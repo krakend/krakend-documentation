@@ -90,6 +90,7 @@ The following example demonstrates a configuration with several endpoints, each 
 - A `/limited-endpoint` is capped at 50 reqs/s AND their users can make up to 5 reqs/s (where a user is a different IP)
 - A `/user-limited-endpoint` is not limited globally but every user (identified with `X-Auth-Token` can make up to 10 reqs/sec)
 
+    ```
     {
         "version": 2,
         "endpoints": [
