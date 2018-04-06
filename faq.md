@@ -8,6 +8,24 @@ description: Frequently Asked Questions
 ---
 
 # Understanding the behaviour
+## I am getting a `200` status when the backend returns a `201`
+E.g:
+
+    2017/01/19 - 10:31:27 | 200 |    1.134431ms | ::1 |   POST     /users
+
+### Explanation
+
+By default, the gateway will always send a HTTP status 200 if the backend returns a 200 or a 201. You can inject your own HTTPStatusHandler implementation if you need a different behaviour. Check this [issue comment](https://github.com/devopsfaith/krakend/issues/102#issuecomment-373657911) for more details.
+
+## I am getting a `500` status when the backend returns anything but `200`, `201` or redirects
+E.g:
+
+    2017/01/19 - 10:31:37 | 500 |    1.007191ms | ::1 |   POST     /users_ko
+
+### Explanation
+
+By default, the gateway will always send a HTTP status 200 if the backend returns a 500 for any status above 400. You can inject your own HTTPStatusHandler implementation if you need a different behaviour. Check this [issue comment](https://github.com/devopsfaith/krakend/issues/102#issuecomment-373657911) for more details.
+
 ## I am seeing frequent `503` errors in the logs
 E.g:
 
