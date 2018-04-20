@@ -1,12 +1,12 @@
 ---
 aliases:
 - /features/other/
-lastmod: 2016-09-30
+lastmod: 2016-04-14
 date: 2016-09-30
 toc: true
 linktitle: Other
 title: Other
-weight: 50
+weight: 60
 menu:
   main:
     parent: features
@@ -55,45 +55,3 @@ traffic to the suffering backend.
 The Circuit Breaker is a protection measure for your stack and avoids cascading failures. It is **always enabled** (and is transparent to you).
 
 Check out the [Circuit Breaker](/docs/throttling/circuit-breaker) section for more info about this component.
-
-# Backend content types
-
-KrakenD supports several content types or encodings:
-
-- JSON
-- XML
-- RSS
-
-Each backend declaration is able to define which encoder should be used before processing its responses, as showed in this example:
-
-	...
-	"endpoints": [
-    {
-      "endpoint": "/abc",
-      "timeout": "800ms",
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/a",
-          "encoding": "json",
-          "host": [
-            "http://service-a.company.com"
-          ]
-        },
-        {
-          "url_pattern": "/b",
-          "encoding": "xml",
-          "host": [
-            "http://service-b.company.com"
-          ]
-        },
-        {
-          "url_pattern": "/c",
-          "encoding": "rss",
-          "host": [
-            "http://service-c.company.com"
-          ]
-        }
-      ]
-    }
-    ...
