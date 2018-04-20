@@ -52,55 +52,49 @@ The configuration file contains a lot of different options that are not explaine
 ## Configuration file example
 This is simplified example of a configuration file:
 
-    {
-	  "version": 2,
-	  "extra_config": {
-	    "github_com/devopsfaith/krakend-gologging": {
-	      "level": "ERROR",
-	      "prefix": "[KRAKEND]",
-	      "syslog": false,
-	      "stdout": true
-	    }
-	  },
-	  "timeout": "3000ms",
-	  "cache_ttl": "300s",
-	  "sd_providers": {
-	    "hosts": [
-	      {
-	        "sd": "static",
-	        "host": "http://api.company.local:9000"
-	      }
-	    ]
-	  },
-	  "endpoints": [
-	    {
-	      "endpoint": "/products",
-	      "method": "GET",
-	      "concurrent_calls": 1,
-	      "extra_config": {
-	        "github_com/devopsfaith/krakend-httpsecure": {
-	          "disable": true,
-	          "allowed_hosts": [],
-	          "ssl_proxy_headers": {}
-	        },
-	        "github.com/devopsfaith/krakend-ratelimit/juju/router": {
-	          "clientMaxRate": 0
-	        }
-	      },
-	      "backend": [
+	{
+	    "version": 2,
+	    "name": "My lovely gateway",
+	    "port": 8080,
+	    "cache_ttl": "3600s",
+	    "timeout": "3s",
+	    "host": [ "https://jsonplaceholder.typicode.com" ],
+	    "endpoints": [
 	        {
-	          "url_pattern": "/products-list",
-	          "extra_config": {
-	            "github.com/devopsfaith/krakend-oauth2-clientcredentials": {
-	              "is_disabled": true,
-	              "endpoint_params": {}
-	            }
-	          },
-	          "encoding": "json"
+	            "endpoint": "/fake",
+	            "concurrent_calls": 3,
+	            "headers_to_pass": [
+	                "Content-Type",
+	                "Authorization",
+	                "X-Y-Z"
+	            ],
+	            "backend": [
+	                {
+	                    "host": [ "http://127.0.0.1:8080" ],
+	                    "url_pattern": "/__debug/fake"
+	                }
+	            ]
+	        },
+	        {
+	            "endpoint": "/combination/{id}",
+	            "method": "GET",
+	            "backend": [
+	                {
+	                    
+	                    "url_pattern": "/posts?userId={id}",
+	                    "is_collection": true,
+	                    "mapping": { "collection": "posts" }
+	                },
+	                {
+	                    "host": [
+	                        "https://jsonplaceholder.typicode.com"
+	                    ],
+	                    "url_pattern": "/users/{id}",
+	                    "mapping": { "email": "personal_email" }
+	                }
+	            ]
 	        }
-	      ]
-	    }
-	  ]
+	    ]
 	}
 
 Check [this larger sample file](https://github.com/devopsfaith/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you will see an example on how to modify the application headers, configure the circuit breaker or apply rate limits.
