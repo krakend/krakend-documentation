@@ -50,7 +50,7 @@ Of course you can try to start the service directly as this will be done anyway.
 The configuration file contains a lot of different options that are not explained in this section, the best way to get familiar with them is using the KrakenDesigner.
 
 ## Configuration file example
-This is simplified example of a configuration file:
+This is a simplified example of a configuration file:
 
 	{
 	    "version": 2,
