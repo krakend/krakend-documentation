@@ -86,7 +86,7 @@ Inside the `endpoints` you will basically declare an array with every `endpoint`
   	]
 
 ## The `extra_config` structure
-When a component is registered, its configuration is taken from the `extra_config`. The `extra_config` can be declared in the root level of the file, but many components will look for the `extra_config` key inside an `endpoint` definition or a `backend` definition.
+When a component is registered, its configuration is taken from the `extra_config` (if any). The `extra_config` can be declared in the root level of the file, but many components will look for the `extra_config` key inside an `endpoint` definition or a `backend` definition.
 
 It's the responsibility of each external component to define a **namespace** that will be used as the key to retrieve the configuration. For instance, the [gologging middleware](https://github.com/devopsfaith/krakend-ratelimit) expects to find a key `github_com/devopsfaith/krakend-gologging`:
 {{< highlight JSON >}}
