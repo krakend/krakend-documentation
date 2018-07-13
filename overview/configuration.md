@@ -105,31 +105,41 @@ It's the responsibility of each external component to define a **namespace** tha
 
 As per the official KrakenD components, the namespaces use the library path as the key for the `extra_config` as this is considered a good practice. When the `extra_config` is in the root of the file (service level) the namespace does not use any dot (notice the `github_com`) to avoid problems with parsers, but when the extra_config is placed at `endpoint` level or even `backend` level the dots are present.
 
-The following code is an example defining a global limit of 5000 reqs/s for the entire Gateway, but a specific endpoint accepts only 10 reqs/s.
+The following code is an example defining two simultaneous rate limiting strategies: A limit of 5000 reqs/s for a specific endpoint, but yet, one of its backends will accept a maximum of 100 reqs/s.
 
-{{< highlight JSON "hl_lines=5 14" >}}
+{{< highlight JSON "hl_lines=8 19" >}}
+{
+	"version": 2,
+	"endpoints": [
 	{
-	  "version": 2,
-	  "extra_config": {
-	    "github_com/devopsfaith/krakend-ratelimit/juju/router": {
-	      "maxRate": 5000,
-	      "clientMaxRate": 0
-	    }
-	  },
-	  "endpoints": [
-	    {
-	      "endpoint": "/limited-to-10-per-second",
-	      "extra_config": {
-	        "github.com/devopsfaith/krakend-ratelimit/juju/router": {
-	          "maxRate": 10
-	        }
-	      },
-	      "backend": [...]
-	    },
-	    ...
-	  ],
-	  ...
+		"endpoint": "/limited-to-5000-per-second",
+		"extra_config": {
+			"github.com/devopsfaith/krakend-ratelimit/juju/router": {
+				"maxRate": 5000
+			}
+		},
+		"backend":
+		[{
+			"host": [
+				"http://slow.backend.com/"
+			],
+			"url_pattern": "/slow/endpoint",
+			"extra_config": {
+				"github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
+					"maxRate": 100,
+					"capacity": 1
+				}
+			}
+		},
+		{
+			"host": [
+				"http://fast.backend.com/"
+			],
+			"url_pattern": "/fast/endpoint"
+		}]
+		...
 	}
+}
 {{< /highlight >}}
 ## Example file
 
