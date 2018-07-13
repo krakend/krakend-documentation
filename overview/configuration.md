@@ -88,7 +88,7 @@ Inside the `endpoints` you will basically declare an array with every `endpoint`
 ## The `extra_config` structure
 When a component is registered, its configuration is taken from the `extra_config` (if any). The `extra_config` can be declared in the root level of the file, but many components will look for the `extra_config` key inside an `endpoint` definition or a `backend` definition.
 
-It's the responsibility of each external component to define a **namespace** that will be used as the key to retrieve the configuration. For instance, the [gologging middleware](https://github.com/devopsfaith/krakend-ratelimit) expects to find a key `github_com/devopsfaith/krakend-gologging`:
+It's the responsibility of each external component to define a **namespace** that will be used as the key to retrieve the configuration. For instance, the [gologging middleware](https://github.com/devopsfaith/krakend-gologging) expects to find a key `github_com/devopsfaith/krakend-gologging`:
 {{< highlight JSON >}}
 {
 	"version": 2,
@@ -103,7 +103,7 @@ It's the responsibility of each external component to define a **namespace** tha
 }
 {{< /highlight >}}
 
-As per the official KrakenD components, the namespaces use the library path as the key for the `extra_config`. When the `extra_config` is in the root of the file (service level) the namespace does not use any dot (notice the `github_com`) as this is considered a good practice, but when the extra_config is placed at `endpoint` level or even `backend` level the dots are present.
+As per the official KrakenD components, the namespaces use the library path as the key for the `extra_config` as this is considered a good practice. When the `extra_config` is in the root of the file (service level) the namespace does not use any dot (notice the `github_com`) to avoid problems with parsers, but when the extra_config is placed at `endpoint` level or even `backend` level the dots are present.
 
 The following code is an example defining a global limit of 5000 reqs/s for the entire Gateway, but a specific endpoint accepts only 10 reqs/s.
 
@@ -136,9 +136,9 @@ The following code is an example defining a global limit of 5000 reqs/s for the 
 Check [this larger sample file](https://github.com/devopsfaith/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you will see an example on how to modify the application headers, configure the circuit breaker or apply rate limits.
 
 # Flexible configuration
-There might be times when you want to split the content of a large configuration file, or use placeholders instead of hardcoding values in the configuration file because you have multiple environments, or any other reason.
+There might be times when you want to split the content of a large configuration file, use placeholders instead of hardcoding values, reuse variables or even whole blocks of code in the configuration file.
 
-Instead of working with the final configuration file, the package **[krakend-flexibleconfig](https://github.com/devopsfaith/krakend-flexibleconfig)** allows you to use a template that will generate the final configuration file.
+Instead of working with the final configuration file, the package **[krakend-flexibleconfig](https://github.com/devopsfaith/krakend-flexibleconfig)** allows you to use a template that will generate the final configuration file for you.
 
 This is an example of a flexible configuration template:
 
