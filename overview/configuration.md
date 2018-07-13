@@ -13,8 +13,7 @@ aliases:
 - /docs/configuration/standalone
 ---
 
-All KrakenD configuration lives inside a unique file. We will refer to it as the `krakend.json` file
-or the `/etc/krakend/krakend.json` but it will have the name and live in the location that you decide.
+All KrakenD configuration is loaded at start-up time from a single configuration file we usually refer to as `/etc/krakend/krakend.json` or just `krakend.json`. This is a convenient name for the documentation but the configuration file can have any path or name you want, or even be split into multiple configuration files with dynamic values where ENV vars can be injected (see [flexible-config](#flexible-configuration) below).
 
 The `krakend.json` file defines endpoints, business logic, service limits, security configuration,
 SSL certificates and any other piece of configuration needed by KrakenD or your own middlewares.
@@ -87,11 +86,12 @@ Inside the `endpoints` you will basically declare an array with every `endpoint`
   	]
 
 ## The `extra_config` structure
-When a middleware is registered, its configuration is taken from the `extra_config`.
+When a component is registered, its configuration is taken from the `extra_config`. The `extra_config` can be declared in the root level of the file, but many components will look for the `extra_config` key inside an `endpoint` definition or a `backend` definition.
 
-Every middleware will look up for a key containing its own go library **namespace**. For instance, let's say that we want to enable the [golooging middleware](https://github.com/devopsfaith/krakend-ratelimit), then we only need to add the namespace and the associated configuration. Every middleware has its own configuration, so the content inside the namespace depends on every middelware:
+It's the responsibility of each external component to define a **namespace** that will be used as the key to retrieve the configuration. For instance, the [gologging middleware](https://github.com/devopsfaith/krakend-ratelimit) expects to find a key `github_com/devopsfaith/krakend-gologging`:
 {{< highlight JSON >}}
 {
+	"version": 2,
 	"extra_config": {
 	    "github_com/devopsfaith/krakend-gologging": {
 	      "level": "WARNING",
@@ -99,10 +99,14 @@ Every middleware will look up for a key containing its own go library **namespac
 	      "syslog": false,
 	      "stdout": true
 	    }
+	}
 }
 {{< /highlight >}}
 
-When the `extra_config` is in the root of the file (service level) the namespace does not use any dot (notice the `github_com`) but the extra_config can also be placed at `endpoint` level or even `backend` level. This is an example defining a global limit of 5000 reqs/s for the entire Gateway, but a specific endpoint accepting only 10 reqs/s.
+As per the official KrakenD components, the namespaces use the library path as the key for the `extra_config`. When the `extra_config` is in the root of the file (service level) the namespace does not use any dot (notice the `github_com`) as this is considered a good practice, but when the extra_config is placed at `endpoint` level or even `backend` level the dots are present.
+
+The following code is an example defining a global limit of 5000 reqs/s for the entire Gateway, but a specific endpoint accepts only 10 reqs/s.
+
 {{< highlight JSON "hl_lines=5 14" >}}
 	{
 	  "version": 2,
