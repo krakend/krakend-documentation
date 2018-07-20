@@ -6,7 +6,7 @@ date: 2016-09-30
 toc: true
 linktitle: Other
 title: Other
-weight: 60
+weight: 100
 menu:
   main:
     parent: features
