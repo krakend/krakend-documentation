@@ -10,14 +10,14 @@ menu:
 title: The KrakenD Playground
 weight: 110
 ---
-If you are new to KrakenD a quick way to get started is to make use of the [KrakenD Playground](https://github.com/devopsfaith/krakend-playground). 
+If you are new to KrakenD, a quick way to get started is to make use of the [KrakenD Playground](https://github.com/devopsfaith/krakend-playground).
 
-The KrakenD Playground is a **Docker Compose** environment that puts together the necessary pieces to let you play with KrakenD in a working ecosystem. 
+The KrakenD Playground is a **Docker Compose** environment that puts together the necessary pieces to let you play with KrakenD in a working environment.
 
 As KrakenD is an API gateway, we have also added to the environment an API (backend) to feed the gateway and a website to make use of the data. With the KrakenD Playground you can see the different pieces that take place in the API Gateway use cases.
 
 # An environment ready to use!
-The Docker environment can be started with `docker-compose up` and then fire up your browser, `curl`, Postman, httpie or anything else you use to interact with the services.
+The KrakenD Playground can be started with `docker-compose up` and then fire up your browser, `curl`, Postman, httpie or anything else you use to interact with the services.
 
 When starting the Docker compose you will have:
 
@@ -26,6 +26,6 @@ When starting the Docker compose you will have:
 - A backend simulating API responses on port 8000
 - Plus a [Jaeger](https://www.jaegertracing.io/) where traces are sent on port 16686
 
-Have a look at the `docker-compose.yml` to understand how this services interact together, and to `krakend.json` to find out what endpoints are exposed.
+Have a look at the `docker-compose.yml` file to understand how this services interact together, and also at the `krakend.json` file to find out what endpoints are exposed.
 
 If you'd like to see more examples, please let us know or open an [issue](https://github.com/devopsfaith/krakend-playground/issues)!
