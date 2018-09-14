@@ -2,7 +2,7 @@
 lastmod: 2018-09-13
 date: 2018-09-13
 linktitle: The Playground
-description: Start playing with KrakenD with a ready-to-use  environment with a gateway, backends and several use cases.
+description: Start playing with KrakenD through a ready-to-use  complete environment -  gateway, backend, client and several use cases.
 notoc: true
 menu:
   main:
