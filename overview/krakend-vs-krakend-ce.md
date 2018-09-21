@@ -5,7 +5,7 @@ linktitle: KrakenD vs KrakenD-CE
 description: What is the difference between KrakenD and KrakenD-CE?
 notoc: true
 menu:
-  main:
+  documentation:
     parent: getting started
 title: KrakenD vs KrakenD-CE
 weight: 100

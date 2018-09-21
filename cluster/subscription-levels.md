@@ -5,7 +5,7 @@ title: Cluster Subscription
 linktitle: Subscription levels
 notoc: true
 menu:
-  main:
+  documentation:
     parent: cluster
 weight: 10
 ---

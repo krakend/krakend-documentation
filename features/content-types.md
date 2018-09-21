@@ -8,7 +8,7 @@ linktitle: Content Types
 title: Content Types
 weight: 50
 menu:
-  main:
+  documentation:
     parent: features
 ---
 

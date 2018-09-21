@@ -4,7 +4,7 @@ aliases:
 lastmod: 2016-10-25
 date: 2016-10-25
 menu:
-  main:
+  documentation:
     parent: getting started
 next: /overview/configuration
 notoc: true

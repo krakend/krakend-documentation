@@ -5,7 +5,7 @@ linktitle: Throttling Overview
 title: KrakenD Throttling
 weight: 1
 menu:
-  main:
+  documentation:
     parent: Throttling and Limits
 ---
 

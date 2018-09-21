@@ -5,7 +5,7 @@ linktitle: The Playground
 description: Start playing with KrakenD through a ready-to-use  complete environment -  gateway, backend, client and several use cases.
 notoc: true
 menu:
-  main:
+  documentation:
     parent: getting started
 title: The KrakenD Playground
 weight: 110

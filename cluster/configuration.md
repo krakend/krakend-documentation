@@ -3,7 +3,7 @@ lastmod: 2017-01-21
 date: 2017-01-21
 linktitle: Cluster configuration
 menu:
-  main:
+  documentation:
     parent: cluster
 title: Cluster configuration
 weight: 10

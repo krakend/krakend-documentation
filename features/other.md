@@ -8,7 +8,7 @@ linktitle: Other
 title: Other
 weight: 100
 menu:
-  main:
+  documentation:
     parent: features
 ---
 

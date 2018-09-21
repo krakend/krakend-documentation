@@ -6,7 +6,7 @@ linktitle:  Parameter forwarding
 title: Parameter forwarding
 weight: 30
 menu:
-  main:
+  documentation:
     parent: features
 ---
 KrakenD always **alleviates backends** avoiding to pollute them with everything coming from the clients. By default **no parameters sent by clients are forwarded to backends** and if needed they will require an explicit declaration in the configuration file.

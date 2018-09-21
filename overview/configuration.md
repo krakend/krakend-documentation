@@ -3,7 +3,7 @@ lastmod: 2018-07-12
 date: 2016-07-01
 linktitle: Configuration file
 menu:
-  main:
+  documentation:
     parent: getting started
 title: KrakenD configuration - The krakend.json file
 weight: 40

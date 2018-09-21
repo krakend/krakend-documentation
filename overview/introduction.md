@@ -5,11 +5,11 @@ lastmod: 2016-10-25
 date: 2016-10-25
 linktitle: Introduction
 menu:
-  main:
+  documentation:
     parent: getting started
 next: /overview/quickstart
 title: Introduction to KrakenD
-weight: 5
+weight: -10000
 ---
 
 # What is KrakenD?

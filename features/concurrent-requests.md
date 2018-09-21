@@ -6,7 +6,7 @@ linktitle: Concurrent Requests
 title: Concurrent Requests
 weight: 20
 menu:
-  main:
+  documentation:
     parent: features
 ---
 # Why enabling concurrent requests?

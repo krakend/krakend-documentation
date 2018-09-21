@@ -5,7 +5,7 @@ linktitle: Max IDLE connections
 title: KrakenD - Maximum IDLE connections
 weight: 60
 menu:
-  main:
+  documentation:
     parent: Throttling and Limits
 ---
 

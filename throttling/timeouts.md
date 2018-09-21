@@ -5,7 +5,7 @@ linktitle: Timeouts
 title: KrakenD - Timeouts
 weight: 40
 menu:
-  main:
+  documentation:
     parent: Throttling and Limits
 ---
 

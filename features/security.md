@@ -8,7 +8,7 @@ linktitle: Security
 title: Security
 weight: 40
 menu:
-  main:
+  documentation:
     parent: features
 ---
 

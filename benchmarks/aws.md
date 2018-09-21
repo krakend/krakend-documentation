@@ -8,7 +8,7 @@ title: KrakenD Benchmarks on AWS
 description: Performance tests of KrakenD on Amazon AWS environment
 weight: 10
 menu:
-  main:
+  documentation:
     parent: Benchmarks
 ---
 

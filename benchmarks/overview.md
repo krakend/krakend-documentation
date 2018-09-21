@@ -6,7 +6,7 @@ title: Benchmarks Overview
 description: Performance tests of KrakenD
 weight: 1
 menu:
-  main:
+  documentation:
     parent: Benchmarks
 ---
 # KrakenD, the **ultra performer** API Gateway

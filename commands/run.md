@@ -9,7 +9,7 @@ description: KrakenD Run Command
 weight: 1
 notoc: true
 menu:
-  main:
+  documentation:
     parent: Command line commands
 ---
 

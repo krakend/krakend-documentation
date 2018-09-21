@@ -1,11 +1,10 @@
-
 ---
 aliases:
 - /overview/installing/
 lastmod: 2016-01-04
 date: 2016-07-01
 menu:
-  main:
+  documentation:
     parent: getting started
 title: Installing KrakenD
 weight: 20
@@ -13,9 +12,9 @@ weight: 20
 KrakenD is a **single binary file** that does not require any external libraries to work. To install KrakenD choose your operative system in the downloads section or use the Docker image.
 
 
-<a href="/download" class="btn btn-primary">Download KrakenD</a>
+<a href="/download" class="btn btn-secondary"><i class="fa fa-download"></i> Download KrakenD</a>
 and
-<a href="http://designer.krakend.io" class="btn btn-primary">Generate the configuration file</a>
+<a href="http://designer.krakend.io" class="btn btn-secondary"><i class="fa fa-file"></i> Generate the configuration file</a>
 
 
 **Just exploring?**

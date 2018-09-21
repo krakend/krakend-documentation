@@ -8,7 +8,7 @@ linktitle: Response manipulation
 title: Response manipulation
 weight: 10
 menu:
-  main:
+  documentation:
     parent: features
 ---
 
@@ -21,7 +21,7 @@ The following manipulations are available by default:
 # Merging
 When you create KrakenD endpoints, if a specific endpoint feeds from 2 or more backend sources (APIs), they will be automatically merged in a single response to the client. For instance, imagine you have 3 different API services exposing the resources `/a`,`/b` and `/c` and you want to expose them all together in the KrakenD endpoint `/abc`. This is what you would get:
 
-<img class="img-responsive" src="/images/documentation/krakend-merge.png" />
+<img class="img-fluid" src="/images/documentation/krakend-merge.png" />
 
 The merge operation is implemented in a way where user experience and responsiveness goes first. It does its *best effort* to get all the required parts from the involved backends and returning the composed object as soon as possible.
 

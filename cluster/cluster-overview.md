@@ -4,7 +4,7 @@ date: 2017-01-21
 linktitle: Overview
 notoc: true
 menu:
-  main:
+  documentation:
     parent: cluster
 title: Cluster Management Overview
 weight: 1

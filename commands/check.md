@@ -9,7 +9,7 @@ description: KrakenD Check Command
 weight: 10
 notoc: true
 menu:
-  main:
+  documentation:
     parent: Command line commands
 ---
 

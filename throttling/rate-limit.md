@@ -7,7 +7,7 @@ linktitle: Rate Limits
 title: KrakenD - Rate limiting
 weight: 10
 menu:
-  main:
+  documentation:
     parent: Throttling and Limits
 ---
 

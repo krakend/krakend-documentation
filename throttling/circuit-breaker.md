@@ -7,7 +7,7 @@ linktitle: Circuit Breaker
 title: KrakenD - Circuit Breaker
 weight: 10
 menu:
-  main:
+  documentation:
     parent: Throttling and Limits
 ---
 

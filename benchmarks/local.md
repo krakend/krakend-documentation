@@ -8,7 +8,7 @@ title: Local Benchmarks
 description: Performance tests of KrakenD
 weight: 15
 menu:
-  main:
+  documentation:
     parent: Benchmarks
 ---
 
