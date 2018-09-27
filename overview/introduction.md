@@ -15,17 +15,17 @@ weight: -10000
 # What is KrakenD?
 KrakenD is a high-performance open source solution to create enterprise-grade API Gateways.
 
-It's core functionality is to create an API that acts as an aggregator of many microservices into single endpoints, doing automatically the heavy-lifting for you (group, wrap, transform, shrink, protocol translation, etc) and needs no programming as it offers a declarative way to create the endpoints. It is also well structured and layered and open to extend its functionality using plug-and-play middleware developed by the community or in-house.
+Its core functionality is to create an API that acts as an aggregator of many microservices into single endpoints, doing automatically the heavy-lifting for you (group, wrap, transform, shrink, protocol translation, etc) and needs no programming as it offers a declarative way to create the endpoints. It is also well structured and layered and open to extending its functionality using plug-and-play middleware developed by the community or in-house.
 
 KrakenD focuses on being a pure API gateway and unlike others is not coupled to the HTTP transport layer and it has been in production in large Internet businesses in Europe since early 2017.
 
 # Why an API Gateway?
 
-Consumers of REST API content (specially in microservices) often query backend services that weren't coded for the UI implementation. This is of course a good practice, but the UI consumers need to do implementations that suffer a lot of complexity and burden with the sizes of their microservices responses.
+Consumers of REST API content (especially in microservices) often query backend services that weren't coded for the UI implementation. This is, of course, a good practice, but the UI consumers need to do implementations that suffer a lot of complexity and burden with the sizes of their microservices responses.
 
-KrakenD is an **API Gateway** and proxy generator that sits between the client and all the source servers, adding a new layer that removes all the complexity to the clients, providing them only the information that the UI needs. KrakenD acts as an **aggregator** of many sources into single endpoints and allows you to group, wrap, transform and shrink responses. Additionally it supports a myriad of middleware and plugins that allow you to extend the functionality, such as adding Oauth authorization or security layers (SSL, certificates, HTTP Strict Transport Security, Clickjacking protection, HTTP Public Key Pinning, MIME-sniffing prevention, XSS protection).
+KrakenD is an **API Gateway** and proxy generator that sits between the client and all the source servers, adding a new layer that removes all the complexity to the clients, providing them only the information that the UI needs. KrakenD acts as an **aggregator** of many sources into single endpoints and allows you to group, wrap, transform and shrink responses. Additionally, it supports a myriad of middleware and plugins that allow you to extend the functionality, such as adding OAuth authorization or security layers (SSL, certificates, HTTP Strict Transport Security, Clickjacking protection, HTTP Public Key Pinning, MIME-sniffing prevention, XSS protection).
 
-KrakenD not only supports HTTP(S), but because it is a set of generic libraries you can build all type of API Gateways and proxies, including for instance, a RPC gateway.
+KrakenD not only supports HTTP(S), but because it is a set of generic libraries you can build all type of API Gateways and proxies, including, for instance, an RPC gateway.
 
 KrakenD is written in [Go](https://golang.org/) with support for multiple platforms.
 

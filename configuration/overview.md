@@ -10,18 +10,18 @@ weight: -1000
 aliases:
 - /docs/overview/configuration/
 ---
-When the KrakenD service is started, the `run` command requires passing the flag `-c` indicating the path to the configuration file that defines KrakenD behavior. This configuration file is usually referred through the documentation as the `krakend.json`. This is just a convenient name for the documentation but the configuration file doesn't need to live or be named in any specific way. 
+When the KrakenD service is started, the `run` command requires passing the flag `-c` indicating the path to the configuration file that defines KrakenD behavior. This configuration file is usually referred through the documentation as the `krakend.json`. This is just a convenient name for the documentation but the configuration file doesn't need to live or be named in any specific way.
 
 If your configuration file is complex it can be split into multiple files with dynamic values where ENV vars can be injected (see [flexible-config](/docs/configuration/flexible-configuration)).
 
-Provided this simple configuration mechanism, the versioning and automation is very convenient. Any change in the API Gateway will be always under version control and it can be reverted to a previous state without effort.
+Provided this simple configuration mechanism, the versioning and automation are very convenient. Any change in the API Gateway will be always under version control and it can be reverted to a previous state without effort.
 
 # Generating the configuration file
 The configuration file can be written from scratch or reuse another existing file as a base, but the easiest way to write your first configuration file is by simply using the online configuration editor [KrakenDesigner](http://designer.krakend.io/).
 
-The KrakenDesigner is a simple javascript application that helps you understand the capabilities of the API Gateway and helps you set the different values for all the differents options. Using this option you don't need to learn and write from scratch all the attribute names. The configuration file can be downloaded at any time and loaded again to resume the edition.
+The KrakenDesigner is a simple javascript application that helps you understand the capabilities of the API Gateway and helps you set the different values for all the different options. Using this option you don't need to learn and write from scratch all the attribute names. The configuration file can be downloaded at any time and loaded again to resume the edition.
 
-The Kraken Designer is a **pure static** page that **does not send any of your configuration elsewhere**, and as it happens with all our software, is also open sourced and you can download it and run it in your own web server. See the [Krakendesigner](https://github.com/devopsfaith/krakendesigner) repository..
+The Kraken Designer is a **pure static** page that **does not send any of your configuration elsewhere**, and as it happens with all our software, is also open sourced and you can download it and run it in your own web server. See the [Krakendesigner](https://github.com/devopsfaith/krakendesigner) repository.
 
 <a class="btn btn-secondary btn-circle" href="http://designer.krakend.io/">Generate configuration now</a>
 
