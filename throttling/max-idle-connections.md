@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-01-04
+lastmod: 2018-09-27
 date: 2018-01-04
 linktitle: Max IDLE connections
 title: KrakenD - Maximum IDLE connections
@@ -21,7 +21,7 @@ KrakenD will close connections sitting idle in a "keep-alive" state when `max_id
 
 Every ecosystem needs its own setting, have this in mind:
 
-- If you set a number very high for `max_idle_connections` you might exhaust your systems port limit.
+- If you set a number very high for `max_idle_connections` you might exhaust your system's port limit.
 - If you set a number very low, new connections will be frequently created and a low rate of connection reuse will take place.
 
 

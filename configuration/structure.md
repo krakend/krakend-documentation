@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-09-21
+lastmod: 2018-09-27
 date: 2018-09-21
 linktitle: Understanding the file
 menu:
@@ -10,7 +10,7 @@ weight: 10
 ---
 
 # Configuration file structure
-The configuration file contains all the options defining how the gateway behaves. There are a large number of options you can put in this file, but in this section we will focus only in the structure:
+The configuration file contains all the options defining how the gateway behaves. There are a large number of options you can put in this file, but in this section, we will focus only on the structure:
 
 	{
 	    "version": 2,
@@ -24,7 +24,7 @@ The configuration file contains all the options defining how the gateway behaves
 - `extra_config`: In case there is any extra middleware (non-core) needing configuration this will be here. For instance, you might want to enable logging, metrics, throttling, etc. which are middleware.
 
 ## The `endpoints` structure
-Inside the `endpoints` you will basically declare an array with every `endpoint` definition (the URL) the gateway will answer to. For each endpoint you need to declare at least a `backend`, the place were your API with the data lives. It looks like this:
+Inside the `endpoints`, you will basically declare an array with every `endpoint` definition (the URL) the gateway will answer to. For each endpoint, you need to declare at least a `backend`, the place were your API with the data lives. It looks like this:
 
 	"endpoints": [
 	    {

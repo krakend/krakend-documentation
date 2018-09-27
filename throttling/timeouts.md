@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-01-04
+lastmod: 2018-09-27
 date: 2018-01-04
 linktitle: Timeouts
 title: KrakenD - Timeouts
@@ -9,14 +9,14 @@ menu:
     parent: Throttling and Limits
 ---
 
-Being KrakenD an API Gateway that talk to other services, being able to control the waiting times for different aspects is crucial. KrakenD will allow you to fine-tune this settings.
+Being KrakenD an API Gateway that talks to other services, being able to control the waiting times for different aspects is crucial. KrakenD will allow you to fine-tune these settings.
 
 The timeouts can apply to:
 
 - **The duration of the whole pipe** (from user request to user response)
 - **The HTTP request related timeouts**
 
-Additionally you can control the number of **maximum IDLE connections**.
+Additionally, you can control the number of **maximum IDLE connections**.
 
 # Pipe timeouts
 
@@ -54,7 +54,7 @@ When the timeout for a pipe is reached, the request is canceled and the user rec
 
 # HTTP Request timeouts
 In addition to the timeouts for the whole pipe, you can configure the specific HTTP layer timeouts.
-All the settings below work in the same way the pipeline timeouts, if you place this values in an endpoint, they will override the global setting.
+All the settings below work just like the pipeline timeouts. If you place this values in an endpoint, they will override the global setting.
 
 ## HTTP Read Timeout
 Maximum duration for reading the entire HTTP request, including the body.
@@ -116,4 +116,3 @@ Examples of equivalent timeouts in different units are:
 	"timeout": "1000ms",
 	"timeout": "1000000us",
 	"timeout": "1000000000ns",
-

@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-06-23
+lastmod: 2018-09-27
 date: 2018-06-23
 linktitle: KrakenD vs KrakenD-CE
 description: What is the difference between KrakenD and KrakenD-CE?
@@ -16,7 +16,7 @@ If you had a quick look at our git repositories you might be confused at first, 
 **TL;DR;**
 
 - KrakenD is a framework
-- KrakenD-CE is a ready to use API Gateway
+- KrakenD-CE is an API Gateway ready to use
 - KrakenD Enterprise is professional services to businesses
 
 ## KrakenD framework
@@ -30,9 +30,9 @@ KrakenD focuses on building the core framework and functionality a pure API gate
 ## KrakenD Community Edition
 `KrakenD-CE` ([repo](https://github.com/devopsfaith/krakend-ce)) is a ready to use API gateway. This is our interpretation of what the community will need, just one answer of the thousands of combinations an API Gateway might need. The KrakenD-CE uses the KrakenD framework in its core and extends its functionality by adding in the final binary some of the several [middleware contributions](https://github.com/devopsfaith/krakend-contrib) we thought an API Gateway should have.
 
-KrakenD-CE adds to the KrakenD framework interesting functionality like logging, service discovery, developer tools, metrics, circuit breaker, rate limiting, oauth, security and other interesting stuff.
+KrakenD-CE adds to the KrakenD framework interesting functionality like logging, service discovery, developer tools, metrics, circuit breaker, rate limiting, OAuth, security and other interesting stuff.
 
-The good news, is that we always refer to both things as "KrakenD" :)
+The good news is that we always refer to both things as "KrakenD" :)
 
 ## KrakenD Enterprise
-There is no Enterprise software. KrakenD(-CE) is the same product for paying customers or the community. The KrakenD Enterprise subscription is a series of services in consultancy, development and support around KrakenD.
+There is no Enterprise software. KrakenD(-CE) is the same product for paying customers or the community. The KrakenD Enterprise subscription is a series of services in consultancy, development, and support around KrakenD.

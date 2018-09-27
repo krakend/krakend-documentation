@@ -1,5 +1,5 @@
 ---
-lastmod: 2016-10-20
+lastmod: 2018-09-27
 date: 2016-07-01
 linktitle: Throttling Overview
 title: KrakenD Throttling
@@ -12,8 +12,7 @@ menu:
 The KrakenD is a powerful tool that handles a huge amount of traffic and depending on the usage you could stress your
 own backend micro-services architecture by requesting a lot of data, compromising your backend SLA.
 
-In order to prevent the KrakenD to stress your infrastructure (or even someone using it to harm you) there are several
-mechanisms to put you safe.
+In order to prevent the KrakenD to stress your infrastructure (or even someone using it to harm you), there are several mechanisms to put you safe.
 
 
  - [The Circuit Breaker](/docs/throttling/circuit-breaker/)

@@ -1,7 +1,7 @@
 ---
 aliases:
 - /features/response-manipulation/
-lastmod: 2016-09-30
+lastmod: 2018-09-27
 date: 2016-09-30
 toc: true
 linktitle: Response manipulation
@@ -12,14 +12,14 @@ menu:
     parent: features
 ---
 
-KrakenD allows you to perform several manipulations of the responses out of the box, just by adding them in the configuration file. You can also add your own or 3rd parties middlewares to extend this behavior.
+KrakenD allows you to perform several manipulations of the responses out of the box, just by adding them to the configuration file. You can also add your own or 3rd parties middlewares to extend this behavior.
 
 KrakenD manipulations are measured in `nanoseconds`, you can find the benchmark for every response manipulation in the [benchmarks](https://github.com/devopsfaith/krakend/blob/master/docs/BENCHMARKS.md#response-manipulation)
 
 The following manipulations are available by default:
 
 # Merging
-When you create KrakenD endpoints, if a specific endpoint feeds from 2 or more backend sources (APIs), they will be automatically merged in a single response to the client. For instance, imagine you have 3 different API services exposing the resources `/a`,`/b` and `/c` and you want to expose them all together in the KrakenD endpoint `/abc`. This is what you would get:
+When you create KrakenD endpoints, if a specific endpoint feeds from 2 or more backend sources (APIs), they will be automatically merged in a single response to the client. For instance, imagine you have 3 different API services exposing the resources `/a`,`/b`, and `/c` and you want to expose them all together in the KrakenD endpoint `/abc`. This is what you would get:
 
 <img class="img-fluid" src="/images/documentation/krakend-merge.png" />
 
@@ -67,7 +67,7 @@ The `timeout` value can be introduced inside each endpoint or globally placing `
 ### What happens when the timeout is triggered?
 If KrakenD is waiting for the backends to respond and the timeout is reached, the response will be incomplete and missing any data that couldn't be fetched before the timeout happened. On the other hand, all the parts that could effectively be retrieved before the timeout happened they will do appear in the response.
 
-In the case the response has missing parts the **cache header won't exist**, as we don't want clients to cache incomplete responses
+If the response has missing parts, the cache header won't exist, as we don't want clients to cache incomplete responses.
 
 
 ## Merge example
@@ -162,7 +162,7 @@ With these 'partial responses' and the given configuration, KrakenD will return 
 
 # Filtering
 
-When you create a KrakenD endpoint you can decide to show only a subset of the fields coming from the response of your backends. There are a number of different reasons you might want to use this functionality, but we strongly encourage you to use it to save user's bandwith and increase load and render times.
+When you create a KrakenD endpoint you can decide to show only a subset of the fields coming from the response of your backends. There are a number of different reasons you might want to use this functionality, but we strongly encourage you to use it to save user's bandwidth and increase load and render times.
 
 There are two different strategies you can use to filter content:
 
@@ -178,7 +178,7 @@ The blacklisted fields of your choice can also be nested field. Use a **dot** as
 ### Blacklist example
 We will use the [JSONPlaceholder](https://jsonplaceholder.typicode.com/) fake API so you can see live the output of the backend.
 
-We want to setup a KrakenD endpoint that returns the **posts for a specific user**, but we've seen that the [backend response]((https://jsonplaceholder.typicode.com/posts/1)) contains too much data since our use case do not need the `body` and `userId` fields and we want a lighter and faster response.
+We want to set up a KrakenD endpoint that returns the **posts for a specific user**, but we've seen that the [backend response]((https://jsonplaceholder.typicode.com/posts/1)) contains too much data since our use case do not need the `body` and `userId` fields and we want a lighter and faster response.
 
 The KrakenD endpoint to accept URLs like`/posts/1` is defined as follows:
 
@@ -206,7 +206,7 @@ Now, when calling the KrakenD endpoint `/posts/1` the response you would get wil
 	  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
 	}
 
-[Compared with the backend response](https://jsonplaceholder.typicode.com/posts/1) you'll see that the fields `body` and `userId` are not longer there.
+[Compared with the backend response](https://jsonplaceholder.typicode.com/posts/1) you'll see that the fields `body` and `userId` are no longer there.
 
 ## Whitelisting fields (only show)
 The blacklist filter can be read as the *only show this* filter. When you set a whitelist KrakenD will include in the endpoint response only those fields that match exactly with your choice. Use the whitelist to strictly define the fields you want to show in the response.

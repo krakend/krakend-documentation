@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-09-21
+lastmod: 2018-09-27
 date: 2016-07-01
 linktitle: Configuration overview
 menu:
@@ -45,7 +45,7 @@ By adding the flag `--debug` you will be able to see the full output with the in
 
     krakend --config ~/my-krakend.json --debug
 
-Of course you can try to start the service directly as this will be done anyway. When the syntax is correct you'll see the message
+Of course, you can try to start the service directly as this will be done anyway. When the syntax is correct you'll see the message
 
     Syntax OK!
 

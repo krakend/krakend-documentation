@@ -11,15 +11,15 @@ menu:
   documentation:
     parent: Benchmarks
 ---
-We wanted to compare our own product with other similar products in the market. In order to do so we used the same 
+We wanted to compare our own product with other similar products in the market. In order to do so we used the same
 environment and conditions and tested the following products:
 
  - Kong
  - Vulcand
  - Tyk
  - KrakenD
- 
-For the benchmarks we based the tests on the benchmarking project [varnish/api-gateway-benchmarks](https://github.com/varnish/api-gateway-benchmarks).
+
+For the benchmarks, we based the tests on the benchmarking project [varnish/api-gateway-benchmarks](https://github.com/varnish/api-gateway-benchmarks).
 
 **At the time of writing, KrakenD does not support auth features, so we just did the benchmark with _test01_**
 

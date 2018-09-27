@@ -1,7 +1,7 @@
 ---
 aliases:
 - /features/other/
-lastmod: 2016-04-14
+lastmod: 2018-09-27
 date: 2016-04-14
 toc: true
 linktitle: Content Types
@@ -53,7 +53,7 @@ Each backend declaration is able to define which encoder should be used before p
     }
     ...
 
-As you can see, having the `encoding`declaration in every backend allows you to consume services with different content types (in the example JSON, XML and RSS) that will be later aggregated into a unified content type (e.g: JSON).
+As you can see, having the `encoding`declaration in every backend allows you to consume services with different content types (in the example JSON, XML, and RSS) that will be later aggregated into a unified content type (e.g: JSON).
 
 # Response content type
 
@@ -104,4 +104,4 @@ The gin-based KrakenD router includes these output encodings:
 
 - JSON
 - String
-- Negotiate: internally supports JSON, XML and YAML and selects one or another depending on the received `Accept` header.
+- Negotiate: internally supports JSON, XML, and YAML. It selects one or the other depending on the received `Accept` header.

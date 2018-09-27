@@ -1,7 +1,7 @@
 ---
 aliases:
 - /features/security/
-lastmod: 2016-09-30
+lastmod: 2018-09-27
 date: 2016-09-30
 toc: true
 linktitle: Security
@@ -26,9 +26,9 @@ When a request hits KrakenD, it will confirm if the value of the `Host` HTTP hea
 
 KrakenD follow the OWASP's recommendations by adding a frame-breaking strategy.
 
-You can add a `X-Frame-Options` header with the value of `DENY` (default behaviour) or even set your custom value.
+You can add an `X-Frame-Options` header with the value of `DENY` (default behavior) or even set your custom value.
 
-Check the [OWASP Clickjaking cheat sheet](https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet#X-Frame-Options_Header_Types) for more details about the header and its recommended values.
+Check the [OWASP Clickjacking cheat sheet](https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet#X-Frame-Options_Header_Types) for more details about the header and its recommended values.
 
 ## MIME-Sniffing prevention
 
@@ -52,7 +52,7 @@ OWASP defines the HPKP as
 
 > HTTP Public Key Pinning (HPKP) is a security mechanism which allows HTTPS websites to resist impersonation by attackers using mis-issued or otherwise fraudulent certificates. (For example, sometimes attackers can compromise certificate authorities, and then can mis-issue certificates for a web origin.).
 
-**This feature must be used with caution, because there is a risk that hosts may make themselves unavailable by pinning to a set of public key hashes that becomes invalid.**
+**This feature must be used with caution because there is a risk that hosts may make themselves unavailable by pinning to a set of public key hashes that becomes invalid.**
 
 # OAuth2
 

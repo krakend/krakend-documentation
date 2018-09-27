@@ -1,7 +1,7 @@
 ---
 aliases:
 - /overview/usage/
-lastmod: 2016-10-25
+lastmod: 2018-09-27
 date: 2016-10-25
 menu:
   documentation:
@@ -13,12 +13,12 @@ title: Using KrakenD
 weight: 30
 ---
 
-From an operations point of view KrakenD is very simple to use. It only requires you to pass
-the path the configuration file (which defines behaviours and endpoints). Additionally you can
+From an operations point of view KrakenD, is very simple to use. It only requires you to pass
+the path the configuration file (which defines behaviors and endpoints). Additionally, you can
 enable the debug with the `-d` flag, and that's pretty much everything.
 
 # TL;DR
-1. Generate a configuration file with your endpoints definition. Easier way to generate it is using the [designer](http://designer.krakend.io/)
+1. Generate a configuration file with your endpoints definition. The easier way to generate it is using the [designer](http://designer.krakend.io/)
 2. Check the syntax of your `krakend.json` is good
 
 	`./krakend check --config krakend.json --debug`

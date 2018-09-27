@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-07-20
+lastmod: 2018-09-27
 date: 2018-07-20
 toc: true
 linktitle:  Parameter forwarding
@@ -9,7 +9,7 @@ menu:
   documentation:
     parent: features
 ---
-KrakenD always **alleviates backends** avoiding to pollute them with everything coming from the clients. By default **no parameters sent by clients are forwarded to backends** and if needed they will require an explicit declaration in the configuration file.
+KrakenD always **alleviates backends** avoiding to pollute them with everything coming from the clients. By default, **no parameters sent by clients are forwarded to backends** and if needed they will require an explicit declaration in the configuration file.
 
 The parameter forwarding refers to:
 
@@ -20,7 +20,7 @@ The parameter forwarding refers to:
 # Query string forwarding
 Use `querystring_params`
 
-In order to receive the query strings sent by clients in your backends you will need to declare in the `querystring_params` the list of recognized parameters. When this list is set, any matching parameters are included in the backend call **when present**.
+In order to receive the query strings sent by clients in your backends, you will need to declare in the `querystring_params` the list of recognized parameters. When this list is set, any matching parameters are included in the backend call **when present**.
 
 For instance, let's forward`?a=1&b=2` to the backends:
 
@@ -97,7 +97,7 @@ This setting will change the headers received by the backend to:
     X-Forwarded-For: ::1
 
 # Cookies forwarding
-A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `headers_to_pass`, just as you would do with any other header. With this **all your cookies** will be sent to all backends inside the endpoint. Use this option wisely!
+A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `headers_to_pass`, just as you would do with any other header. With this, **all your cookies** will be sent to all backends inside the endpoint. Use this option wisely!
 
 Example:
 
@@ -122,4 +122,3 @@ Example:
 	    }
 	  ]
 	}
-

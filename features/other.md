@@ -1,7 +1,7 @@
 ---
 aliases:
 - /features/other/
-lastmod: 2016-04-14
+lastmod: 2018-09-27
 date: 2016-09-30
 toc: true
 linktitle: Other
@@ -14,7 +14,7 @@ menu:
 
 # Load balancing
 
-KrakenD has a round robin based load balancing component for a proper load distribution against the registered backends. This component is totally transparent for the user.
+KrakenD has a round-robin based load balancing component for a proper load distribution against the registered backends. This component is totally transparent for the user.
 
 # Service Discovery
 
@@ -38,18 +38,18 @@ The rate limits allow you to restrict the traffic to any component of the stack 
 
 - Avoid flooding your system with massive requests
 - Establish a quota of usage for your API
-- Create a simple QoS strategy for you API
+- Create a simple QoS strategy for your API
 
-This measures are complementary to the [Circuit Breaker](/docs/throttling/circuit-breaker).
+These measures are complementary to the [Circuit Breaker](/docs/throttling/circuit-breaker).
 
 Check out the [Rate limit](/docs/throttling/rate-limit) section for more info about this component.
 
 # Circuit breaker
 
-To keep KrakenD responsive and resilient, we added a **Circuit Breaker** middleware on several points of the processing pipe. Thanks to this component, when KrakenD demands more throughput than your actual API stack is able to deliver properly, the **Circuit Breaker** mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. The **Circuit Breaker** is also useful for dealing with network and other communication problems, by preventing too many requests to fail due timeouts, etc.
+To keep KrakenD responsive and resilient, we added a **Circuit Breaker** middleware on several points of the processing pipe. Thanks to this component, when KrakenD demands more throughput than your actual API stack is able to deliver properly, the **Circuit Breaker** mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. The **Circuit Breaker** is also useful for dealing with network and other communication problems, by preventing too many requests to fail due to timeouts, etc.
 
-The **Circuit Breaker** is a very simple **state machine** in the middle of the request and response that monitors all 
-the failures of your backend and when they reach a configured threshold the circuit breaker will prevent sending more 
+The **Circuit Breaker** is a very simple **state machine** in the middle of the request and response that monitors all
+the failures of your backend and when they reach a configured threshold the circuit breaker will prevent sending more
 traffic to the suffering backend.
 
 The Circuit Breaker is a protection measure for your stack and avoids cascading failures. It is **always enabled** (and is transparent to you).

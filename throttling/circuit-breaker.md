@@ -1,7 +1,7 @@
 ---
 aliases:
 - /throttling/circuit-breaker/
-lastmod: 2018-01-04
+lastmod: 2018-09-27
 date: 2016-07-01
 linktitle: Circuit Breaker
 title: KrakenD - Circuit Breaker
@@ -11,7 +11,7 @@ menu:
     parent: Throttling and Limits
 ---
 
-To keep KrakenD responsive and resilient, we added a **Circuit Breaker** middleware on several points of the processing pipe. Thanks to this component, when KrakenD demands more throughput than your actual API stack is able to deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also useful for dealing with network and other communication problems, by preventing too many requests to fail due timeouts, etc.
+To keep KrakenD responsive and resilient, we added a **Circuit Breaker** middleware on several points of the processing pipe. Thanks to this component, when KrakenD demands more throughput than your actual API stack is able to deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also useful for dealing with network and other communication problems, by preventing too many requests to fail due to timeouts, etc.
 
 The **Circuit Breaker** is a very simple **state machine** in the middle of the request and response that monitors all
 the failures of your backend and when they reach a configured threshold the circuit breaker will prevent sending more
@@ -42,11 +42,9 @@ And this is the way the states change:
 |-----|
 | ![Krakend logo](/images/documentation/circuit-breaker-states.png) |
 
-- State is in `CLOSED` test, everything is normal
-- The maximum consecutive allowed errors (`maxErrors`) is reached, the system changes to `OPEN`. No more connections to backend sent
-- System stays in `OPEN` state for N seconds (`timeout`)
-- System changes to `HALF-OPEN` and allows 1 connection to pass.
-- If the connection succeeded change to `CLOSED`, everything back to normal. If it failed switch to `OPEN` again.
+- `CLOSED`: In the initial state, the system is healthy and sending connections to the backend.
+- `OPEN`: When a consecutive number of supported errors from the backend (`maxErrors`)  is reached, the system changes to `OPEN` and no further connections are sent to the backend. The system will stay in `OPEN` state for N seconds ( the `timeout`).
+- `HALF-OPEN`: After the timeout, it changes to this state and allows one connection to pass. If the connection succeeds the state changes to `CLOSED` and the backend is considered to be healthy again. But if it fails, it switches back to `OPEN` for another timeout.
 
 
 # Configuring a circuit breaker
@@ -74,4 +72,3 @@ The following configuration is an example on how to add circuit breaker capabili
 		}
 		]
 	...
-

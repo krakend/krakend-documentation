@@ -1,7 +1,7 @@
 ---
 aliases:
 - /throttling/rate-limit/
-lastmod: 2018-01-04
+lastmod: 2018-09-27
 date: 2016-07-01
 linktitle: Rate Limits
 title: KrakenD - Rate limiting
@@ -15,7 +15,7 @@ The rate limits allow you to restrict the traffic to any component of the stack 
 
 - Avoid flooding your system with massive requests
 - Establish a quota of usage for your API
-- Create a simple QoS strategy for you API
+- Create a simple QoS strategy for your API
 
 KrakenD provides rate limiting capabilities just by adding the desired configuration in the `krakend.json` file and this feature is complementary to the [Circuit Breaker](/docs/throttling/circuit-breaker), so they can exist together.
 
@@ -34,9 +34,9 @@ To deep dive in the internals see the [rate-limiting middleware](https://github.
 # Router: Rate limiting usage of KrakenD endpoints
 The router rate limit is a **per endpoint** setting that allows you to set the number of **maximum requests per second** a KrakenD endpoint will accept. If no configuration is added explicitly KrakenD is not going to apply any limitation in the number of requests it can handle.
 
-In order to specify a rate limit you need to add the configuration in the desired endpoint. The router rate limit **does not accept a default value** to be used across all the endpoints. Nevertheless, when using the [KrakenDesigner](http://designer.krakend.io/) if you specify a default rate limit in the *Service* section it will copy the setting in every single endpoint for you when there is no setting.
+In order to specify a rate limit, you need to add the configuration in the desired endpoint. The router rate limit **does not accept a default value** to be used across all the endpoints. Nevertheless, when using the [KrakenDesigner](http://designer.krakend.io/) if you specify a default rate limit in the *Service* section it will copy the setting in every single endpoint for you when there is no setting.
 
-At the router level you can set the rate limit for endpoints based on:
+At the router level, you can set the rate limit for endpoints based on:
 
 1. Maximum request rate an endpoint accepts
 2. Maximum request rate an endpoint accepts **per client**
@@ -55,16 +55,15 @@ If API users reach the established limit in the endpoint then KrakenD will start
 ## Maximum request rate per endpoint and client (`clientMaxRate`)
 Similar to `maxRate` the `clientMaxRate` establishes a *user quota*. Limits the maximum requests per second the KrakenD service will process for a single endpoint and a given client. Every KrakenD instance will keep its counters of the requests per second **every single client** is doing.
 
-There are two client identification strategies you can set (choose one):
+There are two client identification strategies that can be chosen:
 
-  - `"strategy": "ip"` When you apply the restrictions based on the client IP. For you every IP is a different user.
-  - `"strategy": "header"` When your criteria for identifying a user comes from the value of a `key` inside the header. You must specify both `strategy` and `key`.
-    - E.g, set `"key": "X-TOKEN"` to use the `X-TOKEN` header as unique user identifier.
+  - `"strategy": "ip"` When the restrictions are based on the client's IP, and every IP is considered a different user.
+  - `"strategy": "header"` When the criteria for identifying a user comes from the value of a `key` inside the header. With this strategy the `key` must be also specified.
+    - E.g, set `"key": "X-TOKEN"` to use the `X-TOKEN` header as the unique user identifier.
 
+The absence of `clientMaxRate` in the configuration or `"clientMaxRate": 0` means NO LIMIT per user.
 
-The absence of `clientMaxRate` in the configuration or `"clientMaxRate": 0` mean NO LIMIT per user.
-
-The value you use for `clientMaxRate` should be significantly lower than you would use for `maxRate`, as this limit will be multiplied by the number of active clients in that moment.
+The value you use for `clientMaxRate` should be significantly lower than you would use for `maxRate`, as this limit will be multiplied by the number of active clients at that moment.
 
 Example:
 
@@ -76,16 +75,16 @@ If 200 different customers (with different IPs) hit the KrakenD, they will be al
 
 <div class="alert note">
     <h4><i class="icon fa fa-sticky-note-o"></i> Performance note!</h4>
-    <p>From a <strong>performance point of view</strong> the <tt>clientMaxRate</tt> drops the performance as every incoming client needs to be monitored. Use it wisely.</p>
+    <p>From a <strong>performance point of view</strong>, the <tt>clientMaxRate</tt> drops the performance as every incoming client needs to be monitored. Use it wisely.</p>
  </div>
 
 ### What happens when the `clientMaxRate` limit is reached?
 If an API user (IP or header strategies) reaches the established limit in the endpoint then KrakenD will start rejecting requests. The user will see an HTTP status code `429 Too Many Requests`.
 
-## Router rate limit example, `clientMaxRate` and `maxRate` together.
+## Router rate limit example, `clientMaxRate`, and `maxRate` together.
 The following example demonstrates a configuration with several endpoints, each one setting different limits:
 
-- A `/happy-hour` endpoint with unlimited in usage as it sets `0`.
+- A `/happy-hour` endpoint with unlimited usage as it sets `0`.
 - A `/happy-hour-2` endpoint is also unlimited as it sets no rate configuration.
 - A `/limited-endpoint` is capped at 50 reqs/s AND their users can make up to 5 reqs/s (where a user is a different IP)
 - A `/user-limited-endpoint` is not limited globally but every user (identified with `X-Auth-Token` can make up to 10 reqs/sec)
@@ -134,7 +133,7 @@ Example
 
 
 # Proxy: Rate limit backends
-No matter what is the activity users are generating at the router level, you might want to restrict the connections KrakenD makes to your backends. Configuration comes similarly than in the router case, but it's declared directly in the `backend` section instead of `endpoint` (or globally).
+No matter what is the amount of activity the users are generating at the router level, you might want to restrict the connections KrakenD makes to your backends. Configuration is similar to the router's one, but it's declared directly in the `backend` section instead of the `endpoint`.
 
 This parameter is defined at the `krakend.json` configuration file as follows:
 
@@ -165,10 +164,9 @@ There are two parameters you can set:
 
 
 # Comparison of `maxRate` vs `clientMaxRate`
-The `maxRate` (available both in router and proxy layers) is an absolute number where you have the exact control on how much traffic you are allowing to hit the backend or endpoint. In an eventual DDoS the `maxRate` can help in a way since it won't accept more traffic than allowed. But on the other hand a single host could abuse the system taking a big percentage of that quota.
+The `maxRate` (available both in router and proxy layers) is an absolute number where you have the exact control over how much traffic you are allowing to hit the backend or endpoint. In an eventual DDoS, the `maxRate` can help in a way since it won't accept more traffic than allowed. But on the other hand a single host could abuse the system taking a big percentage of that quota.
 
 The `clientMaxRate` is a limit per client and it won't help you if you just want to control the total traffic, as
-the total traffic supported by the backend or endpoint depends on the number of different requesting clients. A DDoS will then happily pass through, but on the other hand you can keep any particular abuser limited to its quota.
+the total traffic supported by the backend or endpoint depends on the number of different requesting clients. A DDoS will then happily pass through, but on the other hand, you can keep any particular abuser limited to its quota.
 
 Depending on your use case you will need to decide if you use one, the other, the two, or none of them (fastest!)
-

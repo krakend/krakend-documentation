@@ -1,7 +1,7 @@
 ---
 aliases:
 - /overview/installing/
-lastmod: 2016-01-04
+lastmod: 2018-09-27
 date: 2016-07-01
 menu:
   documentation:
@@ -56,7 +56,7 @@ Paste this in the terminal:
     dnf install -y krakend
     systemctl start krakend
 
-Current KrakenD version will run at least in Centos 7 and Fedora 24
+The current KrakenD version will run at least in Centos 7 and Fedora 24
 
 ## Debian and Ubuntu
 
@@ -74,7 +74,7 @@ Bottom line:
     apt-get update
     apt-get install -y krakend
 
-Current KrakenD version will run at least in Debian 8, Debian 9 and Ubuntu 16.x
+The current KrakenD version will run at least in Debian 8, Debian 9 and Ubuntu 16.x
 
 ## Generic (via `tar.gz`)
 You can also [download](/download) the `tar.gz` and decompress it anywhere. Instructions to check the SHA and PGP signature [here](/docs/overview/verifying-packages).
