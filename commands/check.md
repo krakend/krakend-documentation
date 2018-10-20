@@ -18,19 +18,41 @@ The `krakend check` command validates the passed configuration. Since KrakenD do
 
 # Usage
 
-	$ ./krakend check -h
-	Validates that the active configuration file has a valid syntax to run the service. Change the configuration file by using the --config flag
-
-	Usage:
-	  krakend check [flags]
-
-	Global Flags:
-	      --config string   Path to the configuration filename
-	  -d, --debug           Enable the debug
+	$ krakend check -h
+	
+	`7MMF' `YMM'                  `7MM                         `7MM"""Yb.
+	 MM   .M'                      MM                           MM    `Yb.
+	 MM .d"     `7Mb,od8 ,6"Yb.    MM  ,MP'.gP"Ya `7MMpMMMb.    MM     `Mb
+	 MMMMM.       MM' "'8)   MM    MM ;Y  ,M'   Yb  MM    MM    MM      MM
+	 MM  VMA      MM     ,pm9MM    MM;Mm  8M""""""  MM    MM    MM     ,MP
+	 MM   `MM.    MM    8M   MM    MM `Mb.YM.    ,  MM    MM    MM    ,dP'
+	 .JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'
+	 _______________________________________________________________________
+ 
+	 Version: {{% version %}}
+ 
+	 Validates that the active configuration file has a valid syntax to run the service.
+	 Change the configuration file by using the --config flag
+ 
+	 Usage:
+	 krakend check [flags]
+ 
+	 Aliases:
+	 check, validate
+ 
+	 Examples:
+	 krakend check -d -c config.json
+ 
+	 Flags:
+	 -h, --help   help for check
+ 
+	 Global Flags:
+	 -c, --config string   Path to the configuration filename
+	 -d, --debug           Enable the debug
 
 Passing a path to the config file is required
 
-	$ ./krakend check
+	$ krakend check
 	Please, provide the path to your config file
 
 # Example
@@ -229,13 +251,13 @@ We will use this configuration for the demo
 
 ## Debug disabled
 
-	$ ./krakend check --config krakend.json
+	$ krakend check --config krakend.json
 	Parsing configuration file: krakend.json
 	Syntax OK!
 
 ## Debug enabled
 
-	$ ./krakend check -c krakend.json -d
+	$ krakend check -c krakend.json -d
 	Parsing configuration file: krakend.json
 	Parsed configuration: CacheTTL: 1h0m0s, Port: 8080
 	Hosts: []

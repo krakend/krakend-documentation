@@ -13,7 +13,7 @@ menu:
     parent: Command line commands
 ---
 
-To start KrakenD you need to invoke the `run` command with the path to the configuration file. You
+To start KrakenD, you need to invoke the `run` command with the path to the configuration file. You
 can also specify the port (defaults to `8080`)
 
     krakend run -c krakend.json
@@ -24,12 +24,12 @@ can also specify the port (defaults to `8080`)
 
 The `krakend run` command with no flags will remind you that you need the path to the configuration file:
 
-    $ ./krakend run
+    $ krakend run
     Please, provide the path to your config file
 
 Show the help:
 
-    $  ./krakend run -h
+    $ krakend run -h
 
     `7MMF' `YMM'                  `7MM                         `7MM"""Yb.
       MM   .M'                      MM                           MM    `Yb.
@@ -40,23 +40,24 @@ Show the help:
     .JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'
     _______________________________________________________________________
 
-    Version: 0.4
+    Version: {{% version %}}
 
-    Run the KrakenD server.
+    The API Gateway builder
 
     Usage:
-      krakend run [flags]
+      krakend [command]
 
-    Examples:
-    krakend run -d -c config.json
+    Available Commands:
+      check       Validates that the configuration file is valid.
+      help        Help about any command
+      run         Run the KrakenD server.
 
     Flags:
-      -h, --help       help for run
-      -p, --port int   Listening port for the http service
-
-    Global Flags:
       -c, --config string   Path to the configuration filename
       -d, --debug           Enable the debug
+      -h, --help            help for krakend
+
+    Use "krakend [command] --help" for more information about a command.
 
 
 

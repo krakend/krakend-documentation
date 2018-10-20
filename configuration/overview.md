@@ -26,29 +26,15 @@ The Kraken Designer is a **pure static** page that **does not send any of your c
 <a class="btn btn-secondary btn-circle" href="https://designer.krakend.io/">Generate configuration now</a>
 
 # Supported file formats
-The KrakenD configuration file can be encoded as:
-
-- `yaml`
-- `toml`
-- `json`
-- `hcl`
-- `java.properties`
-
-Our recommendation is to **choose JSON**, at least until you are familiar with the product. If you intend to autogenerate your configuration file using the KrakenDesigner, the output is a `JSON`, and if you want to continue later editing a configuration file again with the designer, it only can read JSON as well.
-
-Worth mentioning that all our examples in the documentation and repositories are today shown in `JSON` format, so it's always easier for you to copy/paste snippets of code. However, you are free to choose `yaml` or `toml` if you are more comfortable with these options.
+The configuration file can be written as `.json`, `.toml`, `.yaml`, `.yml`, `.properties`, `.props`, `.prop` or `.hcl`. For more information and recommendations see [supported file formats](/docs/configuration/supported-formats/).
 
 # Validating the syntax of the configuration file
-Let's say you are modifying by hand the file `~/my-krakend.json`. When you finish, you can check the syntax of the file by running:
+Validate the syntax (not the logic) of your configuration file using the `krakend check` command:
 
-    krakend --config ~/my-krakend.json check
-
-By adding the flag `--debug` you can see the full output with the interpretation of the file:
-
-    krakend --config ~/my-krakend.json --debug
+    krakend check --config ./krakend.toml --debug
 
 You can also start the service directly as this is done right before the server starts. When the syntax is correct, you'll see the message
 
     Syntax OK!
 
-The configuration file contains a lot of different options that are not explained in this section, the best way to get familiar with them is using the KrakenDesigner.
+Read more about [`krakend check`](/docs/commands/check/)

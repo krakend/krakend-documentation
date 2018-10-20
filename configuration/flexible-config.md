@@ -6,7 +6,7 @@ menu:
   documentation:
     parent: configuration
 title: Flexible configuration
-weight: 20
+weight: 100
 ---
 There might be times when you want to split the content of a large configuration file, use placeholders instead of hardcoding values, reuse variables or even whole blocks of code in the configuration file.
 
