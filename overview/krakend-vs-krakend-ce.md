@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-09-27
+lastmod: 2018-10-20
 date: 2018-06-23
 linktitle: KrakenD vs. KrakenD-CE
 description: What is the difference between KrakenD and KrakenD-CE?
@@ -17,14 +17,16 @@ If you had a quick look at our git repositories, you might be confused at first,
 
 - KrakenD is a framework
 - KrakenD-CE is an API Gateway ready to use
-- KrakenD Enterprise is professional services to businesses
+- KrakenD Enterprise are our professional services to businesses
 
 ## KrakenD framework
-KrakenD ([repo](https://github.com/devopsfaith/krakend)) is an open-source project created by [@devopsfaith](https://twitter.com/devopsfaith) to accelerate the creation of API Gateways. The KrakenD framework provides several components for assembling your API Gateway and can be used in its entirety or just importing it as Go libraries to take only some of the functionality it brings.
+KrakenD ([repo](https://github.com/devopsfaith/krakend)) is an open-source project created by [@devopsfaith](https://twitter.com/devopsfaith) to accelerate the creation of custom API Gateways. The KrakenD framework provides several components for assembling your API Gateway and can be used in its entirety or just importing it as Go libraries to take only some of the functionality it brings.
 
 Unlike the rest of API Gateways in the space, KrakenD framework aims to bring together Go enthusiasts and professionals to collaborate towards building API Gateways. KrakenD is very modular and lets you replace the components or add new ones (middlewares).
 
 KrakenD focuses on providing a core framework and functionality that a pure API gateway needs, and it keeps it clean and extensible, so that you can create your custom gateway without any trouble.
+
+[See source code](https://github.com/devopsfaith/krakend)
 
 
 ## KrakenD Community Edition
@@ -34,5 +36,10 @@ KrakenD-CE adds to the KrakenD framework more functionality like logging, servic
 
 The good news is that we always refer to both things as "KrakenD" :)
 
+<a class="btn btn-secondary btn-circle" href="/download/"><i class="fa fa-download"></i> Download</a>
+<a class="btn" href="https://github.com/devopsfaith/krakend-ce"><i class="fab fa-github"></i> Source code</a>
+
 ## KrakenD Enterprise
 There is no Enterprise software. KrakenD(-CE) is the same product for paying customers or the community. The KrakenD Enterprise subscription is a series of services in consultancy, development, and support around KrakenD.
+
+[Learn more about Enterprise](/enterprise/)
