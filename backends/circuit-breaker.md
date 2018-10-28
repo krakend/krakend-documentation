@@ -1,14 +1,15 @@
 ---
 aliases:
 - /throttling/circuit-breaker/
-lastmod: 2018-09-27
+- /docs/throttling/circuit-breaker/
+lastmod: 2018-10-22
 date: 2016-07-01
 linktitle: Circuit Breaker
-title: KrakenD - Circuit Breaker
+title: The Circuit Breaker
 weight: 10
 menu:
   documentation:
-    parent: Throttling and Limits
+    parent: backends
 ---
 
 To keep KrakenD responsive and resilient, we added a **Circuit Breaker** middleware on several points of the processing pipe. Thanks to this component, when KrakenD demands more throughput than your actual API stack is able to deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also useful for dealing with network and other communication problems, by preventing too many requests to fail due to timeouts, etc.

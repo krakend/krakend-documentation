@@ -1,6 +1,7 @@
 ---
 aliases:
 - /throttling/rate-limit/
+- /docs/throttling/rate-limit/
 lastmod: 2018-09-27
 date: 2016-07-01
 linktitle: Rate Limits
@@ -8,7 +9,7 @@ title: KrakenD - Rate limiting
 weight: 10
 menu:
   documentation:
-    parent: Throttling and Limits
+    parent: features
 ---
 
 The rate limits allow you to restrict the traffic to any component of the stack (the KrakenD itself and the actual API backend services) and mainly cover two different purposes:
@@ -17,7 +18,7 @@ The rate limits allow you to restrict the traffic to any component of the stack 
 - Establish a quota of usage for your API
 - Create a simple QoS strategy for your API
 
-KrakenD provides rate limiting capabilities just by adding the desired configuration in the `krakend.json` file and this feature is complementary to the [Circuit Breaker](/docs/throttling/circuit-breaker), so they can exist together.
+KrakenD provides rate limiting capabilities just by adding the desired configuration in the `krakend.json` file and this feature is complementary to the [Circuit Breaker](/docs/backends/circuit-breaker), so they can exist together.
 
 **The limits apply individually to each running instance of KrakenD**. For instance, if you limit an endpoint to 100 reqs/s in the `krakend.json` and you have 3 instances of KrakenD running your ecosystem is supporting 300 reqs/s.
 
@@ -73,10 +74,9 @@ If 200 different customers (with different IPs) hit the KrakenD, they will be al
 
     200 ips x 10 req/s = 2000req/s
 
-<div class="alert note">
-    <h4><i class="icon fa fa-sticky-note-o"></i> Performance note!</h4>
-    <p>From a <strong>performance point of view</strong>, the <tt>clientMaxRate</tt> drops the performance as every incoming client needs to be monitored. Use it wisely.</p>
- </div>
+ {{% note title="Perf note" %}}
+ From a **performance point of view**, the `clientMaxRate` drops the performance as every incoming client needs to be monitored. Use it wisely.
+ {{% /note %}}
 
 ### What happens when the `clientMaxRate` limit is reached?
 If an API user (IP or header strategies) reaches the established limit in the endpoint then KrakenD will start rejecting requests. The user will see an HTTP status code `429 Too Many Requests`.

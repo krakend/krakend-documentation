@@ -15,7 +15,7 @@ own backend micro-services architecture by requesting a lot of data, compromisin
 In order to prevent the KrakenD to stress your infrastructure (or even someone using it to harm you), there are several mechanisms to put you safe.
 
 
- - [The Circuit Breaker](/docs/throttling/circuit-breaker/)
+ - [The Circuit Breaker](/docs/backends/circuit-breaker/)
  - [Rate limits](/docs/throttling/rate-limit/)
  - [Timeouts](/docs/throttling/timeouts/)
  - [Maximum IDLE connections](/docs/throttling/max-idle-connections/)

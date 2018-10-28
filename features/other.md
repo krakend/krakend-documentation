@@ -40,7 +40,7 @@ The rate limits allow you to restrict the traffic to any component of the stack 
 - Establish a quota of usage for your API
 - Create a simple QoS strategy for your API
 
-These measures are complementary to the [Circuit Breaker](/docs/throttling/circuit-breaker).
+These measures are complementary to the [Circuit Breaker](/docs/backends/circuit-breaker/).
 
 Check out the [Rate limit](/docs/throttling/rate-limit) section for more info about this component.
 
@@ -54,4 +54,4 @@ traffic to the suffering backend.
 
 The Circuit Breaker is a protection measure for your stack and avoids cascading failures. It is **always enabled** (and is transparent to you).
 
-Check out the [Circuit Breaker](/docs/throttling/circuit-breaker) section for more info about this component.
+Check out the [Circuit Breaker](/docs/backends/circuit-breaker/) section for more info about this component.
