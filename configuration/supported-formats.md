@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-10-20
+lastmod: 2018-10-28
 date: 2016-07-01
 linktitle: Supported file formats
 menu:
@@ -29,5 +29,7 @@ Validate the syntax (not the logic) with [`krakend check`](/docs/commands/check/
 You are free to choose `YAML`, `TOML` or any of the other formats at your best convenience. But have in mind the following logic when choosing a file format other than `json`. 
 
 **Using the UI**: If you intend to generate or edit your configuration file using the [KrakenDesigner](https://designer.krakend.io), the input and output are always a `.json` file.
+
+**Flexible Configuration**: If you want to split the configuration file into different pieces or use variables inside the configuration, the [flexible configuration](/docs/configuration/flexible-config/) needs `JSON`.
 
 **Documentation**: All our examples in the documentation and repositories are today shown in `JSON` format, so it's always more convenient to reuse snippets of code.
