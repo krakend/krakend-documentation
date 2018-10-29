@@ -4,7 +4,7 @@ date: 2016-04-14
 toc: true
 linktitle: Supported encodings
 title: Supported backend encodings
-weight: 50
+weight: 40
 menu:
   documentation:
     parent: backends

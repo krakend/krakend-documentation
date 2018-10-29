@@ -2,11 +2,11 @@
 lastmod: 2018-09-27
 date: 2018-01-04
 linktitle: Timeouts
-title: KrakenD - Timeouts
+title: Timeouts
 weight: 40
 menu:
   documentation:
-    parent: Throttling and Limits
+    parent: throttling
 ---
 
 Being KrakenD an API Gateway that talks to other services, being able to control the waiting times for different aspects is crucial. KrakenD will allow you to fine-tune these settings.

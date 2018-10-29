@@ -4,7 +4,7 @@ date: 2016-09-30
 toc: true
 linktitle: Concurrent Requests
 title: Concurrent Requests
-weight: 20
+weight: 30
 aliases:
 - /docs/features/concurrent-requests/
 menu:

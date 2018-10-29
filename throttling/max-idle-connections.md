@@ -2,11 +2,11 @@
 lastmod: 2018-09-27
 date: 2018-01-04
 linktitle: Max IDLE connections
-title: KrakenD - Maximum IDLE connections
+title: Maximum IDLE connections
 weight: 60
 menu:
   documentation:
-    parent: Throttling and Limits
+    parent: throttling
 ---
 
 Having a high number of IDLE connections to every backend affects directly to the performance of the proxy layer. This is why you can control the number using the `max_idle_connections` setting. For instance:

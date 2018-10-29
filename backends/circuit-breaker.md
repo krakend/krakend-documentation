@@ -6,7 +6,7 @@ lastmod: 2018-10-22
 date: 2016-07-01
 linktitle: Circuit Breaker
 title: The Circuit Breaker
-weight: 10
+weight: 20
 menu:
   documentation:
     parent: backends
