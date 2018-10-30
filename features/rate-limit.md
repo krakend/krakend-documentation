@@ -2,68 +2,69 @@
 aliases:
 - /throttling/rate-limit/
 - /docs/throttling/rate-limit/
-lastmod: 2018-09-27
+lastmod: 2018-10-30
 date: 2016-07-01
 linktitle: Rate Limits
-title: Router rate limiting
+title: Endpoint rate limiting
 weight: 10
 menu:
   documentation:
     parent: features
 ---
 
+Limiting endpoints is responsibility of the **router rate** and allows you to set the number of **maximum requests per second** a KrakenD endpoint is going to accept. By default, there is no limitation on the number of requests an endpoint can handle.
 
-
-# Router: Rate limiting usage of KrakenD endpoints
-The router rate limit is a **per endpoint** setting that allows you to set the number of **maximum requests per second** a KrakenD endpoint will accept. If no configuration is added explicitly KrakenD is not going to apply any limitation in the number of requests it can handle.
-
-In order to specify a rate limit, you need to add the configuration in the desired endpoint. The router rate limit **does not accept a default value** to be used across all the endpoints. Nevertheless, when using the [KrakenDesigner](http://designer.krakend.io/) if you specify a default rate limit in the *Service* section it will copy the setting in every single endpoint for you when there is no setting.
+To specify a rate limit, you need to add the configuration in the desired endpoint.
 
 At the router level, you can set the rate limit for endpoints based on:
 
-1. Maximum request rate an endpoint accepts
-2. Maximum request rate an endpoint accepts **per client**
+1. Maximum number of requests an endpoint accepts in a second (`maxRate`)
+2. Maximum number of requests an endpoint accepts **per client** (`clientMaxRate`)
 
 
-## Maximum request rate per endpoint (`maxRate`)
+# Endpoint rate limit (`maxRate`)
 Enable this option when you want to set the maximum requests an endpoint can handle within a window of 1 second.
 
-When set, every KrakenD instance will keep in-memory an updated counter with the number of requests being processed per second in that endpoint.
+When set, every KrakenD instance keeps in-memory an updated counter with the number of requests processed per second in that endpoint.
 
-The absence of `maxRate` in the configuration or `"maxRate": 0` mean NO LIMIT.
+The absence of `maxRate` in the configuration or `"maxRate": 0` is the equivalent to no limitation.
 
-### What happens when the `maxRate` limit is reached?
-If API users reach the established limit in the endpoint then KrakenD will start rejecting requests. Users will see an HTTP status code `503 Service Unavailable`.
+## What if the `maxRate` limit is reached?
+If API users reach the established limit in the endpoint, then KrakenD starts rejecting requests. Users see an HTTP status code `503 Service Unavailable`.
 
-## Maximum request rate per endpoint and client (`clientMaxRate`)
-Similar to `maxRate` the `clientMaxRate` establishes a *user quota*. Limits the maximum requests per second the KrakenD service will process for a single endpoint and a given client. Every KrakenD instance will keep its counters of the requests per second **every single client** is doing.
+# Endpoint rate limit per client (`clientMaxRate`)
+The rate per client works similarly to `maxRate`, but the `clientMaxRate` establishes a *user quota*.
 
-There are two client identification strategies that can be chosen:
+Instead of counting all the connections to the endpoint the `clientMaxRate` keeps a counter for every client and endpoint. Have in mind that every KrakenD instance keeps its counters in memory for **every single client**.
 
-  - `"strategy": "ip"` When the restrictions are based on the client's IP, and every IP is considered a different user.
-  - `"strategy": "header"` When the criteria for identifying a user comes from the value of a `key` inside the header. With this strategy the `key` must be also specified.
-    - E.g, set `"key": "X-TOKEN"` to use the `X-TOKEN` header as the unique user identifier.
-
-The absence of `clientMaxRate` in the configuration or `"clientMaxRate": 0` means NO LIMIT per user.
-
-The value you use for `clientMaxRate` should be significantly lower than you would use for `maxRate`, as this limit will be multiplied by the number of active clients at that moment.
-
-Example:
+**Example**:
 
     clientMaxRate : 10
 
-If 200 different customers (with different IPs) hit the KrakenD, they will be allowed to generate a total traffic of
+200 different customers (with different IPs) hitting the limited KrakenD endpoint are allowed to generate total traffic of:
 
-    200 ips x 10 req/s = 2000req/s
+    200 IPs x 10 req/s = 2000req/s
 
- {{% note title="Perf note" %}}
- From a **performance point of view**, the `clientMaxRate` drops the performance as every incoming client needs to be monitored. Use it wisely.
- {{% /note %}}
 
-### What happens when the `clientMaxRate` limit is reached?
-If an API user (IP or header strategies) reaches the established limit in the endpoint then KrakenD will start rejecting requests. The user will see an HTTP status code `429 Too Many Requests`.
+{{% note title="A note on performance" %}}
+Limiting endpoints per user makes KrakenD keep in memory counters for the two dimensions: *endpoints x clients*.
 
-## Router rate limit example, `clientMaxRate`, and `maxRate` together.
+The `clientMaxRate` drops the performance as every incoming client needs tracking. Even counters are small in data it's easy to end up with several millions of counters.  Make sure to do your math every time.
+{{% /note %}}
+
+The absence of `clientMaxRate` in the configuration or `"clientMaxRate": 0` is the equivalent to no limitation.
+
+## Client identification strategies
+Two **client identification strategies** are available:
+
+  - `"strategy": "ip"` When the restrictions apply to the client's IP, and every IP is considered to be a different user.
+  - `"strategy": "header"` When the criteria for identifying a user comes from the value of a `key` inside the header. With this strategy, the `key` must also be present.
+    - E.g., set `"key": "X-TOKEN"` to use the `X-TOKEN` header as the unique user identifier.
+
+## What if the `clientMaxRate` limit is reached?
+If an API user (IP or header strategies) reaches the established limit in the endpoint, then KrakenD starts to reject requests to that specific client. The user sees an HTTP status code `429 Too Many Requests`.
+
+# Example of  `clientMaxRate` and `maxRate` together.
 The following example demonstrates a configuration with several endpoints, each one setting different limits:
 
 - A `/happy-hour` endpoint with unlimited usage as it sets `0`.
@@ -112,5 +113,3 @@ Example
               },
               ...
           }
-
-
