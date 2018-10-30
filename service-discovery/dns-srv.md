@@ -2,13 +2,15 @@
 lastmod: 2018-10-21
 date: 2016-09-30
 toc: true
-linktitle: DNS SRV / Consul
-title: Service Discovery with DNS SRV (e.g. Consul)
+linktitle: DNS SRV
+title: SD with DNS SRV (e.g. Consul)
 weight: 10
 menu:
   documentation:
     parent: service-discovery
 ---
+The `DNS SRV` is a market standard used by systems such as **Kubernetes, Mesos, Haproxy, Nginx plus, AWS ECS, Linkerd**, and more.
+
 To integrate Consul as the Service Discovery or any other `DNS SRV` compatible systems you only need to set two keys:
 
 - `"sd": "dns"`: To set service discovery = DNS SRV

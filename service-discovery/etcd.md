@@ -47,7 +47,7 @@ Now you are able to use `etcd` with your backends.
 # Using etcd to resolve backends
 Once the integration has been enabled, add the following keys in the `backend` section of your configuration. The `host` key can be skipped if there is another `host` key in the root level of the configuration.
 
-- `"sd": "etcd"`: To set service discovery = DNS SRV
+- `"sd": "etcd"`: To set etcd as the service discovery
 - `"host": []`: The list of all the services you want to resolve
 
 For instance, set the service discovery for an individual backend:
