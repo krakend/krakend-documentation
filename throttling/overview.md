@@ -21,7 +21,7 @@ The rate limits are complementary to the [Circuit Breaker](/docs/backends/circui
 # Types of rate limits
 There are two different layers where the rate limiting applies:
 
-1. **[Router layer](/docs/features/rate-limit/)**: Sets a maximum throughput to end-users hitting KrakenD endpoints.
+1. **[Router layer](/docs/endpoints/rate-limit/)**: Sets a maximum throughput to end-users hitting KrakenD endpoints.
 2. **[Proxy layer](/docs/backends/rate-limit/)**: Sets a maximum throughput between KrakenD and your backend services
 
 To deep dive in the code see the [rate-limiting middleware](https://github.com/devopsfaith/krakend-ratelimit)

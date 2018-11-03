@@ -2,6 +2,7 @@
 aliases:
 - /throttling/rate-limit/
 - /docs/throttling/rate-limit/
+- /docs/features/rate-limit/
 lastmod: 2018-10-30
 date: 2016-07-01
 linktitle: Rate Limits
@@ -9,7 +10,7 @@ title: Endpoint rate limiting
 weight: 10
 menu:
   documentation:
-    parent: features
+    parent: endpoints
 ---
 
 Limiting endpoints is responsibility of the **router rate** and allows you to set the number of **maximum requests per second** a KrakenD endpoint is going to accept. By default, there is no limitation on the number of requests an endpoint can handle.

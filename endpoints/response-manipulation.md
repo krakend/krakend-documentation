@@ -1,6 +1,6 @@
 ---
 aliases:
-- /features/response-manipulation/
+- /docs/features/response-manipulation/
 lastmod: 2018-09-27
 date: 2016-09-30
 toc: true
@@ -9,7 +9,7 @@ title: Response manipulation
 weight: 10
 menu:
   documentation:
-    parent: features
+    parent: endpoints
 ---
 
 KrakenD allows you to perform several manipulations of the responses out of the box, just by adding them to the configuration file. You can also add your own or 3rd parties middlewares to extend this behavior.

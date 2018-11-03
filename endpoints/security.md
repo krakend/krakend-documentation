@@ -1,6 +1,6 @@
 ---
 aliases:
-- /features/security/
+- /docs/features/security/
 lastmod: 2018-09-27
 date: 2016-09-30
 toc: true
@@ -9,7 +9,7 @@ title: Security
 weight: 40
 menu:
   documentation:
-    parent: features
+    parent: endpoints
 ---
 
 KrakenD has implemented some security strategies

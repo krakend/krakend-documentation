@@ -1,6 +1,7 @@
 ---
 aliases:
 - /features/other/
+- /docs/features/content-types/
 lastmod: 2018-10-20
 date: 2016-04-14
 toc: true
@@ -9,7 +10,7 @@ title: Response content types
 weight: 50
 menu:
   documentation:
-    parent: features
+    parent: endpoints
 ---
 
 KrakenD supports sending responses back to the client using content types other than JSON (v0.5 or greater. The list of supported content types depends on the selected router package.
