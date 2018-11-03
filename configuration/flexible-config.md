@@ -59,7 +59,7 @@ To insert the content of an external partial file in-place use:
 The file is assumed to live inside the directory defined in `FC_PARTIALS`.
 
 ### Insert values from settings files
-In the `FC_SETTINGS` directory, you can save different `.json` files with data structures insides that you can reference in the templates. 
+In the `FC_SETTINGS` directory, you can save different `.json` files with data structures insides that you can reference in the templates.
 
 For instance, if you have a file `settings/db.json` with the following content:
 
@@ -69,11 +69,11 @@ For instance, if you have a file `settings/db.json` with the following content:
         "pass": "a-p4ssw0rd"
     }
 
-You can access particular settings like this: `{{ .Db.Host }}`. Notice the variable uses the filename and the keys inside the structure with the first letter in upper case.
+You can access particular settings like this: `{{ .db.host }}`.
 
 When instead of a single value you need to insert a whole JSON structure, you need to use the `marshall`.
 
-    {{ marshal .Db }}
+    {{ marshal .db }}
 
 ## Testing the configuration
 As the configuration is now composed of several pieces, it's easy to do a mistake in some point. Test the syntax of all the files is good with the `krakend check` command and pay attention to the output to verify there aren't any errors.
@@ -110,7 +110,7 @@ In this file we have written the content of the rate limit configuration for a b
 
 **settings/service.json**
 
-In the settings directory we will write all the files that be offered you can write anything you want and the contents can be retrieved as variables. 
+In the settings directory we will write all the files that be offered you can write anything you want and the contents can be retrieved as variables.
 
     {
         "port": 8090,
@@ -175,13 +175,13 @@ Have a look at the highlighted lines:
             "endpoint": "/limited-endpoint",
             "backend": [
                 {
-                    "url_pattern": "/v1/slow-backend",          
+                    "url_pattern": "/v1/slow-backend",
                     "extra_config": {
                         {{ include "rate_limit_backend.tmpl" }}
-                    }                
+                    }
                 }
                 ]
-            } 
+            }
         ]
     }
 {{< /highlight >}}
