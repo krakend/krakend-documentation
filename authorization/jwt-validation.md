@@ -18,9 +18,12 @@ A typical request requiring JWT validation includes in the `Authorization` heade
     Host: krakend.example.com
     Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9...TJVA95OrM7E20RMHrHDcEfxjoYZgeFONFh7HgQeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IktyYWtlbkQiLCJpYXQiOjE1MTYyMzkwMjJ9.NVFYj2MhyvJjMESOg4ktIOfzak2ekD7IrCa9-UiO4QA
 
+**And cookies?** Yes, you can also send the validation token in a **cookie**.
+
+We consider a JWT token to be valid when is well formed, signed by a recognized issuer, unexpired, with some claims and is not marked as [revoked](/docs/authorization/revoking-tokens).
 
 {{% note title="A note on JWT generation" %}}
-When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives, and are recommended to expire in minutes or hours.
+When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives and are recommended to expire in minutes or hours.
 {{% /note %}}
 
 # Basic JWT validation
@@ -55,21 +58,22 @@ This configuration makes sure that:
 - The token is well-formed and didn't expire
 - The token has a valid signature
 - The role of the user is either `user` or `admin` (taken from a key in the JWT payload named `http://api.example.com/custom/roles`)
+- The token is not revoked in the bloomfilter (see [revoking tokens](/docs/authorization/revoking-tokens))
 
 ## JWT validation settings
-The following settings are available as settings of the JWT validation. **Fields `alg` and `jwk-url` are mandatory** and the rest of the keys can be added or not at your best convenience.
+The following settings are available for JWT validation. **Fields `alg` and `jwk-url` are mandatory** and the rest of the keys can be added or not at your best convenience.
 
 Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
 
 - `alg`: *recognized string*. The hashing algorithm used by the issuer. Usually `RS256`.
-- `jwk-url`: *string*. The URL to the JWK endpoint with the public keys used to verify the authenticity of the token.
+- `jwk-url`: *string*. The URL to the JWK endpoint with the public keys used to verify the authenticity and integrity of the token.
 - `cache`: *boolean*. Set this value to `true` to store the JWK public key in-memory for the next 15 minutes and avoid hammering the key server, recommended for performance. The cache can store up to 100 different public keys simultaneously.
 - `audience`: *list*. Set when you want to reject tokens that do not contain an audience of the list.
 - `roles_key`: When passing roles, the key name inside the JWT payload specifying the role of the user.
-- `roles`: *list*. When set, all JWT tokens not having at least one of the listed roles is rejected.
+- `roles`: *list*. When set, the JWT token not having at least one of the listed roles are rejected.
 - `issuer`: *string*. When set,  tokens not matching the issuer are rejected.
 - `cookie_key`: *string*. Add the key name of the cookie containing the token when is not passed in the headers
-- `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain http) to download the keys.
+- `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys.
 - `jwk_fingerprints`: *string list*. A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.
 - `cipher_suites`: *integers list*. Override the default cipher suites. Unless you have a legacy JWK, you don't need to add this value.
 
@@ -105,6 +109,8 @@ The following example contains every single option available:
 }
 {{< /highlight >}}
 
+# A complete running example
+The [KrakenD Playground](/docs/overview/playground/) demonstrates how to protect endpoints using JWT and includes an example ready to use using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa). To try it, [clone the playground](https://github.com/devopsfaith/krakend-playground) and follow the README.
 
 # Supported hashing algorithms and cipher suites
 
