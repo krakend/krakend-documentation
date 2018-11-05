@@ -19,10 +19,10 @@ In order to add metrics to your KrakenD installation add the `github_com/devopsf
   "extra_config": {
     "github_com/devopsfaith/krakend-metrics": {
       "collection_time": "60s",
-      "proxy_disabled": true,
-      "router_disabled": true,
-      "backend_disabled": true,
-      "endpoint_disabled": true,
+      "proxy_disabled": false,
+      "router_disabled": false,
+      "backend_disabled": false,
+      "endpoint_disabled": false,
       "listen_address": ":8090"
     },
     ...
@@ -34,5 +34,6 @@ The options of the *middleware* are:
 - `collection_time`: The time window to collect metrics. Defaults to 60 seconds.
 - `proxy_disabled`: Skip any metrics happening in the proxy layer (traffic against your backends)
 - `router_disabled`:  Skip any metrics happening in the router layer (activity in KrakenD endpoints)
+- `backend_disabled`: Skip any metrics happening in the backend layer.
 - `endpoint_disabled`: Do not publish the `/__stats/` endpoint. Metrics won't be accessible via the endpoint but still collected.
 - `listen_address`: Change the listening address where the metrics endpoint is exposed. It defaults to :8090.
