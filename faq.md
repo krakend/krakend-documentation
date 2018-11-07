@@ -24,7 +24,7 @@ E.g:
 
 ## Explanation
 
-By default, the gateway will always send an HTTP status 200 if the backend returns a 500 for any status above 400. You can inject your own HTTPStatusHandler implementation if you need a different behavior. Check this [issue comment](https://github.com/devopsfaith/krakend/issues/102#issuecomment-373657911) for more details.
+By default, the gateway will always send an HTTP status 500 if the backend returns any status above 400. You can inject your own HTTPStatusHandler implementation if you need a different behavior. Check this [issue comment](https://github.com/devopsfaith/krakend/issues/102#issuecomment-373657911) for more details.
 
 # I am seeing frequent `503` errors in the logs
 E.g:
