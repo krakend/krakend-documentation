@@ -28,7 +28,7 @@ The tokens are in-memory, directly in the rejecter interface, so the system is q
 ## Additional resources
 If you want to learn bloomfilters by example, have a look at the following resources:
 
-- [bloomfilter tutorial](https://llimllib.github.io/bloomfilter-tutorial/).
+- [Bloomfilter tutorial](https://llimllib.github.io/bloomfilter-tutorial/)
 - [Bloomfilter calculator](https://hur.st/bloomfilter/?n=1000000&p=1.0E-9&m=&k=)
 
 # Expiring tokens in a cluster
