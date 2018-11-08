@@ -32,6 +32,6 @@ If you want to learn bloomfilters by example, have a look at the following resou
 - [Bloomfilter calculator](https://hur.st/bloomfilter/?n=1000000&p=1.0E-9&m=&k=)
 
 # Expiring tokens in a cluster
-All KrakenD nodes are stateless and act individually. Every node needs to receive the RPC notification about any tokens that need insertion in every local bloomfilter.  The bloomfilter gets updated while the service is running, but it depends on how you push them in the cluster the synchronization differents. The system is **eventually consistent**.
+All KrakenD nodes are stateless and act individually. Every node needs to receive the RPC notification about any tokens that need insertion in every local bloomfilter. The bloomfilter gets updated while the service is running, but the the level of synchronization between the nodes depends on how you push them in the cluster. The system is **eventually consistent**.
 
 The bloomfilter management is brought to you by the component, but you still need to implement the administration part that serves as the source of these tokens and the pushing of them (e.g., a queue and a consumer).
