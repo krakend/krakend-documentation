@@ -20,7 +20,7 @@ The **default policy** for data forwarding works as follows:
 
 You can change this behavior according to your needs, and define which elements are allowed to pass.
 
-However, if you want a specific endpoint to act just like a regular proxy without doing any operations use the `no-op` option on its encoding options. When using `no-op`, the gateway can't probe the content whatsoever. The request goes from the client to the backend "as is".
+However, if you want a specific endpoint to act just like a regular proxy without doing any operations use the `no-op` option on its encoding options. When using `no-op`, the gateway can't do anything with the content. The request goes from the client to the backend "as is".
 
 # Query string forwarding
 KrakenD **sends all query string parameters to the backend by default**. Meaning that if an endpoint `/foo` receives the query string `/foo?a=1&b=2` all its declared backends are going to receive `a` and `b`.
