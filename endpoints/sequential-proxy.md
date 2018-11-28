@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-11-11
+lastmod: 2018-11-27
 date: 2018-11-11
 toc: true
 linktitle: Sequential Proxy
