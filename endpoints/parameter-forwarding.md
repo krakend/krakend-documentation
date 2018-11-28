@@ -100,7 +100,7 @@ And the backend receives:
 
 No `evil` here! So, remember to set always the `querystring_params` if you intend to inject variables as parameters.
 
-Read the [`/__debug/` endpoint](/endpoints/debug-endpoint) to understand how to test query string parameters.
+Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint) to understand how to test query string parameters.
 
 # Headers forwarding
 KrakenD **does not send client headers to the backend by default**.  Use `headers_to_pass`.
@@ -149,7 +149,7 @@ This setting changes the headers received by the backend to:
     User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
     X-Forwarded-For: ::1
 
-Read the [`/__debug/` endpoint](/endpoints/debug-endpoint) to understand how to test headers.
+Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint) to understand how to test headers.
 
 # Cookies forwarding
 A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `headers_to_pass`, just as you would do with any other header.
