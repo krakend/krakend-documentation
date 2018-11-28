@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-11-27
+lastmod: 2018-11-28
 date: 2018-11-27
 linktitle: Debug endpoint
 menu:
@@ -12,16 +12,16 @@ The `/__debug` endpoint is available when you start the server with the `-d` fla
 
 The endpoint can be used as a fake backend to see its activity in the log. When developing, add KrakenD itself as a backend using the `/__debug/` endpoint so you can see exactly what headers and query string parameters your backends are receiving.
 
-The debug endpoint might save you a lot of trouble, as your application might not work when certain headers or parameters are not present, and you might be relying in what your client is sending, and not in what the gateway is sending.
+The debug endpoint might save you a lot of trouble, as your application might not work when certain headers or parameters are not present, and you might be relying upon what your client is sending, and not in what the gateway is sending.
 
-For instance, your client might be sending a `Content-Type` header, but unless this header is recognized by the gateway (added in `headers_to_pass`), it is not going to reach the backend. Seeing the exact headers and parameters in the log clear all the doubts and you can reproduce the call and conditions easily.
+For instance, your client might be sending a `Content-Type` header, but unless this header pear is recognized by the gateway (added in `headers_to_pass`), it is not going to reach the backend. Seeing the specific headers and parameters in the log clears all the doubts, and you can reproduce the call and conditions easily.
 
 # Debug endpoint configuration example
 The following configuration demonstrates how to test what headers and query string parameters are sent and received by the backends.
 
 We are going to test the following endpoints:
 
-- `/default-behavior`: No client headers, query string or cookies are forwarded.
+- `/default-behavior`: No client headers, query string or cookies forwarded.
 - `/known-params`: Forwards known parameters and headers
     - Recognizes `a` and `b` as query string
     - Recognizes `User-Agent` as forwarded header
@@ -74,7 +74,7 @@ Now we can test that the endpoints behave as expected
 
     curl -i 'http://localhost:8080/default-behavior?a=1&b=2&c=3'
 
-The `curl` command automatically sends the `Accept` and `User-Agent` headers. And then in the KrakenD log we can see that `a`, `b`, and `c` are not forwarded, neither its headers.
+In the KrakenD log, we can see that `a`, `b`, and `c` do not appear in the backend call, neither its headers (**note**: the `curl` command automatically sends the `Accept` and `User-Agent` headers)
 
 {{< highlight go "hl_lines=5 8" >}}
 DEBUG: Method: GET
@@ -87,11 +87,11 @@ DEBUG: Body:
 [GIN] 2018/11/27 - 22:32:44 | 200 |     565.971µs |             ::1 | GET      /default-behavior?a=1&b=2&c=3
 {{< /highlight >}}
 
-Now let's repeat the same with the known parameters:
+Now let's repeat the same request but to the known parameters endpoint:
 
     curl -i 'http://localhost:8080/known-params?a=1&b=2&c=3'
 
-And now in the KrakenD log now we can see that the `User-Agent` and `Accept` are present:
+In the KrakenD log we can see now that the `User-Agent` and `Accept` are present (as they are implicitly sent by curl):
 
 {{< highlight go "hl_lines=5 8" >}}
 DEBUG: Method: GET
@@ -103,6 +103,3 @@ DEBUG: Method: GET
 [GIN] 2018/11/27 - 22:33:23 | 200 |     122.507µs |             ::1 | GET      /__debug/some?a=1&b=2
 [GIN] 2018/11/27 - 22:33:23 | 200 |     542.483µs |             ::1 | GET      /known-params?a=1&b=2&c=3
 {{< /highlight >}}
-
-
-
