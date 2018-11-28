@@ -20,21 +20,20 @@ The **default policy** for data forwarding works as follows:
 
 You can change this behavior according to your needs, and define which elements are allowed to pass.
 
-However, if you want a specific endpoint to act just like a regular proxy without doing any operations use the `no-op` option on its encoding options. When using `no-op`, the gateway can't do anything with the content. The request goes from the client to the backend "as is".
+# Optional query string forwarding
+KrakenD **does not send any query string parameter to the backend by default**, avoiding the pollution of the backends. Meaning that if an endpoint `/foo` receives the query string `/foo?a=1&b=2` all its declared backends are not going to see neither `a` nor `b`.
 
-# Query string forwarding
-KrakenD **sends all query string parameters to the backend by default**. Meaning that if an endpoint `/foo` receives the query string `/foo?a=1&b=2` all its declared backends are going to receive `a` and `b`.
+The property list `querystring_params` in the `endpoint` configuration allows you to declare **optional query string parameters**. When this list exists in the configuration, the forwarding policy behaves like a whitelist: all matching parameters declared in the `querystring_params` list are forwarded to the backend, and the rest dropped.
 
-Nevertheless, it's recommended to add the property list `querystring_params` in the `endpoint` configuration to declare the allowed parameters and avoid polluting backends. When this list exists in the configuration, the forwarding policy behaves like a whitelist: all matching parameters declared in the `querystring_params` list are forwarded to the backend, and the rest dropped.
+Parameters are always optional and the user can pass a subset of them, all, or none.
 
-For instance, let's forward `?a=1&b=2` only to the backends:
+For instance, let's forward `?a=1&b=2` to the backends:
 
     {
       "version": 2,
       "endpoints": [
         {
           "endpoint": "/v1/foo",
-          "method": "GET",
           "querystring_params": [
             "a",
             "b"
@@ -42,7 +41,6 @@ For instance, let's forward `?a=1&b=2` only to the backends:
           "backend": [
             {
               "url_pattern": "/catalog",
-              "sd": "static",
               "host": [
                 "http://some.api.com:9000"
               ]
@@ -54,10 +52,10 @@ For instance, let's forward `?a=1&b=2` only to the backends:
 
 With this configuration, given a request like `http://krakend:8080/v1/foo?a=1&b=2&evil=here`, the backend receives `a` and `b`, but `evil` is missing.
 
-Also, if a request like `http://krakend:8080/v1/foo?a=1` is skipping an allowed parameter like `b`, this parameter is missing in the backend as well.
+Also, if a request like `http://krakend:8080/v1/foo?a=1` does not include `b`, this parameter is simply missing in the backend request as well.
 
-## Mixing endpoint {variables} and query string parameters
-The `{variables}` used in the endpoints definition can be injected in the backends as part of the query string parameters as well. These variables combine with any actual query string parameters in the endpoint. For instance:
+## Mandatory query string parameters
+When your backend requires query string parameters and you want to make them **mandatory** in KrakenD, use the `{variables}` placeholders in the endpoints definition. The variables can be injected in the backends as part of the query string parameters. For instance:
 
     ...
     {
@@ -70,15 +68,13 @@ The `{variables}` used in the endpoints definition can be injected in the backen
             ]
     }
 
-{{% note title="Important note" %}}
-Injecting variables in the backend as a query string enables the forwarding of all client query string parameters, unless the `querystring_params` is set.
-{{% /note %}}
+The parameter is mandatory as if a value for `channel` is not provided the server replies with a `404`.
 
-With the configuration above a request to the KrakenD endpoint such as `http://krakend/v3/iOS/foo?limit=10&evil=here` makes a call to the backend with the following query string parameters:
+With the configuration above a request to the KrakenD endpoint such as `http://krakend/v3/iOS/foo?limit=10&evil=here` makes a call to the backend with only the `channel` query string:
 
-    /foo?channel=iOS&limit=10&evil=here
+    /foo?channel=iOS
 
-The same call using `querystring_params` produces the equivalent behavior, only that unexpected parameters drop:
+Nevertheless, the `querystring_params` could also be added in this configuration, creating a special case of optional and mandatory parameters! You would be passing query strings both hardcoded in the `url_pattern` and generated from the user input. What happens in this strange case is that if the user passes a single optional query string parameter that is declared in `querystring_params` then the mandatory value is lost. If the request does not contain any known optional parameter, then the mandatory value is used. For instance:
 
     {
             "endpoint": "/v3/{channel}/foo",
@@ -94,11 +90,17 @@ The same call using `querystring_params` produces the equivalent behavior, only 
             ]
     }
 
-And the backend receives:
+With `http://krakend/v3/iOS/foo?limit=10&evil=here` the backend receives:
 
-    /foo?channel=iOS&limit=10
+    /foo?limit=10
 
-No `evil` here! So, remember to set always the `querystring_params` if you intend to inject variables as parameters.
+No mandatory `channel` here! Because the optional parameter `limit` has been declared.
+
+On the other hand, `http://krakend/v3/iOS/foo?evil=here` produces:
+
+	 /foo?channel=foo
+
+No optional parameter has been passed, so the mandatory one is used.
 
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint) to understand how to test query string parameters.
 
@@ -125,14 +127,12 @@ KrakenD passes only these essential headers to the backends:
       "endpoints": [
         {
           "endpoint": "/v1/foo",
-          "method": "GET",
           "headers_to_pass": [
             "User-Agent"
             ],
           "backend": [
             {
               "url_pattern": "/catalog",
-              "sd": "static",
               "host": [
                 "http://some.api.com:9000"
               ]
@@ -163,14 +163,12 @@ Example:
       "endpoints": [
         {
           "endpoint": "/v1/foo",
-          "method": "GET",
           "headers_to_pass": [
             "Cookie"
             ],
           "backend": [
             {
               "url_pattern": "/catalog",
-              "sd": "static",
               "host": [
                 "http://some.api.com:9000"
               ]
