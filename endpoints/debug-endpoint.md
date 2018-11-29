@@ -10,7 +10,7 @@ weight: 35
 ---
 The `/__debug` endpoint is available when you start the server with the `-d` flag.
 
-The endpoint can be used as a **fake backend** and is very useful to see the interaction between the gateway and the backends as its activity is printed in the log when the debug mode is enabled.
+The endpoint can be used as a **fake backend** and is very useful to see the interaction between the gateway and the backends as its activity is printed in the log using the `DEBUG` log level .
 
 When developing, add KrakenD itself as another backend using the `/__debug/` endpoint so you can see exactly what headers and query string parameters your backends are receiving.
 
