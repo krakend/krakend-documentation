@@ -178,7 +178,7 @@ The blacklisted fields of your choice can also be nested field. Use a **dot** as
 ### Blacklist example
 We will use the [JSONPlaceholder](https://jsonplaceholder.typicode.com/) fake API so you can see live the output of the backend.
 
-We want to set up a KrakenD endpoint that returns the **posts for a specific user**, but we've seen that the [backend response]((https://jsonplaceholder.typicode.com/posts/1)) contains too much data since our use case do not need the `body` and `userId` fields and we want a lighter and faster response.
+We want to set up a KrakenD endpoint that returns the **posts for a specific user**, but we've seen that the [backend response](https://jsonplaceholder.typicode.com/posts/1) contains too much data since our use case do not need the `body` and `userId` fields and we want a lighter and faster response.
 
 The KrakenD endpoint to accept URLs like`/posts/1` is defined as follows:
 
