@@ -21,6 +21,12 @@ KrakenD needs **no programming** as it offers a declarative way to create the en
 
 KrakenD focuses on being a pure API gateway,  not coupled to the HTTP transport layer and it has been in production in large Internet businesses in Europe since early 2017.
 
+Check our original **[KrakenD presentation slides](//www.slideshare.net/AlbertLombarte1/krakend-api-gateway)** at [Slideshare](//www.slideshare.net/AlbertLombarte1/krakend-api-gateway)
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/HjibH0SPFxNhb7" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+<small>Having trouble? Open in <a href="//www.slideshare.net/AlbertLombarte1/krakend-api-gateway">Slideshare</a></small>
+
 # Why an API Gateway?
 
 When consumers of API content (especially in microservices) query backend services, the implementations suffer a lot of complexity and burden with the sizes and complexity of their microservices responses.
