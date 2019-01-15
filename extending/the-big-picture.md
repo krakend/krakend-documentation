@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-01-14
+lastmod: 2019-01-15
 date: 2019-01-14
 toc: true
 linktitle: The big picture
@@ -22,7 +22,7 @@ Let's start with the rules followed to code KrakenD, as they answer to architect
 * Each request must be processed in its request-scoped context
 
 # KrakenD internal states
-When you start KrakenD the system goes through two different internal states: **building** and **working**. Let's see what happens in every state.
+When you start KrakenD, the system goes through two different internal states: **building** and **working**. Let's see what happens in every state.
 
 ## Building state
 The building state administers the service start-up and prepares the system before it can start receiving traffic. During the building state, three things happen:
@@ -31,17 +31,21 @@ The building state administers the service start-up and prepares the system befo
 - Preparation of the middlewares
 - Construction of the pipes
 
-A `pipe` is a function that receives a request message, processes it, and produces the response message and an error. The KrakenD router binds the pipes to the selected transport layer (e.g: HTTP, gRPC).
+A `pipe` is a function that receives a request message, processes it, and produces the response message and an error. The KrakenD router binds the pipes to the selected transport layer (e.g., HTTP, gRPC).
 
 When the building state finishes, the KrakenD service is not going to need to calculate any route or lookup for the associated handler function, as all the mapping is direct in-memory.
 
 ## Working state
 The working state is when the system is ready and can process the requests. When they arrive, the `router` already has the mapping of the request with the handler function and triggers the pipe execution. The `proxy` is the step of the pipe that manipulates, aggregates, and does other data handling for the rest of the process.
 
-As the handler functions were built in the previous step, **KrakenD doesn't penalize the performance depending on the number of endpoints or the possible cardinality** of the URIs requested by the users.
+As the handler functions are in the previous step, **KrakenD doesn't penalize the performance depending on the number of endpoints or the possible cardinality** of the URIs requested by the users.
 
 # The important packages
 The KrakenD framework is composed of a set of packages designed as building blocks for creating pipes and processors between an exposed endpoint and one or several API resources served by your backends.
+
+<center>
+![KrakenD packages](/images/documentation/config-router-proxy-packages.png)
+</center>
 
 The most important packages are:
 
@@ -51,7 +55,7 @@ The most important packages are:
 
 The rest of the packages of the framework contain some helpers and adapters for additional tasks, like encoding, logging or service discovery.
 
-Additionally, the KrakenD-CE bundles a lot of middleware and components that are in its own scope and package. These packages and others are listed in our [KrakenD Contrib](https://github.com/devopsfaith/krakend-contrib) repository.
+Additionally, the KrakenD-CE bundles a lot of middleware and components that are in its scope and package. These packages and others are listed in our [KrakenD Contrib](https://github.com/devopsfaith/krakend-contrib) repository.
 
 
 ## The `config` package
