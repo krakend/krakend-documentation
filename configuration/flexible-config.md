@@ -56,7 +56,7 @@ To insert the content of an external partial file in-place use:
 
     {{ include "partial_file_name.tmpl" }}
 
-The file is assumed to live inside the directory defined in `FC_PARTIALS`.
+**The content inside the partial is not parsed**, and is inserted *as is*. The file is assumed to live inside the directory defined in `FC_PARTIALS`.
 
 ### Insert values from settings files
 In the `FC_SETTINGS` directory, you can save different `.json` files with data structures insides that you can reference in the templates.
@@ -157,7 +157,7 @@ Have a look at the highlighted lines:
 {{< highlight go "hl_lines=3-5 7 9 12 16 23" >}}
     {
         "version": 2,
-        "port": "{{ .service.port }}",
+        "port": {{ .service.port }},
         "extra_config": {{ marshal .service.extra_config }},
         "host": {{ marshal .service.default_hosts }},
         "endpoints": [
@@ -187,7 +187,7 @@ Have a look at the highlighted lines:
 {{< /highlight >}}
 
 - The `.service.port` is taken from the `service.json` file.
-- The `extra_config` in the third line is inserted as a JSON object using the `marshall` function from the `service.json` as well.
+- The `extra_config` in the third line is inserted as a JSON object using the `marshal` function from the `service.json` as well.
 - A `range` iterates the array found under `endpoint.json` and key `example_group`. The variables inside the range are relative to the `example_group` content.
 - Finally, an `include` at the bottom inserts the content as is.
 
