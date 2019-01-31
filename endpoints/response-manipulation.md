@@ -1,7 +1,7 @@
 ---
 aliases:
 - /docs/features/response-manipulation/
-lastmod: 2018-09-27
+lastmod: 2019-01-31
 date: 2016-09-30
 toc: true
 linktitle: Response manipulation
@@ -413,17 +413,17 @@ KrakenD expects that all backends return an object. For instance, a JSON respons
 
 ```
 {
-    "a": true,
-    "b": false
+	"a": true,
+	"b": false
 }
 ```
 
 When your API returns a collection (`[]` or array) instead of an object you need to tell this to KrakenD so its content can be converted to an object. Example of collection:
 
 ```
-[ 
-    {"a": true },
-    {"b": false}
+[
+	{"a": true },
+	{"b": false}
 ]
 ```
 In these cases, add inside the `backend` key the property `"is_collection": true` so KrakenD can convert this collection to an object. By default, the key `collection` will be added, e.g.:
@@ -431,8 +431,8 @@ In these cases, add inside the `backend` key the property `"is_collection": true
 {
 	"collection": [
 		{"a": true },
-        {"b": false}
-    ]
+		{"b": false}
+	]
 }
 ```
 You can rename the automatically named key `collection` to something else using the `mapping` attribute (see above).
@@ -464,7 +464,7 @@ The response will look like this:
 {
   "myposts": [
     {
-      ... 
+      ...
     },
     {
       ...
