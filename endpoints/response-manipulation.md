@@ -25,6 +25,8 @@ When you create KrakenD endpoints, if a specific endpoint feeds from 2 or more b
 
 The merge operation is implemented in a way where user experience and responsiveness goes first. It does its *best effort* to get all the required parts from the involved backends and returning the composed object as soon as possible.
 
+By simply adding several backends into an endpoint, you get the merge operation automatically.
+
 The configuration for the image above could be like this:
 
 
@@ -64,10 +66,12 @@ Keep in mind that in order to avoid any degraded user experience, KrakenD won't 
 The `timeout` value can be introduced inside each endpoint or globally placing `timeout` in the root of the configuration file. The most specific definition always overwrites the generic one.
 
 
-### What happens when the timeout is triggered?
+### What happens when the timeout is triggered or some backend failed?
 If KrakenD is waiting for the backends to respond and the timeout is reached, the response will be incomplete and missing any data that couldn't be fetched before the timeout happened. On the other hand, all the parts that could effectively be retrieved before the timeout happened they will do appear in the response.
 
 If the response has missing parts, the cache header won't exist, as we don't want clients to cache incomplete responses.
+
+At all times, the `x-krakend-completed` header returned by KrakenD contains a boolean telling you if all backends returned its content (`x-krakend-completed: true`) or a partial response (`x-krakend-completed: false`).
 
 
 ## Merge example
@@ -403,3 +407,71 @@ the gateway will generate responses like this one:
 	    "itemsPerPage":1,
 	    "items":[]
 	}
+
+# Collections or Arrays
+KrakenD expects that all backends return an object. For instance, a JSON response needs to be encapsulated between curly braces `{}`. E.g.:
+
+```
+{
+    "a": true,
+    "b": false
+}
+```
+
+When your API returns a collection (`[]` or array) instead of an object you need to tell this to KrakenD so its content can be converted to an object. Example of collection:
+
+```
+[ 
+    {"a": true },
+    {"b": false}
+]
+```
+In these cases, add inside the `backend` key the property `"is_collection": true` so KrakenD can convert this collection to an object. By default, the key `collection` will be added, e.g.:
+```
+{
+	"collection": [
+		{"a": true },
+        {"b": false}
+    ]
+}
+```
+You can rename the automatically named key `collection` to something else using the `mapping` attribute (see above).
+
+The following is a real example based on a [collection response](http://jsonplaceholder.typicode.com/posts), copy and paste to test in your environment:
+
+```
+"endpoints": [
+    {
+      "endpoint": "/posts",
+      "backend": [
+        {
+          "url_pattern": "/posts",
+          "host": ["http://jsonplaceholder.typicode.com"],
+          "sd": "static",
+          "is_collection": true,
+          "mapping": {
+            "collection": "myposts"
+          }
+        }
+      ]
+    }
+]
+```
+
+The response will look like this:
+
+```
+{
+  "myposts": [
+    {
+      ... 
+    },
+    {
+      ...
+    }
+}
+```
+{{% note title="No manipulation on arrays" %}}
+When working with backend responses that are collections be aware that
+data manipulations are not available (except for the mapping/renaming of the
+`collection` key)
