@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-10-30
+lastmod: 2019-01-30
 date: 2018-10-30
 toc: true
 linktitle: Logging
@@ -21,6 +21,7 @@ The component `gologging` extends the default logging capabilities with the foll
 - Option to write to the syslog
 - Add a prefix to log lines
 - Select the reporting level
+- Option to use a predefined or custom format
 
 ## Enabling `gologging`
 
@@ -33,7 +34,9 @@ To enjoy the extended logging capabilitites the component needs to be added in t
           "level": "INFO",
           "prefix": "[KRAKEND]",
           "syslog": true,
-          "stdout": true
+          "stdout": true,
+          "format": "custom",
+          "custom_format": "%{message}"
         }
       }
 
@@ -59,6 +62,23 @@ Besides, you might want to choose to add a string to every logged line, so you c
 
 - `"prefix": "[ANY STRING]"`
 
+### Predefined and customs formats
+If you want to follow other patterns for logging, you're able to.
+
+- `"format": "custom"`
+
+The valid formats are:
+ - `default`
+ - `logstash`
+ - `custom`
+
+If you select the `custom` format, you'll be able to use the `custom_format` field:
+
+- `"custom_format": "%{message}"`
+
+The pattern to use is the same as the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
+
+
 # Graylog and the GELF format
 KrakenD supports sending structured events in GELF format to your Graylog Cluster (KrakenD 0.7+) thanks to the [krakend-gelf](https://github.com/devopsfaith/krakend-gelf) integration.
 
@@ -82,5 +102,24 @@ For instance:
           "prefix": "[KRAKEND]",
           "syslog": false,
           "stdout": true
+      }
+    }
+
+# Logstash
+If you want to log using the Logstash standard via stdout, you have to add the `krakend-logstash` integration in the
+root level of your `krakend.json`, inside the `extra_config` section. **The `gologging` needs to be enabled too**.
+
+For instance:
+
+    "extra_config": {
+      "github_com/devopsfaith/krakend-logstash": {
+        "enabled": true
+      }
+      "github_com/devopsfaith/krakend-gologging": {
+          "level": "INFO",
+          "prefix": "[KRAKEND]",
+          "syslog": false,
+          "stdout": true,
+          "format": "logstash"
       }
     }
