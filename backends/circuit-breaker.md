@@ -67,7 +67,8 @@ The following configuration is an example on how to add circuit breaker capabili
 				"github.com/devopsfaith/krakend-circuitbreaker/gobreaker": {
 					"interval": 60,
 					"timeout": 10,
-					"maxErrors": 1
+					"maxErrors": 1,
+					"logStatusChange": true
 				}
 			}
 		}
