@@ -17,6 +17,7 @@ The `static` resolution is the default service discovery choice. It uses a list 
 
 Using `"sd": "static"` in the configuration file is optional.
 
+```
 "backend": [
 	{
 		"url_pattern": "/some-url",
@@ -27,7 +28,7 @@ Using `"sd": "static"` in the configuration file is optional.
 		]
 	}
 ]
-
+```
 
 # DNS SRV
 A typical Service Discovery integration for KrakenD is to use `DNS SRV`. It is a market standard used by many other systems work such as **Kubernetes, Mesos, Haproxy, Nginx plus, AWS ECS, Linkerd**, and more.
