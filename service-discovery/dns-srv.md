@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-10-21
+lastmod: 2019-02-13
 date: 2016-09-30
 toc: true
 linktitle: DNS SRV
@@ -27,7 +27,8 @@ For instance:
               "sd": "dns",
               "host": [
                 "api-catalog.service.consul.srv"
-              ]
+              ],
+              "disable_host_sanitize": true
             }
           ]
     ...
