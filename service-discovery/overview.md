@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-10-21
+lastmod: 2019-02-13
 date: 2016-09-30
 toc: true
 linktitle: Service Discovery overview
@@ -15,18 +15,18 @@ Service discovery enables clients to detect and locate services on your enterpri
 # Static resolution
 The `static` resolution is the default service discovery choice. It uses a list of hosts declared in the configuration file and KrakenD must be able to reach them directly by hostname, DNS or IP. All the necessary connections are load balanced between all the servers in the list.
 
-Just use `"sd": "static"` in the configuration file
+Using `"sd": "static"` in the configuration file is optional.
 
-    "backend": [
-	        {
-	          "url_pattern": "/some-url",
-	          "sd": "static",
-	          "host": [
-	            "http://my-service-01.api.com:9000",
-              "http://my-service-02.api.com:9000"
-	          ]
-	        }
-	      ]
+"backend": [
+	{
+		"url_pattern": "/some-url",
+		"sd": "static",
+		"host": [
+			"http://my-service-01.api.com:9000",
+			"http://my-service-02.api.com:9000"
+		]
+	}
+]
 
 
 # DNS SRV

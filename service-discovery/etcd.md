@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-10-21
+lastmod: 2019-02-13
 date: 2016-09-30
 toc: true
 linktitle: etcd
@@ -59,7 +59,8 @@ For instance, set the service discovery for an individual backend:
               "sd": "etcd",
               "host": [
                 "api-catalog"
-              ]
+              ],
+              "disable_host_sanitize": true
             }
           ]
     ...
