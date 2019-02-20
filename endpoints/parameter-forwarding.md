@@ -54,6 +54,15 @@ With this configuration, given a request like `http://krakend:8080/v1/foo?a=1&b=
 
 Also, if a request like `http://krakend:8080/v1/foo?a=1` does not include `b`, this parameter is simply missing in the backend request as well.
 
+## Sending all query string parameters
+The default policy can be overridden by using an asterisk `*` as the parameter name:
+```
+"querystring_params":[  
+      "*"
+]
+```
+The lines above make the gateway to pass any query string to all backends. Enabling this might pollute your backends with anything sent by end users, and the gateway is no longer in control of what are the allowed parameters in the contract.
+
 ## Mandatory query string parameters
 When your backend requires query string parameters and you want to make them **mandatory** in KrakenD, use the `{variables}` placeholders in the endpoints definition. The variables can be injected in the backends as part of the query string parameters. For instance:
 
