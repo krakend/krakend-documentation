@@ -55,13 +55,13 @@ With this configuration, given a request like `http://krakend:8080/v1/foo?a=1&b=
 Also, if a request like `http://krakend:8080/v1/foo?a=1` does not include `b`, this parameter is simply missing in the backend request as well.
 
 ## Sending all query string parameters
-The default policy can be overridden by using an asterisk `*` as the parameter name:
+While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
 ```
 "querystring_params":[  
       "*"
 ]
 ```
-The lines above make the gateway to pass any query string to all backends. Enabling this might pollute your backends with anything sent by end users, and the gateway is no longer in control of what are the allowed parameters in the contract.
+Enabling the wildcard pollutes your backends, as any query string sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the query strings in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
 ## Mandatory query string parameters
 When your backend requires query string parameters and you want to make them **mandatory** in KrakenD, use the `{variables}` placeholders in the endpoints definition. The variables can be injected in the backends as part of the query string parameters. For instance:
@@ -159,6 +159,16 @@ This setting changes the headers received by the backend to:
     X-Forwarded-For: ::1
 
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint) to understand how to test headers.
+
+## Sending all client headers to the backends
+While the default policy prevents forwarding unrecognized headers, setting an asterisk `*` as the parameter name makes the gateway to **forward any header to the backends**, including cookies:
+```
+"headers_to_pass":[  
+      "*"
+]
+```
+Enabling the wildcard pollutes your backends, as any header sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the headers in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
+
 
 # Cookies forwarding
 A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `headers_to_pass`, just as you would do with any other header.
