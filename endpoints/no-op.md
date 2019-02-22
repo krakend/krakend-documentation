@@ -40,7 +40,7 @@ Examples:
 - You need to keep the headers of the backend as is.
 
 
-# How to use `no-op`
+## How to use `no-op`
 To declare endpoints that go directly to the backend as they are you need to define the `no-op` encoding **both** in the `endpoint` **and** the `backend` section, specifically:
 
   - Add `"output_encoding": "no-op"` in the `endpoint` section
@@ -59,7 +59,6 @@ The following snippet shows an endpoint that is passed to the backend as is. Not
     "backend": [
         {
             "encoding": "no-op",
-            "method": "POST",
             "host": [ "localhost:8080" ],
             "url_pattern": "/__debug/login"
         }
