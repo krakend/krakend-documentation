@@ -40,9 +40,8 @@ Plus these optional:
 - `min_version` (string): Minimum TLS version (one of `SSL3.0`, `TLS10`, `TLS11` or `TLS12`)
 - `max_version` (string): Maximum TLS version (one of `SSL3.0`, `TLS10`, `TLS11` or `TLS12`)
 - `curve_preferences` (integer array): The list of all the identifiers for the curve preferences (use `23` for CurveP256, `24` for CurveP384 or `25` for CurveP521)
+- `prefer_server_cipher_suites` (boolean): Enforces the use of one of the cipher suites offered by the server, instead of going with the suite proposed by the client.
 - `cipher_suites` (integer array): The list of cipher suites (see below).
-- `prefer_server_cipher_suites` (integer array): The list of your preferred cipher suites (see below).
-
 The list of cipher suites with its values is:
 
   - `5`: TLS_RSA_WITH_RC4_128_SHA
