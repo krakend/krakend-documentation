@@ -9,22 +9,22 @@ menu:
   documentation:
     parent: endpoints
 ---
-The **static proxy** can inject static data in your backend responses before returning them.
+The **static proxy** is an aid to clients dealing with incomplete and other types of degraded responses. When enabled, the static proxy **injects static data** in the final response when the behavior of a backend falls in the selected **strategy**.
 
-A typical scenario is **when some of your backends fail**, and you prefer to provide a **stub response** rather than no content at all. Your application can handle better the failure when useful data, even static, is returned.
+A typical scenario is **when some backend fails** and the endpoint becomes incomplete, but you prefer to provide a **stub response** for that part instead. When your application cannot handle well the degraded response, the static data comes handy.
 
 Another example scenario is to create an endpoint pointing to an unfinished backend where **its functionality is not in production yet**, but your client application needs to go ahead the backend developers and start using the static responses.
 
-There are many other scenarios, and this is why KrakenD offers several **strategies** that you can use to decide whether to inject static data or not.
+There are many other scenarios, and this is why KrakenD offers several **strategies** that you can use to decide whether to inject static data or not. In any case, remember that the primary goal of this feature is to support corner-cases related to clients not ready to deal with gracefully degraded responses.
 
 # Static response strategies
 The supported strategies to inject static data are the following:
 
 - `always`: Injects the static data in the response no matter what.
 - `success`: Injects the data when all the backends did not fail.
-- `complete`: Injects the data when there weren't any errors, all backends gave a response, and the responses completed successfully (no timeouts)
-- `errored`: Injects the data when some backend failed
-- `incomplete`: When there is no response, or some backend did not return a valid response in time.
+- `complete`: Injects the data when there weren't any errors, all backends gave a response, and the responses merged successfully
+- `errored`: Injects the data when some backend failed, returning an explicit error.
+- `incomplete`: When some backend did not reach the merge operation (timeout or another reason).
 
 Pay attention to the different strategies as they might offer subtle differences. The code associated to these strategies is:
 
@@ -33,6 +33,11 @@ Pay attention to the different strategies as they might offer subtle differences
     func staticIfErroredMatch(_ *Response, err error) bool  { return err != nil }
     func staticIfCompleteMatch(r *Response, err error) bool { return err == nil && r != nil && r.IsComplete }
     func staticIfIncompleteMatch(r *Response, _ error) bool { return r == nil || !r.IsComplete }
+
+# Handling collisions
+The static proxy is processed **after** all the backend merging has occurred, meaning that if your static data has keys that are colliding with the existing responses, these are overwritten.
+
+The static data always has a priority as it's the last computed part. When an endpoint aggregates data from multiple sources, if a `group` for each backend is not used, then all the responses are merged straight into the root. The static data makes the merge in the root as well, so be cautious when setting the content of `data`, to make sure you are not replacing valuable information.
 
 # Adding static responses
 To add a static response add under any `endpoint` an `extra_config` entry as follows:
@@ -48,10 +53,14 @@ To add a static response add under any `endpoint` an `extra_config` entry as fol
         }
     }
 
-Inside the `strategy` key choose the strategy that fits your use case, and inside `data` you need to add the JSON object as it's returned.
+Inside the `strategy` key choose the strategy that fits your use case (one of `always`, `success`, `complete`, `errored`or `incomplete`), and inside `data` you need to add the JSON object as it's returned.
 
 # Static proxy example
-The following `/static` endpoint returns `{"foo": 42, "bar": "foobar"}` when the backend returned errors.
+The following `/static` endpoint returns `{"errored": {"foo": 42, "bar": "foobar"} }` when the backend returned errors.
+
+Notice two things in the example trying to avoid collisions.  First, each backend uses a `group`, so when the backend works correctly, its response is inside a key "foo" or "bar". Using this strategy if "foo" and "bar" use the same keys there is no problem.
+
+Secondly, when one of the 2 backends fail, it creates a new group "oh-snap" (see `data`).
 
     "endpoints": [
             {
@@ -61,7 +70,15 @@ The following `/static` endpoint returns `{"foo": 42, "bar": "foobar"}` when the
                         "host": [
                             "http://your.backend"
                         ],
-                        "url_pattern": "/foo"
+                        "url_pattern": "/foo",
+                        "group": "foo"
+                    },
+                    {
+                        "host": [
+                            "http://your.backend"
+                        ],
+                        "url_pattern": "/bar",
+                        "group": "bar"
                     }
                 ],
                 "extra_config": {
@@ -69,12 +86,12 @@ The following `/static` endpoint returns `{"foo": 42, "bar": "foobar"}` when the
                         "static": {
                             "strategy": "errored",
                             "data": {
-                                "foo": 42,
-                                "bar": "foobar"
+                                "oh-snap": {
+                                    "id": 42,
+                                    "bar": "foobar"
+                                }
                             }
                         }
                     }
                 }
             },
-
-
