@@ -2,7 +2,7 @@
 lastmod: 2018-11-27
 date: 2018-11-11
 toc: true
-linktitle: Sequential Proxy
+linktitle: Sequential Proxy (chain reqs.)
 title: Sequential Proxy
 weight: 60
 menu:
