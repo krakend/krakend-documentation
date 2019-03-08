@@ -25,7 +25,7 @@ The gateway can work with several content types, even allowing your clients to c
   - RSS
   - YAML.
 - `string`: Treat the whole response as a simple string
-- `no-op`: Proxy to ONE backend. [See its documentation](/docs/endpoints/no-op/).
+- `no-op`: No encoding, no decoding. [See its documentation](/docs/endpoints/no-op/).
 
 
 Each endpoint declaration is able to define which encoder should be used, as shown in this example. By default, when the `output_encoding` is omitted, KrakenD falls back to JSON:
