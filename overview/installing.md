@@ -1,7 +1,7 @@
 ---
 aliases:
 - /overview/installing/
-lastmod: 2018-09-27
+lastmod: 2019-03-11
 date: 2016-07-01
 menu:
   documentation:
@@ -45,14 +45,14 @@ The installation process requires following these steps:
 
 Paste this in the terminal:
 
-    rpm -Uvh http://repo.krakend.io/rpm/krakend-repo-0.1-0.noarch.rpm
+    rpm -Uvh http://repo.krakend.io/rpm/krakend-repo-0.2-0.x86_64.rpm
     yum install -y krakend
     systemctl start krakend
 
 ## Fedora
 Paste this in the terminal:
 
-    rpm -Uvh http://repo.krakend.io/rpm/krakend-repo-0.1-0.noarch.rpm
+    rpm -Uvh http://repo.krakend.io/rpm/krakend-repo-0.2-0.x86_64.rpm
     dnf install -y krakend
     systemctl start krakend
 
@@ -69,7 +69,7 @@ The installation process requires following these steps:
 
 Bottom line:
 
-    apt-key adv --keyserver keyserver.ubuntu.com --recv AB39BEA1
+    apt-key adv --keyserver keyserver.ubuntu.com --recv {{% pgp_key %}}
     echo "deb http://repo.krakend.io/apt stable main" | tee /etc/apt/sources.list.d/krakend.list
     apt-get update
     apt-get install -y krakend
