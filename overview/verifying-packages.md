@@ -29,7 +29,7 @@ Now you can verify the signature of the package:
     gpg: Good signature from "Devops Faith Package Manager <packages@devops.faith>"
     gpg: WARNING: This key is not certified with a trusted signature!
     gpg:					There is no indication that the signature belongs to the owner.
-    Primary key fingerprint: {{% pgp_finterprint %}}
+    Primary key fingerprint: {{% pgp_fingerprint %}}
 
 
 # SHA256
