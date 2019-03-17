@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-11-08
+lastmod: 2019-03-17
 date: 2018-11-05
 linktitle: Revoking tokens
 title: Revoking valid tokens
@@ -21,7 +21,7 @@ The bloomfilter component brings the following functionalities:
 - Check tokens and discard access on positives
 
 # Why bloomfilters?
-The Bloomfilters are ideal for supporting massive rejection of tokens with very little memory consumption. For instance, 100 million tokens of any size consume around 0.5GB RAM (with a rate of false positives of 1 in 999,925,224 tokens). These numbers are impossible to get with a key-value or a relational database.
+The Bloomfilters are ideal for supporting massive rejection of tokens with very little memory consumption. For instance, 100 million tokens of any size consume around 0.5GB RAM (with a rate of false positives of 1 in 999,925,224 tokens), and lookups are completed in constant time (k number of hashes). These numbers are impossible to get with a key-value or a relational database.
 
 The tokens are in-memory, directly in the rejecter interface, so the system is quick resolving the match.
 
