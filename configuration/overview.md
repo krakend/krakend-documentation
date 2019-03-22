@@ -12,7 +12,7 @@ aliases:
 ---
 When the KrakenD service is about to be started, the `run` command requires passing the flag `-c` which states the path to the configuration file. We refer through the documentation to this file as the `krakend.json`, but it can be stored or named according to your preferences.
 
-If your configuration file is too large or repetitive, it can be split into multiple files using a templating system, where ENV vars can also be injected as dynamic values. See the [flexible-config](/docs/configuration/flexible-configuration)) for more information on this feature.
+If your configuration file is too large or repetitive, it can be split into multiple files using a templating system, where ENV vars can also be injected as dynamic values. See the [flexible-config](/docs/configuration/flexible-config)) for more information on this feature.
 
 Provided this simple configuration mechanism, the versioning and automation are very convenient. Any change in the API Gateway is always under the version control system, and the code controls the state of the gateway.
 
