@@ -3,6 +3,7 @@ lastmod: 2019-03-21
 date: 2019-03-21
 linktitle: OAuth2 Client credentials
 title: OAuth 2.0 Client Credentials
+source: https://github.com/devopsfaith/krakend-oauth2-clientcredentials
 weight: 50
 #notoc: true
 menu:

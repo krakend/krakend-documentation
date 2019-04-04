@@ -4,6 +4,7 @@ date: 2018-11-05
 linktitle: Metrics
 title: Metrics middleware
 weight: 20
+source: https://github.com/devopsfaith/krakend-metrics
 menu:
   documentation:
     parent: logging-metrics-tracing

@@ -4,13 +4,14 @@ date: 2018-11-03
 linktitle: JWT Signing
 title: JWT Signing
 weight: 30
+source: https://github.com/devopsfaith/krakend-jose
 menu:
   documentation:
     parent: authorization
 ---
 The JWT signing component is meant to create an **endpoint wrapper** that returns signed tokens when your application returns plain text tokens. The tokens return to the user signed with your secret key, that can be kept in the gateway or a trusted machine. With the token signing, you are in control of the private key, and you don't need to trust an external source to keep it for you.
 
-The [JOSE component](https://github.com/devopsfaith/krakend-jose) is responsible for signing tokens.
+The **JOSE component** is responsible for signing tokens.
 
 # Requirements
 You need a backend -not KrakenD- that exposes an endpoint able to **issues tokens**, and another endpoint for **refreshing tokens**.

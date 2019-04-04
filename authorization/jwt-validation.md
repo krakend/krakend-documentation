@@ -4,13 +4,14 @@ date: 2018-11-03
 linktitle: JWT Validation
 title: JWT Validation
 weight: 20
+source: https://github.com/devopsfaith/krakend-jose
 menu:
   documentation:
     parent: authorization
 ---
 The JWT validation shields any amount of desired endpoints, forcing requests to the API gateway to provide a token **issued by a third party**. Verification of the token takes place in every request, including the check of the signature and optionally the assurance that its issuer, roles, and audience are sufficient to access the endpoint.
 
-The [JOSE component](https://github.com/devopsfaith/krakend-jose) is responsible for validating the tokens.
+The **JOSE component** is responsible for validating the tokens.
 
 A typical request requiring JWT validation includes in the `Authorization` header a bearer with the token:
 

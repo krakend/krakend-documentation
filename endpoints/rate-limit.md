@@ -8,6 +8,7 @@ date: 2016-07-01
 linktitle: Rate Limits
 title: Endpoint rate limiting
 weight: 10
+source: https://github.com/devopsfaith/krakend-ratelimit
 menu:
   documentation:
     parent: endpoints

@@ -7,6 +7,7 @@ date: 2016-07-01
 linktitle: Circuit Breaker
 title: The Circuit Breaker
 weight: 20
+source: https://github.com/devopsfaith/krakend-circuitbreaker
 menu:
   documentation:
     parent: backends

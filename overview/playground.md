@@ -4,6 +4,7 @@ date: 2018-09-13
 linktitle: The Playground
 description: Start playing with KrakenD through a ready-to-use complete environment -  gateway, backend, client and several use cases.
 notoc: true
+source: https://github.com/devopsfaith/krakend-playground
 menu:
   documentation:
     parent: getting started
