@@ -5,6 +5,7 @@ linktitle: AMQP - RabbitMQ
 title: API Gateway integration with AMQP messaging
 weight: 90
 since: 0.9
+notoc: true
 source: https://github.com/devopsfaith/krakend-amqp
 menu:
   documentation:
@@ -17,7 +18,7 @@ The configuration of the queue is a straightforward process. To connect the endp
 The following configurations demonstrate both the **consumer** and the **producer** to create the whole publish/susbcribe pattern.
 
 # Consumer
-The consumer retrieves messages from the queue when a KrakenD endpoint is plugged to its AMQ backend. The needed configuration is as follows:
+The consumer retrieves messages from the queue when a KrakenD endpoint is plugged to its AMQP backend. The needed configuration is as follows:
 
 		"backend": [
 			{
