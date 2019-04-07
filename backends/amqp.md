@@ -22,8 +22,8 @@ Both the consumers and the producers have this configuration keys in common:
 - `name` - *string*
 - `exchange` - *string*
 - `routing_key` - []*string*
-- `durable` - *bool*
-- `delete` - *bool*
+- `durable` - *bool* `true` is recommended, but depends on the use case.
+- `delete` - *bool* `false` is recommended to avoid deletions when the consumer is disconnected
 - `exclusive` - *bool*
 - `no_wait` - *bool*
 
@@ -31,6 +31,8 @@ The following configurations demonstrate both the **consumer** and the **produce
 
 # Consumer
 The consumer retrieves messages from the queue when a KrakenD endpoint plugs to its AMQP backend. The recommendation is to connect consumers to `GET` endpoints.
+
+A single endpoint can consume messages from N queues, or can consume N messages from the same queue by adding N backends with the proper queue name.
 
 ## Example
 The needed configuration to run a consumer is:
@@ -48,7 +50,6 @@ The needed configuration to run a consumer is:
                         "delete":         false,
                         "exclusive":      false,
                         "no_wait":        true,
-                        "auto_ack":       false,
                         "no_local":       false,
                         "routing_key":    ["#"],
                         "prefetch_count": 10
@@ -62,7 +63,6 @@ The full list of parameters for the consumer are:
 - All the common settings above plus:
 - `prefetch_count` - *int*
 - `prefetch_size` - *int*
-- `auto_ack` - *bool*
 - `no_local` - *bool*
 
 # Producer
@@ -108,8 +108,8 @@ Additionally, these items below are parameter keys that can be present in the en
 - `exp_key` - *string*
 - `reply_to_key` - *string*
 - `msg_id_key` - *string*
-- `priority_key` - *string*
-- `routing_key` - *string*
+- `priority_key` - *string* - Key of the request parameters that is used as the priority value for the produced message.
+- `routing_key` - *string* - Key of the request parameters that is used as the routing value for the produced message.
 
 For instance, an `endpoint` URL could be declared as `/produce/{a}/{b}/{id}/{prio}/{route}` and the producer knows how to map them with a configuration like this:
 
