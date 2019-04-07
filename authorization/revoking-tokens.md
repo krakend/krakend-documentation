@@ -4,6 +4,7 @@ date: 2018-11-05
 linktitle: Revoking tokens
 title: Revoking valid tokens
 weight: 40
+source: https://github.com/devopsfaith/bloomfilter
 menu:
   documentation:
     parent: authorization

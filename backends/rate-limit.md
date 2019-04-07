@@ -4,6 +4,7 @@ date: 2018-10-29
 linktitle: Proxy rate limit
 title: Rate-limiting backends
 weight: 10
+source: https://github.com/devopsfaith/krakend-ratelimit
 menu:
   documentation:
     parent: backends

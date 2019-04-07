@@ -5,6 +5,7 @@ toc: true
 linktitle: etcd
 title: Service Discovery with etcd
 weight: 20
+source: https://github.com/devopsfaith/krakend-etcd
 menu:
   documentation:
     parent: service-discovery

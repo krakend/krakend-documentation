@@ -4,6 +4,7 @@ date: 2018-10-29
 linktitle: Caching responses
 title: Caching backend responses
 weight: 50
+source: https://github.com/devopsfaith/krakend-httpcache
 menu:
   documentation:
     parent: backends

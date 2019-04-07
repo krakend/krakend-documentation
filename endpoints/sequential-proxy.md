@@ -4,6 +4,7 @@ date: 2018-11-11
 toc: true
 linktitle: Sequential Proxy (chain reqs.)
 title: Sequential Proxy
+since: 0.7
 weight: 60
 menu:
   documentation:

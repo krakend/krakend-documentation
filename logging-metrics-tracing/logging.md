@@ -5,6 +5,7 @@ toc: true
 linktitle: Logging
 title: Logging - Syslog, stdout and GELF
 weight: 10
+source: https://github.com/devopsfaith/krakend-gologging
 menu:
   documentation:
     parent: logging-metrics-tracing
