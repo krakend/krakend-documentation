@@ -3,6 +3,7 @@ lastmod: 2019-03-17
 date: 2018-11-05
 linktitle: Revoking tokens
 title: Revoking valid tokens
+description: How to invalidate JWT tokens
 weight: 40
 source: https://github.com/devopsfaith/bloomfilter
 menu:
