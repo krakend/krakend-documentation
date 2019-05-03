@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-04-03
+lastmod: 2019-05-03
 date: 2016-09-30
 toc: true
 linktitle: Data manipulation
@@ -117,6 +117,8 @@ From the performance point of view, blacklist is slightly fastest than whitelist
 KrakenD is able to group your backend responses inside different objects. In other words, when you set a `group` attribute for a backend, instead of placing all the response attributes in the root of the response, KrakenD creates a new key and places the response inside.
 
 Encapsulating backend responses inside each own group is especially interesting when different backend responses can have colliding key names (e.g: all responses contain an `id` with different values).
+
+When grouping different backend responses **don't share the same group name**, as the slowest backend would overwrite the response with the same group. Group names are supposed to be unique for each backend in the same endpoint but this is not enforced.
 
 ## Grouping example
 
