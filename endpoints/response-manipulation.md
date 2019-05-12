@@ -10,6 +10,8 @@ weight: 10
 menu:
   documentation:
     parent: endpoints
+images:
+- /images/documentation/krakend-merge.png
 ---
 
 KrakenD allows you to perform several manipulations of the responses out of the box, just by adding them to the configuration file. You can also add your own or 3rd parties middlewares to extend this behavior.

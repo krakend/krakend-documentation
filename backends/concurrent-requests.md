@@ -10,6 +10,13 @@ aliases:
 menu:
   documentation:
     parent: backends
+images:
+- /images/documentation/concurrency/CDF_happy_vs_sad.png
+- /images/documentation/concurrency/PDF_happy_vs_sad.png
+- /images/documentation/concurrency/CDF_concurrency_happy.png
+- /images/documentation/concurrency/PDF_concurrency_happy.png
+- /images/documentation/concurrency/CDF_concurrency_sad.png
+- /images/documentation/concurrency/PDF_concurrency_sad.png
 ---
 
 The concurrent requests is an excellent technique to **improve the response times and decrease error rates** by requesting in parallel the same information multiple times. When the first backend returns the information, the remaining threads are canceled.

@@ -10,6 +10,8 @@ menu:
 next: /overview/quickstart
 title: Introduction to KrakenD
 weight: -10000
+images:
+- /images/documentation/krakend-gateway.png
 ---
 
 # What is KrakenD?

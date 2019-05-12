@@ -8,6 +8,8 @@ weight: -1000
 menu:
   documentation:
     parent: extending
+images:
+- /images/documentation/config-router-proxy-packages.png
 ---
 Before starting to dive into the KrakenD framework code, spend a few minutes understanding the big pieces of the system, how it works, and the philosophy behind it.
 
