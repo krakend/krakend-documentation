@@ -41,7 +41,7 @@ For instance your backend could have an endpoint like `/token-issuer`, that when
 # Basic JWT signing
 When your application knows how to issue tokens, you can sign them before passing them to the user automatically in the gateway. To achieve that, instead of publishing our internal backend that generates plain tokens under `/token-issuer`, we only expose via KrakenD a new endpoint named `/token` (choose your name). This endpoint forwards the data received in the `POST` (as chosen in the example) and returns a signed token when the backend replies.
 
-For instance, from the plain token above we want to sign the keys `"access_token"` and `"refresh_token"` so nobody can see its contents. We need a configuration like this:
+For instance, from the plain token above we want to sign the keys `"access_token"` and `"refresh_token"` so nobody can modify its contents. We need a configuration like this:
 
 {{< highlight go "hl_lines=8-15" >}}
 "endpoint": "/token",
