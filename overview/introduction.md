@@ -21,7 +21,7 @@ Its core functionality is to create an API that acts as an aggregator of many mi
 
 KrakenD needs **no programming** as it offers a declarative way to create the endpoints. It is well structured and layered and open to extending its functionality using plug-and-play middleware developed by the community or in-house.
 
-KrakenD focuses on being a pure API gateway,  not coupled to the HTTP transport layer and it has been in production in large Internet businesses in Europe since early 2017.
+KrakenD focuses on being a pure API gateway,  not coupled to the HTTP transport layer and it has been in production in large Internet businesses in Europe since early 2017. [See who is using KrakenD and use cases](/who-is-using-krakend/)
 
 Check our original **[KrakenD presentation slides](//www.slideshare.net/AlbertLombarte1/krakend-api-gateway)** at [Slideshare](//www.slideshare.net/AlbertLombarte1/krakend-api-gateway)
 

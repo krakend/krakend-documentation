@@ -15,6 +15,9 @@ The AMQP component allows to **send and receive messages to and from a queue** t
 
 The configuration of the queue is a straightforward process. To connect the endpoints to the messaging system you only need to include the `extra_config` key with the namespaces `github.com/devopsfaith/krakend-amqp/consume` or `github.com/devopsfaith/krakend-amqp/produce`.
 
+The parameters of this integration follow the AMQP specification. To understand
+what are the implications of a certain parameter, see the **[AMQP Complete Reference Guide](https://www.rabbitmq.com/amqp-0-9-1-reference.html)**.
+
 **Common settings**
 
 Both the consumers and the producers have this configuration keys in common:
