@@ -1,7 +1,7 @@
 ---
 aliases:
 - /docs/features/security/
-lastmod: 2018-09-27
+lastmod: 2019-09-02
 date: 2016-09-30
 toc: true
 linktitle: Security
