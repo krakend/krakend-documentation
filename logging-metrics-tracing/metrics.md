@@ -4,12 +4,15 @@ date: 2018-11-05
 linktitle: Metrics
 title: Metrics middleware
 weight: 20
+notoc: true
 source: https://github.com/devopsfaith/krakend-metrics
 menu:
   documentation:
     parent: logging-metrics-tracing
 ---
-The metrics *middleware* offers a new service in a different port and exposes a `/__stats/` endpoint with the collection of all the KrakenD metrics.
+The metrics *middleware* offers a new service in a different port and exposes a `/__stats/` endpoint with the collection of all the KrakenD metrics:
+
+    http://localhost:8080/__stats/
 
 # Enabling metrics
 In order to add metrics to your KrakenD installation add the `github_com/devopsfaith/krakend-metrics` namespace under `extra_config` in the root of your configuration file, e.g.:
