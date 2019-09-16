@@ -23,6 +23,6 @@ The Opencensus exporter allows you push data to Prometheus. Enabling it only req
 	  }
 	}
 - `port` on which Prometheus is listening
-- `namespace` sets the domain the metric belongs to. "krakend" is the default value when no `namespace` is provided.
+- `namespace` sets the domain the metric belongs to. Optional field.
 
 See also the [additional settings](/docs/logging-metrics-tracing/opencensus/) of the Opencensus module that can be declared.
