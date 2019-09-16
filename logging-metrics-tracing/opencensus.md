@@ -18,7 +18,8 @@ You will be interested in Opencensus when you want to see data in one of its sup
 		"github_com/devopsfaith/krakend-opencensus": {
 			"exporters": {
 				"prometheus": {
-				"port": 9091
+					"port": 9091
+					"namespace": "krakend"
 				}
 			}
 		}
