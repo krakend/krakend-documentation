@@ -11,33 +11,50 @@ menu:
   documentation:
     parent: throttling
 ---
-The **bot detector** module checks incoming connections to the gateway to determine if they were made by a bot or not. It helps you actively detect bots carrying out scraping, content theft, and form spam.
 
-Bots are detected by inspecting the `User-Agent` header and checked against **your configuration rules**. You decide what is for you a bot and which ones you want to connect or not.
+The **bot detector** module checks incoming connections to the gateway to determine if a bot made them, helping you detect and reject bots carrying out scraping, content theft, and form spam.
 
+Bots are detected by inspecting the `User-Agent` and comparing its value with a set of configuration rules provided by you. The bot detector module **does not set any initial rules**, meaning that is up to you to decide the best rules for your use case, and choose how restrictive or permissive you are with bots.
 
-The configuration rules of the botdetector have to be included in the `extra_config` at the root level of your `krakend.json` file. For instance:
+As the bot detector module is flexible in its configuration, you can use it for other purposes than just discarding bots. For instance, you could set a whitelist rule for your mobile application `User-Agent` which would be allowed to interact with KrakenD and discard the rest of the traffic.
 
-	"github_com/devopsfaith/krakend-botdetector": {
-		"whitelist": ["c", "Pingdom.com_bot_version_1.1"],
-		"blacklist": ["a", "b"],
-		"patterns": [
-			"(Pingdom.com_bot_version_).*",
-			"(facebookexternalhit)/.*"
-		],
-		"cacheSize": 0
-	}
+# Configuring bot rules
 
-The available options in the botdetector module are:
+The configuration rules of the bot detector have to be included inside the `extra_config`'s namespace `github_com/devopsfaith/krakend-botdetector` at the root level of your `krakend.json` file.
 
-- `whitelist`: An array with EXACT MATCHES of all the bots you are trusting and willing to connect
-- `blacklist`: An array of EXACT MATCHES of undesired bots
-- `patterns`: An array with all the **regular expressions** that define bots. If one of these expressions match, the connection is rejected. You might want to have a look at [all these patterns](https://github.com/ua-parser/uap-core/blob/master/regexes.yaml).
-- `cacheSize`: When the value is larger than 0, a LRU-based cache layer is added on top of the detector with the specified fixed size. This is used to avoid calculating the same User-Agent against all regexp strings.
+For instance:
 
-The order of evaluation of rules is:
+    "extra_config": {
+        "github_com/devopsfaith/krakend-botdetector": {
+            "whitelist": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
+            "blacklist": ["a", "b"],
+            "patterns": [
+                "(Pingdom.com_bot_version_).*",
+                "(facebookexternalhit)/.*"
+            ],
+            "cacheSize": 0
+        }
+    }
 
-* whitelist -> If the whitelist is matched, no more checks are done and the connection is accepted.
-* blacklist -> If the blacklist is matched, the connection is rejected
-* patterns -> If blacklist or whitelist didn't match, all the patterns are tried in sequential order. Place the most susceptible matches first.
+The available configuration options in the bot detector module are:
 
+*   `whitelist`: An array with EXACT MATCHES of trusted user agents that can connect.
+*   `blacklist`: An array of EXACT MATCHES of undesired bots, to reject immediately.
+*   `patterns`: An array with all the **regular expressions** that define bots. Matching bots are rejected.
+*   `cacheSize`: Size of the LRU cache that helps speed the bot detection.
+
+Notice that the `whitelist` and the `blacklist` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
+
+On the other hand, the `patterns` attribute expects regular expressions. The syntax is the same general syntax used by Perl, Python, and other languages. More precisely, it is the syntax accepted by [RE2](https://golang.org/s/re2syntax)
+
+The order of evaluation of the rules is sequential in this order: `whitelist` -> `blacklist` -> `patterns`. When a user agent matches in any of the former evaluations, the execution ends and the connection is accepted (whitelist) or rejected (blacklist and patterns).
+
+## Building your bot rules
+You might want to have a look at [all these patterns](https://github.com/ua-parser/uap-core/blob/master/regexes.yaml).
+
+## Caching
+Evaluating every user agent against a ** substantial list of patterns** can be a time-consuming operation. When this is the case, you can enable caching by setting `cacheSize` and avoid reprocessing User-Agents checked before.
+
+The LRU caching system is in-memory and does not require running a separate set of servers, thus reducing the operation pain. There are neither cache expiration times, nor explicit cache evictions. When/if the cache is full, the least recently used (LRU) element is automatically replaced with the new one. An order of magnitude of megabytes should be enough to save the different User-Agent requests and combinations.
+
+Set in the `cacheSize` an integer with the fixed size of the cache, or `0` to disable caching.
