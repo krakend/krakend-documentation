@@ -3,7 +3,7 @@ lastmod: 2019-09-15
 date: 2019-09-15
 linktitle: Bot detector
 title: Control of bot traffic
-weight: 80
+weight: 10
 since: 1.0
 notoc: true
 source: https://github.com/devopsfaith/krakend-botdetector
@@ -47,13 +47,21 @@ Notice that the `whitelist` and the `blacklist` do not expect regular expression
 
 On the other hand, the `patterns` attribute expects regular expressions. The syntax is the same general syntax used by Perl, Python, and other languages. More precisely, it is the syntax accepted by [RE2](https://golang.org/s/re2syntax)
 
-The order of evaluation of the rules is sequential in this order: `whitelist` -> `blacklist` -> `patterns`. When a user agent matches in any of the former evaluations, the execution ends and the connection is accepted (whitelist) or rejected (blacklist and patterns).
+The order of evaluation of the rules is sequential in this order: `whitelist` -> `blacklist` -> `patterns`. When a user agent matches in any of the former evaluations, the execution ends, and the connection is accepted (whitelist) or rejected (blacklist and patterns).
 
 ## Building your bot rules
-You might want to have a look at [all these patterns](https://github.com/ua-parser/uap-core/blob/master/regexes.yaml).
+
+Fighting against spam, spiders, scrapping, theft, and bots is a problematic matter. There are different angles you can choose to combat it using the bot detection module.
+
+Maybe you want to have a [massive list](https://github.com/ua-parser/uap-core/blob/master/regexes.yaml) of regular expressions of bots that are troubling you, and caching enabled.
+
+Or perhaps you only require a single negative pattern that discards anything that you don't know is legit.
+
+Whatever rules you decide to set in place, remember than whitelisting and blacklisting are faster but are inflexible and require you to set the exact user-agent. On the other hand, regular expressions are very convenient, but the cost of evaluating them is higher in comparison.
 
 ## Caching
-Evaluating every user agent against a ** substantial list of patterns** can be a time-consuming operation. When this is the case, you can enable caching by setting `cacheSize` and avoid reprocessing User-Agents checked before.
+
+Evaluating every user agent against a ** substantial list of patterns** can be a time-consuming operation. Even when we are talking about a few milliseconds, you can enable caching by setting `cacheSize` and avoid reprocessing User-Agents checked before. Every millisecond counts!
 
 The LRU caching system is in-memory and does not require running a separate set of servers, thus reducing the operation pain. There are neither cache expiration times, nor explicit cache evictions. When/if the cache is full, the least recently used (LRU) element is automatically replaced with the new one. An order of magnitude of megabytes should be enough to save the different User-Agent requests and combinations.
 

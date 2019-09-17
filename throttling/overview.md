@@ -1,7 +1,7 @@
 ---
 lastmod: 2018-09-29
 date: 2016-07-01
-linktitle: Rate limits and throttling overview
+linktitle: Rate limits and throttling
 title: Throttling overview
 weight: -10
 menu:

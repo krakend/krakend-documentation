@@ -1,7 +1,7 @@
 ---
 lastmod: 2018-09-27
 date: 2018-01-04
-linktitle: Timeouts
+linktitle: Request timeouts
 title: Timeouts
 weight: 40
 menu:
