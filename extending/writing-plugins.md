@@ -26,9 +26,11 @@ The word plugin appears in many places over the Internet, but when we talk about
 
 KrakenD API Gateway is a composition of a framework and many other pieces and repositories that compile in a single, final, binary. We refer to these pieces as **middleware**, **components**, **modules**, or **packages** `¯\_(ツ)_/¯`.
 
-**A plugin is a parallel program** (and a different binary) that when running in conjunction with KrakenD can participate in the processing.
+**A plugin is a soft-linked library**, thus a separated `.so` file, that when running in conjunction with KrakenD can participate in the processing.
 
 Plugins and middlewares are close concepts but do not confuse them. The middleware compiles inside the KrakenD binary while plugins compile in **another binary**.
+
+Plugins allow you to "drag and drop" custom functionality into KrakenD but still use the official binaries. Custom middlewares require compiling your version of KrakenD.
 
 # Approaches to extend KrakenD
 
@@ -40,12 +42,17 @@ Either you write plugins, or you write middleware. These are the three options:
 
 Choosing one approach over another depends on what you want to accomplish. A simple orientation can be:
 
-> Do you want to modify the request of the user before KrakenD starts processing?
-> Go for the router plugin.
-> Do you want to change how KrakenD interacts with your backend services?
-> Go for the proxy plugin
-> Do you want to change the internals of the pipes, add tooling, integrations, etc.?
-> Write your custom middleware
+**Do you want to modify the request of the user before KrakenD starts processing?**
+
+- Choose the router plugin.
+
+**Do you want to change how KrakenD interacts with your backend services?**
+
+- Choose the proxy plugin.
+
+**Do you want to change the internals of the pipes, add tooling, integrations, etc.?**
+
+- Write your custom middleware.
 
 # Sequence of requests and responses
 

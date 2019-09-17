@@ -13,7 +13,7 @@ menu:
     parent: backends
 ---
 
-TThe Lambda integration allows you to invoke Amazon Lambda functions on a KrakenD endpoint call.
+The Lambda integration allows you to invoke Amazon Lambda functions on a KrakenD endpoint call.
 
 Add lambda invocations into KrakenD as any other regular backend. The inclusion requires you to add the code in the `extra_config` of your `backend` section, using the `github.com/devopsfaith/krakend-lambda` namespace.
 
