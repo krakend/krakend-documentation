@@ -1,14 +1,16 @@
 ---
 lastmod: 2018-09-29
 date: 2018-09-21
-linktitle: Flexible configuration
+linktitle: Configuration in multiple files
+source: https://github.com/devopsfaith/krakend-flexibleconfig
+since: 0.5
 menu:
   documentation:
     parent: configuration
 title: Flexible configuration
-weight: 100
+weight: 20
 ---
-The **Flexible Configuration** component ([source code](https://github.com/devopsfaith/krakend-flexibleconfig)) is included in the KrakenD API Gateway and allows you to split the configuration file into several pieces for a more natural organization.
+The **Flexible Configuration** component is included in the KrakenD API Gateway and allows you to split the configuration file into several pieces for a more natural organization.
 
 When the Flexible Configuration is enabled, KrakenD assumes that your configuration file is a template that needs compilation during start-up time. With this, you have the opportunity to produce a more sophisticated configuration file that utilizes variables and brings content from external files.
 
