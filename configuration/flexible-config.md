@@ -28,7 +28,8 @@ The activation of the package works via environment variables, as follows:
 
 - `FC_ENABLE=1` to let KrakenD know that you are using Flexible Configuration. You can use `1` or any other value, just pass the variable ( `0` won't disable it!). The file passed with the `-c` flag is the base template.
 - `FC_SETTINGS=dirname`: The path to the directory with all the settings files.
-- `FC_PARTIALS=dirname`: The path to the directory with the partial templates included in the configuration file.
+- `FC_PARTIALS=dirname`: The path to the directory with the partial files included in the configuration file. Partial file are NOT evaluated, just inserted in the placeholder.
+- `FC_TEMPLATES=dirname`: The path to the directory with the sub templates included in the configuration file. These are evaluated using the Go templating system.
 - `FC_OUT`: For debugging purposes, pass a filename where the final JSON result of parsing the template is saved.
 
 For instance, let's assume you decided to organize your configuration as follows:
@@ -37,7 +38,9 @@ For instance, let's assume you decided to organize your configuration as follows
     └── config
        ├── krakend.json
        ├── partials
-       │   └── service_extra_config.tmpl
+       │   └── static_file.tmpl
+       ├── templates
+       │   └── environment.tmpl
        └── settings
            └── db.json
 
@@ -46,41 +49,72 @@ Then you can run KrakenD from the terminal with this command:
     $ FC_ENABLE=1 \
     FC_SETTINGS="$PWD/config/settings" \
     FC_PARTIALS="$PWD/config/partials" \
+    FC_TEMPLATES="$PWD/config/templates" \
     krakend run -c "$PWD/config/krakend.json"
 
 ## Template syntax
 The configuration file passed with the `-c` flag is treated as a **Go template**, and you can make use of all the power the template engine brings. The data evaluations or control structures are easily recognized as they are surrounded by `{{` and `}}`. Any other text outside the delimiters is copied to the output unchanged.
 
-### Include an external file
-To insert the content of an external partial file in-place use:
+These are all the syntax possibilities:
 
-    {{ include "partial_file_name.tmpl" }}
+- `{{ .file.key }}`: Insert the value of a `key` in a settings `file`
+- `{{ marshall .file.key }}`: Insert a JSON structure under a `key` in a settings `file`
+- `{{ include "file.txt" }}`: Replace with the complete content of the `file.txt`
+- `{{ template "file.tmpl" context }}`: Process the Go template `file.tmpl` passing in its dot (`{{ . }}`) the `context`
 
-**The content inside the partial is not parsed**, and is inserted *as is*. The file is assumed to live inside the directory defined in `FC_PARTIALS`.
+See below for further explanation and examples.
 
 ### Insert values from settings files
-In the `FC_SETTINGS` directory, you can save different `.json` files with data structures insides that you can reference in the templates.
+In the `FC_SETTINGS` directory, you can save different `.json` files with data structures inside that you can reference in the templates.
 
 For instance, if you have a file `settings/db.json` with the following content:
 
     {
         "host": "192.168.1.23",
         "port": 8766,
-        "pass": "a-p4ssw0rd"
+        "pass": "a-p4ssw0rd",
+        "label": "production"
     }
 
-You can access particular settings like this: `{{ .db.host }}`.
+You can access particular settings like using this syntax: `{{ .db.host }}`.
 
-When instead of a single value you need to insert a whole JSON structure, you need to use the `marshall`.
+The first name after the dot is the name of the file, and then the element in the structure you want to access. The example would write `192.168.1.23` where you wrote the placeholder.
+
+### Insert structures from settings files
+When instead of a single value you need to insert a **JSON structure** (several element), you need to use `marshall`.
 
     {{ marshal .db }}
+
+The example would write the whole content of the `db.json` file.
+
+### Include an external file
+To insert the content of an external partial file in-place use:
+
+    {{ include "partial_file_name.txt" }}
+
+**The content inside the partial is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension.
+
+### Include and process a sub-template
+While the `include` is only meant to paste the content of a plain text file, the `template` gives you all the power of Go templating ([documentation](https://golang.org/pkg/text/template/)). The syntax is as follows:
+
+    {{ template "template_name.tmpl" context }}
+
+The template `template_name.tmpl` is executed and processed. The value of `context` is passed in the template as the context, meaning that the sub-template can access it using the dot `{{ . }}`. This context variable could be an object, such as `{{ template "environment" .db.label }}`, but it can also be another type, like a string: ``{{ template "environment" "production" }}`.
+
+Go templates allow you to introduce handy stuff like conditionals or loops and allow you to create powerful configurations.
+
 
 ## Testing the configuration
 As the configuration is now composed of several pieces, it's easy to do a mistake in some point. Test the syntax of all the files is good with the `krakend check` command and pay attention to the output to verify there aren't any errors.
 
-You might also want to use the flag `FC_OUT` to write the temporary file to a known path, so you can check its contents:
+You might also want to use the flag `FC_OUT` to write the content of the final file in a known path, so you can check its contents:
 
-    FC_ENABLE=1 FC_SETTINGS="$PWD/config/settings" FC_PARTIALS="$PWD/config/partials" FC_OUT=out.json krakend check -d -c "$PWD/config/krakend.json"
+    FC_ENABLE=1 \
+    FC_SETTINGS="$PWD/config/settings" \
+    FC_PARTIALS="$PWD/config/partials" \
+    FC_TEMPLATES="$PWD/config/templates" \
+    FC_OUT=out.json \
+    krakend check -d -c "$PWD/config/krakend.json"
 
 When there are errors the output contains information to help you resolve it, e.g:
 
@@ -88,7 +122,7 @@ When there are errors the output contains information to help you resolve it, e.
     - backends.json: invalid character '}' looking for beginning of object key string
 
 # Flexible configuration example
-To demonstrate the usage of the flexible configuration we are going to reorganize a configuration file in several pieces. This is a simple example to see the basics of the templating system, and it does not intend to show a good way to organize and split the files:
+To demonstrate the usage of the flexible configuration we are going to reorganize a configuration file in several pieces. This is a simple example to see the basics of the templates system, and it does not intend to show a good way to organize and split the files:
 
     .
     └── config
