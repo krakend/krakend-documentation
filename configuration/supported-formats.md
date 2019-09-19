@@ -7,7 +7,7 @@ menu:
     parent: configuration
 title: KrakenD file supported formats
 notoc: true
-weight: 20
+weight: 30
 ---
 
 The expected configuration file format by default is `json`, but KrakenD can parse different formats if one of the following extensions is found:
@@ -21,12 +21,12 @@ The expected configuration file format by default is `json`, but KrakenD can par
 - `.prop`
 - `.hcl`
 
-Nevertheless, **our recommendation is to choose `JSON`**. 
+Nevertheless, **our recommendation is to choose `JSON`**.
 
 Validate the syntax (not the logic) with [`krakend check`](/docs/commands/check/)
 
 # Why choosing json?
-You are free to choose `YAML`, `TOML` or any of the other formats at your best convenience. But have in mind the following logic when choosing a file format other than `json`. 
+You are free to choose `YAML`, `TOML` or any of the other formats at your best convenience. But have in mind the following logic when choosing a file format other than `json`.
 
 **Using the UI**: If you intend to generate or edit your configuration file using the [KrakenDesigner](https://designer.krakend.io), the input and output are always a `.json` file.
 
