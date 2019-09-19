@@ -26,23 +26,23 @@ The only requirement to use the Flexible Configuration is to encode the configur
 # Usage
 The activation of the package works via environment variables, as follows:
 
-- `FC_ENABLE=1` to let KrakenD know that you are using Flexible Configuration. You can use `1` or any other value, just pass the variable ( `0` won't disable it!). The file passed with the `-c` flag is the base template.
+- `FC_ENABLE=1` to let KrakenD know that you are using Flexible Configuration. You can use `1` or any other value (but  `0` won't disable it!). The file passed with the `-c` flag is the base template.
 - `FC_SETTINGS=dirname`: The path to the directory with all the settings files.
-- `FC_PARTIALS=dirname`: The path to the directory with the partial files included in the configuration file. Partial file are NOT evaluated, just inserted in the placeholder.
-- `FC_TEMPLATES=dirname`: The path to the directory with the sub templates included in the configuration file. These are evaluated using the Go templating system.
-- `FC_OUT`: For debugging purposes, pass a filename where the final JSON result of parsing the template is saved.
+- `FC_PARTIALS=dirname`: The path to the directory with the partial files included in the configuration file. Partial files DON'T EVALUATE, they are only inserted in the placeholder.
+- `FC_TEMPLATES=dirname`: The path to the directory with the sub-templates included in the configuration file. These are evaluated using the Go templating system.
+- `FC_OUT`: For debugging purposes, saves the resulting configuration of processing the flexible configuration in the given filename. Otherwise, the final file is not visible.
 
 For instance, let's assume you decided to organize your configuration as follows:
 
     .
     └── config
-       ├── krakend.json
-       ├── partials
-       │   └── static_file.tmpl
-       ├── templates
-       │   └── environment.tmpl
-       └── settings
-           └── db.json
+       ├── krakend.json
+       ├── partials
+       │   └── static_file.tmpl
+       ├── templates
+       │   └── environment.tmpl
+       └── settings
+           └── db.json
 
 Then you can run KrakenD from the terminal with this command:
 
@@ -81,18 +81,18 @@ You can access particular settings like using this syntax: `{{ .db.host }}`.
 The first name after the dot is the name of the file, and then the element in the structure you want to access. The example would write `192.168.1.23` where you wrote the placeholder.
 
 ### Insert structures from settings files
-When instead of a single value you need to insert a **JSON structure** (several element), you need to use `marshall`.
+When instead of a single value you need to insert a **JSON structure** (several elements), you need to use `marshall`.
 
     {{ marshal .db }}
 
-The example would write the whole content of the `db.json` file.
+The example would write the entire content of the `db.json` file.
 
 ### Include an external file
 To insert the content of an external partial file in-place use:
 
     {{ include "partial_file_name.txt" }}
 
-**The content inside the partial is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension.
+**The content inside the partial template is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension.
 
 ### Include and process a sub-template
 While the `include` is only meant to paste the content of a plain text file, the `template` gives you all the power of Go templating ([documentation](https://golang.org/pkg/text/template/)). The syntax is as follows:
@@ -105,7 +105,7 @@ Go templates allow you to introduce handy stuff like conditionals or loops and a
 
 
 ## Testing the configuration
-As the configuration is now composed of several pieces, it's easy to do a mistake in some point. Test the syntax of all the files is good with the `krakend check` command and pay attention to the output to verify there aren't any errors.
+As the configuration is now composed of several pieces, it's easy to make a mistake at some point. Test the syntax of all the files is good with the `krakend check` command and pay attention to the output to verify there aren't any errors.
 
 You might also want to use the flag `FC_OUT` to write the content of the final file in a known path, so you can check its contents:
 
@@ -116,26 +116,26 @@ You might also want to use the flag `FC_OUT` to write the content of the final f
     FC_OUT=out.json \
     krakend check -d -c "$PWD/config/krakend.json"
 
-When there are errors the output contains information to help you resolve it, e.g:
+When there are errors, the output contains information to help you resolve it, e.g.:
 
     ERROR parsing the configuration file: loading flexible-config settings:
     - backends.json: invalid character '}' looking for beginning of object key string
 
 # Flexible configuration example
-To demonstrate the usage of the flexible configuration we are going to reorganize a configuration file in several pieces. This is a simple example to see the basics of the templates system, and it does not intend to show a good way to organize and split the files:
+To demonstrate the usage of the flexible configuration, we are going to reorganize a configuration file in several pieces. This is a simple example to see the basics of the templates system, and it does not intend to show a good way to organize and split the files:
 
     .
     └── config
-        ├── krakend.json
-        ├── partials
-        │   └── rate_limit_backend.tmpl
-        └── settings
-            ├── endpoint.json
-            └── service.json
+        ├── krakend.json
+        ├── partials
+        │   └── rate_limit_backend.tmpl
+        └── settings
+            ├── endpoint.json
+            └── service.json
 
 **partials/rate_limit_backend.tmpl**
 
-In this file we have written the content of the rate limit configuration for a backend. This file will be inserted when included "as is":
+In this file, we have written the content of the rate limit configuration for a backend. This file is inserted when included "as is":
 
     "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
         "maxRate": "100",
@@ -144,7 +144,7 @@ In this file we have written the content of the rate limit configuration for a b
 
 **settings/service.json**
 
-In the settings directory we will write all the files that be offered you can write anything you want and the contents can be retrieved as variables.
+In the settings directory, we write all the files whose values can be accessed as variables.
 
     {
         "port": 8090,
@@ -167,7 +167,7 @@ In the settings directory we will write all the files that be offered you can wr
 
 **settings/endpoint.json**
 
-This file declares a couple of endpoints that feed from a single backend:
+This file declares a couple of endpoints that feed on a single backend:
 
     {
         "example_group": [
@@ -184,7 +184,7 @@ This file declares a couple of endpoints that feed from a single backend:
 
 **krakend.json**
 
-Finally, the base template. It inserts the content of other files using `include`, uses the variables declared in the settings files and writes json content with `marshal`.
+Finally, introducing the base template. It inserts the content of other files using `include`, uses the variables declared in the settings files and writes json content with `marshal`.
 
 Have a look at the highlighted lines:
 
@@ -224,6 +224,8 @@ Have a look at the highlighted lines:
 - The `extra_config` in the third line is inserted as a JSON object using the `marshal` function from the `service.json` as well.
 - A `range` iterates the array found under `endpoint.json` and key `example_group`. The variables inside the range are relative to the `example_group` content.
 - Finally, an `include` at the bottom inserts the content as is.
+
+Notice that there is a `{{ range }}`. If you wanted to use it inside a template, and not the base file, you would need to include it inside a sub-template with ``{{ template "template.tmp" .endpoint.example_group }}``.
 
 To parse the configuration use:
 
