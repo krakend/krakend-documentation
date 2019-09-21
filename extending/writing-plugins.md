@@ -77,14 +77,18 @@ The sequence described above can be seen in the following diagram. Notice the tw
 The blue spots indicate the places where you can register your custom plugins.
 
 ### Writing proxy plugins (http client)
+Find a *hello world* example with the simplest custom plugin in the [godoc documentation](https://godoc.org/github.com/devopsfaith/krakend/transport/http/client/plugin).
 
 **HTTP client** plugins execute in the proxy layer. They allow you to intercept, transform, and manipulate the requests before they hit your backend services.
 
 Writing an HTTP client requires to implement the [plugin client interface](https://github.com/devopsfaith/krakend/tree/master/transport/http/client/plugin). After doing this, your plugin registers itself on KrakenD during startup time.
 
-A complete and working example of this type of plugin can be found in the article [gRPC-gateway as a KrakenD plugin](/blog/krakend-grpc-gateway-plugin/), which builds a gRPC-gateway to connect to your backends. Go through the article and linked sources to get your plugin working.
+A more complete example of this type of plugin that the basic plugin above can be found in the article [gRPC-gateway as a KrakenD plugin](/blog/krakend-grpc-gateway-plugin/), which builds a gRPC-gateway to connect to your backends. Go through the article and linked sources to get your plugin working.
+
+
 
 ### Writing router plugins (http handler)
+Find a *hello world* example with the simplest custom plugin in the [godoc documentation](https://godoc.org/github.com/devopsfaith/krakend/transport/http/server/plugin)
 
 The router layer receives the user requests. You can intercept the request before KrakenD gets it to do any transformation or operation you want.
 
