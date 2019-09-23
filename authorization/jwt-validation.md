@@ -14,11 +14,11 @@ The JWT validation shields any amount of desired endpoints, forcing requests to 
 The **JOSE component** is responsible for validating the tokens.
 
 A typical request requiring JWT validation includes in the `Authorization` header a bearer with the token:
-
-    GET /resource HTTP/1.1
-    Host: krakend.example.com
-    Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9...TJVA95OrM7E20RMHrHDcEfxjoYZgeFONFh7HgQeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IktyYWtlbkQiLCJpYXQiOjE1MTYyMzkwMjJ9.NVFYj2MhyvJjMESOg4ktIOfzak2ekD7IrCa9-UiO4QA
-
+{{< terminal >}}
+GET /resource HTTP/1.1
+Host: krakend.example.com
+Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9...TJVA95OrM7E20RMHrHDcEfxjoYZgeFONFh7HgQeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IktyYWtlbkQiLCJpYXQiOjE1MTYyMzkwMjJ9.NVFYj2MhyvJjMESOg4ktIOfzak2ekD7IrCa9-UiO4QA
+{{< /terminal >}}
 **And cookies?** Yes, you can also send the validation token in a **cookie**.
 
 We consider a JWT token to be valid when is well formed, signed by a recognized issuer, unexpired, with some claims and is not marked as [revoked](/docs/authorization/revoking-tokens).

@@ -26,8 +26,7 @@ Unlike the rest of API Gateways in the space, KrakenD framework aims to bring to
 
 KrakenD focuses on providing a core framework and functionality that a pure API gateway needs, and it keeps it clean and extensible, so that you can create your custom gateway without any trouble.
 
-[See source code](https://github.com/devopsfaith/krakend)
-
+<a class="btn btn-light" href="https://github.com/devopsfaith/krakend"><i class="fab fa-github"></i> Source code</a>
 
 ## KrakenD Community Edition
 `KrakenD-CE` ([repo](https://github.com/devopsfaith/krakend-ce)) is a ready-to-use API gateway, assembled the way we think it delivers more value to the general audience. The KrakenD-CE uses the KrakenD framework in its core and extends its functionality by adding in the final binary some of the several [middleware contributions](https://github.com/devopsfaith/krakend-contrib) we thought an API Gateway should have.
@@ -37,9 +36,11 @@ KrakenD-CE adds to the KrakenD framework more functionality like logging, servic
 The good news is that we always refer to both things as "KrakenD" :)
 
 <a class="btn btn-secondary btn-circle" href="/download/"><i class="fa fa-download"></i> Download</a>
-<a class="btn" href="https://github.com/devopsfaith/krakend-ce"><i class="fab fa-github"></i> Source code</a>
+<a class="btn btn-light" href="https://github.com/devopsfaith/krakend-ce"><i class="fab fa-github"></i> Source code</a>
 
 ## KrakenD Enterprise
-There is no Enterprise software. KrakenD(-CE) is the same product for paying customers or the community. The KrakenD Enterprise subscription is a series of services in consultancy, development, and support around KrakenD.
+Customers of the [KrakenD Enterprise](/enterprise) package enjoy the development, consultancy, support, and training services offered by the very same KrakenD creators. As per the software, KrakenD Enterprise users have SaaS functionalities that allow remote management, observability, and other features. There is also more tooling around KrakenD to increase productivity, and enable working with KrakenD in large groups of developers.
+
+**Our commitment to open-source is still in the center of our business**, and this is why our Enterprise solution is built on top of the open-source version.  The Enterprise version uses the same OSS binary and extends it with a great variety of pluggable solutions. We want to make sure that both enterprise and community users have the excellent quality and reliability they are used to.
 
 [Learn more about Enterprise](/enterprise/)

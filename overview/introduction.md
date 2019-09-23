@@ -9,12 +9,13 @@ menu:
     parent: getting started
 next: /overview/quickstart
 title: Introduction to KrakenD
+notoc: true
 weight: -10000
 images:
+- /images/KrakendFlow.png
 - /images/documentation/krakend-gateway.png
 ---
 
-# What is KrakenD?
 KrakenD is a high-performance open source API Gateway.
 
 Its core functionality is to create an API that acts as an aggregator of many microservices into single endpoints, doing the heavy-lifting automatically for you: aggregate, transform, filter, decode, throttle, auth and more.
