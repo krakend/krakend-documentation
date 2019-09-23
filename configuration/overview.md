@@ -37,10 +37,13 @@ The configuration file can be written as `.json`, `.toml`, `.yaml`, `.yml`, `.pr
 # Validating the syntax of the configuration file
 Validate the syntax (not the logic) of your configuration file using the `krakend check` command:
 
-    krakend check --config ./krakend.toml --debug
+{{% terminal%}}
+krakend check --config ./krakend.toml --debug
+Syntax OK!
+{{% /terminal %}}
 
-You can also start the service directly as this is done right before the server starts. When the syntax is correct, you'll see the message
+When the syntax is correct, you'll see the message `Syntax OK!`, otherwise the error is shown.
 
-    Syntax OK!
+You can also start the service directly as this is done right before the server starts.
 
 Read more about [`krakend check`](/docs/commands/check/)

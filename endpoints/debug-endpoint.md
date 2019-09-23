@@ -76,14 +76,17 @@ To test it right now, save the content of this file in a `krakend-test.json` and
 
 Start the server:
 
-    krakend run -d -c krakend-test.json
-
+{{< terminal title="Run KrakenD with debug mode">}}
+krakend run -d -c krakend-test.json
+{{< /terminal >}}
 
 Now we can test that the endpoints behave as expected:
 
 **Default behavior:**
 
-    curl -i 'http://localhost:8080/default-behavior?a=1&b=2&c=3'
+{{< terminal title="Ignore query strings by default">}}
+curl -i 'http://localhost:8080/default-behavior?a=1&b=2&c=3'
+{{< /terminal >}}
 
 In the KrakenD log, we can see that `a`, `b`, and `c` do not appear in the backend call, neither its headers. The `curl` command automatically sends the `Accept` and `User-Agent` headers but they are not in the backend call either, instead we see the KrakenD User-Agent as set by the gateway:
 
@@ -100,7 +103,9 @@ DEBUG: Body:
 
 Now let's repeat the same request but to the `/optional-params` endpoint:
 
-    curl -i 'http://localhost:8080/optional-params?a=1&b=2&c=3'
+{{< terminal title="Recognized and forwarded query strings">}}
+curl -i 'http://localhost:8080/optional-params?a=1&b=2&c=3'
+{{< /terminal >}}
 
 In the KrakenD log we can see now that the `User-Agent` and `Accept` are present (as they are implicitly sent by curl), and that `a` and `b` are reaching the backend (but not `c`):
 
@@ -117,7 +122,9 @@ DEBUG: Body:
 
 Finally, let's note what happens when you inject mandatory query strings in the backend definition, the `/mandatory/{variable}` endpoint:
 
-    curl -i 'http://localhost:8080/mandatory/foo?a=1&b=2&c=3'
+{{< terminal title="Mandatory query strings">}}
+curl -i 'http://localhost:8080/mandatory/foo?a=1&b=2&c=3'
+{{< /terminal >}}
 
 As we can see, the backend includes the `?mandatory=foo` variable that was written manually in the backend definition:
 

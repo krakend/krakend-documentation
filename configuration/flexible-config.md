@@ -1,12 +1,14 @@
 ---
 lastmod: 2018-09-29
 date: 2018-09-21
-linktitle: Configuration in multiple files
+linktitle: Multiple configuration files
 source: https://github.com/devopsfaith/krakend-flexibleconfig
 since: 0.5
 menu:
   documentation:
     parent: configuration
+images:
+- /images/krakend-flexible-config.png
 title: Flexible configuration
 weight: 20
 ---
@@ -26,7 +28,7 @@ A template system gives you full flexibility to work with the configuration file
 The only requirement to use the Flexible Configuration is to encode the configuration file in `JSON` format as the package does not support other formats just yet.
 
 # Usage
-The activation of the package works via environment variables, as follows:
+The activation of the package works via environment variables when running krakend, as follows:
 
 - `FC_ENABLE=1` to let KrakenD know that you are using Flexible Configuration. You can use `1` or any other value (but  `0` won't disable it!). The file passed with the `-c` flag is the base template.
 - `FC_SETTINGS=dirname`: The path to the directory with all the settings files.

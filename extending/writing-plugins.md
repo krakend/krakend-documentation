@@ -9,6 +9,7 @@ menu:
   documentation:
     parent: extending
 images:
+- /images/extensible.png
 - /images/documentation/krakend-plugins.png
 ---
 

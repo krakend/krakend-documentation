@@ -5,8 +5,10 @@ linktitle: Bot detector
 title: Control of bot traffic
 weight: 10
 since: 1.0
-notoc: true
+#notoc: true
 source: https://github.com/devopsfaith/krakend-botdetector
+images:
+- /images/krakend-botdetector.png
 menu:
   documentation:
     parent: throttling

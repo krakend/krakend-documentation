@@ -99,8 +99,9 @@ The configuration for the load test was stored in the `krakend.json` file, as fo
 Notice that `Lwan` is the backend running at `lwan:8080`.
 
 And we started the KrakenD with this cmd (debug mode):
-
-    $ ./krakend run --config krakend.json -d > /dev/null
+{{< terminal >}}
+krakend run --config krakend.json -d > /dev/null
+{{< /terminal >}}
 
 # Results
 

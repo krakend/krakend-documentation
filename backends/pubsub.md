@@ -1,16 +1,18 @@
 ---
 lastmod: 2019-09-15
 date: 2019-09-15
-linktitle: Pub/sub
+linktitle: Publisher/subscribe
 title: Using publisher/subscribe as backends
 weight: 100
 since: 1.0
 source: https://github.com/devopsfaith/krakend-pubsub
+images:
+- /images/features-event-driven.png
 menu:
   documentation:
     parent: backends
 ---
-Connect any endpoint to publish/subscribe backends that use any of these technologies:
+Since KrakenD 1.0 you can connect an endpoint to multiple publish/subscribe backends, helping you integrate with **event driven architectures**. For instance, a frontend client can push events to a queue using a REST interface. Or a client could consume a REST endpoint that us plugged to the last events pushed in a backend. You can even validate messages and formats, as all the KrakenD available middleware can be used. The list of supported backend technologies is:
 
 - AWS SNS (Simple Notification Service) and SQS (Simple Queueing Service)
 - Azure Service Bus Topic and Subscription
