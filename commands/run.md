@@ -16,60 +16,67 @@ menu:
 To start KrakenD, you need to invoke the `run` command with the path to the configuration file. You
 can also specify the port (defaults to `8080`)
 
-    krakend run -c krakend.json
-    # or
-    krakend run --config /path/to/krakend.json
-    # or
-    krakend run --config /path/to/krakend.json -p 8080
+{{< terminal title="Command to start KrakenD" >}}
+krakend run -c krakend.json
+# or
+krakend run --config /path/to/krakend.json
+# or
+krakend run --config /path/to/krakend.json -p 8080
+{{< /terminal >}}
 
 The `krakend run` command with no flags will remind you that you need the path to the configuration file:
 
-    $ krakend run
-    Please, provide the path to your config file
+{{< terminal title="Missing configuration file" >}}
+krakend run
+Please, provide the path to your config file
+{{< /terminal >}}
 
 Show the help:
+{{< terminal title="Run command help" >}}
+krakend run -h
 
-    $ krakend run -h
+`7MMF' `YMM'                  `7MM                         `7MM"""Yb.
+  MM   .M'                      MM                           MM    `Yb.
+  MM .d"     `7Mb,od8 ,6"Yb.    MM  ,MP'.gP"Ya `7MMpMMMb.    MM     `Mb
+  MMMMM.       MM' "'8)   MM    MM ;Y  ,M'   Yb  MM    MM    MM      MM
+  MM  VMA      MM     ,pm9MM    MM;Mm  8M""""""  MM    MM    MM     ,MP
+  MM   `MM.    MM    8M   MM    MM `Mb.YM.    ,  MM    MM    MM    ,dP'
+.JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'
+_______________________________________________________________________
 
-    `7MMF' `YMM'                  `7MM                         `7MM"""Yb.
-      MM   .M'                      MM                           MM    `Yb.
-      MM .d"     `7Mb,od8 ,6"Yb.    MM  ,MP'.gP"Ya `7MMpMMMb.    MM     `Mb
-      MMMMM.       MM' "'8)   MM    MM ;Y  ,M'   Yb  MM    MM    MM      MM
-      MM  VMA      MM     ,pm9MM    MM;Mm  8M""""""  MM    MM    MM     ,MP
-      MM   `MM.    MM    8M   MM    MM `Mb.YM.    ,  MM    MM    MM    ,dP'
-    .JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'
-    _______________________________________________________________________
+Version: {{% version %}}
 
-    Version: {{% version %}}
+The API Gateway builder
 
-    The API Gateway builder
+Usage:
+  krakend [command]
 
-    Usage:
-      krakend [command]
+Available Commands:
+  check       Validates that the configuration file is valid.
+  help        Help about any command
+  run         Run the KrakenD server.
 
-    Available Commands:
-      check       Validates that the configuration file is valid.
-      help        Help about any command
-      run         Run the KrakenD server.
+Flags:
+  -c, --config string   Path to the configuration filename
+  -d, --debug           Enable the debug
+  -h, --help            help for krakend
 
-    Flags:
-      -c, --config string   Path to the configuration filename
-      -d, --debug           Enable the debug
-      -h, --help            help for krakend
-
-    Use "krakend [command] --help" for more information about a command.
+Use "krakend [command] --help" for more information about a command.
+{{< /terminal >}}
 
 
 
 ## Example
 The most common way of starting the service is:
 
-    krakend run --config krakend.json
+{{< terminal title="Start krakend" >}}
+krakend run --config krakend.json
+{{< /terminal >}}
 
-To start the KrakenD service in a different port:
+To start the KrakenD service in a different port (the port can be set in the configuration file as well):
 
-    krakend run --config path/to/krakend.json --port 8888
+{{< terminal title="Start in a custom port" >}}
+krakend run --config path/to/krakend.json --port 8888
+{{< /terminal >}}
 
-In development and testing phase increase the verbosity to see what is going on with:
-
-    krakend run --log INFO
+In development and testing phase [increase the verbosity of the logs](http://localhost:1313/docs/logging-metrics-tracing/logging/#set-the-reporting-level)

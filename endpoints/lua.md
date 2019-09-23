@@ -1,0 +1,119 @@
+---
+lastmod: 2019-09-15
+date: 2019-09-15
+linktitle:  Lua scripting
+title: Transformations using Lua scripting
+weight: 90
+source: https://github.com/devopsfaith/krakend-lua
+since: 1.0
+menu:
+  documentation:
+    parent: endpoints
+---
+
+Scripting with Lua is an additional choice to extend your business logic, and is compatible with the rest of options such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/endpoints/martian/), or other Go plugins and middlewares.
+
+If you are more familiar with Lua than Go, this module can help you solve exceptional cases that need solution using a little bit of scripting. The introduction of Lua scripts in your Gateway does not require to recompile KrakenD, but unlike Go, Lua scripts are interpreted in real-time.
+
+For performance-first users, a Go plugin delivers better results than a Lua script.
+
+# Configuration
+KrakenD looks for the lua scripts in the root folder where krakend is running. You need to specify in the configuration which lua scripts are going to be loaded in Krakend, as well as several options. The `extra_config` can be set at `endpoint` level or `backend` level.
+
+    "extra_config": {
+          "github.com/devopsfaith/krakend-lua": {
+            "sources": ["file1.lua"],
+            "md5": {
+              "file1.lua": "49ae50f58e35f4821ad4550e1a4d1de0"
+            },
+            "pre": "pre",
+            "post": "post",
+            "live": false,
+            "skip_next": true
+          }
+    }
+
+- `sources`: An array with all the files that will be processed
+- `md5`: (optional) The md5sum of each file that must match the one found in the disk. Used to make sure that the file has not been modified by a 3rd party.
+- `pre` and `post` contain the code to start the execution in every step. `post` is only available in the `backend` section.
+- `live`: Live reload of the script in every execution
+- `skip_next`: only to be set when in a `backend` section, skips the query to the next backend.
+
+
+# Supported Lua types (cheatsheet)
+
+When running Lua scripts on KrakenD, there are two different types you can use in their coding. Depending on the place of the pipe you want to place the script you can use a `proxy` type or a `router` type:
+
+    End User <--[router]--> KrakenD <--[proxy]--> Services
+
+These two types are described as follows:
+
+*   Router: The router layer is what happens between the end-user and KrakenD
+*   Proxy: The proxy layer is between KrakenD and your services
+
+## `proxy` type
+
+Use this type when you need to intercept requests and responses between KrakenD and your services.
+
+### Request
+
+Scripts that need to modify a request that KrakenD is about to do against the backend services.
+
+*   `load` (_Static_)
+*   `method` (_Dynamic_)
+*   `path` (_Dynamic_)
+*   `query` (_Dynamic_)
+*   `url` (_Dynamic_)
+*   `params` (_Dynamic_)
+*   `headers` (_Dynamic_)
+*   `body` (_Dynamic_)
+
+Example: Access the request getter with `req:url()` and the setter with `req:url("foo")`.
+
+### Response
+
+Scripts that need to modify a request that KrakenD is about to get from the backend services.
+
+*   `load` (_Static_)
+*   `isComplete` (_Dynamic_)
+*   `statusCode` (_Dynamic_)
+*   `data` (_Dynamic_)
+*   `headers` (_Dynamic_)
+*   `body` (_Dynamic_)
+
+## `router` type
+
+Use this type when you need to script the router layer, traffic between end-users and KrakenD.
+
+### ctx
+
+*   `load` (_Static_)
+*   `method` (_Dynamic_)
+*   `query` (_Dynamic_)
+*   `url` (_Dynamic_)
+*   `params` (_Dynamic_)
+*   `headers` (_Dynamic_)
+*   `body` (_Dynamic_)
+
+# Additional helpers (cheatsheet)
+
+The following helpers are available in your scripts:
+
+## `table`
+
+*   `get` (_Dynamic_)
+*   `set` (_Dynamic_)
+*   `len` (_Dynamic_)
+
+## `list`
+
+*   `get` (_Dynamic_)
+*   `set` (_Dynamic_)
+*   `len` (_Dynamic_)
+
+## `http_response`
+
+*   `new` (_Static_)
+*   `statusCode` (_Dynamic_)
+*   `headers` (_Dynamic_)
+*   `body` (_Dynamic_)
