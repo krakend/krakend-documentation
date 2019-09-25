@@ -17,7 +17,7 @@ The Opencensus exporter allows you push data to Prometheus. Enabling it only req
 	"github_com/devopsfaith/krakend-opencensus": {
       "exporters": {
         "prometheus": {
-            "port": 9091
+            "port": 9091,
             "namespace": "krakend"
         }
 	  }
