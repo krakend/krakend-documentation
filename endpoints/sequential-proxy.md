@@ -1,11 +1,14 @@
 ---
-lastmod: 2018-11-27
+lastmod: 2019-09-26
 date: 2018-11-11
 toc: true
 linktitle: Sequential Proxy (chain reqs.)
 title: Sequential Proxy
 since: 0.7
+notoc: true
 weight: 60
+images:
+- /images/documentation/krakend-sequential-call.png
 menu:
   documentation:
     parent: endpoints
@@ -32,9 +35,9 @@ Where `0` is the index of the specific backend you want to access ( `backend` ar
 
 
 ## Example
-It's easier to understand with an example:
+It's easier to understand with the example of the graph:
 
-The `/hotels/{hotel_id}` is a backend call that returns data for the requested hotel, including a `destination_id` that is a relationship identifier. The output is like the following:
+KrakenD calls a backend `/hotels/{hotel_id}` that returns data for the requested hotel. When we request for the hotel ID `25` the backend service responds with the hotel data, including a `destination_id` that is a relationship identifier. The output for `GET /hotels/25` is like the following:
 
     {
       "hotel_id": 25,
@@ -42,18 +45,33 @@ The `/hotels/{hotel_id}` is a backend call that returns data for the requested h
       "destination_id": 1034
     }
 
-Another backend call, `/destinations/{destination_id}`, returns all the possible destinations for a given numeric ID:
+KrakenD waits for the response of the backend and looks for the field `destination_id`. And then injects the value in the next backend call to `/destinations/{destination_id}`. In this case the next call is `GET /destinations/1034`, and the response is:
 
     {
       "destination_id": 1034,
       "destinations": [
-        { ... }, { ... }
-      ]
+          "LAX",
+          "SFO",
+          "OAK"
+        ]
     }
 
-We want the API Gateway to expose `/hotels/{id}` and return in the same call both the hotel data and its relationship with the destinations. The code looks like this:
+Now KrakenD has both responses from the backends and can merge the data, returning the following object to the user:
 
-    "endpoint": "/hotels/{id}",
+    {
+      "hotel_id": 25,
+      "name": "Hotel California",
+      "destination_id": 1034,
+      "destinations": [
+          "LAX",
+          "SFO",
+          "OAK"
+        ]
+    }
+
+The configuration needed for this example is:
+
+    "endpoint": "/hotel-destinations/{id}",
     "backend": [
         { <--- Index 0
             "host": [
@@ -63,7 +81,7 @@ We want the API Gateway to expose `/hotels/{id}` and return in the same call bot
         },
         { <--- Index 1
             "host": [
-                "https://hotels.api"
+                "https://destinations.api"
             ],
             "url_pattern": "/destinations/{resp0_destination_id}"
         }
@@ -74,4 +92,5 @@ We want the API Gateway to expose `/hotels/{id}` and return in the same call bot
         }
     }
 
-The key here is the variable `{resp0_destination_id}` that references the `destination_id` to the response of the backend number `0` (first).
+The key here is the variable `{resp0_destination_id}` that refers to `destination_id` for the backend with index `0` (first in the list).
+
