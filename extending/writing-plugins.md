@@ -77,6 +77,14 @@ The sequence described above can be seen in the following diagram. Notice the tw
 
 The blue spots indicate the places where you can register your custom plugins.
 
+
+Compile your plugin with `go build -buildmode=plugin -o yourplugin.so` and then reference them in the configuration file. For instance:
+
+    "github_com/devopsfaith/krakend/transport/http/server/handler": {
+       "name": "your-plugin"
+    }
+
+
 ### Writing proxy plugins (http client)
 Find a *hello world* example with the simplest custom plugin in the [godoc documentation](https://godoc.org/github.com/devopsfaith/krakend/transport/http/client/plugin).
 
@@ -85,8 +93,6 @@ Find a *hello world* example with the simplest custom plugin in the [godoc docum
 Writing an HTTP client requires to implement the [plugin client interface](https://github.com/devopsfaith/krakend/tree/master/transport/http/client/plugin). After doing this, your plugin registers itself on KrakenD during startup time.
 
 A more complete example of this type of plugin that the basic plugin above can be found in the article [gRPC-gateway as a KrakenD plugin](/blog/krakend-grpc-gateway-plugin/), which builds a gRPC-gateway to connect to your backends. Go through the article and linked sources to get your plugin working.
-
-
 
 ### Writing router plugins (http handler)
 Find a *hello world* example with the simplest custom plugin in the [godoc documentation](https://godoc.org/github.com/devopsfaith/krakend/transport/http/server/plugin)

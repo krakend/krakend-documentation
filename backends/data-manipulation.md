@@ -339,3 +339,8 @@ The response will look like this:
 All the data manipulation operations (such as whitelist, blacklist, etc) expect to find objects in the response. When an object is nested inside another object you can filter directly, but when there are arrays in the equation KrakenD needs to flatten the structure.
 
 See [flatmap documentation](/docs/backends/flatmap)
+
+# Manipulations with Lua
+Backends response can be transformed using Lua scripting.
+
+See [Lua scripts](/docs/endpoints/lua/) documentation
