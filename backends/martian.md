@@ -10,7 +10,7 @@ aliases:
 - /docs/endpoints/martian
 menu:
   documentation:
-    parent: endpoints
+    parent: backends
 ---
 The [krakend-martian](https://github.com/devopsfaith/krakend-martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel).
 
