@@ -6,6 +6,8 @@ title: Modify requests and responses with Martian
 weight: 85
 since: 0.7
 source: https://github.com/devopsfaith/krakend-martian
+aliases:
+- /docs/endpoints/martian
 menu:
   documentation:
     parent: endpoints
