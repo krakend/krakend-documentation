@@ -16,17 +16,32 @@ When you are willing to manipulate or aggregate data, KrakenD's policy regarding
 
 If in the other hand, your endpoint connects to a single backend with no manipulation, [use the `no-op` encoding](/docs/endpoints/no-op) which returns the response to the client *as is*, preserving its form: body, headers, status codes and such.
 
-You can override the default policy of hiding backend error details. If you prefer revealing these details to the client, you can choose to show them in the gateway response. To achieve this, enable the `return_error_details` option in backend the configuration, and then all errors will appear in the desired key.
+You can override the default policy of hiding backend error details.
+
+# Showing backend errors
+If you prefer revealing these details to the client, you can choose to show them in the gateway response. To achieve this, enable the `return_error_details` option in backend the configuration, and then all errors will appear in the desired key.
 
 Place the following configuration inside the `backend` configuration:
 
     "extra_config": {
         "github.com/devopsfaith/krakend/http": {
-            "return_error_details": "object_containing_error_details"
+            "return_error_details": "backend_alias"
         }
     }
 
-Notice that the `return_error_details` key requires a value that represents the name of the object containing the error details. If there are no errors, the key won't exist.
+Notice that `return_error_details` sets an alias for this backend.
+
+# Response for failing backends
+When a backend fails, you'll find an object named `error_` + `backend_alias` containing the detailed errors of the backend. The returned structure on error contains the status code and the body:
+
+
+	"error_backend_alias": {
+		"http_status_code": 404,
+		"http_body": "404 page not found\\n"
+	}
+
+
+If there are no errors, the key won't exist.
 
 # Example
 The following configuration sets an endpoint with two backends that return its errors in two different keys:
@@ -54,3 +69,13 @@ The following configuration sets an endpoint with two backends that return its e
 			}
 		]
     }
+
+Let's say your `backend_b` has failed, but your `backend_a` worked just fine. The client response could look like this:
+
+	{
+		"error_backend_b": {
+			"http_status_code": 404,
+			"http_body": "404 page not found\\n"
+		},
+		"foo": 42
+	}
