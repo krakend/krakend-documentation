@@ -60,7 +60,7 @@ The following configuration sets an endpoint with two backends that return its e
 			},
 			{
 				"host": ["http://127.0.0.1:8081"],
-				"url_pattern": "/var",
+				"url_pattern": "/bar",
 				"extra_config": {
 					"github.com/devopsfaith/krakend/http": {
 						"return_error_details": "backend_b"
