@@ -30,7 +30,7 @@ The following example describes the options explained later in this article:
         "ssl_port": "443",
         "ssl_certificate": "/path/to/cert",
         "ssl_private_key": "/path/to/key",
-        "sts_seconds": "300",
+        "sts_seconds": 300,
         "sts_include_subdomains": true,
         "frame_deny": true,
         "custom_frame_options_value": "ALLOW-FROM https://example.com",
