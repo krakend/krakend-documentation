@@ -45,6 +45,7 @@ The needed configuration to run a consumer is:
                 "host": [
                     "amqp://guest:guest@myqueue.host.com:5672"
                 ],
+                "disable_host_sanitize": true,
                 "extra_config": {
                     "github.com/devopsfaith/krakend-amqp/consume": {
                         "name":           "queue-1",
@@ -83,6 +84,7 @@ The needed configuration to run a producer is as follows:
                 "host": [
                     "amqp://guest:guest@myqueue.host.com:5672"
                 ],
+                "disable_host_sanitize": true,
                 "extra_config": {
                     "github.com/devopsfaith/krakend-amqp/produce": {
                         "exchange":       "some-exchange",
