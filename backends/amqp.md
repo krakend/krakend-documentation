@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-04-05
+lastmod: 2019-10-13
 date: 2018-04-05
 linktitle: AMQP - RabbitMQ
 title: API Gateway integration with AMQP messaging
@@ -18,12 +18,14 @@ The configuration of the queue is a straightforward process. To connect the endp
 The parameters of this integration follow the AMQP specification. To understand
 what are the implications of a certain parameter, see the **[AMQP Complete Reference Guide](https://www.rabbitmq.com/amqp-0-9-1-reference.html)**.
 
+**KrakenD creates both the exchange and the queue for you**.
+
 **Common settings**
 
 Both the consumers and the producers have this configuration keys in common:
 
-- `name` - *string*
-- `exchange` - *string*
+- `name` - *string* as the queue name
+- `exchange` - *string* the exchange name (must have `topic` type if already exists).
 - `routing_key` - []*string*
 - `durable` - *bool* `true` is recommended, but depends on the use case.
 - `delete` - *bool* `false` is recommended to avoid deletions when the consumer is disconnected
@@ -87,6 +89,7 @@ The needed configuration to run a producer is as follows:
                 "disable_host_sanitize": true,
                 "extra_config": {
                     "github.com/devopsfaith/krakend-amqp/produce": {
+                        "name": "queue-1",
                         "exchange":       "some-exchange",
                         "durable":        true,
                         "delete":         false,
