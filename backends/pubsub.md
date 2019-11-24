@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2019-11-24
 date: 2019-09-15
 linktitle: Publisher/subscribe
 title: Using publisher/subscribe as backends
@@ -19,6 +19,7 @@ Since KrakenD 1.0 you can connect an endpoint to multiple publish/subscribe back
 - GCP PubSub
 - NATS.io
 - RabbitMQ
+- Apache Kafka
 
 # Configuration
 To add pub/sub functionality to your backends include the following namespaces under the `extra_config` of your `backend`:
@@ -74,7 +75,7 @@ For SQS topics and subscriptions, the URL's host+path is automatically prefixed 
 Schema:
 
 - Topics: `azuresb://mytopic`
-- Subsciptions: `azuresb://mytopic?subscription=mysubscription`
+- Subscriptions: `azuresb://mytopic?subscription=mysubscription`
 
 The URL's host+path is used as the topic name. For subscriptions, the subscription name must be provided in the "subscription" query parameter.
 
@@ -84,6 +85,14 @@ The URL's host+path is used as the topic name. For subscriptions, the subscripti
 Schema:
 
 - Topics: `rabbit://myexchange`
-- Subsciptions: `rabbit://myqueue`
+- Subscriptions: `rabbit://myqueue`
 
 For topics, the URL's host+path is used as the exchange name. For subscriptions, the URL's host+path is used as the queue name. No query parameters are supported.
+
+## Kafka
+[Apache Kafka](https://kafka.apache.org/) is a distributed streaming platform.
+
+Schema:
+
+- Topics: `kafka://mytopic`
+- Subscriptions: `kafka://group?topic=mytopic`
