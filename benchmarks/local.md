@@ -128,4 +128,4 @@ Response from the KrakenD:
 
 # Summary
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=local_100_500_concurrency.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "local_100_500_concurrency.csv">}}

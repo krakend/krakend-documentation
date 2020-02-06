@@ -304,10 +304,10 @@ And we started the environment as described in the [README](https://github.com/v
 
 ## Requests per second
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=api-gateway-benchmark_test01_rps.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "api-gateway-benchmark_test01_rps.csv">}}
 
 ## Response time distribution
 
 *Time in milliseconds*
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=api-gateway-benchmark_test01_resp_time.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "api-gateway-benchmark_test01_resp_time.csv">}}
