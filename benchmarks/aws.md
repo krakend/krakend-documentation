@@ -107,43 +107,43 @@ krakend run --config krakend.json -d > /dev/null
 
 ## Proxy test on `t2.micro`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=t2_micro_test01.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "t2_micro_test01.csv" >}}
 
 ## Aggregate test on `t2.micro`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=t2_micro_aggregate.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "t2_micro_aggregate.csv" >}}
 
 ## Proxy test on `t2.medium`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=t2_medium_test01.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "t2_medium_test01.csv" >}}
 
 ## Aggregate test on `t2.medium`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=t2_medium_aggregate.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "t2_medium_aggregate.csv" >}}
 
 ## Proxy test on `m4.large`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=m4_large_test01.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "m4_large_test01.csv" >}}
 
 ## Aggregate test on `m4.large`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=m4_large_aggregate.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "m4_large_aggregate.csv" >}}
 
 ## Proxy test on `c4.xlarge`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=c4_xlarge_test01.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "c4_xlarge_test01.csv" >}}
 
 ## Aggregate test on `c4.xlarge`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=c4_xlarge_aggregate.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "c4_xlarge_aggregate.csv" >}}
 
 ## Proxy test on `c4.2xlarge`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=c4_2xlarge_test01.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "c4_2xlarge_test01.csv" >}}
 
 ## Aggregate test on `c4.2xlarge`
 
-<script src="https://gist.github.com/kpacha/91caba50e47160f656069373b0f0605d.js?file=c4_2xlarge_aggregate.csv"></script>
+{{< gist kpacha 91caba50e47160f656069373b0f0605d "c4_2xlarge_aggregate.csv" >}}
 
 ## Conclusions
 During all the tests we did, the instances of type `c4` always showed a stable behavior while the `m4` types didn't offer
