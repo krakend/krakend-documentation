@@ -21,13 +21,13 @@ For performance-first users, a Go plugin delivers better results than a Lua scri
 KrakenD looks for the lua scripts in the root folder where krakend is running. You need to specify in the configuration which lua scripts are going to be loaded in Krakend, as well as several options. The `extra_config` can be set at `endpoint` level or `backend` level.
 
     "extra_config": {
-          "github.com/devopsfaith/krakend-lua": {
+          "github.com/devopsfaith/krakend-lua/proxy": {
             "sources": ["file1.lua"],
             "md5": {
               "file1.lua": "49ae50f58e35f4821ad4550e1a4d1de0"
             },
-            "pre": "pre",
-            "post": "post",
+            "pre": "lua code to execute for pre",
+            "post": "lua code to execute for post",
             "live": false,
             "skip_next": true
           }
@@ -39,6 +39,21 @@ KrakenD looks for the lua scripts in the root folder where krakend is running. Y
 - `live`: Live reload of the script in every execution
 - `skip_next`: only to be set when in a `backend` section, skips the query to the next backend.
 
+# Namespace (component name)
+
+There are three namespaces that are used for the lua component.
+
+Under the `endpoint` section use the namespaces (these are described in the next section):
+  
+    "github.com/devopsfaith/krakend-lua/proxy"
+    
+    and
+    
+    "github.com/devopsfaith/krakend-lua/router"
+
+Under the `backend` use the name space:
+
+    "github.com/devopsfaith/krakend-lua/proxy/backend"
 
 # Supported Lua types (cheatsheet)
 
@@ -117,3 +132,40 @@ The following helpers are available in your scripts:
 *   `statusCode` (_Dynamic_)
 *   `headers` (_Dynamic_)
 *   `body` (_Dynamic_)
+
+
+# Sequence of execution
+
+Request sequence:
+1. Router  "source" files
+2. Router  "pre" logic
+3. Proxy   "source" files
+4. Proxy   "pre" logic
+5. Backend "source" files
+6. Backend "pre" logic
+
+
+The returned response then goes through:
+
+7. Backend "post" logic
+8. Proxy   "post" logic
+
+# Examples
+
+For the endpoint section:
+
+    "extra_config": {
+          "github.com/devopsfaith/krakend-lua/proxy": {
+            "pre": "print('Lua proxy!'); local r = request.load(); r:header('X-from-lua', '1234');",
+          }
+    }
+
+
+For the backend section:
+
+    "extra_config": {
+          "github.com/devopsfaith/krakend-lua/proxy/backend": {
+            "pre": "print('Showing body from backend-pre logic'); local r = request.load(); print(r:body('')); ",
+          }
+    }
+
