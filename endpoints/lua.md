@@ -29,6 +29,7 @@ KrakenD looks for the lua scripts in the root folder where krakend is running. Y
             "pre": "lua code to execute for pre",
             "post": "lua code to execute for post",
             "live": false,
+            "allow_open_libs": false,
             "skip_next": true
           }
     }
@@ -37,6 +38,7 @@ KrakenD looks for the lua scripts in the root folder where krakend is running. Y
 - `md5`: (optional) The md5sum of each file that must match the one found in the disk. Used to make sure that the file has not been modified by a 3rd party.
 - `pre` and `post` contain the code to start the execution in every step. `post` is only available in the `backend` section.
 - `live`: Live reload of the script in every execution
+- `allow_open_libs`: The regular lua libraries are not open by default, as an efficiency point. But if you need to use the lua libraries (for file io for example), then set this to true.  If not present, default value is false.
 - `skip_next`: only to be set when in a `backend` section, skips the query to the next backend.
 
 # Namespace (component name)
