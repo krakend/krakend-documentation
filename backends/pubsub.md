@@ -92,7 +92,10 @@ For topics, the URL's host+path is used as the exchange name. For subscriptions,
 ## Kafka
 [Apache Kafka](https://kafka.apache.org/) is a distributed streaming platform.
 
+Kafka connection requires KrakenD >= `1.1`.
+
 Schema:
 
 - Topics: `kafka://mytopic`
 - Subscriptions: `kafka://group?topic=mytopic`
+
