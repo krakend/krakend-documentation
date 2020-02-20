@@ -89,7 +89,4 @@ The following example demonstrates a complete configuration to fulfill the requi
         ]
     }
 
-The code above works with Auth0. The differences with the basic example are:
-
-- The id and the secret are passed as `endpoint_params`, as auth0 ignores the auth header and expects the credentials sent as JSON data or form body.
-- The `Accept` header is needed when sending a request to auth0. The `krakend-martian` component modifies the request to the backend to do that.
+The code above works with Auth0. The difference with the basic example is the way both the id and the secret are passed as `endpoint_params`, as auth0 ignores the auth header and expects the credentials sent as JSON data or form body.
