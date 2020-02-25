@@ -158,7 +158,7 @@ For the endpoint section:
 
     "extra_config": {
           "github.com/devopsfaith/krakend-lua/proxy": {
-            "pre": "print('Lua proxy!'); local r = request.load(); r:header('X-from-lua', '1234');",
+            "pre": "print('Lua proxy!'); local r = request.load(); r:headers('X-from-lua', '1234');",
           }
     }
 
