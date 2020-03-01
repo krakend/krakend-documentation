@@ -2,7 +2,7 @@
 lastmod: 2019-01-15
 date: 2019-01-14
 toc: true
-linktitle: Writing plugins
+linktitle: Writing custom plugins
 title: Writing custom plugins
 weight: 10
 menu:
