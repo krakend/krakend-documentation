@@ -20,7 +20,7 @@ The **default policy** for data forwarding works as follows:
 
 You can change this behavior according to your needs, and define which elements are allowed to pass.
 
-# Optional query string forwarding
+## Optional query string forwarding
 KrakenD **does not send any query string parameter to the backend by default**, avoiding the pollution of the backends. Meaning that if an endpoint `/foo` receives the query string `/foo?a=1&b=2` all its declared backends are not going to see neither `a` nor `b`.
 
 The property list `querystring_params` in the `endpoint` configuration allows you to declare **optional query string parameters**. When this list exists in the configuration, the forwarding policy behaves like a whitelist: all matching parameters declared in the `querystring_params` list are forwarded to the backend, and the rest dropped.
@@ -54,7 +54,7 @@ With this configuration, given a request like `http://krakend:8080/v1/foo?a=1&b=
 
 Also, if a request like `http://krakend:8080/v1/foo?a=1` does not include `b`, this parameter is simply missing in the backend request as well.
 
-## Sending all query string parameters
+### Sending all query string parameters
 While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
 ```
 "querystring_params":[  
@@ -63,7 +63,7 @@ While the default policy prevents from sending unrecognized query string paramet
 ```
 Enabling the wildcard pollutes your backends, as any query string sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the query strings in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
-## Mandatory query string parameters
+### Mandatory query string parameters
 When your backend requires query string parameters and you want to make them **mandatory** in KrakenD, use the `{variables}` placeholders in the endpoints definition. The variables can be injected in the backends as part of the query string parameters. For instance:
 
     ...
@@ -113,7 +113,7 @@ No optional parameter has been passed, so the mandatory one is used.
 
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint) to understand how to test query string parameters.
 
-# Headers forwarding
+## Headers forwarding
 KrakenD **does not send client headers to the backend by default**.  Use `headers_to_pass`.
 
 Declare the list of headers sent by the client that you want to let pass to the backend with the `headers_to_pass` option.
@@ -160,7 +160,7 @@ This setting changes the headers received by the backend to:
 
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint) to understand how to test headers.
 
-## Sending all client headers to the backends
+### Sending all client headers to the backends
 While the default policy prevents forwarding unrecognized headers, setting an asterisk `*` as the parameter name makes the gateway to **forward any header to the backends**, including cookies:
 ```
 "headers_to_pass":[  
@@ -170,7 +170,7 @@ While the default policy prevents forwarding unrecognized headers, setting an as
 Enabling the wildcard pollutes your backends, as any header sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the headers in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
 
-# Cookies forwarding
+## Cookies forwarding
 A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `headers_to_pass`, just as you would do with any other header.
 
 When doing this, **all your cookies** are sent to all backends inside the endpoint. Use this option wisely!
