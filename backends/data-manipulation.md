@@ -36,9 +36,9 @@ Also worth mentioning, the operator works with **objects only** and not with arr
 
 For instance, `{ "a": [ { "a1": 1 } ] }` can't be blacklisted as `a.a1` because `a1` is inside an array.
 
-{{% note title="Working with arrays" %}}
+{{< note title="Working with arrays" >}}
 Blacklist and whitelist filters expect objects. When working with collections, see the [flatmap approach](/docs/backends/flatmap/)
-{{% /note %}}
+{{< /note >}}
 
 ### Blacklist example
 We will use the [JSONPlaceholder](https://jsonplaceholder.typicode.com/) fake API so you can see live the output of the backend.

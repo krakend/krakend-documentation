@@ -29,6 +29,8 @@ Inside the `endpoints`, you declare an array with every `endpoint` (the URL) the
 
 It looks like this:
 
+{{< highlight JSON >}}
+{
     "endpoints": [
         {
           "endpoint": "/v1/foo-bar",
@@ -48,6 +50,8 @@ It looks like this:
           ]
         }
       ]
+}
+{{< /highlight >}}
 
 This declares and endpoint `/v1/foo-bar` which is the result of merging the responses from `/foo` and `/bar`.
 

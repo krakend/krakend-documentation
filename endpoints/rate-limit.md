@@ -48,11 +48,11 @@ Instead of counting all the connections to the endpoint the `clientMaxRate` keep
     200 IPs x 10 req/s = 2000req/s
 
 
-{{% note title="A note on performance" %}}
+{{< note title="A note on performance" >}}
 Limiting endpoints per user makes KrakenD keep in memory counters for the two dimensions: *endpoints x clients*.
 
 The `clientMaxRate` drops the performance as every incoming client needs tracking. Even counters are small in data it's easy to end up with several millions of counters.  Make sure to do your math every time.
-{{% /note %}}
+{{< /note >}}
 
 The absence of `clientMaxRate` in the configuration or `"clientMaxRate": 0` is the equivalent to no limitation.
 

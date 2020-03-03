@@ -74,7 +74,7 @@ The installation process requires following these steps:
 
 Bottom line:
 {{< terminal title="DEB based" >}}
-apt-key adv --keyserver keyserver.ubuntu.com --recv {{% param pgp_key %}}
+apt-key adv --keyserver keyserver.ubuntu.com --recv {{< param pgp_key >}}
 echo "deb http://repo.krakend.io/apt stable main" | tee /etc/apt/sources.list.d/krakend.list
 apt-get update
 apt-get install -y krakend

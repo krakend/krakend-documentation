@@ -7,6 +7,7 @@ menu:
     parent: configuration
 title: KrakenD's configuration file(s)
 weight: -1000
+notoc: true
 aliases:
 - /docs/overview/configuration/
 ---
@@ -17,9 +18,9 @@ The name `krakend.json` is just **an alias**, a convention, that we use everywhe
 Provided this simple configuration mechanism, the **versioning and automation are very convenient**. Any change in the API Gateway is always under the version control system, and the code controls the state of the gateway.
 
 
-{{% note title="Configuration using multiple files" %}}
+{{< note title="Configuration using multiple files" >}}
 If your configuration file is too large or repetitive, it can be split into several files using a templating system. See the [flexible configuration documentation](/docs/configuration/flexible-config) for more information on this feature.
-{{% /note %}}
+{{< /note >}}
 
 
 # Generating the configuration file(s)
@@ -37,10 +38,10 @@ The configuration file can be written as `.json`, `.toml`, `.yaml`, `.yml`, `.pr
 # Validating the syntax of the configuration file
 Validate the syntax (not the logic) of your configuration file using the `krakend check` command:
 
-{{% terminal%}}
+{{< terminal title="Check the configuration" >}}
 krakend check --config ./krakend.toml --debug
 Syntax OK!
-{{% /terminal %}}
+{{< /terminal >}}
 
 When the syntax is correct, you'll see the message `Syntax OK!`, otherwise the error is shown.
 

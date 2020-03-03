@@ -14,11 +14,11 @@ menu:
 
 The flatmap middleware allows you to **manipulate arrays** by flattening and expanding array structures to objects and vice versa. The process is automatically done by the flatmap component, letting you to concentrate on the type of operation you want to execute.
 
-{{% note title="Important" %}}
+{{< note title="Important" >}}
 Use a regular [data manipulation](/docs/backends/data-manipulation/) operation such as [`target`](/docs/backends/data-manipulation/#target), [`blacklist`](/docs/backends/data-manipulation/#blacklist) or [`whitelist`](/docs/backends/data-manipulation/#whitelist) whenever it fits as their computational cost is lower.
 
 The flatmap component makes sense only when you need to manipulate arrays, and **not as a general solution for all objects**.
-{{% /note %}}
+{{< /note >}}
 
 The flatmap component is part of the krakend proxy operation, so it needs to be included as an `extra_config` inside the `backend` configuration. There are two different types of operations you can do:
 

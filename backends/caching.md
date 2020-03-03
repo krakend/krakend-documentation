@@ -16,9 +16,9 @@ This caching technique applies to traffic between KrakenD and your microservices
 
 When enabled all connections for the configured backend are cached in-memory for the amount of time retrieved from the `Cache-Control` header of the response.
 
-{{% note title="Performance notice!" %}}
+{{< note title="Performance notice!" >}}
 This option can increase the load and memory consumption heavily as KrakenD needs to keep in memory all the returned data during the expiration period. Use wisely!
-{{% /note %}}
+{{< /note >}}
 
 If you enable this module, you are required to be very aware of the response sizes, caching times and the hit-rate of the calls.
 

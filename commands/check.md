@@ -29,7 +29,7 @@ The `krakend check` command validates the passed configuration. Since KrakenD do
 _______________________________________________________________________
 
 
-Version: {{% version %}}
+Version: {{< version >}}
 
 Validates that the active configuration file has a valid syntax to run the service.
 Change the configuration file by using the --config flag

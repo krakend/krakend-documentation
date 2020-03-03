@@ -16,9 +16,9 @@ When JWT shields a specific set of endpoints, requests to the API gateway must p
 
 Only in the case that the token is valid and passes all the checks, **the user is authorized to access the endpoint** and continue with the request.
 
-{{% note title="New to JWT?" %}}
+{{< note title="New to JWT?" >}}
 If you are not familiar with JWT yet, read the "[Introduction to JSON Web Tokens](https://jwt.io/introduction/)"
-{{% /note %}}
+{{< /note >}}
 
 ## KrakenD JWT implementations
 KrakenD implements both [JWT signing](/docs/authorization/jwt-signing) and [JWT validation](/docs/authorization/jwt-validation) models to protect endpoints from undesired users that are not entitled to use the information, reinforcing security.

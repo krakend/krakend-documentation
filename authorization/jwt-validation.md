@@ -23,9 +23,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9...TJVA95OrM7E20RMHrHDcEfxjoYZgeFO
 
 We consider a JWT token to be valid when is well formed, signed by a recognized issuer, unexpired, with some claims and is not marked as [revoked](/docs/authorization/revoking-tokens).
 
-{{% note title="A note on JWT generation" %}}
+{{< note title="A note on JWT generation" >}}
 When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives and are recommended to expire in minutes or hours.
-{{% /note %}}
+{{< /note >}}
 
 # Basic JWT validation
 The JWT validation is per endpoint and must be present inside every endpoint definition needing it. If several endpoints are going to require JWT validation consider using the [flexible configuration](/docs/configuration/flexible-config/) to avoid repetitive declarations.
@@ -34,7 +34,7 @@ Enable the JWT validation by adding the namespace `"github.com/devopsfaith/krake
 
 For instance, to protect the endpoint `/protected/resource`:
 
-{{< highlight go "hl_lines=4-10" >}}
+{{< highlight JSON "hl_lines=4-10" >}}
 {
     "endpoint": "/protected/resource",
     "extra_config": {
@@ -82,7 +82,8 @@ For the full list of recognized algorithms and cipher suites scroll down to the 
 
 The following example contains every single option available:
 
-{{< highlight go "hl_lines=3-24" >}}
+{{< highlight JSON >}}
+{
 "endpoint": "/foo"
 "extra_config": {
     "github.com/devopsfaith/krakend-jose/validator": {
@@ -107,6 +108,7 @@ The following example contains every single option available:
             10, 47, 53
         ]
     }
+}
 }
 {{< /highlight >}}
 

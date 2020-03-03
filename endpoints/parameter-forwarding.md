@@ -124,7 +124,7 @@ KrakenD passes only these essential headers to the backends:
 
     Accept-Encoding: gzip
     Host: localhost:8080
-    User-Agent: KrakenD Version {{% version %}}
+    User-Agent: KrakenD Version {{< version >}}
     X-Forwarded-For: ::1
 
  When you use the `headers_to_pass`, take into account that any of these headers are replaced with the ones you declare.
