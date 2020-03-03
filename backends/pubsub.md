@@ -29,6 +29,7 @@ The `host` key defines the desired driver, and the actual host is usually set in
 For a **subscriber**:
 
 	"host": "schema://",
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/subscriber": {
 			"subscription_url": "url"
@@ -38,6 +39,7 @@ For a **subscriber**:
 For a **publisher**:
 
 	"host": "schema://",
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/publisher": {
 			"topic_url": "url"
@@ -51,6 +53,7 @@ See the specification of each individual technology.
 Set the envvar `RABBIT_SERVER_URL='guest:guest@localhost:5672'` and add in the configuration:
 
 	"host": ["amqp://"],
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/subscriber": {
 		"subscription_url": "myexchange"
@@ -71,6 +74,7 @@ The configuration you need to use is:
 Example: 
 
 	"host": ["gcppubsub://"],
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/subscriber": {
 		"subscription_url": "projects/myproject/subscriptions/mysub"
@@ -91,6 +95,7 @@ No query parameters are supported.
 Example:
 
 	"host": ["nats://"],
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/subscriber": {
 			"subscription_url": "mysubject"
@@ -103,13 +108,14 @@ Example:
 
 AWS SNS sets the `url` without any `host` or environment variables, e.g:
 
+	"host": ["awssns:///arn:aws:sns:us-east-2:123456789012:mytopic""],
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/subscriber": {
-			"subscription_url": "awssns:///sns-topic-arn"
+			"subscription_url": "?region=us-east-2"
 		}
 	}
 
-For SNS topics, the URL's host+path is used as the topic Amazon Resource Name (ARN). Since ARNs have ":" in them, and ":" precedes a port in URL hostnames, leave the host blank and put the ARN in the path (e.g., `awssns:///arn:aws:service:region:accountid:resourceType/resourcePath`).
 
 ## AWS SQS
 [Amazon Simple Queue Service (SQS)](https://aws.amazon.com/sqs/) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications.
@@ -118,12 +124,12 @@ AWS SQS sets the `url` without any `host` or environment variables, e.g:
 
 Url: `awssqs://sqs-queue-url`
 
-For SQS topics and subscriptions, the URL's host+path is automatically prefixed with "https://" to create the queue URL.
 
-
+	"host": ["awssqs://https://sqs.us-east-2.amazonaws.com/123456789012"],
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/subscriber": {
-			"subscription_url": "awssqs://sqs-queue-url"
+			"subscription_url": "/myqueue?region=us-east-2"
 		}
 	}
 
@@ -142,6 +148,7 @@ Note that for subscriptions, the subscription name must be provided in the `?sub
 Example:
 
 	"host": ["azuresb://"],
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/subscriber": {
 			"subscription_url": "mytopic"
@@ -165,6 +172,7 @@ No query parameters are supported.
 Example:
 
 	"host": ["rabbit://"],
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/subscriber": {
 			"subscription_url": "myexchange"
@@ -182,6 +190,7 @@ Kafka connection requires KrakenD >= `1.1`.
 **Kafka subscriptions**:
 
 	"host": ["kafka://"],
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/subscriber": {
 			"subscription_url": "group?topic=mytopic"
@@ -192,6 +201,7 @@ Kafka connection requires KrakenD >= `1.1`.
 **Kafka topics**:
 
 	"host": ["kafka://"],
+	"disable_host_sanitize": true,
 	"extra_config": {
 		"github.com/devopsfaith/krakend-pubsub/publisher": {
 			"topic_url": "mytopic"
