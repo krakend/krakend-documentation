@@ -10,6 +10,8 @@ menu:
     parent: getting started
 title: The KrakenD Playground
 weight: 110
+images: ["https://github.com/devopsfaith/krakend-playground/blob/master/composer-env.png?raw=true"]
+
 ---
 If you are new to KrakenD, a quick way to get started is to make use of the [KrakenD Playground](https://github.com/devopsfaith/krakend-playground).
 
