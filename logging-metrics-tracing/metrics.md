@@ -14,7 +14,7 @@ The metrics *middleware* offers a new service in a different port and exposes a 
 
     http://localhost:8080/__stats/
 
-# Enabling metrics
+## Enabling metrics
 In order to add metrics to your KrakenD installation add the `github_com/devopsfaith/krakend-metrics` namespace under `extra_config` in the root of your configuration file, e.g.:
 
 {{< highlight go "hl_lines=3-11" >}}

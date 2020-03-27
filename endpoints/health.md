@@ -21,7 +21,7 @@ Although there is no default health check implementation, the result can be achi
 - Use a [static Martian modifier](/docs/backends/martian/) and serve any static file as `/health`.
 - Pass the `/health` to another backend (although you are checking the backend, not KrakenD)
 
-# Adding a `/health` endpoint with stub data
+# How to add a `/health` endpoint with stub data
 The easiest option is to use the [static proxy](/docs/endpoints/static-proxy/) functionality. With this technique, we are going to add an endpoint that uses an unreachable (and fake) backend. As the data can't be fetched from KrakenD, the strategy `always` is going to make sure we return the desired static data that we want.
 
     {

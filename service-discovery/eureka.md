@@ -1,7 +1,7 @@
 ---
 lastmod: 2018-10-21
 date: 2016-09-30
-toc: true
+notoc: true
 linktitle: Eureka
 title: Service Discovery with Eureka
 weight: 30

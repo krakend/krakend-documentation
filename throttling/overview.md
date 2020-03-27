@@ -18,7 +18,7 @@ The most significant type of throttling is the **rate limit** that allows you to
 
 The rate limits are complementary to the [Circuit Breaker](/docs/backends/circuit-breaker) feature.
 
-# Types of rate limits
+## Types of rate limits
 There are two different layers where the rate limiting applies:
 
 1. **[Router layer](/docs/endpoints/rate-limit/)**: Sets a maximum throughput to end-users hitting KrakenD endpoints.
@@ -26,17 +26,17 @@ There are two different layers where the rate limiting applies:
 
 To deep dive in the code see the [rate-limiting middleware](https://github.com/devopsfaith/krakend-ratelimit)
 
-## Rate limiting a cluster
+### Rate limiting a cluster
 As KrakenD is a stateless API Gateway and does not have any centralization, **the limits apply individually to each running instance of KrakenD**. For instance, if you limit an endpoint to 100 reqs/s in the `krakend.json` and you have a cluster deployed with 3 instances of KrakenD, then your ecosystem is limiting to 300 reqs/s. If you add a 4th node, then you are increasing this limit to 400 reqs/s.
 
-# The Circuit Breaker
+## The Circuit Breaker
 The **Circuit Breaker** is a **state machine** between the request and the response that observes the failures of the backends. When a backend seems to be failing, KrakenD ceases to send more traffic to avoid stressing the suffering backend until it is considered recovered.
 
 The Circuit Breaker is an automatic protection measure for your stack and avoids cascade failures.
 
 See the [Circuit Breaker](/docs/backends/circuit-breaker/)
 
-# Timeouts and Idle Connections
+## Timeouts and Idle Connections
 KrakenD allows you to fine-tune timeouts both for the HTTP server and the HTTP client used to access your backends. As per the IDLE connections, having a high number of them to every backend, it affects directly to the performance of the proxy layer.
 
 - See [Timeouts](/docs/throttling/timeouts/)

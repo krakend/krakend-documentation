@@ -16,11 +16,11 @@ The timeouts can apply to:
 - **The duration of the whole pipe** (from user request to user response)
 - **The HTTP request related timeouts**
 
-Additionally, you can control the number of **maximum IDLE connections**.
+Additionally, you can control the number of [**maximum IDLE connections**](/docs/throttling/max-idle-connections/).
 
-# Pipe timeouts
+## Pipe timeouts
 
-## Global timeout
+### Global timeout
 The `timeout` key in the `krakend.json` at the root level is used in the first place to apply a **default timeout** for the **whole duration of the pipe** (and not only the connection to the backends). The timeout takes into account all the time involved between the request, the fetching of the data, manipulation and any other middleware. You can see it is an end-user timeout.
 
 	{
@@ -29,7 +29,7 @@ The `timeout` key in the `krakend.json` at the root level is used in the first p
 	   ...
 	}
 
-## Endpoint-specific timeout
+### Endpoint-specific timeout
 Even the `timeout` value in the root level sets a default timeout for all the endpoints, you can override it later on any specific endpoints.
 
 To do so, just place it inside the desired endpoint:
@@ -49,14 +49,14 @@ To do so, just place it inside the desired endpoint:
 
 The example above will use 1 second timeout for the `/splash` endpoint and 2000 milliseconds for all the other endpoints.
 
-## What happens when the timeout is reached?
+### What happens when the timeout is reached?
 When the timeout for a pipe is reached, the request is canceled and the user receives an HTTP status code `500 Internal Server Error`
 
-# HTTP Request timeouts
+## HTTP Request timeouts
 In addition to the timeouts for the whole pipe, you can configure the specific HTTP layer timeouts.
 All the settings below work just like the pipeline timeouts. If you place this values in an endpoint, they will override the global setting.
 
-## HTTP Read Timeout
+### HTTP Read Timeout
 Maximum duration for reading the entire HTTP request, including the body.
 
 This timeout does not let Handlers make per-request decisions on each request body's acceptable deadline.
@@ -66,7 +66,7 @@ This timeout does not let Handlers make per-request decisions on each request bo
 		"read_timeout": "1s"
 	}
 
-## HTTP Write Timeout
+### HTTP Write Timeout
 Maximum duration before timing out writes of the response.
 
 It is reset whenever a new request header is read. Like HTTP Read Timeout, it does not let Handlers make decisions on a per-request basis.
@@ -77,7 +77,7 @@ It is reset whenever a new request header is read. Like HTTP Read Timeout, it do
 	}
 
 
-## HTTP Idle Timeout
+### HTTP Idle Timeout
 Maximum amount of time to wait for the next request when keep-alives are enabled.
 
 If IdleTimeout is zero, the value of ReadTimeout is used. If both are zero, ReadHeaderTimeout is used.
@@ -87,7 +87,7 @@ If IdleTimeout is zero, the value of ReadTimeout is used. If both are zero, Read
 		"idle_timeout": "0s"  (no timeout)
 	}
 
-## HTTP Read Header Timeout
+### HTTP Read Header Timeout
 Amount of time allowed to read request headers.
 
 The connection's read deadline is reset after reading the headers and the Handler can decide what is considered too slow for the body.
@@ -97,7 +97,7 @@ The connection's read deadline is reset after reading the headers and the Handle
 		"read_header_timeout": "10ms"
 	}
 
-# Time units
+## Time units
 The time units you can use to specify timeouts are integers (not *floats*) using any of these units:
 
 - Nanoseconds: `ns`

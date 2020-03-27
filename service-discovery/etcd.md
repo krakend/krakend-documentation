@@ -16,7 +16,7 @@ The etcd Service Discovery integration allows you to perform the host resolution
 The integration etcd is controlled by the [krakend-etcd](https://github.com/devopsfaith/krakend-etcd) component and adds client and subscriber capabilities for etcd.
 
 
-# Enabling etcd
+## Enabling etcd
 To enable the integration add in the **root** of your configuration file the necessary settings:
 
 {{< highlight json "hl_lines=3-15" >}}
@@ -45,7 +45,7 @@ The timeouts and keepalive will take the shown values if the keys are missing, a
 
 Now you are able to use `etcd` with your backends.
 
-# Using etcd to resolve backends
+## Using etcd to resolve backends
 Once the integration has been enabled, add the following keys in the `backend` section of your configuration. The `host` key can be skipped if there is another `host` key in the root level of the configuration.
 
 - `"sd": "etcd"`: To set etcd as the service discovery
@@ -65,4 +65,3 @@ For instance, set the service discovery for an individual backend:
             }
           ]
     ...
-

@@ -8,26 +8,25 @@ menu:
 title: Developer Tools
 weight: 10
 ---
-<span class="badge badge-warning">This document is a draft</span>
 
 There are some resources that make your life easier when developing with KrakenD. These tools are ment to be used only in development and **never in production**
 
-# Hot reload the configuration
+## Hot reload the configuration
 A Docker image using Reflex watches the configuration directory and reloads KrakenD when the configuration changes. This is very convenient while you are developing as it allows you to test new changes without having to restart manually and making the process less tedious.
 
 [More information in our blog post](https://www.krakend.io/blog/reloading-the-krakend-configuration/)
 
-# Generate graphs from configuration
+## Generate graphs from configuration
 The [config2dot](https://github.com/devopsfaith/krakend-config2dot) is a tool to create graphs automatically after reading your configuration file `krakend.json`.
 
-<img alt="Config2Dot example" src="https://github.com/devopsfaith/krakend-config2dot/blob/master/docs/config_1.png?raw=true" class="img-fluid">
+![Config2Dot example](https://github.com/devopsfaith/krakend-config2dot/blob/master/docs/config_1.png?raw=true)
 
-# Debugging the activity
-## krakend-memviz
+## Debugging the activity
+### krakend-memviz
 Adds a [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) file exporter of request/response snapshots to your proxy stack for debug and development purposes. Do not use this in production as it will kill your performance.
 
 
-## krakend-spew
+### krakend-spew
 Dumps every entity seen in the pipe: requests and responses passing through thew whole stack. Do not use this in production as it will kill your performance.
 
 Dumps are stored in files like `<pipe>_<base64_endpoint/backend_name>_<timestamp>.txt`. E.g:

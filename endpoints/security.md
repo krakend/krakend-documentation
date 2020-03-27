@@ -42,9 +42,9 @@ The following example describes the options explained later in this article:
 
 See below the different options described in this configuration file.
 
-# General security
+## General security
 
-## Restrict connections by host
+### Restrict connections by host
 Use `allowed_hosts`
 
 Define a whitelist of hosts that KrakenD should accept requests to.
@@ -53,7 +53,7 @@ When a request hits KrakenD, it will confirm if the value of the `Host` HTTP hea
 
 The list must contain the fully qualified domain names that are allowed, along with the origin port. When the list is empty accepts any host.
 
-## Clickjacking protection
+### Clickjacking protection
 Use `frame_deny`
 
 KrakenD follow the OWASP's recommendations by adding a frame-breaking strategy.
@@ -62,19 +62,19 @@ You can add an `X-Frame-Options` header using `custom_frame_options_value` with 
 
 Check the [OWASP Clickjacking cheat sheet](https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet#X-Frame-Options_Header_Types) for more details about the header and its recommended values.
 
-## MIME-Sniffing prevention
+### MIME-Sniffing prevention
 Use `content_type_nosniff`
 
 Enabling this feature will prevent the user's browser from interpreting files as something else than declared by the content type in the HTTP headers.
 
-## Cross-site scripting (XSS) protection
+### Cross-site scripting (XSS) protection
 Use `browser_xss_filter`
 
 This feature enables the [Cross-site scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)) filter in the user's browser.
 
-# HTTPS
+## HTTPS
 
-## HTTP Strict Transport Security (HSTS)
+### HTTP Strict Transport Security (HSTS)
 Use `sts_seconds`
 
 OWASP defines the HSTS as
@@ -83,7 +83,7 @@ OWASP defines the HSTS as
 
 Enable this policy by setting the max-age of the Strict-Transport-Security header. Setting to `0` disables HSTS. Use the `sts_seconds` setting.
 
-## HTTP Public Key Pinning (HPKP)
+### HTTP Public Key Pinning (HPKP)
 Use `hpkp_public_key`
 
 OWASP defines the HPKP as
@@ -92,7 +92,7 @@ OWASP defines the HPKP as
 
 **This feature must be used with caution because there is a risk that hosts may make themselves unavailable by pinning to a set of public key hashes that becomes invalid.**
 
-# OAuth2
+## OAuth2
 
 KrakenD supports the client credentials grant.
 

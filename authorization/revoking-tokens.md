@@ -22,18 +22,18 @@ The bloomfilter component brings the following functionalities:
 - Manage tokens through an RPC interface, both individually or in batch.
 - Check tokens and discard access on positives
 
-# Why bloomfilters?
+## Why bloomfilters?
 The Bloomfilters are ideal for supporting massive rejection of tokens with very little memory consumption. For instance, 100 million tokens of any size consume around 0.5GB RAM (with a rate of false positives of 1 in 999,925,224 tokens), and lookups are completed in constant time (k number of hashes). These numbers are impossible to get with a key-value or a relational database.
 
 The tokens are in-memory, directly in the rejecter interface, so the system is quick resolving the match.
 
-## Additional resources
+### Additional resources
 If you want to learn bloomfilters by example, have a look at the following resources:
 
 - [Bloomfilter tutorial](https://llimllib.github.io/bloomfilter-tutorial/)
 - [Bloomfilter calculator](https://hur.st/bloomfilter/?n=1000000&p=1.0E-9&m=&k=)
 
-# Expiring tokens in a cluster
+## Expiring tokens in a cluster
 All KrakenD nodes are stateless and act individually. Every node needs to receive the RPC notification about any tokens that need insertion in every local bloomfilter. The bloomfilter gets updated while the service is running, but the the level of synchronization between the nodes depends on how you push them in the cluster. The system is **eventually consistent**.
 
 The bloomfilter management is brought to you by the component, but you still need to implement the administration part that serves as the source of these tokens and the pushing of them (e.g., a queue and a consumer).

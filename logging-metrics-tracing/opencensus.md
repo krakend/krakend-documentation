@@ -25,7 +25,7 @@ You will be interested in Opencensus when you want to see data in one of its sup
 		}
 	}
 
-# Configuration
+## Configuration
 The Opencensus only needs an exporter to work, although multiple exporters can be added in the same configuration. Every exporter has its own configuration and this described in its own section.
 
 By default, **all exporters sample the 100% of the requests received every second**, but this can be changed by specifying more configuration:

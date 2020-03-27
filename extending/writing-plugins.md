@@ -19,7 +19,7 @@ It's important to remark, that if you want to do complex business logic checks a
 
 Let's get you started building custom code!
 
-# Where to start customizing
+## Where to start customizing
 
 The word plugin appears in many places over the Internet, but when we talk about plugins we refer to **[Go plugins](https://golang.org/pkg/plugin/)**.
 
@@ -33,7 +33,7 @@ Plugins and middlewares are close concepts but do not confuse them. The middlewa
 
 Plugins allow you to "drag and drop" custom functionality into KrakenD but still use the official binaries. Custom middlewares require compiling your version of KrakenD.
 
-# Approaches to extend KrakenD
+## Approaches to extend KrakenD
 
 Either you write plugins, or you write middleware. These are the three options:
 
@@ -55,7 +55,7 @@ Choosing one approach over another depends on what you want to accomplish. A sim
 
 - Write your custom middleware.
 
-# Sequence of requests and responses
+## Sequence of requests and responses
 
 A recommended read before going any further is "[Understanding the big picture](/docs/extending/the-big-picture/#the-important-packages)", and specially identify the important packages.
 
@@ -66,14 +66,14 @@ In a nutshell, the sequence of a request-response is as follows:
 3.  The `proxy` pipe fetches the data for all the requests, manipulates, aggregates... and returns the context to the `router`.
 4.  The `router` converts back the proxy response into an HTTP response.
 
-## Writing and injecting plugins
+### Writing and injecting plugins
 
 The sequence described above can be seen in the following diagram. Notice the two blue spots:
 
 *   The http handler (router)
 *   The http client (proxy)
 
-<img src="/images/documentation/krakend-plugins.png" class="img-fluid text-center px-5 py-2">
+![Krakend Plugins](/images/documentation/krakend-plugins.png)
 
 The blue spots indicate the places where you can register your custom plugins.
 
@@ -85,7 +85,7 @@ Compile your plugin with `go build -buildmode=plugin -o yourplugin.so` and then 
     }
 
 
-### Writing proxy plugins (http client)
+#### Writing proxy plugins (http client)
 Find a *hello world* example with the simplest custom plugin in the [godoc documentation](https://godoc.org/github.com/devopsfaith/krakend/transport/http/client/plugin).
 
 **HTTP client** plugins execute in the proxy layer. They allow you to intercept, transform, and manipulate the requests before they hit your backend services.
@@ -94,14 +94,14 @@ Writing an HTTP client requires to implement the [plugin client interface](https
 
 A more complete example of this type of plugin that the basic plugin above can be found in the article [gRPC-gateway as a KrakenD plugin](/blog/krakend-grpc-gateway-plugin/), which builds a gRPC-gateway to connect to your backends. Go through the article and linked sources to get your plugin working.
 
-### Writing router plugins (http handler)
+#### Writing router plugins (http handler)
 Find a *hello world* example with the simplest custom plugin in the [godoc documentation](https://godoc.org/github.com/devopsfaith/krakend/transport/http/server/plugin)
 
 The router layer receives the user requests. You can intercept the request before KrakenD gets it to do any transformation or operation you want.
 
 Writing an http handler plugin requires you to implement the [plugin server interface](https://github.com/devopsfaith/krakend/tree/master/transport/http/server/plugin).
 
-### Writing your custom middleware
+#### Writing your custom middleware
 
 The last option is to write code and compile it along with KrakenD. When writing your custom code, the usual choice is to fork the [KrakenD-CE](https://github.com/devopsfaith/krakend-ce) repository.
 
@@ -113,6 +113,6 @@ There are many examples of different modules, included in KrakenD-CE and not on 
 
 A relaxed start to build a component KrakenD is our article "[Website development as a sysadmin"](/blog/website-development-as-a-sysadmin/) where you can find custom code to add automatic API authentication against a backend.
 
-# Ask the community
+## Ask the community
 
 Finally, we recommend you joining our [Slack channel](/support) and explain what you are trying to do. Probably there is someone who was in your situation before, and you might even get a free code snippet!

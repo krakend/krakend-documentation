@@ -27,7 +27,7 @@ We consider a JWT token to be valid when is well formed, signed by a recognized 
 When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives and are recommended to expire in minutes or hours.
 {{< /note >}}
 
-# Basic JWT validation
+## Basic JWT validation
 The JWT validation is per endpoint and must be present inside every endpoint definition needing it. If several endpoints are going to require JWT validation consider using the [flexible configuration](/docs/configuration/flexible-config/) to avoid repetitive declarations.
 
 Enable the JWT validation by adding the namespace `"github.com/devopsfaith/krakend-jose/validator"` inside the `extra_config` of the desired `endpoint`.
@@ -61,7 +61,7 @@ This configuration makes sure that:
 - The role of the user is either `user` or `admin` (taken from a key in the JWT payload named `http://api.example.com/custom/roles`)
 - The token is not revoked in the bloomfilter (see [revoking tokens](/docs/authorization/revoking-tokens))
 
-## JWT validation settings
+### JWT validation settings
 The following settings are available for JWT validation. **Fields `alg` and `jwk-url` are mandatory** and the rest of the keys can be added or not at your best convenience.
 
 Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
@@ -112,12 +112,12 @@ The following example contains every single option available:
 }
 {{< /highlight >}}
 
-# A complete running example
+## A complete running example
 The [KrakenD Playground](/docs/overview/playground/) demonstrates how to protect endpoints using JWT and includes an example ready to use using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa). To try it, [clone the playground](https://github.com/devopsfaith/krakend-playground) and follow the README.
 
-# Supported hashing algorithms and cipher suites
+## Supported hashing algorithms and cipher suites
 
-## Hashing algorithms
+### Hashing algorithms
 Accepted values for the `alg` field are:
 
 - `EdDSA`: EdDSA
@@ -134,7 +134,7 @@ Accepted values for the `alg` field are:
 - `PS384`: PS384 - RSASSA-PSS using SHA384 and MGF1-SHA384
 - `PS512`: PS512 - RSASSA-PSS using SHA512 and MGF1-SHA512
 
-## Cipher suites
+### Cipher suites
 Accepted values for cipher suites are:
 
 - `5`: TLS_RSA_WITH_RC4_128_SHA

@@ -11,7 +11,7 @@ menu:
 ---
 KrakenD `no-op` (**no-operation**), is a special type of **encoding** that behaves as a **proxy** by passing the client's request to the backend ***as is***, and vice-versa.
 
-# Using `no-op` to proxy requests
+## Using `no-op` to proxy requests
 When setting `no-op`, KrakenD does not inspect the request `body` or manipulates it in any way. Instead, when a request to a `no-op` endpoint is received, KrakenD directly forwards it to the backend without doing any operation with it.
 
 The *proxy pipe* (this is from KrakenD to backend) is marked to do no-operation, meaning that KrakenD does not aggregate content, filter, manipulate or any of the other functionalities performed during this pipe. It's also important to notice that only a **single backend** is accepted, as the merge operation happens during the *proxy pipe*.

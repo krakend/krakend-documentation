@@ -20,10 +20,10 @@ KrakenD manipulations are measured in `nanoseconds`, you can find the benchmark 
 
 The following manipulations are available by default:
 
-# Merging
+## Merging
 When you create KrakenD endpoints, if a specific endpoint feeds from 2 or more backend sources (APIs), they will be automatically merged in a single response to the client. For instance, imagine you have 3 different API services exposing the resources `/a`,`/b`, and `/c` and you want to expose them all together in the KrakenD endpoint `/abc`. This is what you would get:
 
-<img class="img-fluid" src="/images/documentation/krakend-merge.png" />
+![Merge](/images/documentation/krakend-merge.png)
 
 The merge operation is implemented in a way where user experience and responsiveness goes first. It does its *best effort* to get all the required parts from the involved backends and returning the composed object as soon as possible.
 
@@ -62,13 +62,13 @@ The configuration for the image above could be like this:
 	      ]
 	    }
 
-## Merging timeouts
+### Merging timeouts
 Keep in mind that in order to avoid any degraded user experience, KrakenD won't be stuck forever until all the backends decide to respond. In a gateway **failing fast is better than succeeding slowly** and KrakenD will make sure this happens as it will **apply the timeout policy**. This will put your users safe during high load peaks, network errors, or any other problems that stress your backends.
 
 The `timeout` value can be introduced inside each endpoint or globally placing `timeout` in the root of the configuration file. The most specific definition always overwrites the generic one.
 
 
-### What happens when the timeout is triggered or some backend failed?
+#### What happens when the timeout is triggered or some backend failed?
 If KrakenD is waiting for the backends to respond and the timeout is reached, the response will be incomplete and missing any data that couldn't be fetched before the timeout happened. On the other hand, all the parts that could effectively be retrieved before the timeout happened they will do appear in the response.
 
 If the response has missing parts, the cache header won't exist, as we don't want clients to cache incomplete responses.
@@ -76,7 +76,7 @@ If the response has missing parts, the cache header won't exist, as we don't wan
 At all times, the `x-krakend-completed` header returned by KrakenD contains a boolean telling you if all backends returned its content (`x-krakend-completed: true`) or a partial response (`x-krakend-completed: false`).
 
 
-## Merge example
+### Merge example
 
 Imagine an endpoint with the following configuration:
 
@@ -166,7 +166,7 @@ With these 'partial responses' and the given configuration, KrakenD will return 
 	  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
 	}
 
-# Filtering
+## Filtering
 
 When you create a KrakenD endpoint you can decide to show only a subset of the fields coming from the response of your backends.
 There are a number of different reasons you might want to use this functionality, but we strongly encourage you to use it to save user's bandwidth and increase load and render times.
@@ -178,14 +178,14 @@ There are two different strategies you can use to filter content:
 
 See [filtering documentation](/docs/backends/data-manipulation#filtering)
 
-# Grouping
+## Grouping
 KrakenD is able to group your backend responses inside different objects. In other words, when you set a `group` attribute for a backend, instead of placing all the response attributes in the root of the response, KrakenD creates a new key and places the response inside.
 
 Encapsulating backend responses inside each own group is especially interesting when different backend responses can have colliding key names (e.g: all responses contain an `id` with different values).
 
 See [grouping documentation](/docs/backends/data-manipulation#grouping)
 
-# Mapping (renaming)
+## Mapping (renaming)
 
 KrakenD is also able to manipulate the name of the fields of the generated responses, so your composed response would be as close to your use case as possible without changing a line on any backend.
 
@@ -193,14 +193,14 @@ In the `mapping` section map the original field name with the desired name.
 
 See [mapping documentation](/docs/backends/data-manipulation#mapping)
 
-# Target (or capturing)
+## Target (or capturing)
 It is frequent in many API implementations that the important data is always encapsulated inside a generic field like `data`, `response` or `content`, as there are other fields showing the status code and other metadata. Sometimes we neither want to let the client handle with this nor drag this first level container through all the configuration.
 
 When setting a `target` in your backend, these generic containers (the target) disappear and all content extracted to the root as it never existed. As this capturing takes place before other options like whitelist or mapping, you can't forget about and manipulate data as.
 
 See [target documentation](/docs/backends/data-manipulation#target)
 
-# Collection -or Array- manipulation
+## Collection -or Array- manipulation
 KrakenD expects all backends to return objects in the response. There are times when the whole response of the backend comes inside an array, and other times when you need to do operations over fields that are arrays themselves.
 
 In any case, manipulations over arrays work differently than the objects.

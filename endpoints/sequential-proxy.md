@@ -17,7 +17,7 @@ The best experience consumers can have with KrakenD API is by letting the system
 
 The sequential proxy allows you to **chain backend requests**.
 
-# Chaining the requests
+## Chaining the requests
 All you need to enable the sequential proxy is add in the endpoint definition the following configuration:
 
     "endpoint": "/hotels/{id}",
@@ -93,4 +93,3 @@ The configuration needed for this example is:
     }
 
 The key here is the variable `{resp0_destination_id}` that refers to `destination_id` for the backend with index `0` (first in the list).
-

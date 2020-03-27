@@ -13,7 +13,7 @@ The JWT signing component is meant to create an **endpoint wrapper** that return
 
 The **JOSE component** is responsible for signing tokens.
 
-# Requirements
+## Requirements
 You need a backend -not KrakenD- that exposes an endpoint able to **issues tokens**, and another endpoint for **refreshing tokens**.
 
 For instance your backend could have an endpoint like `/token-issuer`, that when receives the right `POST` parameters able to identify the user returns something like this:
@@ -38,7 +38,7 @@ For instance your backend could have an endpoint like `/token-issuer`, that when
         "exp": 1735689600
     }
 
-# Basic JWT signing
+## Basic JWT signing
 When your application knows how to issue tokens, you can sign them before passing them to the user automatically in the gateway. To achieve that, instead of publishing our internal backend that generates plain tokens under `/token-issuer`, we only expose via KrakenD a new endpoint named `/token` (choose your name). This endpoint forwards the data received in the `POST` (as chosen in the example) and returns a signed token when the backend replies.
 
 For instance, from the plain token above we want to sign the keys `"access_token"` and `"refresh_token"` so nobody can modify its contents. We need a configuration like this:
@@ -73,11 +73,11 @@ What happens here is that the user requests a `/token` to the gateway and the is
     "refresh_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6InNcdTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpf1MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjf1J0NzU2eXVcd21uMTI4NzZidmN4OThlcnR5dWlvcCIsInN1YiI6IjEyMzQ1Njc4OTBxd2VydHl1aW8ifQ.4v36tuYHe4E9gCVO-_asuXfzSzoJdoR0NJfVQdVKidw"
     }
 
-# A complete running example
+## A complete running example
 The [KrakenD Playground](/docs/overview/playground/) demonstrates how to sign tokens in the `/token` endpoint and includes an example ready to use. To try it, [clone the playground](https://github.com/devopsfaith/krakend-playground) and follow the README.
 
 
-# JWT signing settings
+## JWT signing settings
 The following settings are available to sign JWT:
 
 

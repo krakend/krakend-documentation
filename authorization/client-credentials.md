@@ -17,7 +17,7 @@ The client credentials **authorize KrakenD, as the client, to access the protect
 
 Successfully setting the client credentials for a backend means that KrakenD can get the protected content, but the endpoint offered to the end-user is going to be public unless you protect it with JWT.
 
-# Configuring OAuth2 Client Credentials
+## Configuring OAuth2 Client Credentials
 To access a protected resource using client-credentials add under every `backend` the appropriate `extra_config`.
 
 The namespace used is `"github.com/devopsfaith/krakend-oauth2-clientcredentials"`. Sample configuration below:
@@ -50,7 +50,7 @@ The settings of this component are:
 - `endpoint_params` *list,optional*: Any additional parameters that you want to include **in the payload** when requesting the token. For instance, it is frequent to add the `audience` request parameter that denotes the target API for which the token should be issued.
 
 
-# Auth0 integration
+## Auth0 integration
 The following example demonstrates a complete configuration to fulfill the requirements of [Auth0](https://auth0.com/). It is essentially the same configuration we have shown above, but with some additions, explained after the code:
 
     {

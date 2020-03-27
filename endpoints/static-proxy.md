@@ -17,7 +17,7 @@ Another example scenario is to create an endpoint pointing to an unfinished back
 
 There are many other scenarios, and this is why KrakenD offers several **strategies** that you can use to decide whether to inject static data or not. In any case, remember that the primary goal of this feature is to support corner-cases related to clients not ready to deal with gracefully degraded responses.
 
-# Static response strategies
+## Static response strategies
 The supported strategies to inject static data are the following:
 
 - `always`: Injects the static data in the response no matter what.
@@ -34,12 +34,12 @@ Pay attention to the different strategies as they might offer subtle differences
     func staticIfCompleteMatch(r *Response, err error) bool { return err == nil && r != nil && r.IsComplete }
     func staticIfIncompleteMatch(r *Response, _ error) bool { return r == nil || !r.IsComplete }
 
-# Handling collisions
+## Handling collisions
 The static proxy is processed **after** all the backend merging has occurred, meaning that if your static data has keys that are colliding with the existing responses, these are overwritten.
 
 The static data always has a priority as it's the last computed part. When an endpoint aggregates data from multiple sources, if a `group` for each backend is not used, then all the responses are merged straight into the root. The static data makes the merge in the root as well, so be cautious when setting the content of `data`, to make sure you are not replacing valuable information.
 
-# Adding static responses
+## Adding static responses
 To add a static response add under any `endpoint` an `extra_config` entry as follows:
 
     "extra_config": {
@@ -55,7 +55,7 @@ To add a static response add under any `endpoint` an `extra_config` entry as fol
 
 Inside the `strategy` key choose the strategy that fits your use case (one of `always`, `success`, `complete`, `errored`or `incomplete`), and inside `data` you need to add the JSON object as it's returned.
 
-# Static proxy example
+## Static proxy example
 The following `/static` endpoint returns `{"errored": {"foo": 42, "bar": "foobar"} }` when the backend returned errors.
 
 Notice two things in the example trying to avoid collisions.  First, each backend uses a `group`, so when the backend works correctly, its response is inside a key "foo" or "bar". Using this strategy if "foo" and "bar" use the same keys there is no problem.

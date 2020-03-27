@@ -4,6 +4,7 @@ date: 2018-01-04
 linktitle: Max IDLE connections
 title: Maximum IDLE connections
 weight: 60
+notoc: true
 menu:
   documentation:
     parent: throttling
