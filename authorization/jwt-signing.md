@@ -138,27 +138,30 @@ The token is no more than a JSON output adhering to the [JWT standard](https://t
 The following code (PHP) in your backend would suffice to let KrakenD do the signing:
 
     // Example of generating an access_token and refresh_token
+    header('Content-Type: application/json');
+    
     $jti = uniqid('', true);
     $expiration = time() + 1800; // 30 minutes
+    $id_user = 123456789;
+    $roles = ["customer", "premium"];
 
-    return json_encode([
+    echo json_encode([
       "access_token" => [
           "aud" => "https://your.krakend.io",
           "iss" => "https://your-backend",
-          "sub" => $user_data->id_user,
+          "sub" => $id_user,
           "jti" => $jti,
-          "roles" => [$user_data->role],
-          "exp" => $expiration, // 30 minutes
-          "other_data" => $user_data->other
-          ],
-      "refresh_token": {
-          "aud": "https://your.krakend.io",
-          "iss": "https://your-backend",
-          "sub": $user_data->id_user,
-          "jti": $jti,
-          "exp": $expiration
-      },
-      "exp": $expiration
+          "roles" => $roles,
+          "exp" => $expiration // 30 minutes
+        ],
+        "refresh_token" => [
+          "aud" => "https://your.krakend.io",
+          "iss" => "https://your-backend",
+          "sub" => $id_user,
+          "jti" => $jti,
+          "exp" => $expiration
+        ],
+        "exp" => $expiration // We won't sign this key
       ]);
 
 
