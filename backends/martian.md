@@ -29,7 +29,7 @@ There are four different types of interactions you can do with Martian:
 - **Groups**: Bundle multiple operations to execute in the order specified in the group
 - **Verifiers**: Track network traffic against expectations
 
-# Transforming requests and responses
+## Transforming requests and responses
 
 Add martian modifiers in your configuration under the `extra_config` of any `endpoint` using the namespace `github.com/devopsfaith/krakend-martian`.
 
@@ -42,12 +42,12 @@ Your configuration has to look as follows:
         }
     }
 
-## Modifier configuration
+### Modifier configuration
 
 In the examples below, you'll find that all modifiers have a configuration key named `scope`. The scope indicates when to apply the modifier, it can be an array containing `request`, `response`, or both. The rest of the keys in every modifier depends on the modifier itself.
 
 
-# Transform headers
+## Transform headers
 The `header.Modifier` injects a header with a specific value. For instance, the following configuration adds a header `X-Martian` both in the request and the response.
 
     "endpoint": "/foo",
@@ -61,7 +61,7 @@ The `header.Modifier` injects a header with a specific value. For instance, the 
         }
     }
 
-# Modify the body
+## Modify the body
 Through the `body.Modifier` you can modify the body of the request and the response. The content of the `body` must be encoded in `base64`.
 
 The following modifier sets the body of the request and the response to `{"msg":"you rock!"}`. Notice that the `body` field is `base64` encoded.
@@ -77,7 +77,7 @@ The following modifier sets the body of the request and the response to `{"msg":
     }
 
 
-# Transform the URL
+## Transform the URL
 The `url.Modifier` allows you to change settings in the URL. For instance:
 
     "endpoint": "/foo",
@@ -94,7 +94,7 @@ The `url.Modifier` allows you to change settings in the URL. For instance:
     }
 
 
-# Inject query string parameters
+## Inject query string parameters
 The `querystring.Modifier` allows you to modify query strings injecting key pairs. It can be useful if you want the Gateway to send something extra to the backends, for instance:
 
     {
@@ -109,7 +109,7 @@ The `querystring.Modifier` allows you to modify query strings injecting key pair
       }
     }
 
-# Copying headers
+## Copying headers
 Although not widely used, the `header.Copy` lets you duplicate a header using another name.
 
     {
@@ -124,7 +124,7 @@ Although not widely used, the `header.Copy` lets you duplicate a header using an
       }
     }
 
-# Apply multiple modifiers consecutively
+## Apply multiple modifiers consecutively
 All the examples above perform a single modification in the request or the response. However, the `fifo.Group` allows you to create a list of modifiers that execute consecutively. The group is needed when using more than one modifier and encapsulates all the following actions to perform in the `modifiers` array. You can use the FIFO group even when there is only one modifier in the list.
 
 
@@ -154,7 +154,7 @@ Example of usage (modify the body, and set a header):
         }
     }
 
-# All Martian modifiers, verifiers and filters
+## All Martian modifiers, verifiers and filters
 The Martian library comes with [+25 modifiers](https://github.com/google/martian) you can use, we are not listing all the options in the documentation. Instead, we provided the modifiers that are key when using Martian.
 
 For the complete list of modifiers and usage see [Google's Martian repository](https://github.com/google/martian). These are the packages included in KrakenD-CE:
@@ -169,10 +169,9 @@ For the complete list of modifiers and usage see [Google's Martian repository](h
 - [github.com/google/martian/stash](https://github.com/google/martian/tree/master/stash)
 - [github.com/google/martian/status](https://github.com/google/martian/tree/master/status)
 
-# Building new modifiers
+## Building new modifiers
 There will be times when you want to create a new modifier that covers your specific use case and does some other dynamic operations. Creating more modifiers is a straightforward process and only requires to `make` the gateway once you have it coded.
 
 Nothing better than an example to demonstrate how to create a new modifier. Our SRE Director (who wasn't familiar with Go) went through the process of creating a new Modifier that would authenticate automatically against the Marvel API adding an API Key, a timestamp and a calculated hash.
 
 Read it here (contains the source code): [Martian example: Adding automatic API authentication](/blog/website-development-as-a-sysadmin/)
-
