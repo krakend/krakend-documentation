@@ -15,7 +15,7 @@ images:
 
 KrakenD's modular design allows you to extend its functionality by adding your custom code. As an engineer, it's always tempting to start writing code but **the majority of scenarios do not require writing any**. Existing modules, middleware, and plugins suffice almost everyone's needs.
 
-It's important to remark, that if you want to do complex business logic checks and transformations, aside from the core functionality, there is specific scripting designed for that without compiling Go code. Examples are the [expression language](/docs/endpoints/common-expression-language-cel/), [Martian transformations](/docs/endpoints/martian/), or [Lua scripting](/docs/endpoints/lua/).
+It's important to remark, that if you want to do complex business logic checks and transformations, aside from the core functionality, there is specific scripting designed for that without compiling Go code. Examples are the [expression language](/docs/endpoints/common-expression-language-cel/), [Martian transformations](/docs/backends/martian/), or [Lua scripting](/docs/endpoints/lua/).
 
 Let's get you started building custom code!
 
