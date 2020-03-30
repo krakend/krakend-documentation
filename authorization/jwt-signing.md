@@ -74,7 +74,11 @@ For instance, from the plain token above we want to sign the keys `"access_token
 ...
 {{< /highlight >}}
 
-Notice that a [JSON Web key](https://tools.ietf.org/html/rfc7517#appendix-C.1) is provided to sign the content. Generate your key and save it in a secure place.
+Notice that a [JSON Web key](https://tools.ietf.org/html/rfc7517#appendix-C.1) `jwk-url` is provided to sign the content. Generate your key and save it in a secure place.
+
+{{< note title="Non-secure example" >}}
+The examples in the this page add a `disable_jwk_security` flag because the `jwk-url` references an URL with an insecure protocol http. When going to production **serve your JWK under HTTPS** instead and add the rest of security options in the configuration.
+{{< /note >}}
 
 What happens here is that the user requests a `/token` to the gateway and the issuing is delegated to the backend. The response of the backend with the plain token is signed using your private JWK. And then the user receives the signed token, e.g:
 
@@ -92,12 +96,16 @@ The following settings are available to sign JWT:
 - `kid`: *string*. The key ID purpose is to match a specific key, as the jwk-url might contain several keys (see [JWT validation](/docs/authorization/jwt-validation/))
 - `keys-to-sign`: *string list*. List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).
 
-**Optional**:
+**Optional fields**:
 
 - `full`: *boolean*. Use JSON format instead of the compact form JWT is giving.
-- `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys.
+- `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Don't recommended for production.
+
+**Security enforcement**:
+
 - `jwk_fingerprints`: *string list*. A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in `base64` format.
 - `cipher_suites`: *integers list*. Override the default cipher suites. Unless you have a legacy JWK, you don't need to add this value.
+- `jwk_local_ca`: *string*. Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g, self-signed certificates).
 
 
 The following example contains every single option available:
