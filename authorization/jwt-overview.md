@@ -24,7 +24,7 @@ If you are not familiar with JWT yet, read the "[Introduction to JSON Web Tokens
 KrakenD implements both [JWT signing](/docs/authorization/jwt-signing) and [JWT validation](/docs/authorization/jwt-validation) models to protect endpoints from undesired users that are not entitled to use the information, reinforcing security.
 
 - [Sign tokens](/docs/authorization/jwt-signing) when you have no identity server yet (like a classic monolithic application with a `/login` endpoint) and let KrakenD take care of the token signing with the private key.
-- [Validate tokens](/docs/authorization/jwt-validation) issued by a third party, ensuring their integrity and proper claims.
+- [Validate tokens](/docs/authorization/jwt-validation) issued by a third party or the [JWT signing middleware](/docs/authorization/jwt-signing), ensuring their integrity and proper claims.
 
 
 A stateless system like KrakenD **does not issue tokens**, this is the responsability of your backend or identity server.

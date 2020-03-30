@@ -58,11 +58,11 @@ KrakenD does the following validation to let users hit protected endpoints:
 - The algorithm `alg` is supported by KrakenD and matches exactly the one used in the endpoint definition.
 - The token hasn't expired
 - The signature is valid.
-- The given `issuer` matches (if present)
-- The given `audience` matches (if present)
-- The given claims are within the endpoint accepted `roles` (if present)
+- The given `issuer` matches (if present in the configuration)
+- The given `audience` matches (if present in the configuration)
+- The given claims are within the endpoint accepted `roles` (if present in the configuration))
 
-The configuration allows you to define permissions per endpoint.
+The configuration allows you to define the set of required roles. A user who passes a token with roles `A` and `B`, can access an endpoint requiring `"roles": ["A","C"]` as it has one of the required options (`A`).
 
 When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives and are recommended to expire in a few minutes or hours.
 
