@@ -26,7 +26,7 @@ The CEL expressions have a similar syntax to expressions in C/C++/Java/JavaScrip
 
     '::1' in req_headers['X-Forwarded-For']
 
-This expression checks that the request header `X-Forwarded-For` contains the string `::1` (request comes from localhost).
+This expression checks that the request header array `X-Forwarded-For` contains an item with a value matching `::1` (request comes from localhost).
 
 CEL expressions can be used in four different places: during the **request** and the **response** of both **backends** and **endpoints** (see the blue squares in the image). The flow is:
 
