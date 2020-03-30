@@ -1,17 +1,17 @@
 ---
-lastmod: 2019-01-24
+lastmod: 2020-03-29
 date: 2019-01-24
 linktitle: Checking requests and responses
 title: Checking requests and responses with the Common Expression Language (CEL)
 weight: 80
 since: 0.8
 source: https://github.com/devopsfaith/krakend-cel
+images: ["/images/documentation/krakend-cel.png"]
 menu:
   documentation:
     parent: endpoints
 ---
-There are times when you might want to include **additional logic** in the gateway
-to decide if a request has to be fulfilled or not.
+There are times when you might want to include **additional logic** in the gateway to decide if a request has to be fulfilled or not.
 
 The [Common Expression Language (CEL)](https://github.com/devopsfaith/krakend-cel)
 middleware enables Google's [CEL spec](https://github.com/google/cel-spec)
@@ -20,34 +20,34 @@ simple and powerful option to have full control during requests and responses.
 
 When the CEL component is enabled, any amount of expressions to check both requests and responses can be set.
 
-Then, during runtime, when an expression returns `false`, KrakenD does not return the content as the condition has failed. Otherwise, if all expressions returned `true` the content is served.
+Then, during runtime, when an expression returns `false`, KrakenD does not return the content as the condition has failed. Otherwise, if all expressions returned `true`, the content is served.
 
-The CEL expressions have similar syntax to expressions in C/C++/Java/JavaScript and evaluate to a boolean condition. For instance:
+The CEL expressions have a similar syntax to expressions in C/C++/Java/JavaScript and evaluate to a boolean condition. For instance:
 
     '::1' in req_headers['X-Forwarded-For']
 
 This expression checks that the request header `X-Forwarded-For` contains the string `::1` (request comes from localhost).
 
-CEL expressions can be used both during the **request** or the **response** of
-the **backends** and the **endpoints**. The flow is:
+CEL expressions can be used in four different places: during the **request** and the **response** of both **backends** and **endpoints** (see the blue squares in the image). The flow is:
 
-- Request endpoint evaluation
-- Request backend evaluation (N times)
-- Response backend evaluation (N times)
-- Response endpoint evaluation (can evaluate all merged data)
+- **Endpoint request** evaluation
+- **Backend request** evaluation (per N backends)
+- **Backend response** evaluation (per N backends)
+- **Endpoint response** evaluation (can evaluate all merged data)
 
-# Adding logic in the request
+![The 4 CEL places](/images/documentation/krakend-cel.png)
+
+## Adding logic in the request
 If you want to add some logic to decide whether or not to continue serving the request
 to an endpoint or proxy to the next backend not, use a `req_*` variable.
 
-## CEL variables
 The following data is injected to the CEL evaluator for its inspection:
 
 ### Requests
 - `req_method`: What is the method of this endpoint, e.g.: `GET`
 - `req_path`: The path used to access this endpoing, e.g: : `/foo`
 - `req_params`: Object with all the parameters sent with the request, e.g:
-  `req_params.foo.var`
+  `req_params.Foo.var`. Notice that **parameters capitalize the first letter**
 - `req_headers`: Array with all the headers received, e.g: `req_headers['X-Forwarded-For']`
 - `now`: An object containing the current timestamp, e.g:
   `timestamp(now).getDayOfWeek()`
@@ -71,5 +71,85 @@ This example checks that the JWT token contains the metadata `user_id` and
 `enabled_days` with the macro `has()`, and then checks that today's weekday  is
 within one of the allowed days to see the endpoint.
 
-# CEL Syntax
-See the [language definition](https://github.com/google/cel-spec/blob/master/doc/langdef.md)
+## CEL Syntax and examples
+See the CEL [language definition](https://github.com/google/cel-spec/blob/master/doc/langdef.md) for the full list of supported options.
+
+The following example snippets demonstrate how to check requests and responses. 
+
+### Example: Discard an invalid request before reaching the backend
+The following example demonstrates how to reject a user request that does not fulfill a specific expression, checking at the endpoint level that when `/nick/{nick}` is called, a constraining format applies. More specifically, the example requires that the parameter `{nick}` matches the expression `k.*`:
+
+    "endpoints": [
+        {
+          "endpoint": "/nick/{nick}",
+          "extra_config":{
+            "github.com/devopsfaith/krakend-cel": [
+              {
+                "check_expr": "req_params.Nick.matches('k.*')"
+              }
+            ]
+          },
+          "backend": [{...}]
+        }
+
+With this configuration, any request to `/nick/kate` or `/nick/kevin` will make it to the backend, while a request to `/nick/ray` will be immediately rejected.
+
+### Example: Check if the backend response has a specific field or abort
+This example can be copy/pasted into your configuration as it connects to an existing external API. The CEL validation happens at the backend level. After the backend has been queried, the CEL expression checks that a field `website` exists inside the response body. If the user does not have the field, the call to the endpoint will fail:
+
+    "endpoints": [
+    {
+      "endpoint": "/nick/{nick}",
+      "backend": [
+        {
+          "host": [
+            "https://api.bitbucket.org"
+          ],
+          "url_pattern": "/2.0/users/{nick}",
+          "whitelist": [
+            "display_name",
+            "website"
+          ],
+          "group": "bitbucket",
+          "extra_config":{
+            "github.com/devopsfaith/krakend-cel": [
+              {
+                "check_expr": "'website' in resp_data.bitbucket"
+              }
+            ]
+          }
+        }
+      ]
+    }
+
+Also, notice how we are accessing a `bitbucket` element in the data, which is a new attribute added by KrakenD thanks to the `group` functionality (it does not exist in the origin API). The point here is that the CEL evaluation is applied **after** KrakenD has processed the backend.
+
+### Example: Time-based access
+Because we engineers prefer not to paged over the weekends when backends go down, let's close the access to them during the weekend, so they are 100% operational :)
+
+    {
+      "endpoint": "/weekdays",
+      "extra_config":{
+        "github.com/devopsfaith/krakend-cel": [
+          {
+            "check_expr": "(timestamp(now).getDayOfWeek() + 6) % 7 <= 4"
+          }
+        ]
+    }
+
+Note: The function `getDayOfWeek()` starts at `0` (Sunday), so the only days with a `mod <=4 ` are 0 and 6. 
+
+### Example: Use custom data from JWT payload
+Let's say that the JWT token the user sent contains an attribute named `enabled_days` in its payload. This attribute lists all the integers representing which days the resource can be accessed:
+
+    {
+      "endpoint": "/combination/{id}",
+      "extra_config":{
+        "github.com/devopsfaith/krakend-cel": [
+          {
+            "check_expr": "has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)"
+          }
+        ]
+    }
+
+The expression checks that the JWT token has both the `user_id` and the `enabled_days` and that today is a valid day.
