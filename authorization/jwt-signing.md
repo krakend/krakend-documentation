@@ -77,7 +77,7 @@ For instance, from the plain token above we want to sign the keys `"access_token
 Notice that a [JSON Web key](https://tools.ietf.org/html/rfc7517#appendix-C.1) `jwk-url` is provided to sign the content. Generate your key and save it in a secure place.
 
 {{< note title="Non-secure example" >}}
-The examples in the this page add a `disable_jwk_security` flag because the `jwk-url` references an URL with an insecure protocol http. When going to production **serve your JWK under HTTPS** instead and add the rest of security options in the configuration.
+The examples on this page add a `disable_jwk_security` flag because the `jwk-url` references an URL with an insecure protocol HTTP. When going to production **serve your JWK under HTTPS** instead and add the rest of security options in the configuration.
 {{< /note >}}
 
 What happens here is that the user requests a `/token` to the gateway and the issuing is delegated to the backend. The response of the backend with the plain token is signed using your private JWK. And then the user receives the signed token, e.g:
@@ -99,13 +99,13 @@ The following settings are available to sign JWT:
 **Optional fields**:
 
 - `full`: *boolean*. Use JSON format instead of the compact form JWT is giving.
-- `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Don't recommended for production.
+- `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Not recommended for production.
 
 **Security enforcement**:
 
 - `jwk_fingerprints`: *string list*. A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in `base64` format.
 - `cipher_suites`: *integers list*. Override the default cipher suites. Unless you have a legacy JWK, you don't need to add this value.
-- `jwk_local_ca`: *string*. Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g, self-signed certificates).
+- `jwk_local_ca`: *string*. Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
 
 
 The following example contains every single option available:
@@ -144,7 +144,7 @@ Essentially, what you need to adopt JWT in your backend is to adapt your existin
 
 The token is no more than a JSON output adhering to the [JWT standard](https://tools.ietf.org/html/rfc7519). 
 
-There are a lot of **open source libraries to generate JWT tokens** in all major languages. Use them or write directly the JSON output with a simple template. 
+There are a lot of **open source libraries to generate JWT tokens** in all major languages. Use them or write the JSON output directly with a simple template. 
 
 Here is a [dummy token](https://github.com/devopsfaith/krakend-playground/blob/master/data/token.json) for you to check how it looks like.
 
