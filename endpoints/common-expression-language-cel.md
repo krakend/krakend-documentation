@@ -28,22 +28,52 @@ The CEL expressions have a similar syntax to expressions in C/C++/Java/JavaScrip
 
 This expression checks that the request header array `X-Forwarded-For` contains an item with a value matching `::1` (request comes from localhost).
 
-CEL expressions can be used in four different places: during the **request** and the **response** of both **backends** and **endpoints** (see the blue squares in the image). The flow is:
+CEL expressions can be used in five different places: during the **request** and the **response** of both **backends** and **endpoints** (see the blue dots in the image), and in the router layer as a JWT rejecter. The flow is:
 
+![The 5 CEL places](/images/documentation/krakend-cel.png)
+
+- **JWT** evaluation
 - **Endpoint request** evaluation
 - **Backend request** evaluation (per N backends)
 - **Backend response** evaluation (per N backends)
 - **Endpoint response** evaluation (can evaluate all merged data)
 
-![The 4 CEL places](/images/documentation/krakend-cel.png)
+## Configuration
+The CEL component goes inside the `extra_config` of your `endpoints` or your `backend` using the namespace `github.com/devopsfaith/krakend-cel`. 
 
-## Adding logic in the request
-If you want to add some logic to decide whether or not to continue serving the request
-to an endpoint or proxy to the next backend not, use a `req_*` variable.
+Depending on the place where you put the `extra_config`, the expressions will be checked at the `endpoint` level, or the `backend` level. 
 
-The following data is injected to the CEL evaluator for its inspection:
+For instance, you might want to reject users that do not adhere to some criteria related to the content in their JWT token. There is no reason to delay this check, and you would place the check at the endpoint level, right before hitting any backend. In another scenario, you might want to make sure that the response of a specific backend contains a must-have field; that configuration would go under the `backend` section, and isolated from the rest of sibling backends under the same endpoint umbrella.
 
-### Requests
+The configuration is as follows:
+
+    "extra_config":{
+      "github.com/devopsfaith/krakend-cel": [
+        {
+          "check_expr": "CONDITION1 && CONDITION2 && CONDITION3"
+        },
+        {
+          "check_expr": "CONDITION4"
+        }
+      ]
+    }
+
+An array of objects with one single field `check_expr` is needed. 
+
+- `check_expr`: The expression that evaluates as a boolean, you can write any conditional. If all stacked conditions are *true* the request continues, *false*, it fails to retrieve data from the token, the request, or the response. The expressions can use a set of **variables**, shown in the sections below.
+
+## Adding logic in the requests and responses.
+There are three different ways to access the metadata of requests and responses to decide whether or not to continue serving the user command.
+
+- Use a `req_` variable to access **request** data.
+- Use a `resp_` variable to access **response** data.
+- Use the `JWT` variable to access the **payload of the JWT**.
+
+See the data that is injected to the CEL evaluator for its inspection below.
+
+### Variables for requests
+The following variables can be used inside the `check_expr`:
+
 - `req_method`: What is the method of this endpoint, e.g.: `GET`
 - `req_path`: The path used to access this endpoing, e.g: : `/foo`
 - `req_params`: Object with all the parameters sent with the request, e.g:
@@ -52,7 +82,9 @@ The following data is injected to the CEL evaluator for its inspection:
 - `now`: An object containing the current timestamp, e.g:
   `timestamp(now).getDayOfWeek()`
 
-### Responses
+### Variables for responses
+The following variables can be used inside the `check_expr`:
+
 - `resp_completed`: Boolean whether all the data has been successfully
   retrieved
 - `resp_metadata_status`: Returns an integer with the StatusCode
@@ -60,7 +92,7 @@ The following data is injected to the CEL evaluator for its inspection:
 - `resp_data`: An object with all the data captured in the response
 - `now`: An object containing the current timestamp
 
-### JWT rejecter
+### Variables for the JWT rejecter
 CEL expressions can also be used during the JWT token validation. Use the `JWT`
 variable to access its metadata. For instance:
 
