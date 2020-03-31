@@ -50,15 +50,10 @@ The configuration is as follows:
     "extra_config":{
       "github.com/devopsfaith/krakend-cel": [
         {
-          "check_expr": "CONDITION1 && CONDITION2 && CONDITION3"
-        },
-        {
-          "check_expr": "CONDITION4"
+          "check_expr": "CONDITION1 && CONDITION2"
         }
       ]
     }
-
-An array of objects with one single field `check_expr` is needed. 
 
 - `check_expr`: The expression that evaluates as a boolean, you can write any conditional. If all stacked conditions are *true* the request continues, *false*, it fails to retrieve data from the token, the request, or the response. The expressions can use a set of **variables**, shown in the sections below.
 
