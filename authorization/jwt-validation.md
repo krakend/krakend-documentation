@@ -16,7 +16,7 @@ The generation of the token itself has to be **driven by a third party**, althou
 The internal component responsible for validating tokens is called **krakend-jose**.
 
 ## JWT tokens
-KrakenD uses standard JWT tokens to protect endpoints, using JSON Web Signature (**JWS**), to check the tokens' digital signature ensuring the integrity of the contained claims and protecting against attacks using tampered tokens.
+KrakenD uses standard JWT tokens to protect endpoints, using JSON Web Signature (**JWS**), to check the tokens' digital signature, ensuring the integrity of the contained claims and protecting against attacks using tampered tokens.
 
 A JWT token is a `base64` encoded string with the structure **header.payload.signature**.
 
@@ -30,17 +30,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9.(truncated).ktIOfzak2ekD7IrCa9-Ui
 Or optionally, you can send the token **inside a cookie** instead.
 
 ### JWT header requirements
-When KrakenD decodes the `base64` token string passed in the `Bearer` or the cookie, it expects to find in its **header** section the following 3 fields:
+When KrakenD decodes the `base64` token string passed in the `Bearer` or the cookie, it expects to find in its **header** section the following three fields:
 
-	{
-	  "alg": "RS256",
-	  "typ": "JWT",
-	  "kid": "MDNGMjU2M0U3RERFQUEwOUUzQUMwQ0NBN0Y1RUY0OEIxNTRDM0IxMw"
-	}
+    {
+      "alg": "RS256",
+      "typ": "JWT",
+      "kid": "MDNGMjU2M0U3RERFQUEwOUUzQUMwQ0NBN0Y1RUY0OEIxNTRDM0IxMw"
+    }
 
 The values of the `alg` and `kid` depend on your implementation, but they must be present.
 
-The value provided in the `kid` string **must match the `kid` value of one of the keys exposed at the URL provided in the `jwk-url`** to verify the signature. The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches both the single key present in the JWK document and in the token header.
+The value provided in the `kid` string **must match the `kid` value of one of the keys exposed at the URL provided in the `jwk-url`** to verify the signature. The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches both the single key present in the JWK document and the token header.
 
 KrakenD is built with security in mind and uses JWS (instead of plain JWT or JWE), and the `kid` points to the right key in the JWS. This is why this entry is mandatory to validate your tokens. 
 
@@ -101,7 +101,7 @@ This configuration makes sure that:
 - The token is not revoked in the bloom filter (see [revoking tokens](/docs/authorization/revoking-tokens))
 
 ### JWT validation settings
-The following settings are available for JWT validation. **Fields `alg` and `jwk-url` are mandatory** and the rest of the keys can be added or not at your best convenience.
+The following settings are available for JWT validation. **Fields `alg` and `jwk-url` are mandatory**, and the rest of the keys can be added or not at your best convenience.
 
 Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
 
@@ -117,9 +117,9 @@ Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
 - `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.
 - `jwk_fingerprints`: *string list*. A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.
 - `cipher_suites`: *integers list*. Override the default cipher suites. Use it if you want to enforce an even higher security standard.
-- `jwk_local_ca`: *string*. Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g, self-signed certificates).
+- `jwk_local_ca`: *string*. Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
 
-For the full list of recognized algorithms and cipher suites scroll down to the end of the document.
+For the full list of recognized algorithms and cipher suites, scroll down to the end of the document.
 
 The following example contains every single option available:
 
@@ -156,8 +156,8 @@ The following example contains every single option available:
 ## A complete running example
 The [KrakenD Playground](/docs/overview/playground/) demonstrates how to protect endpoints using JWT and includes two examples ready to use:
 
-- an integration with an external third party using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa)
-- an integration with an internal identity provider service (mocked) using a symmetric key algorithm and a signer middleware.
+- Integration with an external third party using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa)
+- Integration with an internal identity provider service (mocked) using a symmetric key algorithm and a signer middleware.
 
 To try it, [clone the playground](https://github.com/devopsfaith/krakend-playground) and follow the README.
 
