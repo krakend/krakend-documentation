@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-11-03
+lastmod: 2020-03-28
 date: 2018-11-03
 linktitle: JWT Validation
 title: JWT Validation
@@ -9,23 +9,62 @@ menu:
   documentation:
     parent: authorization
 ---
-The JWT validation shields any amount of desired endpoints, forcing requests to the API gateway to provide a token **issued by a third party**. Verification of the token takes place in every request, including the check of the signature and optionally the assurance that its issuer, roles, and audience are sufficient to access the endpoint.
+The JWT validation **protects endpoints from public usage**, forcing calls to the API gateway to provide a valid token to access its contents.
 
-The **JOSE component** is responsible for validating the tokens.
+The generation of the token itself has to be **driven by a third party**, although the user calls can be proxied through KrakenD. If you don't have an identity server yet you still can [sign tokens through KrakenD](/docs/authorization/jwt-signing/) 
 
-A typical request requiring JWT validation includes in the `Authorization` header a bearer with the token:
+The internal component responsible for validating tokens is called **krakend-jose**.
+
+## JWT tokens
+KrakenD uses standard JWT tokens to protect endpoints, using JSON Web Signature (**JWS**), to ensure that tokens are digitally signed. 
+
+A JWT token is a `base64` encoded string with the structure **header.payload.signature**.
+
+A typical request to an endpoint requiring JWT validation includes a `Bearer` in the `Authorization` header:
 {{< terminal >}}
 GET /resource HTTP/1.1
 Host: krakend.example.com
-Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9...TJVA95OrM7E20RMHrHDcEfxjoYZgeFONFh7HgQeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IktyYWtlbkQiLCJpYXQiOjE1MTYyMzkwMjJ9.NVFYj2MhyvJjMESOg4ktIOfzak2ekD7IrCa9-UiO4QA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9.(truncated).ktIOfzak2ekD7IrCa9-UiO4QA
 {{< /terminal >}}
-**And cookies?** Yes, you can also send the validation token in a **cookie**.
 
-We consider a JWT token to be valid when is well formed, signed by a recognized issuer, unexpired, with some claims and is not marked as [revoked](/docs/authorization/revoking-tokens).
+Or optionally, you can send the token **inside a cookie** instead.
 
-{{< note title="A note on JWT generation" >}}
-When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives and are recommended to expire in minutes or hours.
+### JWT header requirements
+When KrakenD decodes the `base64` token string passed in the `Bearer` or the cookie, it expects to find in its **header** section the following 3 fields:
+
+	{
+	  "alg": "RS256",
+	  "typ": "JWT",
+	  "kid": "MDNGMjU2M0U3RERFQUEwOUUzQUMwQ0NBN0Y1RUY0OEIxNTRDM0IxMw"
+	}
+
+The values of the `alg` and `kid` depend on your implementation, but they must be present.
+
+The value provided in the `kid` string **must match the `kid` value of the associated URL provided in the `jwk-url`** to verify the signature. The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches both in the URL and in the token. Also notice that the `kid` is `base64` encoded, so we didn't write `03F2563E7DDEAA09E3AC0CCA7F5EF48B154C3B13` (which is the real Key ID).
+
+KrakenD is built with security in mind and uses JWS (instead of plain JWT or JWE), and the `kid` points to the right signature in the JWS. This is why this entry is mandatory to validate your tokens. 
+
+{{< note title="Important!" >}}
+Make sure you are declaring the right `kid` in your JWT. Paste a token in a [debugger](https://jwt.io/#debugger-io) to find out.
 {{< /note >}}
+
+### Validation process
+KrakenD does the following validation to let users hit protected endpoints:
+
+- The `jwk-url` must be accessible by KrakenD at all times (caching is available)
+- The token is [well formed](https://jwt.io/#debugger-io)
+- The `kid` in the header is listed in the `jwk-url`.
+- The content of the JWK Keys (`kid`) is **base64** urlencoded
+- The algorithm `alg` is supported by KrakenD and matches exactly the one used in the endpoint definition.
+- The token hasn't expired
+- The signature is valid.
+- The given `issuer` matches (if present in the configuration)
+- The given `audience` matches (if present in the configuration)
+- The given claims are within the endpoint accepted `roles` (if present in the configuration))
+
+The configuration allows you to define the set of required roles. A user who passes a token with roles `A` and `B`, can access an endpoint requiring `"roles": ["A","C"]` as it has one of the required options (`A`).
+
+When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives and are recommended to expire in a few minutes or hours.
 
 ## Basic JWT validation
 The JWT validation is per endpoint and must be present inside every endpoint definition needing it. If several endpoints are going to require JWT validation consider using the [flexible configuration](/docs/configuration/flexible-config/) to avoid repetitive declarations.
@@ -78,6 +117,7 @@ Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
 - `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys.
 - `jwk_fingerprints`: *string list*. A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.
 - `cipher_suites`: *integers list*. Override the default cipher suites. Unless you have a legacy JWK, you don't need to add this value.
+- `jwk_local_ca`: *string*. Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g, self-signed certificates).
 
 For the full list of recognized algorithms and cipher suites scroll down to the end of the document.
 
