@@ -69,6 +69,7 @@ Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
 - `alg`: *recognized string*. The hashing algorithm used by the issuer. Usually `RS256`.
 - `jwk-url`: *string*. The URL to the JWK endpoint with the public keys used to verify the authenticity and integrity of the token.
 - `cache`: *boolean*. Set this value to `true` to store the JWK public key in-memory for the next 15 minutes and avoid hammering the key server, recommended for performance. The cache can store up to 100 different public keys simultaneously.
+- `cache_duration`: *int*. Change the default duration of 15 minutes. Value in **seconds**.
 - `audience`: *list*. Set when you want to reject tokens that do not contain an audience of the list.
 - `roles_key`: When passing roles, the key name inside the JWT payload specifying the role of the user.
 - `roles`: *list*. When set, the JWT token not having at least one of the listed roles are rejected.
