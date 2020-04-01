@@ -111,7 +111,7 @@ The full list of parameters for the producer are:
 - `mandatory` - *bool*
 - `immediate` - *bool*
 
-Additionally, these items below are parameter keys that can be present in the endpoint URL and are passed to the producer:
+Additionally, these items below are parameter keys that can be present in the endpoint URL and are passed to the producer (notice the capitalization of the first letter of the param names at the configuration):
 
 - `exp_key` - *string*
 - `reply_to_key` - *string*
@@ -123,9 +123,9 @@ For instance, an `endpoint` URL could be declared as `/produce/{a}/{b}/{id}/{pri
 
     {
         ...
-        "exp_key":"a",
-        "reply_to_key":"b",
-        "msg_id_key":"id",
-        "priority_key":"prio",
-        "routing_key":"route"
+        "exp_key":"A",
+        "reply_to_key":"B",
+        "msg_id_key":"Id",
+        "priority_key":"Prio",
+        "routing_key":"Route"
     }
