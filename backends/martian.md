@@ -31,16 +31,17 @@ There are four different types of interactions you can do with Martian:
 
 ## Transforming requests and responses
 
-Add martian modifiers in your configuration under the `extra_config` of any `endpoint` using the namespace `github.com/devopsfaith/krakend-martian`.
+Add martian modifiers in your configuration under the `extra_config` of any `backend` using the namespace `github.com/devopsfaith/krakend-martian`.
 
 Your configuration has to look as follows:
 
-    "endpoint": "/foo",
     "extra_config": {
         "github.com/devopsfaith/krakend-martian": {
             // modifier configuration here
         }
     }
+
+See the possibilities and examples below.
 
 ### Modifier configuration
 
@@ -50,7 +51,6 @@ In the examples below, you'll find that all modifiers have a configuration key n
 ## Transform headers
 The `header.Modifier` injects a header with a specific value. For instance, the following configuration adds a header `X-Martian` both in the request and the response.
 
-    "endpoint": "/foo",
     "extra_config": {
         "github.com/devopsfaith/krakend-martian": {
             "header.Modifier": {
@@ -80,7 +80,6 @@ The following modifier sets the body of the request and the response to `{"msg":
 ## Transform the URL
 The `url.Modifier` allows you to change settings in the URL. For instance:
 
-    "endpoint": "/foo",
     "extra_config": {
         "github.com/devopsfaith/krakend-martian": {
             "url.Modifier": {
