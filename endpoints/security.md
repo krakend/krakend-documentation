@@ -13,7 +13,7 @@ menu:
     parent: endpoints
 ---
 
-KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://github.com/devopsfaith/krakend-httpsecure). To enable them you only need to add the `extra_config` at `endpoint` level or service (root) level, depending on the item.
+KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://github.com/devopsfaith/krakend-httpsecure). To enable them you only need to add the `extra_config` at service (root) level.
 
 The following example describes the options explained later in this article:
 
