@@ -13,7 +13,7 @@ Hardware can fail at any time, and a Gateway is a piece critical enough to have 
 
 KrakenD nodes **are stateless** and they don't store data or application state to a persistent storage. Instead, any configuration data and application state exist within the configuration file. Nodes are expendable and replaceable at any time, as they do not hold anything.
 
-# Running the cluster
+## Running the cluster
 Running a cluster of machines is a straightforward process that only requires two conditions:
 
 - Having a balancer in front of the machines (e.g., ELB, Haproxy, Kubernetes...)

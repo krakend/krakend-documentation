@@ -15,7 +15,7 @@ menu:
 
 KrakenD supports sending responses back to the client using content types other than JSON. The list of supported content types depends on the router package used.
 
-# Supported encodings
+## Supported encodings
 The gateway can work with several content types, even allowing your clients to choose how to consume the content. The following `output_encoding` strategies are available to choose for every an endpoint:
 
 - `json`: The endpoint always return a response in JSON format to the client.
@@ -62,10 +62,10 @@ Each endpoint declaration is able to define which encoder should be used, as sho
 
 Notice that endpoint `/c` uses JSON as no encoding has been defined.
 
-# Using other routers from the framework
+## Using other routers from the framework
 If instead of the KrakenD API Gateway (KrakenD-CE), which uses internally the gin router, you decide to build your own gateway using the KrakenD framework, the following routers and output encodings are available:
 
-## Gin
+### Gin
 The gin-based KrakenD router includes these output encodings:
 
 - `json`
@@ -73,7 +73,7 @@ The gin-based KrakenD router includes these output encodings:
 - `negotiate`
 - `no-op`
 
-## Mux-based
+### Mux-based
 The mux based routers supported by the KrakenD framework are:
 
 - Mux
@@ -88,4 +88,4 @@ and they include these output encodings:
 - `string`
 - `no-op`
 
-
+See the list of [supported routers](https://github.com/devopsfaith/krakend/tree/master/router).

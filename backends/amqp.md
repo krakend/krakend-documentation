@@ -34,12 +34,12 @@ Both the consumers and the producers have this configuration keys in common:
 
 The following configurations demonstrate both the **consumer** and the **producer** to create the whole publish/subscribe pattern.
 
-# Consumer
+## Consumer
 The consumer retrieves messages from the queue when a KrakenD endpoint plugs to its AMQP backend. The recommendation is to connect consumers to `GET` endpoints.
 
 A single endpoint can consume messages from N queues, or can consume N messages from the same queue by adding N backends with the proper queue name.
 
-## Example
+### Example
 The needed configuration to run a consumer is:
 
         "backend": [
@@ -63,7 +63,7 @@ The needed configuration to run a consumer is:
                 }
             }
 
-## Consumer settings
+### Consumer settings
 The full list of parameters for the consumer are:
 
 - All the common settings above plus:
@@ -71,12 +71,12 @@ The full list of parameters for the consumer are:
 - `prefetch_size` - *int*
 - `no_local` - *bool*
 
-# Producer
+## Producer
 The producer publishes messages to the messaging system for your asynchronous consumption. The recommendation is to plug producers to `POST` endpoints.
 
 Worth mentioning that the producer needs you to pass a body in the request and that the endpoint should declare the `headers_to_pass` so producers are aware of the headers.
 
-## Example
+### Example
 The needed configuration to run a producer is as follows:
 
         "endpoint": "/producer",
@@ -102,7 +102,7 @@ The needed configuration to run a producer is as follows:
             }
 
 
-## Producer settings
+### Producer settings
 The full list of parameters for the producer are:
 
 - All the common settings above plus:

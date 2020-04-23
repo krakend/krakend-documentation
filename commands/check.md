@@ -7,7 +7,6 @@ linktitle: Check
 title: Commands - check
 description: KrakenD Check Command
 weight: 10
-notoc: true
 menu:
   documentation:
     parent: Command line commands
@@ -57,7 +56,7 @@ krakend check
 Please, provide the path to your config file
 {{< /terminal >}}
 
-# Example
+## Example
 
 We will use this configuration for the demo
 

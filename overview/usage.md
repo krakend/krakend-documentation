@@ -17,7 +17,7 @@ From an operations point of view KrakenD, is very simple to use. It only require
 the path the configuration file (which defines behaviors and endpoints). Additionally, you can
 enable the debug with the `-d` flag, and that's pretty much everything.
 
-# TL;DR
+## TL;DR
 1. Generate a configuration file with your endpoints definition. The easier way to generate it is using the [designer](http://designer.krakend.io/)
 2. Check the syntax of your `krakend.json` is good
 	{{< terminal title="Syntax checking" >}}
@@ -33,7 +33,7 @@ The flag `-c` is the short version of `--config` and `-d` the short version of `
 you to find problems easily.
 
 
-# Using KrakenD
+## Using KrakenD
 
 To start KrakenD make sure to provide the path to the binary or add it to the `PATH`. You can see all
 KrakenD options by running the binary with no options:

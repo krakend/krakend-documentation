@@ -30,7 +30,7 @@ Check our original **[KrakenD presentation slides](//www.slideshare.net/AlbertLo
 
 <small>Having trouble? Open in <a href="//www.slideshare.net/AlbertLombarte1/krakend-api-gateway">Slideshare</a></small>
 
-# Why an API Gateway?
+## Why an API Gateway?
 
 When consumers of API content (especially in microservices) query backend services, the implementations suffer a lot of complexity and burden with the sizes and complexity of their microservices responses.
 
@@ -40,7 +40,7 @@ KrakenD acts as an **aggregator** of many sources into single endpoints and allo
 
 KrakenD is written in [Go](https://golang.org/) with support for multiple platforms and is based on the [KrakenD framework](https://github.com/devopsfaith/krakend).
 
-## A practical example
+### A practical example
 A mobile developer needs to construct a single front page that requires data from several calls to their backend services, e.g:
 
     1) api.store.server/products

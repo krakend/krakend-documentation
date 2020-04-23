@@ -6,7 +6,7 @@ notoc: true
 ---
 How to make sure what you are downloading is legit.
 
-# PGP
+## PGP
 We will check the detached signature [PGP](http://repo.krakend.io/bin/krakend_{{< version >}}_amd64.tar.gz.asc) against our package [KrakenD](http://repo.krakend.io/bin/krakend_{{< version >}}_amd64.tar.gz).
 
     $ gpg --verify krakend_{{< version >}}_amd64.tar.gz.asc krakend_{{< version >}}_amd64.tar.gz
@@ -32,11 +32,11 @@ Now you can verify the signature of the package:
     Primary key fingerprint: {{< param pgp_fingerprint >}}
 
 
-# SHA256
+## SHA256
 
 To make sure the binary downloaded matches our SHA256 ensure the next 2 commands produce the same [SHA](http://repo.krakend.io/bin/krakend_{{< version >}}_amd64.tar.gz.sha256) output.
 
-    # Your downloaded file
+    ## Your downloaded file
 	$ shasum -a 256 -b krakend_{{< version >}}_amd64.tar.gz
-    # Our SHA256
+    ## Our SHA256
     $ curl http://repo.krakend.io/bin/krakend_{{< version >}}_amd64.tar.gz.sha256

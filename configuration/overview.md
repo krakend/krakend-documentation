@@ -7,7 +7,6 @@ menu:
     parent: configuration
 title: KrakenD's configuration file(s)
 weight: -1000
-notoc: true
 aliases:
 - /docs/overview/configuration/
 ---
@@ -23,7 +22,7 @@ If your configuration file is too large or repetitive, it can be split into seve
 {{< /note >}}
 
 
-# Generating the configuration file(s)
+## Generating the configuration file(s)
 The configuration file can be written from scratch or reuse another existing file as a base, but the easiest way to write your first configuration file is by simply using the online configuration editor [KrakenDesigner](https://designer.krakend.io/).
 
 The KrakenDesigner is a simple javascript application that helps you understand the capabilities of the API Gateway and helps you set the different values for all the different options. Using this option you don't need to learn and write from scratch all the attribute names. The configuration file can be downloaded at any time and loaded again to resume the edition.
@@ -32,10 +31,10 @@ The Kraken Designer is a **pure static** page that **does not send any of your c
 
 <a class="btn btn-secondary btn-circle" href="https://designer.krakend.io/">Generate configuration now</a>
 
-# Supported file formats
-The configuration file can be written as `.json`, `.toml`, `.yaml`, `.yml`, `.properties`, `.props`, `.prop` or `.hcl`. For more information and recommendations see [supported file formats](/docs/configuration/supported-formats/).
+## Supported file formats
+Through all the documentation we refer to the configuration file as the `krakend.json` file, but the configuration file can be written using `.json`, `.toml`, `.yaml`, `.yml`, `.properties`, `.props`, `.prop` or `.hcl`. For more information and recommendations see [supported file formats](/docs/configuration/supported-formats/).
 
-# Validating the syntax of the configuration file
+## Validating the syntax of the configuration file
 Validate the syntax (not the logic) of your configuration file using the `krakend check` command:
 
 {{< terminal title="Check the configuration" >}}

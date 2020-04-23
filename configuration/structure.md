@@ -8,9 +8,9 @@ menu:
 title: Understanding the configuration file
 weight: 10
 ---
-All KrakenD behavior depends on the `krakend.json` file, so being familiar with the structure of this file it's essential.
+All KrakenD behavior depends on the `krakend.json` file ([other formats supported](/docs/configuration/supported-formats)), so being familiar with the structure of the configuration file it's essential.
 
-# Configuration file structure
+## Configuration file structure
 There are a large number of options you can put in this file, let's focus now only on the structure:
 
     {
@@ -24,7 +24,7 @@ There are a large number of options you can put in this file, let's focus now on
 - `endpoints[]`: An array of endpoint objects offered by the gateway and all the associated backends and configurations.
 - `extra_config{}`: Extra configuration associated with middlewares or components. For instance, you might want to enable logging or metrics, which are non-core and optional features of the API gateway.
 
-## The `endpoints` structure
+### The `endpoints` structure
 Inside the `endpoints`, you declare an array with every `endpoint` (the URL) the gateway offers. For each endpoint, you need to declare at least a `backend` - the place where the data is-.
 
 It looks like this:
@@ -55,7 +55,7 @@ It looks like this:
 
 This declares and endpoint `/v1/foo-bar` which is the result of merging the responses from `/foo` and `/bar`.
 
-## The `extra_config` structure
+### The `extra_config` structure
 When a component is registered, its associated configuration is taken from the `extra_config` (if any).
 
 The `extra_config` can appear on different levels, and this depends entirely on every component. An `extra_config` in the root level of the file usually sets values at a service level, and this affects the gateway globally. On the other hand, some components seek the `extra_config` key inside an `endpoint` definition or a `backend` definition, as its functionality is specific to the backend or the endpoint behavior only. For instance, you might want to set a rate limit only to a specific endpoint or backend.
@@ -113,6 +113,6 @@ The following code is an example defining two simultaneous rate limiting strateg
     }
 }
 {{< /highlight >}}
-## Example file
+### Example file
 
 Check [this larger sample file](https://github.com/devopsfaith/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you can see an example on how to modify the application headers, configure the circuit breaker or apply rate limits.

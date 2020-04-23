@@ -13,7 +13,7 @@ A KrakenD cluster consists of multiple KrakenD instances running simultaneously 
 
 A KrakenD cluster runs with the same KrakenD open source software you use today to start a single instance. Consequently **no license is needed** to operate a sizeable enterprise-grade API gateway.
 
-# KrakenD cluster benefits
+## KrakenD cluster benefits
 Having a KrakenD cluster provides these immediate **benefits**:
 
 - **Increased throughput and capacity**: Having more KrakenD nodes expands the number of requests the API can handle.

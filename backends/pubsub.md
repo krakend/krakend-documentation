@@ -21,7 +21,7 @@ Since KrakenD 1.0 you can connect an endpoint to multiple publish/subscribe back
 - RabbitMQ
 - Apache Kafka
 
-# Configuration
+## Configuration
 To add pub/sub functionality to your backends include the namespaces `github.com/devopsfaith/krakend-pubsub/subscriber` and `github.com/devopsfaith/krakend-pubsub/publisher` under the `extra_config` of your `backend` section.
 
 The `host` key defines the desired driver, and the actual host is usually set in an **environment variable** outside of KrakenD:
@@ -61,7 +61,7 @@ Set the envvar `RABBIT_SERVER_URL='guest:guest@localhost:5672'` and add in the c
 	},
 
 
-## GCP PubSub
+### GCP PubSub
 [Google's Cloud Pub/Sub](https://cloud.google.com/pubsub/) is a fully-managed real-time messaging service that allows you to send and receive messages between independent applications.
 
 The configuration you need to use is:
@@ -81,7 +81,7 @@ Example:
 		}
 	},
 
-## NATS
+### NATS
 [NATS.io](https://nats.io/) is a simple, secure and high performance open source messaging system for cloud native applications, IoT messaging, and microservices architectures.
 
 Configuration:
@@ -103,7 +103,7 @@ Example:
 	}
 
 
-## AWS SNS
+### AWS SNS
 [Amazon Simple Notification Service (SNS)](https://aws.amazon.com/sns/) is a highly available, durable, secure, fully managed pub/sub messaging service that enables you to decouple microservices, distributed systems, and serverless applications. Amazon SNS provides topics for high-throughput, push-based, many-to-many messaging
 
 AWS SNS sets the `url` without any `host` or environment variables, e.g:
@@ -117,7 +117,7 @@ AWS SNS sets the `url` without any `host` or environment variables, e.g:
 	}
 
 
-## AWS SQS
+### AWS SQS
 [Amazon Simple Queue Service (SQS)](https://aws.amazon.com/sqs/) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications.
 
 AWS SQS sets the `url` without any `host` or environment variables, e.g:
@@ -133,7 +133,7 @@ Url: `awssqs://sqs-queue-url`
 		}
 	}
 
-## Azure Service Bus Topic and Subscription
+### Azure Service Bus Topic and Subscription
 [Microsoft Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions) supports a set of cloud-based, message-oriented middleware technologies including reliable message queuing and durable publish/subscribe messaging. These "brokered" messaging capabilities can be thought of as decoupled messaging features that support publish-subscribe, temporal decoupling, and load balancing scenarios using the Service Bus messaging workload.
 
 Configuration:
@@ -155,7 +155,7 @@ Example:
 		}
 	}
 
-## RabbitMQ
+### RabbitMQ
 [RabbitMQ](https://www.rabbitmq.com/) is one of the most popular open source message brokers.
 
 Rabbit can alternatively be configured using the [AMQP component](/docs/backends/amqp/).
@@ -179,7 +179,7 @@ Example:
 		}
 	}
 
-## Kafka
+### Kafka
 [Apache Kafka](https://kafka.apache.org/) is a distributed streaming platform.
 
 Kafka connection requires KrakenD >= `1.1`.

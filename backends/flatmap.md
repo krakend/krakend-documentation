@@ -14,21 +14,22 @@ menu:
 
 The flatmap middleware allows you to **manipulate arrays** by flattening and expanding array structures to objects and vice versa. The process is automatically done by the flatmap component, letting you to concentrate on the type of operation you want to execute.
 
-{{< note title="Important" >}}
-Use a regular [data manipulation](/docs/backends/data-manipulation/) operation such as [`target`](/docs/backends/data-manipulation/#target), [`blacklist`](/docs/backends/data-manipulation/#blacklist) or [`whitelist`](/docs/backends/data-manipulation/#whitelist) whenever it fits as their computational cost is lower.
 
-The flatmap component makes sense only when you need to manipulate arrays, and **not as a general solution for all objects**.
-{{< /note >}}
+## Flatmap configuration
+The flatmap component is part of the krakend proxy operation, so it needs to be included as an `extra_config` inside the `backend` configuration. The namespace is `github.com/devopsfaith/krakend/proxy`.
 
-The flatmap component is part of the krakend proxy operation, so it needs to be included as an `extra_config` inside the `backend` configuration. There are two different types of operations you can do:
+There are two different types of operations you can do:
 
 *   **Moving**, **embedding** or **extracting** items from one place to another (equivalent concepts to [`mapping`](/docs/backends/data-manipulation/#mapping) and [`whitelist`](/docs/backends/data-manipulation/#whitelist))
 *   **Deleting** specific items (similar concept to [`blacklist`](/docs/backends/data-manipulation/#blacklist))
 
 Inside the `flatmap_filter` array, you define the sequence of actions that you want to apply.
 
-# Flatmap configuration
+{{< note title="Important" >}}
+Use a regular [data manipulation](/docs/backends/data-manipulation/) operation such as [`target`](/docs/backends/data-manipulation/#target), [`blacklist`](/docs/backends/data-manipulation/#blacklist) or [`whitelist`](/docs/backends/data-manipulation/#whitelist) whenever it fits as their computational cost is lower.
 
+The flatmap component makes sense only when you need to manipulate arrays, and **not as a general solution for all objects**.
+{{< /note >}}
 The flatmap filter configuration expects an array with the sequence of operations you want to execute. Every operation is defined with an object containing two properties: `type` and `args`.
 
 The component structure is as follows:
@@ -141,7 +142,7 @@ Some individual operations **on the example structure above**:
 | `"a.*.b1.*.c"` | `"a.*.x.*.c.d.e.f.g"`  | <i class="fa fa-times-circle ko"></i> | Incorrect, renaming to an element `x` that is not in the last position |
 | `"a.*.b1.*.c"` | `"a.*.b1.*.d.*.e"`     | <i class="fa fa-times-circle ko"></i> | Incorrect, destination path has more wildcards than source path        |
 
-# Configuration example
+## Configuration example
 
 The following example demonstrates how to modify a collection doing these operations:
 
@@ -168,7 +169,7 @@ The following example demonstrates how to modify a collection doing these operat
             }
         }
 
-## What we did here?
+**What did we do here?**
 
 There is a sequence of 4 operations in order to:
 

@@ -40,7 +40,7 @@ There are two parameters you can set:
 
 
 
-# Comparison of `maxRate` vs `clientMaxRate`
+## Comparison of `maxRate` vs `clientMaxRate`
 The `maxRate` (available both in router and proxy layers) is an absolute number where you have the exact control over how much traffic you are allowing to hit the backend or endpoint. In an eventual DDoS, the `maxRate` can help in a way since it won't accept more traffic than allowed. But on the other hand a single host could abuse the system taking a big percentage of that quota.
 
 The `clientMaxRate` is a limit per client and it won't help you if you just want to control the total traffic, as

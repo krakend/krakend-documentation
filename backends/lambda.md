@@ -24,7 +24,7 @@ The **payload** that is sent to the Lambda function comes from the request and d
 
 You don't need to set an Amazon API Gateway in the middle as KrakenD does this job for you.
 
-# Lambda configuration
+## Lambda configuration
 
 The inclusion requires you to add the code in the `extra_config` of your `backend` section, using the `github.com/devopsfaith/krakend-lambda` namespace.
 
@@ -36,15 +36,13 @@ The supported parameters are:
 *   `max_retries`: Maximum times you want to execute the function until you have a successful response.
 *   `endpoint`: An optional parameter to customize the Lambda endpoint to call. Useful when Localstack is used for testing.
 
-## Authentication
+### Authentication
 
 The KrakenD machine needs to have the AWS credentials in the default file, `~/.aws/credentials`.
 
 When setting the credentials make sure that the lamdba is callable within the KrakenD box with the credentials provided. This translates in having an IAM user with a policy and execution role that let you invoke the function.
 
-# Examples
-
-## Associate a lambda to a backend
+## Example: Associate a lambda to a backend
 
 When the KrakenD endpoint is attached to the same Lambda, use this configuration:
 
@@ -57,7 +55,7 @@ When the KrakenD endpoint is attached to the same Lambda, use this configuration
         }
     }
 
-## Take the lambda from the URL
+## Example: Take the lambda from the URL
 
 When the name of the Lambda to depends on a parameter passed in the endpoint, use this configuration instead:
 

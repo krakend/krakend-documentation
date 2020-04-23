@@ -16,7 +16,7 @@ The **Flexible Configuration** component is included in the KrakenD API Gateway 
 
 When the Flexible Configuration is enabled, KrakenD assumes that your configuration file is a template that needs compilation during start-up time. With this, you have the opportunity to produce a more sophisticated configuration file that utilizes variables and brings content from external files.
 
-# When to use Flexible Configuration
+## When to use Flexible Configuration
 A template system gives you full flexibility to work with the configuration file. It comes handy to:
 
 - Split a large `krakend.json` file into several pieces
@@ -24,10 +24,10 @@ A template system gives you full flexibility to work with the configuration file
 - Use placeholders and reusable code blocks
 - Have the full power of the go template system!
 
-# Requirements
+## Requirements
 The only requirement to use the Flexible Configuration is to encode the configuration file in `JSON` format as the package does not support other formats just yet.
 
-# Usage
+## Usage
 The activation of the package works via environment variables when running krakend, as follows:
 
 - `FC_ENABLE=1` to let KrakenD know that you are using Flexible Configuration. You can use `1` or any other value (but  `0` won't disable it!). The file passed with the `-c` flag is the base template.
@@ -56,7 +56,7 @@ Then you can run KrakenD from the terminal with this command:
     FC_TEMPLATES="$PWD/config/templates" \
     krakend run -c "$PWD/config/krakend.json"
 
-## Template syntax
+### Template syntax
 The configuration file passed with the `-c` flag is treated as a **Go template**, and you can make use of all the power the template engine brings. The data evaluations or control structures are easily recognized as they are surrounded by `{{` and `}}`. Any other text outside the delimiters is copied to the output unchanged.
 
 These are all the syntax possibilities:
@@ -68,7 +68,7 @@ These are all the syntax possibilities:
 
 See below for further explanation and examples.
 
-### Insert values from settings files
+#### Insert values from settings files
 In the `FC_SETTINGS` directory, you can save different `.json` files with data structures inside that you can reference in the templates.
 
 For instance, if you have a file `settings/db.json` with the following content:
@@ -84,21 +84,21 @@ You can access particular settings like using this syntax: `{{ .db.host }}`.
 
 The first name after the dot is the name of the file, and then the element in the structure you want to access. The example would write `192.168.1.23` where you wrote the placeholder.
 
-### Insert structures from settings files
+#### Insert structures from settings files
 When instead of a single value you need to insert a **JSON structure** (several elements), you need to use `marshall`.
 
     {{ marshal .db }}
 
 The example would write the entire content of the `db.json` file.
 
-### Include an external file
+#### Include an external file
 To insert the content of an external partial file in-place use:
 
     {{ include "partial_file_name.txt" }}
 
 **The content inside the partial template is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension.
 
-### Include and process a sub-template
+#### Include and process a sub-template
 While the `include` is only meant to paste the content of a plain text file, the `template` gives you all the power of Go templating ([documentation](https://golang.org/pkg/text/template/)). The syntax is as follows:
 
     {{ template "template_name.tmpl" context }}
@@ -108,7 +108,7 @@ The template `template_name.tmpl` is executed and processed. The value of `conte
 Go templates allow you to introduce handy stuff like conditionals or loops and allow you to create powerful configurations.
 
 
-## Testing the configuration
+### Testing the configuration
 As the configuration is now composed of several pieces, it's easy to make a mistake at some point. Test the syntax of all the files is good with the `krakend check` command and pay attention to the output to verify there aren't any errors.
 
 You might also want to use the flag `FC_OUT` to write the content of the final file in a known path, so you can check its contents:
@@ -125,7 +125,7 @@ When there are errors, the output contains information to help you resolve it, e
     ERROR parsing the configuration file: loading flexible-config settings:
     - backends.json: invalid character '}' looking for beginning of object key string
 
-# Flexible configuration example
+## Flexible configuration example
 To demonstrate the usage of the flexible configuration, we are going to reorganize a configuration file in several pieces. This is a simple example to see the basics of the templates system, and it does not intend to show a good way to organize and split the files:
 
     .

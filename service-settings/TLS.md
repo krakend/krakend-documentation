@@ -1,7 +1,6 @@
 ---
 lastmod: 2019-02-22
 date: 2019-02-22
-toc: true
 linktitle: TLS
 title: Enabling TLS for HTTPS and HTTP/2
 weight: 10
@@ -16,7 +15,7 @@ There are two different strategies when using TLS over KrakenD:
 
 In case you want to enable TLS in KrakenD you need to add a `tls` key at service level (configuration's file root) with at least the public key and the private key. When you add TLS, KrakenD listens **only using TLS**, and no traffic to plain HTTP is accepted.
 
-# Simple configuration for TLS
+## Simple configuration for TLS
 To start KrakenD with TLS you need to generate the certificate and provide both the public and the private key:
 
     {
@@ -27,7 +26,7 @@ To start KrakenD with TLS you need to generate the certificate and provide both 
       }
     }
 
-# Full configuration for TLS
+## Full configuration for TLS
 All the accepted options of the TLS configuration are:
 
 

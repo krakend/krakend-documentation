@@ -24,7 +24,7 @@ traffic to the suffering backend.
 
 The Circuit Breaker is a protection measure for your stack and avoids cascading failures.
 
-# How it works
+## How it works
 
 The Circuit Breaker retains the state of the connections to your backend(s) over a series of requests
 and when it sees the configured number of **consecutive failures** (`maxErrors`) in a given time interval (`interval`)
@@ -52,7 +52,7 @@ And this is the way the states change:
 - `HALF-OPEN`: After the timeout, it changes to this state and allows one connection to pass. If the connection succeeds, the state changes to `CLOSED`, and the backend is considered to be healthy again. But if it fails, it switches back to `OPEN` for another timeout.
 
 
-# Configuring a circuit breaker
+## Configuring a circuit breaker
 The Circuit Breaker is available by default in KrakenD thanks to the [circuit breaker middleware](https://github.com/devopsfaith/krakend-circuitbreaker). As all additional middlewares, you need to set its values in its own namespace `github.com/devopsfaith/krakend-circuitbreaker/gobreaker` inside the `extra_config` key.
 
 The following configuration is an example of how to add circuit breaker capabilities to a backend:

@@ -23,16 +23,12 @@ For the benchmarks, we based the tests on the benchmarking project [varnish/api-
 
 **At the time of writing, KrakenD does not support auth features, so we just did the benchmark with _test01_**
 
-# TLDR;
-
-Check out the generated graphs ([throughput](http://www.charted.co/c/1db8eb2) and [responses](http://www.charted.co/c/2940d33)) or the [summary](#summary)
-
-# Hardware
+## Hardware
 
     Model MacBook Pro (MacBookPro11,4) - August 2015
     Processor:    Intel Core i7 2,2 GHz
 
-# Setup
+## Setup
 
 For this test, we stored this configuration at `krakend.json`
 
@@ -101,9 +97,9 @@ And we started the environment as described in the [README](https://github.com/v
     [vagrant@consumer boom]$ /usr/local/bin/test00
     [vagrant@consumer boom]$ /usr/local/bin/test01
 
-# Results
+## Results
 
-## Test 00
+### Test 00
 
     [vagrant@consumer ~]$ /usr/local/bin/test00
     100000 / 100000 Booooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo! 100.00 %
@@ -142,9 +138,9 @@ And we started the environment as described in the [README](https://github.com/v
       95% in 0.0233 secs.
       99% in 0.0333 secs.
 
-## Test 01
+### Test 01
 
-### KrakenD
+#### KrakenD
 
     [vagrant@consumer ~]$ /usr/local/bin/test01
     100000 / 100000 Booooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo! 100.00 %
@@ -183,7 +179,7 @@ And we started the environment as described in the [README](https://github.com/v
       95% in 0.0469 secs.
       99% in 0.0771 secs.
 
-### Vulcand
+#### Vulcand
 
     [vagrant@consumer ~]$ /usr/local/bin/test01
     100000 / 100000 Booooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo! 100.00 %
@@ -222,7 +218,7 @@ And we started the environment as described in the [README](https://github.com/v
       95% in 0.0733 secs.
       99% in 0.2057 secs.
 
-### Kong
+#### Kong
 
     [vagrant@consumer ~]$ /usr/local/bin/test01
     100000 / 100000 Booooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo! 100.00 %
@@ -261,7 +257,7 @@ And we started the environment as described in the [README](https://github.com/v
       95% in 0.1076 secs.
       99% in 0.2355 secs.
 
-### Tyk
+#### Tyk
 
     [vagrant@consumer ~]$ /usr/local/bin/test01
     100000 / 100000 Booooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo! 100.00 %
@@ -300,13 +296,13 @@ And we started the environment as described in the [README](https://github.com/v
       95% in 0.9231 secs.
       99% in 2.1054 secs.
 
-# Summary
+## Summary
 
-## Requests per second
+### Requests per second
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "api-gateway-benchmark_test01_rps.csv">}}
 
-## Response time distribution
+### Response time distribution
 
 *Time in milliseconds*
 

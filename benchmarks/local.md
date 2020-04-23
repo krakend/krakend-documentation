@@ -12,16 +12,12 @@ menu:
     parent: Benchmarks
 ---
 
-# TL;DR
-
-Check out the generated [graphs](http://www.charted.co/c/301c7e8) or the [summary](#summary)
-
-# Hardware
+## Hardware
 
     Model MacBook Pro (MacBookPro11,4) - August 2015
     Processor:    Intel Core i7 2,2 GHz
 
-# Setup
+## Setup
 
 For this test, we stored this configuration at `krakend.json`
 
@@ -76,7 +72,7 @@ Response from the KrakenD:
 
     {"message":"pong"}
    
-# Results
+## Results
 
     $ hey -c 200 -n 100000 http://127.0.0.1:8080/foo
     8217 requests done.
@@ -126,6 +122,6 @@ Response from the KrakenD:
       95% in 0.0173 secs
       99% in 0.0212 secs
 
-# Summary
+## Summary
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "local_100_500_concurrency.csv">}}

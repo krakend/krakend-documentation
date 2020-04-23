@@ -6,7 +6,6 @@ title: Returning the details of backend errors
 weight: 130
 #since: 0.9
 #source: https://github.com/devopsfaith/krakend
-notoc: true
 menu:
   documentation:
     parent: backends
@@ -18,7 +17,7 @@ If in the other hand, your endpoint connects to a single backend with no manipul
 
 You can override the default policy of hiding backend error details.
 
-# Showing backend errors
+## Showing backend errors
 If you prefer revealing these details to the client, you can choose to show them in the gateway response. To achieve this, enable the `return_error_details` option in backend the configuration, and then all errors will appear in the desired key.
 
 Place the following configuration inside the `backend` configuration:
@@ -31,7 +30,7 @@ Place the following configuration inside the `backend` configuration:
 
 Notice that `return_error_details` sets an alias for this backend.
 
-# Response for failing backends
+## Response for failing backends
 When a backend fails, you'll find an object named `error_` + `backend_alias` containing the detailed errors of the backend. The returned structure on error contains the status code and the body:
 
 
@@ -43,7 +42,7 @@ When a backend fails, you'll find an object named `error_` + `backend_alias` con
 
 If there are no errors, the key won't exist.
 
-# Example
+## Example
 The following configuration sets an endpoint with two backends that return its errors in two different keys:
 
  	{

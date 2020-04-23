@@ -12,13 +12,9 @@ menu:
     parent: Benchmarks
 ---
 
-# TL;DR
-
-Check out the generated [graphs](http://www.charted.co/c/227df90) or the [conclusions](#conclusions)
-
 The following numbers show the execution results for the KrakenD benchmarks on [Amazon EC2](https://aws.amazon.com/ec2/) machines.
 
-# Benchmark Setup
+## Benchmark Setup
 This set of benchmarks have been running on different AWS EC2 instances. Each individual test consists of spinning up 3 different machines, being:
 
 - **A web server**: A [LWAN](https://lwan.ws/) web server using an instance `c4.xlarge`. This is the "fake API" where KrakenD will take the data
@@ -45,7 +41,7 @@ The instance types we tested are:
 | c4.2xlarge | 8 | 15 GB|
 
 
-# KrakenD Configuration for all tests
+## KrakenD Configuration for all tests
 
 The configuration for the load test was stored in the `krakend.json` file, as follows:
 
@@ -103,49 +99,49 @@ And we started the KrakenD with this cmd (debug mode):
 krakend run --config krakend.json -d > /dev/null
 {{< /terminal >}}
 
-# Results
+## Results
 
-## Proxy test on `t2.micro`
+### Proxy test on `t2.micro`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "t2_micro_test01.csv" >}}
 
-## Aggregate test on `t2.micro`
+### Aggregate test on `t2.micro`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "t2_micro_aggregate.csv" >}}
 
-## Proxy test on `t2.medium`
+### Proxy test on `t2.medium`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "t2_medium_test01.csv" >}}
 
-## Aggregate test on `t2.medium`
+### Aggregate test on `t2.medium`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "t2_medium_aggregate.csv" >}}
 
-## Proxy test on `m4.large`
+### Proxy test on `m4.large`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "m4_large_test01.csv" >}}
 
-## Aggregate test on `m4.large`
+### Aggregate test on `m4.large`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "m4_large_aggregate.csv" >}}
 
-## Proxy test on `c4.xlarge`
+### Proxy test on `c4.xlarge`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "c4_xlarge_test01.csv" >}}
 
-## Aggregate test on `c4.xlarge`
+### Aggregate test on `c4.xlarge`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "c4_xlarge_aggregate.csv" >}}
 
-## Proxy test on `c4.2xlarge`
+### Proxy test on `c4.2xlarge`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "c4_2xlarge_test01.csv" >}}
 
-## Aggregate test on `c4.2xlarge`
+### Aggregate test on `c4.2xlarge`
 
 {{< gist kpacha 91caba50e47160f656069373b0f0605d "c4_2xlarge_aggregate.csv" >}}
 
-## Conclusions
+### Conclusions
 During all the tests we did, the instances of type `c4` always showed a stable behavior while the `m4` types didn't offer
 a proportional increase in the performance and the variance of the responses is too high.
 

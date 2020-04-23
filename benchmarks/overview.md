@@ -9,12 +9,12 @@ menu:
   documentation:
     parent: Benchmarks
 ---
-# KrakenD, the **ultra performer** API Gateway
+## KrakenD, the **ultra performer** API Gateway
 An API Gateway is a component that needs to deliver really fast, as it is an added layer in the infrastructure. KrakenD
 was built with performance in mind. In this page and inner pages, you'll find several tests we did to measure the performance.
 We also invite you to do them for yourself!
 
-# TL;DR: **Benchmark results**
+## TL;DR: **Benchmark results**
 **~18,000 requests/second** on an ordinary laptop.
 
 The following table summarizes different performance tests using Amazon EC2 virtual instances and an example with a laptop.
@@ -65,30 +65,30 @@ The following table summarizes different performance tests using Amazon EC2 virt
     </tbody>
  </table>
 
-## Benchmark in a MacBook Pro
+### Benchmark in a MacBook Pro
 
 [Here you will find the results of the benchmarks](/docs/benchmarks/local)
 
-## Benchmark in Amazon AWS EC2 Instances
+### Benchmark in Amazon AWS EC2 Instances
 
 [Here you will find the results of the benchmarks](/docs/benchmarks/aws)
 
-## API Gateway Benchmark
+### API Gateway Benchmark
 
 [Here you will find the results of the comparisons](/docs/benchmarks/api-gateway-benchmark)
 
-# Tooling
+## Tooling
 
-## hey
+### hey
 
 Some local benchmarks used the [hey](https://github.com/rakyll/hey) tool, which is an Apache Benchmark (ab) replacement tool.
 
-## api-gateway-benchmark
+### api-gateway-benchmark
 
 > This project aims to provide a complete set of tools needed to do simple performance comparisons in the API manager/gateway space. It is inspired by the great Framework Benchmarks project by TechEmpower.
 
 Check the [varnish/api-gateway-benchmarks](https://github.com/varnish/api-gateway-benchmarks) project for more info.
 
-## Lwan
+### Lwan
 
 [LWAN](https://lwan.ws/) is a high performance web server used to build the backends REST APIs for KrakenD to load the data during the benchmarks.

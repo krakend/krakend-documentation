@@ -25,7 +25,7 @@ Nevertheless, **our recommendation is to choose `JSON`**.
 
 Validate the syntax (not the logic) with [`krakend check`](/docs/commands/check/)
 
-# Why choosing json?
+## Why choosing json?
 You are free to choose `YAML`, `TOML` or any of the other formats at your best convenience. But have in mind the following logic when choosing a file format other than `json`.
 
 **Using the UI**: If you intend to generate or edit your configuration file using the [KrakenDesigner](https://designer.krakend.io), the input and output are always a `.json` file.
