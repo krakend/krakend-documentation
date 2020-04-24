@@ -1,6 +1,7 @@
 ---
 aliases:
 - /docs/features/security/
+- /docs/endpoints/security/
 lastmod: 2019-09-02
 date: 2016-09-30
 toc: true
@@ -10,7 +11,7 @@ source: https://github.com/devopsfaith/krakend-httpsecure
 weight: 40
 menu:
   documentation:
-    parent: endpoints
+    parent: service-settings
 ---
 
 KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://github.com/devopsfaith/krakend-httpsecure). To enable them you only need to add the `extra_config` at service (root) level.
