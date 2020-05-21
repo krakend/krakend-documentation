@@ -1,5 +1,5 @@
 # KrakenD Documentation
-All the documentation uses Markdown syntax and the site is generated using [Hugo](gohugo.io). After your contribution this repository will be used to compile all the documentation.
+All the documentation uses Markdown syntax and the site is generated using [Hugo](https://gohugo.io). After your contribution this repository will be used to compile all the documentation.
 
 If you want to use a server to browse this pages, although not necessary, you can copy the folder inside the `content` directory in any Hugo installation.
 
