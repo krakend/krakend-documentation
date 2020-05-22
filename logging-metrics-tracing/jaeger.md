@@ -21,7 +21,7 @@ The following configuration snippet sends data to your Jaeger:
       "exporters": {
         "jaeger": {
 			"endpoint": "http://192.168.99.100:14268",
-            "serviceName":"krakend"
+            "service_name":"krakend"
 		},
 	  }
 	}
