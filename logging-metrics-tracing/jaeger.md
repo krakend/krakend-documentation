@@ -27,7 +27,7 @@ The following configuration snippet sends data to your Jaeger:
 	}
 
 - `endpoint` is the URL (including port) where your Jaeger is
-- `serviceName` the service name registered in Jaeger
+- `service_name` the service name registered in Jaeger
 
 
 See also the [additional settings](/docs/logging-metrics-tracing/opencensus/) of the Opencensus module that can be declared.
