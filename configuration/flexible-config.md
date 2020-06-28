@@ -62,7 +62,7 @@ The configuration file passed with the `-c` flag is treated as a **Go template**
 These are all the syntax possibilities:
 
 - `{{ .file.key }}`: Insert the value of a `key` in a settings `file`
-- `{{ marshall .file.key }}`: Insert a JSON structure under a `key` in a settings `file`
+- `{{ marshal .file.key }}`: Insert a JSON structure under a `key` in a settings `file`
 - `{{ include "file.txt" }}`: Replace with the complete content of the `file.txt`
 - `{{ template "file.tmpl" context }}`: Process the Go template `file.tmpl` passing in its dot (`{{ . }}`) the `context`
 
@@ -85,7 +85,7 @@ You can access particular settings like using this syntax: `{{ .db.host }}`.
 The first name after the dot is the name of the file, and then the element in the structure you want to access. The example would write `192.168.1.23` where you wrote the placeholder.
 
 #### Insert structures from settings files
-When instead of a single value you need to insert a **JSON structure** (several elements), you need to use `marshall`.
+When instead of a single value you need to insert a **JSON structure** (several elements), you need to use `marshal`.
 
     {{ marshal .db }}
 
