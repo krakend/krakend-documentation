@@ -20,7 +20,7 @@ The following configuration snippet sends data to your Jaeger:
 	"github_com/devopsfaith/krakend-opencensus": {
       "exporters": {
         "jaeger": {
-			"endpoint": "http://192.168.99.100:14268",
+			"endpoint": "http://192.168.99.100:14268/api/traces",
             "service_name":"krakend"
 		},
 	  }
