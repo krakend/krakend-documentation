@@ -19,7 +19,7 @@ You can use two different filtering strategies, pick one or the other in each en
 - **Allow list** (`allow`)
 {{< note title="Renamed attributes" >}}
 Prior to KrakenD 1.2 these terms where defined as `whitelist` and `blacklist`, please upgrade your configuration with the new terms as the next version will not understand them.
-42:{{< /note >}}
+{{< /note >}}
 
 ### Deny
 

@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-04-05
+lastmod: 2020-07-10
 date: 2019-04-05
 toc: true
 linktitle: Array manipulations
@@ -22,6 +22,7 @@ There are two different types of operations you can do:
 
 *   **Moving**, **embedding** or **extracting** items from one place to another (equivalent concepts to [`mapping`](/docs/backends/data-manipulation/#mapping) and [`allow`](/docs/backends/data-manipulation/#allow))
 *   **Deleting** specific items (similar concept to [`deny`](/docs/backends/data-manipulation/#deny))
+*   **Appending** items from one list to the other
 
 Inside the `flatmap_filter` array, you define the sequence of actions that you want to apply.
 
@@ -51,7 +52,7 @@ The component structure is as follows:
 
 ## Operations
 
-The two types of operations are defined as follows:
+The types of operations are defined as follows:
 
 *   **Move**: To move or rename a collection to another.
     *   `"type": "move"`
@@ -59,6 +60,9 @@ The two types of operations are defined as follows:
 *   **Delete**: To remove a collection
     *   `"type": "del"`
     *   `"args": ["target_in_collection_to_delete"]`
+*   **Append**: To append a collection after another one, and return only the latter.
+    *   `"type": "append"`
+    *   `"args": ["collection_to_append", "returned_collection"]`
 
 Both moving and deleting apply to the **last item** in the arguments. For instance, a deletion of `a.b.c` deletes `c` and leaves `a.b` in the response.
 
@@ -150,6 +154,10 @@ The following example demonstrates how to modify a collection doing these operat
             "github.com/devopsfaith/krakend/proxy": {
                 "flatmap_filter": [
                     {
+                        "type": "append",
+                        "args": ["kindergarten", "schools"]
+                    },
+                    {
                         "type": "move",
                         "args": ["schools.42.students", "alumni"]
                     },
@@ -173,6 +181,7 @@ The following example demonstrates how to modify a collection doing these operat
 
 There is a sequence of 4 operations in order to:
 
+*   Extract all items inside `kindergarten` and append them to the `students` collection.
 *   Extract all `students` of the `43rd` school (array starts at 0) and put them under a new property `alumni`
 *   Get rid of all the remaining schools
 *   Delete all items with a property `password` inside the array

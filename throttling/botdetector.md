@@ -54,7 +54,7 @@ The order of evaluation of the rules is sequential in this order: `allowlist` ->
 
 {{< note title="Renamed attributes" >}}
 Prior to KrakenD 1.2 the terms `whitelist` and `blacklist` were used, please upgrade your configuration with the new terms `allowlist` and `blocklist` as the next version will not understand them.
-42:{{< /note >}}
+{{< /note >}}
 
 ### Building your bot rules
 
