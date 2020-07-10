@@ -20,13 +20,13 @@ The flatmap component is part of the krakend proxy operation, so it needs to be 
 
 There are two different types of operations you can do:
 
-*   **Moving**, **embedding** or **extracting** items from one place to another (equivalent concepts to [`mapping`](/docs/backends/data-manipulation/#mapping) and [`whitelist`](/docs/backends/data-manipulation/#whitelist))
-*   **Deleting** specific items (similar concept to [`blacklist`](/docs/backends/data-manipulation/#blacklist))
+*   **Moving**, **embedding** or **extracting** items from one place to another (equivalent concepts to [`mapping`](/docs/backends/data-manipulation/#mapping) and [`allow`](/docs/backends/data-manipulation/#allow))
+*   **Deleting** specific items (similar concept to [`deny`](/docs/backends/data-manipulation/#deny))
 
 Inside the `flatmap_filter` array, you define the sequence of actions that you want to apply.
 
 {{< note title="Important" >}}
-Use a regular [data manipulation](/docs/backends/data-manipulation/) operation such as [`target`](/docs/backends/data-manipulation/#target), [`blacklist`](/docs/backends/data-manipulation/#blacklist) or [`whitelist`](/docs/backends/data-manipulation/#whitelist) whenever it fits as their computational cost is lower.
+Use a regular [data manipulation](/docs/backends/data-manipulation/) operation such as [`target`](/docs/backends/data-manipulation/#target), [`deny`](/docs/backends/data-manipulation/#deny) or [`allow`](/docs/backends/data-manipulation/#allow) whenever it fits as their computational cost is lower.
 
 The flatmap component makes sense only when you need to manipulate arrays, and **not as a general solution for all objects**.
 {{< /note >}}
@@ -64,7 +64,7 @@ Both moving and deleting apply to the **last item** in the arguments. For instan
 
 ## Mixing flatmap with other manipulation operations
 
-When the flatmap filter is enabled, the operations `group` and `target` keep their functionality, but `whitelist`, `blacklist` and `mapping` are ignored.
+When the flatmap filter is enabled, the operations `group` and `target` keep their functionality, but `allow`, `deny` and `mapping` are ignored.
 
 ## Data representation in `args`
 
@@ -110,7 +110,7 @@ Notice from this example that...
 
 *   `a` and `b1` contain arrays (`[...]`) with objects inside.
 *   `b2`, `c` and `d` are basic types
-*   Since `a` is an array (`"a": []`) we need to use the flatmap component. If it were an object (`"a": {}`) we would use [blacklist or whitelist](/docs/backends/data-manipulation/)
+*   Since `a` is an array (`"a": []`) we need to use the flatmap component. If it were an object (`"a": {}`) we would use [deny or allow](/docs/backends/data-manipulation/)
 
 #### Representing some values
 

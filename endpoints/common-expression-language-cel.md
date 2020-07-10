@@ -133,7 +133,7 @@ This example can be copy/pasted into your configuration as it connects to an exi
             "https://api.bitbucket.org"
           ],
           "url_pattern": "/2.0/users/{nick}",
-          "whitelist": [
+          "allow": [
             "display_name",
             "website"
           ],
