@@ -9,6 +9,7 @@ menu:
   documentation:
     parent: backends
 ---
+This page describes the most basic options to manipulate the content you receive from the backend before delivering it to the client.
 
 ## Filtering
 When you offer a KrakenD endpoint, you can decide whether to return all the fields from the backend (default behavior) or specify which ones are allowed through an allow or deny list. You might want to use this functionality for many different reasons. Still, we strongly encourage you to consider using it frequently to save the user's bandwidth, provide the client what is needed, and decrease the load and render times.
@@ -17,6 +18,7 @@ You can use two different filtering strategies, pick one or the other in each en
 
 - **Deny list** (`deny`)
 - **Allow list** (`allow`)
+
 {{< note title="Renamed attributes" >}}
 Prior to KrakenD 1.2 these terms where defined as `whitelist` and `blacklist`, please upgrade your configuration with the new terms as the next version will not understand them.
 {{< /note >}}
@@ -128,57 +130,57 @@ When grouping different backend responses **don't share the same group name**, a
 
 The following code is an endpoint that gets data from two different backends, but one of the responses is encapsulated inside the field `last_post`.
 
-  {
-      "endpoint": "/users/{user}",
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/users/{user}",
-          "host": [
-            "https://jsonplaceholder.typicode.com"
-          ]
-        },
-        {
-          "url_pattern": "/posts/{user}",
-          "host": [
-            "https://jsonplaceholder.typicode.com"
-          ],
-          "group": "last_post"
-        }
-      ]
-    }
+    {
+        "endpoint": "/users/{user}",
+        "method": "GET",
+        "backend": [
+          {
+            "url_pattern": "/users/{user}",
+            "host": [
+              "https://jsonplaceholder.typicode.com"
+            ]
+          },
+          {
+            "url_pattern": "/posts/{user}",
+            "host": [
+              "https://jsonplaceholder.typicode.com"
+            ],
+            "group": "last_post"
+          }
+        ]
+      }
 
 This will generate responses like this one:
 
-  {
-    "id": 1,
-    "name": "Leanne Graham",
-    "username": "Bret",
-    "email": "Sincere@april.biz",
-    "address": {
-      "street": "Kulas Light",
-      "suite": "Apt. 556",
-      "city": "Gwenborough",
-      "zipcode": "92998-3874",
-      "geo": {
-        "lat": "-37.3159",
-        "lng": "81.1496"
-      }
-    },
-    "phone": "1-770-736-8031 x56442",
-    "website": "hildegard.org",
-    "company": {
-      "name": "Romaguera-Crona",
-      "catchPhrase": "Multi-layered client-server neural-net",
-      "bs": "harness real-time e-markets"
-    },
-    "last_post": {
+    {
       "id": 1,
-      "userId": 1,
-      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-      "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+      "name": "Leanne Graham",
+      "username": "Bret",
+      "email": "Sincere@april.biz",
+      "address": {
+        "street": "Kulas Light",
+        "suite": "Apt. 556",
+        "city": "Gwenborough",
+        "zipcode": "92998-3874",
+        "geo": {
+          "lat": "-37.3159",
+          "lng": "81.1496"
+        }
+      },
+      "phone": "1-770-736-8031 x56442",
+      "website": "hildegard.org",
+      "company": {
+        "name": "Romaguera-Crona",
+        "catchPhrase": "Multi-layered client-server neural-net",
+        "bs": "harness real-time e-markets"
+      },
+      "last_post": {
+        "id": 1,
+        "userId": 1,
+        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+      }
     }
-  }
 
 ## Mapping
 
@@ -189,47 +191,47 @@ In the `mapping` section, map the original field name with the desired name.
 ### Mapping example:
 Instead of showing the `email` field we want to name it `personal_email`:
 
-  {
-      "endpoint": "/users/{user}",
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/users/{user}",
-          "host": [
-            "https://jsonplaceholder.typicode.com"
-          ],
-          "mapping": {
-            "email": "personal_email"
+    {
+        "endpoint": "/users/{user}",
+        "method": "GET",
+        "backend": [
+          {
+            "url_pattern": "/users/{user}",
+            "host": [
+              "https://jsonplaceholder.typicode.com"
+            ],
+            "mapping": {
+              "email": "personal_email"
+            }
           }
-        }
-      ]
-    }
+        ]
+      }
 
 Will generate responses like this one:
 
-  {
-    "id": 1,
-    "name": "Leanne Graham",
-    "username": "Bret",
-    "personal_email": "Sincere@april.biz",
-    "address": {
-      "street": "Kulas Light",
-      "suite": "Apt. 556",
-      "city": "Gwenborough",
-      "zipcode": "92998-3874",
-      "geo": {
-        "lat": "-37.3159",
-        "lng": "81.1496"
+    {
+      "id": 1,
+      "name": "Leanne Graham",
+      "username": "Bret",
+      "personal_email": "Sincere@april.biz",
+      "address": {
+        "street": "Kulas Light",
+        "suite": "Apt. 556",
+        "city": "Gwenborough",
+        "zipcode": "92998-3874",
+        "geo": {
+          "lat": "-37.3159",
+          "lng": "81.1496"
+        }
+      },
+      "phone": "1-770-736-8031 x56442",
+      "website": "hildegard.org",
+      "company": {
+        "name": "Romaguera-Crona",
+        "catchPhrase": "Multi-layered client-server neural-net",
+        "bs": "harness real-time e-markets"
       }
-    },
-    "phone": "1-770-736-8031 x56442",
-    "website": "hildegard.org",
-    "company": {
-      "name": "Romaguera-Crona",
-      "catchPhrase": "Multi-layered client-server neural-net",
-      "bs": "harness real-time e-markets"
     }
-  }
 
 ## Target
 It is frequent in many API implementations that the desired data lives inside a generic field like `data` or `content`, and you don't want to have this level included in your responses.
@@ -241,39 +243,39 @@ The capturing option uses the attribute `target` in the configuration file.
 ### Capturing a target example
 Given a backend endpoint with this kind of responses containing a level `data`:
 
-  {
-    "apiVersion":"2.0",
-    "data": {
-      "updated":"2010-01-07T19:58:42.949Z",
-      "totalItems":800,
-      "startIndex":1,
-      "itemsPerPage":1,
-      "items":[]
+    {
+      "apiVersion":"2.0",
+      "data": {
+        "updated":"2010-01-07T19:58:42.949Z",
+        "totalItems":800,
+        "startIndex":1,
+        "itemsPerPage":1,
+        "items":[]
+      }
     }
-  }
 
 and with this KrakenD configuration
 
-  {
-      "endpoint": "/foo",
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/bar",
-          "target": "data"
-        }
-      ]
-    }
+    {
+        "endpoint": "/foo",
+        "method": "GET",
+        "backend": [
+          {
+            "url_pattern": "/bar",
+            "target": "data"
+          }
+        ]
+      }
 
 the gateway will generate responses like this one:
 
-  {
-      "updated":"2010-01-07T19:58:42.949Z",
-      "totalItems":800,
-      "startIndex":1,
-      "itemsPerPage":1,
-      "items":[]
-  }
+    {
+        "updated":"2010-01-07T19:58:42.949Z",
+        "totalItems":800,
+        "startIndex":1,
+        "itemsPerPage":1,
+        "items":[]
+    }
 
 ## Collections
 Working with collections (or arrays) is a special manipulation case. There are two different scenarios regarding collections:
@@ -345,6 +347,6 @@ All the data manipulation operations (such as the allow list, deny list, etc.) e
 See [flatmap documentation](/docs/backends/flatmap)
 
 ## Manipulations with Lua
-Backends response can be transformed using Lua scripting.
+More advanced manipulations can be done using Lua scripting.
 
 See [Lua scripts](/docs/endpoints/lua/) documentation
