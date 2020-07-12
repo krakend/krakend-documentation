@@ -3,7 +3,7 @@ lastmod: 2019-10-07
 date: 2019-10-07
 linktitle:  Health endpoint
 title: Adding a health endpoint
-weight: 110
+weight: 10000
 notoc: true
 menu:
   documentation:

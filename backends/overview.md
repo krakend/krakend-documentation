@@ -10,14 +10,28 @@ menu:
     parent: backends
 ---
 
-The concept of "backend" references to the origin servers providing the necessary data to populate your endpoints.
+The concept of `backend` references to the origin servers providing the necessary data to populate your endpoints. A backend can be something as your HTTP-based API, a Lambda function, or a Kafka queue to name a few examples.
 
-A backend can be any server inside our outside your networks as long it is reachable by KrakenD. For instance, you can create endpoints that are fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook or any other service.
+A backend can be any server inside our outside your network, as long it is reachable by KrakenD. For instance, you can create endpoints that are fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook or any other service.
 
-The backends are declared inside every endpoint using the `backend` key.
+When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy) is used), and the content parsed according to its `encoding` or middleware configuration.
 
-## Simple example
-In the example below, KrakenD offers an endpoint `/v1/products` that when requested connects simultaneously to the two services declared under each `host` field (but picking just one of each using load balancing) and returns the merged content given by `/products/_catalog/all` and `/marketing/offers` of these two different services.
+The backends are declared inside every endpoint using a `backend` array. 
+
+## Backend configuration
+Inside the `backend` array, you need to create an object for each backend entry. The more important options are:
+
+- [`encoding`](/docs/backends/supported-encodings/) to define how to parse the backend response
+- [`sd`](/docs/service-discovery/overview/) when using a Service Discovery system (e.g., when deploying in k8s)
+- `method` one of `GET`, `POST`, `PUT`, `DELETE`, `PATCH` (in **uppercase**!)
+- `url_pattern` The path inside the service (no protocol, no host, no method)
+- `host` an array with all the available hosts to load balance requests using the format `protocol://host:port`
+- `extra_config` when there is additional configuration related to a specific component or middleware that you want to enable
+
+More configuration options such as the ones for [data manipulation](/docs/backends/data-manipulation/) are available. You will find them in each specific section. 
+
+## Backend configuration example
+In the example below, KrakenD offers an endpoint `/v1/products` that merges the content from two different services using the URLs `/products` and `/offers`. The requests to the marketing (`marketing.myapi.com`) and the products (`products-XX.myapi.com`) API are fired simultaneously. KrakenD will load balance amongs the listed hosts (here or in your [service discovery](/docs/service-discovery/overview/)) to pick one of the three hosts.
 
 ```
 ...
@@ -27,7 +41,7 @@ In the example below, KrakenD offers an endpoint `/v1/products` that when reques
 	"method": "GET",
 	"backend": [
 		{
-			"url_pattern": "/products/_catalog/all",
+			"url_pattern": "/products",
 			"host": [
 				"https://products-01.myapi.com:8000",
 				"https://products-02.myapi.com:8000"
@@ -35,7 +49,7 @@ In the example below, KrakenD offers an endpoint `/v1/products` that when reques
 			]
 		},
 		{
-			"url_pattern": "/marketing/offers",
+			"url_pattern": "/offers",
 			"host": [
 				"https://marketing.myapi.com:8000"
 			]
