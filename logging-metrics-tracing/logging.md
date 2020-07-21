@@ -81,7 +81,7 @@ The pattern to use is the same as the [go-logging library](https://github.com/op
 
 ## Logstash
 If you want to log using the Logstash standard via stdout, you have to add the `krakend-logstash` integration in the
-root level of your `krakend.json`, inside the `extra_config` section. **The `gologging` needs to be enabled too**.
+root level of your `krakend.json`, inside the `extra_config` section. **The `gologging` needs to be enabled too (but the format should be `default`)**.
 
 For instance:
 
@@ -93,7 +93,6 @@ For instance:
         "level": "INFO",
         "prefix": "[KRAKEND]",
         "syslog": false,
-        "stdout": true,
-        "format": "logstash"
+        "stdout": true
       }
     }
