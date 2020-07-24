@@ -30,7 +30,7 @@ In the example below, KrakenD offers an endpoint `/v1/products` that when reques
 			"url_pattern": "/products/_catalog/all",
 			"host": [
 				"https://products-01.myapi.com:8000",
-				"https://products-02.myapi.com:8000"
+				"https://products-02.myapi.com:8000",
 				"https://products-03.myapi.com:8000"
 			]
 		},
