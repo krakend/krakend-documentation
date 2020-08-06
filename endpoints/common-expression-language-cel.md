@@ -83,7 +83,7 @@ The following variables can be used inside the `check_expr`:
 - `resp_completed`: Boolean whether all the data has been successfully
   retrieved
 - `resp_metadata_status`: Returns an integer with the StatusCode
-- `resp_metadata_header`: Returns an array with all the headers of the response
+- `resp_metadata_headers`: Returns an array with all the headers of the response
 - `resp_data`: An object with all the data captured in the response
 - `now`: An object containing the current timestamp
 
