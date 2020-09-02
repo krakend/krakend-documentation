@@ -97,7 +97,7 @@ The bloom filter gets updated while the service is running, but the level of syn
 
 The resulting system is **eventually consistent**.
 
-The bloom filter management is brought to you by the component, and for the administration part the client offers the necessary tools to adapt the gateway to your scenario. The implentation very much depends on what you want to achieve.
+The bloom filter management is brought to you by the component, and for the administration part the client offers the necessary tools to adapt the gateway to your scenario. The implementation very much depends on what you want to achieve.
 
 ### Additional resources
 If you want to learn bloomfilters by example, have a look at the following resources:

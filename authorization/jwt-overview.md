@@ -27,4 +27,4 @@ KrakenD implements both [JWT signing](/docs/authorization/jwt-signing) and [JWT 
 - [Validate tokens](/docs/authorization/jwt-validation) issued by a third party or the [JWT signing middleware](/docs/authorization/jwt-signing), ensuring their integrity and proper claims.
 
 
-A stateless system like KrakenD **does not issue tokens**, this is the responsability of your backend or identity server.
+A stateless system like KrakenD **does not issue tokens**, this is the responsibility of your backend or identity server.

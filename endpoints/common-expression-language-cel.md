@@ -57,6 +57,12 @@ The configuration is as follows:
 
 - `check_expr`: The expression that evaluates as a boolean, you can write any conditional. If all stacked conditions are *true* the request continues, *false*, it fails to retrieve data from the token, the request, or the response. The expressions can use a set of **variables**, shown in the sections below.
 
+
+{{< note title="A note on client headers" >}}
+When **client headers** are needed, remember to add them under [`headers_to_pass`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
+{{< /note >}}
+
+
 ## Adding logic in the requests and responses.
 There are three different ways to access the metadata of requests and responses to decide whether or not to continue serving the user command.
 
@@ -70,7 +76,7 @@ See the data that is injected to the CEL evaluator for its inspection below.
 The following variables can be used inside the `check_expr`:
 
 - `req_method`: What is the method of this endpoint, e.g.: `GET`
-- `req_path`: The path used to access this endpoing, e.g: : `/foo`
+- `req_path`: The path used to access this endpoint, e.g: : `/foo`
 - `req_params`: Object with all the parameters sent with the request, e.g:
   `req_params.Foo.var`. Notice that **parameters capitalize the first letter**
 - `req_headers`: Array with all the headers received, e.g: `req_headers['X-Forwarded-For']`

@@ -40,7 +40,7 @@ The supported parameters are:
 
 The KrakenD machine needs to have the AWS credentials in the default file, `~/.aws/credentials`.
 
-When setting the credentials make sure that the lamdba is callable within the KrakenD box with the credentials provided. This translates in having an IAM user with a policy and execution role that let you invoke the function.
+When setting the credentials make sure that the lambda is callable within the KrakenD box with the credentials provided. This translates in having an IAM user with a policy and execution role that let you invoke the function.
 
 ## Example: Associate a lambda to a backend
 

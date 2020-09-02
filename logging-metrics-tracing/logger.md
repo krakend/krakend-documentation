@@ -27,7 +27,7 @@ The following configuration snippet enables the logger:
 	}
 
 - `stats`: Whether to log the statistics or not
-- `spans`: Wether to log the spans or not
+- `spans`: Whether to log the spans or not
 
 
 See also the [additional settings](/docs/logging-metrics-tracing/opencensus/) of the Opencensus module that can be declared.
