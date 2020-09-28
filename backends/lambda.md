@@ -63,7 +63,7 @@ When the name of the Lambda to depends on a parameter passed in the endpoint, us
     "backend": [
     {
         "github.com/devopsfaith/krakend-lambda": {
-            "function_param_name": "lambda",
+            "function_param_name": "Lambda",
             "region": "us-west1",
             "max_retries": 1
         }
@@ -71,4 +71,9 @@ When the name of the Lambda to depends on a parameter passed in the endpoint, us
 
 In this example, the `function_param_name` is telling us which is the placeholder in the endpoint setting the lambda. In this case, `{lambda}`.
 
-Following the code, a call `GET /call-a-lambda/my-lambda` would produce a call to the `my-lambda` function in AWS.
+Following the code, a call `GET /call-a-lambda/my-lambda` would produce a call to the `My-lambda` function in AWS.
+
+
+{{< note title="Parameters' first character uppercased" >}}
+Notice the capitalization of the first letter of the parameter names at the configuration above. For instance, when an endpoint parameter is defined as `{route}`, define it in the config as `Route`.
+{{< /note >}}
