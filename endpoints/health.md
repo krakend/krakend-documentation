@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-09-18
+lastmod: 2020-10-05
 date: 2019-10-07
 linktitle:  Healthcheck
 title: Adding a health check endpoint (ping)
@@ -10,9 +10,20 @@ menu:
     parent: endpoints
 ---
 
-If you place a balancer in front of KrakenD, such as an ELB, you can check KrakenD health using a **TCP port check**. If, on the other hand, you need an **HTTP endpoint** like `/health` or `/ping` in systems like Kubernetes, you can do it in different ways.
+If you place a balancer in front of KrakenD, such as an ELB, you can check KrakenD health using a **TCP port check**. If, on the other hand, you need an **HTTP endpoint** in systems like Kubernetes, use `/__health`.
 
-Although there is no opinionated health check implementation in KrakenD, **the result can be achieved using different strategies**.
+## The `/__health` endpoint
+
+The health endpoint in KrakenD works out of the box without adding any configuration in the server. Just point your checks to `/__health` and you'll have a `200` response code from KrakenD when the system is running, e.g.:
+
+{{< terminal title="k8s check endpoint" >}}
+curl http://localhost:8080/__health
+{"status":"OK"}
+{{< /terminal >}}
+
+## Alternative ways of doing a health check (prior to 1.2)
+
+If for any reason you can't or don't want to use the `/__health` endpoint , **the result can be achieved using different strategies**.
 
 Some of them can be:
 
@@ -23,7 +34,7 @@ Some of them can be:
 
 See examples below.
 
-## Simple `/health` endpoint
+### Simple `/health` endpoint
 A very simple option to add a health option is to create a **KrakenD endpoint that connects to itself** as the backend, going through the router and proxy layers. The configuration would look like this:
 
 {{< highlight json >}}
@@ -61,11 +72,11 @@ curl http://localhost:8080/health
 
 You can customize this response with stub data.
 
-## How to add a `/health` endpoint with a custom response
+### How to add a `/health` endpoint with a custom response
 An additional setting to the configuration above is to add the [static proxy](/docs/endpoints/static-proxy/) functionality wich allows you to return stub data. With its strategy `always` we are going to make sure that we always return the `data` we have declared in the configuration.
 
 When using this strategy, the backend can be a fake host (then you don't need to start KrakenD with `-d`), as KrakenD returns the static `data` every time.
- 
+
  {{< highlight json "hl_lines=11" >}}
     {
         "version": 2,
