@@ -1,7 +1,7 @@
 ---
 lastmod: 2018-10-20
 date: 2018-09-21
-linktitle: File structure
+linktitle: The configuration file
 menu:
   documentation:
     parent: configuration

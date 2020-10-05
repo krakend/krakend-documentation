@@ -9,7 +9,7 @@ title: Developer Tools
 weight: 10
 ---
 
-There are some resources that make your life easier when developing with KrakenD. These tools are ment to be used only in development and **never in production**
+There are some resources that make your life easier when developing with KrakenD. These tools are meant to be used only in development and **never in production**
 
 ## Hot reload the configuration
 A Docker image using Reflex watches the configuration directory and reloads KrakenD when the configuration changes. This is very convenient while you are developing as it allows you to test new changes without having to restart manually and making the process less tedious.

@@ -17,15 +17,15 @@ As a user, I want to log me out of all my devices.
 As an administrator, I want to kick out someone from the platform.
 As a software releaser, my new backend version requires new fields in the tokens, and I want all my sessions renegotiated again, or all users of a specific app (Android, iOS, Web app, etc.) has to be invalidated.
 
-## Storing blacklisted tokens using the bloom filter
+## Storing blocked tokens using the bloom filter
 KrakenD integrates the [bloom filter](https://github.com/devopsfaith/bloomfilter) component that allows you to store in an optimized way tokens to revoke on the subsequent requests. 
 
-When you enable the bloom filter, it inspects the payload of incoming JWT tokens to check if any of the configured fields in `TokenKeys` contains a blacklisted value. And if a blacklister is found, access is not permitted.
+When you enable the bloom filter, it inspects the payload of incoming JWT tokens to check if any of the configured fields in `TokenKeys` contains a blocked value. And if a blocked is found, access is not permitted.
 
 The bloom filter component brings the following functionalities:
 
-- Hold blacklisted tokens in memory
-- Propagate blacklisted elements through an RPC interface
+- Hold blocked tokens in memory
+- Propagate blocked elements through an RPC interface
 - Check tokens and discard access on positives
 
 ### Bloom filter client
@@ -97,7 +97,7 @@ The bloom filter gets updated while the service is running, but the level of syn
 
 The resulting system is **eventually consistent**.
 
-The bloom filter management is brought to you by the component, and for the administration part the client offers the necessary tools to adapt the gateway to your scenario. The implentation very much depends on what you want to achieve.
+The bloom filter management is brought to you by the component, and for the administration part the client offers the necessary tools to adapt the gateway to your scenario. The implementation very much depends on what you want to achieve.
 
 ### Additional resources
 If you want to learn bloomfilters by example, have a look at the following resources:

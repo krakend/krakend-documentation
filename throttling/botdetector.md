@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2020-07-10
 date: 2019-09-15
 linktitle: Bot detector
 title: Control of bot traffic
@@ -18,7 +18,7 @@ The **bot detector** module checks incoming connections to the gateway to determ
 
 Bots are detected by inspecting the `User-Agent` and comparing its value with a set of configuration rules provided by you. The bot detector module **does not set any initial rules**, meaning that is up to you to decide the best rules for your use case, and choose how restrictive or permissive you are with bots.
 
-As the bot detector module is flexible in its configuration, you can use it for other purposes than just discarding bots. For instance, you could set a whitelist rule for your mobile application `User-Agent` which would be allowed to interact with KrakenD and discard the rest of the traffic.
+As the bot detector module is flexible in its configuration, you can use it for other purposes than just discarding bots. For instance, you could set an allow rule for your mobile application `User-Agent` which would be allowed to interact with KrakenD and discard the rest of the traffic.
 
 ## Configuring bot rules
 
@@ -28,8 +28,8 @@ For instance:
 
     "extra_config": {
         "github_com/devopsfaith/krakend-botdetector": {
-            "whitelist": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
-            "blacklist": ["a", "b"],
+            "allow": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
+            "deny": ["a", "b"],
             "patterns": [
                 "(Pingdom.com_bot_version_).*",
                 "(facebookexternalhit)/.*"
@@ -40,16 +40,21 @@ For instance:
 
 The available configuration options in the bot detector module are:
 
-*   `whitelist`: An array with EXACT MATCHES of trusted user agents that can connect.
-*   `blacklist`: An array of EXACT MATCHES of undesired bots, to reject immediately.
+*   `allow`: An array with EXACT MATCHES of trusted user agents that can connect.
+*   `deny`: An array of EXACT MATCHES of undesired bots, to reject immediately.
 *   `patterns`: An array with all the **regular expressions** that define bots. Matching bots are rejected.
 *   `cacheSize`: Size of the LRU cache that helps speed the bot detection.
 
-Notice that the `whitelist` and the `blacklist` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
+
+Notice that the `allow` and the `deny` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
 
 On the other hand, the `patterns` attribute expects regular expressions. The syntax is the same general syntax used by Perl, Python, and other languages. More precisely, it is the syntax accepted by [RE2](https://golang.org/s/re2syntax)
 
-The order of evaluation of the rules is sequential in this order: `whitelist` -> `blacklist` -> `patterns`. When a user agent matches in any of the former evaluations, the execution ends, and the connection is accepted (whitelist) or rejected (blacklist and patterns).
+The order of evaluation of the rules is sequential in this order: `allow` -> `deny` -> `patterns`. When a user agent matches in any of the former evaluations, the execution ends, and the connection is accepted (allow) or rejected (deny and patterns).
+
+{{< note title="Renamed attributes" >}}
+Prior to KrakenD 1.2 the terms `whitelist` and `blacklist` were used, please upgrade your configuration with the new terms `allow` and `deny` as the next version will not understand them.
+{{< /note >}}
 
 ### Building your bot rules
 
@@ -59,7 +64,7 @@ Maybe you want to have a [massive list](https://github.com/ua-parser/uap-core/bl
 
 Or perhaps you only require a single negative pattern that discards anything that you don't know is legit.
 
-Whatever rules you decide to set in place, remember than whitelisting and blacklisting are faster but are inflexible and require you to set the exact user-agent. On the other hand, regular expressions are very convenient, but the cost of evaluating them is higher in comparison.
+Whatever rules you decide to set in place, remember than allowing and denying are faster but are inflexible and require you to set the exact user-agent. On the other hand, regular expressions are very convenient, but the cost of evaluating them is higher in comparison.
 
 ### Caching
 

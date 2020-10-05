@@ -173,8 +173,8 @@ There are a number of different reasons you might want to use this functionality
 
 There are two different strategies you can use to filter content:
 
-- **[Blacklist](/docs/backends/data-manipulation#blacklist)**
-- **[Whitelist](/docs/backends/data-manipulation#whitelist)**
+- **[Deny list](/docs/backends/data-manipulation#deny)**
+- **[Allow list](/docs/backends/data-manipulation#allow)**
 
 See [filtering documentation](/docs/backends/data-manipulation#filtering)
 
@@ -196,7 +196,7 @@ See [mapping documentation](/docs/backends/data-manipulation#mapping)
 ## Target (or capturing)
 It is frequent in many API implementations that the important data is always encapsulated inside a generic field like `data`, `response` or `content`, as there are other fields showing the status code and other metadata. Sometimes we neither want to let the client handle with this nor drag this first level container through all the configuration.
 
-When setting a `target` in your backend, these generic containers (the target) disappear and all content extracted to the root as it never existed. As this capturing takes place before other options like whitelist or mapping, you can't forget about and manipulate data as.
+When setting a `target` in your backend, these generic containers (the target) disappear and all content extracted to the root as it never existed. As this capturing takes place before other options like `allow` or `mapping`, you don't need to use nesting.
 
 See [target documentation](/docs/backends/data-manipulation#target)
 

@@ -41,6 +41,11 @@ KrakenD looks for the lua scripts in the root folder where krakend is running. Y
 - `allow_open_libs`: The regular lua libraries are not open by default, as an efficiency point. But if you need to use the lua libraries (for file io for example), then set this to true.  If not present, default value is false.
 - `skip_next`: only to be set when in a `backend` section, skips the query to the next backend.
 
+{{< note title="A note on client headers" >}}
+When **client headers** are needed, remember to add them under [`headers_to_pass`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
+{{< /note >}}
+
+
 ## Namespaces (component name)
 
 There are three namespaces that are used for the lua component.

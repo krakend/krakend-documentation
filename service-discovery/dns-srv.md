@@ -3,7 +3,7 @@ lastmod: 2019-02-13
 date: 2016-09-30no
 notoc: true
 linktitle: DNS SRV
-title: SD with DNS SRV (e.g. Consul)
+title: SD with DNS SRV (e.g., Consul, k8s)
 weight: 10
 menu:
   documentation:

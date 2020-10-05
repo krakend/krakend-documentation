@@ -26,7 +26,7 @@ The component `gologging` extends the default logging capabilities with the foll
 
 ### Enabling `gologging`
 
-To enjoy the extended logging capabilitites the component needs to be added in the `krakend.json` configuration. Add its namespace in the `extra_config` at the root level:
+To enjoy the extended logging capabilities the component needs to be added in the `krakend.json` configuration. Add its namespace in the `extra_config` at the root level:
 
     {
       "version": 2,

@@ -23,7 +23,7 @@ You can change this behavior according to your needs, and define which elements 
 ## Optional query string forwarding
 KrakenD **does not send any query string parameter to the backend by default**, avoiding the pollution of the backends. Meaning that if an endpoint `/foo` receives the query string `/foo?a=1&b=2` all its declared backends are not going to see neither `a` nor `b`.
 
-The property list `querystring_params` in the `endpoint` configuration allows you to declare **optional query string parameters**. When this list exists in the configuration, the forwarding policy behaves like a whitelist: all matching parameters declared in the `querystring_params` list are forwarded to the backend, and the rest dropped.
+The property list `querystring_params` in the `endpoint` configuration allows you to declare **optional query string parameters**. When this list exists in the configuration, the forwarding policy behaves like an allow list: all matching parameters declared in the `querystring_params` list are forwarded to the backend, and the rest dropped.
 
 Parameters are always optional and the user can pass a subset of them, all, or none.
 

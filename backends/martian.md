@@ -43,6 +43,11 @@ Your configuration has to look as follows:
 
 See the possibilities and examples below.
 
+{{< note title="A note on client headers" >}}
+When **client headers** are needed, remember to add them under [`headers_to_pass`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
+{{< /note >}}
+
+
 ### Modifier configuration
 
 In the examples below, you'll find that all modifiers have a configuration key named `scope`. The scope indicates when to apply the modifier, it can be an array containing `request`, `response`, or both. The rest of the keys in every modifier depends on the modifier itself.

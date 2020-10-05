@@ -48,9 +48,9 @@ See below the different options described in this configuration file.
 ### Restrict connections by host
 Use `allowed_hosts`
 
-Define a whitelist of hosts that KrakenD should accept requests to.
+Define a list of hosts that KrakenD should accept requests to.
 
-When a request hits KrakenD, it will confirm if the value of the `Host` HTTP header is in the whitelist. If so, it will further process the request. If the host is not in the whitelist, KrakenD will simply reject the request.
+When a request hits KrakenD, it will confirm if the value of the `Host` HTTP header is in the list. If so, it will further process the request. If the host is not in the allowed hosts list, KrakenD will simply reject the request.
 
 The list must contain the fully qualified domain names that are allowed, along with the origin port. When the list is empty accepts any host.
 

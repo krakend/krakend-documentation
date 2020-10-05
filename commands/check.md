@@ -139,7 +139,7 @@ We will use this configuration for the demo
 	                        "https://api.github.com"
 	                    ],
 	                    "url_pattern": "/",
-	                    "whitelist": [
+	                    "allow": [
 	                        "authorizations_url",
 	                        "code_search_url"
 	                    ],
@@ -204,7 +204,7 @@ We will use this configuration for the demo
 	                    "url_pattern": "/user/schedule/{id}.rss",
 	                    "encoding": "rss",
 	                    "group": "schedule",
-	                    "whitelist": ["items", "title"],
+	                    "allow": ["items", "title"],
 	                    "extra_config": {
 	                        "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
 	                            "maxRate": 1,
@@ -224,7 +224,7 @@ We will use this configuration for the demo
 	                    "url_pattern": "/user/{id}.rss",
 	                    "encoding": "rss",
 	                    "group": "available",
-	                    "whitelist": ["items", "title"],
+	                    "allow": ["items", "title"],
 	                    "extra_config": {
 	                        "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
 	                            "maxRate": 2,
