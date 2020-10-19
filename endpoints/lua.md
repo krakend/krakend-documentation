@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2020-10-19
 date: 2019-09-15
 linktitle:  Lua scripting
 title: Transformations using Lua scripting
@@ -15,9 +15,10 @@ Scripting with Lua is an additional choice to extend your business logic, and is
 
 If you are more familiar with Lua than Go, this module can help you solve exceptional cases that need solution using a little bit of scripting. The introduction of Lua scripts in your Gateway does not require to recompile KrakenD, but unlike Go, Lua scripts are interpreted in real-time.
 
-For performance-first users, a Go plugin delivers better results than a Lua script.
+For performance-first users, a Go plugin delivers much better results than a Lua script.
 
 ## Configuration
+
 KrakenD looks for the lua scripts in the root folder where krakend is running. You need to specify in the configuration which lua scripts are going to be loaded in Krakend, as well as several options. The `extra_config` can be set at `endpoint` level or `backend` level.
 
     "extra_config": {
@@ -45,12 +46,12 @@ KrakenD looks for the lua scripts in the root folder where krakend is running. Y
 When **client headers** are needed, remember to add them under [`headers_to_pass`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
 {{< /note >}}
 
-
 ## Namespaces (component name)
 
 There are three namespaces that are used for the lua component.
 
 Under the `endpoint` section use the namespaces (these are described in the next section):
+
 - `"github.com/devopsfaith/krakend-lua/proxy"`
 - `"github.com/devopsfaith/krakend-lua/router"`
 
@@ -66,8 +67,8 @@ When running Lua scripts on KrakenD, there are two different types you can use i
 
 These two types are described as follows:
 
-*   Router: The router layer is what happens between the end-user and KrakenD
-*   Proxy: The proxy layer is between KrakenD and your services
+- Router: The router layer is what happens between the end-user and KrakenD
+- Proxy: The proxy layer is between KrakenD and your services
 
 ### `proxy` type
 
@@ -136,10 +137,22 @@ The following helpers are available in your scripts:
 *   `headers` (_Dynamic_)
 *   `body` (_Dynamic_)
 
+### `custom_error`
+
+A generic helper in pre and post scripts that allows you to set **custom http status codes**. For instance, when you want to send an immediate response to the client from within a Lua script without further querying the backend, or after evaluating the response of the backend.
+
+Example to throw a generic error (`500` status code ) with a message:
+
+    custom_error("Something weird happened")
+
+Or even changing the http status code (`418 I'm a teapot`)
+
+    custom_error("I refuse to make any coffee, I'm a teapot!", 418)
 
 ## Sequence of execution
 
 Request sequence:
+
 1. Router  "source" files
 2. Router  "pre" logic
 3. Proxy   "source" files
@@ -171,3 +184,13 @@ For the backend section:
             "pre": "print('Showing body from backend-pre logic'); local r = request.load(); print(r:body('')); ",
           }
     }
+
+Setting a cookie:
+
+    "extra_config": {
+        "github.com/devopsfaith/krakend-lua/proxy": {
+            "post": "local r = response.load(); r:headers('Set-Cookie', 'kkkey1='.. r:data('response'));",
+            "allow_open_libs": true
+        }
+    }
+

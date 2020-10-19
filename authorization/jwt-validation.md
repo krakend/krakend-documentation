@@ -11,7 +11,7 @@ menu:
 ---
 The JWT validation **protects endpoints from public usage**, forcing calls to the API gateway to provide a valid token to access its contents.
 
-The generation of the token itself has to be **driven by a third party**, although the user calls can be proxied through KrakenD. If you don't have an identity server yet you still can [sign tokens through KrakenD](/docs/authorization/jwt-signing/) 
+The generation of the token itself has to be **driven by a third party**, although the user calls can be proxied through KrakenD. If you don't have an identity server yet you still can [sign tokens through KrakenD](/docs/authorization/jwt-signing/)
 
 The internal component responsible for validating tokens is called **krakend-jose**.
 
@@ -42,13 +42,14 @@ The values of the `alg` and `kid` depend on your implementation, but they must b
 
 The value provided in the `kid` string **must match the `kid` value of one of the keys exposed at the URL provided in the `jwk-url`** to verify the signature. The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches both the single key present in the JWK document and the token header.
 
-KrakenD is built with security in mind and uses JWS (instead of plain JWT or JWE), and the `kid` points to the right key in the JWS. This is why this entry is mandatory to validate your tokens. 
+KrakenD is built with security in mind and uses JWS (instead of plain JWT or JWE), and the `kid` points to the right key in the JWS. This is why this entry is mandatory to validate your tokens.
 
 {{< note title="Important!" >}}
 Make sure you are declaring the right `kid` in your JWT. Paste a token in a [debugger](https://jwt.io/#debugger-io) to find out.
 {{< /note >}}
 
 ### Validation process
+
 KrakenD does the following validation to let users hit protected endpoints:
 
 - The `jwk-url` must be accessible by KrakenD at all times (caching is available)
@@ -64,9 +65,12 @@ KrakenD does the following validation to let users hit protected endpoints:
 
 The configuration allows you to define the set of required roles. A user who passes a token with roles `A` and `B`, can access an endpoint requiring `"roles": ["A","C"]` as it has one of the required options (`A`).
 
+When the validation process is not passed, KrakenD returns to the client a `401 Unauthorized` status code.
+
 When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives and are recommended to expire in a few minutes or hours.
 
 ## Basic JWT validation
+
 The JWT validation is per endpoint and must be present inside every endpoint definition needing it. If several endpoints are going to require JWT validation consider using the [flexible configuration](/docs/configuration/flexible-config/) to avoid repetitive declarations.
 
 Enable the JWT validation by adding the namespace `"github.com/devopsfaith/krakend-jose/validator"` inside the `extra_config` of the desired `endpoint`.
@@ -101,6 +105,7 @@ This configuration makes sure that:
 - The token is not revoked in the bloom filter (see [revoking tokens](/docs/authorization/revoking-tokens))
 
 ### JWT validation settings
+
 The following settings are available for JWT validation. **Fields `alg` and `jwk-url` are mandatory**, and the rest of the keys can be added or not at your best convenience.
 
 Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
