@@ -48,7 +48,7 @@ The installation process requires following these steps:
 
 Paste this in the terminal:
 {{< terminal title="Yum based" >}}
-rpm -Uvh http://repo.krakend.io/rpm/krakend-repo-0.2-0.x86_64.rpm
+rpm -Uvh {{< param download_repo >}}/rpm/krakend-repo-0.2-0.x86_64.rpm
 yum install -y krakend
 systemctl start krakend
 {{< /terminal >}}
@@ -56,7 +56,7 @@ systemctl start krakend
 ### Fedora
 Paste this in the terminal:
 {{< terminal title="DNF based" >}}
-rpm -Uvh http://repo.krakend.io/rpm/krakend-repo-0.2-0.x86_64.rpm
+rpm -Uvh {{< param download_repo >}}/rpm/krakend-repo-0.2-0.x86_64.rpm
 dnf install -y krakend
 systemctl start krakend
 {{< /terminal >}}
@@ -75,7 +75,7 @@ The installation process requires following these steps:
 Bottom line:
 {{< terminal title="DEB based" >}}
 apt-key adv --keyserver keyserver.ubuntu.com --recv {{< param pgp_key >}}
-echo "deb http://repo.krakend.io/apt stable main" | tee /etc/apt/sources.list.d/krakend.list
+echo "deb {{< param download_repo >}}/apt stable main" | tee /etc/apt/sources.list.d/krakend.list
 apt-get update
 apt-get install -y krakend
 {{< /terminal >}}
