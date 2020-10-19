@@ -8,6 +8,7 @@ source: https://github.com/devopsfaith/krakend-circuitbreaker
 menu:
   documentation:
     parent: backends
+notoc: true
 images:
 - /images/documentation/circuit-breaker.png
 - /images/documentation/circuit-breaker-states.png
@@ -53,7 +54,7 @@ The attributes available for the configuration are:
 - `interval`: (*integer*) Time window where the errors count, in seconds.
 - `timeout`: (*integer*) For how long the circuit breaker will wait before testing again that the backend is healthy.
 - `maxErrors`: (*integer*) The consecutive number of errors within the `interval` window to consider the backend unhealthy.
-`name`: (*string*) A friendly name to identify this circuit breaker's activity in the logs.
+- `name`: (*string*) A friendly name to identify this circuit breaker's activity in the logs.
 - `logStatusChange`: (*boolean*)  Whether to log the changes of state of this circuit breaker or not.
 
 ## How it works
