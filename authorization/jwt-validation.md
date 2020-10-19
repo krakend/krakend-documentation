@@ -11,11 +11,12 @@ menu:
 ---
 The JWT validation **protects endpoints from public usage**, forcing calls to the API gateway to provide a valid token to access its contents.
 
-The generation of the token itself has to be **driven by a third party**, although the user calls can be proxied through KrakenD. If you don't have an identity server yet you still can [sign tokens through KrakenD](/docs/authorization/jwt-signing/) 
+The generation of the token itself has to be **driven by a third party**, although the user calls can be proxied through KrakenD. If you don't have an identity server yet you still can [sign tokens through KrakenD](/docs/authorization/jwt-signing/)
 
 The internal component responsible for validating tokens is called **krakend-jose**.
 
 ## JWT tokens
+
 KrakenD uses standard JWT tokens to protect endpoints, using JSON Web Signature (**JWS**), to check the tokens' digital signature, ensuring the integrity of the contained claims and protecting against attacks using tampered tokens.
 
 A JWT token is a `base64` encoded string with the structure **header.payload.signature**.
@@ -30,6 +31,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9.(truncated).ktIOfzak2ekD7IrCa9-Ui
 Or optionally, you can send the token **inside a cookie** instead.
 
 ### JWT header requirements
+
 When KrakenD decodes the `base64` token string passed in the `Bearer` or the cookie, it expects to find in its **header** section the following three fields:
 
     {
@@ -42,13 +44,14 @@ The values of the `alg` and `kid` depend on your implementation, but they must b
 
 The value provided in the `kid` string **must match the `kid` value of one of the keys exposed at the URL provided in the `jwk-url`** to verify the signature. The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches both the single key present in the JWK document and the token header.
 
-KrakenD is built with security in mind and uses JWS (instead of plain JWT or JWE), and the `kid` points to the right key in the JWS. This is why this entry is mandatory to validate your tokens. 
+KrakenD is built with security in mind and uses JWS (instead of plain JWT or JWE), and the `kid` points to the right key in the JWS. This is why this entry is mandatory to validate your tokens.
 
 {{< note title="Important!" >}}
 Make sure you are declaring the right `kid` in your JWT. Paste a token in a [debugger](https://jwt.io/#debugger-io) to find out.
 {{< /note >}}
 
 ### Validation process
+
 KrakenD does the following validation to let users hit protected endpoints:
 
 - The `jwk-url` must be accessible by KrakenD at all times (caching is available)
@@ -67,6 +70,7 @@ The configuration allows you to define the set of required roles. A user who pas
 When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives and are recommended to expire in a few minutes or hours.
 
 ## Basic JWT validation
+
 The JWT validation is per endpoint and must be present inside every endpoint definition needing it. If several endpoints are going to require JWT validation consider using the [flexible configuration](/docs/configuration/flexible-config/) to avoid repetitive declarations.
 
 Enable the JWT validation by adding the namespace `"github.com/devopsfaith/krakend-jose/validator"` inside the `extra_config` of the desired `endpoint`.
@@ -101,6 +105,7 @@ This configuration makes sure that:
 - The token is not revoked in the bloom filter (see [revoking tokens](/docs/authorization/revoking-tokens))
 
 ### JWT validation settings
+
 The following settings are available for JWT validation. **Fields `alg` and `jwk-url` are mandatory**, and the rest of the keys can be added or not at your best convenience.
 
 Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
@@ -153,7 +158,35 @@ The following example contains every single option available:
 }
 {{< /highlight >}}
 
+## Passing claims to the backend URL
+
+Since KrakenD 1.2.0, it is possible to use data present in the claims to inject it into the backend's final URL. The notation of the `url_pattern` field includes the parsing of `{JWT.some_claim}`, where `some_claim` is an attribute of your claim.
+
+For instance, when your JWT payload is represented by something like this:
+
+    {
+        "sub": "1234567890",
+        "name": "Mr. KrakenD"
+    }
+
+Having a `backend` defined like this:
+
+    {
+        "url_pattern": "/foo/{JWT.sub}",
+        "method": "POST"
+        ...
+    }
+
+Produces , the call by the client to your backend would produces the request:
+
+    POST /foo/1234567890
+
+Have in mind that this syntax in the `url_pattern` field is only available if the backend loads the extra_config `"github.com/devopsfaith/krakend-jose/validator"` and that **it does not work with nested attributes** in the payload.
+
+If for any reason, KrakenD can't replace the content of the claim, the backend receives a request to the literal url `/foo/{JWT.sub}`.
+
 ## A complete running example
+
 The [KrakenD Playground](/docs/overview/playground/) demonstrates how to protect endpoints using JWT and includes two examples ready to use:
 
 - Integration with an external third party using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa)
@@ -164,6 +197,7 @@ To try it, [clone the playground](https://github.com/devopsfaith/krakend-playgro
 ## Supported hashing algorithms and cipher suites
 
 ### Hashing algorithms
+
 Accepted values for the `alg` field are:
 
 - `EdDSA`: EdDSA
@@ -181,6 +215,7 @@ Accepted values for the `alg` field are:
 - `PS512`: PS512 - RSASSA-PSS using SHA512 and MGF1-SHA512
 
 ### Cipher suites
+
 Accepted values for cipher suites are:
 
 - `5`: TLS_RSA_WITH_RC4_128_SHA
