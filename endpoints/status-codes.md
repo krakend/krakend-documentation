@@ -41,10 +41,13 @@ To offer a gracefully degraded service when some backends fail, we leave the dec
 
 If what you need is returning the content of a backend service *as is*, then the [no-op encoding](/docs/endpoints/no-op/) will proxy the client call to the backend service without any manipulation. When the backend produces the response, it's passed back to the client, preserving its form: body, headers, status codes, and such.
 
+An exception to this behavior is `30x` responses, which will be followed by the gateway even with `no-op` encoding. If your backend returns a `301` the client won't follow it, but the gateway.
+
 ## Returning other status codes
 
 Default status codes can be overridden per endpoint, following different implementations.
 
 - **[Using no-operation](/docs/endpoints/no-op/)**: When your call is not idempotent (i.e., a write operation), and you want the client to receive whatever the backend is responding.
 - **[Using a Lua script](/docs/endpoints/lua/)**: To write in the configuration any logic, you need to evaluate and return a `custom_error`, with any status code of your choice.
+- As `custom_error` will end the pipe execution. If you just want to alter the status code, you can (in a no-op pipe) use the `statusCode` dynamic helper on the response.
 - **Injecting your own [HTTPStatusHandler](https://github.com/devopsfaith/krakend/issues/102#issuecomment-373657911)**

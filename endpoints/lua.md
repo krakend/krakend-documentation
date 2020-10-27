@@ -141,6 +141,8 @@ The following helpers are available in your scripts:
 
 A generic helper in pre and post scripts that allows you to set **custom http status codes**. For instance, when you want to send an immediate response to the client from within a Lua script without further querying the backend, or after evaluating the response of the backend.
 
+It stops the script and the pipe execution.
+
 Example to throw a generic error (`500` status code ) with a message:
 
     custom_error("Something weird happened")
