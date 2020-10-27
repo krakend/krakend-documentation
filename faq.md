@@ -66,6 +66,7 @@ of the returned content. If the response of your API is a collection, e.g: respo
 ## Reserved endpoints
 The following names cannot be used as endpoint names as they are reserved:
 
-    /__debug/
-    /__stats/
+    /__debug
+    /__stats
+    /__health
     /favicon.ico
