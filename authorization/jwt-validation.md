@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-03-28
+lastmod: 2020-10-27
 date: 2018-11-03
 linktitle: JWT Validation
 title: JWT Validation
@@ -40,7 +40,7 @@ When KrakenD decodes the `base64` token string passed in the `Bearer` or the coo
       "kid": "MDNGMjU2M0U3RERFQUEwOUUzQUMwQ0NBN0Y1RUY0OEIxNTRDM0IxMw"
     }
 
-The values of the `alg` and `kid` depend on your implementation, but they must be present.
+The `alg` and `kid` values depend on your implementation, but they must be present.
 
 The value provided in the `kid` string **must match the `kid` value of one of the keys exposed at the URL provided in the `jwk-url`** to verify the signature. The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches both the single key present in the JWK document and the token header.
 
@@ -66,6 +66,10 @@ KrakenD does the following validation to let users hit protected endpoints:
 - The given claims are within the endpoint accepted `roles` (if present in the configuration))
 
 The configuration allows you to define the set of required roles. A user who passes a token with roles `A` and `B`, can access an endpoint requiring `"roles": ["A","C"]` as it has one of the required options (`A`).
+
+If the token is expired, the signature doesn't match, the required claims do not match or the token is revoked, a `401 Unauthorized` is returned.
+
+When the token doesn't include the defined ACL's required roles, a `403 Forbidden` is returned.
 
 When you generate tokens for end-users, make sure to set a **low expiration**. Tokens are supposed to have short lives and are recommended to expire in a few minutes or hours.
 
@@ -111,16 +115,16 @@ The following settings are available for JWT validation. **Fields `alg` and `jwk
 Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
 
 - `alg`: *recognized string*. The hashing algorithm used by the issuer. See the [hashing algorithms](#hashing-algorithms) section for comprehensive list of supported algorithms.
-- `jwk-url`: *string*. The URL to the JWK endpoint with the public keys used to verify the authenticity and integrity of the token.
+- `jwk-url`: *string*. The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
 - `cache`: *boolean*. Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, recommended for performance. The cache can store up to 100 different public keys simultaneously.
 - `cache_duration`: *int*. Change the default duration of 15 minutes. Value in **seconds**.
 - `audience`: *list*. Set when you want to reject tokens that do not contain the given audience.
-- `roles_key`: When passing roles, the key name inside the JWT payload specifying the role of the user.
+- `roles_key`: When passing roles, the key name inside the JWT payload specifies the user's role.
 - `roles`: *list*. When set, the JWT token not having at least one of the listed roles are rejected.
 - `issuer`: *string*. When set,  tokens not matching the issuer are rejected.
 - `cookie_key`: *string*. Add the key name of the cookie containing the token when is not passed in the headers
 - `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.
-- `jwk_fingerprints`: *string list*. A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.
+- `jwk_fingerprints`: *string list*. A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.
 - `cipher_suites`: *integers list*. Override the default cipher suites. Use it if you want to enforce an even higher security standard.
 - `jwk_local_ca`: *string*. Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
 

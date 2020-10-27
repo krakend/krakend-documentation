@@ -20,6 +20,8 @@ Bots are detected by inspecting the `User-Agent` and comparing its value with a 
 
 As the bot detector module is flexible in its configuration, you can use it for other purposes than just discarding bots. For instance, you could set an allow rule for your mobile application `User-Agent` which would be allowed to interact with KrakenD and discard the rest of the traffic.
 
+Discarded traffic receives a `403 Forbidden` status code.
+
 ## Configuring bot rules
 
 The configuration rules of the bot detector have to be included inside the `extra_config`'s namespace `github_com/devopsfaith/krakend-botdetector` at the root level of your `krakend.json` file.
