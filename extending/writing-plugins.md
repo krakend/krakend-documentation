@@ -113,6 +113,12 @@ There are many examples of different modules, included in KrakenD-CE and not on 
 
 A relaxed start to build a component KrakenD is our article "[Website development as a sysadmin"](/blog/website-development-as-a-sysadmin/) where you can find custom code to add automatic API authentication against a backend.
 
+#### Validate your plugin
+
+Make sure your plugin uses the libraries and versions required by the chosen KrakenD Version:
+
+<a class="btn btn-secondary btn-lg" href="http://plugin-tools.krakend.io/validate">Go to plugin validator</a>
+
 ## Ask the community
 
 Finally, we recommend you joining our [Slack channel](/support) and explain what you are trying to do. Probably there is someone who was in your situation before, and you might even get a free code snippet!
