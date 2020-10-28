@@ -97,22 +97,6 @@ The `url.Modifier` allows you to change settings in the URL. For instance:
         }
     }
 
-
-## Inject query string parameters
-The `querystring.Modifier` allows you to modify query strings injecting key pairs. It can be useful if you want the Gateway to send something extra to the backends, for instance:
-
-    {
-      extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
-          "querystring.Modifier": {
-            "scope": ["request"],
-            "name": "api-key",
-            "value": "some.api.key.here"
-          }
-        }
-      }
-    }
-
 ## Copying headers
 Although not widely used, the `header.Copy` lets you duplicate a header using another name.
 
