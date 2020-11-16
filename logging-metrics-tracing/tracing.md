@@ -15,8 +15,13 @@ The [Opencensus exporters](/docs/logging-metrics-tracing/opencensus/) allow you 
 
 Enabling tracing is key to have a good detail of what is going on inside the Gateway and between the user, the Gateway and your services.
 
-The following tracing exporters are supported:
+Examples of supported exporters are:
 
 - Jaeger
 - Zipkin
 - AWS X-Ray
+- InfluxDB
+- Prometheus
+- Google Stackdriver
+- Datadog
+- OpenCensus Agent (e.g: Azure Monitor)

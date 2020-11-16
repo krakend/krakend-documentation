@@ -16,7 +16,7 @@ menu:
 
 The Opencensus exporter allows you export data to Google Stackdriver. Enabling it only requires you to add the `stackdriver` exporter in the [opencensus module](/docs/logging-metrics-tracing/opencensus/).
 
-The following configuration snippet sends data to your X-Ray:
+The following configuration snippet sends the data:
 
     "github_com/devopsfaith/krakend-opencensus": {
       "exporters": {

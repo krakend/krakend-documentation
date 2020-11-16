@@ -4,7 +4,7 @@ date: 2019-09-15
 notoc: true
 linktitle: Logger
 title: Exporting to the logger
-weight: 130
+weight: 1000
 source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 menu:
