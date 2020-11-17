@@ -7,13 +7,15 @@ title: Exporting traces to Zipkin
 weight: 90
 source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
+aliases:
+- /docs/logging-metrics-tracing/zipkin/
 menu:
   documentation:
-    parent: logging-metrics-tracing
+    parent: telemetry
 ---
 [Zipkin](https://zipkin.io/) is a distributed tracing system. It helps gather timing data needed to troubleshoot latency problems in service architectures.
 
-The Opencensus exporter allows you export data to Zipkin. Enabling it only requires you to add the `zipkin` exporter in the [opencensus module](/docs/logging-metrics-tracing/opencensus/).
+The Opencensus exporter allows you export data to Zipkin. Enabling it only requires you to add the `zipkin` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your Zipkin:
 
@@ -30,4 +32,4 @@ The following configuration snippet sends data to your Zipkin:
 - `service_name` the service name registered in Zipkin
 
 
-See also the [additional settings](/docs/logging-metrics-tracing/opencensus/) of the Opencensus module that can be declared.
+See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.

@@ -3,14 +3,16 @@ lastmod: 2019-09-15
 date: 2019-09-15
 notoc: true
 linktitle: Opencensus
-title: Exporting logs, metrics, and traces to several providers
+title: Sending out logs, metrics, and traces
 weight: 60
 source: https://github.com/devopsfaith/krakend-opencensus
+aliases:
+- /docs/logging-metrics-tracing/opencensus/
 menu:
   documentation:
-    parent: logging-metrics-tracing
+    parent: telemetry
 ---
-The Opencensus exporter is a single component that allows you to export data to multiple providers, both open source and privative.
+The Opencensus exporter is a single component that allows you to **export data to multiple providers**, both open source and privative.
 
 You will be interested in Opencensus when you want to see data in one of its supported `exporters`. For instance, you might want to send metrics to Prometheus. That would be as easy as adding this snippet in the **root level** of your `krakend.json` file:
 
@@ -27,7 +29,9 @@ You will be interested in Opencensus when you want to see data in one of its sup
             }
         }
     }
+
 ## Configuration
+
 The Opencensus only needs an exporter to work, although multiple exporters can be added in the same configuration. Every exporter has its own configuration and this described in its own section.
 
 By default, **all exporters sample the 100% of the requests received every second**, but this can be changed by specifying more configuration:

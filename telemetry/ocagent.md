@@ -9,7 +9,7 @@ source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 menu:
   documentation:
-    parent: logging-metrics-tracing
+    parent: telemetry
 ---
 
 The `ocagent` exporter sends OpenCensus Stats and Traces to the OpenCensus Agent, instead of pushing data to backends’ exporters.
@@ -18,7 +18,7 @@ For instance, you can enable ocagent to upload data to the OpenCensus Agent, and
 
 You can integrate the OpenCensus Agent with Azure Monitor, Jaeger, or Prometheus to name a few examples.
 
-Enabling it only requires you to add the `ocagent` exporter in the [opencensus module](/docs/logging-metrics-tracing/opencensus/).
+Enabling it only requires you to add the `ocagent` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends the data:
 
@@ -46,4 +46,4 @@ The following configuration snippet sends the data:
   - header key: *string*
   - header value: *string*
 
-See also the [additional settings](/docs/logging-metrics-tracing/opencensus/) of the Opencensus module that can be declared.
+See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.

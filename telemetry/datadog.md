@@ -9,14 +9,16 @@ since: 1.2
 source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 images: ["/images/documentation/datadog-screenshot.png"]
+aliases:
+- /docs/logging-metrics-tracing/datadog/
 menu:
   documentation:
-    parent: logging-metrics-tracing
+    parent: telemetry
 ---
 [Datadog](https://www.datadoghq.com/) is a monitoring and security platform for developers, IT operations teams and business in the cloud.
 
 ## Datadog configuration
-The Opencensus exporter allows you export data to Datadog. Enabling it only requires you to add the `datadog` exporter in the [opencensus module](/docs/logging-metrics-tracing/opencensus/).
+The Opencensus exporter allows you export data to Datadog. Enabling it only requires you to add the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your Datadog:
 
@@ -48,4 +50,4 @@ The following configuration snippet sends data to your Datadog:
 - `disable_count_per_buckets` (*bool*) Specifies whether to emit count_per_bucket metrics
 
 
-See also the [additional settings](/docs/logging-metrics-tracing/opencensus/) of the Opencensus module that can be declared.
+See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.

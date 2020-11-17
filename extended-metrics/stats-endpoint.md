@@ -1,20 +1,26 @@
 ---
 lastmod: 2018-11-05
 date: 2018-11-05
-linktitle: Metrics
-title: Metrics middleware
+linktitle: Stats endpoint
+title: The stats endpoint
 weight: 20
 notoc: true
 source: https://github.com/devopsfaith/krakend-metrics
+aliases:
+- /docs/logging-metrics-tracing/metrics/
+
 menu:
   documentation:
-    parent: logging-metrics-tracing
+    parent: extended-metrics
 ---
 The metrics *middleware* offers a new service in a different port and exposes a `/__stats/` endpoint with the collection of all the KrakenD metrics:
 
-    http://localhost:8080/__stats/
+    http://localhost:8090/__stats/
+
+Through the extended metrics you can create new tools or integrate with existing ones. A good example of this is [importing a Grafana dashboard](/docs/extended-metrics/grafana) with all kind of KrakenD metrics.
 
 ## Enabling metrics
+
 In order to add metrics to your KrakenD installation add the `github_com/devopsfaith/krakend-metrics` namespace under `extra_config` in the root of your configuration file, e.g.:
 
 {{< highlight go "hl_lines=3-11" >}}

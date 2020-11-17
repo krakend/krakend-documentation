@@ -2,20 +2,26 @@
 lastmod: 2019-01-30
 date: 2018-10-30
 toc: true
-linktitle: Logging
+linktitle: Logging overview
 title: Logging - Syslog, stdout and GELF
 weight: 10
 source: https://github.com/devopsfaith/krakend-gologging
+aliases:
+- /docs/logging-metrics-tracing/logging/
 menu:
   documentation:
-    parent: logging-metrics-tracing
+    parent: logging
 ---
-When the service starts, if no logging configuration is set, all the log events are sent to the **standard output** using the basic logger capabilities of the KrakenD framework. The reporting level, in that case, is `DEBUG` and adds no prefix to the logs.
+By default,  when KrakenD starts all the log events are sent to the **standard output** using the basic logger capabilities of the KrakenD framework. The reporting level, in that case, is `DEBUG` and adds no prefix to the log lines.
 
 ## Extending the logging capabilities
-Different logging components allow you to extend the logging functionality, such as sending the events to the **syslog**, choosing the verbosity level or use the **Graylog Extended Log Format (GELF)**. In addition to this, a lot of exporters are available to send your logs out.
+
+Different logging components allow you to extend the logging functionality, such as sending the events to the **syslog**, choosing the verbosity level, or use the **Graylog Extended Log Format (GELF)**.
+
+In addition to this, a lot of exporters are available to send your logs out (see [Telemetry](/docs/telemetry/overview))
 
 ### Improved logging with `gologging`.
+
 The component `gologging` extends the default logging capabilities with the following capabilities:
 
 - Option to write to the stdout

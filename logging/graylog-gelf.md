@@ -7,10 +7,12 @@ title: Graylog and the GELF format
 weight: 40
 source: https://github.com/devopsfaith/krakend-gelf
 since: 0.7
+aliases:
+- /docs/logging-metrics-tracing/graylog-gelf/
 notoc: true
 menu:
   documentation:
-    parent: logging-metrics-tracing
+    parent: logging
 ---
 KrakenD supports sending structured events in GELF format to your Graylog Cluster thanks to the [krakend-gelf](https://github.com/devopsfaith/krakend-gelf) integration.
 
