@@ -41,7 +41,8 @@ By default, **all exporters sample the 100% of the requests received every secon
       "reporting_period": 1,
       "enabled_layers": {
         "backend": true,
-        "router": true
+        "router": true,
+        "pipe": true
       },
       "exporters": {
         "prometheus": {
@@ -56,3 +57,4 @@ By default, **all exporters sample the 100% of the requests received every secon
 - `enabled_layers` let you specify what data you want to export. All layers are enabled by default:
   - Use `backend` to report the activity between KrakenD and your services
   - Use `router` to report the activity between end-users and KrakenD
+  - Use `pipe` to report the activity at the beginning of the proxy layer. It gives a more detailed view of the internals of the pipe between end-users and KrakenD.
