@@ -7,16 +7,18 @@ title: Exporting metrics, logs and events to Google Stackdriver
 weight: 120
 source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
+aliases:
+- /docs/logging-metrics-tracing/stackdriver/
 menu:
   documentation:
-    parent: logging-metrics-tracing
+    parent: telemetry
 ---
 
 [Google Stackdriver](https://cloud.google.com/stackdriver/) aggregates metrics, logs, and events from infrastructure, giving developers and operators a rich set of observable signals that speed root-cause analysis and reduce mean time to resolution (MTTR).
 
-The Opencensus exporter allows you export data to Google Stackdriver. Enabling it only requires you to add the `stackdriver` exporter in the [opencensus module](/docs/logging-metrics-tracing/opencensus/).
+The Opencensus exporter allows you export data to Google Stackdriver. Enabling it only requires you to add the `stackdriver` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
-The following configuration snippet sends data to your X-Ray:
+The following configuration snippet sends the data:
 
     "github_com/devopsfaith/krakend-opencensus": {
       "exporters": {
@@ -34,4 +36,4 @@ The following configuration snippet sends data to your X-Ray:
 *   `metrics_prefix`: A prefix that you can add to all your metrics for better organization.
 *   `default_labels`: Enter here any label that will be assigned by default to the reported metric so you can filter later on Stack Driver. In the example we set a label `env` with the value `production`.
 
-See also the [additional settings](/docs/logging-metrics-tracing/opencensus/) of the Opencensus module that can be declared.
+See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.

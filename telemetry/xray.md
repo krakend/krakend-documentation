@@ -7,13 +7,15 @@ title: Exporting traces to AWS X-Ray
 weight: 110
 source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
+aliases:
+- /docs/logging-metrics-tracing/xray/
 menu:
   documentation:
-    parent: logging-metrics-tracing
+    parent: telemetry
 ---
 [AWS X-Ray](https://aws.amazon.com/xray/) is a service offered by Amazon that provides an end-to-end view of requests as they travel through your application, and shows a map of your application’s underlying components.
 
-The Opencensus exporter allows you export data to AWS X-Ray. Enabling it only requires you to add the `xray` exporter in the [opencensus module](/docs/logging-metrics-tracing/opencensus/).
+The Opencensus exporter allows you export data to AWS X-Ray. Enabling it only requires you to add the `xray` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your X-Ray:
 
@@ -36,4 +38,4 @@ The following configuration snippet sends data to your X-Ray:
 - `secret_access_key`: Your secret access key provided by Amazon. Needed when `use_env` is unset or set to `false`.
 
 
-See also the [additional settings](/docs/logging-metrics-tracing/opencensus/) of the Opencensus module that can be declared.
+See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
