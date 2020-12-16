@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-03-27
+lastmod: 2020-12-17
 date: 2017-01-21
 linktitle: Kubernetes
 title: Deploying to Kubernetes
@@ -45,6 +45,9 @@ The KrakenD `deployment` definition, in a file called `deployment-definition.yam
             imagePullPolicy: Never
             command: [ "/usr/bin/krakend" ]
             args: [ "run", "-d", "-c", "/etc/krakend/krakend.json", "-p", "8080" ]
+            env:
+            - name: KRAKEND_PORT
+              value: "8080"
 
 ## Service definition yaml
 
