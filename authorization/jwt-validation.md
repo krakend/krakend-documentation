@@ -114,19 +114,20 @@ The following settings are available for JWT validation. **Fields `alg` and `jwk
 
 Add them under the `"github.com/devopsfaith/krakend-jose/validator"` namespace:
 
-- `alg`: *recognized string*. The hashing algorithm used by the issuer. See the [hashing algorithms](#hashing-algorithms) section for comprehensive list of supported algorithms.
-- `jwk-url`: *string*. The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
-- `cache`: *boolean*. Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, recommended for performance. The cache can store up to 100 different public keys simultaneously.
-- `cache_duration`: *int*. Change the default duration of 15 minutes. Value in **seconds**.
-- `audience`: *list*. Set when you want to reject tokens that do not contain the given audience.
-- `roles_key`: When passing roles, the key name inside the JWT payload specifies the user's role.
-- `roles`: *list*. When set, the JWT token not having at least one of the listed roles are rejected.
-- `issuer`: *string*. When set,  tokens not matching the issuer are rejected.
-- `cookie_key`: *string*. Add the key name of the cookie containing the token when is not passed in the headers
-- `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.
-- `jwk_fingerprints`: *string list*. A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.
-- `cipher_suites`: *integers list*. Override the default cipher suites. Use it if you want to enforce an even higher security standard.
-- `jwk_local_ca`: *string*. Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
+- `alg` (*recognized string*): The hashing algorithm used by the issuer. See the [hashing algorithms](#hashing-algorithms) section for comprehensive list of supported algorithms.
+- `jwk-url` (*string*): The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
+- `cache` (*boolean*): Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, recommended for performance. The cache can store up to 100 different public keys simultaneously.
+- `cache_duration` (*int*): Change the default duration of 15 minutes. Value in **seconds**.
+- `audience` (*list*): Set when you want to reject tokens that do not contain the given audience.
+- `roles_key` (*string*):  When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: ["myrole"] } } `.
+- `roles_key_is_nested` (*bool*):  If the roles key is using a nested object using the `.` dot notation must be set to `true` in order to traverse the object.
+- `roles` (*list*):  When set, the JWT token not having at least one of the listed roles are rejected.
+- `issuer` (*string*): When set,  tokens not matching the issuer are rejected.
+- `cookie_key` (*string*): Add the key name of the cookie containing the token when is not passed in the headers
+- `disable_jwk_security` (*boolean*): When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.
+- `jwk_fingerprints` (*strings list*): A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.
+- `cipher_suites` (*integers list*): Override the default cipher suites. Use it if you want to enforce an even higher security standard.
+- `jwk_local_ca` (*string*): Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
 
 For the full list of recognized algorithms and cipher suites, scroll down to the end of the document.
 
@@ -144,6 +145,7 @@ The following example contains every single option available:
             "audience1"
         ],
         "roles_key": "department",
+        "roles_key_is_nested": false,
         "roles": [
             "sales",
             "development"
