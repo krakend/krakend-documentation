@@ -20,9 +20,9 @@ When working with lists, KrakenD needs to flatten and expand array structures to
 You can manipulate collections at two different stages:
 
 - When the response of a backend is received (inside its `backend` section)
-- After having merged all the backend responses (inside the `endpoint` section, starting at KrakenD 1.2) 
+- After having merged all the backend responses (inside the `endpoint` section, starting at KrakenD 1.2)
 
-You can do simultaneous combinations to output the desired result. For instance, declare an endpoint with three backends that apply transformations independently, and a final change within the endpoint after merging the result of the three. 
+You can do simultaneous combinations to output the desired result. For instance, declare an endpoint with three backends that apply transformations independently, and a final change within the endpoint after merging the result of the three.
 
 ## Types of manipulations
 
@@ -69,13 +69,13 @@ The component structure with three operations, would be as follows:
 
 The types of operations are defined as follows:
 
-*   **Move**: To move or rename a collection to another.
+*   **Move**: To move or rename a collection to another. Needs 2 arguments.
     *   `"type": "move"`
     *   `"args": ["target_in_collection", "destination_in_collection"]`
-*   **Delete**: To remove a collection
+*   **Delete**: To remove al matching patterns within a collection. Needs one or more arguments.
     *   `"type": "del"`
-    *   `"args": ["target_in_collection_to_delete"]`
-*   **Append**: To append a collection after another one, and return only the latter.
+    *   `"args": ["target_in_collection_to_delete", "another_collection_to_delete", "..."]`
+*   **Append**: To append a collection after another one, and return only the latter. Needs 2 arguments.
     *   `"type": "append"`
     *   `"args": ["collection_to_append", "returned_collection"]`
 
