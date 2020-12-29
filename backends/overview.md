@@ -12,7 +12,7 @@ menu:
 
 The concept of `backend` references to the origin servers providing the necessary data to populate your endpoints. A backend can be something as your HTTP-based API, a Lambda function, or a Kafka queue to name a few examples.
 
-A backend can be any server inside our outside your network, as long it is reachable by KrakenD. For instance, you can create endpoints that are fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook or any other service.
+A backend can be any server inside or outside your network, as long it is reachable by KrakenD. For instance, you can create endpoints that are fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook or any other service.
 
 When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy) is used), and the content parsed according to its `encoding` or middleware configuration.
 
