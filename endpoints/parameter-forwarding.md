@@ -107,7 +107,7 @@ No mandatory `channel` here! Because the optional parameter `limit` has been dec
 
 On the other hand, `http://krakend/v3/iOS/foo?evil=here` produces:
 
-	 /foo?channel=foo
+	 /foo?channel=iOS
 
 No optional parameter has been passed, so the mandatory one is used.
 
