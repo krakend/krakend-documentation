@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-02-26
+lastmod: 2021-01-28
 date: 2020-02-26
 linktitle:  Creating endpoints
 title: How to create KrakenD endpoints
@@ -38,7 +38,7 @@ The previous example exposes to the clients a `GET /v1/foo` and takes the data f
 The **endpoint object** accepts the following attributes:
 
 - `endpoint`: The resource URL you want to expose
-- `method`: Must be **written in uppercase** `GET`, `POST`, `PUT`, `DELETE`.
+- `method`: Must be **written in uppercase** `GET`, `POST`, `PUT`, `PATCH`, `DELETE`.
 - `backend`: List of all the **backend objects** queried for this endpoint. 
 - `extra_config`: Configuration of components and middlewares that are executed with this endpoint.
 - `querystring_params`: Recognized GET parameters. See [parameter forwarding](/docs/endpoints/parameter-forwarding/).

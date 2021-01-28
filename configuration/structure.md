@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-10-20
+lastmod: 2021-01-28
 date: 2018-09-21
 linktitle: The configuration file
 menu:
@@ -116,3 +116,6 @@ The following code is an example defining two simultaneous rate limiting strateg
 ### Example file
 
 Check [this larger sample file](https://github.com/devopsfaith/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you can see an example on how to modify the application headers, configure the circuit breaker or apply rate limits.
+
+### Advanced tips for shorter configurations
+To keep shorter configuration files, and easier to read, have a look at the best practices to do [housekeeping of your configuration files](/blog/housekeeping-configuration-file/)
