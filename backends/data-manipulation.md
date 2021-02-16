@@ -53,29 +53,29 @@ We want to set up a KrakenD endpoint that returns the **posts for a specific use
 
 The KrakenD endpoint to accept URLs like`/posts/1` is defined as follows:
 
-  {
-      "endpoint": "/posts/{user}",
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/posts/{user}",
-          "host": [
-            "https://jsonplaceholder.typicode.com"
-          ],
-          "deny": [
-            "body",
-            "userId"
-          ]
-        }
-      ]
-    }
+    {
+        "endpoint": "/posts/{user}",
+        "method": "GET",
+        "backend": [
+          {
+            "url_pattern": "/posts/{user}",
+            "host": [
+              "https://jsonplaceholder.typicode.com"
+            ],
+            "deny": [
+              "body",
+              "userId"
+            ]
+          }
+        ]
+      }
 
 When calling the KrakenD endpoint `/posts/1` the response you would get will be as follows:
 
     {
-    "id": 1,
-    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
-  }
+      "id": 1,
+      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+    }
 
 [Compared with the backend response](https://jsonplaceholder.typicode.com/posts/1), you'll see that the fields `body` and `userId` are no longer there.
 
@@ -88,29 +88,29 @@ The allowed fields of your choice can also be nested. Use a **dot** as the level
 
 We will repeat the same exercise we did in the deny list to get the same output. We only want to get the `id` and `title` fields from the backend.
 
-  {
-      "endpoint": "/posts/{user}",
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/posts/{user}",
-          "host": [
-            "https://jsonplaceholder.typicode.com"
-          ],
-          "allow": [
-            "id",
-            "title"
-          ]
-        }
-      ]
-    }
+    {
+        "endpoint": "/posts/{user}",
+        "method": "GET",
+        "backend": [
+          {
+            "url_pattern": "/posts/{user}",
+            "host": [
+              "https://jsonplaceholder.typicode.com"
+            ],
+            "allow": [
+              "id",
+              "title"
+            ]
+          }
+        ]
+      }
 
 When calling the KrakenD endpoint `/posts/1` the response you would get will be as follows:
 
     {
-    "id": 1,
-    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
-  }
+      "id": 1,
+      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+    }
 
 Just exactly as we did with the deny list.
 

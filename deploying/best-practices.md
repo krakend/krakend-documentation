@@ -28,7 +28,7 @@ Creating an immutable Docker image with your desired configuration takes a few s
     COPY krakend.json /etc/krakend/krakend.json
 
 ## Place a balancer in front of KrakenD
-Put a load balancer in front of KrakenD to distribute traffic between the different nodes of the cluster (Kubernetes already does this for you). Use always at least two krakend instances for High Availability.
+Put a load balancer in front of KrakenD to distribute traffic between the different nodes of the cluster (Kubernetes already does this for you). Use always at least two KrakenD instances for High Availability.
 
 ## Use HTTP2
 Enable HTTP2 between your balancer and KrakenD API gateway for the best performance.

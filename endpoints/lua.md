@@ -19,7 +19,7 @@ For performance-first users, a Go plugin delivers much better results than a Lua
 
 ## Configuration
 
-KrakenD looks for the lua scripts in the root folder where krakend is running. You need to specify in the configuration which lua scripts are going to be loaded in Krakend, as well as several options. The `extra_config` can be set at `endpoint` level or `backend` level.
+KrakenD looks for the lua scripts in the root folder where KrakenD is running. You need to specify in the configuration which lua scripts are going to be loaded in Krakend, as well as several options. The `extra_config` can be set at `endpoint` level or `backend` level.
 
     "extra_config": {
           "github.com/devopsfaith/krakend-lua/proxy": {
@@ -195,4 +195,3 @@ Setting a cookie:
             "allow_open_libs": true
         }
     }
-
