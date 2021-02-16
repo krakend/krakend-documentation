@@ -1,7 +1,7 @@
 ---
 aliases:
 - /commands/check
-lastmod: 2016-10-28
+lastmod: 2021-02-16
 date: 2016-10-28
 linktitle: Check
 title: Commands - check
@@ -17,36 +17,37 @@ The `krakend check` command validates the passed configuration. Since KrakenD do
 
 {{< terminal title="Usage of KrakenD check" >}}
 ./krakend check -h
-
-`7MMF' `YMM'                  `7MM                         `7MM"""Yb.
-MM   .M'                      MM                           MM    `Yb.
-MM .d"     `7Mb,od8 ,6"Yb.    MM  ,MP'.gP"Ya `7MMpMMMb.    MM     `Mb
-MMMMM.       MM' "'8)   MM    MM ;Y  ,M'   Yb  MM    MM    MM      MM
-MM  VMA      MM     ,pm9MM    MM;Mm  8M""""""  MM    MM    MM     ,MP
-MM   `MM.    MM    8M   MM    MM `Mb.YM.    ,  MM    MM    MM    ,dP'
-.JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmd
+                                                                        
+`7MMF' `YMM'                  `7MM                         `7MM"""Yb.   
+  MM   .M'                      MM                           MM    `Yb. 
+  MM .d"     `7Mb,od8 ,6"Yb.    MM  ,MP'.gP"Ya `7MMpMMMb.    MM     `Mb 
+  MMMMM.       MM' "'8)   MM    MM ;Y  ,M'   Yb  MM    MM    MM      MM 
+  MM  VMA      MM     ,pm9MM    MM;Mm  8M""""""  MM    MM    MM     ,MP 
+  MM   `MM.    MM    8M   MM    MM `Mb.YM.    ,  MM    MM    MM    ,dP' 
+.JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'   
 _______________________________________________________________________
-
+                                                                  
 Version: {{< version >}}
 
 Validates that the active configuration file has a valid syntax to run the service.
 Change the configuration file by using the --config flag
 
 Usage:
-krakend check [flags]
+  krakend check [flags]
 
 Aliases:
-check, validate
+  check, validate
 
 Examples:
 krakend check -d -c config.json
 
 Flags:
--h, --help   help for check
+  -h, --help              help for check
+  -t, --test-gin-routes   Test the endpoint patterns against a real gin router on selected port
 
 Global Flags:
--c, --config string   Path to the configuration filename
--d, --debug           Enable the debug
+  -c, --config string   Path to the configuration filename
+  -d, --debug           Enable the debug
 {{< /terminal >}}
 
 Passing a path to the config file is required
@@ -303,3 +304,14 @@ Endpoints (3):
 				github.com/devopsfaith/krakend-circuitbreaker/gobreaker: map[interval:60 timeout:10 maxErrors:1]
 Syntax OK!
 {{< /terminal >}}
+
+## Check conflicting routes
+Even the configuration is valid from a syntax perspective, you can have a failing KrakenD once the service starts. To avoid this situation, the `-t` flag will actually start a KrakenD instance and **test the routes**.
+
+When automating the checks of the configuration, make sure to add the `-t` flag:
+
+```
+krakend check -t -d -c config.json
+```
+
+Make sure that the port of KrakenD is not allocated in your pipeline. You can always change it with environment vars.
