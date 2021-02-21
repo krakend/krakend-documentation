@@ -13,7 +13,7 @@ The component `krakend-jose` is responsible for the JWT validation and **protect
 
 Before digging any further, some answers to frequently asked questions:
 
-1) **KrakenD does not generate the tokens itself**, but you can plug it into any SaaS or self-hosted Identity Provider (**IdP**) using industry standards. 
+1) **KrakenD does not generate the tokens itself**, but you can plug it into any SaaS or self-hosted Identity Provider (**IdP**) using industry standards (e.g.: Auth0, Azure AD, Google Firebase, Keycloak, etc.) 
 
 2) **KrakenD does not need to validate all calls using your IdP**. KrakenD validates the signature of every incoming call by itself, only needing to check the IdP keys every 15 minutes (configurable).
 
@@ -118,6 +118,7 @@ These options are for the `extra_config`'s namespace `"github.com/devopsfaith/kr
 - `cipher_suites` (*integers list*): Override the default cipher suites. Use it if you want to enforce an even higher security standard.
 - `jwk_local_ca` (*string*): Path to the CA's certificate that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
 - `propagate-claim` (*list*): Enables passing claims in the backend's request header (see below)
+- `key_identify_strategy` (*string*): Allows strategies other than `kid` to load keys. Allowed values are: `kid`, `x5t`, `kid_x5t`
 
 For the full list of recognized algorithms and cipher suites, scroll down to the end of the document.
 
