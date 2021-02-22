@@ -13,16 +13,31 @@ The component `krakend-jose` is responsible for the JWT validation and **protect
 
 Before digging any further, some answers to frequently asked questions:
 
-1) **KrakenD does not generate the tokens itself**, but you can plug it into any SaaS or self-hosted Identity Provider (**IdP**) using industry standards (e.g.: Auth0, Azure AD, Google Firebase, Keycloak, etc.) 
+1) **KrakenD does not generate the tokens itself**. Still, you can plug it into any SaaS or self-hosted Identity Provider (**IdP**) using industry standards (e.g.: Auth0, Azure AD, Google Firebase, Keycloak, etc.) 
 
-2) **KrakenD does not need to validate all calls using your IdP**. KrakenD validates the signature of every incoming call by itself, only needing to check the IdP keys every 15 minutes (configurable).
+2) **KrakenD does not need to validate all calls using your IdP**. KrakenD validates every incoming call's signature and **it doesn't make token introspection** (asking the IdP data about the token owner).
 
-3) **If you don't have an identity server**, you can still use your classic monolith/backend login system and adapt it to return a JWT payload (which is a simple JSON) and let KrakenD [sign the token for you](/docs/authorization/jwt-signing/) and start using tokens right away.
+3) **If you don't have an identity server**, you can still use your classic monolith/backend login system and adapt it to return a JWT payload (which is a simple JSON). From here, let KrakenD [sign the token for you](/docs/authorization/jwt-signing/) and start using tokens right away.
 
-4) **Your self-hosted identity server doesn't need to be exposed to the Internet**, as it can live behind KrakenD and let the token generation requests be proxied through KrakenD. If you use a SaaS solution, of course it's exposed.
+4) **Your self-hosted identity server doesn't need to be exposed to the Internet**, as it can live behind KrakenD and let the token generation requests be proxied through KrakenD. If you use a SaaS solution, of course, it's exposed.
+
+## Key concepts
+KrakenD uses the **JSON Web Token** specification (**JWT**), an industry-standard representing claims securely between two parties. A **JWT** is an encoded JSON object containing key-value pairs of attributes signed by a trusted authority. It carries the information your end-users pass to the system to be recognized as legitimate users with other metadata.
+
+All tokens transmitted between users and KrakenD have to be signed using **JWS**, to make sure they are legitimate and not forged by an attacker. JWS represents digitally signed content using JSON data structures that are base64url encoded using the format `header.payload.signature`.
+
+Finally, KrakenD needs to retrieve from the trusted authority (your Identity Provider) the keys that let the system validate the signature. These keys are transmitted between KrakenD and the IdP using the **JWK** format, a JSON object representing a set of cryptographic keys. Depending on the system and implementation you have in your IdP, objects will use one or another algorithm. **JWA** represents the set of algorithms you can use to sign your tokens.
+
+The introduction above is very superficial; the recommended read is the RFC:
+
+- **JWT**: [Definition of tokens: structure and composition of header and payload](https://tools.ietf.org/html/rfc7519)
+- **JWS** [Signature](https://tools.ietf.org/html/rfc7515)
+- **JWK** [Key transmission](https://tools.ietf.org/html/rfc7517)
+- **JWA** [Definition of cyphering and signing algorithms](https://tools.ietf.org/html/rfc7518)
+- **JWE** is not supported by KrakenD (Premise: Sensitive data should not be transmitted using tokens).
 
 ## JWT tokens definition
-KrakenD uses **standard JWT tokens** to protect endpoints, using JSON Web Signature (**JWS**), to check the tokens' digital signature, ensuring the integrity of the contained claims and defending against attacks using tampered tokens.
+KrakenD uses **standard JWT tokens** to protect endpoints, using JSON Web Signature (**JWS**), to check the tokens' digital signature integrity of the contained claims and defending against attacks using tampered tokens.
 
 A JWT token is a `base64` encoded string with the structure `header.payload.signature`.
 
@@ -100,15 +115,15 @@ These options are for the `extra_config`'s namespace `"github.com/devopsfaith/kr
 - `alg` (*recognized string*): The hashing algorithm used by the issuer. See the [hashing algorithms](#hashing-algorithms) section for a comprehensive list of supported algorithms.
 - `jwk-url` (*string*): The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
 - `jwk_local_path` (*string*): Local path to the JWK public keys. Instead of pointing to an external URL (`jwk-url`) the public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add:
-    - `secret_url` (*url*): A URL with custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers below)
+    - `secret_url` (*url*): An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers below)
     - `cypher_key` (*string*): The cyphering key.
 - `cache` (*boolean*): Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, recommended for performance. The cache can store up to 100 different public keys simultaneously.
 - `cache_duration` (*int*): Change the default duration of 15 minutes. Value in **seconds**.
 - `audience` (*list*): Set when you want to reject tokens that do not contain the given audience.
 - `roles_key` (*string*):  When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: ["myrole"] } } `.
-- `roles_key_is_nested` (*bool*):  If the roles key is using a nested object using the `.` dot notation must be set to `true` in order to traverse the object.
 - `roles` (*list*):  When set, the JWT token not having at least one of the listed roles are rejected.
-- `scopes` (*string*): List of scopes to validate, sepparated by a space. 
+- `roles_key_is_nested` (*bool*):  If the roles key is using a nested object using the `.` dot notation must be set to `true` in order to traverse the object.
+- `scopes` (*string*): List of scopes to validate, separated by a space. 
 - `scopes_key`: The key name where the scopes can be found. The key can be a nested object using the `.` dot notation, e.g.: `data.data2.scopes`
 - `scopes_matcher` (*string*): Valid options are `all` or `any`. When `all` is used, every single scope defined in the endpoint must be present in the token. Otherwise, any matching scope will let you pass.
 - `issuer` (*string*): When set,  tokens not matching the issuer are rejected.
@@ -185,7 +200,7 @@ The local secrets require an URL with the following scheme:
 ```
 base64key://base64content
 ```
-The URL host must be base64 encoded, and must decode to exactly 32 bytes. Here is an example of the `extra_config`:
+The URL host must be base64 encoded and must decode to exactly 32 bytes. Here is an example of the `extra_config`:
 
 ```
 {
@@ -211,7 +226,7 @@ The URL Host + Path are used as the key ID, which can be in the form of an Amazo
 ```
 azurekeyvault://keyID
 ```
-The credentials are taken from the environment, unless the `AZURE_KEYVAULT_AUTH_VIA_CLI` environment variable is set to true, in which case it uses the `az` command line. 
+The credentials are taken from the environment unless the `AZURE_KEYVAULT_AUTH_VIA_CLI` environment variable is set to true, in which case it uses the `az` command line. 
 
 
 [More information about Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/general/basic-concepts)
@@ -258,7 +273,7 @@ Keep in mind that this syntax in the `url_pattern` field is only available if th
 If KrakenD can't replace the claim's content for any reason, the backend receives a request to the literal URL `/foo/{JWT.sub}`.
 
 ## Propagate JWT claims as request headers
-Since KrakenD 1.3.0 it is possible to forward claims in a JWT as request headers. It is a common use case to e.g. have the sub claim added as a `X-User` header to the request. 
+Since KrakenD 1.3.0, it is possible to forward claims in a JWT as request headers. It is a common use case to have, for instance, the sub claim added as an `X-User` header to the request. 
 
 **Important:** The endpoint `headers_to_pass` needs to be set as well, so the backend can see it.
 
@@ -272,7 +287,7 @@ Since KrakenD 1.3.0 it is possible to forward claims in a JWT as request headers
         }
       },
 ```
-In this case, the value of the `sub` claim will be added as `x-user` header to the request. If the claim does not exists, the mapping is just skipped.
+In this case, the `sub` claim's value will be added as `x-user` header to the request. If the claim does not exist, the mapping is just skipped.
 
 ## A complete running example
 
