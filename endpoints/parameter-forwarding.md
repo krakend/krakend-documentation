@@ -122,12 +122,14 @@ A client request from a browser or a mobile client usually contains a lot of hea
 
 KrakenD passes only these essential headers to the backends:
 
-    Accept-Encoding: gzip
-    Host: localhost:8080
-    User-Agent: KrakenD Version {{< version >}}
-    X-Forwarded-For: ::1
+- `Accept-Encoding`
+- `Host`
+- `User-Agent` (KrakenD Version {{< version >}})
+- `X-Forwarded-For`
+- `X-Forwarded-Host`
+- `X-Forwarded-Via` (only when `User-Agent` is in the `headers_to_pass`)
 
- When you use the `headers_to_pass`, take into account that any of these headers are replaced with the ones you declare.
+When you use the `headers_to_pass`, take into account that any of these headers are replaced with the ones you declare.
 
  An example to pass the `User-Agent` to the backend:
 
