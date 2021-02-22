@@ -22,7 +22,7 @@ You can manipulate collections at two different stages:
 - When the response of a backend is received (inside its `backend` section)
 - After having merged all the backend responses (inside the `endpoint` section, starting at KrakenD 1.2)
 
-You can do simultaneous combinations to output the desired result. For instance, declare an endpoint with three backends that apply transformations independently, and a final change within the endpoint after merging the result of the three.
+You can do simultaneous combinations to output the desired result. For instance, declare an endpoint with three backends that apply transformations independently and a final change within the endpoint after merging the three.
 
 ## Types of manipulations
 
@@ -41,7 +41,7 @@ The flatmap component is **not as a general solution for all objects**, and make
 ## Flatmap configuration
 Depending on the stage you want to do the manipulation, you will need an `extra_config` configuration inside your `endpoint` or `backend` section. For both cases, the namespace is `github.com/devopsfaith/krakend/proxy`.
 
-The component structure with three operations, would be as follows:
+The component structure with three operations would be as follows:
 
         "extra_config": {
             "github.com/devopsfaith/krakend/proxy": {
@@ -69,10 +69,10 @@ The component structure with three operations, would be as follows:
 
 The types of operations are defined as follows:
 
-*   **Move**: To move or rename a collection to another. Needs 2 arguments.
+*   **Move**: To move or rename a collection to another. It needs two arguments.
     *   `"type": "move"`
     *   `"args": ["target_in_collection", "destination_in_collection"]`
-*   **Delete**: To remove al matching patterns within a collection. Needs one or more arguments.
+*   **Delete**: To remove all matching patterns within a collection. Needs one or more arguments.
     *   `"type": "del"`
     *   `"args": ["target_in_collection_to_delete", "another_collection_to_delete", "..."]`
 *   **Append**: To append a collection after another one, and return only the latter. Needs 2 arguments.
@@ -90,7 +90,7 @@ Operations always apply to ** the last item** in the arguments. For instance, a 
 
 ### Notation by example
 
-We are going to use an elementary JSON structure as an example of data representation, see below:
+We are going to use an elementary JSON structure as an example of data representation. See below:
 
         {
             "a": [

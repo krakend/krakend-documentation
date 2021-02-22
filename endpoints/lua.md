@@ -113,6 +113,7 @@ Use this type when you need to script the router layer, traffic between end-user
 *   `params` (_Dynamic_)
 *   `headers` (_Dynamic_)
 *   `body` (_Dynamic_)
+*   `host` (_Dynamic_)
 
 ## Additional helpers (cheatsheet)
 

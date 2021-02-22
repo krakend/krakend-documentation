@@ -1,15 +1,18 @@
 ---
-lastmod: 2019-02-13
+lastmod: 2021-02-22
 date: 2016-09-30
 toc: true
 linktitle: etcd
-title: Service Discovery with etcd
+title: Service Discovery with etcd (deprecated)
 weight: 20
 source: https://github.com/devopsfaith/krakend-etcd
 menu:
   documentation:
     parent: service-discovery
 ---
+{{< note title="Deprecated" >}}
+Since KrakenD 1.3.0 etcd is not longer supported. The documentation is left here for reference.
+{{< /note >}}
 
 The etcd Service Discovery integration allows you to perform the host resolution using your existing etcd setup.
 
