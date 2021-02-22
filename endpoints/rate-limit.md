@@ -3,7 +3,7 @@ aliases:
 - /throttling/rate-limit/
 - /docs/throttling/rate-limit/
 - /docs/features/rate-limit/
-lastmod: 2018-10-30
+lastmod: 2020-02-22
 date: 2016-07-01
 linktitle: Rate Limits
 title: Endpoint rate limiting
