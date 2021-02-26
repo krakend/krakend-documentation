@@ -123,7 +123,7 @@ These options are for the `extra_config`'s namespace `"github.com/devopsfaith/kr
 - `roles_key` (*string*):  When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: ["myrole"] } } `.
 - `roles` (*list*):  When set, the JWT token not having at least one of the listed roles are rejected.
 - `roles_key_is_nested` (*bool*):  If the roles key is using a nested object using the `.` dot notation must be set to `true` in order to traverse the object.
-- `scopes` (*string*): List of scopes to validate, separated by a space. 
+- `scopes` (*list*): List of scopes to validate. 
 - `scopes_key`: The key name where the scopes can be found. The key can be a nested object using the `.` dot notation, e.g.: `data.data2.scopes`
 - `scopes_matcher` (*string*): Valid options are `all` or `any`. When `all` is used, every single scope defined in the endpoint must be present in the token. Otherwise, any matching scope will let you pass.
 - `issuer` (*string*): When set,  tokens not matching the issuer are rejected.
