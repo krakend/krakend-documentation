@@ -16,6 +16,8 @@ The **Flexible Configuration** component is included in the KrakenD API Gateway 
 
 When the Flexible Configuration is enabled, KrakenD assumes that your configuration file is a template that needs compilation during start-up time. With this, you have the opportunity to produce a more sophisticated configuration file that utilizes variables and brings content from external files.
 
+A typical use case of the flexible configuration is when you have multiple environments and you have different settings for each.
+
 ## When to use Flexible Configuration
 A template system gives you full flexibility to work with the configuration file. It comes handy to:
 
@@ -83,6 +85,10 @@ For instance, if you have a file `settings/db.json` with the following content:
 You can access particular settings like using this syntax: `{{ .db.host }}`.
 
 The first name after the dot is the name of the file, and then the element in the structure you want to access. The example would write `192.168.1.23` where you wrote the placeholder.
+
+{{< note title="Accessing variables inside range" >}}
+When you are doing a loop with a `range`, the variables inside are relative to the `range` context. To access outsider variables use the `$` notation. For instance: `{{ $.db.host }}`
+{{< /note >}}
 
 #### Insert structures from settings files
 When instead of a single value you need to insert a **JSON structure** (several elements), you need to use `marshal`.

@@ -49,7 +49,7 @@ Host: krakend.example.com
 Authorization: Bearer eyJhbGciOiJIUzI1NiIXVCJ9.(truncated).ktIOfzak2ekD7IrCa9-UiO4QA
 {{< /terminal >}}
 
-Or instead, you can send the token **inside a cookie**.
+Or instead, you can send the token **inside a cookie** (see [`cookie_key`](/docs/authorization/jwt-validation/#jwt-validation-settings)).
 
 ## JWT header requirements
 When KrakenD decodes the `base64` token string passed in the `Bearer` or a cookie, it expects to find in its **header** section the following **three fields**:
