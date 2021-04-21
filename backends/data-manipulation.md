@@ -344,7 +344,7 @@ The response will look like this:
 ### When you need to manipulate arrays
 All the data manipulation operations (such as the allow list, deny list, etc.) expect to find objects in the response. When an object is nested inside another object, you can filter directly, but when there are arrays in the equation, KrakenD needs a special configuration that internally flattens this structure:
 
-See [Manipulating arrays - flatmap](/docs/backends/flatmap)
+See [Manipulating arrays - flatmap](/docs/backends/flatmap/)
 
 ## Manipulations with Lua
 If you need more sophisticated manipulation options, they can be done using Lua scripting:

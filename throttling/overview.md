@@ -16,7 +16,7 @@ The most significant type of throttling is the **rate limit** that allows you to
 - Establish a quota of usage for your exposed API (router rate limit)
 - Create a simple QoS strategy for your API
 
-The rate limits are complementary to the [Circuit Breaker](/docs/backends/circuit-breaker) feature.
+The rate limits are complementary to the [Circuit Breaker](/docs/backends/circuit-breaker/) feature.
 
 ## Types of rate limits
 There are two different layers where the rate limiting applies:

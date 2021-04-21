@@ -105,12 +105,12 @@ This configuration makes sure that:
 - The token is well-formed and didn't expire
 - The token has a valid signature
 - The role of the user is either `user` or `admin` (taken from a key in the JWT payload named `http://api.example.com/custom/roles`)
-- The token is not revoked in the bloom filter (see [revoking tokens](/docs/authorization/revoking-tokens))
+- The token is not revoked in the bloom filter (see [revoking tokens](/docs/authorization/revoking-tokens/))
 
 ## JWT validation settings
 The following settings are available for JWT validation. There are a lot of options, although generally only the **fields `alg` and `jwk-url` or `jwk_local_path` are mandatory**, and the rest of the keys can be added or not at your best convenience or depending on other options.
 
-These options are for the `extra_config`'s namespace `"github.com/devopsfaith/krakend-jose/validator"` placed in every endpoint (use [flexible configuration](/docs/configuration/flexible-config) to avoid code repetition):
+These options are for the `extra_config`'s namespace `"github.com/devopsfaith/krakend-jose/validator"` placed in every endpoint (use [flexible configuration](/docs/configuration/flexible-config/) to avoid code repetition):
 
 - `alg` (*recognized string*): The hashing algorithm used by the issuer. See the [hashing algorithms](#hashing-algorithms) section for a comprehensive list of supported algorithms.
 - `jwk-url` (*string*): The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
@@ -293,7 +293,7 @@ In this case, the `sub` claim's value will be added as `x-user` header to the re
 
 The [KrakenD Playground](/docs/overview/playground/) demonstrates how to protect endpoints using JWT and includes two examples ready to use:
 
-- Integration with an external third party using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa)
+- Integration with an external third party using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa/)
 - Integration with an internal identity provider service (mocked) using a symmetric key algorithm and a signer middleware.
 
 To try it, [clone the playground](https://github.com/devopsfaith/krakend-playground) and follow the README.

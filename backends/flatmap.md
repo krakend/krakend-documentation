@@ -12,7 +12,7 @@ menu:
     parent: backends
 ---
 
-The flatmap middleware allows you to **manipulate collections** (or arrays, or lists, you name it). While the [basic manipulation operations](/docs/backends/data-manipulation) allow you to work directly with objects, the collections require a different approach: the **flatmap component**.
+The flatmap middleware allows you to **manipulate collections** (or arrays, or lists, you name it). While the [basic manipulation operations](/docs/backends/data-manipulation/) allow you to work directly with objects, the collections require a different approach: the **flatmap component**.
 
 When working with lists, KrakenD needs to flatten and expand array structures to objects to operate with them, and vice versa. This process is automatically done by the flatmap component, letting you concentrate only on the type of operation you want to execute.
 

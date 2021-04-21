@@ -16,7 +16,7 @@ menu:
 
 The metrics *middleware* collects **extended metrics** and exposes them in the `/__stats/` endpoint. The endpoint runs in a different port than the API, and contains a lot of metrics.
 
-Through the extended metrics you can create new tools or integrate with existing ones. For instance, combining the metrics with the InfluxDB extended metrics you can have a [Grafana dashboard](/docs/extended-metrics/grafana).
+Through the extended metrics you can create new tools or integrate with existing ones. For instance, combining the metrics with the InfluxDB extended metrics you can have a [Grafana dashboard](/docs/extended-metrics/grafana/).
 
 The structure of the metrics looks like this (truncated):
 

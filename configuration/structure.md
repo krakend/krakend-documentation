@@ -8,7 +8,7 @@ menu:
 title: Understanding the configuration file
 weight: 10
 ---
-All KrakenD behavior depends on the `krakend.json` file ([other formats supported](/docs/configuration/supported-formats)), so being familiar with the structure of the configuration file it's essential.
+All KrakenD behavior depends on the `krakend.json` file ([other formats supported](/docs/configuration/supported-formats/)), so being familiar with the structure of the configuration file it's essential.
 
 ## Configuration file structure
 There are a large number of options you can put in this file, let's focus now only on the structure:

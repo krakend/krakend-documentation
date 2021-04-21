@@ -12,9 +12,9 @@ weight: 20
 KrakenD is a **single binary file** that does not require any external libraries to work. To install KrakenD choose your operative system in the downloads section or use the Docker image.
 
 
-<a href="/download" class="btn btn-secondary"><i class="fa fa-download"></i> Download KrakenD</a>
+<a href="/download/" class="btn btn-secondary"><i class="fa fa-download"></i> Download KrakenD</a>
 and
-<a href="http://designer.krakend.io" class="btn btn-secondary"><i class="fa fa-file"></i> Generate the configuration file</a>
+<a href="https://designer.krakend.io/" class="btn btn-secondary"><i class="fa fa-file"></i> Generate the configuration file</a>
 
 
 **Just exploring?**
@@ -26,7 +26,7 @@ If you are already familiar with Docker, the easiest way to get started is by pu
 {{< terminal title="Running KrakenD using the Docker container" >}}
 docker run -p 8080:8080 -v $PWD:/etc/krakend/ devopsfaith/krakend run --config /etc/krakend/krakend.json
 {{< /terminal >}}
-Make sure you have a `krakend.json` in the current directory with your endpoint definition. You can [generate it here](http://designer.krakend.io/)
+Make sure you have a `krakend.json` in the current directory with your endpoint definition. You can [generate it here](https://designer.krakend.io/)
 
 ## Mac OS X
 The [Homebrew](https://brew.sh/) formula will download the source code, build the formula and link the binary for you. The installation might take a while.
@@ -83,7 +83,7 @@ apt-get install -y krakend
 The current KrakenD version will run at least in Debian 8, Debian 9 and Ubuntu 16.x
 
 ### Generic (via `tar.gz`)
-You can also [download](/download) the `tar.gz` and decompress it anywhere. Instructions to check the SHA and PGP signature [here](/docs/overview/verifying-packages).
+You can also [download](/download/) the `tar.gz` and decompress it anywhere. Instructions to check the SHA and PGP signature [here](/docs/overview/verifying-packages/).
 
 
 ## Build KrakenD yourself

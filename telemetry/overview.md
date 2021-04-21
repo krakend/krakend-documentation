@@ -21,14 +21,14 @@ Enabling tracing is key to have a good detail of what is going on inside the Gat
 
 The following telemetry systems are supported:
 
-- [Jaeger](/docs/telemetry/jaeger)
-- [Zipkin](/docs/telemetry/zipkin)
-- [AWS X-Ray](/docs/telemetry/xray)
-- [InfluxDB](/docs/telemetry/influxdb)
-- [Prometheus](/docs/telemetry/prometheus)
-- [Google Stackdriver](/docs/telemetry/stackdriver)
-- [Datadog](/docs/telemetry/datadog)
-- [OpenCensus Agent](/docs/telemetry/opencensus) (e.g: **Azure Monitor**)
-- [Grafana](/docs/extended-metrics/grafana)
+- [Jaeger](/docs/telemetry/jaeger/)
+- [Zipkin](/docs/telemetry/zipkin/)
+- [AWS X-Ray](/docs/telemetry/xray/)
+- [InfluxDB](/docs/telemetry/influxdb/)
+- [Prometheus](/docs/telemetry/prometheus/)
+- [Google Stackdriver](/docs/telemetry/stackdriver/)
+- [Datadog](/docs/telemetry/datadog/)
+- [OpenCensus Agent](/docs/telemetry/opencensus/) (e.g: **Azure Monitor**)
+- [Grafana](/docs/extended-metrics/grafana/)
 - Newrelic (only custom builds)
 - Instana (KrakenD Enterprise only)

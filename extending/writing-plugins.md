@@ -117,7 +117,7 @@ A relaxed start to build a component KrakenD is our article "[Website developmen
 
 Make sure your plugin uses the libraries and versions required by the chosen KrakenD Version:
 
-<a class="btn btn-secondary btn-lg" href="http://plugin-tools.krakend.io/validate">Go to plugin validator</a>
+<a class="btn btn-secondary btn-lg" href="https://plugin-tools.krakend.io/validate">Go to plugin validator</a>
 
 ## Ask the community
 

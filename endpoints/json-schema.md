@@ -27,7 +27,7 @@ You can apply constraints by adding keywords to the schema. For instance, you ca
 
 All the configuration inside the namespace is pure JSON Schema vocabulary. [Read the JSON schema documentation](https://json-schema.org/) to get familiar with the specification.
 
- A full configuration for you to try on the localhost with the [debug endpoint](/docs/endpoints/debug-endpoint) is: 
+ A full configuration for you to try on the localhost with the [debug endpoint](/docs/endpoints/debug-endpoint/) is:
 {{< highlight json "hl_lines=14-25" >}}
 {
     "version": 2,

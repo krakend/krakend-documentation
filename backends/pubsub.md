@@ -69,7 +69,7 @@ The configuration you need to use is:
 - `host`: `gcppubsub://`
 - `url` for topics: `"projects/myproject/topics/mytopic"` or the shortened form `"myproject/mytopic"`
 - `url` for subscriptions: `"projects/myproject/subscriptions/mysub"` or the shortened form `"myproject/mysub"`
-- Environment variables:  `GOOGLE_APPLICATION_CREDENTIALS`, see [Google documentation](https://cloud.google.com/docs/authentication/production).
+- Environment variables:  `GOOGLE_APPLICATION_CREDENTIALS`, see [Google documentation](https://cloud.google.com/docs/authentication/production/).
 
 Example: 
 

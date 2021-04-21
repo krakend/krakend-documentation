@@ -26,7 +26,7 @@ Unless the `no-op` encoding is set, the following status codes are the default b
 | `404 Not Found`             | The requested endpoint is not configured on KrakenD           |
 | `400 Bad Request`           | Client made a malformed request, i.e. [json-schema](/docs/endpoints/json-schema/) validation failed         |
 | `401 Unauthorized`          | Client sent an invalid JWT token or its claims |
-| `403 Forbidden`             | The user is allowed to use the API, but not the resource, e.g.: Insufficient JWT [role](/docs/authorization/jwt-validation), or [bot detector](/docs/throttling/botdetector/) banned it |
+| `403 Forbidden`             | The user is allowed to use the API, but not the resource, e.g.: Insufficient JWT [role](/docs/authorization/jwt-validation/), or [bot detector](/docs/throttling/botdetector/) banned it |
 | `429 Too Many Requests`     | The client reached the rate limit for the endpoint |
 | `503 Service Unavailable`   | All clients together reached the configured global rate limit for the endpoint |
 | `500 Internal Server Error` | Default error code, and in general, when backends return any status above `400` |

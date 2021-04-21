@@ -67,15 +67,15 @@ The following table summarizes different performance tests using Amazon EC2 virt
 
 ### Benchmark in a MacBook Pro
 
-[Here you will find the results of the benchmarks](/docs/benchmarks/local)
+[Here you will find the results of the benchmarks](/docs/benchmarks/local/)
 
 ### Benchmark in Amazon AWS EC2 Instances
 
-[Here you will find the results of the benchmarks](/docs/benchmarks/aws)
+[Here you will find the results of the benchmarks](/docs/benchmarks/aws/)
 
 ### API Gateway Benchmark
 
-[Here you will find the results of the comparisons](/docs/benchmarks/api-gateway-benchmark)
+[Here you will find the results of the comparisons](/docs/benchmarks/api-gateway-benchmark/)
 
 ## Tooling
 

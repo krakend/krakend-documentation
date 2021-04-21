@@ -111,7 +111,7 @@ On the other hand, `http://krakend/v3/iOS/foo?evil=here` produces:
 
 No optional parameter has been passed, so the mandatory one is used.
 
-Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint) to understand how to test query string parameters.
+Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test query string parameters.
 
 ## Headers forwarding
 KrakenD **does not send client headers to the backend by default**.  Use `headers_to_pass`.
@@ -160,7 +160,7 @@ This setting changes the headers received by the backend to:
     User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
     X-Forwarded-For: ::1
 
-Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint) to understand how to test headers.
+Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test headers.
 
 ### Sending all client headers to the backends
 While the default policy prevents forwarding unrecognized headers, setting an asterisk `*` as the parameter name makes the gateway to **forward any header to the backends**, including cookies:

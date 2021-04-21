@@ -18,7 +18,7 @@ the path the configuration file (which defines behaviors and endpoints). Additio
 enable the debug with the `-d` flag, and that's pretty much everything.
 
 ## TL;DR
-1. Generate a configuration file with your endpoints definition. The easier way to generate it is using the [designer](http://designer.krakend.io/)
+1. Generate a configuration file with your endpoints definition. The easier way to generate it is using the [designer](https://designer.krakend.io/)
 2. Check the syntax of your `krakend.json` is good
 	{{< terminal title="Syntax checking" >}}
 krakend check --config krakend.json --debug
@@ -72,6 +72,6 @@ Use "krakend [command] --help" for more information about a command.
 
 As you can see there are 3 different supported commands:
 
-- [`krakend check`](/docs/commands/check) (syntax validation)
-- [`krakend run`](/docs/commands/run) (run the server)
+- [`krakend check`](/docs/commands/check/) (syntax validation)
+- [`krakend run`](/docs/commands/run/) (run the server)
 - `krakend help` (show usage)

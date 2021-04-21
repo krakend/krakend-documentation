@@ -13,7 +13,7 @@ menu:
 
 Through the **OAuth 2.0 Client Credentials Grant** KrakenD can request to your authorization server an access token to reach protected resources.
 
-The client credentials **authorize KrakenD, as the client, to access the protected resources**. Do not confuse this with authorizing an end-user (see [JWT](/docs/authorization/jwt-overview) instead).
+The client credentials **authorize KrakenD, as the client, to access the protected resources**. Do not confuse this with authorizing an end-user (see [JWT](/docs/authorization/jwt-overview/) instead).
 
 Successfully setting the client credentials for a backend means that KrakenD can get the protected content, but the endpoint offered to the end-user is going to be public unless you protect it with JWT.
 

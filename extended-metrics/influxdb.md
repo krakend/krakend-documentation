@@ -11,15 +11,15 @@ menu:
     parent: extended-metrics
 ---
 
-KrakenD can expose detailed and extended metrics via the [krakend-metrics](/docs/extended-metrics/influxdb)). The **krakend-influx** component lets you **send these extended KrakenD metrics to InfluxDB**.
+KrakenD can expose detailed and extended metrics via the [krakend-metrics](/docs/extended-metrics/influxdb/)). The **krakend-influx** component lets you **send these extended KrakenD metrics to InfluxDB**.
 
 Notice that there are **two different implementations** of InfluxDB in KrakenD:
 
 - Native InfluxDB exporter (this page)
-- [OpenCensus InfluxDB exporter](/docs/telemetry/influxdb)
+- [OpenCensus InfluxDB exporter](/docs/telemetry/influxdb/)
 
 {{< note title="Which InfluxDB implementation should I choose?" >}}
-The **native implementation** exports data from a collector that is tailor-made for KrakenD, and also richer in content and less abstract. On the other hand, the [OpenCensus exporter for InfluxDB](/docs/telemetry/influxdb) is more generalistic and abstract, but implements a collector with less data. For our Grafana dahsboard, choose this one.
+The **native implementation** exports data from a collector that is tailor-made for KrakenD, and also richer in content and less abstract. On the other hand, the [OpenCensus exporter for InfluxDB](/docs/telemetry/influxdb/) is more generalistic and abstract, but implements a collector with less data. For our Grafana dahsboard, choose this one.
 {{< /note >}}
 
 ## InfluxDB configuration
@@ -50,4 +50,4 @@ You can accomplish it with the following snippet.
 - `ttl` (*duration*): Expressed as <value><units> (e.g: `30s`,`1m`). See [accepted values](https://golang.org/pkg/time/#ParseDuration).
 - `buffer_size` (*integer*): Use `0` to send events immediately or the number of points that should be sent together.
 
-Now you are ready to [publish a Grafana](/docs/extended-metrics/grafana).
+Now you are ready to [publish a Grafana](/docs/extended-metrics/grafana/).

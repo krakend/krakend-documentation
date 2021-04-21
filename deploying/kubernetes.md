@@ -16,7 +16,7 @@ Create a `Dockerfile` that includes the configuration of the service. That shoul
     FROM devosfaith/krakend
     COPY krakend.json /etc/krakend/krakend.json
 
-If you use [flexible-configuration](/docs/configuration/flexible-config) you might want to add a previous generation of the krakend.json file using a multi-step Docker.
+If you use [flexible-configuration](/docs/configuration/flexible-config/) you might want to add a previous generation of the krakend.json file using a multi-step Docker.
 
 From here you need to create a `NodePort` and send all the traffic to KrakenD.
 

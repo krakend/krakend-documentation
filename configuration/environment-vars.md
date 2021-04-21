@@ -10,7 +10,7 @@ menu:
 title: Overriding the configuration with environment vars
 weight: 40
 ---
-When KrakenD [runs](/docs/commands/run), all the behavior is loaded from the [configuration file](/docs/configuration/structure). For each configuration value that isn't nested (meaning first-level properties of the configuration), you can override its value with an environment variable.
+When KrakenD [runs](/docs/commands/run/), all the behavior is loaded from the [configuration file](/docs/configuration/structure/). For each configuration value that isn't nested (meaning first-level properties of the configuration), you can override its value with an environment variable.
 
 All configuration environment variables must have the prefix `KRAKEND_` and declared in uppercase. The variable name after the prefix must match the property in the configuration value.
 

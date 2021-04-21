@@ -18,7 +18,7 @@ Provided this simple configuration mechanism, the **versioning and automation ar
 
 
 {{< note title="Configuration using multiple files" >}}
-If your configuration file is too large or repetitive, it can be split into several files using a templating system. See the [flexible configuration documentation](/docs/configuration/flexible-config) for more information on this feature.
+If your configuration file is too large or repetitive, it can be split into several files using a templating system. See the [flexible configuration documentation](/docs/configuration/flexible-config/) for more information on this feature.
 {{< /note >}}
 
 

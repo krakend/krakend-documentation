@@ -16,8 +16,8 @@ The plugin validator is an online tool that allows you to find problems with you
 
 The plugin validator checks your `go.sum` file to find problems and reports all associated problems. From which Go version is supported, to which individual libraries will conflict during runtime.
 
-<a class="btn btn-secondary btn-lg" href="http://plugin-tools.krakend.io/validate">Go to plugin validator</a>
+<a class="btn btn-secondary btn-lg" href="https://plugin-tools.krakend.io/validate">Go to plugin validator</a>
 
 The dependencies list shows all libraries used by KrakenD. Make sure your plugins use the same versions:
 
-<a class="btn btn-secondary btn-lg" href="http://plugin-tools.krakend.io">Go to dependencies finder</a>
+<a class="btn btn-secondary btn-lg" href="https://plugin-tools.krakend.io">Go to dependencies finder</a>
