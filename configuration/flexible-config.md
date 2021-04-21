@@ -198,34 +198,26 @@ Finally, introducing the base template. It inserts the content of other files us
 
 Have a look at the highlighted lines:
 
-{{< highlight go "hl_lines=3-5 7 9 12 16 23" >}}
+{{< highlight go "hl_lines=3-5 7 9 12 15" >}}
     {
         "version": 2,
         "port": {{ .service.port }},
         "extra_config": {{ marshal .service.extra_config }},
         "host": {{ marshal .service.default_hosts }},
         "endpoints": [
-            {{ range .endpoint.example_group }}
+            {{ range $idx, $endpoint := .endpoint.example_group }}
+            {{if $idx}},{{end}}
             {
-            "endpoint": "{{ .endpoint }}",
+            "endpoint": "{{ $endpoint.endpoint }}",
             "backend": [
                 {
-                    "url_pattern": "{{ .backend }}"
-                }
-            ]
-            },
-            {{ end }}
-            {
-            "endpoint": "/limited-endpoint",
-            "backend": [
-                {
-                    "url_pattern": "/v1/slow-backend",
+                    "url_pattern": "{{ $endpoint.backend }}",
                     "extra_config": {
                         {{ include "rate_limit_backend.tmpl" }}
                     }
                 }
-                ]
-            }
+            ]
+            {{ end }}
         ]
     }
 {{< /highlight >}}
@@ -233,7 +225,8 @@ Have a look at the highlighted lines:
 - The `.service.port` is taken from the `service.json` file.
 - The `extra_config` in the third line is inserted as a JSON object using the `marshal` function from the `service.json` as well.
 - A `range` iterates the array found under `endpoint.json` and key `example_group`. The variables inside the range are relative to the `example_group` content.
-- Finally, an `include` at the bottom inserts the content as is.
+- An `include` in the extra_config inserts the content as is.
+- Also notice the little trick `{{if $idx}},{{end}}` insidde the loop. When it is not in the first element `0`, it will add a comma to prevent breaking the JSON format.
 
 Notice that there is a `{{ range }}`. If you wanted to use it inside a template, and not the base file, you would need to include it inside a sub-template with ``{{ template "template.tmp" .endpoint.example_group }}``.
 
