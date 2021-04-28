@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2021-04-28
 date: 2019-09-15
 notoc: true
 linktitle: InfluxDB
@@ -24,13 +24,16 @@ The following configuration snippet sends data to your InfluxDB:
         "influxdb": {
             "address": "http://192.168.99.100:8086",
             "db": "krakend",
-            "timeout": "1s"
+            "timeout": "1s",
+            "username": "your-influxdb-user",
+            "password": "your-influxdb-password"
         },
       }
     }
 
-- `address` is the URL (including port) where your InfluxDB is installed
-- `db` is the database name
-- `timeout` is the maximum time you wait for Influx to respond
+- `address` is the URL (including port) where your InfluxDB is installed.
+- `db` is the database name.
+- `timeout` is the maximum time you will wait for InfluxDB to respond.
+- `username` and `password` are optional and used to authenticate against InfluxDB.
 
 See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
