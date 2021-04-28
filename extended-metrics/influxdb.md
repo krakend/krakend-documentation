@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-11-18
+lastmod: 2021-04-28
 date: 2020-11-18
 linktitle: InfluxDB exporter
 title: Native InfluxDB exporter
@@ -37,7 +37,10 @@ You can accomplish it with the following snippet.
         "github_com/letgoapp/krakend-influx":{
             "address":"http://192.168.99.9:8086",
             "ttl":"25s",
-            "buffer_size":0
+            "buffer_size":0,
+            "db": "krakend",
+            "username": "your-influxdb-user",
+            "password": "your-influxdb-password"
         },
         "github_com/devopsfaith/krakend-metrics": {
           "collection_time": "30s",
@@ -48,6 +51,8 @@ You can accomplish it with the following snippet.
 
 - `address` (*string*): The complete url of the influxdb including the port if different from defaults in http/https
 - `ttl` (*duration*): Expressed as <value><units> (e.g: `30s`,`1m`). See [accepted values](https://golang.org/pkg/time/#ParseDuration).
-- `buffer_size` (*integer*): Use `0` to send events immediately or the number of points that should be sent together.
+- `buffer_size` (*integer*): Use `0` to send events immediately or set the number of points that should be sent together.
+- `db` (*string*): Name of the database, defaults to *krakend*.
+- `username` and `password` are optional and used to authenticate against InfluxDB.
 
 Now you are ready to [publish a Grafana](/docs/extended-metrics/grafana/).
