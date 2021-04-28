@@ -20,6 +20,7 @@ The documentation in this site covers all the functionality of KrakenD API Gatew
 - [Building Micro Services with .Net Core + Krakend API Gateway](https://balramchavan.medium.com/building-micro-services-with-net-core-krakend-api-gateway-fad036f10298) by Balram Chavan (Engineer @Boehringer Ingelheim)
 - [How To Effortlessly Adopt Microservices Using KrakenD](https://betterprogramming.pub/how-to-effortlessly-adopt-microservices-using-krakend-28c265573877) by Kirshi Yin on BetterProgramming
 - [Using a proxy and API gateway to optimize Compass for performance](https://blog.hcltechsw.com/compass/using-a-proxy-and-api-gateway-to-optimize-compass-for-performance/) by Michael Hudson (Technology Director @HCL Software)
+- [Configuring Grafana and InfluxDB](https://skalena.github.io/api-methodology/public/cont/krakend-grafana-influxdb/) by Skalena (KrakenD distributor in Brazil)
 
 If you have written a tutorial, guide or any other material worth sharing with the community, let us know:
 
