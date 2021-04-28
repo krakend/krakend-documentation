@@ -29,9 +29,9 @@ The following configuration snippet sends data to your Datadog:
               "tags": [
                 "gw"
               ],
-              "global_tags": [
-                "prod"
-              ],
+              "global_tags": {
+                "env": "prod"
+              },
               "disable_count_per_buckets": true,
               "trace_address": "localhost:8126",
               "stats_address": "localhost:8125",
@@ -43,7 +43,7 @@ The following configuration snippet sends data to your Datadog:
       }
 
 - `tags` (*list*) specifies a set of global tags to attach to each metric
-- `global_tags` (*list*) GlobalTags holds a set of tags that will automatically be applied to all exported spans.
+- `global_tags` (*object*) GlobalTags holds a set of tags (key/value) that will automatically be applied to all exported spans.
 - `service` (*string*) Service specifies the service name used for tracing
 - `trace_address` (*string*) TraceAddr specifies the `host[:port]` address of the Datadog Trace Agent. It defaults to localhost:8126.
 - `stats_address` (*string*) StatsAddr specifies the `host[:port]` address for DogStatsD. It defaults to localhost:8125.
