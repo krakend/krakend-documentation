@@ -5,13 +5,19 @@ notoc: true
 linktitle: InfluxDB
 title: Exporting metrics and events to InfluxDB
 weight: 80
-source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 aliases:
 - /docs/logging-metrics-tracing/influxdb/
 menu:
   documentation:
     parent: telemetry
+meta:
+  since: 0.5
+  source: https://github.com/devopsfaith/krakend-opencensus
+  namespace:
+  - github_com/devopsfaith/krakend-opencensus
+  scope:
+  - service
 ---
 [InfluxDB](https://www.influxdata.com/) is a time series database designed to handle high write and query loads.
 

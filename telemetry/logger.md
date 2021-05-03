@@ -12,6 +12,13 @@ aliases:
 menu:
   documentation:
     parent: telemetry
+meta:
+  since: 0.5
+  source: https://github.com/devopsfaith/krakend-opencensus
+  namespace:
+  - github_com/devopsfaith/krakend-opencensus
+  scope:
+  - service
 ---
 Opencensus can export data to the system logger as another exporter.
 

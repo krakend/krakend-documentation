@@ -14,6 +14,13 @@ aliases:
 menu:
   documentation:
     parent: telemetry
+meta:
+  since: 1.2
+  source: https://github.com/devopsfaith/krakend-opencensus
+  namespace:
+  - github_com/devopsfaith/krakend-opencensus
+  scope:
+  - service
 ---
 [Datadog](https://www.datadoghq.com/) is a monitoring and security platform for developers, IT operations teams and business in the cloud.
 

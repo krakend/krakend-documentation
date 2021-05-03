@@ -4,14 +4,19 @@ date: 2019-09-15
 linktitle: Bot detector
 title: Control of bot traffic
 weight: 10
-since: 1.0
-#notoc: true
 source: https://github.com/devopsfaith/krakend-botdetector
 images:
 - /images/krakend-botdetector.png
 menu:
   documentation:
     parent: throttling
+meta:
+  since: 1.0
+  source: https://github.com/devopsfaith/krakend-botdetector
+  namespace:
+  - github_com/devopsfaith/krakend-botdetector
+  scope:
+  - service
 ---
 
 The **bot detector** module checks incoming connections to the gateway to determine if a bot made them, helping you detect and reject bots carrying out scraping, content theft, and form spam.

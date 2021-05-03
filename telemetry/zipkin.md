@@ -5,13 +5,19 @@ notoc: true
 linktitle: Zipkin
 title: Exporting traces to Zipkin
 weight: 90
-source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 aliases:
 - /docs/logging-metrics-tracing/zipkin/
 menu:
   documentation:
     parent: telemetry
+meta:
+  since: 0.5
+  source: https://github.com/devopsfaith/krakend-opencensus
+  namespace:
+  - github_com/devopsfaith/krakend-opencensus
+  scope:
+  - service
 ---
 [Zipkin](https://zipkin.io/) is a distributed tracing system. It helps gather timing data needed to troubleshoot latency problems in service architectures.
 

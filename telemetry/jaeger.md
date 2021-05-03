@@ -5,13 +5,19 @@ notoc: true
 linktitle: Jaeger
 title: Exporting traces to Jaeger
 weight: 100
-source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 aliases:
 - /docs/logging-metrics-tracing/jaeger/
 menu:
   documentation:
     parent: telemetry
+meta:
+  since: 0.5
+  source: https://github.com/devopsfaith/krakend-opencensus
+  namespace:
+  - github_com/devopsfaith/krakend-opencensus
+  scope:
+  - service
 ---
 [Jaeger](https://www.jaegertracing.io/) is an open source, end-to-end distributed tracing system that allows you to monitor and troubleshoot transactions in complex distributed systems.
 

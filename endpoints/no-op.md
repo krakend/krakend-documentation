@@ -11,6 +11,7 @@ menu:
 meta:
   since: 1.2
   source: https://github.com/devopsfaith/krakend-ce
+  namespace: false
   scope:
   - endpoint
 ---

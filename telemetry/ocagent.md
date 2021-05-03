@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-11-16
+lastmod: 2021-05-03
 date: 2020-11-16
 notoc: true
 linktitle: OpenCensus Agent
@@ -10,6 +10,13 @@ notoc: true
 menu:
   documentation:
     parent: telemetry
+meta:
+  since: 1.1
+  source: https://github.com/devopsfaith/krakend-opencensus
+  namespace:
+  - github_com/devopsfaith/krakend-opencensus
+  scope:
+  - service
 ---
 
 The `ocagent` exporter sends OpenCensus Stats and Traces to the OpenCensus Agent, instead of pushing data to backends’ exporters.

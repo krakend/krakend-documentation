@@ -5,12 +5,18 @@ notoc: true
 linktitle: Opencensus
 title: Sending out logs, metrics, and traces
 weight: 60
-source: https://github.com/devopsfaith/krakend-opencensus
 aliases:
 - /docs/logging-metrics-tracing/opencensus/
 menu:
   documentation:
     parent: telemetry
+meta:
+  since: 0.5
+  source: https://github.com/devopsfaith/krakend-opencensus
+  namespace:
+  - github_com/devopsfaith/krakend-opencensus
+  scope:
+  - service
 ---
 The Opencensus exporter is a single component that allows you to **export data to multiple providers**, both open source and privative.
 

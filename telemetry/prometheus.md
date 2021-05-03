@@ -11,6 +11,13 @@ aliases:
 menu:
   documentation:
     parent: telemetry
+meta:
+  since: 0.5
+  source: https://github.com/devopsfaith/krakend-opencensus
+  namespace:
+  - github_com/devopsfaith/krakend-opencensus
+  scope:
+  - service
 ---
 [Prometheus](https://prometheus.io/) is an open-source systems monitoring and alerting toolkit.
 
