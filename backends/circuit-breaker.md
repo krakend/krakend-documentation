@@ -1,17 +1,23 @@
 ---
-lastmod: 2020-10-19
+lastmod: 2021-05-02
 date: 2016-07-01
 linktitle: Circuit Breaker
 title: The Circuit Breaker
 weight: 20
-source: https://github.com/devopsfaith/krakend-circuitbreaker
 menu:
   documentation:
     parent: backends
-notoc: true
 images:
 - /images/documentation/circuit-breaker.png
 - /images/documentation/circuit-breaker-states.png
+notoc: true
+meta:
+  since: false
+  source: https://github.com/devopsfaith/krakend-circuitbreaker
+  namespace:
+  - github.com/devopsfaith/krakend-circuitbreaker/gobreaker
+  scope:
+  - backend
 ---
 
 To keep KrakenD responsive and resilient, we added a **Circuit Breaker** middleware on several processing pipe points. Thanks to this component, when KrakenD demands more throughput than your actual API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also useful for dealing with network and other communication problems by preventing too many requests to fail due to timeouts, etc.
@@ -25,7 +31,8 @@ The Circuit Breaker is a protection measure for your stack and avoids cascading 
 The Circuit Breaker is available by default in KrakenD thanks to the [circuit breaker middleware](https://github.com/devopsfaith/krakend-circuitbreaker). As with all additional middlewares, you need to set its values in its own namespace `github.com/devopsfaith/krakend-circuitbreaker/gobreaker` inside the `extra_config` key.
 
 The following configuration is an example of how to add circuit breaker capabilities to a backend:
-
+{{< highlight json >}}
+{
     "endpoints": [
     {
         "endpoint": "/myendpoint",
@@ -47,7 +54,10 @@ The following configuration is an example of how to add circuit breaker capabili
             }
         }
         ]
-    ...
+    }
+    ]
+}
+{{< /highlight >}}
 
 The attributes available for the configuration are:
 

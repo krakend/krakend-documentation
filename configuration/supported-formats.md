@@ -10,16 +10,16 @@ notoc: true
 weight: 30
 ---
 
-The expected configuration file format by default is `json`, but KrakenD can parse different formats if one of the following extensions is found:
+The expected configuration file format by default is `json`, but KrakenD can parse different formats if one of the following is found:
 
-- `.json`
-- `.toml`
-- `.yaml`
-- `.yml`
-- `.properties`
-- `.props`
-- `.prop`
-- `.hcl`
+- `krakend.json`
+- `krakend.toml`
+- `krakend.yaml`
+- `krakend.yml`
+- `krakend.properties`
+- `krakend.props`
+- `krakend.prop`
+- `krakend.hcl`
 
 Nevertheless, **our recommendation is to choose `JSON`**.
 

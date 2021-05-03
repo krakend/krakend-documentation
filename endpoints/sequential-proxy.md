@@ -12,6 +12,13 @@ images:
 menu:
   documentation:
     parent: endpoints
+meta:
+  since: 0.7
+  source: https://github.com/devopsfaith/krakend
+  namespace:
+  - github.com/devopsfaith/krakend/proxy
+  scope:
+  - endpoint
 ---
 The best experience consumers can have with KrakenD API is by letting the system fetch all the data from the different backends concurrently at the same time. However, there are times when you need to **delay a backend call** until you can inject as input the result of a previous call.
 

@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-02-22
+lastmod: 2021-05-02
 date: 2019-02-22
 toc: true
 linktitle: No-op (proxy only)
@@ -8,6 +8,11 @@ weight: 60
 menu:
   documentation:
     parent: endpoints
+meta:
+  since: 1.2
+  source: https://github.com/devopsfaith/krakend-ce
+  scope:
+  - endpoint
 ---
 KrakenD `no-op` (**no-operation**), is a special type of **encoding** that behaves as a **proxy** by passing the client's request to the backend ***as is***, and vice-versa.
 

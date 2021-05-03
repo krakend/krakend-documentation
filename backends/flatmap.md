@@ -5,11 +5,17 @@ toc: true
 linktitle: Array manipulations
 title: Array manipulation - flatmap
 weight: 70
-since: 0.9
-source: https://github.com/devopsfaith/flatmap
 menu:
   documentation:
     parent: backends
+meta:
+  since: 0.9
+  source: https://github.com/devopsfaith/flatmap
+  namespace:
+  - github.com/devopsfaith/krakend/proxy
+  scope:
+  - backend
+  - endpoint
 ---
 
 The flatmap middleware allows you to **manipulate collections** (or arrays, or lists, you name it). While the [basic manipulation operations](/docs/backends/data-manipulation/) allow you to work directly with objects, the collections require a different approach: the **flatmap component**.

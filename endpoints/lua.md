@@ -1,14 +1,22 @@
 ---
-lastmod: 2020-10-19
+lastmod: 2021-05-02
 date: 2019-09-15
 linktitle:  Lua scripting
 title: Transformations using Lua scripting
 weight: 90
-source: https://github.com/devopsfaith/krakend-lua
-since: 1.0
 menu:
   documentation:
     parent: endpoints
+meta:
+  since: 1.0
+  source: https://github.com/devopsfaith/krakend-lua
+  namespace:
+  - "github.com/devopsfaith/krakend-lua/proxy"
+  - "github.com/devopsfaith/krakend-lua/router"
+  - "github.com/devopsfaith/krakend-lua/proxy/backend"
+  scope:
+  - endpoint
+  - backend
 ---
 
 Scripting with Lua is an additional choice to extend your business logic, and is compatible with the rest of options such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or other Go plugins and middlewares.

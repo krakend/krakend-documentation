@@ -1,22 +1,54 @@
 ---
-lastmod: 2018-11-05
+lastmod: 2021-05-02
 date: 2018-11-05
 linktitle: Metrics and /__stats
 title: Extended metrics and the `/__stats` endpoint
 weight: 10
-notoc: true
-source: https://github.com/devopsfaith/krakend-metrics
-aliases:
-- /docs/logging-metrics-tracing/metrics/
-
 menu:
   documentation:
     parent: extended-metrics
+notoc: true
+meta:
+  since: 0.4
+  source: https://github.com/devopsfaith/krakend-metrics
+  namespace:
+  - github_com/devopsfaith/krakend-metrics
+  scope:
+  - service
 ---
 
 The metrics *middleware* collects **extended metrics** and exposes them in the `/__stats/` endpoint. The endpoint runs in a different port than the API, and contains a lot of metrics.
 
 Through the extended metrics you can create new tools or integrate with existing ones. For instance, combining the metrics with the InfluxDB extended metrics you can have a [Grafana dashboard](/docs/extended-metrics/grafana/).
+
+## Configuration
+
+In order to add metrics to your KrakenD installation add the `github_com/devopsfaith/krakend-metrics` namespace under `extra_config` in the root of your configuration file, e.g.:
+
+{{< highlight go "hl_lines=3-11" >}}
+{
+  "version": 2,
+  "extra_config": {
+    "github_com/devopsfaith/krakend-metrics": {
+      "collection_time": "60s",
+      "proxy_disabled": false,
+      "router_disabled": false,
+      "backend_disabled": false,
+      "endpoint_disabled": false,
+      "listen_address": ":8090"
+    }
+  }
+}
+{{< /highlight >}}
+
+The options of the *middleware* are:
+
+- `collection_time`: The time window to collect metrics. Defaults to 60 seconds.
+- `proxy_disabled`: Skip any metrics happening in the proxy layer (traffic against your backends)
+- `router_disabled`:  Skip any metrics happening in the router layer (activity in KrakenD endpoints)
+- `backend_disabled`: Skip any metrics happening in the backend layer.
+- `endpoint_disabled`: Do not publish the `/__stats/` endpoint. Metrics won't be accessible via the endpoint but still collected.
+- `listen_address`: Change the listening address where the metrics endpoint is exposed. It defaults to :8090.
 
 The structure of the metrics looks like this (truncated):
 
@@ -52,32 +84,3 @@ curl http://localhost:8090/__stats
   }
 }
 {{< /terminal >}}
-
-## Enabling metrics
-
-In order to add metrics to your KrakenD installation add the `github_com/devopsfaith/krakend-metrics` namespace under `extra_config` in the root of your configuration file, e.g.:
-
-{{< highlight go "hl_lines=3-11" >}}
-{
-  "version": 2,
-  "extra_config": {
-    "github_com/devopsfaith/krakend-metrics": {
-      "collection_time": "60s",
-      "proxy_disabled": false,
-      "router_disabled": false,
-      "backend_disabled": false,
-      "endpoint_disabled": false,
-      "listen_address": ":8090"
-    }
-  }
-}
-{{< /highlight >}}
-
-The options of the *middleware* are:
-
-- `collection_time`: The time window to collect metrics. Defaults to 60 seconds.
-- `proxy_disabled`: Skip any metrics happening in the proxy layer (traffic against your backends)
-- `router_disabled`:  Skip any metrics happening in the router layer (activity in KrakenD endpoints)
-- `backend_disabled`: Skip any metrics happening in the backend layer.
-- `endpoint_disabled`: Do not publish the `/__stats/` endpoint. Metrics won't be accessible via the endpoint but still collected.
-- `listen_address`: Change the listening address where the metrics endpoint is exposed. It defaults to :8090.

@@ -1,16 +1,21 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2021-05-02
 date: 2019-01-24
 linktitle: Transform requests and responses
 title: Modify requests and responses with Martian
 weight: 85
-since: 0.7
-source: https://github.com/devopsfaith/krakend-martian
 aliases:
 - /docs/endpoints/martian
 menu:
   documentation:
     parent: backends
+meta:
+  since: 0.7
+  source: https://github.com/devopsfaith/krakend-martian
+  namespace:
+  - github.com/devopsfaith/krakend-martian
+  scope:
+  - backend
 ---
 The [krakend-martian](https://github.com/devopsfaith/krakend-martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel/).
 

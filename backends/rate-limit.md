@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-10-29
+lastmod: 2021-05-02
 date: 2018-10-29
 linktitle: Proxy rate limit
 title: Rate-limiting backends
@@ -8,34 +8,39 @@ source: https://github.com/devopsfaith/krakend-ratelimit
 menu:
   documentation:
     parent: backends
+notoc: true
+meta:
+  since: false
+  source: https://github.com/devopsfaith/krakend-ratelimit
+  namespace:
+  - github.com/devopsfaith/krakend-ratelimit/juju/proxy
+  scope:
+  - backend
 ---
 
 No matter what is the amount of activity the users are generating at the router level, you might want to restrict the connections KrakenD makes to your backends. Configuration is similar to the router's one, but it's declared directly in the `backend` section instead of the `endpoint`.
 
 This parameter is defined at the `krakend.json` configuration file as follows:
-
-    ...
+{{< highlight json "hl_lines=8-13">}}
     {
       "endpoint": "/products/{cat_id}",
       "backend": [
       {
-          "host": [
-              "http://some.api.com/"
-          ],
+          "host": ["http://some.api.com/"],
           "url_pattern": "/catalog/category/{cat_id}.rss",
           "encoding": "rss",
           "extra_config": {
               "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
-                  "maxRate": 1,
+                  "maxRate": 0.5,
                   "capacity": 1
               }
           }
       }
-    ...
+{{< /highlight >}}
 
 There are two parameters you can set:
 
-- `maxRate`: Maximum requests per second you want to accept in this backend.
+- `maxRate` (*float*): Maximum requests per second you want to accept in this backend.
 - `capacity`: The capacity according to the [token bucket algorithm](https://en.wikipedia.org/wiki/Token_bucket) with a `bucket capacity == tokens added per second` so KrakenD is able to allow some bursting on the request rates. Recommended value is capacity==maxRate
 
 

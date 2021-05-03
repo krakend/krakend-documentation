@@ -1,13 +1,20 @@
 ---
-lastmod: 2018-10-29
+lastmod: 2021-05-02
 date: 2018-10-29
 linktitle: Caching responses
 title: Caching backend responses
 weight: 50
-source: https://github.com/devopsfaith/krakend-httpcache
 menu:
   documentation:
     parent: backends
+notoc: true
+meta:
+  since: 0.4
+  source: https://github.com/devopsfaith/krakend-httpcache
+  namespace:
+  - github.com/devopsfaith/krakend-httpcache
+  scope:
+  - backend
 ---
 
 Sometimes you might want to reuse a previous response of a backend instead of asking for the same information over the network again. In this cases, it is possible to enable **in-memory** caching for the desired backend responses.

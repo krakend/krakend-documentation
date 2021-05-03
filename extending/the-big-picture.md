@@ -45,9 +45,8 @@ As the handler functions are in the previous step, **KrakenD doesn't penalize th
 ## The important packages
 The KrakenD framework is composed of a set of packages designed as building blocks for creating pipes and processors between an exposed endpoint and one or several API resources served by your backends.
 
-<center>
+
 ![KrakenD packages](/images/documentation/config-router-proxy-packages.png)
-</center>
 
 The most important packages are:
 

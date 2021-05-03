@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-10-02
+lastmod: 2021-05-02
 date: 2019-10-02
 linktitle: Return backend errors
 title: Returning the details of backend errors
@@ -9,6 +9,13 @@ weight: 130
 menu:
   documentation:
     parent: backends
+meta:
+  since: 0.8
+  source: https://github.com/devopsfaith/krakend
+  namespace:
+  - github.com/devopsfaith/krakend/http
+  scope:
+  - backend
 ---
 
 When you are willing to manipulate or aggregate data, KrakenD's policy regarding errors and status codes is to **hide from the client any backend details**. The philosophy behind this is that clients have to be decoupled from its underlying services.

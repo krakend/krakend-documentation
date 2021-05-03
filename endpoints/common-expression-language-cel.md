@@ -4,12 +4,19 @@ date: 2019-01-24
 linktitle: Checking requests and responses
 title: Checking requests and responses with the Common Expression Language (CEL)
 weight: 80
-since: 0.8
 source: https://github.com/devopsfaith/krakend-cel
 images: ["/images/documentation/krakend-cel.png"]
 menu:
   documentation:
     parent: endpoints
+meta:
+  since: 0.8
+  source: https://github.com/devopsfaith/krakend-cel
+  namespace:
+  - github.com/devopsfaith/krakend-cel
+  scope:
+  - endpoint
+  - backend
 ---
 There are times when you might want to include **additional logic** in the gateway to decide if a request has to be fulfilled or not.
 

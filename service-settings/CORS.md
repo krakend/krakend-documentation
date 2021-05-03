@@ -5,7 +5,14 @@ linktitle: CORS
 title: Enabling Cross Origin Resource Sharing (CORS)
 weight: 20
 notoc: true
-source: https://github.com/devopsfaith/krakend-cors
+meta:
+  since: 0.6
+  source: https://github.com/devopsfaith/krakend-cors
+  namespace:
+  - github_com/devopsfaith/krakend-cors
+  scope:
+  - service
+
 menu:
   documentation:
     parent: service-settings

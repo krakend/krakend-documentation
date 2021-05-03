@@ -1,13 +1,19 @@
 ---
 lastmod: 2019-02-22
 date: 2019-02-22
-toc: true
 linktitle: Static responses (stubs)
 title: Static Proxy - Adding static/stub data
 weight: 70
 menu:
   documentation:
     parent: endpoints
+meta:
+  since: 0.5
+  source: https://github.com/devopsfaith/krakend
+  namespace:
+  - github.com/devopsfaith/krakend/proxy
+  scope:
+  - endpoint
 ---
 The **static proxy** is an aid to clients dealing with incomplete and other types of degraded responses. When enabled, the static proxy **injects static data** in the final response when the behavior of a backend falls in the selected **strategy**.
 

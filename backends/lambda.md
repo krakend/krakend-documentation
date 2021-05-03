@@ -1,18 +1,23 @@
 ---
-lastmod: 2018-11-27
+lastmod: 2021-05-02
 date: 2018-11-11
 toc: true
 linktitle: Lambda functions
 title: Integration with AWS Lambda functions
-since: 1.0
-source: https://github.com/devopsfaith/krakend-lambda
 weight: 110
-#notoc: true
 images:
     - /images/krakend-lambda.png
 menu:
   documentation:
     parent: backends
+notoc: true
+meta:
+  since: 1.0
+  source: https://github.com/devopsfaith/krakend-lambda
+  namespace:
+  - github.com/devopsfaith/krakend-lambda
+  scope:
+  - backend
 ---
 
 The Lambda integration allows you to **invoke Amazon Lambda functions** on a KrakenD endpoint call. The content returned by the lambda function can be treated and manipulated as any other backend.
@@ -35,6 +40,11 @@ The supported parameters are:
 *   `region`: The AWS identifier region (e.g.: `us-east-1`, `eu-west-2`, etc. )
 *   `max_retries`: Maximum times you want to execute the function until you have a successful response.
 *   `endpoint`: An optional parameter to customize the Lambda endpoint to call. Useful when Localstack is used for testing.
+
+{{< note title="Parameters' first character uppercased" >}}
+Notice the capitalization of the first letter of the parameter names at the configuration in the examples below. For instance, when an endpoint parameter is defined as `{route}`, define it in the config as `Route`.
+{{< /note >}}
+
 
 ### Authentication
 
@@ -72,8 +82,3 @@ When the name of the Lambda to depends on a parameter passed in the endpoint, us
 In this example, the `function_param_name` is telling us which is the placeholder in the endpoint setting the lambda. In this case, `{lambda}`.
 
 Following the code, a call `GET /call-a-lambda/my-lambda` would produce a call to the `My-lambda` function in AWS.
-
-
-{{< note title="Parameters' first character uppercased" >}}
-Notice the capitalization of the first letter of the parameter names at the configuration above. For instance, when an endpoint parameter is defined as `{route}`, define it in the config as `Route`.
-{{< /note >}}

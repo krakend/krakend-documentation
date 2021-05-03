@@ -1,14 +1,20 @@
 ---
-lastmod: 2019-10-13
+lastmod: 2021-05-02
 date: 2018-04-05
 linktitle: AMQP - RabbitMQ
 title: API Gateway integration with AMQP messaging
 weight: 90
-since: 0.9
-source: https://github.com/devopsfaith/krakend-amqp
 menu:
   documentation:
     parent: backends
+meta:
+  since: 0.9
+  source: https://github.com/devopsfaith/krakend-amqp
+  namespace:
+  - github.com/devopsfaith/krakend-amqp/consume
+  - github.com/devopsfaith/krakend-amqp/produce
+  scope:
+  - backend
 ---
 
 The AMQP component allows to **send and receive messages to and from a queue** through the API Gateway.

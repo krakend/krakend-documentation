@@ -1,14 +1,20 @@
 ---
-lastmod: 2020-07-10
+lastmod: 2021-05-02
 date: 2020-07-10
 linktitle: JSON Schema validation
 title: Validating the body with the JSON Schema integration
 weight: 130
-since: 1.2
-source: https://github.com/devopsfaith/krakend-jsonschema
 menu:
   documentation:
     parent: endpoints
+notoc: true
+meta:
+  since: 1.2
+  source: https://github.com/devopsfaith/krakend-jsonschema
+  namespace:
+  - github.com/devopsfaith/krakend-jsonschema
+  scope:
+  - endpoint
 ---
 KrakenD endpoints receiving a JSON object in its body can apply automatic validations using the [JSON Schema](https://json-schema.org/) vocabulary before the content passes to the backends. The json schema component allows you to define **validation rules** on the body, type definition, or even validate the fields' values.
 

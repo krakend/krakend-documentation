@@ -5,10 +5,17 @@ linktitle: InfluxDB exporter
 title: Native InfluxDB exporter
 weight: 20
 notoc: true
-source: https://github.com/letgoapp/krakend-influx
 menu:
   documentation:
     parent: extended-metrics
+meta:
+  since: 0.5
+  source: https://github.com/letgoapp/krakend-influx
+  namespace:
+  - github_com/letgoapp/krakend-influx
+  - github_com/devopsfaith/krakend-metrics
+  scope:
+  - service
 ---
 
 KrakenD can expose detailed and extended metrics via the [krakend-metrics](/docs/extended-metrics/influxdb/)). The **krakend-influx** component lets you **send these extended KrakenD metrics to InfluxDB**.
@@ -55,4 +62,4 @@ You can accomplish it with the following snippet.
 - `db` (*string*): Name of the database, defaults to *krakend*.
 - `username` and `password` are optional and used to authenticate against InfluxDB.
 
-Now you are ready to [publish a Grafana](/docs/extended-metrics/grafana/).
+Now you are ready to [publish a Grafana dashboard](/docs/extended-metrics/grafana/).

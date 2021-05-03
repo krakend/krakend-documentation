@@ -9,6 +9,12 @@ menu:
     parent: configuration
 title: Overriding the configuration with environment vars
 weight: 40
+meta:
+  since: 1.2
+  source: false
+  namespace: false
+  scope:
+  - service
 ---
 When KrakenD [runs](/docs/commands/run/), all the behavior is loaded from the [configuration file](/docs/configuration/structure/). For each configuration value that isn't nested (meaning first-level properties of the configuration), you can override its value with an environment variable.
 
