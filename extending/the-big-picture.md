@@ -11,10 +11,10 @@ menu:
 images:
 - /images/documentation/config-router-proxy-packages.png
 ---
-Before starting to dive into the KrakenD framework code, spend a few minutes understanding the big pieces of the system, how it works, and the philosophy behind it.
+Before starting to dive into the KrakenD code, spend a few minutes understanding the big pieces of the system, how it works, and the philosophy behind it.
 
 ## The KrakenD rules
-Let's start with the rules followed to code KrakenD, as they answer to architectural design questions:
+Let's start with the rules followed to code KrakenD (shared with [The Lura Project](https://luraproject.org)), as they answer to architectural design questions:
 
 * [Reactive is key](http://www.reactivemanifesto.org/)
 * Reactive is key (yes, it is very very important)
@@ -43,10 +43,10 @@ The working state is when the system is ready and can process the requests. When
 As the handler functions are in the previous step, **KrakenD doesn't penalize the performance depending on the number of endpoints or the possible cardinality** of the URIs requested by the users.
 
 ## The important packages
-The KrakenD framework is composed of a set of packages designed as building blocks for creating pipes and processors between an exposed endpoint and one or several API resources served by your backends.
+The Lura Project (KrakenD's engine) is composed of a set of packages designed as building blocks for creating pipes and processors between an exposed endpoint and one or several API resources served by your backends.
 
 
-![KrakenD packages](/images/documentation/config-router-proxy-packages.png)
+![Lura packages](/images/documentation/config-router-proxy-packages.png)
 
 The most important packages are:
 
@@ -86,7 +86,7 @@ This layer transforms the request received from the outer layer (router) into a 
 
 Middlewares generates custom proxies that are chained depending on the workflow defined in the configuration until each possible branch ends in a transport-related proxy. Every one of these generated proxies can transform the input or even clone it several times and pass it or them to the next element in the chain. Finally, they can also modify the received response or responses adding all kinds of features to the generated pipe.
 
-The KrakenD framework provides a default implementation of the proxy stack factory.
+The Lura Project provides a default implementation of the proxy stack factory.
 
 #### Middlewares available
 

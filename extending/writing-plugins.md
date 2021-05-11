@@ -25,7 +25,7 @@ The word plugin appears in many places over the Internet, but when we talk about
 
 `middleware != plugin`
 
-KrakenD API Gateway is a composition of a framework and many other pieces and repositories that compile in a single, final, binary. We refer to these pieces as **middleware**, **components**, **modules**, or **packages** `¯\_(ツ)_/¯`.
+KrakenD API Gateway is a composition of the [Lura framework](https://github.com/luraproject/lura) (formerly KrakenD framework) and many other pieces and repositories that compile in a single, final, binary. We refer to these pieces as **middleware**, **components**, **modules**, or **packages** `¯\_(ツ)_/¯`.
 
 **A plugin is a soft-linked library**, thus a separated `.so` file, that when running in conjunction with KrakenD can participate in the processing.
 
@@ -105,7 +105,7 @@ Writing an http handler plugin requires you to implement the [plugin server inte
 
 The last option is to write code and compile it along with KrakenD. When writing your custom code, the usual choice is to fork the [KrakenD-CE](https://github.com/devopsfaith/krakend-ce) repository.
 
-The KrakenD-CE repository is the one assembling all the blocks and manages the dependencies (including the [KrakenD Framework](https://github.com/devopsfaith/krakend)), and lets you effortlessly include your company customizations.
+The KrakenD repository is the one assembling all the blocks and manages the dependencies (including [Lura](https://github.com/luraproject/lura)), and lets you effortlessly include your company customizations.
 
 The small drawback of this approach is that you need to maintain your custom version, which differs from our official binaries.
 

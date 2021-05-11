@@ -12,7 +12,7 @@ menu:
   documentation:
     parent: logging
 ---
-By default,  when KrakenD starts all the log events are sent to the **standard output** using the basic logger capabilities of the KrakenD framework. The reporting level, in that case, is `DEBUG` and adds no prefix to the log lines.
+By default,  when KrakenD starts all the log events are sent to the **standard output** using the basic logger capabilities of the [Lura Project](https://luraproject.org). The reporting level, in that case, is `DEBUG` and adds no prefix to the log lines.
 
 ## Extending the logging capabilities
 

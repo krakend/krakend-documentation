@@ -59,7 +59,7 @@ The configuration above declares an endpoint `/v1/foo-bar`, which returns the re
 That's the basic structure of endpoints; for more information see [how to create endpoints](/docs/endpoints/creating-endpoints/).
 
 ### The `extra_config` structure
-KrakenD is very modular and comes bundled with many components that extend the core functionality of the KrakenD framework. The `extra_config` stores each component configuration that is not part of the KrakenD framework.
+KrakenD is very modular and comes bundled with many components that extend the core functionality of the [Lura Project](https://luraproject.org). The `extra_config` stores each component configuration that is not handled by Lura itself.
 
 Components declare in their source code a **unique namespace**. KrakenD registers the component during the startup, and it passes to the component the configuration found under a key matching the **namespace** inside the `extra_config` object. 
 

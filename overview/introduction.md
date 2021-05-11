@@ -38,7 +38,7 @@ KrakenD is an **API Gateway** that sits between the client and all the source se
 
 KrakenD acts as an **aggregator** of many sources into single endpoints and allows you to group, wrap, transform and shrink responses. Additionally, it supports a myriad of middleware and plugins that allow you to extend the functionality, such as adding OAuth authorization or security layers (SSL, certificates, HTTP Strict Transport Security, Clickjacking protection, HTTP Public Key Pinning, MIME-sniffing prevention, XSS protection).
 
-KrakenD is written in [Go](https://golang.org/) with support for multiple platforms and is based on the [KrakenD framework](https://github.com/devopsfaith/krakend).
+KrakenD is written in [Go](https://golang.org/) with support for multiple platforms and is based on the [Lura Project](https://luraproject.org).
 
 ### A practical example
 A mobile developer needs to construct a single front page that requires data from several calls to their backend services, e.g:

@@ -62,8 +62,8 @@ Each endpoint declaration is able to define which encoder should be used, as sho
 
 Notice that endpoint `/c` uses JSON as no encoding has been defined.
 
-## Using other routers from the framework
-If instead of the KrakenD API Gateway (KrakenD-CE), which uses internally the gin router, you decide to build your own gateway using the KrakenD framework, the following routers and output encodings are available:
+## Using other routers (Lura Project)
+If instead of the KrakenD API Gateway, which uses internally the gin router, you decide to build your own custom gateway using the [Lura Project](https://luraproject.org), the following routers and output encodings are available:
 
 ### Gin
 The gin-based KrakenD router includes these output encodings:
@@ -74,7 +74,7 @@ The gin-based KrakenD router includes these output encodings:
 - `no-op`
 
 ### Mux-based
-The mux based routers supported by the KrakenD framework are:
+The mux based routers supported by Lura are:
 
 - Mux
 - Gorilla
@@ -88,4 +88,4 @@ and they include these output encodings:
 - `string`
 - `no-op`
 
-See the list of [supported routers](https://github.com/devopsfaith/krakend/tree/master/router).
+See the list of [Lura supported routers](https://github.com/luraproject/lura/tree/master/router).
