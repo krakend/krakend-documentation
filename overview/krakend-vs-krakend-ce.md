@@ -19,7 +19,7 @@ If you had a quick look at our git repositories or the documentation, you might 
 - **KrakenD Enterprise** is our commercial version, including services to businesses
 
 ### Lura Project
-The [Lura Project](https://luraproject.org) is our original *KrakenD framework* that we [donated to The Linux Foundation on 2021](/blog/krakend-framework-joins-the-linux-foundation/). Previously it lived from 2006 to 2021 under the KrakenD's team organization ([@devopsfaith](https://twitter.com/devopsfaith)) until it became a [Linux Foundation](https://linuxfoundation.org/) project. KrakenD team continues to be part of the steering committee.
+The [Lura Project](https://luraproject.org) is our original *KrakenD framework* that we [donated to The Linux Foundation on 2021](/blog/krakend-framework-joins-the-linux-foundation/). Previously it lived from 2006 to 2021 under the KrakenD's team organization ([@krakend_io](https://twitter.com/krakend_io)) until it became a [Linux Foundation](https://linuxfoundation.org/) project. KrakenD team continues to be part of the steering committee.
 
 The mission of the Lura Project is to offer an extendable, simple and stateless high-performance API Gateway **framework** designed for both cloud-native and on-prem setups. It provides components for assembling your API Gateway. It can be used in its entirety or just importing it as Go libraries to take only some of the functionality it brings. 
 
