@@ -132,7 +132,7 @@ These options are for the `extra_config`'s namespace `"github.com/devopsfaith/kr
 - `jwk_fingerprints` (*strings list*): A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man-in-the-middle attacks. Add fingerprints in base64 format.
 - `cipher_suites` (*integers list*): Override the default cipher suites. Use it if you want to enforce an even higher security standard.
 - `jwk_local_ca` (*string*): Path to the CA's certificate that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
-- `propagate-claim` (*list*): Enables passing claims in the backend's request header (see below)
+- `propagate-claims` (*list*): Enables passing claims in the backend's request header (see below)
 - `key_identify_strategy` (*string*): Allows strategies other than `kid` to load keys. Allowed values are: `kid`, `x5t`, `kid_x5t`
 
 For the full list of recognized algorithms and cipher suites, scroll down to the end of the document.
