@@ -13,7 +13,7 @@ Deploying KrakenD in Kubernetes requires a straightforward configuration.
 
 Create a `Dockerfile` that includes the configuration of the service. That should be as simple as:
 
-    FROM devosfaith/krakend
+    FROM devopsfaith/krakend
     COPY krakend.json /etc/krakend/krakend.json
 
 If you use [flexible-configuration](/docs/configuration/flexible-config/) you might want to add a previous generation of the krakend.json file using a multi-step Docker.
