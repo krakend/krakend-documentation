@@ -8,8 +8,8 @@ weight: 60
 aliases:
 - /docs/logging-metrics-tracing/opencensus/
 menu:
-  documentation:
-    parent: telemetry
+  community_current:
+    parent: "080 Telemetry"
 meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus

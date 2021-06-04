@@ -4,8 +4,8 @@ date: 2017-01-21
 linktitle: Cluster Overview
 notoc: true
 menu:
-  documentation:
-    parent: cluster
+  community_current:
+    parent: "120 Cluster"
 title: High-availability cluster
 weight: 1
 ---

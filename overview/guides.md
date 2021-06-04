@@ -2,8 +2,8 @@
 lastmod: 2020-04-17
 date: 2020-04-17
 menu:
-  documentation:
-    parent: getting started
+  community_current:
+    parent: "000 Getting Started"
 title: Tutorials and Guides
 notoc: true
 weight: 1000

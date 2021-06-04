@@ -5,8 +5,8 @@ linktitle: Environment vars
 since: 1.2
 notoc: true
 menu:
-  documentation:
-    parent: configuration
+  community_current:
+    parent: "010 Configuration file(s)"
 title: Overriding the configuration with environment vars
 weight: 40
 meta:

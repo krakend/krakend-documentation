@@ -6,8 +6,8 @@ title: Native InfluxDB exporter
 weight: 20
 notoc: true
 menu:
-  documentation:
-    parent: extended-metrics
+  community_current:
+    parent: "100 Extended Metrics"
 meta:
   since: 0.5
   source: https://github.com/letgoapp/krakend-influx

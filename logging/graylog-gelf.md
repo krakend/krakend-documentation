@@ -11,8 +11,8 @@ aliases:
 - /docs/logging-metrics-tracing/graylog-gelf/
 notoc: true
 menu:
-  documentation:
-    parent: logging
+  community_current:
+    parent: "090 Logging"
 ---
 KrakenD supports sending structured events in GELF format to your Graylog Cluster thanks to the [krakend-gelf](https://github.com/devopsfaith/krakend-gelf) integration.
 

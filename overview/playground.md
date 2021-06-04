@@ -6,8 +6,8 @@ description: Start playing with KrakenD through a ready-to-use complete environm
 notoc: true
 source: https://github.com/devopsfaith/krakend-playground
 menu:
-  documentation:
-    parent: getting started
+  community_current:
+    parent: "000 Getting Started"
 title: The KrakenD Playground
 weight: 110
 images: ["https://github.com/devopsfaith/krakend-playground/blob/master/composer-env.png?raw=true"]

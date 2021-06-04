@@ -4,8 +4,8 @@ date: 2017-01-21
 linktitle: Kubernetes
 title: Deploying to Kubernetes
 menu:
-  documentation:
-    parent: deploying
+  community_current:
+    parent: "110 Deploying"
 weight: 20
 ---
 

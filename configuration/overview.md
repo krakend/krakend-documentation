@@ -3,8 +3,8 @@ lastmod: 2018-10-20
 date: 2016-07-01
 linktitle: Configuration overview
 menu:
-  documentation:
-    parent: configuration
+  community_current:
+    parent: "010 Configuration file(s)"
 title: KrakenD's configuration file(s)
 weight: -1000
 aliases:

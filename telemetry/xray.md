@@ -10,8 +10,8 @@ notoc: true
 aliases:
 - /docs/logging-metrics-tracing/xray/
 menu:
-  documentation:
-    parent: telemetry
+  community_current:
+    parent: "080 Telemetry"
 ---
 [AWS X-Ray](https://aws.amazon.com/xray/) is a service offered by Amazon that provides an end-to-end view of requests as they travel through your application, and shows a map of your application’s underlying components.
 

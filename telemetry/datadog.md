@@ -12,8 +12,8 @@ images: ["/images/documentation/datadog-screenshot.png"]
 aliases:
 - /docs/logging-metrics-tracing/datadog/
 menu:
-  documentation:
-    parent: telemetry
+  community_current:
+    parent: "080 Telemetry"
 meta:
   since: 1.2
   source: https://github.com/devopsfaith/krakend-opencensus

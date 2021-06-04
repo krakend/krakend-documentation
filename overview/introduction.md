@@ -5,8 +5,8 @@ lastmod: 2018-11-26
 date: 2016-10-25
 linktitle: Introduction
 menu:
-  documentation:
-    parent: getting started
+  community_current:
+    parent: "000 Getting Started"
 next: /overview/quickstart
 title: Introduction to KrakenD
 notoc: true

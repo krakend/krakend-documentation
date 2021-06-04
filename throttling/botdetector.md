@@ -8,8 +8,8 @@ source: https://github.com/devopsfaith/krakend-botdetector
 images:
 - /images/krakend-botdetector.png
 menu:
-  documentation:
-    parent: throttling
+  community_current:
+    parent: "070 Traffic Management"
 meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-botdetector

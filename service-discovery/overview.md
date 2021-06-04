@@ -6,8 +6,8 @@ linktitle: Service Discovery overview
 title: Service Discovery overview
 weight: -1000
 menu:
-  documentation:
-    parent: service-discovery
+  community_current:
+    parent: "130 Service Discovery"
 ---
 
 Service discovery enables clients to detect and locate services on your enterprise network automatically. Instead of defining a static list of IPs or hostnames pointing to your backends, you can use a service discovery provider and let KrakenD interact with it to get the hosts dynamically.

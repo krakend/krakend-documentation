@@ -7,8 +7,8 @@ title: Supported backend encodings
 weight: 40
 notoc: true
 menu:
-  documentation:
-    parent: backends
+  community_current:
+    parent: "050 Backends Configuration "
 ---
 Setting the `encoding` is an important part of the backend definition, as it informs KrakenD how to parse the responses of your services.
 

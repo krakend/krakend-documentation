@@ -5,8 +5,8 @@ linktitle: Lura vs. KrakenD
 description: What is the difference between Lura and KrakenD?
 notoc: true
 menu:
-  documentation:
-    parent: getting started
+  community_current:
+    parent: "000 Getting Started"
 title: Lura vs. KrakenD
 weight: 100
 ---

@@ -5,8 +5,8 @@ linktitle: Metrics and /__stats
 title: Extended metrics and the `/__stats` endpoint
 weight: 10
 menu:
-  documentation:
-    parent: extended-metrics
+  community_current:
+    parent: "100 Extended Metrics"
 notoc: true
 meta:
   since: 0.4

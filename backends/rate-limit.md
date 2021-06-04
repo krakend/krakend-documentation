@@ -6,8 +6,8 @@ title: Rate-limiting backends
 weight: 10
 source: https://github.com/devopsfaith/krakend-ratelimit
 menu:
-  documentation:
-    parent: backends
+  community_current:
+    parent: "050 Backends Configuration "
 notoc: true
 meta:
   since: false

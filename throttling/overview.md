@@ -5,8 +5,8 @@ linktitle: Rate limits and throttling
 title: Throttling overview
 weight: -10
 menu:
-  documentation:
-    parent: throttling
+  community_current:
+    parent: "070 Traffic Management"
 ---
 KrakenD offers several ways to protect the usage of your infrastructure that might act at very different levels.
 

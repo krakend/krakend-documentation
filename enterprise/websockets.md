@@ -6,8 +6,8 @@ title: Handling WebSockets connections
 weight: 140
 enterprise: true
 menu:
-  documentation:
-    parent: endpoints
+  community_current:
+    parent: "040 Endpoint Configuration "
 images:
 - /images/documentation/krakend-websockets.png
 ---

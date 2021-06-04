@@ -7,8 +7,8 @@ title: Service Discovery with etcd (deprecated)
 weight: 20
 source: https://github.com/devopsfaith/krakend-etcd
 menu:
-  documentation:
-    parent: service-discovery
+  community_current:
+    parent: "130 Service Discovery"
 ---
 {{< note title="Deprecated" >}}
 Since KrakenD 1.3.0 etcd is not longer supported. The documentation is left here for reference.

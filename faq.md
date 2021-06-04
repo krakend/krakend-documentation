@@ -6,6 +6,9 @@ lastmod: 2018-09-27
 linktitle: KrakenD F.A.Q
 title: Frequently Asked Questions
 description: Frequently Asked Questions
+menu:
+  community_current:
+    parent: "999 Frequently Asked Questions"
 ---
 
 ## I am getting a `200` status when the backend returns a `201`

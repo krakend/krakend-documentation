@@ -5,8 +5,8 @@ linktitle: Grafana dashboard
 title: Preconfigured Grafana dashboard
 weight: 30
 menu:
-  documentation:
-    parent: extended-metrics
+  community_current:
+    parent: "100 Extended Metrics"
 skip_header_image: true
 images:
 - /images/documentation/grafana-screenshot.png

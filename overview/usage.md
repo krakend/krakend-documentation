@@ -4,8 +4,8 @@ aliases:
 lastmod: 2018-09-27
 date: 2016-10-25
 menu:
-  documentation:
-    parent: getting started
+  community_current:
+    parent: "000 Getting Started"
 next: /overview/configuration
 notoc: true
 prev: /overview/installing

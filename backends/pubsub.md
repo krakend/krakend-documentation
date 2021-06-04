@@ -7,8 +7,8 @@ weight: 100
 images:
 - /images/features-event-driven.png
 menu:
-  documentation:
-    parent: backends
+  community_current:
+    parent: "050 Backends Configuration "
 meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-pubsub

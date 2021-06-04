@@ -5,8 +5,8 @@ linktitle: AMQP - RabbitMQ
 title: API Gateway integration with AMQP messaging
 weight: 90
 menu:
-  documentation:
-    parent: backends
+  community_current:
+    parent: "050 Backends Configuration "
 meta:
   since: 0.9
   source: https://github.com/devopsfaith/krakend-amqp

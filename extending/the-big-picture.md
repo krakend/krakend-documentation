@@ -6,8 +6,8 @@ linktitle: The big picture
 title: Extending KrakenD, the big picture.
 weight: -1000
 menu:
-  documentation:
-    parent: extending
+  community_current:
+    parent: "150 Customizing KrakenD"
 images:
 - /images/documentation/config-router-proxy-packages.png
 ---

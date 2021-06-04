@@ -3,8 +3,8 @@ lastmod: 2018-11-02
 date: 2017-01-21
 linktitle: Setting up a cluster
 menu:
-  documentation:
-    parent: cluster
+  community_current:
+    parent: "120 Cluster"
 title: Setting up a cluster
 weight: 10
 notoc: true

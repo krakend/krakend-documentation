@@ -5,8 +5,8 @@ linktitle:  Creating endpoints
 title: How to create KrakenD endpoints
 weight: -10
 menu:
-  documentation:
-    parent: endpoints
+  community_current:
+    parent: "040 Endpoint Configuration "
 ---
 KrakenD endpoints are the essential part of KrakenD as they are what your end users consume. 
 

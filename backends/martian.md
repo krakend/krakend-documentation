@@ -7,8 +7,8 @@ weight: 85
 aliases:
 - /docs/endpoints/martian
 menu:
-  documentation:
-    parent: backends
+  community_current:
+    parent: "050 Backends Configuration "
 meta:
   since: 0.7
   source: https://github.com/devopsfaith/krakend-martian

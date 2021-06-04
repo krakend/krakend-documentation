@@ -3,8 +3,8 @@ lastmod: 2021-05-02
 date: 2018-09-21
 linktitle: The configuration file
 menu:
-  documentation:
-    parent: configuration
+  community_current:
+    parent: "010 Configuration file(s)"
 title: Understanding the configuration file
 weight: 10
 ---

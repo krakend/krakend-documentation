@@ -8,8 +8,8 @@ weight: 110
 images:
     - /images/krakend-lambda.png
 menu:
-  documentation:
-    parent: backends
+  community_current:
+    parent: "050 Backends Configuration "
 notoc: true
 meta:
   since: 1.0
