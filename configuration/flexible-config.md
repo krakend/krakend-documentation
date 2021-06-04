@@ -226,7 +226,7 @@ Have a look at the highlighted lines:
 - The `extra_config` in the third line is inserted as a JSON object using the `marshal` function from the `service.json` as well.
 - A `range` iterates the array found under `endpoint.json` and key `example_group`. The variables inside the range are relative to the `example_group` content.
 - An `include` in the extra_config inserts the content as is.
-- Also notice the little trick `{{if $idx}},{{end}}` insidde the loop. When it is not in the first element `0`, it will add a comma to prevent breaking the JSON format.
+- Also notice the little trick `{{if $idx}},{{end}}` inside the loop. When it is not in the first element `0`, it will add a comma to prevent breaking the JSON format.
 
 Notice that there is a `{{ range }}`. If you wanted to use it inside a template, and not the base file, you would need to include it inside a sub-template with ``{{ template "template.tmp" .endpoint.example_group }}``.
 
