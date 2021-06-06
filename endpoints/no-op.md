@@ -7,7 +7,7 @@ title: Proxying directly to the backends with `no-op`
 weight: 60
 menu:
   community_current:
-    parent: "040 Endpoint Configuration "
+    parent: "040 Endpoint Configuration"
 meta:
   since: 1.2
   source: https://github.com/devopsfaith/krakend-ce

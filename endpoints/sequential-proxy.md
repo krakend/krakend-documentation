@@ -11,7 +11,7 @@ images:
 - /images/documentation/krakend-sequential-call.png
 menu:
   community_current:
-    parent: "040 Endpoint Configuration "
+    parent: "040 Endpoint Configuration"
 meta:
   since: 0.7
   source: https://github.com/devopsfaith/krakend

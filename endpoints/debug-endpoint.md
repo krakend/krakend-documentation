@@ -4,7 +4,7 @@ date: 2018-11-27
 linktitle: Debug endpoint
 menu:
   community_current:
-    parent: "040 Endpoint Configuration "
+    parent: "040 Endpoint Configuration"
 title: The `/__debug` endpoint
 weight: 35
 ---

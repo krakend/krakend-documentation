@@ -6,7 +6,7 @@ title: Transformations using Lua scripting
 weight: 90
 menu:
   community_current:
-    parent: "040 Endpoint Configuration "
+    parent: "040 Endpoint Configuration"
 meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-lua

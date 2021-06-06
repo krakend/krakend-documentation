@@ -6,7 +6,7 @@ title: The health endpoint
 weight: 10000
 menu:
   community_current:
-    parent: "040 Endpoint Configuration "
+    parent: "040 Endpoint Configuration"
 notoc: true
 ---
 

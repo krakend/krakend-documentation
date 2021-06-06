@@ -6,7 +6,7 @@ title: Static Proxy - Adding static/stub data
 weight: 70
 menu:
   community_current:
-    parent: "040 Endpoint Configuration "
+    parent: "040 Endpoint Configuration"
 meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend

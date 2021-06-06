@@ -10,7 +10,7 @@ aliases:
 - /docs/backends/concurrent-requests/
 menu:
   community_current:
-    parent: "040 Endpoint Configuration "
+    parent: "040 Endpoint Configuration"
 images:
 - /images/documentation/concurrency/CDF_happy_vs_sad.png
 - /images/documentation/concurrency/PDF_happy_vs_sad.png

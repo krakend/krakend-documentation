@@ -9,7 +9,7 @@ description: KrakenD Check Command
 weight: 10
 menu:
   community_current:
-    parent: "020 Command Line "
+    parent: "020 Command Line"
 ---
 
 The `krakend check` command validates the passed configuration. Since KrakenD does not implement a strict parsing, typos

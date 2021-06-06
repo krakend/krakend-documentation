@@ -7,7 +7,7 @@ title: KrakenD Status Codes
 weight: 25
 menu:
   community_current:
-    parent: "040 Endpoint Configuration "
+    parent: "040 Endpoint Configuration"
 ---
 
 When consuming content through KrakenD, the status code returned to the client depends on the chosen configuration. Three different approaches impact status codes:

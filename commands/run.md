@@ -10,7 +10,7 @@ weight: 1
 notoc: true
 menu:
   community_current:
-    parent: "020 Command Line "
+    parent: "020 Command Line"
 ---
 
 To start KrakenD, you need to invoke the `run` command with the path to the configuration file. You

@@ -8,7 +8,7 @@ source: https://github.com/devopsfaith/krakend-cel
 images: ["/images/documentation/krakend-cel.png"]
 menu:
   community_current:
-    parent: "040 Endpoint Configuration "
+    parent: "040 Endpoint Configuration"
 meta:
   since: 0.8
   source: https://github.com/devopsfaith/krakend-cel
