@@ -10,8 +10,8 @@ images:
 aliases:
 - /docs/logging-metrics-tracing/tracing/
 menu:
-  documentation:
-    parent: telemetry
+  community_current:
+    parent: "080 Telemetry"
 ---
 Observability and networking are key to succeed in a scenario of distributed microservices architecture, and new monitoring tools are needed. These tools must provide at least options to detect problems' root causes, monitoring and details of the different distributed transactions, and performance and latency optimization.
 

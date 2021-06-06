@@ -6,8 +6,8 @@ title: JWT Validation
 weight: 20
 source: https://github.com/devopsfaith/krakend-jose
 menu:
-  documentation:
-    parent: authorization
+  community_current:
+    parent: "060 Authentication & Authorization"
 ---
 The component `krakend-jose` is responsible for the JWT validation and **protects endpoints from public usage**, requiring end-users to provide a valid token to access its contents.
 

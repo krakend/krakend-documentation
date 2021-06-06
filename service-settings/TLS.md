@@ -5,8 +5,8 @@ linktitle: TLS
 title: Enabling TLS for HTTPS and HTTP/2
 weight: 10
 menu:
-  documentation:
-    parent: service-settings
+  community_current:
+    parent: "030 Service Settings"
 ---
 There are two different strategies when using TLS over KrakenD:
 

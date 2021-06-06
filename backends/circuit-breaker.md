@@ -5,8 +5,8 @@ linktitle: Circuit Breaker
 title: The Circuit Breaker
 weight: 20
 menu:
-  documentation:
-    parent: backends
+  community_current:
+    parent: "050 Backends Configuration "
 images:
 - /images/documentation/circuit-breaker.png
 - /images/documentation/circuit-breaker-states.png

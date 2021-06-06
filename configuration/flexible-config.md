@@ -5,8 +5,8 @@ linktitle: Multiple configuration files
 source: https://github.com/devopsfaith/krakend-flexibleconfig
 since: 0.5
 menu:
-  documentation:
-    parent: configuration
+  community_current:
+    parent: "010 Configuration file(s)"
 images:
 - /images/krakend-flexible-config.png
 title: Flexible configuration

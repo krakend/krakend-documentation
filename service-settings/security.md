@@ -5,8 +5,8 @@ linktitle: Security
 title: Security
 weight: 40
 menu:
-  documentation:
-    parent: service-settings
+  community_current:
+    parent: "030 Service Settings"
 meta:
   since: 0.4
   source: https://github.com/devopsfaith/krakend-httpsecure

@@ -3,8 +3,8 @@ lastmod: 2018-11-02
 date: 2017-01-21
 linktitle: Developer Tools
 menu:
-  documentation:
-    parent: developer
+  community_current:
+    parent: "140 Developer Tools"
 title: Developer Tools
 weight: 10
 ---

@@ -3,8 +3,8 @@ lastmod: 2018-10-28
 date: 2016-07-01
 linktitle: Supported file formats
 menu:
-  documentation:
-    parent: configuration
+  community_current:
+    parent: "010 Configuration file(s)"
 title: KrakenD file supported formats
 notoc: true
 weight: 30

@@ -8,8 +8,8 @@ title: KrakenD Benchmarks on AWS
 description: Performance tests of KrakenD on Amazon AWS environment
 weight: 10
 menu:
-  documentation:
-    parent: Benchmarks
+  community_current:
+    parent: "160 Benchmarks"
 ---
 
 The following numbers show the execution results for the KrakenD benchmarks on [Amazon EC2](https://aws.amazon.com/ec2/) machines.

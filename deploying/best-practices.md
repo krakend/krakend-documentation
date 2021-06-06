@@ -3,8 +3,8 @@ lastmod: 2020-03-27
 date: 2017-01-21
 linktitle: Best practices
 menu:
-  documentation:
-    parent: deploying
+  community_current:
+    parent: "110 Deploying"
 title: Deployment best practices
 weight: 10
 ---

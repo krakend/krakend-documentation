@@ -6,8 +6,8 @@ linktitle: Eureka
 title: Service Discovery with Eureka
 weight: 30
 menu:
-  documentation:
-    parent: service-discovery
+  community_current:
+    parent: "130 Service Discovery"
 ---
 
 Users of the Netflix's service [Eureka](https://github.com/Netflix/eureka) have a couple of user contributed integrations available listed in our [krakend-contrib](https://github.com/devopsfaith/krakend-contrib) repository.

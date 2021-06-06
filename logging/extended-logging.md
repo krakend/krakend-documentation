@@ -9,8 +9,8 @@ source: https://github.com/devopsfaith/krakend-gologging
 aliases:
 - /docs/logging-metrics-tracing/logging/
 menu:
-  documentation:
-    parent: logging
+  community_current:
+    parent: "090 Logging"
 ---
 By default,  when KrakenD starts all the log events are sent to the **standard output** using the basic logger capabilities of the [Lura Project](https://luraproject.org). The reporting level, in that case, is `DEBUG` and adds no prefix to the log lines.
 

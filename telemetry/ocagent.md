@@ -8,8 +8,8 @@ weight: 140
 source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 menu:
-  documentation:
-    parent: telemetry
+  community_current:
+    parent: "080 Telemetry"
 meta:
   since: 1.1
   source: https://github.com/devopsfaith/krakend-opencensus

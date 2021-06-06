@@ -6,8 +6,8 @@ title: Benchmarks Overview
 description: Performance tests of KrakenD
 weight: 1
 menu:
-  documentation:
-    parent: Benchmarks
+  community_current:
+    parent: "160 Benchmarks"
 ---
 ## KrakenD, the **ultra performer** API Gateway
 An API Gateway is a component that needs to deliver really fast, as it is an added layer in the infrastructure. KrakenD

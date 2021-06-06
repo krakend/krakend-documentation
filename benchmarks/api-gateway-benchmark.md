@@ -8,8 +8,8 @@ title: Comparison of KrakenD vs other products in the market (Benchmark)
 description: Performance tests of KrakenD
 weight: 10
 menu:
-  documentation:
-    parent: Benchmarks
+  community_current:
+    parent: "160 Benchmarks"
 ---
 We wanted to compare our own product with other similar products in the market. In order to do so we used the same
 environment and conditions and tested the following products:

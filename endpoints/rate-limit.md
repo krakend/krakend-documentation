@@ -7,8 +7,8 @@ weight: 10
 scope:
 - endpoint
 menu:
-  documentation:
-    parent: endpoints
+  community_current:
+    parent: "040 Endpoint Configuration"
 meta:
   since: 0.4
   source: https://github.com/devopsfaith/krakend-ratelimit

@@ -7,8 +7,8 @@ source: https://github.com/devopsfaith/krakend-oauth2-clientcredentials
 weight: 50
 #notoc: true
 menu:
-  documentation:
-    parent: authorization
+  community_current:
+    parent: "060 Authentication & Authorization"
 ---
 
 Through the **OAuth 2.0 Client Credentials Grant** KrakenD can request to your authorization server an access token to reach protected resources.

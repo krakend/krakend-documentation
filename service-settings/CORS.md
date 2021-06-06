@@ -14,8 +14,8 @@ meta:
   - service
 
 menu:
-  documentation:
-    parent: service-settings
+  community_current:
+    parent: "030 Service Settings"
 ---
 When KrakenD endpoints are consumed from a browser, you might need to enable the **Cross-Origin Resource Sharing (CORS)** module as browsers restrict cross-origin HTTP requests initiated from scripts.
 

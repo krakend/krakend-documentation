@@ -6,8 +6,8 @@ linktitle: Declaring backends
 title: Backends Overview
 weight: -1000
 menu:
-  documentation:
-    parent: backends
+  community_current:
+    parent: "050 Backends Configuration "
 ---
 
 The concept of `backend` refers to the origin servers providing the necessary data to populate your endpoints. A backend can be something like your HTTP-based API, a Lambda function, or a Kafka queue, to name a few examples.

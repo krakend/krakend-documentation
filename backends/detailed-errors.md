@@ -7,8 +7,8 @@ weight: 130
 #since: 0.9
 #source: https://github.com/devopsfaith/krakend
 menu:
-  documentation:
-    parent: backends
+  community_current:
+    parent: "050 Backends Configuration "
 meta:
   since: 0.8
   source: https://github.com/devopsfaith/krakend

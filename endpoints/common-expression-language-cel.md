@@ -7,8 +7,8 @@ weight: 80
 source: https://github.com/devopsfaith/krakend-cel
 images: ["/images/documentation/krakend-cel.png"]
 menu:
-  documentation:
-    parent: endpoints
+  community_current:
+    parent: "040 Endpoint Configuration"
 meta:
   since: 0.8
   source: https://github.com/devopsfaith/krakend-cel

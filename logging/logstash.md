@@ -9,8 +9,8 @@ source: https://github.com/devopsfaith/krakend-logstash
 aliases:
 - /docs/logging-metrics-tracing/logstash/
 menu:
-  documentation:
-    parent: logging
+  community_current:
+    parent: "090 Logging"
 ---
 If you want to log using the Logstash standard via stdout, you have to add the `krakend-logstash` integration in the
 root level of your `krakend.json`, inside the `extra_config` section. **The `gologging` needs to be enabled too**.

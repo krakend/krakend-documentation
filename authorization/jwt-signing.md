@@ -7,8 +7,8 @@ weight: 30
 source: https://github.com/devopsfaith/krakend-jose
 images: ["/images/krakend-signer-flow.png"]
 menu:
-  documentation:
-    parent: authorization
+  community_current:
+    parent: "060 Authentication & Authorization"
 ---
 
 The JWT signing component creates a **wrapper for your login endpoint** that signs with your secret key the selected fields of the backend payload right before returning the content to the end-user. 

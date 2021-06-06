@@ -9,8 +9,8 @@ description: KrakenD Run Command
 weight: 1
 notoc: true
 menu:
-  documentation:
-    parent: Command line commands
+  community_current:
+    parent: "020 Command Line"
 ---
 
 To start KrakenD, you need to invoke the `run` command with the path to the configuration file. You

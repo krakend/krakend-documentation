@@ -6,8 +6,8 @@ title: JSON Web Tokens overview
 weight: 10
 notoc: true
 menu:
-  documentation:
-    parent: authorization
+  community_current:
+    parent: "060 Authentication & Authorization"
 ---
 
 The **JSON Web Token** specification is an industry standard to represent claims securely between two parties. The **JWT** is an encoded JSON object that contains key-value pairs of attributes that are signed by a trusted authority.

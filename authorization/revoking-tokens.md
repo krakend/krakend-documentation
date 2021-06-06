@@ -7,8 +7,8 @@ description: How to invalidate JWT tokens using the Bloom filter
 weight: 40
 source: https://github.com/devopsfaith/bloomfilter
 menu:
-  documentation:
-    parent: authorization
+  community_current:
+    parent: "060 Authentication & Authorization"
 ---
 The API Gateway authorizes users that provide valid tokens according to your criteria, but at some point, you might want to change your mind and decide to **revoke JWT tokens that are still valid**.
 

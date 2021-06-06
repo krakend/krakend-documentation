@@ -6,8 +6,8 @@ linktitle: Writing custom plugins
 title: Writing custom plugins
 weight: 10
 menu:
-  documentation:
-    parent: extending
+  community_current:
+    parent: "150 Customizing KrakenD"
 images:
 - /images/extensible.png
 - /images/documentation/krakend-plugins.png

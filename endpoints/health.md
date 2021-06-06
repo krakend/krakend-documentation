@@ -5,8 +5,8 @@ linktitle:  Healthcheck
 title: The health endpoint
 weight: 10000
 menu:
-  documentation:
-    parent: endpoints
+  community_current:
+    parent: "040 Endpoint Configuration"
 notoc: true
 ---
 

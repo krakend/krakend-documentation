@@ -6,8 +6,8 @@ linktitle: Plugin validation tools
 title: Plugin and dependencies validator
 weight: 20
 menu:
-  documentation:
-    parent: extending
+  community_current:
+    parent: "150 Customizing KrakenD"
 ---
 
 The plugin validator is an online tool that allows you to find problems with your plugin dependencies. Go plugins are strict on which versions of libraries you can use, so it's important to make sure that your dependencies are compatible with the selected KrakenD versions.

@@ -5,8 +5,8 @@ linktitle: JSON Schema validation
 title: Validating the body with the JSON Schema integration
 weight: 130
 menu:
-  documentation:
-    parent: endpoints
+  community_current:
+    parent: "040 Endpoint Configuration"
 notoc: true
 meta:
   since: 1.2

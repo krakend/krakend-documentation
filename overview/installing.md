@@ -4,8 +4,8 @@ aliases:
 lastmod: 2019-03-11
 date: 2016-07-01
 menu:
-  documentation:
-    parent: getting started
+  community_current:
+    parent: "000 Getting Started"
 title: Installing KrakenD
 weight: 20
 ---

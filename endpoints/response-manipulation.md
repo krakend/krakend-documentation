@@ -8,8 +8,8 @@ linktitle: Response manipulation
 title: Response manipulation
 weight: 10
 menu:
-  documentation:
-    parent: endpoints
+  community_current:
+    parent: "040 Endpoint Configuration"
 images:
 - /images/documentation/krakend-merge.png
 ---
