@@ -1,6 +1,4 @@
 ---
-aliases:
-- /benchmarks/api-gateway-benchmark
 lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: KrakenD vs others

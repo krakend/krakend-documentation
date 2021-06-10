@@ -1,6 +1,4 @@
 ---
-aliases:
-- /overview/introduction/
 lastmod: 2018-11-26
 date: 2016-10-25
 linktitle: Introduction

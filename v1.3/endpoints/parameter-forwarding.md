@@ -1,8 +1,6 @@
 ---
 lastmod: 2018-11-27
 date: 2018-07-20
-aliases:
-- /docs/features/parameter-forwarding/
 linktitle:  Parameter forwarding
 title: Parameter forwarding
 weight: 30

@@ -1,6 +1,4 @@
 ---
-aliases:
-- /commands/check
 lastmod: 2021-02-16
 date: 2016-10-28
 linktitle: Check

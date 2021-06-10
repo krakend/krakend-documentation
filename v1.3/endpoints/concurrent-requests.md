@@ -5,9 +5,6 @@ toc: true
 linktitle: Concurrent Requests
 title: Concurrent Requests
 weight: 30
-aliases:
-- /docs/features/concurrent-requests/
-- /docs/backends/concurrent-requests/
 menu:
   community_v1.3:
     parent: "040 Endpoint Configuration"

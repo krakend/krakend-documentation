@@ -1,6 +1,4 @@
 ---
-aliases:
-- /benchmarks/aws
 lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: On Amazon Web Services

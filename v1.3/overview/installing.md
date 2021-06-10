@@ -1,6 +1,4 @@
 ---
-aliases:
-- /overview/installing/
 lastmod: 2019-03-11
 date: 2016-07-01
 menu:

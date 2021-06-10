@@ -7,8 +7,6 @@ title: Graylog and the GELF format
 weight: 40
 source: https://github.com/devopsfaith/krakend-gelf
 since: 0.7
-aliases:
-- /docs/logging-metrics-tracing/graylog-gelf/
 notoc: true
 menu:
   community_v1.3:

@@ -6,8 +6,6 @@ linktitle: Logstash
 title: Logstash
 weight: 50
 source: https://github.com/devopsfaith/krakend-logstash
-aliases:
-- /docs/logging-metrics-tracing/logstash/
 menu:
   community_v1.3:
     parent: "090 Logging"

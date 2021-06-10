@@ -1,6 +1,4 @@
 ---
-aliases:
-- /docs/features/response-manipulation/
 lastmod: 2019-01-31
 date: 2016-09-30
 toc: true
