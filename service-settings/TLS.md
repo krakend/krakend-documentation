@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-02-22
+lastmod: 2021-06-13
 date: 2019-02-22
 linktitle: TLS
 title: Enabling TLS for HTTPS and HTTP/2
@@ -36,8 +36,8 @@ All the accepted options of the TLS configuration are:
 Plus these optional:
 
 - `disabled` (boolean): A temporary flag to disable TLS (e.g: while in development)
-- `min_version` (string): Minimum TLS version (one of `SSL3.0`, `TLS10`, `TLS11` or `TLS12`)
-- `max_version` (string): Maximum TLS version (one of `SSL3.0`, `TLS10`, `TLS11` or `TLS12`)
+- `min_version` (string): Minimum TLS version (one of `SSL3.0`, `TLS10`, `TLS11`, `TLS12` or `TLS13`)
+- `max_version` (string): Maximum TLS version (one of `SSL3.0`, `TLS10`, `TLS11`, `TLS12` or `TLS13`)
 - `curve_preferences` (integer array): The list of all the identifiers for the curve preferences (use `23` for CurveP256, `24` for CurveP384 or `25` for CurveP521)
 - `prefer_server_cipher_suites` (boolean): Enforces the use of one of the cipher suites offered by the server, instead of going with the suite proposed by the client.
 - `cipher_suites` (integer array): The list of cipher suites (see below).
@@ -65,3 +65,9 @@ The list of cipher suites with its values is:
   - `49196`: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
   - `52392`: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
   - `52393`: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+
+**TLS 1.3**:
+
+  - `4865`: TLS_AES_128_GCM_SHA256
+  - `4866`: TLS_AES_256_GCM_SHA384
+  - `4867`: TLS_CHACHA20_POLY1305_SHA256
