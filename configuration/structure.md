@@ -8,7 +8,7 @@ menu:
 title: Understanding the configuration file
 weight: 10
 ---
-All KrakenD behavior depends on its configuration file. Although the configuration [supports formats other than JSON](/docs/configuration/supported-formats/) and it can be [described by multiple files](/docs/configuration/flexible-config/), you'll find it referenced through all this documentation and for simplicity as the `krakend.json`. Being familiar with its structure it's essential.
+All KrakenD behavior depends on its configuration file(s). Although the configuration [supports formats other than JSON](/docs/configuration/supported-formats/) and it can be described [using multiple files](/docs/configuration/flexible-config/), you'll find it referenced through all this documentation and for simplicity as the `krakend.json`. Being familiar with its structure it's essential.
 
 ## Configuration file structure
 There are a large number of options you can put in this file. Let's focus now only on the main structure:
@@ -21,9 +21,11 @@ There are a large number of options you can put in this file. Let's focus now on
 {{< /highlight >}}
 
 
-- `version`: The KrakenD file format. The current version is `2`. Version `1` was deprecated in 2016 (`v.0.3.9`).
-- `endpoints[]`: An array of endpoint objects offered by the gateway and all the associated backends and configurations.
-- `extra_config{}`: Components' configuration. Each component uses a unique **namespace** in the configuration so that you can configure multiple elements without collisions. 
+- `version`: The version of the KrakenD file format.
+  - Version `2`: current version
+  - Version `1`: Deprecated in 2016, for version `v0.3.9` and older.
+- `endpoints[]`: An array of endpoint objects offered by the gateway and all the associated backends and configurations. This is your API definition.
+- `extra_config{}`: Components' configuration. Whatever is not a core functionality of the [Lura Project](https://luraproject.org) is declared in a unique **namespace** in the configuration, so that you can configure multiple elements without collisions.
 
 ### The `endpoints` structure
 Inside the `endpoints`, you declare an array with every `endpoint` (the URL) the gateway offers to users. For each endpoint, you need to declare at least a `backend` (the data origin).
@@ -147,8 +149,7 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
             ],
             "url_pattern": "/fast/endpoint"
         }]
-        ...
-    }
+    }]
 }
 {{< /highlight >}}
 
