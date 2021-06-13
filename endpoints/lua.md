@@ -132,6 +132,13 @@ The following helpers are available in your scripts:
 *   `get` (_Dynamic_)
 *   `set` (_Dynamic_)
 *   `len` (_Dynamic_)
+*   `del` (_Dynamic_)
+
+Example of Lua code to delete an element named `element` from a table:
+
+{{< highlight lua>}}
+t:del("element")
+{{< /highlight >}}
 
 ### `list`
 
@@ -140,7 +147,7 @@ The following helpers are available in your scripts:
 *   `len` (_Dynamic_)
 *   `del` (_Dynamic_)
 
-Example of Lua code to replace a list named `collection` from the backend response with deleted content:
+Example of Lua code to replace a list named `collection` with deleted content:
 
 {{< highlight lua>}}
 local original_collection = responseData:get("collection")
