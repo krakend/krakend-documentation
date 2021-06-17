@@ -35,8 +35,8 @@ For instance:
 
     "extra_config": {
         "github_com/devopsfaith/krakend-botdetector": {
-            "allow": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
-            "deny": ["a", "b"],
+            "allowlist": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
+            "denylist": ["a", "b"],
             "patterns": [
                 "(Pingdom.com_bot_version_).*",
                 "(facebookexternalhit)/.*"
@@ -47,20 +47,20 @@ For instance:
 
 The available configuration options in the bot detector module are:
 
-*   `allow`: An array with EXACT MATCHES of trusted user agents that can connect.
-*   `deny`: An array of EXACT MATCHES of undesired bots, to reject immediately.
+*   `allowlist`: An array with EXACT MATCHES of trusted user agents that can connect.
+*   `denylist`: An array of EXACT MATCHES of undesired bots, to reject immediately.
 *   `patterns`: An array with all the **regular expressions** that define bots. Matching bots are rejected.
 *   `cacheSize`: Size of the LRU cache that helps speed the bot detection.
 
 
-Notice that the `allow` and the `deny` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
+Notice that the `allowlist` and the `denylist` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
 
 On the other hand, the `patterns` attribute expects regular expressions. The syntax is the same general syntax used by Perl, Python, and other languages. More precisely, it is the syntax accepted by [RE2](https://golang.org/s/re2syntax)
 
-The order of evaluation of the rules is sequential in this order: `allow` -> `deny` -> `patterns`. When a user agent matches in any of the former evaluations, the execution ends, and the connection is accepted (allow) or rejected (deny and patterns).
+The order of evaluation of the rules is sequential in this order: `allowlist` -> `denylist` -> `patterns`. When a user agent matches in any of the former evaluations, the execution ends, and the connection is accepted (allowlist) or rejected (denylist and patterns).
 
 {{< note title="Renamed attributes" >}}
-Prior to KrakenD 1.2 the terms `whitelist` and `blacklist` were used, please upgrade your configuration with the new terms `allow` and `deny` as the next version will not understand them.
+Prior to KrakenD 1.2 the terms `whitelist` and `blacklist` were used, please upgrade your configuration with the new terms `allowlist` and `denylist` as the next version will not understand them.
 {{< /note >}}
 
 ### Building your bot rules
