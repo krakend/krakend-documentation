@@ -41,7 +41,7 @@ For instance:
                 "(Pingdom.com_bot_version_).*",
                 "(facebookexternalhit)/.*"
             ],
-            "cacheSize": 0
+            "cacheSize": 10000
         }
     }
 
@@ -50,7 +50,7 @@ The available configuration options in the bot detector module are:
 *   `allowlist`: An array with EXACT MATCHES of trusted user agents that can connect.
 *   `denylist`: An array of EXACT MATCHES of undesired bots, to reject immediately.
 *   `patterns`: An array with all the **regular expressions** that define bots. Matching bots are rejected.
-*   `cacheSize`: Size of the LRU cache that helps speed the bot detection.
+*   `cacheSize`: Size of the LRU cache that helps speed the bot detection. The size is the mumber of users agents that you want to keep in memory. 
 
 
 Notice that the `allowlist` and the `denylist` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
@@ -79,4 +79,4 @@ Evaluating every user agent against a **substantial list of patterns** can be a 
 
 The LRU caching system is in-memory and does not require running a separate set of servers, thus reducing the operation pain. There are neither cache expiration times, nor explicit cache evictions. When/if the cache is full, the least recently used (LRU) element is automatically replaced with the new one. An order of magnitude of megabytes should be enough to save the different User-Agent requests and combinations.
 
-Set in the `cacheSize` an integer with the fixed size of the cache, or `0` to disable caching.
+Set in the `cacheSize` an integer with the fixed size of the cache (number of elements to store), or `0` to disable caching.
