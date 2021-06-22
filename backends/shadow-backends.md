@@ -46,7 +46,7 @@ The following example shows a backend that is changing from `v1` to `v2`, but we
             },
             {
                 "host": [ "http://my.api.com" ],
-                "url_pattern": "/v2/user/{id}"
+                "url_pattern": "/v2/user/{id}",
                 "extra_config": {
                     "github.com/devopsfaith/krakend/proxy": {
                         "shadow": true
