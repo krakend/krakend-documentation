@@ -36,6 +36,7 @@ All the accepted options of the TLS configuration are:
 Plus these optional:
 
 - `disabled` (boolean): A temporary flag to disable TLS (e.g: while in development)
+- `enable_mtls` (boolean): Whether to enable or not Mutual Authentication. When mTLS is enabled, **all KrakenD endpoints** require clients to provide a known client-side X.509 authentication certificate. KrakenD relies on the system's CA to validate certificates. See [Mutual Authentication](/docs/authorization/mutual-authentication/)
 - `min_version` (string): Minimum TLS version (one of `SSL3.0`, `TLS10`, `TLS11` or `TLS12`)
 - `max_version` (string): Maximum TLS version (one of `SSL3.0`, `TLS10`, `TLS11` or `TLS12`)
 - `curve_preferences` (integer array): The list of all the identifiers for the curve preferences (use `23` for CurveP256, `24` for CurveP384 or `25` for CurveP521)
