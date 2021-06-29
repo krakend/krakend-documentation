@@ -39,6 +39,9 @@ Follow this table to determine how to treat your backend content:
 | Not an object, but a string            | `string`                            |
 | Nevermind, just proxy                  | `no-op` ([read how](/docs/endpoints/no-op/)) |
 
+{{< note title="Working with JSON arrays" >}}
+If you want to return to the client a JSON array instead of an object, consider using the following combinations: `output_encoding: json-collection` in your `endpoint`, and `is_collection: true` in your `backend`. See [response content types](/docs/endpoints/content-types/).
+{{< /note >}}
 
 
 The following example demonstrates how an endpoint `/abc` is feeding on three different services and urls  `/a`, `/b`, and `/c` and aggregates their responses:
