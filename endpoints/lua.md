@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2021-06-13
 date: 2019-09-15
 linktitle:  Lua scripting
 title: Transformations using Lua scripting
@@ -132,12 +132,28 @@ The following helpers are available in your scripts:
 *   `get` (_Dynamic_)
 *   `set` (_Dynamic_)
 *   `len` (_Dynamic_)
+*   `del` (_Dynamic_)
+
+Example of Lua code to delete an element named `element` from a table:
+
+{{< highlight lua>}}
+t:del("element")
+{{< /highlight >}}
 
 ### `list`
 
 *   `get` (_Dynamic_)
 *   `set` (_Dynamic_)
 *   `len` (_Dynamic_)
+*   `del` (_Dynamic_)
+
+Example of Lua code to replace a list named `collection` with deleted content:
+
+{{< highlight lua>}}
+local original_collection = responseData:get("collection")
+original_collection:del(2)
+responseData:set("collection", original_collection)
+{{< /highlight >}}
 
 ### `http_response`
 
@@ -177,30 +193,42 @@ The returned response then goes through:
 7. Backend "post" logic
 8. Proxy   "post" logic
 
-## Examples
+## Lua examples in different pipes
+The following snippets show how to add Lua code in different sections.
 
-For the endpoint section:
-
-    "extra_config": {
-          "github.com/devopsfaith/krakend-lua/proxy": {
-            "pre": "print('Lua proxy!'); local r = request.load(); r:headers('X-from-lua', '1234');"
-          }
-    }
-
-
-For the backend section:
-
-    "extra_config": {
-          "github.com/devopsfaith/krakend-lua/proxy/backend": {
-            "pre": "print('Showing body from backend-pre logic'); local r = request.load(); print(r:body(''));"
-          }
-    }
-
-Setting a cookie:
-
+### Lua in the endpoint
+An example setting a header in the response using Lua.
+{{< highlight json >}}
+  {
+    "endpoint": "/set-a-header",
     "extra_config": {
         "github.com/devopsfaith/krakend-lua/proxy": {
-            "post": "local r = response.load(); r:headers('Set-Cookie', 'kkkey1='.. r:data('response'));",
+          "pre": "print('Lua proxy!'); local r = request.load(); r:headers('X-from-lua', '1234');"
+        }
+    }
+  }
+{{< /highlight >}}
+
+### Lua in the backend
+An example showing how to **print the backend response** in the console.
+{{< highlight json >}}
+{
+    "extra_config": {
+          "github.com/devopsfaith/krakend-lua/proxy/backend": {
+            "pre": "print('Backend response, pre-logic:'); local r = request.load(); print(r:body(''));"
+          }
+    }
+}
+{{< /highlight >}}
+
+Another example **setting a cookie from Lua**:
+{{< highlight json >}}
+{
+    "extra_config": {
+        "github.com/devopsfaith/krakend-lua/proxy": {
+            "post": "local r = response.load(); r:headers('Set-Cookie', 'key1='.. r:data('response'));",
             "allow_open_libs": true
         }
     }
+}
+{{< /highlight >}}
