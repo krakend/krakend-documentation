@@ -152,7 +152,6 @@ Example of Lua code to replace a list named `collection` with deleted content:
 {{< highlight lua>}}
 local original_collection = responseData:get("collection")
 original_collection:del(2)
-responseData:set("collection", original_collection)
 {{< /highlight >}}
 
 ### `http_response`

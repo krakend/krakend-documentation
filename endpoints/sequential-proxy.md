@@ -40,6 +40,9 @@ When the sequential proxy is enabled, the `url_pattern` of every backend can use
 
 Where `0` is the index of the specific backend you want to access ( `backend` array), and where `XXXX` is the attribute name you want to inject from the previous call.
 
+{{< note title="Unsafe operations" >}}
+If you use unsafe methods (not a `GET`), they can only be placed in the last position of the sequence. Sequences are meant to be used in read-only operations except for the last call. Sequence is not meant to be used in distributed transactions.
+{{< /note >}}
 
 ## Example
 It's easier to understand with the example of the graph:
