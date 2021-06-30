@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-05-02
+old_version: true
 date: 2018-04-05
 linktitle: AMQP - RabbitMQ
 title: API Gateway integration with AMQP messaging

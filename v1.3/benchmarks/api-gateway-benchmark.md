@@ -1,5 +1,6 @@
 ---
 lastmod: 2016-10-28
+old_version: true
 date: 2016-10-28
 linktitle: KrakenD vs others
 title: Comparison of KrakenD vs other products in the market (Benchmark)

@@ -1,5 +1,6 @@
 ---
 lastmod: 2020-04-01
+old_version: true
 date: 2018-11-05
 linktitle: Revoking tokens
 title: Revoking valid tokens with a Bloom filter

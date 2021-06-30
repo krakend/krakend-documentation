@@ -1,5 +1,6 @@
 ---
 lastmod: 2019-03-21
+old_version: true
 date: 2019-03-21
 linktitle: OAuth2 Client credentials
 title: OAuth 2.0 Client Credentials

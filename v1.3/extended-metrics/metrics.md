@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-05-02
+old_version: true
 date: 2018-11-05
 linktitle: Metrics and /__stats
 title: Extended metrics and the `/__stats` endpoint

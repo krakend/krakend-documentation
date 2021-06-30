@@ -1,5 +1,6 @@
 ---
 lastmod: 2019-01-30
+old_version: true
 date: 2018-10-30
 toc: true
 linktitle: Logging overview

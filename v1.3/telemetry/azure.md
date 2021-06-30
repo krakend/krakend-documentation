@@ -1,5 +1,6 @@
 ---
 lastmod: 2020-11-16
+old_version: true
 date: 2020-11-16
 linktitle: Azure Monitor
 title: Exporting metrics, logs and events to Azure Monitor

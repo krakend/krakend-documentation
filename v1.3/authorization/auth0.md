@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-05-02
+old_version: true
 date: 2018-04-05
 linktitle: Auth0 integration
 title: Protecting APIs using the Auth0 integration

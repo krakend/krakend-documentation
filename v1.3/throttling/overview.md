@@ -1,5 +1,6 @@
 ---
 lastmod: 2018-09-29
+old_version: true
 date: 2016-07-01
 linktitle: Rate limits and throttling
 title: Throttling overview

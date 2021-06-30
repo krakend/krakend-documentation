@@ -1,5 +1,6 @@
 ---
 lastmod: 2018-10-28
+old_version: true
 date: 2016-07-01
 linktitle: Supported file formats
 menu:

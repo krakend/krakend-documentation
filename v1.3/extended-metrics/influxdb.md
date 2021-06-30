@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-04-28
+old_version: true
 date: 2020-11-18
 linktitle: InfluxDB exporter
 title: Native InfluxDB exporter

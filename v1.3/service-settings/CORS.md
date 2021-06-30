@@ -1,5 +1,6 @@
 ---
 lastmod: 2020-07-10
+old_version: true
 date: 2020-07-10
 linktitle: CORS
 title: Enabling Cross Origin Resource Sharing (CORS)

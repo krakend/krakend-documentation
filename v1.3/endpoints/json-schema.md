@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-05-02
+old_version: true
 date: 2020-07-10
 linktitle: JSON Schema validation
 title: Validating the body with the JSON Schema integration

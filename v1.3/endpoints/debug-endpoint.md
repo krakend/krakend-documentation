@@ -1,5 +1,6 @@
 ---
 lastmod: 2018-11-28
+old_version: true
 date: 2018-11-27
 linktitle: Debug endpoint
 menu:

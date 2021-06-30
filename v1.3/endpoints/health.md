@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-05-02
+old_version: true
 date: 2019-10-07
 linktitle:  Healthcheck
 title: The health endpoint

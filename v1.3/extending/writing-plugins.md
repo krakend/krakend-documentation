@@ -1,5 +1,6 @@
 ---
 lastmod: 2019-01-15
+old_version: true
 date: 2019-01-14
 toc: true
 linktitle: Writing custom plugins

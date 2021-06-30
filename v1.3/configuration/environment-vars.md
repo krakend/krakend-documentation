@@ -1,5 +1,6 @@
 ---
 lastmod: 2020-07-10
+old_version: true
 date: 2020-07-10
 linktitle: Environment vars
 since: 1.2

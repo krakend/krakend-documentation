@@ -1,5 +1,6 @@
 ---
 lastmod: 2016-10-28
+old_version: true
 date: 2016-10-28
 linktitle: Run
 title: Running KrakenD server. The `krakend run` command

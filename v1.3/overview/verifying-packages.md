@@ -1,5 +1,6 @@
 ---
 lastmod: 2019-03-11
+old_version: true
 date: 2016-07-01
 title: Verifying packages (PGP and SHA256)
 notoc: true

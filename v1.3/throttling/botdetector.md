@@ -1,5 +1,6 @@
 ---
 lastmod: 2020-07-10
+old_version: true
 date: 2019-09-15
 linktitle: Bot detector
 title: Control of bot traffic

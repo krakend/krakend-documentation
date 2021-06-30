@@ -1,5 +1,6 @@
 ---
 lastmod: 2018-09-27
+old_version: true
 date: 2016-10-25
 menu:
   community_v1.3:

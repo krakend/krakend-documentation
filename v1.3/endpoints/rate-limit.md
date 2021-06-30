@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-05-02
+old_version: true
 date: 2016-07-01
 linktitle: Rate Limits
 title: Endpoint rate limiting

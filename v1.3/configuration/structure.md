@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-05-02
+old_version: true
 date: 2018-09-21
 linktitle: The configuration file
 menu:

@@ -1,5 +1,6 @@
 ---
 lastmod: 2020-07-24
+old_version: true
 date: 2019-04-05
 toc: true
 linktitle: Array manipulations

@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-02-16
+old_version: true
 date: 2016-10-28
 linktitle: Check
 title: Commands - check

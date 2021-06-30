@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-01-28
+old_version: true
 date: 2020-02-26
 linktitle:  Creating endpoints
 title: How to create KrakenD endpoints

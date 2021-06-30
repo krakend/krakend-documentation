@@ -1,5 +1,6 @@
 ---
 lastmod: 2020-12-17
+old_version: true
 date: 2017-01-21
 linktitle: Kubernetes
 title: Deploying to Kubernetes

@@ -1,5 +1,6 @@
 ---
 lastmod: 2020-07-12
+old_version: true
 date: 2016-04-14
 toc: true
 linktitle: Supported encodings

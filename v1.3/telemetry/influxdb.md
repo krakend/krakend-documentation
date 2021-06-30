@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-04-28
+old_version: true
 date: 2019-09-15
 notoc: true
 linktitle: InfluxDB

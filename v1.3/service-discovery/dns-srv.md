@@ -1,6 +1,7 @@
 ---
 lastmod: 2019-02-13
-date: 2016-09-30no
+old_version: true
+date: 2016-09-30
 notoc: true
 linktitle: DNS SRV
 title: SD with DNS SRV (e.g., Consul, k8s)

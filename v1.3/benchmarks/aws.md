@@ -1,5 +1,6 @@
 ---
 lastmod: 2016-10-28
+old_version: true
 date: 2016-10-28
 linktitle: On Amazon Web Services
 title: KrakenD Benchmarks on AWS

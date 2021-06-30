@@ -1,5 +1,6 @@
 ---
 lastmod: 2018-09-29
+old_version: true
 date: 2018-09-21
 linktitle: Multiple configuration files
 source: https://github.com/devopsfaith/krakend-flexibleconfig
