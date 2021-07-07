@@ -21,7 +21,7 @@ meta:
 ---
 [Prometheus](https://prometheus.io/) is an open-source systems monitoring and alerting toolkit.
 
-The Opencensus exporter allows you push data to Prometheus. Enabling it only requires you to include in the root level of your configuration the Opencensus middleware with the `prometheus` exporter. Specify the `port` on which Prometheus is listening, the `namespace` (optional), and Prometheus will start receiving the data.
+The Opencensus exporter allows you to expose data to Prometheus. Enabling it only requires you to include in the root level of your configuration the Opencensus middleware with the `prometheus` exporter. Specify the `port` which Prometheus should hit, the `namespace` (optional), and Prometheus will start receiving the data.
 {{< highlight json >}}
 {
   "version": 2,
@@ -42,7 +42,7 @@ The Opencensus exporter allows you push data to Prometheus. Enabling it only req
 }
 {{< /highlight >}}
 
-- `port` on which Prometheus is listening
+- `port` on which the Prometheus exporter should listen
 - `namespace` sets the domain the metric belongs to. Optional field.
 
 Optional fields (default to `false`):
