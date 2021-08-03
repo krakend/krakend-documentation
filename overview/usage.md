@@ -1,6 +1,5 @@
 ---
-aliases:
-- /overview/usage/
+aliases: ["/overview/usage/"]
 lastmod: 2018-09-27
 date: 2016-10-25
 menu:

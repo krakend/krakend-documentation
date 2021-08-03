@@ -1,7 +1,5 @@
 ---
-aliases:
-- /features/other/
-- /docs/features/content-types/
+aliases: ["/features/other/", "/docs/features/content-types/"]
 lastmod: 2019-03-08
 date: 2016-04-14
 toc: true

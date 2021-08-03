@@ -7,8 +7,7 @@ title: Exporting to the logger
 weight: 1000
 source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
-aliases:
-- /docs/logging-metrics-tracing/logger/
+aliases: ["/docs/logging-metrics-tracing/logger/"]
 menu:
   community_current:
     parent: "080 Telemetry"

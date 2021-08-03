@@ -6,8 +6,7 @@ linktitle: Zipkin
 title: Exporting traces to Zipkin
 weight: 90
 notoc: true
-aliases:
-- /docs/logging-metrics-tracing/zipkin/
+aliases: ["/docs/logging-metrics-tracing/zipkin/"]
 menu:
   community_current:
     parent: "080 Telemetry"

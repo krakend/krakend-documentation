@@ -6,8 +6,7 @@ linktitle: Logging overview
 title: Logging - Syslog, stdout and GELF
 weight: 10
 source: https://github.com/devopsfaith/krakend-gologging
-aliases:
-- /docs/logging-metrics-tracing/logging/
+aliases: ["/docs/logging-metrics-tracing/logging/"]
 menu:
   community_current:
     parent: "090 Logging"

@@ -1,6 +1,5 @@
 ---
-aliases:
-- /faq
+aliases: ["/faq"]
 date: 2016-10-26
 lastmod: 2018-09-27
 linktitle: KrakenD F.A.Q

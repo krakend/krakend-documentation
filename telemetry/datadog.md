@@ -9,8 +9,7 @@ since: 1.2
 source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 images: ["/images/documentation/datadog-screenshot.png"]
-aliases:
-- /docs/logging-metrics-tracing/datadog/
+aliases: ["/docs/logging-metrics-tracing/datadog/"]
 menu:
   community_current:
     parent: "080 Telemetry"

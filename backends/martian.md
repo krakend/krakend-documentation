@@ -4,8 +4,7 @@ date: 2019-01-24
 linktitle: Transform requests and responses
 title: Modify requests and responses with Martian
 weight: 85
-aliases:
-- /docs/endpoints/martian
+aliases: ["/docs/endpoints/martian"]
 menu:
   community_current:
     parent: "050 Backends Configuration "
