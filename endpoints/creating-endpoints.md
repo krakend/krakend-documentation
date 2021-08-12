@@ -44,6 +44,10 @@ The **endpoint object** accepts the following attributes:
 - `querystring_params`: Recognized GET parameters. See [parameter forwarding](/docs/endpoints/parameter-forwarding/).
 - `headers_to_pass`: Forwarded headers. See [headers forwarding](/docs/endpoints/parameter-forwarding/#headers-forwarding).
 - `concurrent_calls`: A technique to improve response times. See [concurrent requests](/docs/endpoints/concurrent-requests/)
+- `cache_ttl`: (*time unit*) The cache headers informing for how long the CDN can cache the request to this endpoint. Related: [caching backend responses](/docs/backends/caching/).
+- `timeout`: (*time unit*) Maximum time you'll wait for the slowest backend response. Usually specified in seconds (`s`) or milliseconds (`ms`. E.g: `1500ms`)
+
+\* Valid _time units_ are: `ns`, `us`, (or `µs`), `ms`, `s`, `m`, `h` E.g: `1s`
 
 
 ### Multiple methods of the same resource
