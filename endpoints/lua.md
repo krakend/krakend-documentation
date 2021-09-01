@@ -214,7 +214,7 @@ An example showing how to **print the backend response** in the console.
 {
     "extra_config": {
           "github.com/devopsfaith/krakend-lua/proxy/backend": {
-            "pre": "print('Backend response, pre-logic:'); local r = request.load(); print(r:body(''));"
+            "pre": "print('Backend response, pre-logic:'); local r = request.load(); print(r:body());"
           }
     }
 }
