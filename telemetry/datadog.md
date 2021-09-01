@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-07-24
+lastmod: 2021-09-01
 date: 2020-07-24
 notoc: true
 linktitle: Datadog
@@ -52,7 +52,7 @@ The following configuration snippet sends data to your Datadog:
 - `global_tags` (*object*) GlobalTags holds a set of tags (key/value) that will automatically be applied to all exported spans.
 - `service` (*string*) Service specifies the service name used for tracing
 - `trace_address` (*string*) TraceAddr specifies the `host[:port]` address of the Datadog Trace Agent. It defaults to localhost:8126.
-- `stats_address` (*string*) StatsAddr specifies the `host[:port]` address for DogStatsD. It defaults to localhost:8125.
+- `stats_address` (*string*) StatsAddr specifies the `host[:port]` address for DogStatsD. It defaults to localhost:8125. To enable ingestion using [Unix Domain Socket (UDS)](https://docs.datadoghq.com/developers/dogstatsd/unix_socket/?tab=kubernetes) mount your UDS path and reference it in the `stats_address` using a path like `unix:///var/run/datadog/dsd.socket`.
 - `disable_count_per_buckets` (*bool*) Specifies whether to emit count_per_bucket metrics
 
 
