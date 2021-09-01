@@ -47,15 +47,26 @@ For instance, let's assume you decided to organize your configuration as follows
        ├── templates
        │   └── environment.tmpl
        └── settings
-           └── db.json
-
+           ├── prod
+           |   └── db.json
+           └── dev
+               └── db.json
+       
 Then you can run KrakenD from the terminal with this command:
 
-    $ FC_ENABLE=1 \
-    FC_SETTINGS="$PWD/config/settings" \
-    FC_PARTIALS="$PWD/config/partials" \
-    FC_TEMPLATES="$PWD/config/templates" \
-    krakend run -c "$PWD/config/krakend.json"
+{{< terminal title="Enabling flexible configuration with your custom dirs" >}}
+FC_ENABLE=1 \
+FC_SETTINGS="config/prod/settings" \
+FC_PARTIALS="config/partials" \
+FC_TEMPLATES="config/templates" \
+krakend run -c "config/krakend.json"
+{{< /terminal >}}
+
+In the example above notice that the `FC_SETTINGS` includes the path to the `prod`uction folder. You might inject here an env var if you have multiple environments. The directory structure is completely up to you.
+
+{{< note title="Consider adding an alias" >}}
+Consider adding an alias or bash script with the command above to speed up your development time.
+{{< /note >}}
 
 ### Template syntax
 The configuration file passed with the `-c` flag is treated as a **Go template** ([documentation](https://golang.org/pkg/text/template/)), and you can make use of all the power the template engine brings. In addition, it also loads [Sprig functions](http://masterminds.github.io/sprig/). The data evaluations or control structures are easily recognized as they are surrounded by `{{` and `}}`. Any other text outside the delimiters is copied to the output unchanged.
@@ -72,7 +83,7 @@ See below for further explanation and examples.
 #### Insert values from settings files
 In the `FC_SETTINGS` directory, you can save different `.json` files with data structures inside that you can reference in the templates.
 
-For instance, if you have a file `settings/db.json` with the following content:
+For instance, if you have a file `db.json` with the following content:
 
     {
         "host": "192.168.1.23",
