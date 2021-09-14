@@ -19,7 +19,7 @@ menu:
 ---
 When KrakenD endpoints are consumed from a browser, you might need to enable the **Cross-Origin Resource Sharing (CORS)** module as browsers restrict cross-origin HTTP requests initiated from scripts.
 
-When the Cross-Origin Resource Sharing (CORS) configuration is enabled, KrakenD uses additional HTTP headers to tell browsers that they can **use resources from a different origin** (domain, protocol, or port). For instance, you will need this configuration if your web page is hosted at https://domain-a.com and the Javascript references the KrakenD API at https://domain-b.com.
+When the Cross-Origin Resource Sharing (CORS) configuration is enabled, KrakenD uses additional HTTP headers to tell browsers that they can **use resources from a different origin** (domain, protocol, or port). For instance, you will need this configuration if your web page is hosted at https://www.domain.com and the Javascript references the KrakenD API at https://api.domain.com.
 
 ## Configuration
 CORS configuration lives in the root of the file, as it's a service component. Add the namespace `github_com/devopsfaith/krakend-cors` under the global `extra_config`, as follows:
