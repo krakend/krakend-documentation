@@ -33,6 +33,7 @@ The **key concepts** of `no-op` are:
 - The *router pipe* functionalities are available (e.g., rate limiting the endpoint)
 - The *proxy pipe* functionalities are disabled (aggregate/merge, filter, manipulations, body inspection, concurrency...)
 - Headers passing to the backend still need to be declared under `headers_to_pass`, as they hit the router layer first.
+- Query strings passing to the backend still need to be declared under `querystring_params`, as they hit the router layer first.
 - Backend response and headers remain unchanged (including status codes)
 - The body cannot be changed and is set solely by the backend
 - `1:1` relationship between endpoint-backend (one backend per endpoint).
