@@ -1,6 +1,6 @@
 ---
-lastmod: 2019-09-15
-date: 2019-09-15
+lastmod: 2019-10-11
+date: 2019-10-11
 notoc: true
 linktitle: Jaeger
 title: Exporting traces to Jaeger
@@ -25,16 +25,18 @@ The Opencensus exporter allows you export data to Jaeger. Enabling it only requi
 The following configuration snippet sends data to your Jaeger:
 
 	"github_com/devopsfaith/krakend-opencensus": {
-      "exporters": {
-        "jaeger": {
-			"endpoint": "http://192.168.99.100:14268/api/traces",
-            "service_name":"krakend"
-		},
+    "exporters": {
+      "jaeger": {
+			  "endpoint": "http://192.168.99.100:14268/api/traces",
+        "service_name":"krakend",
+        "buffer_max_count": 1000
+		  },
 	  }
 	}
 
 - `endpoint` is the URL (including port) where your Jaeger is
 - `service_name` the service name registered in Jaeger
+- `buffer_max_count` defines the total number of traces that can be buffered in memory
 
 
 See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
