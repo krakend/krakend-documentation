@@ -48,6 +48,7 @@ CORS configuration lives in the root of the file, as it's a service component. A
           "debug": false
         }
       }
+    }
 
 The configuration options of this component are as follows:
 
