@@ -11,15 +11,15 @@ meta:
   since: 0.9
   source: https://github.com/devopsfaith/krakend-amqp
   namespace:
-  - github.com/devopsfaith/krakend-amqp/consume
-  - github.com/devopsfaith/krakend-amqp/produce
+  - backend/amqp/consumer
+  - backend/amqp/producer
   scope:
   - backend
 ---
 
 The AMQP component allows to **send and receive messages to and from a queue** through the API Gateway.
 
-The configuration of the queue is a straightforward process. To connect the endpoints to the messaging system you only need to include the `extra_config` key with the namespaces `github.com/devopsfaith/krakend-amqp/consume` or `github.com/devopsfaith/krakend-amqp/produce`.
+The configuration of the queue is a straightforward process. To connect the endpoints to the messaging system you only need to include the `extra_config` key with the namespaces `backend/amqp/consumer` or `backend/amqp/producer`.
 
 The parameters of this integration follow the AMQP specification. To understand
 what are the implications of a certain parameter, see the **[AMQP Complete Reference Guide](https://www.rabbitmq.com/amqp-0-9-1-reference.html)**.
@@ -55,7 +55,7 @@ The needed configuration to run a consumer is:
                 ],
                 "disable_host_sanitize": true,
                 "extra_config": {
-                    "github.com/devopsfaith/krakend-amqp/consume": {
+                    "backend/amqp/consumer": {
                         "name":           "queue-1",
                         "exchange":       "some-exchange",
                         "durable":        true,
@@ -94,7 +94,7 @@ The needed configuration to run a producer is as follows:
                 ],
                 "disable_host_sanitize": true,
                 "extra_config": {
-                    "github.com/devopsfaith/krakend-amqp/produce": {
+                    "backend/amqp/producer": {
                         "name": "queue-1",
                         "exchange":       "some-exchange",
                         "durable":        true,

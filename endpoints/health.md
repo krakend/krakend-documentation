@@ -48,7 +48,7 @@ A custom health configuration could look like this:
         {
             "endpoint": "/health",
             "extra_config": {
-                "github.com/devopsfaith/krakend/proxy": {
+                "proxy": {
                     "static": {
                     "data": {
                         "custom": "response",

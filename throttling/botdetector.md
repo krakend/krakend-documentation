@@ -12,9 +12,9 @@ menu:
     parent: "070 Traffic Management"
 meta:
   since: 1.0
-  source: https://github.com/devopsfaith/krakend-botdetector
+  source: https://security/bot-detector
   namespace:
-  - github_com/devopsfaith/krakend-botdetector
+  - security/bot-detector
   scope:
   - service
 ---
@@ -29,12 +29,12 @@ Discarded traffic receives a `403 Forbidden` status code.
 
 ## Configuring bot rules
 
-The configuration rules of the bot detector have to be included inside the `extra_config`'s namespace `github_com/devopsfaith/krakend-botdetector` at the root level of your `krakend.json` file.
+The configuration rules of the bot detector have to be included inside the `extra_config`'s namespace `security/bot-detector` at the root level of your `krakend.json` file.
 
 For instance:
 
     "extra_config": {
-        "github_com/devopsfaith/krakend-botdetector": {
+        "security/bot-detector": {
             "allowlist": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
             "denylist": ["a", "b"],
             "patterns": [

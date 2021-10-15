@@ -11,7 +11,7 @@ meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend
   namespace:
-  - github.com/devopsfaith/krakend/proxy
+  - proxy
   scope:
   - endpoint
 ---
@@ -49,7 +49,7 @@ The static data always has a priority as it's the last computed part. When an en
 To add a static response add under any `endpoint` an `extra_config` entry as follows:
 
     "extra_config": {
-        "github.com/devopsfaith/krakend/proxy": {
+        "proxy": {
             "static": {
                 "strategy": "errored",
                 "data": {
@@ -88,7 +88,7 @@ Secondly, when one of the 2 backends fail, it creates a new group "oh-snap" (see
                     }
                 ],
                 "extra_config": {
-                    "github.com/devopsfaith/krakend/proxy": {
+                    "proxy": {
                         "static": {
                             "strategy": "errored",
                             "data": {

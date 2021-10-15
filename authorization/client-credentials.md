@@ -69,7 +69,7 @@ The following example demonstrates a complete configuration to fulfill the requi
                             "audience": ["YOUR-AUDIENCE"]
                         }
                     },
-                    "github.com/devopsfaith/krakend-martian": {
+                    "modifier/martian": {
                         "fifo.Group": {
                             "scope": ["request", "response"],
                             "aggregateErrors": false,

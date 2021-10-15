@@ -10,13 +10,13 @@ menu:
     parent: "050 Backends Configuration "
 meta:
   since: 0.7
-  source: https://github.com/devopsfaith/krakend-martian
+  source: https://modifier/martian
   namespace:
-  - github.com/devopsfaith/krakend-martian
+  - modifier/martian
   scope:
   - backend
 ---
-The [krakend-martian](https://github.com/devopsfaith/krakend-martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel/).
+The [krakend-martian](https://modifier/martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel/).
 
 Use Martian when you want to intercept the request of the end-user and make modifications before passing the content to the backends. Also, the other way around, transform the backends response before passing it to the user.
 
@@ -35,12 +35,12 @@ There are four different types of interactions you can do with Martian:
 
 ## Transforming requests and responses
 
-Add martian modifiers in your configuration under the `extra_config` of any `backend` using the namespace `github.com/devopsfaith/krakend-martian`.
+Add martian modifiers in your configuration under the `extra_config` of any `backend` using the namespace `modifier/martian`.
 
 Your configuration has to look as follows:
 
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
+        "modifier/martian": {
             // modifier configuration here
         }
     }
@@ -61,7 +61,7 @@ In the examples below, you'll find that all modifiers have a configuration key n
 The `header.Modifier` injects a header with a specific value. For instance, the following configuration adds a header `X-Martian` both in the request and the response.
 
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
+        "modifier/martian": {
             "header.Modifier": {
               "scope": ["request", "response"],
               "name": "X-Martian",
@@ -76,7 +76,7 @@ Through the `body.Modifier` you can modify the body of the request and the respo
 The following modifier sets the body of the request and the response to `{"msg":"you rock!"}`. Notice that the `body` field is `base64` encoded.
 
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian":
+        "modifier/martian":
           {
               "body.Modifier": {
                   "scope": ["request","response"],
@@ -90,7 +90,7 @@ The following modifier sets the body of the request and the response to `{"msg":
 The `url.Modifier` allows you to change settings in the URL. For instance:
 
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
+        "modifier/martian": {
             "url.Modifier": {
               "scope": ["request"],
               "scheme": "https",
@@ -106,7 +106,7 @@ Although not widely used, the `header.Copy` lets you duplicate a header using an
 
     {
       extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
+        "modifier/martian": {
           "header.Copy": {
             "scope": ["request", "response"],
             "from": "Original-Header",
@@ -123,7 +123,7 @@ All the examples above perform a single modification in the request or the respo
 Example of usage (modify the body, and set a header):
 
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
+        "modifier/martian": {
             "fifo.Group": {
                 "scope": ["request", "response"],
                 "aggregateErrors": true,

@@ -13,7 +13,7 @@ meta:
   since: 0.8
   source: https://github.com/devopsfaith/krakend-cel
   namespace:
-  - github.com/devopsfaith/krakend-cel
+  - validation/cel
   scope:
   - endpoint
   - backend
@@ -46,7 +46,7 @@ CEL expressions can be used in five different places: during the **request** and
 - **Endpoint response** evaluation (can evaluate all merged data)
 
 ## Configuration
-The CEL component goes inside the `extra_config` of your `endpoints` or your `backend` using the namespace `github.com/devopsfaith/krakend-cel`. 
+The CEL component goes inside the `extra_config` of your `endpoints` or your `backend` using the namespace `validation/cel`. 
 
 Depending on the place where you put the `extra_config`, the expressions will be checked at the `endpoint` level, or the `backend` level. 
 
@@ -55,7 +55,7 @@ For instance, you might want to reject users that do not adhere to some criteria
 The configuration is as follows:
 
     "extra_config":{
-      "github.com/devopsfaith/krakend-cel": [
+      "validation/cel": [
         {
           "check_expr": "CONDITION1 && CONDITION2"
         }
@@ -123,7 +123,7 @@ The following example demonstrates how to reject a user request that does not fu
         {
           "endpoint": "/nick/{nick}",
           "extra_config":{
-            "github.com/devopsfaith/krakend-cel": [
+            "validation/cel": [
               {
                 "check_expr": "req_params.Nick.matches('k.*')"
               }
@@ -152,7 +152,7 @@ This example can be copy/pasted into your configuration as it connects to an exi
           ],
           "group": "bitbucket",
           "extra_config":{
-            "github.com/devopsfaith/krakend-cel": [
+            "validation/cel": [
               {
                 "check_expr": "'website' in resp_data.bitbucket"
               }
@@ -170,7 +170,7 @@ Because we engineers prefer not to paged over the weekends when backends go down
     {
       "endpoint": "/weekdays",
       "extra_config":{
-        "github.com/devopsfaith/krakend-cel": [
+        "validation/cel": [
           {
             "check_expr": "(timestamp(now).getDayOfWeek() + 6) % 7 <= 4"
           }
@@ -185,7 +185,7 @@ Let's say that the JWT token the user sent contains an attribute named `enabled_
     {
       "endpoint": "/combination/{id}",
       "extra_config":{
-        "github.com/devopsfaith/krakend-cel": [
+        "validation/cel": [
           {
             "check_expr": "has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)"
           }

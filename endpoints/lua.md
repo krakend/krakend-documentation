@@ -11,9 +11,9 @@ meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-lua
   namespace:
-  - "github.com/devopsfaith/krakend-lua/proxy"
-  - "github.com/devopsfaith/krakend-lua/router"
-  - "github.com/devopsfaith/krakend-lua/proxy/backend"
+  - "modifier/lua-proxy"
+  - "modifier/lua-endpoint"
+  - "modifier/lua-proxy/backend"
   scope:
   - endpoint
   - backend
@@ -30,7 +30,7 @@ For performance-first users, a Go plugin delivers much better results than a Lua
 KrakenD looks for the lua scripts in the root folder where KrakenD is running. You need to specify in the configuration which lua scripts are going to be loaded in Krakend, as well as several options. The `extra_config` can be set at `endpoint` level or `backend` level.
 
     "extra_config": {
-          "github.com/devopsfaith/krakend-lua/proxy": {
+          "modifier/lua-proxy": {
             "sources": ["file1.lua"],
             "md5": {
               "file1.lua": "49ae50f58e35f4821ad4550e1a4d1de0"
@@ -60,12 +60,12 @@ There are three namespaces that are used for the lua component.
 
 Under the `endpoint` section use the namespaces (these are described in the next section):
 
-- `"github.com/devopsfaith/krakend-lua/proxy"`
-- `"github.com/devopsfaith/krakend-lua/router"`
+- `"modifier/lua-proxy"`
+- `"modifier/lua-endpoint"`
 
 Under the `backend` use the name space:
 
-- `"github.com/devopsfaith/krakend-lua/proxy/backend"`
+- `"modifier/lua-proxy/backend"`
 
 ## Supported Lua types (cheatsheet)
 
@@ -201,7 +201,7 @@ An example setting a header in the response using Lua.
   {
     "endpoint": "/set-a-header",
     "extra_config": {
-        "github.com/devopsfaith/krakend-lua/proxy": {
+        "modifier/lua-proxy": {
           "pre": "print('Lua proxy!'); local r = request.load(); r:headers('X-from-lua', '1234');"
         }
     }
@@ -213,7 +213,7 @@ An example showing how to **print the backend response** in the console.
 {{< highlight json >}}
 {
     "extra_config": {
-          "github.com/devopsfaith/krakend-lua/proxy/backend": {
+          "modifier/lua-proxy/backend": {
             "pre": "print('Backend response, pre-logic:'); local r = request.load(); print(r:body());"
           }
     }
@@ -224,7 +224,7 @@ Another example **setting a cookie from Lua**:
 {{< highlight json >}}
 {
     "extra_config": {
-        "github.com/devopsfaith/krakend-lua/proxy": {
+        "modifier/lua-proxy": {
             "post": "local r = response.load(); r:headers('Set-Cookie', 'key1='.. r:data('response'));",
             "allow_open_libs": true
         }

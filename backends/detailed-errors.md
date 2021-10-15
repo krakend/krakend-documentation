@@ -13,7 +13,7 @@ meta:
   since: 0.8
   source: https://github.com/devopsfaith/krakend
   namespace:
-  - github.com/devopsfaith/krakend/http
+  - backend/http
   scope:
   - backend
 ---
@@ -30,7 +30,7 @@ If you prefer revealing these details to the client, you can choose to show them
 Place the following configuration inside the `backend` configuration:
 
     "extra_config": {
-        "github.com/devopsfaith/krakend/http": {
+        "backend/http": {
             "return_error_details": "backend_alias"
         }
     }
@@ -59,7 +59,7 @@ The following configuration sets an endpoint with two backends that return its e
 				"host": ["http://127.0.0.1:8081"],
 				"url_pattern": "/foo",
 				"extra_config": {
-					"github.com/devopsfaith/krakend/http": {
+					"backend/http": {
 						"return_error_details": "backend_a"
 					}
 				}
@@ -68,7 +68,7 @@ The following configuration sets an endpoint with two backends that return its e
 				"host": ["http://127.0.0.1:8081"],
 				"url_pattern": "/bar",
 				"extra_config": {
-					"github.com/devopsfaith/krakend/http": {
+					"backend/http": {
 						"return_error_details": "backend_b"
 					}
 				}

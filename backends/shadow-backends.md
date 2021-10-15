@@ -26,7 +26,7 @@ Mirroring the traffic to your microservices allows you to test your new backend 
 To define a backend as a *shadow backend* you only need to add the flag as follows:
 
     "extra_config": {
-        "github.com/devopsfaith/krakend/proxy": {
+        "proxy": {
             "shadow": true
         }
     }
@@ -48,7 +48,7 @@ The following example shows a backend that is changing from `v1` to `v2`, but we
                 "host": [ "http://my.api.com" ],
                 "url_pattern": "/v2/user/{id}",
                 "extra_config": {
-                    "github.com/devopsfaith/krakend/proxy": {
+                    "proxy": {
                         "shadow": true
                     }
                 }

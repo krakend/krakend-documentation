@@ -12,7 +12,7 @@ meta:
   since: 0.9
   source: https://github.com/devopsfaith/flatmap
   namespace:
-  - github.com/devopsfaith/krakend/proxy
+  - proxy
   scope:
   - backend
   - endpoint
@@ -45,12 +45,12 @@ The flatmap component is **not as a general solution for all objects**, and make
 {{< /note >}}
 
 ## Flatmap configuration
-Depending on the stage you want to do the manipulation, you will need an `extra_config` configuration inside your `endpoint` or `backend` section. For both cases, the namespace is `github.com/devopsfaith/krakend/proxy`.
+Depending on the stage you want to do the manipulation, you will need an `extra_config` configuration inside your `endpoint` or `backend` section. For both cases, the namespace is `proxy`.
 
 The component structure with three operations would be as follows:
 
         "extra_config": {
-            "github.com/devopsfaith/krakend/proxy": {
+            "proxy": {
                 "flatmap_filter": [
                     {
                         "type": "move",
@@ -167,7 +167,7 @@ Some individual operations **on the example structure above**:
 The following example demonstrates how to modify a collection doing these operations:
 
         "extra_config": {
-            "github.com/devopsfaith/krakend/proxy": {
+            "proxy": {
                 "flatmap_filter": [
                     {
                         "type": "append",

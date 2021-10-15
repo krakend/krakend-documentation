@@ -85,7 +85,7 @@ We will use this configuration for the demo
 	                    ],
 	                    "url_pattern": "/__debug/supu",
 	                    "extra_config": {
-	                        "github.com/devopsfaith/krakend-martian": {
+	                        "modifier/martian": {
 	                            "fifo.Group": {
 	                                "scope": ["request", "response"],
 	                                "aggregateErrors": true,
@@ -145,7 +145,7 @@ We will use this configuration for the demo
 	                    ],
 	                    "disable_host_sanitize": true,
 	                    "extra_config": {
-	                        "github.com/devopsfaith/krakend-martian": {
+	                        "modifier/martian": {
 	                            "fifo.Group": {
 	                                "scope": ["request", "response"],
 	                                "aggregateErrors": true,

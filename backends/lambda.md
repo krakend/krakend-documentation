@@ -15,7 +15,7 @@ meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-lambda
   namespace:
-  - github.com/devopsfaith/krakend-lambda
+  - backend/lambda
   scope:
   - backend
 ---
@@ -31,7 +31,7 @@ You don't need to set an Amazon API Gateway in the middle as KrakenD does this j
 
 ## Lambda configuration
 
-The inclusion requires you to add the code in the `extra_config` of your `backend` section, using the `github.com/devopsfaith/krakend-lambda` namespace.
+The inclusion requires you to add the code in the `extra_config` of your `backend` section, using the `backend/lambda` namespace.
 
 The supported parameters are:
 
@@ -58,7 +58,7 @@ When the KrakenD endpoint is attached to the same Lambda, use this configuration
 
     "backend": [
     {
-        "github.com/devopsfaith/krakend-lambda": {
+        "backend/lambda": {
             "function_name": "lambda-function",
             "region": "us-west1",
             "max_retries": 1
@@ -72,7 +72,7 @@ When the name of the Lambda to depends on a parameter passed in the endpoint, us
     "endpoint": "/call-a-lambda/{lambda},
     "backend": [
     {
-        "github.com/devopsfaith/krakend-lambda": {
+        "backend/lambda": {
             "function_param_name": "Lambda",
             "region": "us-west1",
             "max_retries": 1

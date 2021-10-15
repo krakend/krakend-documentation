@@ -16,7 +16,7 @@ meta:
   since: 0.7
   source: https://github.com/devopsfaith/krakend
   namespace:
-  - github.com/devopsfaith/krakend/proxy
+  - proxy
   scope:
   - endpoint
 ---
@@ -29,7 +29,7 @@ All you need to enable the sequential proxy is add in the endpoint definition th
 
     "endpoint": "/hotels/{id}",
     "extra_config": {
-          "github.com/devopsfaith/krakend/proxy": {
+          "proxy": {
               "sequential": true
           }
       }
@@ -97,7 +97,7 @@ The configuration needed for this example is:
         }
     ],
     "extra_config": {
-        "github.com/devopsfaith/krakend/proxy": {
+        "proxy": {
             "sequential": true
         }
     }

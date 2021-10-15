@@ -12,7 +12,7 @@ meta:
   since: 1.2
   source: https://github.com/devopsfaith/krakend-jsonschema
   namespace:
-  - github.com/devopsfaith/krakend-jsonschema
+  - validation/json-schema
   scope:
   - endpoint
 ---
@@ -21,10 +21,10 @@ KrakenD endpoints receiving a JSON object in its body can apply automatic valida
 When the validation fails, KrakenD returns to the user a status code `400` (Bad Request), and only if it succeeds, the backend receives the request. 
 
 ## JSON Schema Configuration
-The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `github.com/devopsfaith/krakend-jsonschema`. For instance, to **check if the body is a json object**:
+The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `validation/json-schema`. For instance, to **check if the body is a json object**:
 
     "extra_config":{
-        "github.com/devopsfaith/krakend-jsonschema": {
+        "validation/json-schema": {
             "type": "object"
         }
     }
@@ -49,7 +49,7 @@ All the configuration inside the namespace is pure JSON Schema vocabulary. [Read
                 }
             ],
             "extra_config":{
-                "github.com/devopsfaith/krakend-jsonschema": {
+                "validation/json-schema": {
                   "type": "object",
                   "properties": {
                     "number":      { "type": "number" },
