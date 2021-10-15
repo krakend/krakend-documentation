@@ -13,8 +13,8 @@ meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-pubsub
   namespace:
-  - github.com/devopsfaith/krakend-pubsub/publisher
-  - github.com/devopsfaith/krakend-pubsub/subscriber
+  - backend/pubsub/publisher
+  - backend/pubsub/susbcriber
   scope:
   - backend
 ---
@@ -28,7 +28,7 @@ Since KrakenD 1.0 you can connect an endpoint to multiple publish/subscribe back
 - Apache Kafka
 
 ## Configuration
-To add pub/sub functionality to your backends include the namespaces `github.com/devopsfaith/krakend-pubsub/subscriber` and `github.com/devopsfaith/krakend-pubsub/publisher` under the `extra_config` of your `backend` section.
+To add pub/sub functionality to your backends include the namespaces `backend/pubsub/susbcriber` and `backend/pubsub/publisher` under the `extra_config` of your `backend` section.
 
 The `host` key defines the desired driver, and the actual host is usually set in an **environment variable** outside of KrakenD:
 
@@ -37,7 +37,7 @@ For a **subscriber**:
 	"host": "schema://",
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/susbcriber": {
 			"subscription_url": "url"
 		}
 	}
@@ -47,7 +47,7 @@ For a **publisher**:
 	"host": "schema://",
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/publisher": {
+		"backend/pubsub/publisher": {
 			"topic_url": "url"
 		}
 	}
@@ -61,7 +61,7 @@ Set the envvar `RABBIT_SERVER_URL='guest:guest@localhost:5672'` and add in the c
 	"host": ["amqp://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/susbcriber": {
 		"subscription_url": "myexchange"
 		}
 	},
@@ -82,7 +82,7 @@ Example:
 	"host": ["gcppubsub://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/susbcriber": {
 		"subscription_url": "projects/myproject/subscriptions/mysub"
 		}
 	},
@@ -103,7 +103,7 @@ Example:
 	"host": ["nats://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/susbcriber": {
 			"subscription_url": "mysubject"
 		}
 	}
@@ -117,7 +117,7 @@ AWS SNS sets the `url` without any `host` or environment variables, e.g:
 	"host": ["awssns:///arn:aws:sns:us-east-2:123456789012:mytopic""],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/susbcriber": {
 			"subscription_url": "?region=us-east-2"
 		}
 	}
@@ -134,7 +134,7 @@ Url: `awssqs://sqs-queue-url`
 	"host": ["awssqs://https://sqs.us-east-2.amazonaws.com/123456789012"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/susbcriber": {
 			"subscription_url": "/myqueue?region=us-east-2"
 		}
 	}
@@ -156,7 +156,7 @@ Example:
 	"host": ["azuresb://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/susbcriber": {
 			"subscription_url": "mytopic"
 		}
 	}
@@ -180,7 +180,7 @@ Example:
 	"host": ["rabbit://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/susbcriber": {
 			"subscription_url": "myexchange"
 		}
 	}
@@ -198,7 +198,7 @@ Kafka connection requires KrakenD >= `1.1`.
 	"host": ["kafka://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/susbcriber": {
 			"subscription_url": "group?topic=mytopic"
 		}
 	}
@@ -209,7 +209,7 @@ Kafka connection requires KrakenD >= `1.1`.
 	"host": ["kafka://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/publisher": {
+		"backend/pubsub/publisher": {
 			"topic_url": "mytopic"
 		}
 	}
