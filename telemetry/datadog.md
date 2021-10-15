@@ -17,7 +17,7 @@ meta:
   since: 1.2
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
 ---
@@ -29,7 +29,7 @@ The Opencensus exporter allows you export data to Datadog. Enabling it only requ
 The following configuration snippet sends data to your Datadog:
 
       "extra_config": {
-        "github_com/devopsfaith/krakend-opencensus": {
+        "telemetry/opencensus": {
           "exporters": {
             "datadog": {
               "tags": [

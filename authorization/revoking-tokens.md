@@ -39,13 +39,13 @@ The Bloom filter is ideal for supporting a massive rejection of tokens with very
 The tokens are in-memory, directly in the rejecter interface, so the system is quick resolving the match.
 
 ## Configuration
-The bloom filter lives at the `extra_config` in the root level of the configuration, using the namespace `github_com/devopsfaith/bloomfilter`:
+The bloom filter lives at the `extra_config` in the root level of the configuration, using the namespace `auth/revoker`:
 
 
     "version": "2",
     "name": "My lovely gateway",
     "extra_config":{
-      "github_com/devopsfaith/bloomfilter": {
+      "auth/revoker": {
         "N": 10000000,
         "P": 0.0000001,
         "HashName": "optimal",

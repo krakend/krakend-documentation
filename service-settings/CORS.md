@@ -9,7 +9,7 @@ meta:
   since: 0.6
   source: https://github.com/devopsfaith/krakend-cors
   namespace:
-  - github_com/devopsfaith/krakend-cors
+  - security/cors
   scope:
   - service
 
@@ -22,12 +22,12 @@ When KrakenD endpoints are consumed from a browser, you might need to enable the
 When the Cross-Origin Resource Sharing (CORS) configuration is enabled, KrakenD uses additional HTTP headers to tell browsers that they can **use resources from a different origin** (domain, protocol, or port). For instance, you will need this configuration if your web page is hosted at https://www.domain.com and the Javascript references the KrakenD API at https://api.domain.com.
 
 ## Configuration
-CORS configuration lives in the root of the file, as it's a service component. Add the namespace `github_com/devopsfaith/krakend-cors` under the global `extra_config`, as follows:
+CORS configuration lives in the root of the file, as it's a service component. Add the namespace `security/cors` under the global `extra_config`, as follows:
 
     {
       "version": 2,
       "extra_config": {
-        "github_com/devopsfaith/krakend-cors": {
+        "security/cors": {
           "allow_origins": [
             "*"
           ],

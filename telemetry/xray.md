@@ -18,7 +18,7 @@ The Opencensus exporter allows you export data to AWS X-Ray. Enabling it only re
 
 The following configuration snippet sends data to your X-Ray:
 
-	"github_com/devopsfaith/krakend-opencensus": {
+	"telemetry/opencensus": {
       "exporters": {
         "xray": {
 			"version": "latest",

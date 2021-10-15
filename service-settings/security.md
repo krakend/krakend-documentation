@@ -9,19 +9,19 @@ menu:
     parent: "030 Service Settings"
 meta:
   since: 0.4
-  source: https://github.com/devopsfaith/krakend-httpsecure
+  source: https://sec/http
   namespace:
-  - github_com/devopsfaith/krakend-httpsecure
+  - security/http
   scope:
   - service
 ---
 
-KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://github.com/devopsfaith/krakend-httpsecure). To enable them you only need to add the `extra_config` at service (root) level.
+KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://sec/http). To enable them you only need to add the `extra_config` at service (root) level.
 
 The following example describes the options explained later in this article:
 
     "extra_config": {
-      "github_com/devopsfaith/krakend-httpsecure": {
+      "security/http": {
         "allowed_hosts": [
           "host.known.com:443"
         ],

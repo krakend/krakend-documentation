@@ -80,7 +80,7 @@ The blue spots indicate the places where you can register your custom plugins.
 
 Compile your plugin with `go build -buildmode=plugin -o yourplugin.so` and then reference them in the configuration file. For instance:
 
-    "github_com/devopsfaith/krakend/transport/http/server/handler": {
+    "plugin/http-server": {
        "name": "your-plugin"
     }
 

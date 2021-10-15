@@ -13,7 +13,7 @@ meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
 ---
@@ -24,7 +24,7 @@ You will be interested in Opencensus when you want to see data in one of its sup
     {
         "version": 2,
         "extra_config": {
-            "github_com/devopsfaith/krakend-opencensus": {
+            "telemetry/opencensus": {
                 "exporters": {
                     "prometheus": {
                         "port": 9091
@@ -41,7 +41,7 @@ The Opencensus only needs an exporter to work, although multiple exporters can b
 
 By default, **all exporters sample the 100% of the requests received every second**, but this can be changed by specifying more configuration:
 
-    "github_com/devopsfaith/krakend-opencensus": {
+    "telemetry/opencensus": {
       "sample_rate": 100,
       "reporting_period": 1,
       "enabled_layers": {

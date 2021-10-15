@@ -14,7 +14,7 @@ meta:
   since: 1.1
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
 ---
@@ -29,7 +29,7 @@ Enabling it only requires you to add the `ocagent` exporter in the [opencensus m
 
 The following configuration snippet sends the data:
 
-    "github_com/devopsfaith/krakend-opencensus": {
+    "telemetry/opencensus": {
       "exporters": {
        "ocagent": {
           "address": "collector",

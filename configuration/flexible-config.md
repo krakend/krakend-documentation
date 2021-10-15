@@ -183,7 +183,7 @@ To demonstrate the usage of the flexible configuration, we are going to reorgani
 
 In this file, we have written the content of the rate limit configuration for a backend. This file is inserted when included "as is":
 
-    "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
+    "qos/ratelimit/proxy": {
         "maxRate": "100",
         "capacity": "100"
     }
@@ -200,7 +200,7 @@ In the settings directory, we write all the files whose values can be accessed a
             "https://catalog-api-03.srv"
         ],
         "extra_config": {
-            "github_com/devopsfaith/krakend-httpsecure": {
+            "security/http": {
             "allowed_hosts": [],
             "ssl_proxy_headers": {
                 "X-Forwarded-Proto": "https"

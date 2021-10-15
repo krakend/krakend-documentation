@@ -14,8 +14,8 @@ meta:
   since: 0.5
   source: https://grafana.com/dashboards/5722
   namespace:
-  - github_com/letgoapp/krakend-influx
-  - github_com/devopsfaith/krakend-metrics
+  - telemetry/influx
+  - telemetry/metrics
   scope:
   - service
 ---
@@ -42,12 +42,12 @@ Add the following configuration to your `krakend.json` at the root level:
     {
       "version": 2,
       "extra_config": {
-        "github_com/letgoapp/krakend-influx":{
+        "telemetry/influx":{
             "address":"http://192.168.99.9:8086",
             "ttl":"25s",
             "buffer_size":0
         },
-        "github_com/devopsfaith/krakend-metrics": {
+        "telemetry/metrics": {
           "collection_time": "30s",
           "listen_address": "127.0.0.1:8090"
         }

@@ -81,12 +81,12 @@ Components declare in their source code a **unique namespace**. KrakenD register
 
 All components built by the KrakenD team **use namespaces inspired by the location of the original package**, so they might *look like an URL* but it's just a unique identifier that clearly defines where the original package is. 
 
-For instance, the [extended logging component](/docs/logging/extended-logging/) uses the **namespace** `github_com/devopsfaith/krakend-gologging`:
+For instance, the [extended logging component](/docs/logging/extended-logging/) uses the **namespace** `telemetry/logging`:
 {{< highlight JSON >}}
 {
     "version": 2,
     "extra_config": {
-        "github_com/devopsfaith/krakend-gologging": {
+        "telemetry/logging": {
           "level": "WARNING",
           "prefix": "[KRAKEND]",
           "syslog": false,
@@ -126,7 +126,7 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
     {
         "endpoint": "/limited-to-5000-per-second",
         "extra_config": {
-            "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+            "qos/ratelimit/router": {
                 "maxRate": 5000
             }
         },
@@ -137,7 +137,7 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
             ],
             "url_pattern": "/slow/endpoint",
             "extra_config": {
-                "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
+                "qos/ratelimit/proxy": {
                     "maxRate": 100,
                     "capacity": 1
                 }

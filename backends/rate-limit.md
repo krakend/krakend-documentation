@@ -13,7 +13,7 @@ meta:
   since: false
   source: https://github.com/devopsfaith/krakend-ratelimit
   namespace:
-  - github.com/devopsfaith/krakend-ratelimit/juju/proxy
+  - qos/ratelimit/proxy
   scope:
   - backend
 ---
@@ -30,7 +30,7 @@ This parameter is defined at the `krakend.json` configuration file as follows:
           "url_pattern": "/catalog/category/{cat_id}.rss",
           "encoding": "rss",
           "extra_config": {
-              "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
+              "qos/ratelimit/proxy": {
                   "maxRate": 0.5,
                   "capacity": 1
               }

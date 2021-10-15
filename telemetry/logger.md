@@ -15,7 +15,7 @@ meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
 ---
@@ -25,7 +25,7 @@ Enabling it only requires you to add the `logger` exporter in the [opencensus mo
 
 The following configuration snippet enables the logger:
 
-    "github_com/devopsfaith/krakend-opencensus": {
+    "telemetry/opencensus": {
         "exporters": {
           "logger": {
               "stats": true,

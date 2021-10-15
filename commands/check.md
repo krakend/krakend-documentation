@@ -67,7 +67,7 @@ We will use this configuration for the demo
 	    "cache_ttl": "3600s",
 	    "timeout": "3s",
 	    "extra_config": {
-	      "github_com/devopsfaith/krakend-gologging": {
+	      "telemetry/logging": {
 	        "level":  "ERROR",
 	        "prefix": "[KRAKEND]",
 	        "syslog": false,
@@ -121,7 +121,7 @@ We will use this configuration for the demo
 	                                ]
 	                            }
 	                        },
-	                        "github.com/devopsfaith/krakend-circuitbreaker/gobreaker": {
+	                        "qos/circuit-breaker": {
 	                            "interval": 60,
 	                            "timeout": 10,
 	                            "maxErrors": 1
@@ -181,11 +181,11 @@ We will use this configuration for the demo
 	                                ]
 	                            }
 	                        },
-	                        "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
+	                        "qos/ratelimit/proxy": {
 	                            "maxRate": 2,
 	                            "capacity": 2
 	                        },
-	                        "github.com/devopsfaith/krakend-circuitbreaker/gobreaker": {
+	                        "qos/circuit-breaker": {
 	                            "interval": 60,
 	                            "timeout": 10,
 	                            "maxErrors": 1
@@ -206,11 +206,11 @@ We will use this configuration for the demo
 	                    "group": "schedule",
 	                    "allow": ["items", "title"],
 	                    "extra_config": {
-	                        "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
+	                        "qos/ratelimit/proxy": {
 	                            "maxRate": 1,
 	                            "capacity": 1
 	                        },
-	                        "github.com/devopsfaith/krakend-circuitbreaker/gobreaker": {
+	                        "qos/circuit-breaker": {
 	                            "interval": 60,
 	                            "timeout": 10,
 	                            "maxErrors": 1
@@ -226,11 +226,11 @@ We will use this configuration for the demo
 	                    "group": "available",
 	                    "allow": ["items", "title"],
 	                    "extra_config": {
-	                        "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
+	                        "qos/ratelimit/proxy": {
 	                            "maxRate": 2,
 	                            "capacity": 2
 	                        },
-	                        "github.com/devopsfaith/krakend-circuitbreaker/gobreaker": {
+	                        "qos/circuit-breaker": {
 	                            "interval": 60,
 	                            "timeout": 10,
 	                            "maxErrors": 1
@@ -239,7 +239,7 @@ We will use this configuration for the demo
 	                }
 	            ],
 	            "extra_config": {
-	                "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+	                "qos/ratelimit/router": {
 	                    "maxRate": 50,
 	                    "clientMaxRate": 5,
 	                    "strategy": "ip"

@@ -17,10 +17,10 @@ root level of your `krakend.json`, inside the `extra_config` section. **The `gol
 For instance:
 
     "extra_config": {
-      "github_com/devopsfaith/krakend-logstash": {
+      "telemetry/logstash": {
         "enabled": true
       }
-      "github_com/devopsfaith/krakend-gologging": {
+      "telemetry/logging": {
           "level": "INFO",
           "prefix": "[KRAKEND]",
           "syslog": false,

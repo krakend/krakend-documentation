@@ -26,11 +26,11 @@ Add the `krakend-gelf` integration in the root level of your `krakend.json`, ins
 For instance:
 
     "extra_config": {
-      "github_com/devopsfaith/krakend-gelf": {
+      "telemetry/gelf": {
         "address": "myGraylogInstance:12201",
         "enable_tcp": false
       }
-      "github_com/devopsfaith/krakend-gologging": {
+      "telemetry/logging": {
           "level": "INFO",
           "prefix": "[KRAKEND]",
           "syslog": false,

@@ -12,7 +12,7 @@ meta:
   since: 0.4
   source: https://github.com/devopsfaith/krakend-metrics
   namespace:
-  - github_com/devopsfaith/krakend-metrics
+  - telemetry/metrics
   scope:
   - service
 ---
@@ -23,13 +23,13 @@ Through the extended metrics you can create new tools or integrate with existing
 
 ## Configuration
 
-In order to add metrics to your KrakenD installation add the `github_com/devopsfaith/krakend-metrics` namespace under `extra_config` in the root of your configuration file, e.g.:
+In order to add metrics to your KrakenD installation add the `telemetry/metrics` namespace under `extra_config` in the root of your configuration file, e.g.:
 
 {{< highlight go "hl_lines=3-11" >}}
 {
   "version": 2,
   "extra_config": {
-    "github_com/devopsfaith/krakend-metrics": {
+    "telemetry/metrics": {
       "collection_time": "60s",
       "proxy_disabled": false,
       "router_disabled": false,

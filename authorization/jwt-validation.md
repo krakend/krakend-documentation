@@ -76,7 +76,7 @@ The example above used [this public key](https://albert-test.auth0.com/.well-kno
 ## Basic JWT validation
 The JWT validation must be present inside every endpoint definition needing it. If several endpoints are going to require JWT validation consider using the [flexible configuration](/docs/configuration/flexible-config/) to avoid repetitive declarations.
 
-Enable the JWT validation by adding the namespace `"github.com/devopsfaith/krakend-jose/validator"` inside the `extra_config` of the desired `endpoint`.
+Enable the JWT validation by adding the namespace `"auth/validator"` inside the `extra_config` of the desired `endpoint`.
 
 For instance, to protect the endpoint `/protected/resource`:
 
@@ -84,7 +84,7 @@ For instance, to protect the endpoint `/protected/resource`:
 {
     "endpoint": "/protected/resource",
     "extra_config": {
-        "github.com/devopsfaith/krakend-jose/validator": {
+        "auth/validator": {
             "alg": "RS256",
             "audience": ["http://api.example.com"],
             "roles_key": "http://api.example.com/custom/roles",
@@ -110,7 +110,7 @@ This configuration makes sure that:
 ## JWT validation settings
 The following settings are available for JWT validation. There are a lot of options, although generally only the **fields `alg` and `jwk-url` or `jwk_local_path` are mandatory**, and the rest of the keys can be added or not at your best convenience or depending on other options.
 
-These options are for the `extra_config`'s namespace `"github.com/devopsfaith/krakend-jose/validator"` placed in every endpoint (use [flexible configuration](/docs/configuration/flexible-config/) to avoid code repetition):
+These options are for the `extra_config`'s namespace `"auth/validator"` placed in every endpoint (use [flexible configuration](/docs/configuration/flexible-config/) to avoid code repetition):
 
 - `alg` (*recognized string*): The hashing algorithm used by the issuer. See the [hashing algorithms](#hashing-algorithms) section for a comprehensive list of supported algorithms.
 - `jwk-url` (*string*): The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
@@ -143,7 +143,7 @@ Here there is an example using an external `jwk-url`:
 {
 "endpoint": "/foo"
 "extra_config": {
-    "github.com/devopsfaith/krakend-jose/validator": {
+    "auth/validator": {
         "alg": "RS256",
         "jwk-url": "https://url/to/jwks.json",
         "cache": true,
@@ -275,7 +275,7 @@ The call to your backend would produce the request:
 
     POST /foo/1234567890
 
-Keep in mind that this syntax in the `url_pattern` field is only available if the backend loads the extra_config `"github.com/devopsfaith/krakend-jose/validator"` and that **it does not work with nested attributes** in the payload.
+Keep in mind that this syntax in the `url_pattern` field is only available if the backend loads the extra_config `"auth/validator"` and that **it does not work with nested attributes** in the payload.
 
 If KrakenD can't replace the claim's content for any reason, the backend receives a request to the literal URL `/foo/{JWT.sub}`.
 
@@ -286,7 +286,7 @@ Since KrakenD 1.3.0, it is possible to forward claims in a JWT as request header
 
 ```
 "extra_config": {
-        "github.com/devopsfaith/krakend-jose/validator": {
+        "auth/validator": {
           "propagate-claims": [
             ["sub", "x-user"]
           ],

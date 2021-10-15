@@ -11,7 +11,7 @@ meta:
   #since: 
   source: https://github.com/devopsfaith/krakend-jose
   namespace:
-  - github.com/devopsfaith/krakend-jose/validator
+  - auth/validator
   scope:
   - endpoint
 skip_header_image: true
@@ -50,7 +50,7 @@ Paste the following configuration into a `krakend.json` file.
   {
     "endpoint": "/keycloak-protected",
     "extra_config": {
-        "github.com/devopsfaith/krakend-jose/validator": {
+        "auth/validator": {
             "alg": "RS256",
             "jwk-url": "http://KEYCLOAK:8080/auth/realms/master/protocol/openid-connect/certs",
             "disable_jwk_security": true

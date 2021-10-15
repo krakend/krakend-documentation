@@ -14,7 +14,7 @@ meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
 ---
@@ -24,7 +24,7 @@ The Opencensus exporter allows you export data to Zipkin. Enabling it only requi
 
 The following configuration snippet sends data to your Zipkin:
 
-	"github_com/devopsfaith/krakend-opencensus": {
+	"telemetry/opencensus": {
       "exporters": {
         "zipkin": {
 			"collector_url": "http://192.168.99.100:9411/api/v2/spans",

@@ -20,7 +20,7 @@ Successfully setting the client credentials for a backend means that KrakenD can
 ## Configuring OAuth2 Client Credentials
 To access a protected resource using client-credentials add under every `backend` the appropriate `extra_config`.
 
-The namespace used is `"github.com/devopsfaith/krakend-oauth2-clientcredentials"`. Sample configuration below:
+The namespace used is `"auth/client-credentials"`. Sample configuration below:
 
     {
       "endpoint": "/endpoint",
@@ -28,7 +28,7 @@ The namespace used is `"github.com/devopsfaith/krakend-oauth2-clientcredentials"
           {
               "url_pattern": "/protected-resource",
               "extra_config": {
-                  "github.com/devopsfaith/krakend-oauth2-clientcredentials": {
+                  "auth/client-credentials": {
                       "client_id": "YOUR-CLIENT-ID",
                       "client_secret": "YOUR-CLIENT-SECRET",
                       "token_url": "https://your.custom.identity.service.tld/token_endpoint",
@@ -59,7 +59,7 @@ The following example demonstrates a complete configuration to fulfill the requi
             {
                 "url_pattern": "/backend",
                 "extra_config": {
-                    "github.com/devopsfaith/krakend-oauth2-clientcredentials": {
+                    "auth/client-credentials": {
                         "client_id": "YOUR-CLIENT-ID",
                         "client_secret": "YOUR-CLIENT-SECRET",
                         "token_url": "https://custom.auth0.tld/token_endpoint",

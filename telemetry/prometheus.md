@@ -14,7 +14,7 @@ meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
 ---
@@ -25,7 +25,7 @@ The Opencensus exporter allows you to expose data to Prometheus. Enabling it onl
 {
   "version": 2,
   "extra_config": {
-    "github_com/devopsfaith/krakend-opencensus": {
+    "telemetry/opencensus": {
         "exporters": {
           "prometheus": {
               "port": 9091,

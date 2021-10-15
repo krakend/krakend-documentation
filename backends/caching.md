@@ -12,7 +12,7 @@ meta:
   since: 0.4
   source: https://github.com/devopsfaith/krakend-httpcache
   namespace:
-  - github.com/devopsfaith/krakend-httpcache
+  - qos/http-cache
   scope:
   - backend
 ---
@@ -31,7 +31,7 @@ If you enable this module, you are required to be very aware of the response siz
 
 Enable the caching of the backend services in the `backend` section of your `krakend.json` with the middleware:
 
-    "github.com/devopsfaith/krakend-httpcache": {}
+    "qos/http-cache": {}
 
 The middleware does not require additional configuration other than the simple inclusion.
 
@@ -43,7 +43,7 @@ See an example:
       "url_pattern": "/",
       "host": ["http://my-service.tld"],
       "extra_config": {
-        "github.com/devopsfaith/krakend-httpcache": {}
+        "qos/http-cache": {}
       }
     }
     ]

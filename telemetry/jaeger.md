@@ -14,7 +14,7 @@ meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
 ---
@@ -24,7 +24,7 @@ The Opencensus exporter allows you export data to Jaeger. Enabling it only requi
 
 The following configuration snippet sends data to your Jaeger:
 
-	"github_com/devopsfaith/krakend-opencensus": {
+	"telemetry/opencensus": {
     "exporters": {
       "jaeger": {
 			  "endpoint": "http://192.168.99.100:14268/api/traces",

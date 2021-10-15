@@ -63,7 +63,7 @@ For instance, from the plain token above we want to sign the keys `"access_token
 }
 ],
 "extra_config": {
-    "github.com/devopsfaith/krakend-jose/signer": {
+    "auth/signer": {
         "alg": "HS256",
         "kid": "sim2",
         "keys-to-sign": ["access_token", "refresh_token"],
@@ -116,7 +116,7 @@ The following example contains every single option available:
       "endpoint": "/token",
       "method": "POST",
       "extra_config": {
-        "github.com/devopsfaith/krakend-jose/signer": {
+        "auth/signer": {
           "alg": "HS256",
           "jwk-url": "http://your-backend/jwk/symmetric.json",
           "keys-to-sign": [

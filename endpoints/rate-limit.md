@@ -13,7 +13,7 @@ meta:
   since: 0.4
   source: https://github.com/devopsfaith/krakend-ratelimit
   namespace:
-  - github.com/devopsfaith/krakend-ratelimit/juju/router
+  - qos/ratelimit/router
   scope:
   - endpoint
 ---
@@ -34,7 +34,7 @@ When any of these strategies are set, every KrakenD instance keeps **in-memory**
 {
     "endpoint": "/limited-endpoint",
     "extra_config": {
-      "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+      "qos/ratelimit/router": {
           "maxRate": 50,
           "clientMaxRate": 5,
           "strategy": "ip"
@@ -96,7 +96,7 @@ Configuration:
           {
               "endpoint": "/happy-hour",
               "extra_config": {
-                  "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+                  "qos/ratelimit/router": {
                       "maxRate": 0,
                       "clientMaxRate": 0
                   }
@@ -110,7 +110,7 @@ Configuration:
           {
               "endpoint": "/limited-endpoint",
               "extra_config": {
-                "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+                "qos/ratelimit/router": {
                     "maxRate": 50,
                     "clientMaxRate": 5,
                     "strategy": "ip"
@@ -120,7 +120,7 @@ Configuration:
           {
               "endpoint": "/user-limited-endpoint",
               "extra_config": {
-                "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+                "qos/ratelimit/router": {
                     "clientMaxRate": 10,
                     "strategy": "header",
                     "key": "X-Auth-Token"

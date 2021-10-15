@@ -11,7 +11,7 @@ meta:
   #since: 
   source: https://github.com/devopsfaith/krakend-jose
   namespace:
-  - github.com/devopsfaith/krakend-jose/validator
+  - auth/validator
   scope:
   - endpoint
 ---
@@ -56,7 +56,7 @@ Paste the following configuration into a `krakend.json` file.
   {
     "endpoint": "/auth0-protected",
     "extra_config": {
-        "github.com/devopsfaith/krakend-jose/validator": {
+        "auth/validator": {
             "alg": "SIGNING_ALGORITHM",
             "audience": ["AUDIENCE"],
             "jwk-url": "https://DOMAIN/.well-known/jwks.json"

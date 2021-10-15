@@ -15,7 +15,7 @@ meta:
   since: 0.7
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
 ---
@@ -26,7 +26,7 @@ The Opencensus exporter allows you export data to Google Stackdriver. Enabling i
 
 The following configuration snippet sends the data:
 
-    "github_com/devopsfaith/krakend-opencensus": {
+    "telemetry/opencensus": {
       "exporters": {
        "stackdriver": {
           "project_id": "my-krakend-project",

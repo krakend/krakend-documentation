@@ -14,7 +14,7 @@ meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
 ---
@@ -24,7 +24,7 @@ The Opencensus exporter allows you export data to [InfluxDB](https://www.influxd
 
 The following configuration snippet sends data to your InfluxDB:
 
-    "github_com/devopsfaith/krakend-opencensus": {
+    "telemetry/opencensus": {
       "exporters": {
         "influxdb": {
             "address": "http://192.168.99.100:8086",
