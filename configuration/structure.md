@@ -111,9 +111,6 @@ For instance, you might want to set a rate limit between a user and KrakenD. And
 
 **You don't have to guess where to put the `extra_config`**. Each component has in the documentation what is the scope is built for.
 
-#### Spot the difference: github_com and github.com
-Service scopes do not use any dot in their namespace (notice the `github_com` in the previous example). It is to avoid problems with parsers, but when the `extra_config` is placed at `endpoint` level or even `backend` level, the dots can be present.
-
 ### Example 
 The following code is an example defining two simultaneous rate limiting strategies: A limit of 5000 reqs/s for a specific endpoint, but yet, one of its backends accepts a maximum of 100 reqs/s. As you can imagine, when the backend limit is reached, the user will have partial responses.
 
