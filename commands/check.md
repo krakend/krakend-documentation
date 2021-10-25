@@ -1,9 +1,9 @@
 ---
 aliases: ["/commands/check"]
-lastmod: 2021-02-16
+lastmod: 2021-10-25
 date: 2016-10-28
-linktitle: Check
-title: Commands - check
+linktitle: Checking the config
+title: Validating the configuration with `check`
 description: KrakenD Check Command
 weight: 10
 menu:
@@ -11,8 +11,15 @@ menu:
     parent: "020 Command Line"
 ---
 
-The `krakend check` command validates the passed configuration. Since KrakenD does not implement a strict parsing, typos
- in the config file could be shadowed. In order to validate your config completely, it is recommended to use the `--debug` flag.
+The `krakend check` command **validates KrakenD configuration files** written in any of its [supported formats](/docs/configuration/supported-formats/). The validation does two different things: **linting** and **testing** (an execution).
+
+Whenever the `check` is run, it acts as a (JSON) linter and makes sure that the configuration is not broken from a syntax point of view. It also works with [flexible configuration](/docs/configuration/flexible-config/). When used with the test flag `-t` it also tries to test a run of the service to catch problems that are not strictly related to linting but runtime. For instance, you could have declared a colliding or duplicated endpoint: the syntax would valid and properly linted yet the configuration impossible to run. 
+
+{{< note title="KrakenD doesn't do strict parsing" >}}
+KrakenD **ignores all unknown keys**, and it does not warn about it. It allows you to declare new parameters and entries, but it can also shadow errors in the configuration. The `--debug` flag (see below) shows what is parsed and processed.
+{{< /note >}}
+
+The `krakend check` command accepts the following options:
 
 {{< terminal title="Usage of KrakenD check" >}}
 ./krakend check -h
@@ -42,275 +49,276 @@ krakend check -d -c config.json
 
 Flags:
   -h, --help              help for check
+  -i, --indent string     Indentation of the check dump (default "\t")
   -t, --test-gin-routes   Test the endpoint patterns against a real gin router on selected port
 
 Global Flags:
   -c, --config string   Path to the configuration filename
-  -d, --debug           Enable the debug
+  -d, --debug count     Enable the debug
 {{< /terminal >}}
 
-Passing a path to the config file is required
+## Flags
+Use `krakend check` in combination with the following flags:
 
-{{< terminal >}}
-krakend check
-Please, provide the path to your config file
+- `-c` or `--config` (mandatory) to specify the path to the configuration file in any of the [supported formats](/docs/configuration/supported-formats/), or to the starting template if used in combination with flexible configuration. 
+- `-d` or `--debug` to enable the debug and see information about how KrakenD is interpreting your configuration file. Use from 1 to 3 levels of verbosity using `-d`, `-dd`, or `-ddd`.
+- Use `-t` to **test** the configuration and try to start the service with it for a second. This option is highly recommended as prevents conflicting routes and other problems that are not related with the linting itself, and would end up in a *panic*.
+- `-i` or `--indent`, in combination with `-d`, to change the identation when the debug information renders (default: tab). E.g.: `-i "#"` uses a hash instead of a tab for every nesting level.
+
+## Add `check` to your CI/CD pipeline
+The check command is a must in any **CI/CD pipeline** or when building an immutable `Dockerfile`, as it lets you find broken configurations before going live. Consider adding a line like the following in your release process:
+
+{{< terminal title="Recommended file check for CI/CD" >}}
+krakend check -t -d -c path/to/krakend.json
 {{< /terminal >}}
 
-## Example
+### Docker image with check and flexible configuration
+The following example illustrates a combination of the `check` command with a a multi-stage build to compile a [flexible configuration](/docs/configuration/flexible-config/) in a `Dockerfile`:
 
-We will use this configuration for the demo
+	FROM devopsfaith/krakend as builder
+	ARG ENV=prod
 
-	{
-	    "version": 2,
-	    "name": "My lovely gateway",
-	    "port": 8080,
-	    "cache_ttl": "3600s",
-	    "timeout": "3s",
-	    "extra_config": {
-	      "telemetry/logging": {
-	        "level":  "ERROR",
-	        "prefix": "[KRAKEND]",
-	        "syslog": false,
-	        "stdout": true
-	      }
-	    },
-	    "endpoints": [
-	        {
-	            "endpoint": "/supu",
-	            "method": "GET",
-	            "backend": [
-	                {
-	                    "host": [
-	                        "http://127.0.0.1:8080"
-	                    ],
-	                    "url_pattern": "/__debug/supu",
-	                    "extra_config": {
-	                        "modifier/martian": {
-	                            "fifo.Group": {
-	                                "scope": ["request", "response"],
-	                                "aggregateErrors": true,
-	                                "modifiers": [
-	                                {
-	                                    "header.Modifier": {
-	                                        "scope": ["request", "response"],
-	                                        "name" : "X-Martian",
-	                                        "value" : "ouh yeah!"
-	                                    }
-	                                },
-	                                {
-	                                    "body.Modifier": {
-	                                        "scope": ["request"],
-	                                        "contentType" : "application/json",
-	                                        "body" : "eyJtc2ciOiJ5b3Ugcm9jayEifQ=="
-	                                    }
-	                                },
-	                                {
-	                                    "header.RegexFilter": {
-	                                        "scope": ["request"],
-	                                        "header" : "X-Neptunian",
-	                                        "regex" : "no!",
-	                                        "modifier": {
-	                                            "header.Modifier": {
-	                                                "scope": ["request"],
-	                                                "name" : "X-Martian-New",
-	                                                "value" : "some value"
-	                                            }
-	                                        }
-	                                    }
-	                                }
-	                                ]
-	                            }
-	                        },
-	                        "qos/circuit-breaker": {
-	                            "interval": 60,
-	                            "timeout": 10,
-	                            "max_errors": 1
-	                        }
-	                    }
-	                }
-	            ]
-	        },
-	        {
-	            "endpoint": "/github/{user}",
-	            "method": "GET",
-	            "backend": [
-	                {
-	                    "host": [
-	                        "https://api.github.com"
-	                    ],
-	                    "url_pattern": "/",
-	                    "allow": [
-	                        "authorizations_url",
-	                        "code_search_url"
-	                    ],
-	                    "disable_host_sanitize": true,
-	                    "extra_config": {
-	                        "modifier/martian": {
-	                            "fifo.Group": {
-	                                "scope": ["request", "response"],
-	                                "aggregateErrors": true,
-	                                "modifiers": [
-	                                {
-	                                    "header.Modifier": {
-	                                        "scope": ["request", "response"],
-	                                        "name" : "X-Martian",
-	                                        "value" : "ouh yeah!"
-	                                    }
-	                                },
-	                                {
-	                                    "body.Modifier": {
-	                                        "scope": ["request"],
-	                                        "contentType" : "application/json",
-	                                        "body" : "eyJtc2ciOiJ5b3Ugcm9jayEifQ=="
-	                                    }
-	                                },
-	                                {
-	                                    "header.RegexFilter": {
-	                                        "scope": ["request"],
-	                                        "header" : "X-Neptunian",
-	                                        "regex" : "no!",
-	                                        "modifier": {
-	                                            "header.Modifier": {
-	                                                "scope": ["request"],
-	                                                "name" : "X-Martian-New",
-	                                                "value" : "some value"
-	                                            }
-	                                        }
-	                                    }
-	                                }
-	                                ]
-	                            }
-	                        },
-	                        "qos/ratelimit/proxy": {
-	                            "maxRate": 2,
-	                            "capacity": 2
-	                        },
-	                        "qos/circuit-breaker": {
-	                            "interval": 60,
-	                            "timeout": 10,
-	                            "max_errors": 1
-	                        }
-	                    }
-	                }
-	            ]
-	        },
-	        {
-	            "endpoint": "/show/{id}",
-	            "backend": [
-	                {
-	                    "host": [
-	                        "http://showrss.info/"
-	                    ],
-	                    "url_pattern": "/user/schedule/{id}.rss",
-	                    "encoding": "rss",
-	                    "group": "schedule",
-	                    "allow": ["items", "title"],
-	                    "extra_config": {
-	                        "qos/ratelimit/proxy": {
-	                            "maxRate": 1,
-	                            "capacity": 1
-	                        },
-	                        "qos/circuit-breaker": {
-	                            "interval": 60,
-	                            "timeout": 10,
-	                            "max_errors": 1
-	                        }
-	                    }
-	                },
-	                {
-	                    "host": [
-	                        "http://showrss.info/"
-	                    ],
-	                    "url_pattern": "/user/{id}.rss",
-	                    "encoding": "rss",
-	                    "group": "available",
-	                    "allow": ["items", "title"],
-	                    "extra_config": {
-	                        "qos/ratelimit/proxy": {
-	                            "maxRate": 2,
-	                            "capacity": 2
-	                        },
-	                        "qos/circuit-breaker": {
-	                            "interval": 60,
-	                            "timeout": 10,
-	                            "max_errors": 1
-	                        }
-	                    }
-	                }
-	            ],
-	            "extra_config": {
-	                "qos/ratelimit/router": {
-	                    "maxRate": 50,
-	                    "clientMaxRate": 5,
-	                    "strategy": "ip"
-	                }
-	            }
-	        }
-	    ]
-	}
+	COPY krakend.tmpl .
+	COPY config .
 
+	# Save temporary file to /tmp to avoid permission errors
+	RUN FC_ENABLE=1 \
+		FC_OUT=/tmp/krakend.json \
+		FC_PARTIALS="/etc/krakend/partials" \
+		FC_SETTINGS="/etc/krakend/settings/$ENV" \
+		FC_TEMPLATES="/etc/krakend/templates" \
+		krakend check -d -t -c krakend.tmpl
 
-## Debug disabled
-{{< terminal title="Checking the configuration without the debug flag" >}}
-krakend check --config krakend.json
-Parsing configuration file: krakend.json
-Syntax OK!
+	FROM devopsfaith/krakend
+	COPY --from=builder --chown=krakend /tmp/krakend.json .
+
+Notice how the lines above `check` that the configuration is valid using a starting template `krakend.tmpl` and output the compiled template into a `/tmp/krakend.json` file. This file is the only addition to the final Docker image.
+
+It assumes that you have a file structure like this:
+
+	.
+	├── config
+	│   ├── partials
+	│   ├── settings
+	│   │   ├── prod
+	│   │   │   └── env.json
+	│   │   └── test
+	│   │       └── env.json
+	│   └── templates
+	│       └── some.tmpl
+	├── Dockerfile
+	└── krakend.tmpl
+
+And that you build with something like:
+
+{{< terminal title="Docker build" >}}
+docker build --build-arg ENV=prod -t krakend-prod .
 {{< /terminal >}}
 
-## Debug enabled
+
+## Debugging your configuration
+There are 3 different levels of verbosity you can use with the `--debug` (or `-d`) flag. When used a single time you get the most relevant information after parsing the configuration. The following example shows the debu of a configuration with one endpoint:
+
 {{< terminal title="Checking the configuration with the debug flag" >}}
-krakend check -c krakend.json -d
+krakend check -t -d -c krakend.json
 Parsing configuration file: krakend.json
-Parsed configuration: CacheTTL: 1h0m0s, Port: 8080
-Hosts: []
-Extra (1):
-	github_com/devopsfaith/krakend-gologging: map[level:ERROR syslog:false stdout:true prefix:[KRAKEND]]
-Endpoints (3):
-	Endpoint: /supu, Method: GET, CacheTTL: 1h0m0s, Concurrent: 1, QueryString: []
-	Extra (0):
-	Backends (1):
-		URL: /__debug/supu, Method: GET
-			Timeout: 3s, Target: , Mapping: map[], BL: [], WL: [], Group:
-			Hosts: [http://127.0.0.1:8080]
-			Extra (2):
-				github.com/devopsfaith/krakend-martian: map[fifo.Group:map[scope:[request response] aggregateErrors:true modifiers:[map[header.Modifier:map[value:ouh yeah! scope:[request response] name:X-Martian]] map[body.Modifier:map[scope:[request] contentType:application/json body:eyJtc2ciOiJ5b3Ugcm9jayEifQ==]] map[header.RegexFilter:map[header:X-Neptunian regex:no! modifier:map[header.Modifier:map[scope:[request] name:X-Martian-New value:some value]] scope:[request]]]]]]
-				github.com/devopsfaith/krakend-circuitbreaker/gobreaker: map[timeout:10 maxErrors:1 interval:60]
-	Endpoint: /github/:user, Method: GET, CacheTTL: 1h0m0s, Concurrent: 1, QueryString: []
-	Extra (0):
-	Backends (1):
-		URL: /, Method: GET
-			Timeout: 3s, Target: , Mapping: map[], BL: [], WL: [authorizations_url code_search_url], Group:
-			Hosts: [https://api.github.com]
-			Extra (3):
-				github.com/devopsfaith/krakend-martian: map[fifo.Group:map[modifiers:[map[header.Modifier:map[name:X-Martian value:ouh yeah! scope:[request response]]] map[body.Modifier:map[scope:[request] contentType:application/json body:eyJtc2ciOiJ5b3Ugcm9jayEifQ==]] map[header.RegexFilter:map[scope:[request] header:X-Neptunian regex:no! modifier:map[header.Modifier:map[scope:[request] name:X-Martian-New value:some value]]]]] scope:[request response] aggregateErrors:true]]
-				github.com/devopsfaith/krakend-ratelimit/juju/proxy: map[maxRate:2 capacity:2]
-				github.com/devopsfaith/krakend-circuitbreaker/gobreaker: map[interval:60 timeout:10 maxErrors:1]
-	Endpoint: /show/:id, Method: GET, CacheTTL: 1h0m0s, Concurrent: 1, QueryString: []
-	Extra (1):
-		github.com/devopsfaith/krakend-ratelimit/juju/router: map[maxRate:50 clientMaxRate:5 strategy:ip]
-	Backends (2):
-		URL: /user/schedule/{{.Id}}.rss, Method: GET
-			Timeout: 3s, Target: , Mapping: map[], BL: [], WL: [items title], Group: schedule
-			Hosts: [http://showrss.info]
-			Extra (2):
-				github.com/devopsfaith/krakend-circuitbreaker/gobreaker: map[interval:60 timeout:10 maxErrors:1]
-				github.com/devopsfaith/krakend-ratelimit/juju/proxy: map[maxRate:1 capacity:1]
-		URL: /user/{{.Id}}.rss, Method: GET
-			Timeout: 3s, Target: , Mapping: map[], BL: [], WL: [items title], Group: available
-			Hosts: [http://showrss.info]
-			Extra (2):
-				github.com/devopsfaith/krakend-ratelimit/juju/proxy: map[maxRate:2 capacity:2]
-				github.com/devopsfaith/krakend-circuitbreaker/gobreaker: map[interval:60 timeout:10 maxErrors:1]
+Parsing configuration file: krakend.json
+Global settings
+    Name: My lovely gateway
+    Port: 8080
+4 global component configuration(s):
+- github_com/devopsfaith/krakend-botdetector
+- github_com/devopsfaith/krakend-cors
+- github_com/devopsfaith/krakend-gologging
+- github_com/devopsfaith/krakend-metrics
+1 API endpoints:
+    - GET /cel/req-resp/:id
+    Timeout: 3s
+    1 endpoint component configuration(s):
+    - github.com/devopsfaith/krakend-cel
+    Connecting to 2 backend(s):
+        [+] GET /__debug/{{.Id}}
+        Timeout: 3s
+        Hosts: [http://127.0.0.1:8080]
+        1 backend component configuration(s):
+        - github.com/devopsfaith/krakend-cel
+
+        [+] GET /__debug/{{.Id}}
+        Timeout: 3s
+        Hosts: [http://127.0.0.1:8080]
+        1 backend component configuration(s):
+        - github.com/devopsfaith/krakend-cel
+
 Syntax OK!
 {{< /terminal >}}
 
-## Check conflicting routes
-Even the configuration is valid from a syntax perspective, you can have a failing KrakenD once the service starts. To avoid this situation, the `-t` flag will actually start a KrakenD instance and **test the routes**.
+The same example with a verbosity of level 2 (`-dd`), adds more information in the global settings (like the TLS section) and shows the configuration of the extra_config. The endpoints and the backends show also more information:
 
-When automating the checks of the configuration, make sure to add the `-t` flag:
+{{< terminal title="Checking the configuration with the debug flag" >}}
+Parsing configuration file: krakend.json
+Global settings
+    Name: My lovely gateway
+    Port: 8080
+    Default cache TTL: 1h0m0s
+    Default timeout: 3s
+    Default backend hosts: []
+    No TLS section defined
+    No Plugin section defined
+4 global component configuration(s):
+- github_com/devopsfaith/krakend-botdetector
+    deny: [a b]
+    patterns: [(Pingdom.com_bot_version_).* (facebookexternalhit)/.*]
+    allow: [c Pingdom.com_bot_version_1.1]
+- github_com/devopsfaith/krakend-cors
+    expose_headers: [Content-Length]
+    allow_origins: [*]
+    max_age: 12h
+    allow_methods: [POST GET]
+    allow_headers: [Origin Authorization Content-Type]
+- github_com/devopsfaith/krakend-gologging
+    prefix: [KRAKEND]
+    stdout: true
+    level: DEBUG
+    syslog: false
+- github_com/devopsfaith/krakend-metrics
+    listen_address: :8090
+    collection_time: 60s
+1 API endpoints:
+    - GET /example/:id
+    Timeout: 3s
+    QueryString: [q id]
+    CacheTTL: 1h0m0s
+    Headers to pass: [X-Header]
+    OutputEncoding: json
+    Concurrent calls: 1
+    1 endpoint component configuration(s):
+    - github.com/devopsfaith/krakend-cel
+        [map[check_expr:'something' in req_headers['X-Header']] map[check_expr:int(req_params.Id) % 2 == 0]]
+    Connecting to 2 backend(s):
+        [+] GET /__debug/{{.Id}}
+        Timeout: 3s
+        Hosts: [http://127.0.0.1:8080]
+        Concurrent calls: 1
+        Host sanitization disabled: false
+        Target: 
+        Deny: [], Allow: []
+        Mapping: map[]
+        Group: backend1
+        Encoding: 
+        Is collection: false
+        SD: 
+        1 backend component configuration(s):
+        - github.com/devopsfaith/krakend-cel
+            [map[check_expr:int(req_params.Id) % 3 == 0]]
 
-```
-krakend check -t -d -c config.json
-```
+        [+] GET /__debug/{{.Id}}
+        Timeout: 3s
+        Hosts: [http://127.0.0.1:8080]
+        Concurrent calls: 1
+        Host sanitization disabled: false
+        Target: 
+        Deny: [], Allow: []
+        Mapping: map[]
+        Group: backend2
+        Encoding: 
+        Is collection: false
+        SD: 
+        1 backend component configuration(s):
+        - github.com/devopsfaith/krakend-cel
+            [map[check_expr:int(req_params.Id) % 5 == 0]]
 
-Make sure that the port of KrakenD is not allocated in your pipeline. You can always change it with environment vars.
+Syntax OK!
+{{< /terminal >}}
+
+And in the level 3 (`-ddd`) there is everything that KrakenD could parse from the configuration:
+
+{{< terminal title="Checking the configuration with the debug flag" >}}
+krakend check -t -ddd -c krakend.json
+Parsing configuration file: krakend.json
+Global settings
+    Name: My lovely gateway
+    Port: 8080
+    Default cache TTL: 1h0m0s
+    Default timeout: 3s
+    Default backend hosts: []
+    Read timeout: 0s
+    Write timeout: 0s
+    Idle timeout: 0s
+    Read header timeout: 0s
+    Idle connection timeout: 0s
+    Response header timeout: 0s
+    Expect continue timeout: 0s
+    Dialer timeout: 0s
+    Dialer fallback delay: 0s
+    Dialer keep alive: 0s
+    Disable keep alives: false
+    Disable compression: false
+    Max idle connections: 0
+    Max idle connections per host: 250
+    No TLS section defined
+    No Plugin section defined
+4 global component configuration(s):
+- github_com/devopsfaith/krakend-botdetector
+    patterns: [(Pingdom.com_bot_version_).* (facebookexternalhit)/.*]
+    deny: [a b]
+    allow: [c Pingdom.com_bot_version_1.1]
+- github_com/devopsfaith/krakend-cors
+    expose_headers: [Content-Length]
+    allow_methods: [POST GET]
+    allow_origins: [*]
+    allow_headers: [Origin Authorization Content-Type]
+    max_age: 12h
+- github_com/devopsfaith/krakend-gologging
+    level: DEBUG
+    syslog: false
+    stdout: true
+    prefix: [KRAKEND]
+- github_com/devopsfaith/krakend-metrics
+    listen_address: :8090
+    collection_time: 60s
+1 API endpoints:
+    - GET /example/:id
+    Timeout: 3s
+    QueryString: [q id]
+    CacheTTL: 1h0m0s
+    Headers to pass: [X-Header]
+    OutputEncoding: json
+    Concurrent calls: 1
+    1 endpoint component configuration(s):
+    - github.com/devopsfaith/krakend-cel
+        [map[check_expr:'something' in req_headers['X-Header']] map[check_expr:int(req_params.Id) % 2 == 0]]
+    Connecting to 2 backend(s):
+        [+] GET /__debug/{{.Id}}
+        Timeout: 3s
+        Hosts: [http://127.0.0.1:8080]
+        Concurrent calls: 1
+        Host sanitization disabled: false
+        Target: 
+        Deny: [], Allow: []
+        Mapping: map[]
+        Group: backend1
+        Encoding: 
+        Is collection: false
+        SD: 
+        1 backend component configuration(s):
+        - github.com/devopsfaith/krakend-cel
+            [map[check_expr:int(req_params.Id) % 3 == 0]]
+
+        [+] GET /__debug/{{.Id}}
+        Timeout: 3s
+        Hosts: [http://127.0.0.1:8080]
+        Concurrent calls: 1
+        Host sanitization disabled: false
+        Target: 
+        Deny: [], Allow: []
+        Mapping: map[]
+        Group: backend2
+        Encoding: 
+        Is collection: false
+        SD: 
+        1 backend component configuration(s):
+        - github.com/devopsfaith/krakend-cel
+            [map[check_expr:int(req_params.Id) % 5 == 0]]
+
+Syntax OK!
+{{< /terminal >}}

@@ -2,7 +2,7 @@
 aliases: ["/commands/run"]
 lastmod: 2016-10-28
 date: 2016-10-28
-linktitle: Run
+linktitle: Running KrakenD
 title: Running KrakenD server. The `krakend run` command
 description: KrakenD Run Command
 weight: 1
