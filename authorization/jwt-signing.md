@@ -66,18 +66,18 @@ For instance, from the plain token above we want to sign the keys `"access_token
     "auth/signer": {
         "alg": "HS256",
         "kid": "sim2",
-        "keys-to-sign": ["access_token", "refresh_token"],
-        "jwk-url": "http://your-backend/jwk/symmetric.json",
+        "keys_to_sign": ["access_token", "refresh_token"],
+        "jwk_url": "http://your-backend/jwk/symmetric.json",
         "disable_jwk_security": true
     }
 }
 ...
 {{< /highlight >}}
 
-Notice that a [JSON Web key](https://tools.ietf.org/html/rfc7517#appendix-C.1) `jwk-url` is provided to sign the content. Generate your key and save it in a secure place.
+Notice that a [JSON Web key](https://tools.ietf.org/html/rfc7517#appendix-C.1) `jwk_url` is provided to sign the content. Generate your key and save it in a secure place.
 
 {{< note title="Non-secure example" >}}
-The examples on this page add a `disable_jwk_security` flag because the `jwk-url` references an URL with an insecure protocol HTTP. When going to production **serve your JWK under HTTPS** instead and add the rest of security options in the configuration.
+The examples on this page add a `disable_jwk_security` flag because the `jwk_url` references an URL with an insecure protocol HTTP. When going to production **serve your JWK under HTTPS** instead and add the rest of security options in the configuration.
 {{< /note >}}
 
 What happens here is that the user requests a `/token` to the gateway and the issuing is delegated to the backend. The response of the backend with the plain token is signed using your private JWK. And then the user receives the signed token, e.g:
@@ -92,9 +92,9 @@ What happens here is that the user requests a `/token` to the gateway and the is
 The following settings are available to sign JWT:
 
 - `alg`: *recognized string*. The hashing algorithm used by the issuer. Usually `RS256`.
-- `jwk-url`: *string*. The URL to the JWK endpoint with the private keys used to sign the token.
-- `kid`: *string*. The key ID purpose is to match a specific key, as the jwk-url might contain several keys (see [JWT validation](/docs/authorization/jwt-validation/))
-- `keys-to-sign`: *string list*. List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).
+- `jwk_url`: *string*. The URL to the JWK endpoint with the private keys used to sign the token.
+- `kid`: *string*. The key ID purpose is to match a specific key, as the jwk_url might contain several keys (see [JWT validation](/docs/authorization/jwt-validation/))
+- `keys_to_sign`: *string list*. List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).
 
 **Optional fields**:
 
@@ -118,8 +118,8 @@ The following example contains every single option available:
       "extra_config": {
         "auth/signer": {
           "alg": "HS256",
-          "jwk-url": "http://your-backend/jwk/symmetric.json",
-          "keys-to-sign": [
+          "jwk_url": "http://your-backend/jwk/symmetric.json",
+          "keys_to_sign": [
             "access_token",
             "refresh_token"
           ],

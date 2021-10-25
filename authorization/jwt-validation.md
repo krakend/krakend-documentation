@@ -66,7 +66,7 @@ The `alg` and `kid` values depend on your implementation, but they must be prese
 {{< note title="Important!" >}}
 Make sure you are declaring the right `kid` in your JWT. Paste a token in a [debugger](https://jwt.io/#debugger-io). to find out.
 
-The value provided in the `kid` must match with the `kid` declared at the `jwk-url` or `jwk_local_path`. 
+The value provided in the `kid` must match with the `kid` declared at the `jwk_url` or `jwk_local_path`. 
 {{< /note >}}
 
 The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches both the single key present in the JWK document and the token header.
@@ -89,7 +89,7 @@ For instance, to protect the endpoint `/protected/resource`:
             "audience": ["http://api.example.com"],
             "roles_key": "http://api.example.com/custom/roles",
             "roles": ["user", "admin"],
-            "jwk-url": "https://albert-test.auth0.com/.well-known/jwks.json"
+            "jwk_url": "https://albert-test.auth0.com/.well-known/jwks.json"
         }
     },
     "backend": [
@@ -108,13 +108,13 @@ This configuration makes sure that:
 - The token is not revoked in the bloom filter (see [revoking tokens](/docs/authorization/revoking-tokens/))
 
 ## JWT validation settings
-The following settings are available for JWT validation. There are a lot of options, although generally only the **fields `alg` and `jwk-url` or `jwk_local_path` are mandatory**, and the rest of the keys can be added or not at your best convenience or depending on other options.
+The following settings are available for JWT validation. There are a lot of options, although generally only the **fields `alg` and `jwk_url` or `jwk_local_path` are mandatory**, and the rest of the keys can be added or not at your best convenience or depending on other options.
 
 These options are for the `extra_config`'s namespace `"auth/validator"` placed in every endpoint (use [flexible configuration](/docs/configuration/flexible-config/) to avoid code repetition):
 
 - `alg` (*recognized string*): The hashing algorithm used by the issuer. See the [hashing algorithms](#hashing-algorithms) section for a comprehensive list of supported algorithms.
-- `jwk-url` (*string*): The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
-- `jwk_local_path` (*string*): Local path to the JWK public keys. Instead of pointing to an external URL (`jwk-url`) the public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add:
+- `jwk_url` (*string*): The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
+- `jwk_local_path` (*string*): Local path to the JWK public keys. Instead of pointing to an external URL (`jwk_url`) the public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add:
     - `secret_url` (*url*): An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers below)
     - `cypher_key` (*string*): The cyphering key.
 - `cache` (*boolean*): Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, recommended for performance. The cache can store up to 100 different public keys simultaneously.
@@ -132,12 +132,12 @@ These options are for the `extra_config`'s namespace `"auth/validator"` placed i
 - `jwk_fingerprints` (*strings list*): A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man-in-the-middle attacks. Add fingerprints in base64 format.
 - `cipher_suites` (*integers list*): Override the default cipher suites. Use it if you want to enforce an even higher security standard.
 - `jwk_local_ca` (*string*): Path to the CA's certificate that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
-- `propagate-claims` (*list*): Enables passing claims in the backend's request header (see below)
+- `propagate_claims` (*list*): Enables passing claims in the backend's request header (see below)
 - `key_identify_strategy` (*string*): Allows strategies other than `kid` to load keys. Allowed values are: `kid`, `x5t`, `kid_x5t`
 
 For the full list of recognized algorithms and cipher suites, scroll down to the end of the document.
 
-Here there is an example using an external `jwk-url`:
+Here there is an example using an external `jwk_url`:
 
 {{< highlight JSON >}}
 {
@@ -145,7 +145,7 @@ Here there is an example using an external `jwk-url`:
 "extra_config": {
     "auth/validator": {
         "alg": "RS256",
-        "jwk-url": "https://url/to/jwks.json",
+        "jwk_url": "https://url/to/jwks.json",
         "cache": true,
         "audience": [
             "audience1"
@@ -180,9 +180,9 @@ Here there is an example using an external `jwk-url`:
 ### Validation process
 KrakenD does the following validation to let users hit protected endpoints:
 
-- The `jwk-url` must be accessible by KrakenD at all times (caching is available)
+- The `jwk_url` must be accessible by KrakenD at all times (caching is available)
 - The token is [well formed](https://jwt.io/#debugger-io)
-- The `kid` in the header is listed in the `jwk-url` or `jwk_local_path`.
+- The `kid` in the header is listed in the `jwk_url` or `jwk_local_path`.
 - The content of the JWK Keys (`k`) is **base64** urlencoded
 - The algorithm `alg` is supported by KrakenD and matches exactly the one used in the endpoint definition.
 - The token hasn't expired
@@ -287,7 +287,7 @@ Since KrakenD 1.3.0, it is possible to forward claims in a JWT as request header
 ```
 "extra_config": {
         "auth/validator": {
-          "propagate-claims": [
+          "propagate_claims": [
             ["sub", "x-user"]
           ],
           ...

@@ -59,7 +59,7 @@ Paste the following configuration into a `krakend.json` file.
         "auth/validator": {
             "alg": "SIGNING_ALGORITHM",
             "audience": ["AUDIENCE"],
-            "jwk-url": "https://DOMAIN/.well-known/jwks.json"
+            "jwk_url": "https://DOMAIN/.well-known/jwks.json"
         }
     },
     "backend": [
@@ -91,7 +91,7 @@ The previous screenshots correspond to a configuration like the one it follows (
 {
   "alg": "RS256",
   "audience": ["http://api.example.com"],
-  "jwk-url": "https://krakend-auth0-test.auth0.com/.well-known/jwks.json"
+  "jwk_url": "https://krakend-auth0-test.auth0.com/.well-known/jwks.json"
 }
 {{< /highlight >}}
 

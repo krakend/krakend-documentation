@@ -52,7 +52,7 @@ Paste the following configuration into a `krakend.json` file.
     "extra_config": {
         "auth/validator": {
             "alg": "RS256",
-            "jwk-url": "http://KEYCLOAK:8080/auth/realms/master/protocol/openid-connect/certs",
+            "jwk_url": "http://KEYCLOAK:8080/auth/realms/master/protocol/openid-connect/certs",
             "disable_jwk_security": true
         }
     },
@@ -66,6 +66,6 @@ Paste the following configuration into a `krakend.json` file.
 }
 {{< /highlight >}}
 
-From the configuration above, you have to **replace the `KEYCLOAK:8080` value** to match your installation. If you don't use the default realm `master` then change it also in the `jwk-url`. That's the minimum configuration you need to protect your API from being accessed by someone who has not a valid token from Keycloak. Also notice there is a flag `"disable_jwk_security": true`, this is necessary when we are accessing our JWK address with http instead of https.
+From the configuration above, you have to **replace the `KEYCLOAK:8080` value** to match your installation. If you don't use the default realm `master` then change it also in the `jwk_url`. That's the minimum configuration you need to protect your API from being accessed by someone who has not a valid token from Keycloak. Also notice there is a flag `"disable_jwk_security": true`, this is necessary when we are accessing our JWK address with http instead of https.
 
 Now you might want to add **additional checks to your system** and take advantage of all the powerful features of Keycloak. This is possible by [declaring more elements into the configuration](https://www.krakend.io/docs/authorization/jwt-validation/).

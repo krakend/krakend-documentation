@@ -124,7 +124,7 @@ We will use this configuration for the demo
 	                        "qos/circuit-breaker": {
 	                            "interval": 60,
 	                            "timeout": 10,
-	                            "maxErrors": 1
+	                            "max_errors": 1
 	                        }
 	                    }
 	                }
@@ -188,7 +188,7 @@ We will use this configuration for the demo
 	                        "qos/circuit-breaker": {
 	                            "interval": 60,
 	                            "timeout": 10,
-	                            "maxErrors": 1
+	                            "max_errors": 1
 	                        }
 	                    }
 	                }
@@ -213,7 +213,7 @@ We will use this configuration for the demo
 	                        "qos/circuit-breaker": {
 	                            "interval": 60,
 	                            "timeout": 10,
-	                            "maxErrors": 1
+	                            "max_errors": 1
 	                        }
 	                    }
 	                },
@@ -233,7 +233,7 @@ We will use this configuration for the demo
 	                        "qos/circuit-breaker": {
 	                            "interval": 60,
 	                            "timeout": 10,
-	                            "maxErrors": 1
+	                            "max_errors": 1
 	                        }
 	                    }
 	                }

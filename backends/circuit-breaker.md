@@ -47,9 +47,9 @@ The following configuration is an example of how to add circuit breaker capabili
                 "qos/circuit-breaker": {
                     "interval": 60,
                     "timeout": 10,
-                    "maxErrors": 1,
+                    "max_errors": 1,
                     "name": "cb-myendpoint-1",
-                    "logStatusChange": true
+                    "log_status_change": true
                 }
             }
         }
@@ -63,14 +63,14 @@ The attributes available for the configuration are:
 
 - `interval`: (*integer*) Time window where the errors count, in seconds.
 - `timeout`: (*integer*) For how long the circuit breaker will wait before testing again that the backend is healthy.
-- `maxErrors`: (*integer*) The consecutive number of errors within the `interval` window to consider the backend unhealthy.
+- `max_errors`: (*integer*) The consecutive number of errors within the `interval` window to consider the backend unhealthy.
 - `name`: (*string*) A friendly name to identify this circuit breaker's activity in the logs.
-- `logStatusChange`: (*boolean*)  Whether to log the changes of state of this circuit breaker or not.
+- `log_status_change`: (*boolean*)  Whether to log the changes of state of this circuit breaker or not.
 
 ## How it works
 
 The Circuit Breaker retains the state of the connections to your backend (s) over a series of requests
-and when it sees more than the configured number of **consecutive failures** (`maxErrors`) in a given time interval (`interval`)
+and when it sees more than the configured number of **consecutive failures** (`max_errors`) in a given time interval (`interval`)
 it stops all the interaction with the backend for the next N seconds (the `timeout`). After waiting for this time window, the system will allow a single connection to trial the system again: if it fails, it will wait N seconds more, and if it succeeds, it will return to the normal state, and the system is considered healthy.
 
 The circuit breaker works with three different internal states, and the easiest way to imagine it is like in an electrical circuit:
@@ -90,5 +90,5 @@ And this is the way the states change:
 | ![Krakend logo](/images/documentation/circuit-breaker-states.png) |
 
 - `CLOSED`: In the initial state, the system is healthy and sending connections to the backend.
-- `OPEN`: When a consecutive number of supported errors from the backend (`maxErrors`) is exceeded, the system changes to `OPEN`, and no further connections are sent to the backend. The system will stay in `OPEN` state for N seconds ( the `timeout`).
+- `OPEN`: When a consecutive number of supported errors from the backend (`max_errors`) is exceeded, the system changes to `OPEN`, and no further connections are sent to the backend. The system will stay in `OPEN` state for N seconds ( the `timeout`).
 - `HALF-OPEN`: After the timeout, it changes to this state and allows one connection to pass. If the connection succeeds, the state changes to `CLOSED`, and the backend is considered to be healthy again. But if it fails, it switches back to `OPEN` for another timeout.
