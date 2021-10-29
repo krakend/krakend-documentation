@@ -79,9 +79,8 @@ Components declare in their source code a **unique namespace**. KrakenD register
     }
 {{< /highlight >}}
 
-All components built by the KrakenD team **use namespaces inspired by the location of the original package**, so they might *look like an URL* but it's just a unique identifier that clearly defines where the original package is. 
-
 For instance, the [extended logging component](/docs/logging/extended-logging/) uses the **namespace** `telemetry/logging`:
+
 {{< highlight JSON >}}
 {
     "version": 2,

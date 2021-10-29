@@ -141,37 +141,37 @@ Here there is an example using an external `jwk_url`:
 
 {{< highlight JSON >}}
 {
-"endpoint": "/foo"
-"extra_config": {
-    "auth/validator": {
-        "alg": "RS256",
-        "jwk_url": "https://url/to/jwks.json",
-        "cache": true,
-        "audience": [
-            "audience1"
-        ],
-        "roles_key": "department",
-        "roles_key_is_nested": false,
-        "roles": [
-            "sales",
-            "development"
-        ],
-        "scopes_key": "my_scopes",
-        "scopes_matcher": "any",
-        "scopes": [
-            "resource1:action1",
-            "resource2:action1",
-            "resource1:action2"
-        ],
-        "issuer": "http://my.api.com",
-        "cookie_key": "TOKEN",
-        "disable_jwk_security": true,
-        "jwk_fingerprints": [
-            "S3Jha2VuRCBpcyB0aGUgYmVzdCBnYXRld2F5LCBhbmQgeW91IGtub3cgaXQ=="
-        ],
-        "cipher_suites": [
-            10, 47, 53
-        ]
+    "endpoint": "/foo",
+    "extra_config": {
+        "auth/validator": {
+            "alg": "RS256",
+            "jwk_url": "https://url/to/jwks.json",
+            "cache": true,
+            "audience": [
+                "audience1"
+            ],
+            "roles_key": "department",
+            "roles_key_is_nested": false,
+            "roles": [
+                "sales",
+                "development"
+            ],
+            "scopes_key": "my_scopes",
+            "scopes_matcher": "any",
+            "scopes": [
+                "resource1:action1",
+                "resource2:action1",
+                "resource1:action2"
+            ],
+            "issuer": "http://my.api.com",
+            "cookie_key": "TOKEN",
+            "disable_jwk_security": true,
+            "jwk_fingerprints": [
+                "S3Jha2VuRCBpcyB0aGUgYmVzdCBnYXRld2F5LCBhbmQgeW91IGtub3cgaXQ=="
+            ],
+            "cipher_suites": [
+                10, 47, 53
+            ]
     }
 }
 }
