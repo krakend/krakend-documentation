@@ -3,7 +3,7 @@ lastmod: 2021-06-13
 date: 2019-02-22
 linktitle: TLS
 title: Enabling TLS for HTTPS and HTTP/2
-weight: 10
+weight: 50
 menu:
   community_current:
     parent: "030 Service Settings"

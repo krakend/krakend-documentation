@@ -1,6 +1,6 @@
 ---
-lastmod: 2020-07-10
-date: 2020-07-10
+lastmod: 2021-10-29
+date: 2021-10-29
 linktitle: Router options
 title: Customizing router behavior
 weight: 10
