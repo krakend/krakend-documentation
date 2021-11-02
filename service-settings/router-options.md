@@ -4,7 +4,7 @@ date: 2021-10-29
 linktitle: Router options
 title: Customizing router behavior
 weight: 10
-notoc: true
+notoc: false
 meta:
   since: 2.0
   source: https://github.com/devopsfaith/krakend-cors
@@ -22,7 +22,6 @@ The **optional router configuration** allows you to set global flags that change
 
 Generally speaking **you don't need this**. But in every case there is an exception and you might eventually need to change some value. 
 
-## Adding router flags
 To change the router behavior, add the namespace `router` under the global `extra_config`. The following example shows how to return the error to the client:
 
 See below the list of supported flags.
