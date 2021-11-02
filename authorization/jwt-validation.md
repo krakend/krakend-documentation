@@ -111,7 +111,7 @@ These options are for the `extra_config`'s namespace `"auth/validator"` placed i
 - `jwk_local_ca` (*string*): Path to the CA's certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
 - `propagate_claims` (*list*): Enables passing claims in the backend's request header (see below)
 - `key_identify_strategy` (*string*): Allows strategies other than `kid` to load keys. Allowed values are: `kid`, `x5t`, `kid_x5t`
-- `operation_debug` (*bool*): When `true`, any JWT **validation operation** gets printed in the log with a level `DEBUG`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.
+- `operation_debug` (*bool*): When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.
 
 For the complete list of recognized algorithms and cipher suites, scroll down to the end of the document.
 
