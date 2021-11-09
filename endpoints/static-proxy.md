@@ -9,7 +9,7 @@ menu:
     parent: "040 Endpoint Configuration"
 meta:
   since: 0.5
-  source: https://github.com/devopsfaith/krakend
+  source: https://github.com/luraproject/lura
   namespace:
   - proxy
   scope:

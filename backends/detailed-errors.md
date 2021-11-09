@@ -11,7 +11,7 @@ menu:
     parent: "050 Backends Configuration "
 meta:
   since: 0.8
-  source: https://github.com/devopsfaith/krakend
+  source: https://github.com/luraproject/lura
   namespace:
   - backend/http
   scope:
