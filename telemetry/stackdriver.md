@@ -10,7 +10,7 @@ notoc: true
 aliases: ["/docs/logging-metrics-tracing/stackdriver/"]
 menu:
   community_current:
-    parent: "080 Telemetry"
+    parent: "080 Telemetry and Analytics"
 meta:
   since: 0.7
   source: https://github.com/devopsfaith/krakend-opencensus

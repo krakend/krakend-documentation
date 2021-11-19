@@ -9,7 +9,7 @@ notoc: true
 aliases: ["/docs/logging-metrics-tracing/zipkin/"]
 menu:
   community_current:
-    parent: "080 Telemetry"
+    parent: "080 Telemetry and Analytics"
 meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
