@@ -79,3 +79,19 @@ krakend run --config path/to/krakend.json --port 8888
 {{< /terminal >}}
 
 In development and testing phase [increase the verbosity of the logs](/docs/logging/extended-logging/#set-the-reporting-level)
+
+## Anonymous reporting
+When KrakenD starts, sends a request to our stats server with anonymous no-sensitive information. Our Telemetry system sends **1 request every 12 hours** and contains the following data:
+
+- The KrakenD Version you are running
+- The architecture (e.g: `amd64`)
+- The operating system /`linux`/ `darwin`)
+- A random unique ID
+ 
+That's all we collect. We are well aware of the importance of privacy. We are not in the data-mining business, so we selected a set of minimal details to share from your KrakenD instances that would give us enough insights into the matter without being invasive. We decided that we'd rather lose some accuracy than collect (maybe) sensible information, so we went for this **anonymous approach**.
+
+We don't collect typical system metrics like the number of CPU/cores, CPU usage, available and consumed ram, network throughput, etc. That’s something more related to system monitoring than to the use of KrakenD, and we felt that collecting these metrics generates friction with the acceptance of a telemetry system. 
+
+In any case if you are not comfortable with sharing your KrakenD version, in the open source version you can disable it by passing an environment variable `USAGE_DISABLE=1`.
+
+If you are curious to know how be built it, [read our blog post](/blog/building-a-telemetry-service/).

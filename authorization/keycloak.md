@@ -14,6 +14,8 @@ meta:
   - auth/validator
   scope:
   - endpoint
+  log_prefix:
+  - "[ENDPOINT: /foo][JWTValidator]"
 skip_header_image: true
 images:
 - /images/documentation/keycloak/krakend-keycloak-integration-workflow.png

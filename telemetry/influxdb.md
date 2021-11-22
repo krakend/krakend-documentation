@@ -17,6 +17,8 @@ meta:
   - telemetry/opencensus
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Opencensus]"
 ---
 [InfluxDB](https://www.influxdata.com/) is a time series database designed to handle high write and query loads.
 
@@ -24,6 +26,8 @@ The Opencensus exporter allows you export data to [InfluxDB](https://www.influxd
 
 The following configuration snippet sends data to your InfluxDB:
 
+{{< highlight json >}}
+{
     "telemetry/opencensus": {
       "exporters": {
         "influxdb": {
@@ -35,7 +39,8 @@ The following configuration snippet sends data to your InfluxDB:
         },
       }
     }
-
+}
+{{< /highlight >}}
 - `address` is the URL (including port) where your InfluxDB is installed.
 - `db` is the database name.
 - `timeout` is the maximum time you will wait for InfluxDB to respond.

@@ -20,6 +20,8 @@ meta:
   - telemetry/opencensus
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Opencensus]"
 ---
 [Datadog](https://www.datadoghq.com/) is a monitoring and security platform for developers, IT operations teams and business in the cloud.
 
@@ -27,7 +29,8 @@ meta:
 The Opencensus exporter allows you export data to Datadog. Enabling it only requires you to add the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your Datadog:
-
+{{< highlight json >}}
+{
       "extra_config": {
         "telemetry/opencensus": {
           "exporters": {
@@ -47,7 +50,8 @@ The following configuration snippet sends data to your Datadog:
           }
         }
       }
-
+}
+{{< /highlight  >}}
 - `tags` (*list*) specifies a set of global tags to attach to each metric
 - `global_tags` (*object*) GlobalTags holds a set of tags (key/value) that will automatically be applied to all exported spans.
 - `service` (*string*) Service specifies the service name used for tracing

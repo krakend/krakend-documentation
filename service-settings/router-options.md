@@ -12,6 +12,8 @@ meta:
   - router
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Gin]"
 
 menu:
   community_current:

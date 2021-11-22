@@ -17,6 +17,9 @@ meta:
   scope:
   - endpoint
   - backend
+  log_prefix:
+  - "[ENDPOINT: /foo][CEL]"
+  - "[BACKEND: /foo][CEL]"
 ---
 There are times when you might want to include **additional logic** in the gateway to decide if a request has to be fulfilled or not.
 
@@ -31,7 +34,9 @@ Then, during runtime, when an expression returns `false`, KrakenD does not retur
 
 The CEL expressions have a similar syntax to expressions in C/C++/Java/JavaScript and evaluate to a boolean condition. For instance:
 
-    '::1' in req_headers['X-Forwarded-For']
+{{< highlight js>}}
+'::1' in req_headers['X-Forwarded-For']
+{{< /highlight >}}
 
 This expression checks that the request header array `X-Forwarded-For` contains an item with a value matching `::1` (request comes from localhost).
 
@@ -54,6 +59,7 @@ For instance, you might want to reject users that do not adhere to some criteria
 
 The configuration is as follows:
 
+{{< highlight json>}}
     "extra_config":{
       "validation/cel": [
         {
@@ -61,6 +67,7 @@ The configuration is as follows:
         }
       ]
     }
+{{< /highlight>}}
 
 - `check_expr`: The expression that evaluates as a boolean, you can write any conditional. If all stacked conditions are *true* the request continues, *false*, it fails to retrieve data from the token, the request, or the response. The expressions can use a set of **variables**, shown in the sections below.
 
@@ -104,8 +111,9 @@ The following variables can be used inside the `check_expr`:
 CEL expressions can also be used during the JWT token validation. Use the `JWT`
 variable to access its metadata. For instance:
 
-
+{{< highlight js>}}
     has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)
+{{< /highlight>}}
 
 This example checks that the JWT token contains the metadata `user_id` and
 `enabled_days` with the macro `has()`, and then checks that today's weekday  is
@@ -119,8 +127,9 @@ The following example snippets demonstrate how to check requests and responses.
 ### Example: Discard an invalid request before reaching the backend
 The following example demonstrates how to reject a user request that does not fulfill a specific expression, checking at the endpoint level that when `/nick/{nick}` is called, a constraining format applies. More specifically, the example requires that the parameter `{nick}` matches the expression `k.*`:
 
-    "endpoints": [
-        {
+{{< highlight json>}}
+{
+      "endpoints": [{
           "endpoint": "/nick/{nick}",
           "extra_config":{
             "validation/cel": [
@@ -129,16 +138,19 @@ The following example demonstrates how to reject a user request that does not fu
               }
             ]
           },
-          "backend": [{...}]
-        }
+          "backend": [...]
+        }]
+}
+{{< /highlight >}}
 
 With this configuration, any request to `/nick/kate` or `/nick/kevin` will make it to the backend, while a request to `/nick/ray` will be immediately rejected.
 
 ### Example: Check if the backend response has a specific field or abort
 This example can be copy/pasted into your configuration as it connects to an existing external API. The CEL validation happens at the backend level. After the backend has been queried, the CEL expression checks that a field `website` exists inside the response body. If the user does not have the field, the call to the endpoint will fail:
 
-    "endpoints": [
-    {
+{{< highlight json>}}
+{
+    "endpoints": [{
       "endpoint": "/nick/{nick}",
       "backend": [
         {
@@ -160,13 +172,16 @@ This example can be copy/pasted into your configuration as it connects to an exi
           }
         }
       ]
-    }
+    }]
+}
+{{< /highlight >}}
 
 Also, notice how we are accessing a `bitbucket` element in the data, which is a new attribute added by KrakenD thanks to the `group` functionality (it does not exist in the origin API). The point here is that the CEL evaluation is applied **after** KrakenD has processed the backend.
 
 ### Example: Time-based access
 Because we engineers prefer not to paged over the weekends when backends go down, let's close the access to them during the weekend, so they are 100% operational :)
 
+{{< highlight json>}}
     {
       "endpoint": "/weekdays",
       "extra_config":{
@@ -176,12 +191,13 @@ Because we engineers prefer not to paged over the weekends when backends go down
           }
         ]
     }
-
+{{< /highlight >}}
 Note: The function `getDayOfWeek()` starts at `0` (Sunday), so the only days with a `mod <=4 ` are 0 and 6. 
 
 ### Example: Use custom data from JWT payload
 Let's say that the JWT token the user sent contains an attribute named `enabled_days` in its payload. This attribute lists all the integers representing which days the resource can be accessed:
 
+{{< highlight json>}}
     {
       "endpoint": "/combination/{id}",
       "extra_config":{
@@ -191,5 +207,5 @@ Let's say that the JWT token the user sent contains an attribute named `enabled_
           }
         ]
     }
-
+{{< /highlight >}}
 The expression checks that the JWT token has both the `user_id` and the `enabled_days` and that today is a valid day.

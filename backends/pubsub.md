@@ -17,6 +17,8 @@ meta:
   - backend/pubsub/susbcriber
   scope:
   - backend
+  log_prefix:
+  - "[BACKEND: schema://host][PubSub]"
 ---
 Since KrakenD 1.0 you can connect an endpoint to multiple publish/subscribe backends, helping you integrate with **event driven architectures**. For instance, a frontend client can push events to a queue using a REST interface. Or a client could consume a REST endpoint that is plugged to the last events pushed in a backend. You can even **validate messages and formats** as all the KrakenD available middleware can be used. The list of supported backend technologies is:
 

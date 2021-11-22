@@ -15,6 +15,8 @@ meta:
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
   - telemetry/opencensus
+  log_prefix:
+  - "[SERVICE: Opencensus]"
   scope:
   - service
 ---

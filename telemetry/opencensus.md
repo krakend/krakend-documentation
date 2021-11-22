@@ -16,25 +16,28 @@ meta:
   - telemetry/opencensus
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Opencensus]"
 ---
 The Opencensus exporter is a single component that allows you to **export data to multiple providers**, both open source and privative.
 
 You will be interested in Opencensus when you want to see data in one of its supported `exporters`. For instance, you might want to send metrics to Prometheus. That would be as easy as adding this snippet in the **root level** of your `krakend.json` file:
 
+{{< highlight json >}}
     {
         "version": 2,
         "extra_config": {
             "telemetry/opencensus": {
                 "exporters": {
                     "prometheus": {
-                        "port": 9091
+                        "port": 9091,
                         "namespace": "krakend"
                     }
                 }
             }
         }
     }
-
+{{< /highlight >}}
 ## Configuration
 
 The Opencensus only needs an exporter to work, although multiple exporters can be added in the same configuration. Every exporter has its own configuration and this described in its own section.

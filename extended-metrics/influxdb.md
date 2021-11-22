@@ -16,6 +16,8 @@ meta:
   - telemetry/metrics
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: InfluxDB]"
 ---
 
 KrakenD can expose detailed and extended metrics via the [krakend-metrics](/docs/extended-metrics/influxdb/)). The **krakend-influx** component lets you **send these extended KrakenD metrics to InfluxDB**.

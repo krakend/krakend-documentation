@@ -15,6 +15,8 @@ meta:
   - telemetry/metrics
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Stats]"
 ---
 
 The metrics *middleware* collects **extended metrics** and exposes them in the `/__stats/` endpoint. The endpoint runs in a different port than the API, and contains a lot of metrics.

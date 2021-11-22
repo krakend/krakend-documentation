@@ -18,6 +18,8 @@ meta:
   - qos/circuit-breaker
   scope:
   - backend
+  log_prefix:
+  - "[BACKEND: /foo][CB]"
 ---
 
 To keep KrakenD responsive and resilient, we added a **Circuit Breaker** middleware on several processing pipe points. Thanks to this component, when KrakenD demands more throughput than your actual API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also useful for dealing with network and other communication problems by preventing too many requests to fail due to timeouts, etc.

@@ -17,6 +17,9 @@ meta:
   - security/bot-detector
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Gin][Botdetector]"
+  - "[ENDPOINT: /foo][Botdetector]"
 ---
 
 The **bot detector** module checks incoming connections to the gateway to determine if a bot made them, helping you detect and reject bots carrying out scraping, content theft, and form spam.

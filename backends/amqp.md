@@ -15,6 +15,8 @@ meta:
   - backend/amqp/producer
   scope:
   - backend
+  log_prefix:
+  - "[BACKEND: /foo][AMQP]"
 ---
 
 The AMQP component allows to **send and receive messages to and from a queue** through the API Gateway.

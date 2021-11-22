@@ -17,6 +17,10 @@ meta:
   scope:
   - endpoint
   - backend
+  log_prefix:
+  - "[SERVICE: Gin][Botdetector]"
+  - "[ENDPOINT: /foo][Lua]"
+  - "[BACKEND: /foo][Lua]"
 ---
 
 Scripting with Lua is an additional choice to extend your business logic, and is compatible with the rest of options such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or other Go plugins and middlewares.

@@ -4,11 +4,18 @@ date: 2018-11-03
 linktitle: JWT Signing
 title: JWT Signing
 weight: 30
-source: https://github.com/devopsfaith/krakend-jose
 images: ["/images/krakend-signer-flow.png"]
 menu:
   community_current:
     parent: "060 Authentication & Authorization"
+meta:
+  source: https://github.com/devopsfaith/krakend-jose
+  namespace:
+  - auth/signer
+  scope:
+  - endpoint
+  log_prefix:
+  - "[ENDPOINT: /foo][JWTSigner]"
 ---
 
 The JWT signing component creates a **wrapper for your login endpoint** that signs with your secret key the selected fields of the backend payload right before returning the content to the end-user. 

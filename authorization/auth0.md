@@ -14,6 +14,8 @@ meta:
   - auth/validator
   scope:
   - endpoint
+  log_prefix:
+  - "[ENDPOINT: /foo][JWTValidator]"
 ---
 Let's start with the elephant in the room: when you face the challenge of creating a modern API that has to be scalable, secure, performant, and resilient, it might look like a daunting task.
 

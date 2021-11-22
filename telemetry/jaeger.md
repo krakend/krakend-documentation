@@ -17,22 +17,29 @@ meta:
   - telemetry/opencensus
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Opencensus]"
 ---
 [Jaeger](https://www.jaegertracing.io/) is an open source, end-to-end distributed tracing system that allows you to monitor and troubleshoot transactions in complex distributed systems.
 
 The Opencensus exporter allows you export data to Jaeger. Enabling it only requires you to add the `jaeger` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your Jaeger:
-
-	"telemetry/opencensus": {
-    "exporters": {
-      "jaeger": {
-			  "endpoint": "http://192.168.99.100:14268/api/traces",
-        "service_name":"krakend",
-        "buffer_max_count": 1000
-		  },
-	  }
-	}
+{{< highlight json >}}
+{
+  "extra_config":{
+    "telemetry/opencensus": {
+      "exporters": {
+        "jaeger": {
+          "endpoint": "http://192.168.99.100:14268/api/traces",
+          "service_name":"krakend",
+          "buffer_max_count": 1000
+        },
+      }
+    }
+  }
+}
+{{< /highlight >}}
 
 - `endpoint` is the URL (including port) where your Jaeger is
 - `service_name` the service name registered in Jaeger

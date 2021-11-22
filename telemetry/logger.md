@@ -18,13 +18,17 @@ meta:
   - telemetry/opencensus
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Opencensus]"
 ---
 Opencensus can export data to the system logger as another exporter.
 
 Enabling it only requires you to add the `logger` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet enables the logger:
-
+{{< highlight json >}}
+{
+  "extra_config":{
     "telemetry/opencensus": {
         "exporters": {
           "logger": {
@@ -33,6 +37,8 @@ The following configuration snippet enables the logger:
           }
         }
     }
+}
+{{< /highlight >}}
 
 - `stats`: Whether to log the statistics or not
 - `spans`: Whether to log the spans or not
