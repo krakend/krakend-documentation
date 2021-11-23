@@ -1,13 +1,15 @@
 ---
-lastmod: 2019-03-21
+lastmod: 2021-11-23
 date: 2019-03-21
 linktitle: OAuth2 Client credentials
-title: OAuth 2.0 Client Credentials
+title: OAuth 2.0 Client Credentials (2-legged flow)
 weight: 50
 #notoc: true
 menu:
   community_current:
     parent: "060 Authentication & Authorization"
+images:
+-   /images/documentation/krakend-oauth2-2-legged.png
 meta:
   #since: 
   source: https://github.com/devopsfaith/krakend-oauth2-clientcredentials
@@ -17,7 +19,7 @@ meta:
   - endpoint
 ---
 
-Through the **OAuth 2.0 Client Credentials Grant** KrakenD can request to your authorization server an access token to reach protected resources.
+Through the **OAuth 2.0 Client Credentials Grant**, KrakenD can request to your authorization server an access token to reach protected resources. This is frequently described as the **2-legged OAuth2 flow**.
 
 The client credentials **authorize KrakenD, as the client, to access the protected resources**. Do not confuse this with authorizing an end-user (see [JWT](/docs/authorization/jwt-overview/) instead).
 
@@ -54,6 +56,10 @@ The settings of this component are:
 - `token_url` *string*: The endpoint URL where the negotiation of the token happens
 - `scopes`: *string,optional* A comma separated list of scopes needed, e.g.: `scopeA,scopeB`
 - `endpoint_params` *list,optional*: Any additional parameters that you want to include **in the payload** when requesting the token. For instance, it is frequent to add the `audience` request parameter that denotes the target API for which the token should be issued.
+
+{{< note title="Does this generate a new token for each backend request?" type="question" >}}
+No way! The token will be **automatically refreshed as necessary** (usually when it expires or the server is restarted).
+{{< /note >}}
 
 
 ## Auth0 integration
