@@ -50,26 +50,29 @@ A single endpoint can consume messages from N queues, or can consume N messages 
 ### Example
 The needed configuration to run a consumer is:
 
-        "backend": [
-            {
-                "host": [
-                    "amqp://guest:guest@myqueue.host.com:5672"
-                ],
-                "disable_host_sanitize": true,
-                "extra_config": {
-                    "backend/amqp/consumer": {
-                        "name":           "queue-1",
-                        "exchange":       "some-exchange",
-                        "durable":        true,
-                        "delete":         false,
-                        "exclusive":      false,
-                        "no_wait":        true,
-                        "no_local":       false,
-                        "routing_key":    ["#"],
-                        "prefetch_count": 10
-                    }
+{{< highlight json >}}
+    {
+    "backend": [{
+            "host": [
+                "amqp://guest:guest@myqueue.host.com:5672"
+            ],
+            "disable_host_sanitize": true,
+            "extra_config": {
+                "backend/amqp/consumer": {
+                    "name":           "queue-1",
+                    "exchange":       "some-exchange",
+                    "durable":        true,
+                    "delete":         false,
+                    "exclusive":      false,
+                    "no_wait":        true,
+                    "no_local":       false,
+                    "routing_key":    ["#"],
+                    "prefetch_count": 10
                 }
             }
+        }]
+    }
+{{< /highlight >}}
 
 ### Consumer settings
 The full list of parameters for the consumer are:
@@ -87,28 +90,31 @@ Worth mentioning that the producer needs you to pass a body in the request and t
 ### Example
 The needed configuration to run a producer is as follows:
 
-        "endpoint": "/producer",
-        "headers_to_pass": [ "...", "..." ],
-        "backend": [
-            {
-                "host": [
-                    "amqp://guest:guest@myqueue.host.com:5672"
-                ],
-                "disable_host_sanitize": true,
-                "extra_config": {
-                    "backend/amqp/producer": {
-                        "name": "queue-1",
-                        "exchange":       "some-exchange",
-                        "durable":        true,
-                        "delete":         false,
-                        "exclusive":      false,
-                        "no_wait":        true,
-                        "mandatory": true,
-                        "immediate": false
-                    }
+{{< highlight json >}}
+{
+    "endpoint": "/producer",
+    "headers_to_pass": [ "...", "..." ],
+    "backend": [
+        {
+            "host": [
+                "amqp://guest:guest@myqueue.host.com:5672"
+            ],
+            "disable_host_sanitize": true,
+            "extra_config": {
+                "backend/amqp/producer": {
+                    "name": "queue-1",
+                    "exchange": "some-exchange",
+                    "durable": true,
+                    "delete": false,
+                    "exclusive": false,
+                    "no_wait": true,
+                    "mandatory": true,
+                    "immediate": false
                 }
             }
-
+        }]
+}
+{{< /highlight >}}
 
 ### Producer settings
 The full list of parameters for the producer are:
@@ -134,11 +140,13 @@ Notice the capitalization of the first letter of the parameter names at the conf
 
 For instance, an `endpoint` URL could be declared as `/produce/{a}/{b}/{id}/{prio}/{route}` and the producer knows how to map them with a configuration like this:
 
-    {
-        ...
-        "exp_key":"A",
-        "reply_to_key":"B",
-        "msg_id_key":"Id",
-        "priority_key":"Prio",
-        "routing_key":"Route"
-    }
+{{< highlight json >}}
+{
+    ...
+    "exp_key":"A",
+    "reply_to_key":"B",
+    "msg_id_key":"Id",
+    "priority_key":"Prio",
+    "routing_key":"Route"
+}
+{{< /highlight >}}

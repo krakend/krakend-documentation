@@ -57,9 +57,6 @@ The settings of this component are:
 - `scopes`: *string,optional* A comma separated list of scopes needed, e.g.: `scopeA,scopeB`
 - `endpoint_params` *list,optional*: Any additional parameters that you want to include **in the payload** when requesting the token. For instance, it is frequent to add the `audience` request parameter that denotes the target API for which the token should be issued.
 
-{{< note title="Does this generate a new token for each backend request?" type="question" >}}
-No way! The token will be **automatically refreshed as necessary** (usually when it expires or the server is restarted).
-{{< /note >}}
 
 
 ## Auth0 integration

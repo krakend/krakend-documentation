@@ -10,6 +10,8 @@ meta:
   source: https://github.com/devopsfaith/krakend-cors
   namespace:
   - security/cors
+  log_prefix:
+  - "[SERVICE: Gin][CORS]"
   scope:
   - service
 
@@ -24,31 +26,32 @@ When the Cross-Origin Resource Sharing (CORS) configuration is enabled, KrakenD 
 ## Configuration
 CORS configuration lives in the root of the file, as it's a service component. Add the namespace `security/cors` under the global `extra_config`, as follows:
 
-    {
-      "version": 2,
-      "extra_config": {
-        "security/cors": {
-          "allow_origins": [
-            "*"
-          ],
-          "allow_methods": [
-            "GET",
-            "HEAD",
-            "POST"
-          ],
-          "expose_headers": [
-            "Content-Length",
-            "Content-Type"
-          ],
-          "max_age": "12h",
-          "allow_headers": [
-            "Accept-Language"
-          ],
-          "allow_credentials": false,
-          "debug": false
-        }
-      }
-
+{{< highlight json >}}
+{
+  "version": 2,
+  "extra_config": {
+    "security/cors": {
+      "allow_origins": [
+        "*"
+      ],
+      "allow_methods": [
+        "GET",
+        "HEAD",
+        "POST"
+      ],
+      "expose_headers": [
+        "Content-Length",
+        "Content-Type"
+      ],
+      "max_age": "12h",
+      "allow_headers": [
+        "Accept-Language"
+      ],
+      "allow_credentials": false,
+      "debug": false
+    }
+  }
+{{< /highlight >}}
 The configuration options of this component are as follows:
 
 - `allow_methods` *(list)*: The array of all HTTP methods accepted, in uppercase.  
@@ -60,3 +63,72 @@ The configuration options of this component are as follows:
 
 {{< note title="Allow credentials and wildcards" >}}
 According to the CORS specification, you are not allowed to use wildcards and credentials at the same time. If you need to do this, [check this workaround](https://github.com/devopsfaith/krakend-cors/issues/9){{< /note >}}
+
+## Debugging configuration
+The following configuration might help you debugging your CORS configuration. Check the inline `@comments`:
+
+{{< highlight json >}}
+{
+  "endpoints":[
+        {
+            "@comment": "this will fail due to double CORS validation",
+            "endpoint":"/cors/no-op",
+            "headers_to_pass":["*"],
+            "output_encoding": "no-op",
+            "backend":[
+                {
+                    "url_pattern": "/__debug/cors",
+                    "host": ["http://localhost:8080"],
+                    "encoding": "no-op"
+                }
+            ]
+        },
+        {
+            "@comment": "this won't fail because CORS preflight headers are removed from the request to the backend",
+            "endpoint":"/cors/no-op/martian",
+            "headers_to_pass":["*"],
+            "output_encoding": "no-op",
+            "backend":[
+                {
+                    "url_pattern": "/__debug/cors/martian",
+                    "host": ["http://localhost:8080"],
+                    "encoding": "no-op",
+                    "extra_config":{
+                      "github.com/devopsfaith/krakend-martian": {
+                          "fifo.Group": {
+                              "scope": ["request", "response"],
+                              "aggregateErrors": true,
+                              "modifiers": [
+                                  {
+                                    "header.Blacklist": {
+                                      "scope": ["request"],
+                                      "names": [
+                                        "Access-Control-Request-Method",
+                                        "Sec-Fetch-Dest",
+                                        "Sec-Fetch-Mode",
+                                        "Sec-Fetch-Site",
+                                        "Origin"
+                                      ]
+                                    }
+                                  }
+                              ]
+                          }
+                      }
+                    }
+                }
+            ]
+        },
+        {
+            "@comment": "this won't fail because no headers are added to the request to the backend",
+            "endpoint":"/cors/no-op/no-headers",
+            "output_encoding": "no-op",
+            "backend":[
+                {
+                    "url_pattern": "/__debug/cors/no-headers",
+                    "host": ["http://localhost:8080"],
+                    "encoding": "no-op"
+                }
+            ]
+        }
+]}
+{{< /highlight >}}
