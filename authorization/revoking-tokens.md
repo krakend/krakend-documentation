@@ -41,7 +41,8 @@ The tokens are in-memory, directly in the rejecter interface, so the system is q
 ## Configuration
 The bloom filter lives at the `extra_config` in the root level of the configuration, using the namespace `auth/revoker`:
 
-
+{{< highlight json >}}
+{
     "version": "2",
     "name": "My lovely gateway",
     "extra_config":{
@@ -54,6 +55,10 @@ The bloom filter lives at the `extra_config` in the root level of the configurat
         "TokenKeys": ["jti"]
       }
     }
+}
+{{< /highlight >}}
+
+
 
 All the configuration fields **are mandatory**, and are explained below:
 
@@ -73,13 +78,18 @@ Keep the life of your tokens short (e.g., 30 minutes).
 ### Applied example
 Our sample JWT payload has the following characteristics:
 
+{{< highlight json >}}
+{
     "aud": "https://www.krakend.io",   
     "iss": "https://api.krakend.io",   
     "sub": "john@domain.com",  
     "jti": "mnb23vcsrt756yuiomnbvcx98ertyuiop",  
     "roles": ["user", "premium"],
-    "did": "Android 8.0.0" 
+    "did": "Android 8.0.0",
     "exp": 1735689600
+}
+{{< /highlight >}}
+
 
 The following list shows the possible functionalities with an example`"TokenKeys": ["jti","sub","did","aud"]`:
 

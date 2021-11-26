@@ -31,25 +31,28 @@ When KrakenD receives the JSON payload, it signs the selected group of claims wi
 
 For instance, your backend could have an endpoint like `/token-issuer` that when receives the right combination of username and password via `POST` can identify the user and, instead of setting the session, returns an output like this:
 
-    curl -X POST --data '{"user":"john","pass":"doe"}' https://your-backend/token-issuer
-    {
-        "access_token": {
-            "aud": "https://your.krakend.io",
-            "iss": "https://your-backend",
-            "sub": "1234567890qwertyuio",
-            "jti": "mnb23vcsrt756yuiomnbvcx98ertyuiop",
-            "roles": ["role_a", "role_b"],
-            "exp": 1735689600
-        },
-        "refresh_token": {
-            "aud": "https://your.krakend.io",
-            "iss": "https://your-backend",
-            "sub": "1234567890qwertyuio",
-            "jti": "mnb23vcsrt756yuiomn12876bvcx98ertyuiop",
-            "exp": 1735689600
-        },
+{{< terminal title="Example">}}
+curl -X POST --data '{"user":"john","pass":"doe"}' https://your-backend/token-issuer
+{
+    "access_token": {
+        "aud": "https://your.krakend.io",
+        "iss": "https://your-backend",
+        "sub": "1234567890qwertyuio",
+        "jti": "mnb23vcsrt756yuiomnbvcx98ertyuiop",
+        "roles": ["role_a", "role_b"],
         "exp": 1735689600
-    }
+    },
+    "refresh_token": {
+        "aud": "https://your.krakend.io",
+        "iss": "https://your-backend",
+        "sub": "1234567890qwertyuio",
+        "jti": "mnb23vcsrt756yuiomn12876bvcx98ertyuiop",
+        "exp": 1735689600
+    },
+    "exp": 1735689600
+}
+{{< /terminal >}}
+  
 
 Besides these example keys, the payload can contain any other elements you might need.
 
@@ -60,25 +63,24 @@ Your backend application knows how to issue tokens now, so the gateway can sign 
 
 For instance, from the plain token above we want to sign the keys `"access_token"` and `"refresh_token"` so nobody can modify its contents. We need a configuration like this:
 
-{{< highlight go "hl_lines=8-15" >}}
-"endpoint": "/token",
-"method": "POST",
-"backend": [
+{{< highlight json "hl_lines=9-15" >}}
 {
-    "host": [ "https://backend" ],
-    "url_pattern": "/token-issuer"
+  "endpoint": "/token",
+  "method": "POST",
+  "backend": [{
+      "host": [ "https://backend" ],
+      "url_pattern": "/token-issuer"
+  }],
+  "extra_config": {
+      "auth/signer": {
+          "alg": "HS256",
+          "kid": "sim2",
+          "keys_to_sign": ["access_token", "refresh_token"],
+          "jwk_url": "http://your-backend/jwk/symmetric.json",
+          "disable_jwk_security": true
+      }
+  }
 }
-],
-"extra_config": {
-    "auth/signer": {
-        "alg": "HS256",
-        "kid": "sim2",
-        "keys_to_sign": ["access_token", "refresh_token"],
-        "jwk_url": "http://your-backend/jwk/symmetric.json",
-        "disable_jwk_security": true
-    }
-}
-...
 {{< /highlight >}}
 
 Notice that a [JSON Web key](https://tools.ietf.org/html/rfc7517#appendix-C.1) `jwk_url` is provided to sign the content. Generate your key and save it in a secure place.
@@ -89,11 +91,15 @@ The examples on this page add a `disable_jwk_security` flag because the `jwk_url
 
 What happens here is that the user requests a `/token` to the gateway and the issuing is delegated to the backend. The response of the backend with the plain token is signed using your private JWK. And then the user receives the signed token, e.g:
 
-    {
+{{< highlight json >}}
+{
     "access_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6InNcdTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpf1MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjf1J0NzU2eXVcd21uYnZjeDk4ZXJ0eXVcd3AiLCJyb2xlcyI6WyJyb2xlX2EiLCJyb2xlX2IiXSwif1ViIjoiMTIzNDU2Nzg5MHF3ZXJ0eXVcdyJ9.htgbhantGcv6zrN1i43Rl58q1sokh3lzuFgzfenI0Rk",
     "exp": 1735689600,
     "refresh_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6InNcdTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpf1MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjf1J0NzU2eXVcd21uMTI4NzZidmN4OThlcnR5dWlvcCIsInN1YiI6IjEyMzQ1Njc4OTBxd2VydHl1aW8ifQ.4v36tuYHe4E9gCVO-_asuXfzSzoJdoR0NJfVQdVKidw"
-    }
+}
+{{< /highlight >}}
+
+    
 
 ## JWT signing settings
 The following settings are available to sign JWT:
@@ -117,8 +123,9 @@ The following settings are available to sign JWT:
 
 The following example contains every single option available:
 
-{{< highlight go "hl_lines=6-23" >}}
-"endpoints": [
+{{< highlight json "hl_lines=7-24" >}}
+{
+  "endpoints": [
     {
       "endpoint": "/token",
       "method": "POST",
@@ -144,6 +151,7 @@ The following example contains every single option available:
       }
     }
   ]
+}
 {{< /highlight >}}
 
 ## How to generate a JWT token

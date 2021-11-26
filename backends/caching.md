@@ -23,28 +23,35 @@ This caching technique applies to traffic between KrakenD and your microservices
 
 When enabled all connections for the configured backend are cached in-memory for the amount of time retrieved from the `Cache-Control` header of the response.
 
-{{< note title="Performance notice!" >}}
-This option can increase the load and memory consumption heavily as KrakenD needs to keep in memory all the returned data during the expiration period. Use wisely!
+{{< note title="Performance notice!" type="error">}}
+This option can increase the load and memory consumption heavily as KrakenD needs to keep in memory all the returned data during the expiration period. Only the backend has control over this. Use it wisely and monitor its consumption!
 {{< /note >}}
 
 If you enable this module, you are required to be very aware of the response sizes, caching times and the hit-rate of the calls.
 
 Enable the caching of the backend services in the `backend` section of your `krakend.json` with the middleware:
-
+{{< highlight json >}}
+{
+  "extra_config": {
     "qos/http-cache": {}
+  }
+}
+{{< /highlight >}}
 
-The middleware does not require additional configuration other than the simple inclusion.
+
+The middleware **does not require additional configuration** other than its simple inclusion.
 
 See an example:
 
-    ...
-    "backend": [
-    {
+{{< highlight json >}}
+{
+    "endpoint": "/cached",
+    "backend": [{
       "url_pattern": "/",
       "host": ["http://my-service.tld"],
       "extra_config": {
         "qos/http-cache": {}
       }
-    }
-    ]
-...
+    }]
+}
+{{< /highlight >}}

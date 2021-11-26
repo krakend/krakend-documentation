@@ -51,27 +51,25 @@ A single endpoint can consume messages from N queues, or can consume N messages 
 The needed configuration to run a consumer is:
 
 {{< highlight json >}}
-    {
+{
     "backend": [{
-            "host": [
-                "amqp://guest:guest@myqueue.host.com:5672"
-            ],
-            "disable_host_sanitize": true,
-            "extra_config": {
-                "backend/amqp/consumer": {
-                    "name":           "queue-1",
-                    "exchange":       "some-exchange",
-                    "durable":        true,
-                    "delete":         false,
-                    "exclusive":      false,
-                    "no_wait":        true,
-                    "no_local":       false,
-                    "routing_key":    ["#"],
-                    "prefetch_count": 10
-                }
+        "host": ["amqp://guest:guest@myqueue.host.com:5672"],
+        "disable_host_sanitize": true,
+        "extra_config": {
+            "backend/amqp/consumer": {
+                "name":           "queue-1",
+                "exchange":       "some-exchange",
+                "durable":        true,
+                "delete":         false,
+                "exclusive":      false,
+                "no_wait":        true,
+                "no_local":       false,
+                "routing_key":    ["#"],
+                "prefetch_count": 10
             }
-        }]
-    }
+        }
+    }]
+}
 {{< /highlight >}}
 
 ### Consumer settings
@@ -94,25 +92,22 @@ The needed configuration to run a producer is as follows:
 {
     "endpoint": "/producer",
     "headers_to_pass": [ "...", "..." ],
-    "backend": [
-        {
-            "host": [
-                "amqp://guest:guest@myqueue.host.com:5672"
-            ],
-            "disable_host_sanitize": true,
-            "extra_config": {
-                "backend/amqp/producer": {
-                    "name": "queue-1",
-                    "exchange": "some-exchange",
-                    "durable": true,
-                    "delete": false,
-                    "exclusive": false,
-                    "no_wait": true,
-                    "mandatory": true,
-                    "immediate": false
-                }
-            }
-        }]
+    "backend": [{
+    "host": ["amqp://guest:guest@myqueue.host.com:5672"],
+    "disable_host_sanitize": true,
+    "extra_config": {
+        "backend/amqp/producer": {
+            "name": "queue-1",
+            "exchange": "some-exchange",
+            "durable": true,
+            "delete": false,
+            "exclusive": false,
+            "no_wait": true,
+            "mandatory": true,
+            "immediate": false
+        }
+    }
+    }]
 }
 {{< /highlight >}}
 

@@ -32,21 +32,19 @@ The namespace used is `"auth/client-credentials"`. Sample configuration below:
 {{< highlight json >}}
 {
     "endpoint": "/endpoint",
-    "backend": [
-        {
-            "url_pattern": "/protected-resource",
-            "extra_config": {
-                "auth/client-credentials": {
-                    "client_id": "YOUR-CLIENT-ID",
-                    "client_secret": "YOUR-CLIENT-SECRET",
-                    "token_url": "https://your.custom.identity.service.tld/token_endpoint",
-                    "endpoint_params": {
-                        "audience": ["YOUR-AUDIENCE"]
-                    }
+    "backend": [{
+        "url_pattern": "/protected-resource",
+        "extra_config": {
+            "auth/client-credentials": {
+                "client_id": "YOUR-CLIENT-ID",
+                "client_secret": "YOUR-CLIENT-SECRET",
+                "token_url": "https://your.custom.identity.service.tld/token_endpoint",
+                "endpoint_params": {
+                    "audience": ["YOUR-AUDIENCE"]
                 }
             }
         }
-    ]
+    }]
 }
 {{< /highlight >}}
 The settings of this component are:
@@ -57,45 +55,45 @@ The settings of this component are:
 - `scopes`: *string,optional* A comma separated list of scopes needed, e.g.: `scopeA,scopeB`
 - `endpoint_params` *list,optional*: Any additional parameters that you want to include **in the payload** when requesting the token. For instance, it is frequent to add the `audience` request parameter that denotes the target API for which the token should be issued.
 
-
+{{< note title="Does this feature generate a new token for each backend request?" type="question" >}}
+No way! The token will be **automatically refreshed as necessary** (usually when it expires or the server is restarted).
+{{< /note >}}
 
 ## Auth0 integration
 The following example demonstrates a complete configuration to fulfill the requirements of [Auth0](https://auth0.com/). It is essentially the same configuration we have shown above, but with some additions, explained after the code:
 {{< highlight json >}}
 {
     "endpoint": "/endpoint",
-    "backend": [
-        {
-            "url_pattern": "/backend",
-            "extra_config": {
-                "auth/client-credentials": {
-                    "client_id": "YOUR-CLIENT-ID",
-                    "client_secret": "YOUR-CLIENT-SECRET",
-                    "token_url": "https://custom.auth0.tld/token_endpoint",
-                    "endpoint_params": {
-                        "client_id": ["YOUR-CLIENT-ID"],
-                        "client_secret": ["YOUR-CLIENT-SECRET"],
-                        "audience": ["YOUR-AUDIENCE"]
-                    }
-                },
-                "modifier/martian": {
-                    "fifo.Group": {
-                        "scope": ["request", "response"],
-                        "aggregateErrors": false,
-                        "modifiers": [
-                            {
-                                "header.Modifier": {
-                                    "scope": ["request"],
-                                    "name" : "Accept",
-                                    "value" : "application/json"
-                                }
+    "backend": [{
+        "url_pattern": "/backend",
+        "extra_config": {
+            "auth/client-credentials": {
+                "client_id": "YOUR-CLIENT-ID",
+                "client_secret": "YOUR-CLIENT-SECRET",
+                "token_url": "https://custom.auth0.tld/token_endpoint",
+                "endpoint_params": {
+                    "client_id": ["YOUR-CLIENT-ID"],
+                    "client_secret": ["YOUR-CLIENT-SECRET"],
+                    "audience": ["YOUR-AUDIENCE"]
+                }
+            },
+            "modifier/martian": {
+                "fifo.Group": {
+                    "scope": ["request", "response"],
+                    "aggregateErrors": false,
+                    "modifiers": [
+                        {
+                            "header.Modifier": {
+                                "scope": ["request"],
+                                "name" : "Accept",
+                                "value" : "application/json"
                             }
-                        ]
-                    }
+                        }
+                    ]
                 }
             }
         }
-    ]
+    }]
 }
 {{< /highlight >}}
 
