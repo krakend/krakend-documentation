@@ -29,7 +29,7 @@ In order to add metrics to your KrakenD installation add the `telemetry/metrics`
 
 {{< highlight go "hl_lines=3-11" >}}
 {
-  "version": 2,
+  "version": 3,
   "extra_config": {
     "telemetry/metrics": {
       "collection_time": "60s",

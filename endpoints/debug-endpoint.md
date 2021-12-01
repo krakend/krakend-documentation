@@ -33,7 +33,7 @@ To test it right now, save the content of this file in a `krakend-test.json` and
 
 {{< highlight json >}}
 {
-  "version": 2,
+  "version": 3,
   "port": 8080,
   "host": ["http://127.0.0.1:8080"],
   "endpoints": [

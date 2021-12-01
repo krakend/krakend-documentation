@@ -50,7 +50,7 @@ Add a `name` key in the configuration file with useful information so you can id
 E.g.:
 
     {
-        "version": 2,
+        "version": 3,
         "name": "Production Cluster rev-db6a182"
     }
 

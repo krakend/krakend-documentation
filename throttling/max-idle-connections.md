@@ -13,7 +13,7 @@ menu:
 Having a high number of IDLE connections to every backend affects directly to the performance of the proxy layer. This is why you can control the number using the `max_idle_connections` setting. For instance:
 
 	{
-	  "version": 2,
+	  "version": 3,
 	  "max_idle_connections": 150,
 	  ...
 	}

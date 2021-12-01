@@ -62,7 +62,7 @@ KrakenD registers plugins **during startup** according to its plugin configurati
 
 {{< highlight json >}}
 {
-    "version": 2,
+    "version": 3,
     "plugin": {
         "pattern":".so",
         "folder": "/opt/krakend/plugins/"
@@ -83,7 +83,7 @@ This a sample configuration for an HTTP server fake plugin:
 
 {{< highlight json >}}
 {
-    "version": 2,
+    "version": 3,
     "plugin": {
         "pattern":".so",
         "folder": "/opt/krakend/plugins/"

@@ -25,7 +25,7 @@ meta:
 The Opencensus exporter allows you to expose data to Prometheus. Enabling it only requires you to include in the root level of your configuration the Opencensus middleware with the `prometheus` exporter. Specify the `port` which Prometheus should hit, the `namespace` (optional), and Prometheus will start receiving the data.
 {{< highlight json >}}
 {
-  "version": 2,
+  "version": 3,
   "extra_config": {
     "telemetry/opencensus": {
         "exporters": {

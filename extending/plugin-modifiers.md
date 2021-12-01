@@ -210,7 +210,7 @@ For the test, we'll build a small gateway with a single endpoint merging the res
 
 {{< highlight json >}}
 {
-  "version": 2,
+  "version": 3,
   "port": 8080,
   "name": "KrakenD request and response modifier demo",
   "host": ["https://api.github.com"],

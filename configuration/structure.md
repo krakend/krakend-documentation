@@ -14,7 +14,7 @@ All KrakenD behavior depends on its configuration file(s). Although the configur
 There are a large number of options you can put in this file. Let's focus now only on the main structure:
 {{< highlight json >}}
     {
-        "version": 2,
+        "version": 3,
         "endpoints": [],
         "extra_config": {}
     }
@@ -83,7 +83,7 @@ For instance, the [extended logging component](/docs/logging/extended-logging/) 
 
 {{< highlight JSON >}}
 {
-    "version": 2,
+    "version": 3,
     "extra_config": {
         "telemetry/logging": {
           "level": "WARNING",
@@ -117,7 +117,7 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
 
 {{< highlight JSON "hl_lines=3 6 11 17" >}}
 {
-    "version": 2,
+    "version": 3,
     "endpoints": [
     {
         "endpoint": "/limited-to-5000-per-second",

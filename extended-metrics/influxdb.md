@@ -41,7 +41,7 @@ Pushing data to InfluxDB requires adding two different configuration pieces:
 You can accomplish it with the following snippet.
 
     {
-      "version": 2,
+      "version": 3,
       "extra_config": {
         "telemetry/influx":{
             "address":"http://192.168.99.9:8086",

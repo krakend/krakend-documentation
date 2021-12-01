@@ -30,7 +30,7 @@ For instance, let's forward `?a=1&b=2` to the backends:
 
 {{< highlight json >}}
 {
-  "version": 2,
+  "version": 3,
   "endpoints": [
     {
       "endpoint": "/v1/foo",
@@ -146,7 +146,7 @@ When you use the `headers_to_pass`, take into account that any of these headers 
 
 {{< highlight json >}}
 {
-  "version": 2,
+  "version": 3,
   "endpoints": [
     {
       "endpoint": "/v1/foo",
@@ -199,7 +199,7 @@ Example:
 
 {{< highlight json >}}
 {
-  "version": 2,
+  "version": 3,
   "endpoints": [
     {
       "endpoint": "/v1/foo",

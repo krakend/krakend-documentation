@@ -40,7 +40,7 @@ The dashboard is extensive and offers you metrics like:
 Add the following configuration to your `krakend.json` at the root level:
 
     {
-      "version": 2,
+      "version": 3,
       "extra_config": {
         "telemetry/influx":{
             "address":"http://192.168.99.9:8086",

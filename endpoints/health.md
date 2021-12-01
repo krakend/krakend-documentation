@@ -42,7 +42,7 @@ A custom health configuration could look like this:
 
 {{< highlight json >}}
     {
-        "version": 2,
+        "version": 3,
         "port": 8080,
         "endpoints": [
         {

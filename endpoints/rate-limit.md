@@ -92,7 +92,7 @@ Configuration:
 
 {{< highlight json "hl_lines=7-9 31-35 41-45">}}
 {
-  "version": 2,
+  "version": 3,
   "endpoints": [
     {
         "endpoint": "/happy-hour",

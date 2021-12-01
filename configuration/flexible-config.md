@@ -254,7 +254,7 @@ Have a look at the highlighted lines:
 
 {{< highlight go-text-template "hl_lines=3-5 7 9 12 15" >}}
     {
-        "version": 2,
+        "version": 3,
         "port": {{ .service.port }},
         "extra_config": {{ marshal .service.extra_config }},
         "host": {{ marshal .service.default_hosts }},

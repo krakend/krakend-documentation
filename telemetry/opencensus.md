@@ -25,7 +25,7 @@ You will be interested in Opencensus when you want to see data in one of its sup
 
 {{< highlight json >}}
     {
-        "version": 2,
+        "version": 3,
         "extra_config": {
             "telemetry/opencensus": {
                 "exporters": {

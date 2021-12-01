@@ -24,7 +24,7 @@ Additionally, you can control the number of [**maximum IDLE connections**](/docs
 The `timeout` key in the `krakend.json` at the root level is used in the first place to apply a **default timeout** for the **whole duration of the pipe** (and not only the connection to the backends). The timeout takes into account all the time involved between the request, the fetching of the data, manipulation and any other middleware. You can see it is an end-user timeout.
 
 	{
-	  "version": 2,
+	  "version": 3,
 	   "timeout": "2000ms",
 	   ...
 	}
@@ -35,7 +35,7 @@ Even the `timeout` value in the root level sets a default timeout for all the en
 To do so, just place it inside the desired endpoint:
 
 	{
-	  "version": 2,
+	  "version": 3,
 	  "timeout": "2000ms",
 	  "endpoints": [
 	    {
@@ -62,7 +62,7 @@ Maximum duration for reading the entire HTTP request, including the body.
 This timeout does not let Handlers make per-request decisions on each request body's acceptable deadline.
 
 	{
-		"version": 2,
+		"version": 3,
 		"read_timeout": "1s"
 	}
 
@@ -72,7 +72,7 @@ Maximum duration before timing out writes of the response.
 It is reset whenever a new request header is read. Like HTTP Read Timeout, it does not let Handlers make decisions on a per-request basis.
 
 	{
-		"version": 2,
+		"version": 3,
 		"write_timeout": "0s"  (no timeout)
 	}
 
@@ -83,7 +83,7 @@ Maximum amount of time to wait for the next request when keep-alives are enabled
 If IdleTimeout is zero, the value of ReadTimeout is used. If both are zero, ReadHeaderTimeout is used.
 
 	{
-		"version": 2,
+		"version": 3,
 		"idle_timeout": "0s"  (no timeout)
 	}
 
@@ -93,7 +93,7 @@ Amount of time allowed to read request headers.
 The connection's read deadline is reset after reading the headers and the Handler can decide what is considered too slow for the body.
 
 	{
-		"version": 2,
+		"version": 3,
 		"read_header_timeout": "10ms"
 	}
 

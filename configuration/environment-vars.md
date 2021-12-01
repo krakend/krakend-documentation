@@ -27,7 +27,7 @@ For instance, take the following `krakend.json` configuration as an example:
 
 {{< highlight json >}}
 {
-    "version": 2,
+    "version": 3,
     "timeout": "3s",
     "name": "Example gateway."
 }
@@ -44,7 +44,7 @@ The resulting configuration will be:
 
 {{< highlight json >}}
 {
-    "version": 2,
+    "version": 3,
     "timeout": "500ms",
     "name": "Build ABC0123"
 }
@@ -57,7 +57,7 @@ The resulting configuration will be:
 If you need to replace content using environment variables at any level, you have to use the [flexible configuration](/docs/configuration/flexible-config/). It includes a series of [advanced functions](/docs/configuration/flexible-config/#advanced-functions) including an `env` function that can write in the config any value.
 {{< highlight go-text-template >}}
 {
-    "version": 2,
+    "version": 3,
     "name": "Configuration for {{ env "MY_POD_NAMESPACE" }}"
 }
 {{< /highlight >}}

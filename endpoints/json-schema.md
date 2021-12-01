@@ -41,7 +41,7 @@ All the configuration inside the namespace is pure JSON Schema vocabulary. [Read
  A full configuration for you to try on the localhost with the [debug endpoint](/docs/endpoints/debug-endpoint/) is:
 {{< highlight json "hl_lines=14-25" >}}
 {
-    "version": 2,
+    "version": 3,
     "port": 8080,
     "host": [ "http://127.0.0.1:8080" ],
     "endpoints": [

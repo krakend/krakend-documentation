@@ -23,7 +23,7 @@ To enable it you need to add `enable_mtls` to your `tls` configuration:
 
 {{< highlight json >}}
 {
-    "version": 2,
+    "version": 3,
     "tls": {
       "public_key": "/path/to/cert.pem",
       "private_key": "/path/to/key.pem",

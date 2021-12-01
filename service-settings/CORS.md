@@ -28,7 +28,7 @@ CORS configuration lives in the root of the file, as it's a service component. A
 
 {{< highlight json >}}
 {
-  "version": 2,
+  "version": 3,
   "extra_config": {
     "security/cors": {
       "allow_origins": [
