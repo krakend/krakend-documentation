@@ -75,22 +75,24 @@ krakend check -t -d -c path/to/krakend.json
 ### Docker image with check and flexible configuration
 The following example illustrates a combination of the `check` command with a a multi-stage build to compile a [flexible configuration](/docs/configuration/flexible-config/) in a `Dockerfile`:
 
-	FROM devopsfaith/krakend as builder
-	ARG ENV=prod
+{{< highlight docker >}}
+FROM devopsfaith/krakend as builder
+ARG ENV=prod
 
-	COPY krakend.tmpl .
-	COPY config .
+COPY krakend.tmpl .
+COPY config .
 
-	# Save temporary file to /tmp to avoid permission errors
-	RUN FC_ENABLE=1 \
-		FC_OUT=/tmp/krakend.json \
-		FC_PARTIALS="/etc/krakend/partials" \
-		FC_SETTINGS="/etc/krakend/settings/$ENV" \
-		FC_TEMPLATES="/etc/krakend/templates" \
-		krakend check -d -t -c krakend.tmpl
+# Save temporary file to /tmp to avoid permission errors
+RUN FC_ENABLE=1 \
+    FC_OUT=/tmp/krakend.json \
+    FC_PARTIALS="/etc/krakend/partials" \
+    FC_SETTINGS="/etc/krakend/settings/$ENV" \
+    FC_TEMPLATES="/etc/krakend/templates" \
+    krakend check -d -t -c krakend.tmpl
 
-	FROM devopsfaith/krakend
-	COPY --from=builder --chown=krakend /tmp/krakend.json .
+FROM devopsfaith/krakend
+COPY --from=builder --chown=krakend /tmp/krakend.json .
+{{< /highlight >}}
 
 Notice how the lines above `check` that the configuration is valid using a starting template `krakend.tmpl` and output the compiled template into a `/tmp/krakend.json` file. This file is the only addition to the final Docker image.
 

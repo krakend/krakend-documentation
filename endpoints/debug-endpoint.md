@@ -90,16 +90,14 @@ curl -i 'http://localhost:8080/default-behavior?a=1&b=2&c=3'
 
 In the KrakenD log, we can see that `a`, `b`, and `c` do not appear in the backend call, neither its headers. The `curl` command automatically sends the `Accept` and `User-Agent` headers but they are not in the backend call either, instead we see the KrakenD User-Agent as set by the gateway:
 
-{{< highlight go "hl_lines=5 7" >}}
-DEBUG: Method: GET
-DEBUG: URL: /__debug/default
-DEBUG: Query: map[]
-DEBUG: Params: [{param /default}]
-DEBUG: Headers: map[User-Agent:[KrakenD Version {{< version >}}] X-Forwarded-For:[::1] Accept-Encoding:[gzip]]
-DEBUG: Body:
-[GIN] 2018/11/27 - 22:32:44 | 200 |     118.543µs |             ::1 | GET      /__debug/default
-[GIN] 2018/11/27 - 22:32:44 | 200 |     565.971µs |             ::1 | GET      /default-behavior?a=1&b=2&c=3
-{{< /highlight >}}
+    DEBUG: Method: GET
+    DEBUG: URL: /__debug/default
+    DEBUG: Query: map[]
+    DEBUG: Params: [{param /default}]
+    DEBUG: Headers: map[User-Agent:[KrakenD Version {{< version >}}] X-Forwarded-For:[::1] Accept-Encoding:[gzip]]
+    DEBUG: Body:
+    [GIN] 2018/11/27 - 22:32:44 | 200 |     118.543µs |             ::1 | GET      /__debug/default
+    [GIN] 2018/11/27 - 22:32:44 | 200 |     565.971µs |             ::1 | GET      /default-behavior?a=1&b=2&c=3
 
 Now let's repeat the same request but to the `/optional-params` endpoint:
 
@@ -109,16 +107,14 @@ curl -i 'http://localhost:8080/optional-params?a=1&b=2&c=3'
 
 In the KrakenD log we can see now that the `User-Agent` and `Accept` are present (as they are implicitly sent by curl), and that `a` and `b` are reaching the backend (but not `c`):
 
-{{< highlight go "hl_lines=5 7" >}}
-DEBUG: Method: GET
-DEBUG: URL: /__debug/optional?a=1&b=2
-DEBUG: Query: map[a:[1] b:[2]]
-DEBUG: Params: [{param /optional}]
-DEBUG: Headers: map[User-Agent:[curl/7.54.0] Accept:[*/*] X-Forwarded-For:[::1] Accept-Encoding:[gzip]]
-DEBUG: Body:
-[GIN] 2018/11/27 - 22:33:23 | 200 |     122.507µs |             ::1 | GET      /__debug/optional?a=1&b=2
-[GIN] 2018/11/27 - 22:33:23 | 200 |     542.483µs |             ::1 | GET      /optional-params?a=1&b=2&c=3
-{{< /highlight >}}
+    DEBUG: Method: GET
+    DEBUG: URL: /__debug/optional?a=1&b=2
+    DEBUG: Query: map[a:[1] b:[2]]
+    DEBUG: Params: [{param /optional}]
+    DEBUG: Headers: map[User-Agent:[curl/7.54.0] Accept:[*/*] X-Forwarded-For:[::1] Accept-Encoding:[gzip]]
+    DEBUG: Body:
+    [GIN] 2018/11/27 - 22:33:23 | 200 |     122.507µs |             ::1 | GET      /__debug/optional?a=1&b=2
+    [GIN] 2018/11/27 - 22:33:23 | 200 |     542.483µs |             ::1 | GET      /optional-params?a=1&b=2&c=3
 
 Finally, let's note what happens when you inject mandatory query strings in the backend definition, the `/mandatory/{variable}` endpoint:
 
@@ -128,13 +124,11 @@ curl -i 'http://localhost:8080/mandatory/foo?a=1&b=2&c=3'
 
 As we can see, the backend includes the `?mandatory=foo` variable that was written manually in the backend definition:
 
-{{< highlight go "hl_lines=5 7" >}}
-DEBUG: Method: GET
-DEBUG: URL: /__debug/qs?mandatory=foo
-DEBUG: Query: map[mandatory:[foo]]
-DEBUG: Params: [{param /qs}]
-DEBUG: Headers: map[X-Forwarded-For:[::1] Accept-Encoding:[gzip] User-Agent:[KrakenD Version 0.7.0]]
-DEBUG: Body:
-[GIN] 2018/11/28 - 19:44:19 | 200 |     210.434µs |             ::1 | GET      /__debug/qs?mandatory=foo
-[GIN] 2018/11/28 - 19:44:19 | 200 |    1.975103ms |             ::1 | GET      /mandatory/foo?a=1&b=2&c=3
-{{< /highlight >}}
+    DEBUG: Method: GET
+    DEBUG: URL: /__debug/qs?mandatory=foo
+    DEBUG: Query: map[mandatory:[foo]]
+    DEBUG: Params: [{param /qs}]
+    DEBUG: Headers: map[X-Forwarded-For:[::1] Accept-Encoding:[gzip] User-Agent:[KrakenD Version 0.7.0]]
+    DEBUG: Body:
+    [GIN] 2018/11/28 - 19:44:19 | 200 |     210.434µs |             ::1 | GET      /__debug/qs?mandatory=foo
+    [GIN] 2018/11/28 - 19:44:19 | 200 |    1.975103ms |             ::1 | GET      /mandatory/foo?a=1&b=2&c=3

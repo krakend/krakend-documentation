@@ -9,17 +9,20 @@ menu:
     parent: "030 Service Settings"
 meta:
   since: 0.4
-  source: https://sec/http
+  source: https://github.com/devopsfaith/krakend-httpsecure
   namespace:
   - security/http
   scope:
   - service
 ---
 
-KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://sec/http). To enable them you only need to add the `extra_config` at service (root) level.
+KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://sec/http). To enable them you only need to add its namespace `security/http` at the `extra_config` in the root level of the configuration.
 
-The following example describes the options explained later in this article:
+The following configuration describes all possible options:
 
+{{< highlight json >}}
+{
+    "version": 3,
     "extra_config": {
       "security/http": {
         "allowed_hosts": [
@@ -42,6 +45,9 @@ The following example describes the options explained later in this article:
         "browser_xss_filter": true,
         "content_security_policy": "default-src 'self';"
       }
+}
+{{< /highlight >}}
+
 
 See below the different options described in this configuration file.
 

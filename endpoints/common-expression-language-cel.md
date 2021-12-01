@@ -59,7 +59,7 @@ For instance, you might want to reject users that do not adhere to some criteria
 
 The configuration is as follows:
 
-{{< highlight json>}}
+{{< highlight js>}}
     "extra_config":{
       "validation/cel": [
         {

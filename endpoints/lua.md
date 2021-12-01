@@ -33,19 +33,26 @@ For performance-first users, a Go plugin delivers much better results than a Lua
 
 KrakenD looks for the lua scripts in the root folder where KrakenD is running. You need to specify in the configuration which lua scripts are going to be loaded in Krakend, as well as several options. The `extra_config` can be set at `endpoint` level or `backend` level.
 
+{{< highlight json >}}
+{
     "extra_config": {
-          "modifier/lua-proxy": {
-            "sources": ["file1.lua"],
+        "modifier/lua-proxy": {
+            "sources": [
+                "file1.lua"
+            ],
             "md5": {
-              "file1.lua": "49ae50f58e35f4821ad4550e1a4d1de0"
+                "file1.lua": "49ae50f58e35f4821ad4550e1a4d1de0"
             },
             "pre": "lua code to execute for pre",
             "post": "lua code to execute for post",
             "live": false,
             "allow_open_libs": false,
             "skip_next": true
-          }
+        }
     }
+}
+{{< /highlight >}}
+
 
 - `sources`: An array with all the files that will be processed
 - `md5`: (optional) The md5sum of each file that must match the one found in the disk. Used to make sure that the file has not been modified by a 3rd party.
@@ -173,11 +180,16 @@ It stops the script and the pipe execution.
 
 Example to throw a generic error (`500` status code ) with a message:
 
-    custom_error("Something weird happened")
+{{< highlight lua>}}
+custom_error("Something weird happened")
+{{< /highlight >}}
 
 Or even changing the http status code (`418 I'm a teapot`)
 
-    custom_error("I refuse to make any coffee, I'm a teapot!", 418)
+{{< highlight lua>}}
+custom_error("I refuse to make any coffee, I'm a teapot!", 418)
+{{< /highlight >}}
+
 
 ## Sequence of execution
 

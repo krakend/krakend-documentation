@@ -90,41 +90,58 @@ The following example demonstrates a configuration with several endpoints, each 
 
 Configuration:
 
+{{< highlight json "hl_lines=7-9 31-35 41-45">}}
+{
+  "version": 2,
+  "endpoints": [
     {
-        "version": 2,
-        "endpoints": [
+        "endpoint": "/happy-hour",
+        "extra_config": {
+            "qos/ratelimit/router": {
+                "maxRate": 0,
+                "clientMaxRate": 0
+            }
+        },
+        "backend": [
           {
-              "endpoint": "/happy-hour",
-              "extra_config": {
-                  "qos/ratelimit/router": {
-                      "maxRate": 0,
-                      "clientMaxRate": 0
-                  }
-              }
-              ...
-          },
-          {
-              "endpoint": "/happy-hour-2"
-              ...
-          },
-          {
-              "endpoint": "/limited-endpoint",
-              "extra_config": {
-                "qos/ratelimit/router": {
-                    "maxRate": 50,
-                    "clientMaxRate": 5,
-                    "strategy": "ip"
-                  }
-              }
-          },
-          {
-              "endpoint": "/user-limited-endpoint",
-              "extra_config": {
-                "qos/ratelimit/router": {
-                    "clientMaxRate": 10,
-                    "strategy": "header",
-                    "key": "X-Auth-Token"
-                  }
-              },
-              ...
+            "url_pattern": "/__health",
+            "host": ["http://localhost:8080"]
           }
+        ]
+    },
+    {
+        "endpoint": "/happy-hour-2",
+        "backend": [
+          {
+            "url_pattern": "/__health",
+            "host": ["http://localhost:8080"]
+          }
+        ]
+    },
+    {
+        "endpoint": "/limited-endpoint",
+        "extra_config": {
+          "qos/ratelimit/router": {
+              "maxRate": 50,
+              "clientMaxRate": 5,
+              "strategy": "ip"
+            }
+        }
+    },
+    {
+        "endpoint": "/user-limited-endpoint",
+        "extra_config": {
+          "qos/ratelimit/router": {
+              "clientMaxRate": 10,
+              "strategy": "header",
+              "key": "X-Auth-Token"
+            }
+        },
+        "backend": [
+          {
+            "url_pattern": "/__health",
+            "host": ["http://localhost:8080"]
+          }
+        ]
+    }
+{{< /highlight >}}

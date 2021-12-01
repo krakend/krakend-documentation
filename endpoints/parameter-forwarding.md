@@ -28,26 +28,29 @@ Parameters are always optional and the user can pass a subset of them, all, or n
 
 For instance, let's forward `?a=1&b=2` to the backends:
 
+{{< highlight json >}}
+{
+  "version": 2,
+  "endpoints": [
     {
-      "version": 2,
-      "endpoints": [
+      "endpoint": "/v1/foo",
+      "querystring_params": [
+        "a",
+        "b"
+      ],
+      "backend": [
         {
-          "endpoint": "/v1/foo",
-          "querystring_params": [
-            "a",
-            "b"
-          ],
-          "backend": [
-            {
-              "url_pattern": "/catalog",
-              "host": [
-                "http://some.api.com:9000"
-              ]
-            }
+          "url_pattern": "/catalog",
+          "host": [
+            "http://some.api.com:9000"
           ]
         }
       ]
     }
+  ]
+}
+{{< /highlight >}}
+
 
 With this configuration, given a request like `http://krakend:8080/v1/foo?a=1&b=2&evil=here`, the backend receives `a` and `b`, but `evil` is missing.
 
@@ -55,26 +58,30 @@ Also, if a request like `http://krakend:8080/v1/foo?a=1` does not include `b`, t
 
 ### Sending all query string parameters
 While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
-```
-"querystring_params":[  
-      "*"
-]
-```
+
+{{< highlight js >}}
+  "querystring_params":[  
+        "*"
+  ]
+{{< /highlight >}}
+
 Enabling the wildcard pollutes your backends, as any query string sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the query strings in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
 ### Mandatory query string parameters
 When your backend requires query string parameters and you want to make them **mandatory** in KrakenD, use the `{variables}` placeholders in the endpoints definition. The variables can be injected in the backends as part of the query string parameters. For instance:
 
-    ...
+{{< highlight json >}}
+{
+  "endpoint": "/v3/{channel}/foo",
+  "backend": [
     {
-            "endpoint": "/v3/{channel}/foo",
-            "backend": [
-                    {
-                            "host": ["http://backend"],
-                            "url_pattern": "/foo?channel={channel}"
-                    }
-            ]
+            "host": ["http://backend"],
+            "url_pattern": "/foo?channel={channel}"
     }
+  ]
+}
+{{< /highlight >}}
+
 
 The parameter is mandatory as if a value for `channel` is not provided the server replies with a `404`.
 
@@ -84,19 +91,24 @@ With the configuration above a request to the KrakenD endpoint such as `http://k
 
 Nevertheless, the `querystring_params` could also be added in this configuration, creating a special case of optional and mandatory parameters! You would be passing query strings both hardcoded in the `url_pattern` and generated from the user input. What happens in this strange case is that if the user passes a single optional query string parameter that is declared in `querystring_params` then the mandatory value is lost. If the request does not contain any known optional parameter, then the mandatory value is used. For instance:
 
-    {
-            "endpoint": "/v3/{channel}/foo",
-            "querystring_params": [
-                    "page",
-                    "limit"
+{{< highlight json >}}
+{
+    "endpoint": "/v3/{channel}/foo",
+    "querystring_params": [
+        "page",
+        "limit"
+    ],
+    "backend": [
+        {
+            "host": [
+                "http://backend"
             ],
-            "backend": [
-                    {
-                            "host": ["http://backend"],
-                            "url_pattern": "/foo?channel={channel}"
-                    }
-            ]
-    }
+            "url_pattern": "/foo?channel={channel}"
+        }
+    ]
+}
+{{< /highlight >}}
+
 
 With `http://krakend/v3/iOS/foo?limit=10&evil=here` the backend receives:
 
@@ -132,42 +144,49 @@ When you use the `headers_to_pass`, take into account that any of these headers 
 
  An example to pass the `User-Agent` to the backend:
 
+{{< highlight json >}}
+{
+  "version": 2,
+  "endpoints": [
     {
-      "version": 2,
-      "endpoints": [
+      "endpoint": "/v1/foo",
+      "headers_to_pass": [
+        "User-Agent"
+      ],
+      "backend": [
         {
-          "endpoint": "/v1/foo",
-          "headers_to_pass": [
-            "User-Agent"
-            ],
-          "backend": [
-            {
-              "url_pattern": "/catalog",
-              "host": [
-                "http://some.api.com:9000"
-              ]
-            }
+          "url_pattern": "/catalog",
+          "host": [
+            "http://some.api.com:9000"
           ]
         }
       ]
     }
+  ]
+}
+{{< /highlight >}}
+
 
 This setting changes the headers received by the backend to:
 
-    Accept-Encoding: gzip
-    Host: localhost:8080
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
-    X-Forwarded-For: ::1
+{{< highlight yaml >}}
+Accept-Encoding: gzip
+Host: localhost:8080
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
+X-Forwarded-For: ::1
+{{< /highlight >}}
 
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test headers.
 
 ### Sending all client headers to the backends
 While the default policy prevents forwarding unrecognized headers, setting an asterisk `*` as the parameter name makes the gateway to **forward any header to the backends**, including cookies:
-```
+
+{{< highlight js >}}
 "headers_to_pass":[  
       "*"
 ]
-```
+{{< /highlight >}}
+
 Enabling the wildcard pollutes your backends, as any header sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the headers in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
 
@@ -178,22 +197,24 @@ When doing this, **all your cookies** are sent to all backends inside the endpoi
 
 Example:
 
+{{< highlight json >}}
+{
+  "version": 2,
+  "endpoints": [
     {
-      "version": 2,
-      "endpoints": [
+      "endpoint": "/v1/foo",
+      "headers_to_pass": [
+        "Cookie"
+      ],
+      "backend": [
         {
-          "endpoint": "/v1/foo",
-          "headers_to_pass": [
-            "Cookie"
-            ],
-          "backend": [
-            {
-              "url_pattern": "/catalog",
-              "host": [
-                "http://some.api.com:9000"
-              ]
-            }
+          "url_pattern": "/catalog",
+          "host": [
+            "http://some.api.com:9000"
           ]
         }
       ]
     }
+  ]
+}
+{{< /highlight >}}

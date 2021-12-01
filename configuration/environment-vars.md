@@ -25,11 +25,14 @@ All configuration environment variables that you want to set using environment v
 
 For instance, take the following `krakend.json` configuration as an example:
 
-    {
-        "version": 2,
-        "timeout": "3s",
-        "name": "Example gateway."
-    }
+{{< highlight json >}}
+{
+    "version": 2,
+    "timeout": "3s",
+    "name": "Example gateway."
+}
+{{< /highlight >}}
+
 
 To replace values using env vars, run krakend with the following command:
 
@@ -39,18 +42,22 @@ KRAKEND_NAME="Build ABC0123" KRAKEND_TIMEOUT="500ms" krakend run -c krakend.json
 
 The resulting configuration will be:
 
-    {
-        "version": 2,
-        "timeout": "500ms",
-        "name": "Build ABC0123"
-    }
+{{< highlight json >}}
+{
+    "version": 2,
+    "timeout": "500ms",
+    "name": "Build ABC0123"
+}
+{{< /highlight >}}
+
 
 **NOTE**: The configuration file is not changed. The values above are a representation of the final mapped values.
 
 ## Overriding properties in any nesting level
 If you need to replace content using environment variables at any level, you have to use the [flexible configuration](/docs/configuration/flexible-config/). It includes a series of [advanced functions](/docs/configuration/flexible-config/#advanced-functions) including an `env` function that can write in the config any value.
-
+{{< highlight go-text-template >}}
 {
     "version": 2,
     "name": "Configuration for {{ env "MY_POD_NAMESPACE" }}"
 }
+{{< /highlight >}}

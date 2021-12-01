@@ -63,36 +63,42 @@ Summing up, see the before and after of the following snippet which has 3 of the
 
 **KrakenD 1**:
 
-    {
-        "endpoint": "/foo",
-        "extra_config": {
-            "github.com/devopsfaith/krakend-jose/validator" {
-                "alg": "RS256",
-                "jwk-url": "https://url/to/jwks.json"
-            }
-        },
-        "backend": [
-            {
-                "url_pattern": "/foo",
-                "whitelist": ["field1", "field2"]
-            }
-        ]
-    }
+{{< highlight json >}}
+{
+    "endpoint": "/foo",
+    "extra_config": {
+        "github.com/devopsfaith/krakend-jose/validator" {
+            "alg": "RS256",
+            "jwk-url": "https://url/to/jwks.json"
+        }
+    },
+    "backend": [
+        {
+            "url_pattern": "/foo",
+            "whitelist": ["field1", "field2"]
+        }
+    ]
+}
+{{< /highlight >}}
+
 
 **KrakenD 2**:
+Differences highlighted
 
-    {
-        "endpoint": "/foo",
-        "extra_config": {
-            "auth/validator": {
-                "alg": "RS256",
-                "jwk_url": "https://url/to/jwks.json"
-            }
-        },
-        "backend": [
-            {
-                "url_pattern": "/foo",
-                "allow": ["field1", "field2"]
-            }
-        ]
-    }
+{{< highlight json "hl_lines=4 6 12">}}
+{
+    "endpoint": "/foo",
+    "extra_config": {
+        "auth/validator": {
+            "alg": "RS256",
+            "jwk_url": "https://url/to/jwks.json"
+        }
+    },
+    "backend": [
+        {
+            "url_pattern": "/foo",
+            "allow": ["field1", "field2"]
+        }
+    ]
+}
+{{< /highlight >}}

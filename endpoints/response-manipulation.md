@@ -29,36 +29,40 @@ By simply adding several backends into an endpoint, you get the merge operation 
 
 The configuration for the image above could be like this:
 
-
-	"endpoints": [
-	    {
-	      "endpoint": "/abc",
-	      "timeout": "800ms",
-	      "method": "GET",
-	      "backend": [
-	        {
-	          "url_pattern": "/a",
-	          "encoding": "json",
-	          "host": [
-	            "http://service-a.company.com"
-	          ]
-	        },
-	        {
-	          "url_pattern": "/b",
-	          "encoding": "xml",
-	          "host": [
-	            "http://service-b.company.com"
-	          ]
-	        },
-	        {
-	          "url_pattern": "/c",
-	          "encoding": "json",
-	          "host": [
-	            "http://service-c.company.com"
-	          ]
-	        }
-	      ]
-	    }
+{{< highlight json >}}
+{
+    "endpoints": [
+        {
+            "endpoint": "/abc",
+            "timeout": "800ms",
+            "method": "GET",
+            "backend": [
+                {
+                    "url_pattern": "/a",
+                    "encoding": "json",
+                    "host": [
+                        "http://service-a.company.com"
+                    ]
+                },
+                {
+                    "url_pattern": "/b",
+                    "encoding": "xml",
+                    "host": [
+                        "http://service-b.company.com"
+                    ]
+                },
+                {
+                    "url_pattern": "/c",
+                    "encoding": "json",
+                    "host": [
+                        "http://service-c.company.com"
+                    ]
+                }
+            ]
+        }
+    ]
+}
+{{< /highlight >}}
 
 ### Merging timeouts
 Keep in mind that in order to avoid any degraded user experience, KrakenD won't be stuck forever until all the backends decide to respond. In a gateway **failing fast is better than succeeding slowly** and KrakenD will make sure this happens as it will **apply the timeout policy**. This will put your users safe during high load peaks, network errors, or any other problems that stress your backends.
@@ -78,91 +82,106 @@ At all times, the `x-krakend-completed` header returned by KrakenD contains a bo
 
 Imagine an endpoint with the following configuration:
 
-	...
+{{< highlight json >}}
+{
 	"endpoints": [
-        {
-	      "endpoint": "/users/{user}",
-	      "method": "GET",
-	      "timeout": "800ms"
-	      "backend": [
-	        {
-	          "url_pattern": "/users/{user}",
-	          "host": [
-	            "https://jsonplaceholder.typicode.com"
-	          ]
-	        },
-	        {
-	          "url_pattern": "/posts/{user}",
-	          "host": [
-	            "https://jsonplaceholder.typicode.com"
-	          ]
-	        }
-	      ]
-	    }
+		{
+			"endpoint": "/users/{user}",
+			"method": "GET",
+			"timeout": "800ms",
+			"backend": [
+				{
+					"url_pattern": "/users/{user}",
+					"host": [
+						"https://jsonplaceholder.typicode.com"
+					]
+				},
+				{
+					"url_pattern": "/posts/{user}",
+					"host": [
+						"https://jsonplaceholder.typicode.com"
+					]
+				}
+			]
+		}
+	]
+}
+{{< /highlight >}}
+
+	
 
 When a user calls the endpoint `/users/1`, KrakenD will send two requests and, in the happy scenario, it will receive these responses:
 
-	{
-	  "id": 1,
-	  "name": "Leanne Graham",
-	  "username": "Bret",
-	  "email": "Sincere@april.biz",
-	  "address": {
-	    "street": "Kulas Light",
-	    "suite": "Apt. 556",
-	    "city": "Gwenborough",
-	    "zipcode": "92998-3874",
-	    "geo": {
-	      "lat": "-37.3159",
-	      "lng": "81.1496"
-	    }
-	  },
-	  "phone": "1-770-736-8031 x56442",
-	  "website": "hildegard.org",
-	  "company": {
-	    "name": "Romaguera-Crona",
-	    "catchPhrase": "Multi-layered client-server neural-net",
-	    "bs": "harness real-time e-markets"
-	  }
-	}
+{{< highlight json >}}
+{
+    "id": 1,
+    "name": "Leanne Graham",
+    "username": "Bret",
+    "email": "Sincere@april.biz",
+    "address": {
+        "street": "Kulas Light",
+        "suite": "Apt. 556",
+        "city": "Gwenborough",
+        "zipcode": "92998-3874",
+        "geo": {
+            "lat": "-37.3159",
+            "lng": "81.1496"
+        }
+    },
+    "phone": "1-770-736-8031 x56442",
+    "website": "hildegard.org",
+    "company": {
+        "name": "Romaguera-Crona",
+        "catchPhrase": "Multi-layered client-server neural-net",
+        "bs": "harness real-time e-markets"
+    }
+}
+{{< /highlight >}}
+
 
 and
 
-	{
-	  "userId": 1,
-	  "id": 1,
-	  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-	  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-	}
+{{< highlight json >}}
+{
+    "userId": 1,
+    "id": 1,
+    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+}
+{{< /highlight >}}
+
 
 With these 'partial responses' and the given configuration, KrakenD will return the following response:
 
-	{
-	  "id": 1,
-	  "name": "Leanne Graham",
-	  "username": "Bret",
-	  "email": "Sincere@april.biz",
-	  "address": {
-	    "street": "Kulas Light",
-	    "suite": "Apt. 556",
-	    "city": "Gwenborough",
-	    "zipcode": "92998-3874",
-	    "geo": {
-	      "lat": "-37.3159",
-	      "lng": "81.1496"
-	    }
-	  },
-	  "phone": "1-770-736-8031 x56442",
-	  "website": "hildegard.org",
-	  "company": {
-	    "name": "Romaguera-Crona",
-	    "catchPhrase": "Multi-layered client-server neural-net",
-	    "bs": "harness real-time e-markets"
-	  },
-	  "userId": 1,
-	  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-	  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-	}
+{{< highlight json >}}
+{
+    "id": 1,
+    "name": "Leanne Graham",
+    "username": "Bret",
+    "email": "Sincere@april.biz",
+    "address": {
+        "street": "Kulas Light",
+        "suite": "Apt. 556",
+        "city": "Gwenborough",
+        "zipcode": "92998-3874",
+        "geo": {
+            "lat": "-37.3159",
+            "lng": "81.1496"
+        }
+    },
+    "phone": "1-770-736-8031 x56442",
+    "website": "hildegard.org",
+    "company": {
+        "name": "Romaguera-Crona",
+        "catchPhrase": "Multi-layered client-server neural-net",
+        "bs": "harness real-time e-markets"
+    },
+    "userId": 1,
+    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+}
+{{< /highlight >}}
+
 
 ## Filtering
 

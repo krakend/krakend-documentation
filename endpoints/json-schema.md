@@ -23,11 +23,16 @@ When the validation fails, KrakenD returns to the user a status code `400` (Bad 
 ## JSON Schema Configuration
 The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `validation/json-schema`. For instance, to **check if the body is a json object**:
 
-    "extra_config":{
+{{< highlight json >}}
+{
+    "extra_config": {
         "validation/json-schema": {
             "type": "object"
         }
     }
+}
+{{< /highlight >}}
+
 
 You can apply constraints by adding keywords to the schema. For instance, you can check that the `type` is an instance of an object, array, string, number, boolean, or null.
 
