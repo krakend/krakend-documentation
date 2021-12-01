@@ -6,13 +6,12 @@ menu:
   community_current:
     parent: "010 Configuration file(s)"
 title: Migrating config from KrakenD 1.x or 0.x
-notoc: true
 weight: 100
 ---
 
 The KrakenD 2.0 release is a major version that **simplifies the configuration** of `v1.x` and **standardizes field names** that were using different criteria to declare the attributes.
 
-Migrating from older versions of KrakenD is a straightforward process if you use the [Config migration tool](https://github.com/devopsfaith/krakend-config-migrator). This migration allows you to:
+This migration allows you to:
 
 - Migrate from KrakenD `0.x` to `2.x`
 - Migrate from KrakenD `1.0` to `2.x`
@@ -20,24 +19,28 @@ Migrating from older versions of KrakenD is a straightforward process if you use
 - Migrate from KrakenD `1.3` to `2.x`
 - Migrate from KrakenD `1.4` to `2.x`
 
-## Steps to migrate to KrakenD 2.0 and above
+{{< button-group >}}
+{{< button url="https://github.com/devopsfaith/krakend-config-migrator" text="Download migration tool" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+{{< /button >}}
+{{< /button-group >}}
 
-- Version your configuration in `git` or similar DVCS to track the changes before and after applying the migration tool.
-- Open your configuration file(s) and replace `"version": 2` with `"version": 3`.
-- Download the migration binary for your architecture and execute it passing the path to the folder where your configuration is (absolute or relative).
-- If you use Docker, replace `devopsfaith/krakend` with `krakend` or `krakend:2`, or `krakend:2.0` (now it's an official Docker image)
-- Review the changes the migration tool did to your config
 
-**Only if you are compiling custom go plugins**:
+## Short read - Migrating to KrakenD 2.0 and above
 
-- The **new default container is not plugin friendly**, as it extends from `alpine`. Use the Docker container `krakend:2-debian` instead.
+- Use `git` or similar DVCS to track the changes. Compare the differences at the end.
+- Open your configuration file(s), such as `krakend.json`, and replace `"version": 2` with `"version": 3`. **This is the only change by hand.**
+- Download the migration binary for your architecture (button above) and execute it passing the path to the folder where your configuration is (absolute or relative).
+- If you use open-source with Docker, replace `devopsfaith/krakend` with `krakend` or `krakend:2`, or `krakend:2.0` (now it's an official Docker image!)
+- Review the changes the migration tool did to your config, and delete the migrator.
+
+And only **if you are compiling custom go plugins**, recompile them using the new libraries versions (guide to [write plugins](/docs/extending/writing-plugins/))
 
 {{< note title="Special attention to short words" >}}
 The migration script replaces words used by KrakenD in the past that might collide with wording you use in your endpoints. Words like `whitelist` or `blacklist` will be replaced. Make sure to check changes in the configuration.
 {{< /note >}}
 
 
-## Changes and differences between KrakenD 1 and KrakenD 2 explained
+## Long read - Changes and differences explained
 The migration tool will take care of what is described below for you, but it's not magic. What it does is actually quite simple, and for the most part, what it does is to rename configurations and namespaces. 
 
 ### Renamed namespaces
