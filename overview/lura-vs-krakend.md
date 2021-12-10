@@ -1,8 +1,7 @@
 ---
 lastmod: 2018-10-20
 date: 2018-06-23
-aliases:
-- krakend-vs-krakend-ce
+aliases: ["krakend-vs-krakend-ce"]
 linktitle: Lura vs. KrakenD
 description: What is the difference between Lura and KrakenD?
 notoc: true
