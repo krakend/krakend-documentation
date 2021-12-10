@@ -1,42 +1,46 @@
 ---
-lastmod: 2018-11-27
+lastmod: 2021-12-09
 date: 2018-07-20
 aliases: ["/docs/features/parameter-forwarding/"]
-linktitle:  Parameter forwarding
-title: Parameter forwarding
-weight: 30
+linktitle:  Query strings and headers
+title: Forwarding query strings and headers
+weight: 10
 menu:
   community_current:
     parent: "040 Endpoint Configuration"
 ---
-KrakenD is an API Gateway, and when it comes to forward query strings, cookies, and headers, it **does not behave like a regular proxy** by forwarding parameters to the backend.
+KrakenD is an API Gateway with a **zero-trust policy**, and when it comes to forward query strings, cookies, and headers there are implications that you need to be aware of.
 
-The **default policy** for data forwarding works as follows:
+Part of the zero-trust policy implies that KrakenD **removes by default** any unexpected [query string](#query-string-forwarding), [headers](#headers-forwarding), or [cookies](#cookies-forwarding). Not trusting anyone by default means that unless otherwise configured, none of these elements are forwarded to or included in your API backends.
 
-- No [query string](#query-string-forwarding) parameters are forwarded to the backend
-- No [headers](#headers-forwarding) are forwarded
-- No [cookies](#cookies-forwarding) are forwarded
+## Configuration to enable parameter forwarding
+You can change the default behavior according to your needs, and define which elements are allowed to pass. To do that, add the following configuration options under your `endpoint` definition:
 
-You can change this behavior according to your needs, and define which elements are allowed to pass.
+- `querystring_params` (*array*): Defines the exact list of query strings that are allowed to reach the backend when passed
+- `headers_to_pass` (*array*): Defines the list of all headers allowed to reach the backend when passed
+- A single *star* element (`["*"]`) as the options above, forwards **everything** to the backend
 
-## Optional query string forwarding
-KrakenD **does not send any query string parameter to the backend by default**, avoiding the pollution of the backends. Meaning that if an endpoint `/foo` receives the query string `/foo?a=1&b=2` all its declared backends are not going to see neither `a` nor `b`.
+{{< note title="Case sensitive parameters" type="info" >}}
+The `querystring_params` and `headers_to_pass` lists are **case sensitive**. For instance, a request `?Page=1` wont passed to the backend with `"querystring_params": ["page"]`
+{{< /note >}}
 
-The property list `querystring_params` in the `endpoint` configuration allows you to declare **optional query string parameters**. When this list exists in the configuration, the forwarding policy behaves like an allow list: all matching parameters declared in the `querystring_params` list are forwarded to the backend, and the rest dropped.
+**Example**:
 
-Parameters are always optional and the user can pass a subset of them, all, or none.
+*Send the query strings `items` and `page` to the backend, and also `User-Agent` and `Accept` headers:*
 
-For instance, let's forward `?a=1&b=2` to the backends:
-
-{{< highlight json >}}
+{{< highlight json "hl_lines=6-13">}}
 {
   "version": 3,
   "endpoints": [
     {
       "endpoint": "/v1/foo",
       "querystring_params": [
-        "a",
-        "b"
+        "items",
+        "page"
+      ],
+      "headers_to_pass": [
+        "User-Agent",
+        "Accept"
       ],
       "backend": [
         {
@@ -52,9 +56,52 @@ For instance, let's forward `?a=1&b=2` to the backends:
 {{< /highlight >}}
 
 
-With this configuration, given a request like `http://krakend:8080/v1/foo?a=1&b=2&evil=here`, the backend receives `a` and `b`, but `evil` is missing.
+Read below for further details and examples.
 
-Also, if a request like `http://krakend:8080/v1/foo?a=1` does not include `b`, this parameter is simply missing in the backend request as well.
+## Query string forwarding
+The zero-trust policy implies that for instance, if a KrakenD endpoint `/foo` receives the request `/foo?items=10&page=2`, all its declared backends are not going to see neither `items` nor `page`, **unless otherwise configured**.
+
+To enable the transition of query strings to your backend, add the **list** `querystring_params` in your `endpoint` definition. For instance, let's forward `?items=10&page=2` to the backends now:
+
+{{< highlight json >}}
+{
+  "version": 3,
+  "endpoints": [
+    {
+      "endpoint": "/v1/foo",
+      "querystring_params": [
+        "items",
+        "page"
+      ],
+      "backend": [
+        {
+          "url_pattern": "/catalog",
+          "host": [
+            "http://some.api.com:9000"
+          ]
+        }
+      ]
+    }
+  ]
+}
+{{< /highlight >}}
+
+The `querystring_params` list has the following behavior:
+
+- **Items in the list** are forwarded to your backend when passed
+- **Additional query strings not in the list** are removed from the final call
+- **Writing a single *star* element** (`"querystring_params":["*"]`) instead of individual strings, forwards **everything** to the backend
+
+
+
+Parameters are always optional and the user can pass a subset of them, all, or none. If you want to enforce that a query string parameter is passed by the user, you will need to do a validation with the Common Expression Langiu
+
+
+
+
+With this configuration, given a request like `http://krakend:8080/v1/foo?items=10&page=2&evil=here`, the backend receives `items` and `page`, but `evil` is missing.
+
+Also, if a request like `http://krakend:8080/v1/foo?items=10` does not include `page`, this parameter is simply missing in the backend request as well.
 
 ### Sending all query string parameters
 While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
@@ -65,10 +112,10 @@ While the default policy prevents from sending unrecognized query string paramet
   ]
 {{< /highlight >}}
 
-Enabling the wildcard pollutes your backends, as any query string sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the query strings in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
+**Enabling the wildcard pollutes your backends**, as any query string sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the query strings in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
 ### Mandatory query string parameters
-When your backend requires query string parameters and you want to make them **mandatory** in KrakenD, use the `{variables}` placeholders in the endpoints definition. The variables can be injected in the backends as part of the query string parameters. For instance:
+When your backend requires mandatory **query string** parameters and you want to make them **mandatory** in KrakenD, the only way to enforce this is using the `{variable}` placeholders in the endpoints definition. Mandatory means that the endpoint won't exist unless the parameter is passed. For instance:
 
 {{< highlight json >}}
 {

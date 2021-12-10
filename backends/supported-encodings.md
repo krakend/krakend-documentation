@@ -41,12 +41,15 @@ Follow this table to determine how to treat your backend content:
 
 {{< note title="Working with JSON arrays" >}}
 If you want to return to the client a JSON array instead of an object, consider using the following combinations: `output_encoding: json-collection` in your `endpoint`, and `is_collection: true` in your `backend`. See [response content types](/docs/endpoints/content-types/).
+
+When hesitating whether to use `safejson` or `json` and the `is_collection=true`, the `json` encoder is faster and more performant but less resilient: it will fail when the content doesn't have the expected type.
 {{< /note >}}
 
 
 The following example demonstrates how an endpoint `/abc` is feeding on three different services and urls  `/a`, `/b`, and `/c` and aggregates their responses:
 
-	...
+{{< highlight json >}}
+{
 	"endpoints": [
     {
       "endpoint": "/abc",
@@ -74,6 +77,8 @@ The following example demonstrates how an endpoint `/abc` is feeding on three di
         }
       ]
     }
-    ...
+  ]
+}
+{{< /highlight >}}
 
-As you can see, having the `encoding` declaration inside every backend allows you to consume services with different content types. The endpoint `/abc` instead uses the encoding of your choice (e.g., JSON).
+As you can see, having the `encoding` declaration inside every backend allows you to consume services with different content types. The endpoint `/abc` instead uses the encoding of your choice (e.g., JSON), but is feeding and merging from XML, RSS and JSON content simultaneously.
