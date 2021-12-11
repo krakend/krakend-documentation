@@ -8,9 +8,7 @@ menu:
 title: Deployment best practices
 weight: 10
 ---
-
----
-Setting up a cluster of KrakenD instances is a straightforward process, but here are some not so obvious recommendations to get a good start.
+Setting up a cluster of KrakenD instances is a straightforward process, but here are some not-so-obvious recommendations to get a good start.
 
 
 ## Use blue/green or similar deployment strategy
