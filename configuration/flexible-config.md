@@ -252,7 +252,8 @@ Have a look at the highlighted lines:
                         {{ include "rate_limit_backend.tmpl" }}
                     }
                 }
-            ]
+              ]
+            }
             {{ end }}
         ]
     }
