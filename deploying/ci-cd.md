@@ -8,28 +8,40 @@ menu:
     parent: "110 Deploying"
 weight: 20
 ---
-KrakenD is a stateless application that needs a single configuration file attached to operate. Your build process or CI/CD pipeline should take the following steps to have a safer KrakenD deployment:
+KrakenD operates with its single binary and your associated configuration. Therefore, your build process or CI/CD pipeline only needs to ensure that the configuration file is correct. These are a few recommendations to a safes KrakenD deployment:
 
 1. Make sure the configuration file is valid
-2. Generate an immutable artifact (Docker image) - optional
-3. Run integration tests - optional
+2. Optional - On Docker, generate an immutable docker image
+3. Optional - Run integration tests
 4. Deploy the new configuration
 
-Even there are several ways to automate KrakenD deployments, you should at least try your configuration before applying it in production. In this document you'll find a few notes that might help you automate this process.
+There are several ways to automate KrakenD deployments, but **you must always test your configuration** before applying it in production. You'll find a few notes that might help you automate this process in this document.
 
 ## Making sure the configuration is valid
-The `check` command is a must in any **CI/CD pipeline** or build process to make sure you don't deploy a broken configuration that results in downtime. The `check` command lets you find broken configurations before going live. Consider adding a line like the following in your release process:
+The `check` command is a must in any **CI/CD pipeline** or pre-deploy process to ensure you don't put a broken setup in production that results in downtime. The `check` command lets you find broken configurations before going live. Add a line like the following in your release process:
 
 {{< terminal title="Recommended file check for CI/CD" >}}
-krakend check -t -d -c path/to/krakend.json
+krakend check -t -d -c /path/to/krakend.json
 {{< /terminal >}}
+
+The previous command will stop the pipeline (exit 1) if it fails or continue if the configuration is correct.
 
 [Read more about the `check` command](/docs/commands/check/)
 
 ## Generating a Docker artifact
-When using `Dockerfile` artifacts, the recommended approach is to generate an **immutable artifact** over using volumes. Although you can use the official container and mount an external volume (or ConfigMap in Kubernetes) with the configuration, a custom image with your configuration copied inside allows you to go back to any previous state with safe rollbacks and debugging.
+If you use containers, the recommended approach is to write your own `Dockerfile` and deploy an **immutable artifact** (embedding the config).
 
-The following example illustrates a combination of the `check` command with a a multi-stage build to compile a [flexible configuration](/docs/configuration/flexible-config/) in a `Dockerfile`:
+In its simplified form would be:
+{{< highlight Dockerfile >}}
+FROM devopsfaith/krakend
+COPY krakend.json /etc/krakend/krakend.json
+{{< /highlight >}}
+
+{{< note title="Volume or copy?" type="question" >}}
+Even though you can use the official container directly and attach the configuration mounting an external volume (or ConfigMap in Kubernetes), a custom image with your configuration copied inside has benefits. It guarantees that you can do safe rollbacks and have effective testing and debugging. If you break something at any point, you only need to deploy the previous container, while if you use a volume, you are exposed to downtime or impossible scaling until you fix it.
+{{< /note >}}
+
+A more real-life example illustrates below a combination of the `check` command with a multi-stage build to compile a [flexible configuration](/docs/configuration/flexible-config/) in a `Dockerfile`:
 
 {{< highlight docker >}}
 FROM devopsfaith/krakend as builder
@@ -50,28 +62,39 @@ FROM devopsfaith/krakend
 COPY --from=builder --chown=krakend /tmp/krakend.json .
 {{< /highlight >}}
 
-Notice how the lines above `check` that the configuration is valid using a starting template `krakend.tmpl` and output the compiled template into a `/tmp/krakend.json` file. This file is the only addition to the final Docker image.
+The `Dockerfile` above has two stages:
+ The `check` command compiles the template `krakend.tmpl` and any included sub-template inside and outputs (`FC_OUT`) the resulting `/tmp/krakend.json` file.
+The `krakend.json` file is the only addition to the final Docker image.
 
-It assumes that you have a file structure like this:
+The example above assumes you have a file structure like this:
 
-	.
-	├── config
-	│   ├── partials
-	│   ├── settings
-	│   │   ├── prod
-	│   │   │   └── env.json
-	│   │   └── test
-	│   │       └── env.json
-	│   └── templates
-	│       └── some.tmpl
-	├── Dockerfile
-	└── krakend.tmpl
+    .
+    ├── config
+    │   ├── partials
+    │   ├── settings
+    │   │   ├── prod
+    │   │   │   └── env.json
+    │   │   └── test
+    │   │       └── env.json
+    │   └── templates
+    │       └── some.tmpl
+    ├── Dockerfile
+    └── krakend.tmpl
 
-And that you build with something like:
+Generate the skeleton above with:
+{{< highlight bash >}}
+mkdir -p config/{partials,settings,templates}
+mkdir -p config/settings/{prod,test}
+touch Dockerfile krakend.tmpl
+{{< /highlight >}}
+
+Now the only missing step to generate the image, is to build it, making sure that the environment argument matches our folder inside the `settings` folder:
 
 {{< terminal title="Docker build" >}}
-docker build --build-arg ENV=prod -t krakend-prod .
+docker build --build-arg ENV=prod -t mykrakend .
 {{< /terminal >}}
+
+The resulting image including your configuration will weight around `80MB`.
 
 ## Running the integration tests
 TO-DO
