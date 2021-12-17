@@ -8,7 +8,7 @@ weight: 20
 notoc: true
 menu:
   community_v1.4:
-    parent: "100 Extended Metrics"
+    parent: "080 Telemetry and Analytics"
 meta:
   since: 0.5
   source: https://github.com/letgoapp/krakend-influx

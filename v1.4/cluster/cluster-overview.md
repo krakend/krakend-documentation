@@ -6,7 +6,7 @@ linktitle: Cluster Overview
 notoc: true
 menu:
   community_v1.4:
-    parent: "120 Cluster"
+    parent: "110 Deployment Process"
 title: High-availability cluster
 weight: 1
 ---

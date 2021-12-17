@@ -8,7 +8,7 @@ title: Data manipulation
 weight: 10
 menu:
   community_v1.4:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 ---
 This page describes the most basic options to manipulate the content you receive from the backend before delivering it to the client.
 

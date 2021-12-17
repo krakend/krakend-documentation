@@ -10,7 +10,7 @@ images:
 - /images/documentation/graphql/krakend-rest-to-graphql-transformation.png
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 meta:
   since: 2.0
   source: https://github.com/luraproject/lura

@@ -8,7 +8,7 @@ title: SD with DNS SRV (e.g., Consul, k8s)
 weight: 10
 menu:
   community_v1.3:
-    parent: "130 Service Discovery"
+    parent: "050 Backends Configuration"
 ---
 The `DNS SRV` is a market standard used by systems such as **Kubernetes, Mesos, Haproxy, Nginx plus, AWS ECS, Linkerd**, and more.
 

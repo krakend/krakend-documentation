@@ -5,7 +5,7 @@ linktitle: Docker artifact
 title: Generating a Docker artifact
 menu:
   community_current:
-    parent: "110 Deploying"
+    parent: "110 Deployment and Go-Live"
 weight: 20
 ---
 

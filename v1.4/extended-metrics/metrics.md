@@ -7,7 +7,7 @@ title: Extended metrics and the `/__stats` endpoint
 weight: 10
 menu:
   community_v1.4:
-    parent: "100 Extended Metrics"
+    parent: "080 Telemetry and Analytics"
 notoc: true
 meta:
   since: 0.4

@@ -7,7 +7,7 @@ title: Data manipulation
 weight: 10
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 ---
 This page describes the most basic options to manipulate the content you receive from the backend before delivering it to the client.
 
@@ -76,7 +76,7 @@ The KrakenD endpoint to accept URLs like`/posts/1` is defined as follows:
 }
 {{< /highlight >}}
 
-    
+
 
 When calling the KrakenD endpoint `/posts/1` the response you would get will be as follows:
 
@@ -299,7 +299,7 @@ We need this KrakenD configuration:
     ]
   }
 {{< /highlight >}}
-   
+
 
 ## Collections
 Working with collections (or arrays) is a special manipulation case. There are two different scenarios regarding collections:

@@ -7,7 +7,7 @@ title: API Gateway integration with AMQP messaging
 weight: 90
 menu:
   community_v1.4:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 meta:
   since: 0.9
   source: https://github.com/devopsfaith/krakend-amqp

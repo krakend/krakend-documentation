@@ -28,7 +28,7 @@ Before digging any further, some answers to frequently asked questions:
 
 4) **Your self-hosted identity server doesn't need to be exposed to the Internet**, as it can live behind KrakenD and let the token generation requests be proxied through KrakenD. If you use a SaaS solution, then it's exposed.
 
-5) **If you are new to JWT validation**, start reading the [JSON Web Tokens overview]((/docs/authorization/jwt-overview/)) 
+5) **If you are new to JWT validation**, start reading the [JSON Web Tokens overview]((/docs/authorization/jwt-overview/))
 
 ## JWT header requirements
 When KrakenD decodes the `base64` token string passed in the `Bearer` or a cookie, it expects to find in its **header** section the following **three fields**:
@@ -46,7 +46,7 @@ The `alg` and `kid` values depend on your implementation, but they must be prese
 {{< note title="Important!" >}}
 Make sure you are declaring the right `kid` in your JWT. Paste a token in a [debugger](https://jwt.io/#debugger-io) to find out.
 
-The value provided in the `kid` must match with the `kid` declared at the `jwk_url` or `jwk_local_path`. 
+The value provided in the `kid` must match with the `kid` declared at the `jwk_url` or `jwk_local_path`.
 {{< /note >}}
 
 The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches the single key present in the JWK document and the token header.
@@ -69,7 +69,8 @@ For instance, to protect the endpoint `/protected/resource`:
             "audience": ["http://api.example.com"],
             "roles_key": "http://api.example.com/custom/roles",
             "roles": ["user", "admin"],
-            "jwk_url": "https://albert-test.auth0.com/.well-known/jwks.json"
+            "jwk_url": "https://albert-test.auth0.com/.well-known/jwks.json",
+            "cache": true
         }
     },
     "backend": [
@@ -86,6 +87,7 @@ This configuration makes sure that:
 - The token has a valid signature
 - The role of the user is either `user` or `admin` (taken from a key in the JWT payload named `http://api.example.com/custom/roles`)
 - The token is not revoked in the bloom filter (see [revoking tokens](/docs/authorization/revoking-tokens/))
+- The key from the identity server is cached to avoid hammering it
 
 ## JWT validation settings
 The following settings are available for JWT validation. There are many options, although generally only the **fields `alg` and `jwk_url` or `jwk_local_path` are mandatory**, and the rest of the keys can be added or not at your best convenience or depending on other options.
@@ -159,6 +161,10 @@ Here there is an example using an external `jwk_url`:
 }
 {{< /highlight >}}
 
+{{< note title="Performance considerations" type="tip" >}}
+If you use cryptographic algorithms that require high computation such as `RS512`, make sure your KrakenD instances have a proper CPU setting. Additionally, enable `cache` to avoid hammering your identity servers and save internal network traffic.
+{{< /note >}}
+
 ### Validation process
 KrakenD does the following validation to let users hit protected endpoints:
 
@@ -209,7 +215,7 @@ See this test to [understand how to generate and encrypt payloads](https://githu
 ```
 awskms://keyID
 ```
-The URL Host + Path is used as the key ID, which can be an Amazon Resource Name (ARN), alias name, or alias ARN. Note that ARNs may contain ":" characters, which cannot be escaped in the Host part of a URL, so you should use the `awskms:///<ARN>` form. 
+The URL Host + Path is used as the key ID, which can be an Amazon Resource Name (ARN), alias name, or alias ARN. Note that ARNs may contain ":" characters, which cannot be escaped in the Host part of a URL, so you should use the `awskms:///<ARN>` form.
 
 [More information about AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html#find-cmk-id-arn)
 
@@ -218,7 +224,7 @@ The URL Host + Path is used as the key ID, which can be an Amazon Resource Name 
 ```
 azurekeyvault://keyID
 ```
-The credentials are taken from the environment unless the `AZURE_KEYVAULT_AUTH_VIA_CLI` environment variable is set to true, in which case it uses the `az` command line. 
+The credentials are taken from the environment unless the `AZURE_KEYVAULT_AUTH_VIA_CLI` environment variable is set to true, in which case it uses the `az` command line.
 
 
 [More information about Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/general/basic-concepts)
@@ -272,7 +278,7 @@ Keep in mind that this syntax in the `url_pattern` field is only available if th
 If KrakenD can't replace the claim's content for any reason, the backend receives a request to the literal URL `/foo/{JWT.sub}`.
 
 ## Propagate JWT claims as request headers
-It is possible to forward claims in a JWT as request headers. It is a common use case to have, for instance, the sub claim added as an `X-User` header to the request. 
+It is possible to forward claims in a JWT as request headers. It is a common use case to have, for instance, the sub claim added as an `X-User` header to the request.
 
 **Important:** The endpoint `headers_to_pass` needs to be set as well, so the backend can see it.
 

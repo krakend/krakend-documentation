@@ -7,7 +7,7 @@ title: Array manipulation - flatmap
 weight: 70
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 meta:
   since: 0.9
   source: https://github.com/devopsfaith/flatmap

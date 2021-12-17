@@ -5,7 +5,7 @@ linktitle: To Kubernetes
 title: Deploying to Kubernetes
 menu:
   community_current:
-    parent: "110 Deploying"
+    parent: "110 Deployment and Go-Live"
 weight: 30
 ---
 

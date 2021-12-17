@@ -6,7 +6,7 @@ title: Caching backend responses
 weight: 50
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 notoc: true
 meta:
   since: 0.4

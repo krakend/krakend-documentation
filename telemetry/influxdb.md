@@ -2,9 +2,9 @@
 lastmod: 2021-04-28
 date: 2019-09-15
 notoc: true
-linktitle: InfluxDB
+linktitle: InfluxDB (opencensus)
 title: Exporting metrics and events to InfluxDB
-weight: 80
+weight: 25
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/influxdb/"]
 menu:

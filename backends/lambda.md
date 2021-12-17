@@ -9,7 +9,7 @@ images:
     - /images/krakend-lambda.png
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 notoc: true
 meta:
   since: 1.0
@@ -56,20 +56,26 @@ When setting the credentials make sure that the lambda is callable within the Kr
 
 When the KrakenD endpoint is attached to the same Lambda, use this configuration:
 
-    "backend": [
-    {
+{{< highlight json >}}
+{
+    "backend": [{
         "backend/lambda": {
             "function_name": "lambda-function",
             "region": "us-west1",
             "max_retries": 1
         }
-    }
+    }]
+}
+{{< /highlight >}}
+
 
 ## Example: Take the lambda from the URL
 
 When the name of the Lambda to depends on a parameter passed in the endpoint, use this configuration instead:
 
-    "endpoint": "/call-a-lambda/{lambda},
+{{< highlight json >}}
+{
+    "endpoint": "/call-a-lambda/{lambda}",
     "backend": [
     {
         "backend/lambda": {
@@ -78,6 +84,8 @@ When the name of the Lambda to depends on a parameter passed in the endpoint, us
             "max_retries": 1
         }
     }
+}
+{{< /highlight >}}
 
 In this example, the `function_param_name` is telling us which is the placeholder in the endpoint setting the lambda. In this case, `{lambda}`.
 

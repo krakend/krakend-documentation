@@ -3,10 +3,11 @@ lastmod: 2021-05-02
 date: 2018-11-05
 linktitle: Metrics and /__stats
 title: Extended metrics and the `/__stats` endpoint
-weight: 10
+aliases: ["/docs/extended-metrics/metrics/"]
+weight: 1000
 menu:
   community_current:
-    parent: "100 Extended Metrics"
+    parent: "080 Telemetry and Analytics"
 notoc: true
 meta:
   since: 0.4

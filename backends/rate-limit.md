@@ -7,7 +7,7 @@ weight: 10
 source: https://github.com/devopsfaith/krakend-ratelimit
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 notoc: true
 meta:
   since: false

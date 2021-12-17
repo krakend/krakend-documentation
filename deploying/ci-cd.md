@@ -5,7 +5,7 @@ linktitle: CI/CD integration
 title: Automated KrakenD deployments with CI/CD
 menu:
   community_current:
-    parent: "110 Deploying"
+    parent: "110 Deployment and Go-Live"
 weight: 20
 ---
 KrakenD operates with its single binary and your associated configuration. Therefore, your build process or CI/CD pipeline only needs to ensure that the configuration file is correct. These are a few recommendations to a safes KrakenD deployment:

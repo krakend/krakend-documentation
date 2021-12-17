@@ -4,7 +4,7 @@ date: 2019-09-15
 notoc: true
 linktitle: Telemetry integrations
 title: Telemetry
-weight: 30
+weight: 10
 images:
 - /images/documentation/exporters.png
 aliases: ["/docs/logging-metrics-tracing/tracing/"]
@@ -23,11 +23,12 @@ The following telemetry systems are supported:
 - [Jaeger](/docs/telemetry/jaeger/)
 - [Zipkin](/docs/telemetry/zipkin/)
 - [AWS X-Ray](/docs/telemetry/xray/)
-- [InfluxDB](/docs/telemetry/influxdb/)
+- [InfluxDB (native)](/docs/telemetry/influxdb-native/)
+- [InfluxDB (opencensus)](/docs/telemetry/influxdb/)
 - [Prometheus](/docs/telemetry/prometheus/)
 - [Google Stackdriver](/docs/telemetry/stackdriver/)
 - [Datadog](/docs/telemetry/datadog/)
-- [OpenCensus Agent](/docs/telemetry/opencensus/) (e.g: **Azure Monitor**)
+- [Azure Monitor](/docs/telemetry/opencensus/) (OpenCensus Agent)
 - [Grafana](/docs/extended-metrics/grafana/)
-- Newrelic (only custom builds)
+- Newrelic (KrakenD Enterprise only)
 - Instana (KrakenD Enterprise only)

@@ -8,7 +8,7 @@ weight: 40
 notoc: true
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 ---
 Setting the `encoding` is an important part of the backend definition, as it informs KrakenD how to parse the responses of your services.
 

@@ -9,7 +9,7 @@ weight: 20
 source: https://github.com/devopsfaith/krakend-etcd
 menu:
   community_v1.3:
-    parent: "130 Service Discovery"
+    parent: "050 Backends Configuration"
 ---
 {{< note title="Deprecated" >}}
 Since KrakenD 1.3.0 etcd is not longer supported. The documentation is left here for reference.

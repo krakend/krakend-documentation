@@ -4,62 +4,99 @@ date: 2017-01-21
 linktitle: Best practices
 menu:
   community_current:
-    parent: "110 Deploying"
-title: Deployment best practices
-weight: 10
+    parent: "110 Deployment and Go-Live"
+title: Deployment and go-live recommendations
+weight: 1
 ---
-Setting up a cluster of KrakenD instances is a straightforward process, but here are some not-so-obvious recommendations to get a good start.
+Setting up KrakenD is a straightforward process, but here are some not-so-obvious recommendations to get a good start when going live. This section has generalistic advice, despite that every KrakenD installation is is different. Let's dip the toe into the deployment waters!
 
+## Architecture recommendations
+### High Availability
+Hardware can fail at any time, and a Gateway is a piece critical enough to have redundancy of the service. Having a cluster of machines operating the service assures high availability. You should always plan to have at least a couple of KrakenD servers/containers running in case one of them gets in trouble, even when you have low traffic.
 
-## Use blue/green or similar deployment strategy
-As it happens with Apache, Nginx, Mysql, and the vast majority of services, changing the configuration requires a restart. When deploying new changes, use a technique like blue/green deployment or similar.
+KrakenD can run in different regions and datacenters transparently without any problem as its nodes do not need to communicate to each other.
 
-This scenario can be automated and is available in all major cloud providers. The idea is that you spin up new machines with the latest configuration and then shift the traffic from the old instances to the new ones.
+[Setup a cluster of machines](/docs/deploying/clustering)
 
-This methodology ensures that there is no downtime when applying changes. On-premises installations can make a similar approach as well.
-
-## Use Docker and immutable containers
-Creating an immutable Docker image with your desired configuration takes a few seconds in your CI/CD pipeline. Create a `Dockerfile` with at least the following code and deploy the resulting image in production:
-
-    FROM devopsfaith/krakend
-
-    COPY krakend.json /etc/krakend/krakend.json
-
-## Place a balancer in front of KrakenD
+### Place a balancer in front of KrakenD
 Put a load balancer in front of KrakenD to distribute traffic between the different nodes of the cluster (Kubernetes already does this for you). Use always at least two KrakenD instances for High Availability.
 
-## Use HTTP2
-Enable HTTP2 between your balancer and KrakenD API gateway for the best performance.
+### Server dimensioning
+Dimension KrakenD nodes according to your expected needs and throughput.
 
-## SSL
-Add your public SSL certificate in the load balancer and use **internal certificates** (or even no certificates at all -termination-) between the load balancer and KrakenD.
+See [server requirements](/docs/deploying/server-dimensioning/)
 
-## Enable metrics and logging
-Make sure you have visibility of what is going on. Choose any of the systems where you can send the metrics and enable them. Enable logging with at least a `WARNING` level.
+### Use several gateways
+The API gateway doesn't need to be unique. We recommend using an independent KrakenD installation per consumer type. For instance, your iOS development team might need its own KrakenD with different views of the consumed content compared to the Web Team. Needs and content in each team differs in each endpoint, and every team could optimize the contract for each case.
 
-## Startup command
-Redirecting the output to `/dev/null` gives you more performance.  Run the service with:
+### Use HTTP2
+Whenever possible, enable HTTP2 between your balancer and KrakenD API gateway for the best performance. There is nothing additional you need to configure in KrakenD.
 
-    krakend run -c krakend.json >/dev/null 2>&1
+### SSL Certificates
+Even that you can start KrakenD with SSL, you can add your public SSL certificate in the load balancer or PaaS and use **internal certificates**, or even no certificates at all (termination), between the load balancer and KrakenD.
 
-## Named configuration
-Add a `name` key in the configuration file with useful information so you can identify which specific version your cluster is running. Whatever type of information you write inside the `name` is open to your imagination. Any value you write is available in the metrics for inspection.
+## Prepare for failure
+Add circuit breaker to your backends to avoid KrakenD keep pushing a failing system and throttle down for a while.
 
-E.g.:
+## Monitoring
+### Enable traces and metrics
+Make sure you have visibility of what is going on. Choose any of the systems where you can send the metrics and enable them. There are many choices, if you don't use any SaaS provider, a good self-hosted start would be:
 
-    {
-        "version": 3,
-        "name": "Production Cluster rev-db6a182"
-    }
+- A [Grafana Dashboard](/docs/telemetry/grafana/)
+- Fueled by [InfluxDB](/docs/telemetry/influxdb-native/)
+- And full traces by [Jaeger](/docs/telemetry/jaeger/)
+
+
+### Add logging
+If you don't add any logging, KrakenD will spit on stdout the activity of the gateway. Nevertheless, we recommend you to enable [extended logging](/docs/logging/extended-logging/) with at least a `WARNING` level.
+
+Send logs to [ELK](/docs/logging/logstash/) or [GELF](/docs/logging/graylog-gelf/).
+
+
+## Deployment recommendations
+
+### Release through a CI/CD pipeline
+Automate the go-live process through a [CI/CD](/docs/deploying/ci-cd/) pipeline that builds and checks KrakenD configuration before deploying.
+
+### Use Docker and immutable containers
+On Docker deployments, creating an immutable Docker image with your desired configuration takes a few seconds in your CI/CD pipeline. Create a `Dockerfile` with at least the following code and deploy the resulting image in production:
+
+{{< highlight Dockerfile >}}
+FROM devopsfaith/krakend
+COPY krakend.json /etc/krakend/krakend.json
+{{< /highlight >}}
+
+Read more on [Docker artifacts](/docs/deploying/docker/)
+
+### Use blue/green or similar deployment strategy
+As it happens with Apache, Nginx, Varnish and other stateless services, changing the configuration requires a restart. When deploying new changes, use a technique like blue/green deployment or similar to make the deploy transparent for the user.
+
+This scenario can be automated and is available in Kubernetes and in all major cloud providers. The idea is that you spin up new machines with the latest configuration and then shift the traffic from the old instances to the new ones.
+
+This methodology ensures that there is no downtime when applying changes. On-premises installations can make a similar approach as well, using HA Proxy in front of blue and green KrakenD servers.
+
+## Code organization
+### Name your configurations
+Add a `name` key in the configuration file with useful information so you can identify which specific version your cluster is running. Whatever type of information you write inside the `name` is open to your imagination. Any value you write is **available in the metrics** for inspection.
+
+{{< highlight json >}}
+{
+    "version": 3,
+    "name": "Production Cluster rev-db6a182"
+}
+{{< /highlight >}}
+
 
 **During the build in the pipeline**, it might be a good idea to **replace the content** of the `name` attribute by a content showing the deployed version (the short SHA from the commit maybe).
 
-## Add metadata and your company attributes
-KrakenD **ignores anything that it doesn't recognize** in the configuration as its own. Meaning that your `krakend.json` (or whatever format you use) is open to include additional metadata and fields that make sense to your company. Use it to add your meta language, tags, comments, bot integrations, etc. for better integration with your CI/CD system, deployment process, or just better comprehension of the file in the future.
+### Add comments and metadata  (`@`)
+KrakenD **ignores from the configuration anything that it doesn't recognize**. Meaning that your `krakend.json` (or whatever format you use) allows you to include additional metadata and fields that make sense to your company. Use it to add your meta language, tags, comments, bot integrations, etc. for better integration with your CI/CD system, deployment process, or just better comprehension of the file in the future.
 
-If you add new attributes to the configuration file, make sure they don't collide with new features in the future.
+{{< note title="Use a consistent prefix" type="tip" >}}
+Choose a prefix that makes sense to you, and that it cannot collide with other configurations in the future. At KrakenD we decided to prefix custom attributes with a `@`.
+{{< /note >}}
 
-For instance, we are adding a `@comment` field in the following configuration. This attribute is ignored by KrakenD:
+For instance, you could add `@comment` fields. The field is not recognized by KrakenD adn it will be ignored during startup, but finding it might be bresh air for the developer next to you.
 
 
 {{< highlight json "hl_lines=4" >}}
@@ -72,3 +109,13 @@ For instance, we are adding a `@comment` field in the following configuration. T
     }]
 }
 {{< /highlight >}}
+
+### Redirect ouput to `/dev/null`
+**When the output of KrakenD stdout is not important to you**, set the logging level to `CRITICAL` and redirect its output to `/dev/null` to have even more performance. To do that:
+
+    krakend run -c krakend.json >/dev/null 2>&1
+
+### Split the configuration in multiple repos or folders
+On large organizations with several teams using a common gateway, you might want to split the endpoints in groups using folders or even different repositories. With the [flexible configuration](/docs/configuration/flexible-config/) you can have teams workin in its dedicated space and aggregate all endpoints during build time without conflicts touching the same files.
+
+Most KrakenD configurations tend to be large and with repetitive blocks. Define a basic skeleton of configurations that will be used across all teams.
