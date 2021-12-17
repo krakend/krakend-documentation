@@ -253,6 +253,7 @@ Have a look at the highlighted lines:
                     }
                 }
             ]
+            }
             {{ end }}
         ]
     }
