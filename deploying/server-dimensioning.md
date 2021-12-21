@@ -1,57 +1,66 @@
 ---
 lastmod: 2020-03-27
 date: 2017-01-21
-linktitle: Server size
+linktitle: Server requirements
 menu:
   community_current:
     parent: "110 Deployment and Go-Live"
 title: KrakenD servers requirements
 weight: 10
 ---
-A key difference between using KrakenD over other solutions, is its **low Total Cost of Ownership**.
+When comparing KrakenD with other solutions, a key difference is that its **Total Cost of Ownership** is actually **lower**, and you can save a lot of money in infrastructure.
 
-On the hardware side, KrakenD is **very light** and consumes low resources. Maybe even eco-friendly as a widely seen **consumption pattern** is around `100-200MB` of RAM and `0.5 vCPU` for installations that process a remarkable amount of traffic (thousands of requests per second).
+On the hardware side, KrakenD is **very light** and consumes very low resources. For instance, the **consumption pattern** of the *baseline* (we will see this definition below) is around `100-200MB` of RAM and can work on production with `0.5 vCPU`. This *baseline* can process thousands of requests per second.
 
-The final number depends on many factors, including your choosen configuration, the surrounding environment and specially your backend behavior.
+## Hardware specifications
+So, what are the server specifications (or container limits) I need to set for KrakenD?
 
-## Server size / container limits
-The first question everyone has: **what is the server size I need for KrakenD?**
+*It depends*. For starters, there is **no minimum size** needed to operate KrakenD, and there is no certain type of hardware that you need to have. You can use anything from bare-metal to virtualized environments and Docker containers. In fact, you can run KrakenD in the **small** virtual servers with very good results.
 
-*It depends*. There is no minimum size needed to operate KrakenD, and in fact you can run it in the **smallest** virtual servers with good results. Despite the limits depend on your installation and the resource usage it will imply, in general terms, we can use this guide for an initial sizing idea of your nodes:
+{{< note title="Determining the server size" type="note" >}}
+Your final **server size** or **container limit** depends on many factors, like your choosen configuration and enabled components, the performance of your backends, the timeout settings, the network, the concurrency, and other factors.
 
-| CPUs      | Memory | Purpose                              |
-| --------- | -------| ------------------------------------ |
-| `0.5vCPU` | `512MB`|  Installations with a few thousands of requests per second without high-computation operations and transformations. |
-| `2vCPU`   | `2GB`  |  Generic installations with **large traffic** and authorization |
-| `4vCPU`   | `4GB`  | Configurations with massive traffic and several memory/cpu intensive operations. |
+The proper right way to determine this size is **load testing the gateway**.
 
-Numbers above this table will be when you use KrakenD to cache content, or make use og high-memory or CPU functionalities.
+Whatever is the server size you choose, the recommended approach is having **more small machines rather than one or two big ones**.
 
-Keep an eye on **network usage**, as it is the first limit that KrakenD hits on public-cloud instances with limited throughput. Your KrakenD machines can be at a 10% of CPU/memory usage and still you can reach the maximum amount of traffic your provider allows you use.
+{{< /note >}}
 
-### A few large servers, or several small servers?
-Whatever is the server size you choose, the recommended approach is having more small machines rather than one or two big ones.
+Keep an eye on **network usage**, as it is the first limit that KrakenD hits on public-cloud instances with limited throughput. Your KrakenD machines can be at a 10% of CPU/memory usage and still you can reach the maximum amount of traffic your provider allows you to use.
 
-### Usual suspects of Memory and CPU consumption
-KrakenD has a small memory and CPU **baseline** that will change according to the amount of work it has to do and the waits (queueing connections) for the backends to respond.
+### Guide to server sizing
+Let's put some generalistic examples so you can quickly get an approximation in the following table. The recommended size is **per KrakenD node**, and assuming you have **high throughput**. You can use these numbers to start with sizing, albeit they are not written in stone:
 
-The baseline we are referring to is a gateway that does:
+| vCPUs      | Memory | Gateway features and purpose         |
+| ---------- | -------| ------------------------------------ |
+| `0.5CPU` | `512MB`|  **Baseline** gateway (see definition below) with high throughput. No token validation, nor memory/cpu intensive operations and transformations.
+| `1CPU` | `512MB`|  **Baseline** gateway plus light cryptography algorithms in token validation, and moderate logging.
+| `2vCPU`   | `2GB`  |  **All purpose gateway**. Baseline + token validation + logging  |
+| `4vCPU`   | `4GB`  | **Massive traffic** and **several memory/cpu intensive operations, complex cryptography**. |
+| `+4vCPU`   | `+4GB`  | Numbers above this will be when you use KrakenD to cache content, make use of high-memory or CPU functionalities massively, or your environment pushes the gateway to consume more resources. Machines like this might indicate that you have a hidden problem. |
 
+{{< note title="What is the baseline in the table?" type="question" >}}
+The baseline is a gateway with the following specifications enabled:
 - Routing
-- Basic encoding
-- Basic filters and manipulations
+- Encoding
+- Filters and basic manipulations
 - Circuit breaker
-- No logging
+- High throughput
+- No logging, neither token validation
+{{< /note >}}
 
-When extending this baseline, there are a few usual suspects elements responsible for unusual memory or CPU consumption when the througput increases:
+### Top 10 Memory and CPU consumption patterns
+When extending the baseline, there are a few usual suspects responsible for memory or CPU consumption **when the througput is high**. Computationally complex components put the gateway under more pressure, and a downsized machine will show sympthoms of suffering on CPU/Memory. This is the **TOP 10** usages that make the gateway work more:
 
-- [Lua scripts](/docs/enterprise/endpoints/lua/#supported-lua-types-cheatsheet) (affect memory and CPU) run in their own virtual context and need to be compiled in every execution. They also open the door to write blocking operations. If used in endpoints with a high hit-rate, consider moving the logic to a Go plugin.
-- [Backend caching](/docs/backends/caching/) (memory): KrakenD does not limit the cache size you can use in any way. Your backend will decide through the `Cache-Control` headers how much memory KrakenD will need to store all the cache variety and for how long!. Make sure you do not let KrakenD cache go over its memory limit to see failures in its execution.
-- [Per-user rate limiting](/docs/endpoints/rate-limit/) (memory): User rate limiting requires KrakenD to store one counter per connected user, and endpoint. The number of users and endpoints you have impacts on the total memory needed to store the limits.
-- [Token validation](/docs/authorization/jwt-validation/) or [signing](/docs/authorization/jwt-signing/) (CPU). Signing and validating JWT are in the top 5 operations with bigger computational cost. Try to choose least expensive algorithms (like `HS256`) over very expensive algorithms like the `RSA256`. A special emphasys on high SHA algorithms like `RSA512` as they can make you dimension your CPU to **x2.5** or more compared to `RS256`.
-- [Flatmap](/docs/backends/flatmap/#flatmap-configuration) manipulating endless arrays (CPU): If you have large responses of arrays that need to be manipulated with flatmap, prepare for extra time processing those manipulations.
-- The [Bloomfilter](docs/authorization/revoking-tokens/) (memory) is very effective and space efficient but yet can consume a lot of memory.
-- **Abscence or missconfigured timeouts** (memory and CPU): When your backend is not responding correctly, and KrakenD starts stacking a lot of users waiting your backend to respond, KrakenD will increase its memory consumption to hold those users. Make sure to set low timeouts whenever possible and that KrakenD timeouts are larger than backend timeouts.
-- **Telemetry abuse** (CPU and memory): Enabling several systems of Telemetry at the same time makes KrakenD work harder to report the metrics to all systems.
-- **Inadequate logging level**  (CPU and memory): Having a DEBUG logging level in production versus not having anything has a huge difference in throughput (between x2 and x5 vs the baseline). Choose the level that provides you useful information without having KrakenD writing every single thing it happened and dedicate the resources to your users.
-- **Regular expressions** (CPU) to validate requests with [CEL](/docs/enterprise/endpoints/common-expression-language-cel) or [detect bots](/docs/throttling/botdetector/).
+1. [High, missconfigured, or absent timeouts](/docs/enterprise/throttling/timeouts/) (*memory*): Let's say your backend is delaying its response while KrakenD keeps adding more and more new connections. In this scenario KrakenD will increase its memory consumption to hold those waiting for response users. Set low timeouts when possible (e.g: `3s`) and what is more important, that **KrakenD timeouts are larger than backend timeouts**. You don't want KrakenD cutting connections while your backend keeps working on something the end-user will never see.
+2. [Lua scripts](/docs/enterprise/endpoints/lua/#supported-lua-types-cheatsheet) (*memory and CPU*) : They run in their own virtual context and need to be compiled in every execution. They also open the door to any code you can write that can lead to blocking operations. If used in endpoints with a high hit-rate, consider moving the logic to a Go plugin.
+3. [Backend caching](/docs/backends/caching/) (*memory*): KrakenD does not limit the cache size you can use in any way. Your backend is in charge (through the `Cache-Control` header) of deciding how much memory KrakenD will need, the cardinality, and for how long!. Make sure you do not let the KrakenD cache go over its memory limit to see failures in its execution.
+4. [Per-user rate limiting](/docs/endpoints/rate-limit/) (*memory*): User rate limiting requires KrakenD to store one unique counter per connected user, and per endpoint. The number of users and endpoints you have impacts on the total memory needed to store these limits. Pay attention to memory if you expect thousands of users or endpoints concurrently as you will need to reserve memory to those counters.
+5. [Token validation](/docs/authorization/jwt-validation/) or [signing](/docs/authorization/jwt-signing/) (*CPU*): Signing and validating JWT are in the top 5 operations with bigger computational cost. Try to choose least expensive algorithms (like `HS256`) over very expensive algorithms like the `RSA256`. A special emphasys on high SHA algorithms like `RSA512` as they can make you dimension your CPU to **x2.5** or more compared to `RS256`.
+6. [Flatmap](/docs/backends/flatmap/#flatmap-configuration) (*CPU*): If you have large responses of endless arrays that need to be manipulated with flatmap, prepare for extra time processing those manipulations.
+7. [Excess of Telemetry](/docs/telemetry/overview/) (*CPU and memory*): Enabling several systems of Telemetry at the same time makes KrakenD work harder to report the metrics to all systems. Ore when you have just one, but you have a lot of throughput and your metrics have a high cardinality, with all instrumentation layers enabled and you choose not to do sampling.
+8. [Inadequate logging level](/docs/logging/extended-logging/) (*CPU and memory*): Having a `DEBUG` logging level in production versus not having logging at all has a huge difference in throughput (between x2 and x5 vs the *baseline*). Choose a level that provides you sufficient information to make decisions on production, and avoid having KrakenD writing every single detail of the interaction, and dedicate those resources to your end-users.
+9. The [Bloomfilter](docs/authorization/revoking-tokens/) (*memory*): Although it is very effective and space efficient, yet it can consume a lot of memory due to cardinality.
+10. **Regular expressions** in general (*CPU*): When you need to validate requests either with the [Common Expression Language](/docs/enterprise/endpoints/common-expression-language-cel) or when you need to [detect bots](/docs/throttling/botdetector/).
+
+All the components above don't need to be a problem as long as you dimension the server according to the complexity of your installation.
