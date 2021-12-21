@@ -35,28 +35,36 @@ Whenever possible, enable HTTP2 between your balancer and KrakenD API gateway fo
 ### SSL Certificates
 Even that you can start KrakenD with SSL, you can add your public SSL certificate in the load balancer or PaaS and use **internal certificates**, or even no certificates at all (termination), between the load balancer and KrakenD.
 
-## Prepare for failure
-Add circuit breaker to your backends to avoid KrakenD keep pushing a failing system and throttle down for a while.
+### Prepare for failure
+Add a [circuit breaker](/docs/backends/circuit-breaker/) to your backends to avoid KrakenD keep pushing a failing system and throttle down for a while. If you know that a certain backend does not support more than a number of requests, add a maximum number of requests using the [proxy rate limit](/docs/backends/rate-limit/).
 
 ## Monitoring
 ### Enable traces and metrics
-Make sure you have visibility of what is going on. Choose any of the systems where you can send the metrics and enable them. There are many choices, if you don't use any SaaS provider, a good self-hosted start would be:
+Make sure you have visibility of what is going on. Choose any of the systems where you can send the metrics and enable them. There are many choices, if you don't use any SaaS provider, **a good self-hosted start** would be:
 
 - A [Grafana Dashboard](/docs/telemetry/grafana/)
 - Fueled by [InfluxDB](/docs/telemetry/influxdb-native/)
 - And full traces by [Jaeger](/docs/telemetry/jaeger/)
 
+Pay attention to the cardinality of the metrics. Aggregate and consolidate data in InfluxDB (e.g: When looking at the past year metrics, you don't need minute resolution and days will be enough).
+
 
 ### Add logging
-If you don't add any logging, KrakenD will spit on stdout the activity of the gateway. Nevertheless, we recommend you to enable [extended logging](/docs/logging/extended-logging/) with at least a `WARNING` level.
+If you don't add any logging, KrakenD will spit on stdout the activity of the gateway. Nevertheless, we recommend you to enable [extended logging](/docs/logging/extended-logging/) with `CRITICAL`, `ERROR` or `WARNING` levels at most. Avoid `INFO` and `DEBUG` levels in production.
 
-Send logs to [ELK](/docs/logging/logstash/) or [GELF](/docs/logging/graylog-gelf/).
+Send logs to an [ELK](/docs/logging/logstash/), the [syslog](/docs/logging/extended-logging/#write-to-syslog-or-stdout), or a [GELF server](/docs/logging/graylog-gelf/).
+
+{{< note title="Redirect ouput to /dev/null for maximum performance" type="tip" >}}
+**When the output of KrakenD stdout is not important to you**, set the logging level to `CRITICAL` and redirect its output to `/dev/null` to have even more performance. To do that, start KrakenD with:
+
+    krakend run -c krakend.json >/dev/null 2>&1
+{{< /note >}}
 
 
 ## Deployment recommendations
 
 ### Release through a CI/CD pipeline
-Automate the go-live process through a [CI/CD](/docs/deploying/ci-cd/) pipeline that builds and checks KrakenD configuration before deploying.
+Automate the go-live process through a [CI/CD pipeline](/docs/deploying/ci-cd/) that builds and checks KrakenD configuration before deploying.
 
 ### Use Docker and immutable containers
 On Docker deployments, creating an immutable Docker image with your desired configuration takes a few seconds in your CI/CD pipeline. Create a `Dockerfile` with at least the following code and deploy the resulting image in production:
@@ -73,7 +81,7 @@ As it happens with Apache, Nginx, Varnish and other stateless services, changing
 
 This scenario can be automated and is available in Kubernetes and in all major cloud providers. The idea is that you spin up new machines with the latest configuration and then shift the traffic from the old instances to the new ones.
 
-This methodology ensures that there is no downtime when applying changes. On-premises installations can make a similar approach as well, using HA Proxy in front of blue and green KrakenD servers.
+This methodology ensures that there is no downtime when applying changes. On-premises installations can make a similar approach as well, but the implementations depends on the underlying infrastructure.
 
 ## Code organization
 ### Name your configurations
@@ -110,12 +118,7 @@ For instance, you could add `@comment` fields. The field is not recognized by Kr
 }
 {{< /highlight >}}
 
-### Redirect ouput to `/dev/null`
-**When the output of KrakenD stdout is not important to you**, set the logging level to `CRITICAL` and redirect its output to `/dev/null` to have even more performance. To do that:
-
-    krakend run -c krakend.json >/dev/null 2>&1
-
 ### Split the configuration in multiple repos or folders
-On large organizations with several teams using a common gateway, you might want to split the endpoints in groups using folders or even different repositories. With the [flexible configuration](/docs/configuration/flexible-config/) you can have teams workin in its dedicated space and aggregate all endpoints during build time without conflicts touching the same files.
+On large organizations with several teams using a common gateway, you might want to split the endpoints in groups using folders or even different repositories. With the [flexible configuration](/docs/configuration/flexible-config/) you can have teams working in its dedicated space and aggregate all endpoints during build time without conflicts touching the same files.
 
 Most KrakenD configurations tend to be large and with repetitive blocks. Define a basic skeleton of configurations that will be used across all teams.

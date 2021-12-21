@@ -3,6 +3,7 @@ lastmod: 2021-12-7
 date: 2021-12-7
 linktitle: CI/CD integration
 title: Automated KrakenD deployments with CI/CD
+notoc: true
 menu:
   community_current:
     parent: "110 Deployment and Go-Live"
@@ -10,7 +11,7 @@ weight: 20
 ---
 KrakenD operates with its single binary and your associated configuration. Therefore, your build process or CI/CD pipeline only needs to ensure that the configuration file is correct. These are a few recommendations to a safes KrakenD deployment:
 
-1. Make sure the configuration file is valid
+1. Make sure the configuration file is valid. When using Flexible Configuration, generate the final `krakend.json` using `FC_OUT` as the final artifact
 2. Optional - [Generate an immutable docker image](/docs/deploying/docker/)
 3. Optional - [Run integration tests](/docs/deploying/integration-tests/)
 4. Deploy the new configuration

@@ -57,10 +57,9 @@ You must build the go binary that allows you to run the tests.
 ## Installing the integration tests tool
 To install the integration tests you only need to run the following lines in any machine or Docker container with go installed:
 
-{{< highlight bash >}}
-go get github.com/devopsfaith/krakend-ce/cmd/krakend-integration
-go install github.com/devopsfaith/krakend-ce/cmd/krakend-integration
-{{< /highlight >}}
+{{< terminal title="Installing the integration tool" >}}
+go install github.com/devopsfaith/krakend-ce/cmd/krakend-integration@v{{< version >}}
+{{< /terminal >}}
 
 After this you should have a new binary `krakend-integration` in your PATH. To use it you will to execute:
 
