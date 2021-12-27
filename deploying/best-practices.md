@@ -5,7 +5,7 @@ linktitle: Best practices
 menu:
   community_current:
     parent: "110 Deployment and Go-Live"
-title: Deployment and go-live recommendations
+title: Production best practices
 weight: 1
 ---
 Setting up KrakenD is a straightforward process, but here are some not-so-obvious recommendations to get a good start when going live. This section has generalistic advice, despite that every KrakenD installation is is different. Let's dip the toe into the deployment waters!
@@ -50,7 +50,21 @@ Pay attention to the cardinality of the metrics. Aggregate and consolidate data 
 
 
 ### Add logging
-If you don't add any logging, KrakenD will spit on stdout the activity of the gateway. Nevertheless, we recommend you to enable [extended logging](/docs/logging/extended-logging/) with `CRITICAL`, `ERROR` or `WARNING` levels at most. Avoid `INFO` and `DEBUG` levels in production.
+If you don't add any logging, KrakenD will spit on stdout all the activity of the gateway. This behavior is not recommended for production. Enable the [logging](/docs/logging/extended-logging/) with `CRITICAL`, `ERROR` or `WARNING` levels at most. Avoid `INFO` and `DEBUG` levels in production at all times. This is the **recommended configuration** in production for a good performance:
+
+{{< highlight json >}}
+{
+  "version": 3,
+  "extra_config": {
+    "telemetry/logging": {
+      "level": "CRITICAL",
+      "syslog": false,
+      "stdout": false
+    }
+  }
+}
+{{< /highlight >}}
+
 
 Send logs to an [ELK](/docs/logging/logstash/), the [syslog](/docs/logging/extended-logging/#write-to-syslog-or-stdout), or a [GELF server](/docs/logging/graylog-gelf/).
 

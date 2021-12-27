@@ -8,9 +8,9 @@ notoc: true
 How to make sure what you are downloading is legit.
 
 ## PGP
-We will check the detached signature [PGP]({{< param download_repo >}}/bin/krakend_{{< version >}}_amd64.tar.gz.asc) against our package [KrakenD]({{< param download_repo >}}/bin/krakend_{{< version >}}_amd64.tar.gz).
+We will check the detached signature [PGP]({{< param download_repo >}}/bin/krakend_1.4.1_amd64.tar.gz.asc) against our package [KrakenD]({{< param download_repo >}}/bin/krakend_1.4.1_amd64.tar.gz).
 
-    $ gpg --verify krakend_{{< version >}}_amd64.tar.gz.asc krakend_{{< version >}}_amd64.tar.gz
+    $ gpg --verify krakend_1.4.1_amd64.tar.gz.asc krakend_1.4.1_amd64.tar.gz
     gpg: Signature made Sun Mar 10 18:17:18 2019 UTC using RSA key ID {{< param pgp_key >}}
     gpg: Can't check signature: public key not found
 
@@ -25,7 +25,7 @@ We don't have the packager public key (AB39BEA1) in our system. You need to retr
 
 Now you can verify the signature of the package:
 
-    $ gpg --verify krakend_{{< version >}}_amd64.tar.gz.asc krakend_{{< version >}}_amd64.tar.gz
+    $ gpg --verify krakend_1.4.1_amd64.tar.gz.asc krakend_1.4.1_amd64.tar.gz
     gpg: Signature made Sun Mar 10 18:17:18 2019 UTC using RSA key ID {{< param pgp_key >}}
     gpg: Good signature from "Devops Faith Package Manager <packages@devops.faith>"
     gpg: WARNING: This key is not certified with a trusted signature!
@@ -35,9 +35,9 @@ Now you can verify the signature of the package:
 
 ## SHA256
 
-To make sure the binary downloaded matches our SHA256 ensure the next 2 commands produce the same [SHA]({{< param download_repo >}}/bin/krakend_{{< version >}}_amd64.tar.gz.sha256) output.
+To make sure the binary downloaded matches our SHA256 ensure the next 2 commands produce the same [SHA]({{< param download_repo >}}/bin/krakend_1.4.1_amd64.tar.gz.sha256) output.
 
     ## Your downloaded file
-	$ shasum -a 256 -b krakend_{{< version >}}_amd64.tar.gz
+	$ shasum -a 256 -b krakend_1.4.1_amd64.tar.gz
     ## Our SHA256
-    $ curl {{< param download_repo >}}/bin/krakend_{{< version >}}_amd64.tar.gz.sha256
+    $ curl {{< param download_repo >}}/bin/krakend_1.4.1_amd64.tar.gz.sha256

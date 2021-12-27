@@ -56,7 +56,7 @@ Also, if a request like `http://krakend:8080/v1/foo?a=1` does not include `b`, t
 ### Sending all query string parameters
 While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
 ```
-"querystring_params":[  
+"querystring_params":[
       "*"
 ]
 ```
@@ -123,7 +123,7 @@ KrakenD passes only these essential headers to the backends:
 
 - `Accept-Encoding`
 - `Host`
-- `User-Agent` (KrakenD Version {{< version >}})
+- `User-Agent` (KrakenD Version 1.3)
 - `X-Forwarded-For`
 - `X-Forwarded-Host`
 - `X-Forwarded-Via` (only when `User-Agent` is in the `headers_to_pass`)
@@ -164,7 +164,7 @@ Read the [`/__debug/` endpoint](/docs/v1.3/endpoints/debug-endpoint/) to underst
 ### Sending all client headers to the backends
 While the default policy prevents forwarding unrecognized headers, setting an asterisk `*` as the parameter name makes the gateway to **forward any header to the backends**, including cookies:
 ```
-"headers_to_pass":[  
+"headers_to_pass":[
       "*"
 ]
 ```

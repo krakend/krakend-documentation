@@ -49,7 +49,7 @@ krakend
 .JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'
 _______________________________________________________________________
 
-Version: {{< version >}}
+Version: 1.4.1
 
 The API Gateway builder
 

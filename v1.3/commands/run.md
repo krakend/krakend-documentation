@@ -43,7 +43,7 @@ krakend run -h
 .JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'
 _______________________________________________________________________
 
-Version: {{< version >}}
+Version: 1.3
 
 The API Gateway builder
 
