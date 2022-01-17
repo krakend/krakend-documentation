@@ -22,14 +22,14 @@ Before getting your hands dirty, read the [introduction to plugins](/docs/extend
 ## Plugin requirements
 Writing, compiling and using plugins need to comply with the following list:
 
-- **Right interface**: Your plugin implements the right interface (see each plugin type)
+- **Right interface**: Your plugin implements the proper interface (see each plugin type)
 - **Same go version**: You compile the plugin using the same Go version KrakenD was compiled with
-- **Same architecture/platform**: You compile the plugin using the same architecture where KrakenD will run. E.g.: you cannot compile a plugin in a Mac and use it in a Docker container).
-- **Same import versions**: When using external libraries, if they are also used by KrakenD they have to be in the same version
+- **Same architecture/platform**: You compile the plugin using the same architecture where KrakenD will run. E.g., you cannot compile a plugin in a Mac and use it in a Docker container).
+- **Same import versions**: When using external libraries if KrakenD also uses them, they must be in the same version.
 - **Register and inject** your plugins in the configuration.
 
 ## Compiling plugins
-To respect Go and libraries versions see what versions where used to compile the KrakenD version you have chosen to use. For that, use the **dependencies finder**. If you already have a resulting `go.sum` file, validate it with the **go.sum validator**:
+To respect Go and libraries versions, see what versions were used to compile the KrakenD version you have chosen to use. For that, use the **dependencies finder**. Then, if you already have a resulting `go.sum` file, validate it with the **go.sum validator**:
 
 {{< button-group >}}
 {{< button url="https://plugin-tools.krakend.io/" text="Dependencies finder" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -45,14 +45,14 @@ go build -buildmode=plugin -o yourplugin.so
 {{< /terminal >}}
 
 ### Compiling plugins inside Docker
-The official KrakenD container uses **[Alpine](https://hub.docker.com/_/alpine)** as the base image. When compiling your plugins inside a Docker that extends the official image with a go-alpine builder you will need to install at least the following requirements in the `Dockerfile`:
+The official KrakenD container uses **[Alpine](https://hub.docker.com/_/alpine)** as the base image. Therefore, when compiling your plugins inside a Docker that extends the official image with a go-alpine builder, you will need to install at least the following requirements in the `Dockerfile`:
 
 {{< highlight Dockerfile >}}
 RUN apk add make gcc musl-dev
 {{< /highlight >}}
 
 ## Registering and injecting plugins
-Your plugin is coded and ready to use and now you want to use it. There are two phases:
+Your plugin is coded and ready to use, and now you want to use it. There are two phases:
 
 - Registering the plugin
 - Injecting the plugin in a specific place
@@ -72,14 +72,52 @@ KrakenD registers plugins **during startup** according to its plugin configurati
 Add the `plugin` keyword at the root of your configuration to let KrakenD know the rules to register plugins. The **mandatory** options you need to declare are:
 
 - `folder` (*string*): The directory path in the filesystem where all the plugins you **want to load** are. **MUST END IN SLASH**. The folder can be a relative or absolute path, but end it in slash!. E.g: KrakenD Enterprise stores the plugins in the path  `/opt/krakend/plugins/`.
-- `pattern` (*string*): The pattern narrows down the contents of the folder and acts as a filter. It represents the **substring that must be present** in the plugin name to load. In the example above, any plugin with a `.so` extension will be loaded. You could also use any prefix or suffix to match the content or even the full name of a single plugin. For instance, if you just want to load the rewrite plugin, use `"pattern":"krakend-rewrite.so"`, or use `-prod.so` to load all production safe plugins ending with that sufix. The rules are up to you.
+- `pattern` (*string*): The pattern narrows down the folder's contents and acts as a filter. It represents the **substring that must be present** in the plugin name to load. KrakenD will load any plugin with a `.so` extension in the example above. You could also use any prefix or suffix to match the content or even the full name of a single plugin. For instance, if you want to load the rewrite plugin, use `"pattern":"krakend-rewrite.so"`, or use `-prod.so` to load all safe production plugins ending with that suffix. The rules are up to you.
 
-At this point and with the previous configuration, you have **registered plugins during startup**, and you should see a line early in the logs when starting KrakenD. 
+Place the plugin in the folder you have declared in the configuration and start KrakenD. At this point and with the previous configuration, you have **registered plugins during startup**, and you should see a line early in the logs when starting KrakenD. The log lines depend on the type of plugin you have chosen, an example:
+
+    INFO [SERVICE: Handler Plugin] Total plugins loaded: 1
+
+### Checking the plugin registration
+When the service starts, **KrakenD doesn't know the type of plugin** you have coded until it tries to register it, and **it will try to register it as all known types**. When using a `DEBUG` log level you will see this activity in the logs.
+
+In most cases, you will create your plugin for a single type, but it doesn't mean that you cannot implement more than one type of plugin per file. The registration attempts are reflected in the logs, and you will see log lines that could look like errors, but they are not!
+
+{{< note title="Log line 'symbol X not found in plugin Y'" type="error" >}}
+This logline is not an error (it's a DEBUG message). It tells you that your plugin cannot register itself as one of the other two types of plugins you are not implementing. It's all good.
+{{< /note >}}
+
+For example, let's see how loading three different plugins are logged into KrakenD:
+
+- `client-example.so`  (An [HTTP client plugin](/docs/extending/http-client-plugins/))
+- `server-example.so` (An [HTTP server plugin](/docs/extending/http-server-plugins/))
+- `request-modifier.so` (A [request/response modifier plugin](/docs/extending/plugin-modifiers/))
+
+In the logs, we will see how each plugin fails to register as the rest of the types they don't implement:
+
+{{< highlight txt "hl_lines=4-5 8-9 12-13">}}
+Parsing configuration file: krakend.json
+▶ INFO Listening on port: 8080
+▶ DEBUG [PLUGIN: client-example] Logger loaded
+▶ DEBUG [SERVICE: Executor Plugin] plugin #1 (request-modifier.so): plugin: symbol ClientRegisterer not found in plugin mytest
+▶ DEBUG [SERVICE: Executor Plugin] plugin #2 (server-example.so): plugin: symbol ClientRegisterer not found in plugin myserver
+▶ INFO [SERVICE: Executor Plugin] Total plugins loaded: 1
+▶ DEBUG [PLUGIN: server-example] Logger loaded
+▶ DEBUG [SERVICE: Handler Plugin] plugin #0 (client-example.so): plugin: symbol HandlerRegisterer not found in plugin myclient
+▶ DEBUG [SERVICE: Handler Plugin] plugin #1 (request-modifier.so): plugin: symbol HandlerRegisterer not found in plugin mytest
+▶ INFO [SERVICE: Handler Plugin] Total plugins loaded: 1
+▶ DEBUG [PLUGIN: request-modifier] Logger loaded
+▶ DEBUG [SERVICE: Modifier Plugin] plugin #0 (client-example.so): plugin: symbol ModifierRegisterer not found in plugin myclient
+▶ DEBUG [SERVICE: Modifier Plugin] plugin #2 (server-example.so): plugin: symbol ModifierRegisterer not found in plugin myserver
+▶ INFO [SERVICE: Modifier Plugin] Total plugins loaded: 1
+{{< /highlight >}}
+
+The `INFO` log level tells you what is going on, but notice how the highlighted `DEBUG` messages fail to register for the type they are not. This is expected.
 
 ### Using the plugin
-At this point KrakenD has registered the plugin and can be used. The next step is to inject the plugin somewhere in the configuration. The configuration entry depends entirely on the type of plugin you are using, and what you have coded.
+At this point, KrakenD has registered the plugin and is ready to use. The next step is to inject the plugin somewhere in the configuration. The configuration entry depends entirely on the type of plugin you are using and what you have coded.
 
-This a sample configuration for an HTTP server fake plugin:
+Below there is a sample configuration for an HTTP server fake plugin:
 
 {{< highlight json >}}
 {
