@@ -3,7 +3,7 @@ lastmod: 2021-06-13
 date: 2019-02-22
 linktitle: TLS
 title: Enabling TLS for HTTPS and HTTP/2
-weight: 50
+weight: 30
 notoc: true
 menu:
   community_current:
