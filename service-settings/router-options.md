@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-10-29
+lastmod: 2022-01-19
 date: 2021-10-29
 linktitle: Router options
 title: Customizing router behavior
@@ -22,7 +22,7 @@ menu:
 
 The **optional router configuration** allows you to set global flags that change the way KrakenD processes the requests at the router layer.
 
-Generally speaking **you don't need this**. But in every case there is an exception and you might eventually need to change some value. 
+Generally speaking **you don't need this**. But in every case there is an exception and you might eventually need to change some value.
 
 To change the router behavior, add the namespace `router` under the global `extra_config`. The following example shows how to return the error to the client:
 
@@ -30,6 +30,12 @@ See below the list of supported flags.
 
 ## Supported router flags
 The following sections describe the flags and options available to configure the router. Include only those that you need to override.
+
+### Customizing the health endpoint
+You can set the following router options to customize how the [health endpoint](/docs/service-settings/health/) behaves:
+
+- `disable_health` (*boolean*): When true you don't have any exposed health endpoint. You can still use a TCP checker or build an endpoint yourself.
+- `health_path` (*string*): The path where you'd like to expose the health endpoint. The default value is `/__health`.
 
 ### Returning the gateway error message
 The secure choice of KrakenD is that all errors generated at the gateway **are not returned to the client in the body**. By settting `return_error_msg` (*boolean*) to `true`, when there is an error in the gateway (such as a timeout, a non-200 status code, etc.) it returns to the client the reason for the failure. The error is **written in the body as is**.
