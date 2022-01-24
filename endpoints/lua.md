@@ -17,6 +17,7 @@ meta:
   scope:
   - endpoint
   - backend
+  - async_agent
   log_prefix:
   - "[SERVICE: Gin][Botdetector]"
   - "[ENDPOINT: /foo][Lua]"

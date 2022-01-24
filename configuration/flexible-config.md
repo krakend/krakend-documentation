@@ -195,7 +195,7 @@ In this file, we have written the content of the rate limit configuration for a 
 
 {{< highlight go >}}
 "qos/ratelimit/proxy": {
-    "maxRate": "100",
+    "max_rate": "100",
     "capacity": "100"
 }
 {{< /highlight >}}

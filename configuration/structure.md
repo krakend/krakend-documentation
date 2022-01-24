@@ -123,7 +123,7 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
         "endpoint": "/limited-to-5000-per-second",
         "extra_config": {
             "qos/ratelimit/router": {
-                "maxRate": 5000
+                "max_rate": 5000
             }
         },
         "backend":
@@ -134,7 +134,7 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
             "url_pattern": "/slow/endpoint",
             "extra_config": {
                 "qos/ratelimit/proxy": {
-                    "maxRate": 100,
+                    "max_rate": 100,
                     "capacity": 1
                 }
             }

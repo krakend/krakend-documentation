@@ -76,27 +76,27 @@ Global settings
     Name: My lovely gateway
     Port: 8080
 4 global component configuration(s):
-- github_com/devopsfaith/krakend-botdetector
-- github_com/devopsfaith/krakend-cors
-- github_com/devopsfaith/krakend-gologging
-- github_com/devopsfaith/krakend-metrics
+- security/bot-detector
+- security/cors
+- telemetry/logging
+- telemetry/metrics
 1 API endpoints:
     - GET /cel/req-resp/:id
     Timeout: 3s
     1 endpoint component configuration(s):
-    - github.com/devopsfaith/krakend-cel
+    - validation/cel
     Connecting to 2 backend(s):
         [+] GET /__debug/{{.Id}}
         Timeout: 3s
         Hosts: [http://127.0.0.1:8080]
         1 backend component configuration(s):
-        - github.com/devopsfaith/krakend-cel
+        - validation/cel
 
         [+] GET /__debug/{{.Id}}
         Timeout: 3s
         Hosts: [http://127.0.0.1:8080]
         1 backend component configuration(s):
-        - github.com/devopsfaith/krakend-cel
+        - validation/cel
 
 Syntax OK!
 {{< /terminal >}}
@@ -114,22 +114,22 @@ Global settings
     No TLS section defined
     No Plugin section defined
 4 global component configuration(s):
-- github_com/devopsfaith/krakend-botdetector
+- security/bot-detector
     deny: [a b]
     patterns: [(Pingdom.com_bot_version_).* (facebookexternalhit)/.*]
     allow: [c Pingdom.com_bot_version_1.1]
-- github_com/devopsfaith/krakend-cors
+- security/cors
     expose_headers: [Content-Length]
     allow_origins: [*]
     max_age: 12h
     allow_methods: [POST GET]
     allow_headers: [Origin Authorization Content-Type]
-- github_com/devopsfaith/krakend-gologging
+- telemetry/logging
     prefix: [KRAKEND]
     stdout: true
     level: DEBUG
     syslog: false
-- github_com/devopsfaith/krakend-metrics
+- telemetry/metrics
     listen_address: :8090
     collection_time: 60s
 1 API endpoints:
@@ -141,7 +141,7 @@ Global settings
     OutputEncoding: json
     Concurrent calls: 1
     1 endpoint component configuration(s):
-    - github.com/devopsfaith/krakend-cel
+    - validation/cel
         [map[check_expr:'something' in req_headers['X-Header']] map[check_expr:int(req_params.Id) % 2 == 0]]
     Connecting to 2 backend(s):
         [+] GET /__debug/{{.Id}}
@@ -157,7 +157,7 @@ Global settings
         Is collection: false
         SD: 
         1 backend component configuration(s):
-        - github.com/devopsfaith/krakend-cel
+        - validation/cel
             [map[check_expr:int(req_params.Id) % 3 == 0]]
 
         [+] GET /__debug/{{.Id}}
@@ -173,7 +173,7 @@ Global settings
         Is collection: false
         SD: 
         1 backend component configuration(s):
-        - github.com/devopsfaith/krakend-cel
+        - validation/cel
             [map[check_expr:int(req_params.Id) % 5 == 0]]
 
 Syntax OK!
@@ -207,22 +207,22 @@ Global settings
     No TLS section defined
     No Plugin section defined
 4 global component configuration(s):
-- github_com/devopsfaith/krakend-botdetector
+- security/bot-detector
     patterns: [(Pingdom.com_bot_version_).* (facebookexternalhit)/.*]
     deny: [a b]
     allow: [c Pingdom.com_bot_version_1.1]
-- github_com/devopsfaith/krakend-cors
+- security/cors
     expose_headers: [Content-Length]
     allow_methods: [POST GET]
     allow_origins: [*]
     allow_headers: [Origin Authorization Content-Type]
     max_age: 12h
-- github_com/devopsfaith/krakend-gologging
+- telemetry/logging
     level: DEBUG
     syslog: false
     stdout: true
     prefix: [KRAKEND]
-- github_com/devopsfaith/krakend-metrics
+- telemetry/metrics
     listen_address: :8090
     collection_time: 60s
 1 API endpoints:
@@ -234,7 +234,7 @@ Global settings
     OutputEncoding: json
     Concurrent calls: 1
     1 endpoint component configuration(s):
-    - github.com/devopsfaith/krakend-cel
+    - validation/cel
         [map[check_expr:'something' in req_headers['X-Header']] map[check_expr:int(req_params.Id) % 2 == 0]]
     Connecting to 2 backend(s):
         [+] GET /__debug/{{.Id}}
@@ -250,7 +250,7 @@ Global settings
         Is collection: false
         SD: 
         1 backend component configuration(s):
-        - github.com/devopsfaith/krakend-cel
+        - validation/cel
             [map[check_expr:int(req_params.Id) % 3 == 0]]
 
         [+] GET /__debug/{{.Id}}
@@ -266,7 +266,7 @@ Global settings
         Is collection: false
         SD: 
         1 backend component configuration(s):
-        - github.com/devopsfaith/krakend-cel
+        - validation/cel
             [map[check_expr:int(req_params.Id) % 5 == 0]]
 
 Syntax OK!

@@ -23,16 +23,18 @@ The content of the health endpoint provides extra information, but you don't nee
 curl http://localhost:8080/__health
 {
     "agents": {
-        "some-agent": "2022-01-19 17:25:17.00225307 +0100 CET m=+0.031662879"
+        "some-agent": "2022-01-19 18:25:17.00225307 +0100 CET m=+0.031662879"
     },
+    "now": "2022-01-19 18:38:38.084402465 +0100 CET m=+30.674738658",
     "status": "ok"
 }
 {{< /terminal >}}
 
-There are two keys inside the response:
+There are three keys inside the response:
 
 - `status` with an `ok` value simply tells you that the API is processing HTTP requests correctly. There is no other possible state if the server is up.
 - `agents` is a map of all [Async Agents](/docs/async/agent/) you have running on KrakenD. The map will be empty if you don't use them. When agents are running, the value shows the time of the last working ping.
+- `now` is the current time in the server.
 
 ## Disabling or renaming the health endpoint
 You might want to disable the `/__health` endpoint or rename it. Whatever is the reason, you can set these parameters in the [router options](/docs/service-settings/router-options/#customizing-the-health-endpoint).

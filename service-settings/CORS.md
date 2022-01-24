@@ -94,7 +94,7 @@ The following configuration might help you debugging your CORS configuration. Ch
                     "host": ["http://localhost:8080"],
                     "encoding": "no-op",
                     "extra_config":{
-                      "github.com/devopsfaith/krakend-martian": {
+                      "modifier/martian": {
                           "fifo.Group": {
                               "scope": ["request", "response"],
                               "aggregateErrors": true,
