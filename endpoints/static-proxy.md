@@ -14,6 +14,7 @@ meta:
   - proxy
   scope:
   - endpoint
+  - async_agent
 ---
 The **static proxy** is an aid to clients dealing with incomplete and other types of degraded responses. When enabled, the static proxy **injects static data** in the final response when the behavior of a backend falls in the selected **strategy**.
 
@@ -42,7 +43,7 @@ func staticIfCompleteMatch(r *Response, err error) bool { return err == nil && r
 func staticIfIncompleteMatch(r *Response, _ error) bool { return r == nil || !r.IsComplete }
 {{< /highlight >}}
 
-    
+
 
 ## Handling collisions
 The static proxy is processed **after** all the backend merging has occurred, meaning that if your static data has keys that are colliding with the existing responses, these are overwritten.

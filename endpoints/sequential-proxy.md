@@ -19,6 +19,7 @@ meta:
   - proxy
   scope:
   - endpoint
+  - async_agent
   log_prefix:
   - "[SERVICE: Gin]"
 ---
@@ -47,7 +48,7 @@ When the sequential proxy is enabled, the `url_pattern` of every backend can use
 {resp0_XXXX}
 {{< /highlight >}}
 
-    
+
 
 Where `0` is the index of the specific backend you want to access ( `backend` array), and where `XXXX` is the attribute name you want to inject from the previous call.
 

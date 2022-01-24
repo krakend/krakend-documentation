@@ -15,10 +15,11 @@ meta:
   - validation/json-schema
   scope:
   - endpoint
+  - async_agent
 ---
 KrakenD endpoints receiving a JSON object in its body can apply automatic validations using the [JSON Schema](https://json-schema.org/) vocabulary before the content passes to the backends. The json schema component allows you to define **validation rules** on the body, type definition, or even validate the fields' values.
 
-When the validation fails, KrakenD returns to the user a status code `400` (Bad Request), and only if it succeeds, the backend receives the request. 
+When the validation fails, KrakenD returns to the user a status code `400` (Bad Request), and only if it succeeds, the backend receives the request.
 
 ## JSON Schema Configuration
 The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `validation/json-schema`. For instance, to **check if the body is a json object**:
