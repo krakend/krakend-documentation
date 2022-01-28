@@ -82,4 +82,4 @@ For a more step by step process see [this blog entry](/blog/krakend-on-kubernete
 
 ## Helm Chart
 
-For an example of a Helm Chart, see [Mikescandy contribution](https://github.com/mikescandy/krakend-helm)
+There is no official Helm chart for KrakenD. But you can see as example [Mikescandy's contribution](https://github.com/mikescandy/krakend-helm)

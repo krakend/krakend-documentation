@@ -29,14 +29,15 @@ Writing, compiling and using plugins need to comply with the following list:
 - **Register and inject** your plugins in the configuration.
 
 ## Compiling plugins
-To respect Go and libraries versions, see what versions were used to compile the KrakenD version you have chosen to use. For that, use the **dependencies finder**. Then, if you already have a resulting `go.sum` file, validate it with the **go.sum validator**:
+As your custom plugins need to match the Go and libraries versions used to build KrakenD, you have to make sure your plugin is compatible by checking your `go.sum` file with the command `check-plugin` (read the documentation)
 
-{{< button-group >}}
-{{< button url="https://plugin-tools.krakend.io/" text="Dependencies finder" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-</svg>{{< /button >}}
-{{< button url="https://plugin-tools.krakend.io/validate" type="inversed" >}}go.sum validator{{< /button >}}
-{{< /button-group >}}
+{{< terminal title="Term" >}}
+krakend check-plugin -v 1.17.0 -s ../myplugin/go.sum
+1 incompatibility(ies) found...
+go
+	have: 1.17.0
+	want: 1.16.4
+{{< /terminal >}}
 
 Once your plugin is written with the plugin type interface you have chosen, compile it in the same architecture type as follows:
 

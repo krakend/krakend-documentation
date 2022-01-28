@@ -74,4 +74,4 @@ Now the only missing step to generate the image, is to build it, making sure tha
 docker build --build-arg ENV=prod -t mykrakend .
 {{< /terminal >}}
 
-The resulting image including your configuration will weight around `80MB`.
+The resulting image, including your configuration, weighs around `80MB`.

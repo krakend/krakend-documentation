@@ -3,7 +3,7 @@ lastmod: 2020-07-10
 date: 2019-09-15
 linktitle: Bot detector
 title: Control of bot traffic
-weight: 10
+weight: 20
 source: https://github.com/devopsfaith/krakend-botdetector
 images:
 - /images/krakend-botdetector.png
@@ -38,33 +38,29 @@ For instance:
 
     "extra_config": {
         "security/bot-detector": {
-            "allowlist": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
-            "denylist": ["a", "b"],
+            "allow": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
+            "deny": ["a", "b"],
             "patterns": [
                 "(Pingdom.com_bot_version_).*",
                 "(facebookexternalhit)/.*"
             ],
-            "cacheSize": 10000
+            "cache_size": 10000
         }
     }
 
 The available configuration options in the bot detector module are:
 
-*   `allowlist`: An array with EXACT MATCHES of trusted user agents that can connect.
-*   `denylist`: An array of EXACT MATCHES of undesired bots, to reject immediately.
+*   `allow`: An array with EXACT MATCHES of trusted user agents that can connect.
+*   `deny`: An array of EXACT MATCHES of undesired bots, to reject immediately.
 *   `patterns`: An array with all the **regular expressions** that define bots. Matching bots are rejected.
-*   `cacheSize`: Size of the LRU cache that helps speed the bot detection. The size is the mumber of users agents that you want to keep in memory. 
+*   `cache_size`: Size of the LRU cache that helps speed the bot detection. The size is the mumber of users agents that you want to keep in memory.
 
 
-Notice that the `allowlist` and the `denylist` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
+Notice that the `allow` and the `deny` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
 
 On the other hand, the `patterns` attribute expects regular expressions. The syntax is the same general syntax used by Perl, Python, and other languages. More precisely, it is the syntax accepted by [RE2](https://golang.org/s/re2syntax)
 
-The order of evaluation of the rules is sequential in this order: `allowlist` -> `denylist` -> `patterns`. When a user agent matches in any of the former evaluations, the execution ends, and the connection is accepted (allowlist) or rejected (denylist and patterns).
-
-{{< note title="Renamed attributes" >}}
-Prior to KrakenD 1.2 the terms `whitelist` and `blacklist` were used, please upgrade your configuration with the new terms `allowlist` and `denylist` as the next version will not understand them.
-{{< /note >}}
+The order of evaluation of the rules is sequential in this order: `allow` -> `deny` -> `patterns`. When a user agent matches in any of the former evaluations, the execution ends, and the connection is accepted (allow) or rejected (deny and patterns).
 
 ### Building your bot rules
 
@@ -78,8 +74,8 @@ Whatever rules you decide to set in place, remember than allowing and denying ar
 
 ### Caching
 
-Evaluating every user agent against a **substantial list of patterns** can be a time-consuming operation. Even when we are talking about a few milliseconds, you can enable caching by setting `cacheSize` and avoid reprocessing User-Agents checked before. Every millisecond counts!
+Evaluating every user agent against a **substantial list of patterns** can be a time-consuming operation. Even when we are talking about a few milliseconds, you can enable caching by setting `cache_size` and avoid reprocessing User-Agents checked before. Every millisecond counts!
 
 The LRU caching system is in-memory and does not require running a separate set of servers, thus reducing the operation pain. There are neither cache expiration times, nor explicit cache evictions. When/if the cache is full, the least recently used (LRU) element is automatically replaced with the new one. An order of magnitude of megabytes should be enough to save the different User-Agent requests and combinations.
 
-Set in the `cacheSize` an integer with the fixed size of the cache (number of elements to store), or `0` to disable caching.
+Set in the `cache_size` an integer with the fixed size of the cache (number of elements to store), or `0` to disable caching.

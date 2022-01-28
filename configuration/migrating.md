@@ -41,7 +41,7 @@ The migration script replaces words used by KrakenD in the past that might colli
 
 
 ## Long read - Changes and differences explained
-The migration tool will take care of what is described below for you, but it's not magic. What it does is actually quite simple, and for the most part, what it does is to rename configurations and namespaces. 
+The migration tool will take care of what is described below for you, but it's not magic. What it does is actually quite simple, and for the most part, what it does is to rename configurations and namespaces.
 
 ### Renamed namespaces
 The first relevant change is that all non-core components (this is everything outside of [Lura](https://luraproject.org)) were declared inside an `extra_config` section, using a looong key name (**namespace**). That namespace contained what it could look like an URL (e.g: `github.com/devopsfaith/krakend-jose/validator`) and was generating frequent missunderstanding. Now they have been categorized and simplified to a description of its functionality (e.g.: `auth/validator`).
