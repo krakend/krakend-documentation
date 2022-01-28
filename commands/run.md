@@ -51,9 +51,10 @@ Usage:
   krakend [command]
 
 Available Commands:
-  check       Validates that the configuration file is valid.
-  help        Help about any command
-  run         Run the KrakenD server.
+  check         Validates that the configuration file is valid.
+  check-plugin  Check the compatibility with the plugin deps.
+  help          Help about any command
+  run           Run the KrakenD server.
 
 Flags:
   -c, --config string   Path to the configuration filename

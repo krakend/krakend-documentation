@@ -65,11 +65,11 @@ The configuration needs to declare in the `extra_config` the connection driver y
                     "host": [
                         "http://127.0.0.1:8080"
                     ],
-                    "url_pattern": "/__debug"
+                    "url_pattern": "/__debug/"
                 }
             ],
             "extra_config": {
-                "backend/amqp/consumer": {
+                "async/amqp": {
                     "name": "krakend",
                     "host": "amqp://guest:guest@localhost:5672/",
                     "exchange": "foo",

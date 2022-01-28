@@ -6,10 +6,10 @@ linktitle: Debug endpoint
 menu:
   community_v1.3:
     parent: "040 Endpoint Configuration"
-title: The `/__debug` endpoint
+title: The `/__debug/` endpoint
 weight: 35
 ---
-The `/__debug` endpoint is available when you start the server with the `-d` flag.
+The `/__debug/` endpoint is available when you start the server with the `-d` flag.
 
 The endpoint can be used as a **fake backend** and is very useful to see the interaction between the gateway and the backends as its activity is printed in the log using the `DEBUG` log level .
 
@@ -20,7 +20,7 @@ The debug endpoint might save you much trouble, as your application might not wo
 For instance, your client might be sending a `Content-Type` or `Accept` header and these are perhaps necessary for the proper functioning of your backend, but unless these are recognized headers by the gateway (they are in `headers_to_pass`), they are not going to reach the backend ever. Seeing the specific headers and parameters in the log clears all the doubts, and you can reproduce the call and conditions easily.
 
 ## Debug endpoint configuration example
-The following configuration demonstrates how to test what headers and query string parameters are sent and received by the backends by using the `/__debug` endpoint.
+The following configuration demonstrates how to test what headers and query string parameters are sent and received by the backends by using the `/__debug/` endpoint.
 
 We are going to test the following endpoints:
 
