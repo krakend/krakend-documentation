@@ -3,7 +3,7 @@ lastmod: 2020-07-10
 date: 2019-09-15
 linktitle: Bot detector
 title: Control of bot traffic
-weight: 20
+weight: 30
 source: https://github.com/devopsfaith/krakend-botdetector
 images:
 - /images/krakend-botdetector.png

@@ -21,18 +21,18 @@ meta:
   log_prefix:
   - "[BACKEND: /foo][CB]"
 ---
-
-To keep KrakenD responsive and resilient, we added a **Circuit Breaker** middleware on several processing pipe points. Thanks to this component, when KrakenD demands more throughput than your actual API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also useful for dealing with network and other communication problems by preventing too many requests to fail due to timeouts, etc.
-
 The **Circuit Breaker** is a straightforward **state machine** in the middle of the request and response that monitors all your backend failures. When they reach a configured threshold, the circuit breaker will prevent sending more traffic to the suffering backend.
 
-The Circuit Breaker is a protection measure for your stack and avoids cascading failures.
+When KrakenD demands more throughput than your actual API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also useful for dealing with network and other communication problems by preventing too many requests to fail due to timeouts, etc.
+
+{{< note title="A must have configuration" type="warning" >}}
+The Circuit Breaker is an **automatic protection measure** for your API stack and avoids cascade failures keeping your API responsive and resilient. It has a small consumption of resources, try to implement it always.
+{{< /note >}}
+
 
 ## Circuit breaker configuration
 
-The Circuit Breaker is available by default in KrakenD thanks to the [circuit breaker middleware](https://github.com/devopsfaith/krakend-circuitbreaker). As with all additional middlewares, you need to set its values in its own namespace `qos/circuit-breaker` inside the `extra_config` key.
-
-The following configuration is an example of how to add circuit breaker capabilities to a backend:
+The Circuit Breaker is available in the namespace `qos/circuit-breaker` inside the `extra_config` key. The following configuration is an example of how to add circuit breaker capabilities to a backend:
 {{< highlight json >}}
 {
     "endpoints": [
