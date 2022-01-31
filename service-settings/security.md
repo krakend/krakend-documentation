@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2022-01-31
 date: 2016-09-30
 linktitle: Security
 title: Security
@@ -31,27 +31,32 @@ The following configuration describes all possible options:
         "ssl_proxy_headers": {
           "X-Forwarded-Proto": "https"
         },
+        "host_proxy_headers":[
+          "X-Forwarded-Hosts"
+        ],
         "ssl_redirect": true,
         "ssl_host": "ssl.host.domain",
-        "ssl_port": "443",
-        "ssl_certificate": "/path/to/cert",
-        "ssl_private_key": "/path/to/key",
         "sts_seconds": 300,
         "sts_include_subdomains": true,
         "frame_deny": true,
+        "referrer_policy": "same-origin",
         "custom_frame_options_value": "ALLOW-FROM https://example.com",
         "hpkp_public_key": "pin-sha256=\"base64==\"; max-age=expireTime [; includeSubDomains][; report-uri=\"reportURI\"]",
         "content_type_nosniff": true,
         "browser_xss_filter": true,
-        "content_security_policy": "default-src 'self';"
+        "content_security_policy": "default-src 'self';",
+        "is_development": false
       }
 }
 {{< /highlight >}}
 
-
 See below the different options described in this configuration file.
 
 ## General security
+
+- `is_development` (*bool*): This will cause the AllowedHosts, SSLRedirect, and STSSeconds/STSIncludeSubdomains options to be ignored during development. When deploying to production, be sure to set this to false.
+- `referrer_policy` (*string*): Allows the Referrer-Policy header with the value to be set with a custom value. Default is "".
+- `host_proxy_headers` (*list*): A set of header keys that may hold a proxied hostname value for the request.
 
 ### Restrict connections by host
 Use `allowed_hosts`
