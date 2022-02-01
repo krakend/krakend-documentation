@@ -15,7 +15,7 @@ If you want to customize any of the settings below, they must be written at the 
 
 | Setting parameter | Type | Description |
 |-------------------|---------------|-------------|
-| `port`  | *integer* | The TCP port where KrakenD listens to |
+| `port`  | *integer* | The TCP port where KrakenD listens to. Recommended value is in the range 1024-65535 to run as an unpriviliged user. Defaults to `8080`. |
 | `read_timeout`| *duration* | Is the maximum duration for reading the entire request, including the body. Because `read_timeout` does not let Handlers make per-request decisions on each request body's acceptable deadline or upload rate, most users will prefer to use `read_header_timeout`. It is valid to use them both.|
 | `read_header_timeout` | *duration* | The amount of time allowed to read request headers. The connection's read deadline is reset after reading the headers and the Handler can decide what is considered too slow for the body. |
 |`write_timeout`| *duration* | The maximum duration before timing out writes of the response. It is reset whenever a new request's header is read. Like `read_timeout`, it does not let Handlers make decisions on a per-request basis.|
