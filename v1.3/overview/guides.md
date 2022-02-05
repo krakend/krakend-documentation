@@ -9,7 +9,7 @@ title: Tutorials and Guides
 notoc: true
 weight: 1000
 ---
-The documentation in this site covers all the functionality of KrakenD API Gateway, but over time we have received from KrakenD users all kinds of tutorials, guides and other resources that illustrate how to to do a specific thing. We have included below a few links, but you can share yours.
+The documentation in this site covers all the functionality of KrakenD API Gateway, but over time we have received from KrakenD users all kinds of tutorials, guides and other resources that illustrate how to do a specific thing. We have included below a few links, but you can share yours.
 
 
 ## User-contributed resources
