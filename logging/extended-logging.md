@@ -2,8 +2,8 @@
 lastmod: 2019-01-30
 date: 2018-10-30
 toc: true
-linktitle: Logging overview
-title: Logging - Syslog, stdout and GELF
+linktitle: Improved logging
+title: Improved Logging - Syslog, stdout
 weight: 10
 source: https://github.com/devopsfaith/krakend-gologging
 aliases: ["/docs/logging-metrics-tracing/logging/"]
@@ -78,15 +78,11 @@ If you want to follow other patterns for logging, you're able to.
 - `"format": "custom"`
 
 The valid formats are:
- - `default`
- - `logstash`
- - `custom`
+ - `default` uses the pattern `%{time:2006/01/02 - 15:04:05.000} %{color}▶ %{level:.6s}%{color:reset} %{message}`
+ - `logstash` uses the pattern `{"@timestamp":"%{time:2006-01-02T15:04:05.000+00:00}", "@version": 1, "level": "%{level}", "message": "%{message}", "module": "%{module}"}`
+ - `custom` lets you write your own pattern, e.g: `%{message}`
 
-If you select the `custom` format, you'll be able to use the `custom_format` field:
-
-- `"custom_format": "%{message}"`
-
-The pattern to use is the same as the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
+To know more about the possible pattern format see the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
 
 ## Logstash
 If you want to log using the Logstash standard via stdout, you have to add the `krakend-logstash` integration in the

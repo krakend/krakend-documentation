@@ -82,3 +82,9 @@ The list of cipher suites with its values is:
 - `49196`: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
 - `52392`: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
 - `52393`: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+
+## Generate a certificate
+Example to generate a self-signed certificate from the command line:
+{{< terminal title="Generate a certificate" >}}
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 365 -out cert.pem -keyout key.pem -subj \"/C=US/ST=California/L=Mountain View/O=Your Organization/OU=Your Unit/CN=localhost\"
+{{< /terminal >}}

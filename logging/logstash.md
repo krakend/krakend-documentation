@@ -11,20 +11,25 @@ menu:
   community_current:
     parent: "090 Logging"
 ---
-If you want to log using the Logstash standard via stdout, you have to add the `krakend-logstash` integration in the
-root level of your `krakend.json`, inside the `extra_config` section. **The `gologging` needs to be enabled too**.
+The [Logstash](https://www.elastic.co/es/logstash/) integration prints **KrakenD logs in JSON format** to ingest them and process them later. If you want to log using the Logstash standard via stdout, you need to add the `telemetry/logging` integration as a dependency.
 
-For instance:
+## Configuration
+The configuration you need to enable logstash is:
 
+{{< highlight json >}}
+{
+    "version": 3,
     "extra_config": {
-      "telemetry/logstash": {
-        "enabled": true
-      }
-      "telemetry/logging": {
-          "level": "INFO",
-          "prefix": "[KRAKEND]",
-          "syslog": false,
-          "stdout": true,
-          "format": "logstash"
-      }
+        "telemetry/logstash": {
+            "enabled": true
+        },
+        "telemetry/logging": {
+            "level": "INFO",
+            "prefix": "[KRAKEND]",
+            "syslog": false,
+            "stdout": true,
+            "format": "logstash"
+        }
     }
+}
+{{< /highlight >}}

@@ -1,8 +1,8 @@
 ---
 lastmod: 2021-05-02
 date: 2018-11-05
-linktitle: Metrics and /__stats
-title: Extended metrics and the `/__stats` endpoint
+linktitle: Extended metrics
+title: Extended metrics
 aliases: ["/docs/extended-metrics/metrics/"]
 weight: 1000
 menu:
@@ -19,8 +19,7 @@ meta:
   log_prefix:
   - "[SERVICE: Stats]"
 ---
-
-The metrics *middleware* collects **extended metrics** and exposes them in the `/__stats/` endpoint. The endpoint runs in a different port than the API, and contains a lot of metrics.
+Collect **extended metrics** to push them to [InfluxDB](/docs/telemetry/influxdb-native/) or expose them in the `/__stats/` endpoint. The `/__stats/` endpoint runs in a different port and contains a lot of metrics. This component is the richest in terms of metric data that you can use.
 
 Through the extended metrics you can create new tools or integrate with existing ones. For instance, combining the metrics with the InfluxDB extended metrics you can have a [Grafana dashboard](/docs/extended-metrics/grafana/).
 

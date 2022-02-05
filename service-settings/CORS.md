@@ -43,6 +43,9 @@ CORS configuration lives in the root of the file, as it's a service component. A
         "Content-Length",
         "Content-Type"
       ],
+      "allow_headers": [
+        "Accept-Language"
+      ],
       "max_age": "12h",
       "allow_headers": [
         "Accept-Language"
@@ -56,6 +59,7 @@ The configuration options of this component are as follows:
 
 - `allow_methods` *(list)*: The array of all HTTP methods accepted, in uppercase.
 - `allow_origins` *(list)*: An array with all the origins allowed, examples of values are `https://example.com`, or `*` (any origin).
+- `allow_headers` *(list)*: An array with the headers allowed. Missing headers in this list won't be accepted.
 - `expose_headers` *(list)*: Headers that are safe to expose to the API of a CORS API specification
 - `max_age` *(string)*: For how long the response can be cached. The value needs to specify units. Valid time units are: `ns`, `us`, (or `µs`), `ms`, `s`, `m`, `h` E.g., `12h` for 12 hours.
 - `allow_credentials` *(boolean)*: When requests can include user credentials like cookies, HTTP authentication or client side SSL certificates

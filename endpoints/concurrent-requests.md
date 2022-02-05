@@ -5,7 +5,7 @@ toc: true
 linktitle: Concurrent Requests
 title: Concurrent Requests
 weight: 30
-aliases: ["/docs/features/concurrent-requests/", "/docs/backends/concurrent-requests/"]
+aliases: ["/docs/backends/concurrent-requests/"]
 skip_header_image: true
 menu:
   community_current:
@@ -58,6 +58,9 @@ Nevertheless, we could say that if you are interested in this feature, `3` is a 
 
 Generally speaking, if you work on the cloud, enabling this feature is safer as you can grow the resources easily (but put an eye on the costs). If your hardware is limited (on-premise), do not activate this feature in production without doing your proper load tests.
 
+{{< note title="" type="warning" >}}
+Concurrent calls works better with encodings different than `no-op`. Endpoints returning chunked responses do not play nice with concurrency when `no-op` is enabled.
+{{< /note >}}
 
 ## How does `concurrent_calls` work?
 KrakenD sends up to N `concurrent_calls` to your backends for the **same request to an endpoint. When the first successful response is received, KrakenD cancels the remaining requests and ignores any previous failures. Only in the case that all `concurrent_calls` fail, the endpoint receives the failure as well.

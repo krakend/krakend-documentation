@@ -28,7 +28,7 @@ To get started writing your plugins see:
 The `krakend check-plugin` command accepts the following options:
 
 {{< terminal title="Usage of KrakenD check" >}}
-./krakend check -h
+./krakend check-plugin -h
 
 `7MMF' `YMM'                  `7MM                         `7MM"""Yb.
   MM   .M'                      MM                           MM    `Yb.

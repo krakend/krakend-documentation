@@ -15,6 +15,13 @@ The chosen service discovery strategy determines how to retrieve (statically or 
 
 KrakenD must be in a network where can reach any declared hosts. When there is more than one host, KrakenD load balances the connections to the hosts in the list.
 
+The **possible values** for `sd` are:
+
+- `static`: For static resolution
+- `dns`: For DNS SRV resolution
+
+See below.
+
 ## Static resolution
 The `static` resolution is the default service discovery strategy. It implies that you write directly in the configuration the protocol plus the service name, hosts or IPs you want to connect to.
 
@@ -89,12 +96,3 @@ Some examples on the space optimization and removal of neglectable items:
 - `SRV` passes the weights of 3 servers with values `[100 500 1000]` and KrakenD builds a list `[1 5 10]`
 - `SRV` passes `[25 10000 1000]` and KrakenD compacts it as `[0 10 1]`. The server with a weight of `25` is removed as it is vastly inferior to the rest (0,2% weight).
 - `SRV` passes `[25 1000 10000 65535]` becomes `[0 1 13 85]`. Again, `25` drops. The rest are converted to a lower value with the same distribution proportion.
-
-
-## Eureka (custom build)
-Users of the Netflix's service [Eureka](https://github.com/Netflix/eureka) have a couple of user contributed integrations available listed in our [krakend-contrib](https://github.com/devopsfaith/krakend-contrib) repository.
-
-These integrations are **not bundled with KrakenD** releases, but they can be added to the project and make a custom build.
-
-- [schibsted/krakend-eureka](https://github.com/schibsted/krakend-eureka): The Eureka client [Schibsted](https://www.schibsted.com) has been running in production since 2017.
-- [joaoqalves/krakend-eureka](https://github.com/joaoqalves/krakend-eureka): A Eureka client contributed by [João Alves](https://twitter.com/joaoqalves)

@@ -8,7 +8,7 @@ menu:
   community_current:
     parent: "040 Endpoint Configuration"
 ---
-KrakenD endpoints are the essential part of KrakenD as they are what your end users consume. 
+KrakenD endpoints are the essential part of KrakenD as they are what your end users consume.
 
 See [Understanding the configuration file](/docs/configuration/structure/) if you haven't read it yet.
 
@@ -37,20 +37,21 @@ The endpoints section looks like this:
 {{< /highlight >}}
 
 
-The previous example exposes to the clients a `GET /v1/foo` endpoint and takes the data from your existing backend `GET https://api.mybackend.com"/bar`. As there is no other additional configuration, the data won't be manipulated. 
+The previous example exposes to the clients a `GET /v1/foo` endpoint and takes the data from your existing backend `GET https://api.mybackend.com"/bar`. As there is no other additional configuration, the data won't be manipulated.
 
 ## Attributes
 The **endpoint object** accepts the following attributes:
 
 - `endpoint`: The resource URL you want to expose
-- `method`: Must be **written in uppercase** `GET`, `POST`, `PUT`, `PATCH`, `DELETE`.
-- `backend`: List of all the **backend objects** queried for this endpoint. 
-- `extra_config`: Configuration of components and middlewares that are executed with this endpoint.
-- `querystring_params`: Recognized GET parameters. See [parameter forwarding](/docs/endpoints/parameter-forwarding/).
-- `headers_to_pass`: Forwarded headers. See [headers forwarding](/docs/endpoints/parameter-forwarding/#headers-forwarding).
-- `concurrent_calls`: A technique to improve response times. See [concurrent requests](/docs/endpoints/concurrent-requests/)
-- `cache_ttl`: (*time unit*) The cache headers informing for how long the CDN can cache the request to this endpoint. Related: [caching backend responses](/docs/backends/caching/).
-- `timeout`: (*time unit*) Maximum time you'll wait for the slowest backend response. Usually specified in seconds (`s`) or milliseconds (`ms`. E.g: `1500ms`)
+- `method` (*optional*): Must be **written in uppercase** `GET`, `POST`, `PUT`, `PATCH`, `DELETE`. Defaults to `GET`.
+- `output_encoding`: See the [supported encodings](/docs/endpoints/content-types/). Defaults to `json`.
+- `backend`: List of all the **backend objects** queried for this endpoint.
+- `extra_config` (*optional*): Configuration of components and middlewares that are executed with this endpoint.
+- `querystring_params` (*optional*): Recognized GET parameters. See [parameter forwarding](/docs/endpoints/parameter-forwarding/).
+- `headers_to_pass` (*optional*): Forwarded headers. See [headers forwarding](/docs/endpoints/parameter-forwarding/#headers-forwarding).
+- `concurrent_calls` (*optional*): A technique to improve response times. See [concurrent requests](/docs/endpoints/concurrent-requests/)
+- `cache_ttl` (*optional*): (*time unit*) The cache headers informing for how long the CDN can cache the request to this endpoint. Related: [caching backend responses](/docs/backends/caching/).
+- `timeout` (*optional*): (*time unit*) Maximum time you'll wait for the slowest backend response. Usually specified in seconds (`s`) or milliseconds (`ms`. E.g: `1500ms`)
 
 \* Valid _time units_ are: `ns`, `us`, (or `µs`), `ms`, `s`, `m`, `h` E.g: `1s`
 
@@ -92,11 +93,11 @@ The `method` key defines the HTTP verb you can use with the endpoint. You need t
   ]
 }
 {{< /highlight >}}
-Notice that the `method` is declared both in the endpoint and in the backend (as they could be different). 
+Notice that the `method` is declared both in the endpoint and in the backend (as they could be different).
 
 ### Endpoint variables
 
-Endpoints can define variables in its endpoint definition. To do so, encapsulate the variable name with curly braces, like `{var}`. 
+Endpoints can define variables in its endpoint definition. To do so, encapsulate the variable name with curly braces, like `{var}`.
 
 {{< highlight json >}}
 {
