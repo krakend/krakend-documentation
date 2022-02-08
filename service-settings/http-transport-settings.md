@@ -16,6 +16,7 @@ If you want to customize any of the settings below, they must be written at the 
 
 | Setting parameter | Type | Description |
 |-------------------|---------------|-------------|
+| `disable_rest` | *boolean* | Only RESTful URL patterns are valid to access backends. Set to true if your backends aren't RESTful, e.g.: `/url.{some_variable}.json` |
 | `dialer_timeout` | *duration* | The timeout of the dial function for creating connections |
 | `dialer_keep_alive` | *duration* | The amount of time you want to keep alive the connection |
 | `dialer_fallback_delay` | *duration* |  Specifies the length of time to wait before spawning a fallback connection |
