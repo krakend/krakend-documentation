@@ -1,10 +1,9 @@
 ---
-lastmod: 2020-07-10
+lastmod: 2022-02-08
 date: 2019-09-15
 linktitle: Bot detector
 title: Control of bot traffic
 weight: 30
-source: https://github.com/devopsfaith/krakend-botdetector
 images:
 - /images/krakend-botdetector.png
 menu:
@@ -12,11 +11,12 @@ menu:
     parent: "070 Traffic Management"
 meta:
   since: 1.0
-  source: https://security/bot-detector
+  source: https://github.com/devopsfaith/krakend-botdetector
   namespace:
   - security/bot-detector
   scope:
   - service
+  - endpoint
   log_prefix:
   - "[SERVICE: Gin][Botdetector]"
   - "[ENDPOINT: /foo][Botdetector]"
@@ -32,10 +32,12 @@ Discarded traffic receives a `403 Forbidden` status code.
 
 ## Configuring bot rules
 
-The configuration rules of the bot detector have to be included inside the `extra_config`'s namespace `security/bot-detector` at the root level of your `krakend.json` file.
+The configuration rules of the bot detector have to be included inside the `extra_config`'s namespace `security/bot-detector` at the root level of your `krakend.json` file, or inside an endpoint.
 
 For instance:
 
+{{< highlight json >}}
+{
     "extra_config": {
         "security/bot-detector": {
             "allow": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
@@ -47,13 +49,15 @@ For instance:
             "cache_size": 10000
         }
     }
+}
+{{< /highlight >}}
 
 The available configuration options in the bot detector module are:
 
-*   `allow`: An array with EXACT MATCHES of trusted user agents that can connect.
-*   `deny`: An array of EXACT MATCHES of undesired bots, to reject immediately.
-*   `patterns`: An array with all the **regular expressions** that define bots. Matching bots are rejected.
-*   `cache_size`: Size of the LRU cache that helps speed the bot detection. The size is the mumber of users agents that you want to keep in memory.
+- `allow`: An array with EXACT MATCHES of trusted user agents that can connect.
+- `deny`: An array of EXACT MATCHES of undesired bots, to reject immediately.
+- `patterns`: An array with all the **regular expressions** that define bots. Matching bots are rejected.
+- `cache_size`: Size of the LRU cache that helps speed the bot detection. The size is the mumber of users agents that you want to keep in memory.
 
 
 Notice that the `allow` and the `deny` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
