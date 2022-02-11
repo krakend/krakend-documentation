@@ -13,7 +13,7 @@ menu:
 
 The `krakend check` command **validates KrakenD configuration files** written in any of its [supported formats](/docs/configuration/supported-formats/). The validation does two different things: **linting** and **testing** (an execution).
 
-Whenever the `check` is run, it acts as a (JSON) linter and makes sure that the configuration is not broken from a syntax point of view. It also works with [flexible configuration](/docs/configuration/flexible-config/). When used with the test flag `-t` it also tries to test a run of the service to catch problems that are not strictly related to linting but runtime. For instance, you could have declared a colliding or duplicated endpoint: the syntax would valid and properly linted yet the configuration impossible to run. 
+Whenever the `check` is run, it acts as a (JSON) linter and makes sure that the configuration is not broken from a syntax point of view. It also works with [flexible configuration](/docs/configuration/flexible-config/). When used with the test flag `-t` it also tries to test a run of the service to catch problems that are not strictly related to linting but runtime. For instance, you could have declared a colliding or duplicated endpoint: the syntax would valid and properly linted yet the configuration impossible to run.
 
 {{< note title="KrakenD doesn't do strict parsing" >}}
 KrakenD **ignores all unknown keys**, and it does not warn about it. It allows you to declare new parameters and entries, but it can also shadow errors in the configuration. The `--debug` flag (see below) shows what is parsed and processed.
@@ -23,16 +23,16 @@ The `krakend check` command accepts the following options:
 
 {{< terminal title="Usage of KrakenD check" >}}
 ./krakend check -h
-                                                                        
-`7MMF' `YMM'                  `7MM                         `7MM"""Yb.   
-  MM   .M'                      MM                           MM    `Yb. 
-  MM .d"     `7Mb,od8 ,6"Yb.    MM  ,MP'.gP"Ya `7MMpMMMb.    MM     `Mb 
-  MMMMM.       MM' "'8)   MM    MM ;Y  ,M'   Yb  MM    MM    MM      MM 
-  MM  VMA      MM     ,pm9MM    MM;Mm  8M""""""  MM    MM    MM     ,MP 
-  MM   `MM.    MM    8M   MM    MM `Mb.YM.    ,  MM    MM    MM    ,dP' 
-.JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'   
+
+`7MMF' `YMM'                  `7MM                         `7MM"""Yb.
+  MM   .M'                      MM                           MM    `Yb.
+  MM .d"     `7Mb,od8 ,6"Yb.    MM  ,MP'.gP"Ya `7MMpMMMb.    MM     `Mb
+  MMMMM.       MM' "'8)   MM    MM ;Y  ,M'   Yb  MM    MM    MM      MM
+  MM  VMA      MM     ,pm9MM    MM;Mm  8M""""""  MM    MM    MM     ,MP
+  MM   `MM.    MM    8M   MM    MM `Mb.YM.    ,  MM    MM    MM    ,dP'
+.JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'
 _______________________________________________________________________
-                                                                  
+
 Version: {{< version >}}
 
 Validates that the active configuration file has a valid syntax to run the service.
@@ -60,7 +60,7 @@ Global Flags:
 ## Flags
 Use `krakend check` in combination with the following flags:
 
-- `-c` or `--config` (mandatory) to specify the path to the configuration file in any of the [supported formats](/docs/configuration/supported-formats/), or to the starting template if used in combination with flexible configuration. 
+- `-c` or `--config` (mandatory) to specify the path to the configuration file in any of the [supported formats](/docs/configuration/supported-formats/), or to the starting template if used in combination with flexible configuration.
 - `-d` or `--debug` to enable the debug and see information about how KrakenD is interpreting your configuration file. Use from 1 to 3 levels of verbosity using `-d`, `-dd`, or `-ddd`.
 - Use `-t` to **test** the configuration and try to start the service with it for a second. This option is highly recommended as prevents conflicting routes and other problems that are not related with the linting itself, and would end up in a *panic*.
 - `-i` or `--indent`, in combination with `-d`, to change the identation when the debug information renders (default: tab). E.g.: `-i "#"` uses a hash instead of a tab for every nesting level.
@@ -70,7 +70,6 @@ There are 3 different levels of verbosity you can use with the `--debug` (or `-d
 
 {{< terminal title="Checking the configuration with the debug flag" >}}
 krakend check -t -d -c krakend.json
-Parsing configuration file: krakend.json
 Parsing configuration file: krakend.json
 Global settings
     Name: My lovely gateway
@@ -149,13 +148,13 @@ Global settings
         Hosts: [http://127.0.0.1:8080]
         Concurrent calls: 1
         Host sanitization disabled: false
-        Target: 
+        Target:
         Deny: [], Allow: []
         Mapping: map[]
         Group: backend1
-        Encoding: 
+        Encoding:
         Is collection: false
-        SD: 
+        SD:
         1 backend component configuration(s):
         - validation/cel
             [map[check_expr:int(req_params.Id) % 3 == 0]]
@@ -165,13 +164,13 @@ Global settings
         Hosts: [http://127.0.0.1:8080]
         Concurrent calls: 1
         Host sanitization disabled: false
-        Target: 
+        Target:
         Deny: [], Allow: []
         Mapping: map[]
         Group: backend2
-        Encoding: 
+        Encoding:
         Is collection: false
-        SD: 
+        SD:
         1 backend component configuration(s):
         - validation/cel
             [map[check_expr:int(req_params.Id) % 5 == 0]]
@@ -242,13 +241,13 @@ Global settings
         Hosts: [http://127.0.0.1:8080]
         Concurrent calls: 1
         Host sanitization disabled: false
-        Target: 
+        Target:
         Deny: [], Allow: []
         Mapping: map[]
         Group: backend1
-        Encoding: 
+        Encoding:
         Is collection: false
-        SD: 
+        SD:
         1 backend component configuration(s):
         - validation/cel
             [map[check_expr:int(req_params.Id) % 3 == 0]]
@@ -258,13 +257,13 @@ Global settings
         Hosts: [http://127.0.0.1:8080]
         Concurrent calls: 1
         Host sanitization disabled: false
-        Target: 
+        Target:
         Deny: [], Allow: []
         Mapping: map[]
         Group: backend2
-        Encoding: 
+        Encoding:
         Is collection: false
-        SD: 
+        SD:
         1 backend component configuration(s):
         - validation/cel
             [map[check_expr:int(req_params.Id) % 5 == 0]]

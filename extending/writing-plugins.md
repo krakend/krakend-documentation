@@ -42,7 +42,8 @@ go
 Once your plugin is written with the plugin type interface you have chosen, compile it in the same architecture type as follows:
 
 {{< terminal title="Go compilation">}}
-go build -buildmode=plugin -o yourplugin.so
+go mod init yourmodulename
+go build -buildmode=plugin -o yourplugin.so .
 {{< /terminal >}}
 
 ### Compiling plugins inside Docker

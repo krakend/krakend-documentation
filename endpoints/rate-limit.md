@@ -2,7 +2,7 @@
 lastmod: 2022-01-28
 date: 2016-07-01
 linktitle: Rate Limits
-title: Rate-limiting
+title: Router Rate-limiting
 weight: 10
 scope:
 - endpoint
@@ -18,7 +18,7 @@ meta:
   - endpoint
 ---
 
-The rate limit feature allows you to set a number of **maximum requests per second** a KrakenD endpoint will accept. There are two different strategies to set limits that you can use separately or together:
+The router rate limit feature allows you to set a number of **maximum requests per second** a KrakenD endpoint will accept. There are two different strategies to set limits that you can use separately or together:
 
 - **Endpoint rate-limiting**: applies simultaneously to all your customers using the endpoint, sharing the same counter.
 - **User rate-limiting**: applies to an individual user.

@@ -112,13 +112,13 @@ Add a `name` key in the configuration file with useful information so you can id
 **During the build in the pipeline**, it might be a good idea to **replace the content** of the `name` attribute by a content showing the deployed version (the short SHA from the commit maybe).
 
 ### Add comments and metadata  (`@`)
-KrakenD **ignores from the configuration anything that it doesn't recognize**. Meaning that your `krakend.json` (or whatever format you use) allows you to include additional metadata and fields that make sense to your company. Use it to add your meta language, tags, comments, bot integrations, etc. for better integration with your CI/CD system, deployment process, or just better comprehension of the file in the future.
+During startup, KrakenD **ignores from the configuration anything that it doesn't recognize**. Meaning that your `krakend.json` (or whatever format you use) allows you to include additional metadata and fields that make sense to your company. Use it to add your meta language, tags, comments, bot integrations, etc. for better integration with your CI/CD system, deployment process, or just better comprehension of the file in the future.
 
-{{< note title="Use a consistent prefix" type="tip" >}}
-Choose a prefix that makes sense to you, and that it cannot collide with other configurations in the future. At KrakenD we decided to prefix custom attributes with a `@`.
+{{< note title="Validating KrakenD's schema" type="tip" >}}
+If you use the KrakenD `$schema` to validate your configuration, unknown attributes will trigger a warning during validation. To add your own configurations schema-compatible, and have them ignored by KrakenD, prefix them with one of the following characters: `@`, `$`, `_` or `#`.
 {{< /note >}}
 
-For instance, you could add `@comment` fields. The field is not recognized by KrakenD adn it will be ignored during startup, but finding it might be bresh air for the developer next to you.
+For instance, you could add `@comment` fields. The field is not used by KrakenD and it passes the JSON schema validation. Finding it might be fresh air for the developer next to you.
 
 
 {{< highlight json "hl_lines=4" >}}

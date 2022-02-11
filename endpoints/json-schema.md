@@ -22,7 +22,9 @@ KrakenD endpoints receiving a JSON object in its body can apply automatic valida
 When the validation fails, KrakenD returns to the user a status code `400` (Bad Request), and only if it succeeds, the backend receives the request.
 
 ## JSON Schema Configuration
-The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `validation/json-schema`. For instance, to **check if the body is a json object**:
+The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `validation/json-schema`. KrakenD offers compatibility for the specs **draft-04, draft-06 and draft-07**.
+
+The following example **checks if the body is a json object**:
 
 {{< highlight json >}}
 {

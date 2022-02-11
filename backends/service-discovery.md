@@ -60,6 +60,9 @@ The format of the `SRV` record is as follows:
 
     _api._tcp.example.com. 86400 IN SRV 0 5 8000 foo.example.com.
 
+{{< note title="Caching" type="info" >}}
+The DNS-based service discovery, caches entries for 30 seconds.
+{{< /note >}}
 
 To integrate Consul, Kubernetes or any other `DNS SRV` compatible system as the Service Discovery, you only need to set two keys:
 

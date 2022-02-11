@@ -30,7 +30,6 @@ This migration allows you to:
 - Use `git` or similar DVCS to track the changes. Compare the differences at the end.
 - Open your configuration file(s), such as `krakend.json`, and replace `"version": 2` with `"version": 3`. **This is the only change by hand.**
 - Download the migration binary for your architecture (button above) and execute it passing the path to the folder where your configuration is (absolute or relative).
-- If you use open-source with Docker, replace `devopsfaith/krakend` with `krakend` or `krakend:2`, or `krakend:2.0` (now it's an official Docker image!)
 - Review the changes the migration tool did to your config, and delete the migrator.
 
 And only **if you are compiling custom go plugins**, recompile them using the new libraries versions (guide to [write plugins](/docs/extending/writing-plugins/))
