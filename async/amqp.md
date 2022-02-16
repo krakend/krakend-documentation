@@ -53,3 +53,4 @@ The AMQP driver has to be placed inside the `extra_config` of the [async compone
 - `prefetch_count` - *int* (optional): The number of messages you want to prefetch before consuming them.
 - `prefetch_size` - *int* (optional): The number of bytes you want to use to prefetch messages.
 - `no_local` - *bool* (optional) - The no_local flag is not supported by RabbitMQ.
+- `auto_ack` - *bool*. When KrakenD retrieves the messages, regardless of the success or failure of the operation, it marks them as acknowledged.
