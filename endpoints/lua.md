@@ -13,7 +13,7 @@ meta:
   namespace:
   - "modifier/lua-proxy"
   - "modifier/lua-endpoint"
-  - "modifier/lua-proxy/backend"
+  - "modifier/lua-backend"
   scope:
   - endpoint
   - backend
@@ -77,7 +77,7 @@ Under the `endpoint` section use the namespaces (these are described in the next
 
 Under the `backend` use the name space:
 
-- `"modifier/lua-proxy/backend"`
+- `"modifier/lua-backend"`
 
 ## Supported Lua types (cheatsheet)
 
@@ -230,7 +230,7 @@ An example showing how to **print the backend response** in the console.
 {{< highlight json >}}
 {
     "extra_config": {
-          "modifier/lua-proxy/backend": {
+          "modifier/lua-backend": {
             "pre": "print('Backend response, pre-logic:'); local r = request.load(); print(r:body());"
           }
     }

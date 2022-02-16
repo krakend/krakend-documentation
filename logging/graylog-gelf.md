@@ -32,12 +32,12 @@ Add the `krakend-gelf` integration in the root level of your `krakend.json`, ins
 
 For instance:
 {{< highlight json >}}
-
+{
     "extra_config": {
       "telemetry/gelf": {
         "address": "myGraylogInstance:12201",
         "enable_tcp": false
-      }
+      },
       "telemetry/logging": {
           "level": "INFO",
           "prefix": "[KRAKEND]",
@@ -45,4 +45,5 @@ For instance:
           "stdout": true
       }
     }
+}
 {{< /highlight >}}

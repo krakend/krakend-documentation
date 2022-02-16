@@ -14,7 +14,7 @@ meta:
   since: 2.0
   source: https://github.com/luraproject/lura
   scope:
-  - async_agent.extra_config
+  - async_agent
   log_prefix:
   - "[ASYNC: AgentName][AMQP]"
 ---
