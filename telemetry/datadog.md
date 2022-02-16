@@ -52,6 +52,7 @@ The following configuration snippet sends data to your Datadog:
       }
 }
 {{< /highlight  >}}
+- `namespace`(*string*) the namespace to which metric keys are appended.
 - `tags` (*list*) specifies a set of global tags to attach to each metric
 - `global_tags` (*object*) GlobalTags holds a set of tags (key/value) that will automatically be applied to all exported spans.
 - `service` (*string*) Service specifies the service name used for tracing

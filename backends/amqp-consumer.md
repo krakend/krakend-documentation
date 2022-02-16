@@ -57,8 +57,7 @@ The needed configuration to run a consumer is:
                 "routing_key": ["#"],
                 "prefetch_count": 10,
                 "prefetch_size": 1024,
-                "auto_ack": false,
-                "no_local": false
+                "auto_ack": false
             }
         }
     }]

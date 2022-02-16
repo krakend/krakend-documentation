@@ -3,7 +3,7 @@ lastmod: 2022-01-21
 date: 2022-01-21
 linktitle:  Async Agents
 title: Async agents
-weight: 90
+weight: 10
 images:
   - /images/documentation/async-agents.png
 menu:
@@ -70,8 +70,8 @@ The configuration needs to declare in the `extra_config` the connection driver y
             ],
             "extra_config": {
                 "async/amqp": {
-                    "name": "krakend",
                     "host": "amqp://guest:guest@localhost:5672/",
+                    "name": "krakend",
                     "exchange": "foo",
                     "durable": true,
                     "delete": false,
@@ -104,7 +104,9 @@ The configuration accepts the following parameters. Most of them are optional:
     - `workers` (*integer* - optional): The number of workers (consuming processes) you want to start simultaneously for this agent. Defaults to `1`.
     - `max_rate` (*float* - optional): The maximum number of messages you allow each worker to consume per second. Use `0` or `-1` for unlimited speed. Defaults to `0`.
 - `backend` (*list*): The [backend definition](/docs/backends/overview/) (as you might have in any endpoint) indicating where the event data is sent. It is a full backend object definition, with all its possible options, transformations, filters, validations, etc.
-- `extra_config` (*map* - optional): In the extra configuration you have to at least define the driver that connects to your queue or PubSub system. You can also add other middlewares to modify the request (message) or the response, apply logic or any other endpoint middleware.
+- `extra_config` (*map*): In the extra configuration section you have to **define the driver** that connects to your queue or PubSub system. In addition, you can place other middlewares to modify the request (message) or the response, apply logic or any other endpoint middleware, but adding the driver is mandatory. Supported drivers are:
+    - `async/amqp` (see below)
+
 
 When agents are defined, their activity is shown in the health endpoint with the name of the agent you have chosen.  The health endpoint will show for each agent, when was the last time the agent reported itself as alive. The frequency of this checking is as defined in the `health_interval`.
 

@@ -21,7 +21,7 @@ meta:
   log_prefix:
   - "[BACKEND: /foo][CB]"
 ---
-The **Circuit Breaker** is a straightforward **state machine** in the middle of the request and response that monitors all your backend failures. When they reach a configured threshold, the circuit breaker will prevent sending more traffic to the suffering backend.
+The **Circuit Breaker** is a straightforward **state machine** in the middle of the request and response that monitors all your backend failures. When they reach a configured threshold, the circuit breaker will prevent sending more traffic to a failing backend.
 
 When KrakenD demands more throughput than your actual API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also useful for dealing with network and other communication problems by preventing too many requests to fail due to timeouts, etc.
 

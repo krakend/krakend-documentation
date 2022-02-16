@@ -44,10 +44,10 @@ The Opencensus exporter allows you to expose data to Prometheus. Enabling it onl
 {{< /highlight >}}
 
 - `port` on which the Prometheus exporter should listen
-- `namespace` sets the domain the metric belongs to. Optional field.
 
 Optional fields (default to `false`):
 
+- `namespace` sets the domain the metric belongs to.
 - `tag_host` (*bool*): Whether to send the host as a metric or not.
 - `tag_path` (*bool*): Whether to send the path as a metric or not. Client metrics are reported as: `/hello/:hello/:world` and backend metrics are reported as: `/{hello}/{world}`. Paths are case insensitive, all metrics are reported lowercased.
 - `tag_method` (*bool*): Whether to send the HTTP method as a metric or not.

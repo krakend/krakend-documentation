@@ -76,14 +76,13 @@ When the name of the Lambda to depends on a parameter passed in the endpoint, us
 {{< highlight json >}}
 {
     "endpoint": "/call-a-lambda/{lambda}",
-    "backend": [
-    {
+    "backend": [{
         "backend/lambda": {
             "function_param_name": "Lambda",
             "region": "us-west1",
             "max_retries": 1
         }
-    }
+    }]
 }
 {{< /highlight >}}
 

@@ -47,9 +47,6 @@ CORS configuration lives in the root of the file, as it's a service component. A
         "Accept-Language"
       ],
       "max_age": "12h",
-      "allow_headers": [
-        "Accept-Language"
-      ],
       "allow_credentials": false,
       "debug": false
     }
