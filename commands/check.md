@@ -96,7 +96,22 @@ Global settings
         Hosts: [http://127.0.0.1:8080]
         1 backend component configuration(s):
         - validation/cel
+2 async agent(s):
+    - cool-agent
+    1 agent component configuration(s):
+    - github.com/devopsfaith/krakend-amqp/agent
+    Connecting to 1 backend(s):
+        [+] POST /__debug/cool-agent
+        Timeout: 2s
+        Hosts: [http://127.0.0.1:8080]
 
+    - not-so-cool-agent
+    1 agent component configuration(s):
+    - github.com/devopsfaith/krakend-amqp/agent
+    Connecting to 1 backend(s):
+        [+] POST /__debug/not-so-cool-agent
+        Timeout: 1s
+        Hosts: [http://127.0.0.1:8080]
 Syntax OK!
 {{< /terminal >}}
 
@@ -174,7 +189,67 @@ Global settings
         1 backend component configuration(s):
         - validation/cel
             [map[check_expr:int(req_params.Id) % 5 == 0]]
+2 async agent(s):
+    - cool-agent
+    Encoding:
+    Consumer Timeout: 2s
+    Consumer Workers: 20
+    Consumer Topic: *.bar
+    Consumer Max Rate: 0.000000
+    Connection Max Retries: 10
+    Connection Backoff Strategy: exponential-jitter
+    Connection Health Interval: 1s
+    1 agent component configuration(s):
+    - github.com/devopsfaith/krakend-amqp/agent
+        exchangefoo
+        prefetch_count40
+        auto_acktrue
+        namekrakend
+        hostamqp://guest:guest@localhost:5672/
+    Connecting to 1 backend(s):
+        [+] POST /__debug/cool-agent
+        Timeout: 2s
+        Hosts: [http://127.0.0.1:8080]
+        Concurrent calls: 0
+        Host sanitization disabled: false
+        Target:
+        Deny: [], Allow: []
+        Mapping: map[]
+        Group:
+        Encoding:
+        Is collection: false
+        SD:
+        0 backend component configuration(s):
 
+    - not-so-cool-agent
+    Encoding:
+    Consumer Timeout: 1s
+    Consumer Workers: 20
+    Consumer Topic: foo.*
+    Consumer Max Rate: 1000.000000
+    Connection Max Retries: 10
+    Connection Backoff Strategy: exponential-jitter
+    Connection Health Interval: 1s
+    1 agent component configuration(s):
+    - github.com/devopsfaith/krakend-amqp/agent
+        namekrakend-2
+        hostamqp://guest:guest@localhost:5672/
+        exchangefoo
+        prefetch_count40
+    Connecting to 1 backend(s):
+        [+] POST /__debug/not-so-cool-agent
+        Timeout: 1s
+        Hosts: [http://127.0.0.1:8080]
+        Concurrent calls: 0
+        Host sanitization disabled: false
+        Target:
+        Deny: [], Allow: []
+        Mapping: map[]
+        Group:
+        Encoding:
+        Is collection: false
+        SD:
+        0 backend component configuration(s):
 Syntax OK!
 {{< /terminal >}}
 
@@ -267,6 +342,66 @@ Global settings
         1 backend component configuration(s):
         - validation/cel
             [map[check_expr:int(req_params.Id) % 5 == 0]]
+2 async agent(s):
+    - cool-agent
+    Encoding:
+    Consumer Timeout: 2s
+    Consumer Workers: 20
+    Consumer Topic: *.bar
+    Consumer Max Rate: 0.000000
+    Connection Max Retries: 10
+    Connection Backoff Strategy: exponential-jitter
+    Connection Health Interval: 1s
+    1 agent component configuration(s):
+    - github.com/devopsfaith/krakend-amqp/agent
+        exchangefoo
+        prefetch_count40
+        auto_acktrue
+        namekrakend
+        hostamqp://guest:guest@localhost:5672/
+    Connecting to 1 backend(s):
+        [+] POST /__debug/cool-agent
+        Timeout: 2s
+        Hosts: [http://127.0.0.1:8080]
+        Concurrent calls: 0
+        Host sanitization disabled: false
+        Target:
+        Deny: [], Allow: []
+        Mapping: map[]
+        Group:
+        Encoding:
+        Is collection: false
+        SD:
+        0 backend component configuration(s):
 
+    - not-so-cool-agent
+    Encoding:
+    Consumer Timeout: 1s
+    Consumer Workers: 20
+    Consumer Topic: foo.*
+    Consumer Max Rate: 1000.000000
+    Connection Max Retries: 10
+    Connection Backoff Strategy: exponential-jitter
+    Connection Health Interval: 1s
+    1 agent component configuration(s):
+    - github.com/devopsfaith/krakend-amqp/agent
+        namekrakend-2
+        hostamqp://guest:guest@localhost:5672/
+        exchangefoo
+        prefetch_count40
+    Connecting to 1 backend(s):
+        [+] POST /__debug/not-so-cool-agent
+        Timeout: 1s
+        Hosts: [http://127.0.0.1:8080]
+        Concurrent calls: 0
+        Host sanitization disabled: false
+        Target:
+        Deny: [], Allow: []
+        Mapping: map[]
+        Group:
+        Encoding:
+        Is collection: false
+        SD:
+        0 backend component configuration(s):
 Syntax OK!
 {{< /terminal >}}
