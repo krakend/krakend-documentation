@@ -1,8 +1,8 @@
 ---
 lastmod: 2022-01-31
 date: 2016-09-30
-linktitle: Security
-title: Security
+linktitle: HTTP Security
+title: HTTP Security
 weight: 40
 menu:
   community_current:

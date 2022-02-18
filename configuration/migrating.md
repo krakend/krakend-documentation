@@ -66,15 +66,15 @@ Summing up, see the before and after of the following snippet which has 3 of the
 {
     "endpoint": "/foo",
     "extra_config": {
-        "auth/validator" {
+        "github.com/devopsfaith/krakend-jose/validator" {
             "alg": "RS256",
-            "jwk_url": "https://url/to/jwks.json"
+            "jwk-url": "https://url/to/jwks.json"
         }
     },
     "backend": [
         {
             "url_pattern": "/foo",
-            "allow": ["field1", "field2"]
+            "whitelist": ["field1", "field2"]
         }
     ]
 }
