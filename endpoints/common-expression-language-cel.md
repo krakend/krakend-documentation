@@ -92,9 +92,9 @@ The following variables can be used inside the `check_expr`:
 
 - `req_method`: What is the method of this endpoint, e.g.: `GET`
 - `req_path`: The path used to access this endpoint, e.g: : `/foo`
-- `req_params`: Object with all the parameters sent with the request, e.g:
-  `req_params.Foo.var`. Notice that **parameters capitalize the first letter**
-- `req_headers`: Array with all the headers received, e.g: `req_headers['X-Forwarded-For']`
+- `req_params`: Object with all the parameters declared in the endpoint as `{parameters}` (e.g.: `/v1/users/{id_user}` can be accessed as `req_params.Id_user`. Notice that **parameters capitalize the first letter**. When you use the [sequential proxy](/docs/endpoints/sequential-proxy/#chaining-the-requests) you also have under `req_params.RespX_field.subfield` all the responses of previous backends.
+- `req_headers`: Array with all the headers received. The value of the array is also an array, as you can ha header declared multiple times (e.g.: `Vary`, or `Set-Cookie`). You can access headers like this: `req_headers['X-Forwarded-For']`.
+- `req_querystring`: Object with all the querystrings that were passed by the user (not in the `url_pattern`) and that are defined in the `querystring_params` list. Notice that querystrings, unlike `req_params`, are NOT capitalized. The `req_querystring.foo` will also return an array as a querystring can contain multiple values (e.g: `?foo[]=1&foo[]=2`).
 - `now`: An object containing the current timestamp, e.g:
   `timestamp(now).getDayOfWeek()`
 
@@ -210,3 +210,98 @@ Let's say that the JWT token the user sent contains an attribute named `enabled_
     }
 {{< /highlight >}}
 The expression checks that the JWT token has both the `user_id` and the `enabled_days` and that today is a valid day.
+
+### Example: Conditional call of sequential backends
+The following example is a little bit more complex, as it **combines the sequential proxy with the CEL component**. You can copy and paste this example and start KrakenD with the `krakend run -d` flag. Here is what it does:
+
+- The backend 0 (first item in the `backend` list) calls the URL `/__debug/0`. This backend returns the object `{"message": "pong"}`.
+- The rest of the backends will be executed one by one in the order defined, as the proxy is defined as sequential.
+- The next backend 1 will call `/__debug/1?ignore=pong`, as `pong` is the value of `resp0_message`. We are using an `ignore` querystring as if you were unable to modify your backend URL, but it could be part of the URL (e.g: `/__debug/1/{resp0_message}`). It is mandatory that you use a `resp_` in the URL to make KrakenD fill the request parameters in the sequential calls. In addition, as it has a CEL expression inside, this backend will be called **ONLY** if the response of the backend 0 contains a `message` field. Notice that the backend does not have access to the body of the previous call, but it has access to the parameters in the `url_pattern`. Thus, we can use the `req_params` and access any `{parameter}` as `req_params.Resp0_parameter`. All parameters capitalize the first letter (req_params.**R**esp0_parameter)
+- The backend 2 will be triggered always, but will return the content for aggregation only when the response of the backend has a `pong` string in the response. Notice also that since we are working with the response, the `sequence-2` group is inside the expression.
+- The backend 3 will be called only of the original request contains a querystring `foo`
+- The backend 4 will never be called, as the endpoint does not define a `{NEVER_CALLED_BACKEND}` parameter
+
+{{< highlight json >}}
+{
+    "version": 3,
+    "host": [
+        "http://localhost:8080"
+    ],
+    "endpoints": [
+        {
+            "endpoint": "/cel",
+            "querystring_params": [
+                "foo"
+            ],
+            "backend": [
+                {
+                    "url_pattern": "/__debug/0"
+                },
+                {
+                    "url_pattern": "/__debug/1?ignore={resp0_message}",
+                    "group": "sequence-1",
+                    "extra_config": {
+                        "validation/cel": [
+                            {
+                                "check_expr": "has(req_params.Resp0_message)"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "url_pattern": "/__debug/2",
+                    "group": "sequence-2",
+                    "extra_config": {
+                        "validation/cel": [
+                            {
+                                "check_expr": "resp_data.sequence-2.message == 'pong'"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "url_pattern": "/__debug/3",
+                    "group": "sequence-3",
+                    "extra_config": {
+                        "validation/cel": [
+                            {
+                                "check_expr": "has(req_querystring.foo)"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "url_pattern": "/__debug/4",
+                    "group": "sequence-4",
+                    "extra_config": {
+                        "validation/cel": [
+                            {
+                                "check_expr": "has(req_params.NEVER_CALLED_BACKEND)"
+                            }
+                        ]
+                    }
+                }
+
+            ],
+            "extra_config": {
+                "proxy": {
+                    "sequential": true
+                }
+            }
+        }
+    ]
+}
+{{< /highlight >}}
+
+The expected response will be incomplete (as 1 or more backends will fail) and looks like:
+{{< terminal title="Response" >}}
+curl -iG http://localhost:8080/cel\?foo\=A
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+X-Krakend: Version {{< version >}}
+X-Krakend-Completed: false
+Date: Tue, 22 Feb 2022 17:26:12 GMT
+Content-Length: 114
+
+{"message":"pong","sequence-1":{"message":"pong"},"sequence-2":{"message":"pong"},"sequence-3":{"message":"pong"}}
+{{< /terminal >}}
