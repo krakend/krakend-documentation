@@ -20,7 +20,7 @@ As a software releaser, my new backend version requires new fields in the tokens
 ## Storing blocked tokens using the bloom filter
 KrakenD integrates the [bloom filter](https://github.com/devopsfaith/bloomfilter) component that allows you to store in an optimized way tokens to revoke on the subsequent requests.
 
-When you enable the bloom filter, it inspects the payload of incoming JWT tokens to check if any of the configured fields in `TokenKeys` contains a blocked value. And if a blocked is found, access is not permitted.
+When you enable the bloom filter, it inspects the payload of incoming JWT tokens to check if any of the configured fields in `token_keys` contains a blocked value. And if a blocked is found, access is not permitted.
 
 The bloom filter component brings the following functionalities:
 
@@ -49,10 +49,10 @@ The bloom filter lives at the `extra_config` in the root level of the configurat
       "auth/revoker": {
         "N": 10000000,
         "P": 0.0000001,
-        "HashName": "optimal",
+        "hash_name": "optimal",
         "TTL": 1500,
         "port": 1234,
-        "TokenKeys": ["jti"]
+        "token_keys": ["jti"]
       }
     }
 }
@@ -64,10 +64,10 @@ All the configuration fields **are mandatory**, and are explained below:
 
 - `N`: The maximum number of elements that you want to keep in memory.
 - `P`: The probability of returning a false positive.
-- `HashName`: Either `optimal` (recommended) or `default`.
+- `hash_name`: Either `optimal` (recommended) or `default`.
 - `TTL`: The lifespan of the JWT you are generating in seconds. The value must match the expiration you are setting in the backend.
 - `port`: The port number exposed (has to be free) for the RPC service to communicate with the bloomfilter.
-- `TokenKeys`: The list with all the fields in your JWT payload that need watching. These fields establish the criteria to revoke accesses in the future.
+- `token_keys`: The list with all the fields in your JWT payload that need watching. These fields establish the criteria to revoke accesses in the future.
 
 The values `N` and `P` determine the size of the resulting bloom filter to fulfill your expectations. You can use this [bloom filter calculator](https://hur.st/bloomfilter/?n=1000000&p=1.0E-9&m=&k=) to play with the numbers.
 
@@ -91,7 +91,7 @@ Our sample JWT payload has the following characteristics:
 {{< /highlight >}}
 
 
-The following list shows the possible functionalities with an example`"TokenKeys": ["jti","sub","did","aud"]`:
+The following list shows the possible functionalities with an example`"token_keys": ["jti","sub","did","aud"]`:
 
 - `jti` to revoke a single user session and device
 - `sub` to revoke all sessions of the same subject.
