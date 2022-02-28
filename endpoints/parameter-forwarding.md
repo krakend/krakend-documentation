@@ -16,12 +16,12 @@ Part of the zero-trust policy implies that KrakenD **removes by default** any un
 ## Configuration to enable parameter forwarding
 You can change the default behavior according to your needs, and define which elements are allowed to pass. To do that, add the following configuration options under your `endpoint` definition:
 
-- `querystring_params` (*array*): Defines the exact list of query strings that are allowed to reach the backend when passed
-- `headers_to_pass` (*array*): Defines the list of all headers allowed to reach the backend when passed
+- `input_query_strings` (*array*): Defines the exact list of query strings that are allowed to reach the backend when passed
+- `input_headers` (*array*): Defines the list of all headers allowed to reach the backend when passed
 - A single *star* element (`["*"]`) as the options above, forwards **everything** to the backend
 
 {{< note title="Case sensitive parameters" type="info" >}}
-The `querystring_params` and `headers_to_pass` lists are **case sensitive**. For instance, a request `?Page=1` wont passed to the backend with `"querystring_params": ["page"]`
+The `input_query_strings` and `input_headers` lists are **case sensitive**. For instance, a request `?Page=1` wont passed to the backend with `"input_query_strings": ["page"]`
 {{< /note >}}
 
 **Example**:
@@ -34,11 +34,11 @@ The `querystring_params` and `headers_to_pass` lists are **case sensitive**. For
   "endpoints": [
     {
       "endpoint": "/v1/foo",
-      "querystring_params": [
+      "input_query_strings": [
         "items",
         "page"
       ],
-      "headers_to_pass": [
+      "input_headers": [
         "User-Agent",
         "Accept"
       ],
@@ -61,7 +61,7 @@ Read below for further details and examples.
 ## Query string forwarding
 The zero-trust policy implies that for instance, if a KrakenD endpoint `/foo` receives the request `/foo?items=10&page=2`, all its declared backends are not going to see neither `items` nor `page`, **unless otherwise configured**.
 
-To enable the transition of query strings to your backend, add the **list** `querystring_params` in your `endpoint` definition. For instance, let's forward `?items=10&page=2` to the backends now:
+To enable the transition of query strings to your backend, add the **list** `input_query_strings` in your `endpoint` definition. For instance, let's forward `?items=10&page=2` to the backends now:
 
 {{< highlight json >}}
 {
@@ -69,7 +69,7 @@ To enable the transition of query strings to your backend, add the **list** `que
   "endpoints": [
     {
       "endpoint": "/v1/foo",
-      "querystring_params": [
+      "input_query_strings": [
         "items",
         "page"
       ],
@@ -86,11 +86,11 @@ To enable the transition of query strings to your backend, add the **list** `que
 }
 {{< /highlight >}}
 
-The `querystring_params` list has the following behavior:
+The `input_query_strings` list has the following behavior:
 
 - **Items in the list** are forwarded to your backend when passed
 - **Additional query strings not in the list** are removed from the final call
-- **Writing a single *star* element** (`"querystring_params":["*"]`) instead of individual strings, forwards **everything** to the backend
+- **Writing a single *star* element** (`"input_query_strings":["*"]`) instead of individual strings, forwards **everything** to the backend
 
 
 
@@ -107,7 +107,7 @@ Also, if a request like `http://krakend:8080/v1/foo?items=10` does not include `
 While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
 
 {{< highlight js >}}
-  "querystring_params":[  
+  "input_query_strings":[  
         "*"
   ]
 {{< /highlight >}}
@@ -136,12 +136,12 @@ With the configuration above a request to the KrakenD endpoint such as `http://k
 
     /foo?channel=iOS
 
-Nevertheless, the `querystring_params` could also be added in this configuration, creating a special case of optional and mandatory parameters! You would be passing query strings both hardcoded in the `url_pattern` and generated from the user input. What happens in this strange case is that if the user passes a single optional query string parameter that is declared in `querystring_params` then the mandatory value is lost. If the request does not contain any known optional parameter, then the mandatory value is used. For instance:
+Nevertheless, the `input_query_strings` could also be added in this configuration, creating a special case of optional and mandatory parameters! You would be passing query strings both hardcoded in the `url_pattern` and generated from the user input. What happens in this strange case is that if the user passes a single optional query string parameter that is declared in `input_query_strings` then the mandatory value is lost. If the request does not contain any known optional parameter, then the mandatory value is used. For instance:
 
 {{< highlight json >}}
 {
     "endpoint": "/v3/{channel}/foo",
-    "querystring_params": [
+    "input_query_strings": [
         "page",
         "limit"
     ],
@@ -172,9 +172,9 @@ No optional parameter has been passed, so the mandatory one is used.
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test query string parameters.
 
 ## Headers forwarding
-KrakenD **does not send client headers to the backend by default**.  Use `headers_to_pass`.
+KrakenD **does not send client headers to the backend by default**.  Use `input_headers`.
 
-Declare the list of headers sent by the client that you want to let pass to the backend with the `headers_to_pass` option.
+Declare the list of headers sent by the client that you want to let pass to the backend with the `input_headers` option.
 
 A client request from a browser or a mobile client usually contains a lot of headers, including cookies. Typical examples of the variety of headers that clients send are `Host`, `Connection`, `Cache-Control`, `Cookie`... and a long, long etcetera. The backend usually does not need any of this to return the content.
 
@@ -185,9 +185,9 @@ KrakenD passes only these essential headers to the backends:
 - `User-Agent` (KrakenD Version {{< version >}})
 - `X-Forwarded-For`
 - `X-Forwarded-Host`
-- `X-Forwarded-Via` (only when `User-Agent` is in the `headers_to_pass`)
+- `X-Forwarded-Via` (only when `User-Agent` is in the `input_headers`)
 
-When you use the `headers_to_pass`, take into account that any of these headers are replaced with the ones you declare.
+When you use the `input_headers`, take into account that any of these headers are replaced with the ones you declare.
 
  An example to pass the `User-Agent` to the backend:
 
@@ -197,7 +197,7 @@ When you use the `headers_to_pass`, take into account that any of these headers 
   "endpoints": [
     {
       "endpoint": "/v1/foo",
-      "headers_to_pass": [
+      "input_headers": [
         "User-Agent"
       ],
       "backend": [
@@ -229,7 +229,7 @@ Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand h
 While the default policy prevents forwarding unrecognized headers, setting an asterisk `*` as the parameter name makes the gateway to **forward any header to the backends**, including cookies:
 
 {{< highlight js >}}
-"headers_to_pass":[  
+"input_headers":[  
       "*"
 ]
 {{< /highlight >}}
@@ -238,7 +238,7 @@ Enabling the wildcard pollutes your backends, as any header sent by end users or
 
 
 ## Cookies forwarding
-A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `headers_to_pass`, just as you would do with any other header.
+A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `input_headers`, just as you would do with any other header.
 
 When doing this, **all your cookies** are sent to all backends inside the endpoint. Use this option wisely!
 
@@ -250,7 +250,7 @@ Example:
   "endpoints": [
     {
       "endpoint": "/v1/foo",
-      "headers_to_pass": [
+      "input_headers": [
         "Cookie"
       ],
       "backend": [

@@ -280,7 +280,7 @@ If KrakenD can't replace the claim's content for any reason, the backend receive
 ## Propagate JWT claims as request headers
 It is possible to forward claims in a JWT as request headers. It is a common use case to have, for instance, the sub claim added as an `X-User` header to the request.
 
-**Important:** The endpoint `headers_to_pass` needs to be set as well, so the backend can see it.
+**Important:** The endpoint `input_headers` needs to be set as well, so the backend can see it.
 
 {{< highlight json >}}
 {

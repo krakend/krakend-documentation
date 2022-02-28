@@ -47,8 +47,8 @@ The **endpoint object** accepts the following attributes:
 - `output_encoding`: See the [supported encodings](/docs/endpoints/content-types/). Defaults to `json`.
 - `backend`: List of all the **backend objects** queried for this endpoint.
 - `extra_config` (*optional*): Configuration of components and middlewares that are executed with this endpoint.
-- `querystring_params` (*optional*): Recognized GET parameters. See [parameter forwarding](/docs/endpoints/parameter-forwarding/).
-- `headers_to_pass` (*optional*): Forwarded headers. See [headers forwarding](/docs/endpoints/parameter-forwarding/#headers-forwarding).
+- `input_query_strings` (*optional*): Recognized GET parameters. See [parameter forwarding](/docs/endpoints/parameter-forwarding/).
+- `input_headers` (*optional*): Forwarded headers. See [headers forwarding](/docs/endpoints/parameter-forwarding/#headers-forwarding).
 - `concurrent_calls` (*optional*): A technique to improve response times. See [concurrent requests](/docs/endpoints/concurrent-requests/)
 - `cache_ttl` (*optional*): (*time unit*) The cache headers informing for how long the CDN can cache the request to this endpoint. Related: [caching backend responses](/docs/backends/caching/).
 - `timeout` (*optional*): (*time unit*) Maximum time you'll wait for the slowest backend response. Usually specified in seconds (`s`) or milliseconds (`ms`. E.g: `1500ms`)

@@ -63,7 +63,7 @@ KrakenD looks for the lua scripts in the root folder where KrakenD is running. Y
 - `skip_next`: only to be set when in a `backend` section, skips the query to the next backend.
 
 {{< note title="A note on client headers" >}}
-When **client headers** are needed, remember to add them under [`headers_to_pass`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
+When **client headers** are needed, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
 {{< /note >}}
 
 ## Namespaces (component name)

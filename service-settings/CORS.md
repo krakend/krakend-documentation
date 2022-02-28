@@ -74,7 +74,7 @@ The following configuration might help you debugging your CORS configuration. Ch
         {
             "@comment": "this will fail due to double CORS validation",
             "endpoint":"/cors/no-op",
-            "headers_to_pass":["*"],
+            "input_headers":["*"],
             "output_encoding": "no-op",
             "backend":[
                 {
@@ -87,7 +87,7 @@ The following configuration might help you debugging your CORS configuration. Ch
         {
             "@comment": "this won't fail because CORS preflight headers are removed from the request to the backend",
             "endpoint":"/cors/no-op/martian",
-            "headers_to_pass":["*"],
+            "input_headers":["*"],
             "output_encoding": "no-op",
             "backend":[
                 {

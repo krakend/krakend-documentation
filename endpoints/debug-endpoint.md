@@ -23,7 +23,7 @@ When developing, add KrakenD itself as another backend using the `/__debug/` end
 
 The debug endpoint might save you much trouble, as your application might not work when specific headers or parameters are not present. Maybe you are relying upon what your client is sending, but this is not what the gateway is sending. Remember: this is not a proxy.
 
-For instance, your client might be sending a `Content-Type` or `Accept` header and these are perhaps necessary for the proper functioning of your backend, but unless these are recognized headers by the gateway (they are in `headers_to_pass`), they are not going to reach the backend ever. Seeing the specific headers and parameters in the log clears all the doubts, and you can reproduce the call and conditions easily.
+For instance, your client might be sending a `Content-Type` or `Accept` header and these are perhaps necessary for the proper functioning of your backend, but unless these are recognized headers by the gateway (they are in `input_headers`), they are not going to reach the backend ever. Seeing the specific headers and parameters in the log clears all the doubts, and you can reproduce the call and conditions easily.
 
 ## Debug endpoint configuration example
 The following configuration demonstrates how to test what headers and query string parameters are sent and received by the backends by using the `/__debug/` endpoint.
@@ -54,11 +54,11 @@ To test it right now, save the content of this file in a `krakend-test.json` and
     },
     {
       "endpoint": "/optional-params",
-      "querystring_params": [
+      "input_query_strings": [
           "a",
           "b"
         ],
-      "headers_to_pass": [
+      "input_headers": [
           "User-Agent",
           "Accept"
         ],

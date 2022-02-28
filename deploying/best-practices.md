@@ -124,7 +124,7 @@ For instance, you could add `@comment` fields. The field is not used by KrakenD 
 {{< highlight json "hl_lines=4" >}}
 {
     "endpoint": "/cookies",
-    "headers_to_pass": ["Cookie" ],
+    "input_headers": ["Cookie" ],
     "@comment": "At this early stage of the implementation, we still need to send cookies to the backend.",
     "backend": [{
         "url_pattern": "/srv/legacy"

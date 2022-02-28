@@ -107,7 +107,7 @@ When working in this mode, all you need to do is to configure the GraphQL endpoi
 {{< highlight json >}}
 {
     "endpoint": "/graphql",
-	"querystring_params":[
+	"input_query_strings":[
 		"query",
 		"operationName",
 		"variables"
@@ -122,7 +122,7 @@ When working in this mode, all you need to do is to configure the GraphQL endpoi
 }
 {{< /highlight >}}
 
-The previous example uses a set of recognized query strings to pass to the GraphQL server. You can also use `"querystring_params":["*"]` to forward any query string. The exact configuration works with a `POST` method.
+The previous example uses a set of recognized query strings to pass to the GraphQL server. You can also use `"input_query_strings":["*"]` to forward any query string. The exact configuration works with a `POST` method.
 
 As the configuration above is not using `no-op`, you can take the oprotunity to connect to more servers in the same endpoint by adding additional backend objects in the configuration.
 

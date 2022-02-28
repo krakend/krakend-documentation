@@ -79,7 +79,7 @@ The configuration is as follows:
 
 
 {{< note title="A note on client headers" >}}
-When **client headers** are needed, remember to add them under [`headers_to_pass`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
+When **client headers** are needed, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
 {{< /note >}}
 
 
@@ -97,7 +97,7 @@ You can use the following variables inside the `check_expr`:
 - `req_path`: The path used to access this endpoint, e.g: : `/foo`
 - `req_params`: An object with all the placeholder `{parameters}` declared in the endpoint . All **parameters capitalize the first letter**. E.g.: An `"endpoint": "/v1/users/{id_user}"` will set a variable `req_params.Id_user` containing the value of the parameter passed in the request. When you use the [sequential proxy](/docs/endpoints/sequential-proxy/#chaining-the-requests) you also have under `req_params.RespX_field` the response of a previous backend call (where X is the sequence number and `field` the object you want to retrieve.
 - `req_headers`: An array with all the headers received. The value of the array is at the same time another array, as you can have a header declared multiple times (e.g., multiple cookies with `Set-Cookie`). You can access headers like this: `req_headers['X-Forwarded-For']`.
-- `req_querystring`: An Object with all the query strings that the user passed to the endpoint (not anything you wrote on the backend `url_pattern`). Remember that no query strings pass unless they are in the `querystring_params` list. Notice that querystrings, unlike `req_params`, are NOT capitalized. The `req_querystring.foo` will also return an array as a query string can contain multiple values (e.g: `?foo[]=1&foo[]=2`).
+- `req_querystring`: An Object with all the query strings that the user passed to the endpoint (not anything you wrote on the backend `url_pattern`). Remember that no query strings pass unless they are in the `input_query_strings` list. Notice that querystrings, unlike `req_params`, are NOT capitalized. The `req_querystring.foo` will also return an array as a query string can contain multiple values (e.g: `?foo[]=1&foo[]=2`).
 - `now`: An object containing the current timestamp, e.g:
   `timestamp(now).getDayOfWeek()`
 
@@ -225,7 +225,7 @@ The following example is a bit more complex, as it **combines the sequential pro
     "endpoints": [
         {
             "endpoint": "/cel",
-            "querystring_params": [
+            "input_query_strings": [
                 "foo"
             ],
             "backend": [
