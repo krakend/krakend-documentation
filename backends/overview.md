@@ -12,11 +12,18 @@ menu:
 
 The concept of `backend` refers to the origin servers providing the necessary data to populate your endpoints. A backend can be something like your HTTP-based API, a Lambda function, or a Kafka queue, to name a few examples.
 
-A backend can be any server inside or outside your network, as long it is reachable by KrakenD. For instance, you can create endpoints fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook, or any other service, and return back everything aggregated in a single glorified response.
+A backend can be any server inside or outside your network, as long it is reachable by KrakenD. For instance, you can create endpoints fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook, or other services. You can also return everything aggregated in a single glorified response.
 
-When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy/) is used). The returned content is parsed according to its `encoding` or middleware configuration.
+When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy/) is used). The returned content is parsed according to its `encoding` or in some cases its`extra_config` configuration.
 
 The backends are declared inside every endpoint using a `backend` array.
+
+{{< note title="Multiple non-safe methods" type="info" >}}
+KrakenD **does not allow you to define multiple non-safe (write) backends**. This is a (sometimes controversial) design decision to disable the gateway to handle transactions.
+
+If you need to have a write method (POST, PUT, DELETE, PATCH) together with other GET methods, use the [sequential proxy](/docs/endpoints/sequential-proxy/) and place a maximum of 1 write method at the end of the sequence.
+{{< /note >}}
+
 
 ## Backend configuration
 Inside the `backend` array, you need to create an object for each backend entry. The more important options are:
@@ -25,19 +32,19 @@ Inside the `backend` array, you need to create an object for each backend entry.
 - `sd`: When you use a [Service Discovery](/docs/backends/service-discovery/) system to resolve your backend services
 - `method`: One of `GET`, `POST`, `PUT`, `DELETE`, `PATCH` (in **uppercase**!). The method does not need to match the endpoint's method.
 - `url_pattern` The path inside the service (no protocol, no host, no method). E.g: `/users`
-- `host` an array with all the available hosts to **load balance** requests using the format `protocol://host:port`. E.g.: ' https://my.users-ms.com`. If you are in a platform where hosts are already balanced write a single name in the array with the service name/balancer address.
+- `host` an array with all the available hosts to **load balance** requests using the format `protocol://host:port`. E.g.: ' https://my.users-ms.com`. If you are in a platform where hosts are balanced, write a single name in the array with the service name/balancer address.
 - `extra_config` when there is additional configuration related to a specific component or middleware that you want to enable
 
 Other configuration options such as the ones for [data manipulation](/docs/backends/data-manipulation/) are available. You will find them in each specific feature section.
 
 ### Default values
-When declaring a backend, all properties named as the endpoint are automatically inherited. For instance, if your endpoint uses a `POST` `method`, unless otherwise declared, the backend will use `POST` as well.
+All properties named as the endpoint are automatically inherited when declaring a backend. So, if your endpoint uses a `POST` `method`, unless otherwise changed, the backend will use `POST` as well.
 
 There are also some attributes that you can omit if you don't need to override the value:
 
-- `host`: If you have a `host` declaration at the configuration's root level, it's value is used.
-- `method`: The endpoint's method is used, declare it to alter it in the backend call.
-- `encoding`: Will use the endpoint encoding, or `json` if not defined anywhere.
+- `host`: If you have a `host` declaration at the configuration's root level, its value is used.
+- `method`: The endpoint's method is used. Declare it to change it in the backend call when it differs.
+- `encoding`: Will use the endpoint encoding, or `json` if not defined anywhere else.
 - `sd`: The service discovery always defaults to `static` (no external Service Discovery).
 - `extra_config`: Not required unless additional non-core middleware is needed (like a circuit breaker, rate limit, etc.)
 

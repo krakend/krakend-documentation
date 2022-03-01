@@ -100,10 +100,13 @@ By definition, query string parameters are always optional, and the user can pas
 ### Sending all query string parameters
 While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
 
-{{< highlight js >}}
+{{< highlight json >}}
+{
+  "endpoint": "/foo",
   "input_query_strings":[
-        "*"
+      "*"
   ]
+}
 {{< /highlight >}}
 
 **Enabling the wildcard pollutes your backends**, as any query string sent by end-users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which query strings are in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
@@ -220,10 +223,13 @@ Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand h
 ### Sending all client headers to the backends
 While the default policy prevents forwarding unrecognized headers, setting an asterisk `*` as the parameter name makes the gateway to **forward any header to the backends**, including cookies:
 
-{{< highlight js >}}
-"input_headers":[
+{{< highlight json >}}
+{
+  "endpoint": "/foo",
+  "input_headers":[
       "*"
-]
+  ]
+}
 {{< /highlight >}}
 
 Enabling the wildcard pollutes your backends, as any header sent by end-users or malicious attackers gets through the gateway and impacts the backends behind. We recommend letting the gateway know which headers are in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
