@@ -26,4 +26,4 @@ krakend check -t -d -c /path/to/krakend.json
 
 The command above will stop the pipeline (`exit 1`) if it fails or continue if the configuration is correct. Make sure to always place it in your build/deploy process.
 
-[Read more about the `check` command](/docs/commands/check/)
+[Read more about the `check` command](/docs/configuration/check/)

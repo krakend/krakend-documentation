@@ -23,7 +23,7 @@ The expected configuration file format by default is `json`, but KrakenD can par
 
 Nevertheless, **our recommendation is to choose `JSON`**.
 
-Validate the syntax (not the logic) with [`krakend check`](/docs/commands/check/)
+Validate the syntax with [`krakend check`](/docs/configuration/check/)
 
 ## Why choosing json?
 You are free to choose `YAML`, `TOML` or any of the other formats at your best convenience. But have in mind the following logic when choosing a file format other than `json`.

@@ -44,4 +44,4 @@ When the syntax is correct, you'll see the message `Syntax OK!`, otherwise the e
 
 You can also start the service directly as this is done right before the server starts (except the linting).
 
-Read more about [`krakend check`](/docs/commands/check/)
+Read more about [`krakend check`](/docs/configuration/check/)

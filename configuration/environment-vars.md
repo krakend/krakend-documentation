@@ -16,7 +16,7 @@ meta:
   scope:
   - service
 ---
-When KrakenD [runs](/docs/commands/run/), all the behavior is loaded from the [configuration file](/docs/configuration/structure/). Through environment variables, you can override existing values in the configuration. There are two different ways of injecting environment vars.
+When KrakenD runs, all the behavior is loaded from the [configuration file](/docs/configuration/structure/). Through environment variables, you can override existing values in the configuration. There are two different ways of injecting environment vars.
 
 {{< note title="The key to override must exist in the configuration" type="note" >}}
 The environment variables are meant to **replace** existing attributes in the configuration. Therefore, you cannot set new parameters that do not exist in the configuration.
