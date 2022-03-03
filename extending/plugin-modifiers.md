@@ -10,7 +10,7 @@ menu:
     parent: "150 Custom Plugins and Middleware"
 meta:
   since: 2.0
-  namespace: 
+  namespace:
   - plugin/request-modifier
   - plugin/response-modifier
 images:

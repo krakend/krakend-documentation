@@ -26,7 +26,7 @@ When working with lists, KrakenD needs to flatten and expand array structures to
 You can manipulate collections at two different stages:
 
 - When the response of a backend is received (inside its `backend` section)
-- After having merged all the backend responses (inside the `endpoint` section, starting at KrakenD 1.2)
+- After merging all the backend responses (inside the `endpoint` section)
 
 You can do simultaneous combinations to output the desired result. For instance, declare an endpoint with three backends that apply transformations independently and a final change within the endpoint after merging the three.
 
