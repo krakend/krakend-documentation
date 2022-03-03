@@ -133,7 +133,7 @@ func (r registerer) requestDump(
     // ex: if this modifier required some A and B config params
     /*
         "extra_config":{
-            "proxy/plugin":{
+            "plugin/req-resp-modifier":{
                 "name":["krakend-debugger"],
                 "krakend-debugger":{
                     "A":"foo",
@@ -142,7 +142,7 @@ func (r registerer) requestDump(
             }
         }
     */
-    
+
     // return the modifier
     fmt.Println("request dumper injected!!!")
     return func(input interface{}) (interface{}, error) {
@@ -170,7 +170,7 @@ func (r registerer) responseDump(
     // ex: if this modifier required some A and B config params
     /*
         "extra_config":{
-            "proxy/plugin":{
+            "plugin/req-resp-modifier":{
                 "name":["krakend-debugger"],
                 "krakend-debugger":{
                     "A":"foo",
@@ -179,7 +179,7 @@ func (r registerer) responseDump(
             }
         }
     */
-    
+
     // return the modifier
     fmt.Println("response dumper injected!!!")
     return func(input interface{}) (interface{}, error) {
@@ -232,7 +232,7 @@ For the test, we'll build a small gateway with a single endpoint merging the res
           "mapping": { "blog": "website" },
           "group": "org",
           "extra_config":{
-            "proxy/plugin":{
+            "plugin/req-resp-modifier":{
               "name":["krakend-debugger"]
             }
           }
@@ -242,14 +242,14 @@ For the test, we'll build a small gateway with a single endpoint merging the res
           "mapping": { "collection": "repos" },
           "is_collection": true,
           "extra_config":{
-            "proxy/plugin":{
+            "plugin/req-resp-modifier":{
               "name":["krakend-debugger"]
             }
           }
         }
       ],
       "extra_config":{
-        "proxy/plugin":{
+        "plugin/req-resp-modifier":{
           "name":["krakend-debugger"]
         }
       }
