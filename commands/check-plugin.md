@@ -48,27 +48,32 @@ Usage:
   krakend check-plugin [flags]
 
 Examples:
-krakend check-plugin -v 1.17.0 -s ./go.sum
+krakend check-plugin --go 1.17.7 --libc MUSL-1.2.2 --sum ./go.sum
 
 Flags:
-  -h, --help             help for plugin
-  -s, --sum string       Path to the go.sum file to analize (default "./go.sum")
-  -v, --version string   Version of the go compiler used (default "1.16.4")
+  -h, --help          help for plugin
+  -s, --sum string    Path to the go.sum file to analize (default "./go.sum")
+  -g, --go string     Version of the go compiler used (default "1.17.7")
+  -l, --libc string   Version of the libc library used
 {{< /terminal >}}
 
 ## Flags
 Use `krakend check-plugin` in combination with the following flags:
 
 - `-s` or `--sum` to specify the path to the `go.sum` file of your plugin.
-- `-v` or `--version` to specify the Go version you are using to compile the plugin.
+- `-g` or `--go` to specify the Go version you are using to compile the plugin.
+- `-l` or `--libc` to specify the libc version installed in the system. The libc version must have the preffix `MUSL-`, `GLIBC-`, `DARWIN-`. For instance, a plugin in Mac Monterrey might use `DARWIN-12.2.1`, an Alpine container will need something like `MUSL-1.2.2`, and a Linux box will have `GLIBC-2.32`.
 
 
 {{< terminal title="Checking a failing plugin example" >}}
-krakend check-plugin -v 1.17.0 -s ../plugin-tools/go.sum
-14 incompatibility(ies) found...
+krakend check-plugin --go 1.17.7 --libc MUSL-1.2.2 --sum ../plugin-tools/go.sum
+15 incompatibility(ies) found...
 go
     have: 1.17.0
     want: 1.16.4
+libc
+    have: MUSL-1.2.2
+    want: GLIBC-2.31
 github.com/gin-gonic/gin
     have: v1.6.3
     want: v1.7.7
