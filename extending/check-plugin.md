@@ -1,16 +1,17 @@
 ---
 lastmod: 2022-01-28
 date: 2022-01-28
-linktitle: Checking custom plugins
+aliases: ["/docs/extending/plugin-tools/"]
+linktitle: Checking your plugins
 title: Validate your plugin compatibility
 description: KrakenD check-plugin Command
-weight: 20
+weight: 50
 notoc: true
 meta:
     since: 2.0
 menu:
   community_current:
-    parent: "020 Command Line"
+    parent: "150 Custom Plugins and Middleware"
 ---
 The `krakend check-plugin` command helps you validate the **compatibility of your custom plugins** that will run in conjunction with KrakenD.
 

@@ -1,15 +1,15 @@
 ---
-aliases: ["/commands/check"]
-lastmod: 2021-10-25
+aliases: ["/docs/commands/check/"]
+lastmod: 2021-03-01
 date: 2016-10-28
-linktitle: Checking the config
+linktitle: Validating the config
 title: Validating the configuration with `check`
 description: KrakenD Check Command
-weight: 10
+weight: 20
 notoc: true
 menu:
   community_current:
-    parent: "020 Command Line"
+    parent: "010 Configuration file(s)"
 ---
 
 The `krakend check` command **validates KrakenD configuration files** written in any of its [supported formats](/docs/configuration/supported-formats/).
