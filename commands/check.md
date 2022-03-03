@@ -6,19 +6,31 @@ linktitle: Checking the config
 title: Validating the configuration with `check`
 description: KrakenD Check Command
 weight: 10
+notoc: true
 menu:
   community_current:
     parent: "020 Command Line"
 ---
 
-The `krakend check` command **validates KrakenD configuration files** written in any of its [supported formats](/docs/configuration/supported-formats/). The validation does two different things: **linting** and **testing** (an execution).
+The `krakend check` command **validates KrakenD configuration files** written in any of its [supported formats](/docs/configuration/supported-formats/).
 
-Whenever the `check` is run, it acts as a (JSON) linter and makes sure that the configuration is not broken from a syntax point of view. It also works with [flexible configuration](/docs/configuration/flexible-config/). When used with the test flag `-t` it also tries to test a run of the service to catch problems that are not strictly related to linting but runtime. For instance, you could have declared a colliding or duplicated endpoint: the syntax would valid and properly linted yet the configuration impossible to run.
+It's able to perform three things:
 
-{{< note title="KrakenD doesn't do strict parsing" >}}
-KrakenD **ignores all unknown keys**, and it does not warn about it. It allows you to declare new parameters and entries, but it can also shadow errors in the configuration. The `--debug` flag (see below) shows what is parsed and processed.
-{{< /note >}}
+- **Syntax validation** - For any format (`.yml`, `.json`, `.toml`, etc)
+- **Linting** - Besides checking that the file isn't malformed, the linter checks your config exhaustively against KrakenD's [official schema](https://github.com/krakendio/krakend-schema) to detect wrong types, unknown attributes, or misplaced components. Only available when you work with `JSON` formats.
+- **Testing** - It tests a run of the service to catch problems that are not strictly related to linting but to the runtime. For instance, you could declare a colliding endpoint, and the syntax would validate and lint, yet the configuration would be impossible to run.
 
+**The `check` command can guarantee that a configuration is valid with the three validations**.
+
+**TL;DR**: Add the following line before deploying:
+
+{{< terminal title="Term" >}}
+krakend check -tlc krakend.json
+{{< /terminal >}}
+
+See the usage below.
+
+## Checking the configuration
 The `krakend check` command accepts the following options:
 
 {{< terminal title="Usage of KrakenD check" >}}
@@ -48,28 +60,34 @@ Examples:
 krakend check -d -c config.json
 
 Flags:
+  -c, --config string     Path to the configuration filename
+  -d, --debug count       Enables the debug
   -h, --help              help for check
   -i, --indent string     Indentation of the check dump (default "\t")
+  -l, --lint              Enables the linting against the official KrakenD JSON schema
   -t, --test-gin-routes   Test the endpoint patterns against a real gin router on selected port
-
-Global Flags:
-  -c, --config string   Path to the configuration filename
-  -d, --debug count     Enable the debug
 {{< /terminal >}}
 
 ## Flags
 Use `krakend check` in combination with the following flags:
 
-- `-c` or `--config` (mandatory) to specify the path to the configuration file in any of the [supported formats](/docs/configuration/supported-formats/), or to the starting template if used in combination with flexible configuration.
-- `-d` or `--debug` to enable the debug and see information about how KrakenD is interpreting your configuration file. Use from 1 to 3 levels of verbosity using `-d`, `-dd`, or `-ddd`.
-- Use `-t` to **test** the configuration and try to start the service with it for a second. This option is highly recommended as prevents conflicting routes and other problems that are not related with the linting itself, and would end up in a *panic*.
-- `-i` or `--indent`, in combination with `-d`, to change the identation when the debug information renders (default: tab). E.g.: `-i "#"` uses a hash instead of a tab for every nesting level.
+- `-c` or `--config` to specify the path to the configuration file in any of the [supported formats](/docs/configuration/supported-formats/), or to the starting template if used in combination with flexible configuration.
+- `-d' or `--debug` (*optional*) to enable the debug and see information about how KrakenD is interpreting your configuration file. Use from 1 to 3 levels of verbosity using `-d', `-dd`, or `-ddd`.
+- `-t` or `--test-gin-routes` (*optional*) to test the configuration by trying to start the service for a second. This option is highly recommended as it prevents conflicting routes and other problems unrelated to the linting itself and would end up in a *panic*.
+- `-l` or `--lint` (*optional*) to check that your configuration file is properly linted and does not contain unrecognized options or wrong types. **Your configuration must be in JSON format**. This option requires Internet access as the schema is published online under `http://www.krakend.io/schema/v3.json`.
+- `-i` or `--indent` (*optional*) in combination with `-d`, to change the indentation when the debug information renders (default: `TAB`). E.g.: `-i "#" ` uses a hash instead of a tab for every nesting level.
+
+
+
+{{< note title="Use --lint to do strict parsing" >}}
+The command `krakend run` will run any syntax-valid file, **ignoring unknown configuration keys**. Use the `--lint` flag in the check command to find incorrect entries.
+{{< /note >}}
 
 ## Debugging your configuration
-There are 3 different levels of verbosity you can use with the `--debug` (or `-d`) flag. When used a single time you get the most relevant information after parsing the configuration. The following example shows the debu of a configuration with one endpoint:
+You can use three different verbosity levels with the `--debug` (or `-d') flag. The levels are `-d`, `-dd`, and `-ddd`. When used a single time, you get the most relevant information after parsing the configuration, when you add more, you get more and more details. The following example shows the debug of a configuration with one endpoint:
 
 {{< terminal title="Checking the configuration with the debug flag" >}}
-krakend check -t -d -c krakend.json
+krakend check -t --lint -d -c krakend.json
 Parsing configuration file: krakend.json
 Global settings
     Name: My lovely gateway
@@ -108,7 +126,7 @@ Global settings
 Syntax OK!
 {{< /terminal >}}
 
-The same example with a verbosity of level 2 (`-dd`), adds more information in the global settings (like the TLS section) and shows the configuration of the extra_config. The endpoints and the backends show also more information:
+The same example with the verbosity level 2 (`-dd`) adds more information in the global settings (like the TLS section) and shows the configuration of the extra_config. The endpoints and the backends also show more information:
 
 {{< terminal title="Checking the configuration with the debug flag" >}}
 Parsing configuration file: krakend.json
@@ -217,10 +235,10 @@ Global settings
 Syntax OK!
 {{< /terminal >}}
 
-And in the level 3 (`-ddd`) there is everything that KrakenD could parse from the configuration:
+And in level 3 (`-ddd`), there is everything that KrakenD could parse from the configuration:
 
 {{< terminal title="Checking the configuration with the debug flag" >}}
-krakend check -t -ddd -c krakend.json
+krakend check -t --lint -ddd -c krakend.json
 Parsing configuration file: krakend.json
 Global settings
     Name: My lovely gateway
