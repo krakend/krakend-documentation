@@ -25,30 +25,30 @@ This migration allows you to:
 {{< /button-group >}}
 
 
-## Short read - Migrating to KrakenD 2.0 and above
+## Migrating to KrakenD 2.0 and above
 
 - Use `git` or similar DVCS to track the changes. Compare the differences at the end.
-- Open your configuration file(s), such as `krakend.json`, and replace `"version": 2` with `"version": 3`. **This is the only change by hand.**
-- Download the migration binary for your architecture (button above) and execute it passing the path to the folder where your configuration is (absolute or relative).
-- Review the changes the migration tool did to your config, and delete the migrator.
+- Download the configuration [migration tool](https://github.com/devopsfaith/krakend-config-migrator) and execute it passing the path to your KrakenD project
+- Review the changes the migration tool did to your config and start the config with the new version
 
-And only **if you are compiling custom go plugins**, recompile them using the new libraries versions (guide to [write plugins](/docs/extending/writing-plugins/))
+**If you have custom go plugins**, recompile them. KrakenD has now a command [`krakend check-plugin`](http://localhost:1313/docs/extending/check-plugin/) to test them.
 
 {{< note title="Special attention to short words" >}}
-The migration script replaces words used by KrakenD in the past that might collide with wording you use in your endpoints. Words like `whitelist` or `blacklist` will be replaced. Make sure to check changes in the configuration.
+The migration script replaces words used by KrakenD in the past and are no longer supported that might collide with wording you use in your endpoints. Words like `whitelist` or `blacklist` will be replaced by `allow` and `deny`. Make sure to check the changes in the configuration and ensure that the migration tool didn't change any endpoint definition using those names.
 {{< /note >}}
 
+## Changes from 1.x to 2.x
+There is nothing else you need to do other than using the migration tool, but below we explain what are those changes.
 
-## Long read - Changes and differences explained
-The migration tool will take care of what is described below for you, but it's not magic. What it does is actually quite simple, and for the most part, what it does is to rename configurations and namespaces.
+The migration tool will take care of what is described below for you, and is actually quite simple. For the most part, what it does is to rename configurations and namespaces.
 
 ### Renamed namespaces
-The first relevant change is that all non-core components (this is everything outside of [Lura](https://luraproject.org)) were declared inside an `extra_config` section, using a looong key name (**namespace**). That namespace contained what it could look like an URL (e.g: `github.com/devopsfaith/krakend-jose/validator`) and was generating frequent missunderstanding. Now they have been categorized and simplified to a description of its functionality (e.g.: `auth/validator`).
+The most visible change is that all non-core components (this is everything outside of [Lura](https://luraproject.org)) were declared inside an `extra_config` section, using a looong **namespace**. That namespace contained what it could look like an URL (e.g: `github.com/devopsfaith/krakend-jose/validator`) and was generating frequent missunderstanding year after year. Now all nampespaces have been categorized and simplified to a description of its functionality (e.g.: `auth/validator`).
 
 For the full list of renamed namespaces see the source code of the migration tool.
 
 ### Consistent attribute naming
-Another relevant change is that some attributes have been renamed now to have a consistent naming accross all configurations. Prior to 2.0 some attributes name used hyphenation (`hyphen-ation`), while others used snake case (`snake_case`) or camel case (`camelCase`). Now we are using `snake_case` everywhere whenever possible.
+Another relevant change is that some attributes have been renamed now to have a consistent naming accross all configurations. Prior to 2.0 some attributes name used hyphenation (`hyphen-ation`), while others used snake case (`snake_case`) or camel case (`camelCase`). Now we use `snake_case` everywhere if possible.
 
 ### Removed deprecated elements
 The final change is that all functionalities and attributes that were marked as deprecated on 1.4 have been removed.
@@ -56,7 +56,7 @@ The final change is that all functionalities and attributes that were marked as 
 - `whitelist` is removed, and only `allow` is recognized now
 - `blacklist` is removed, and only `deny` is recognized now
 - `krakend-etc` is no longer included in the binary
-- `krakend-consul` is no longer included in the binary (integration of consul for the Bloomfilter JWT revoker)
+- `krakend-consul`, the integration of consul for the JWT revoker, is no longer included in the binary.
 
 Summing up, see the before and after of the following snippet which has 3 of the changes mentioned above.
 
