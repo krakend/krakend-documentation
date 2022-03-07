@@ -15,46 +15,45 @@ images:
 - /images/documentation/krakend-gateway.png
 ---
 
-KrakenD is a high-performance open source API Gateway.
+KrakenD is an extensible, declarative, **high-performance open-source API Gateway**.
 
-Its core functionality is to create an API that acts as an aggregator of many microservices into single endpoints, doing the heavy-lifting automatically for you: aggregate, transform, filter, decode, throttle, auth and more.
+Its core functionality is to create an API that acts as an aggregator of many microservices into single endpoints, doing the heavy-lifting automatically for you: aggregate, transform, filter, decode, throttle, auth, and more.
 
-KrakenD needs **no programming** as it offers a declarative way to create the endpoints. It is well structured and layered and open to extending its functionality using plug-and-play middleware developed by the community or in-house.
+KrakenD needs **no programming** as it offers a declarative way to create the endpoints. It is well structured and layered, and open to extending its functionality using plug-and-play middleware developed by the community or in-house.
 
-KrakenD focuses on being a pure API gateway,  not coupled to the HTTP transport layer and it has been in production in large Internet businesses in Europe since early 2017. [See who is using KrakenD and use cases](/case-study/)
+KrakenD focuses on being a pure API gateway, not coupled to the HTTP transport layer, and it has been in production in large Internet businesses in Europe since early 2017. [See who is using KrakenD and use cases](/case-study/)
 
-Check our original **[KrakenD presentation slides](//www.slideshare.net/AlbertLombarte1/krakend-api-gateway)** at [Slideshare](//www.slideshare.net/AlbertLombarte1/krakend-api-gateway)
+KrakenD is written in [Go](https://golang.org/). Our engine joined [The Linux Foundation on 2021](http://localhost:1313/blog/krakend-framework-joins-the-linux-foundation/) codenamed as the [Lura Project](luraproject.org/) (previously known as the *Krakend Framework*)
 
-<iframe src="//www.slideshare.net/slideshow/embed_code/key/HjibH0SPFxNhb7" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-<small>Having trouble? Open in <a href="//www.slideshare.net/AlbertLombarte1/krakend-api-gateway">Slideshare</a></small>
+![Lura by The Linux Foundation](/images/documentation/lura-by-tlf.png)
 
 ## Why an API Gateway?
 
-When consumers of API content (especially in microservices) query backend services, the implementations suffer a lot of complexity and burden with the sizes and complexity of their microservices responses.
+When consumers of API content (especially in microservices) query backend services, the implementations suffer a lot of complexity and burden with the sizes of their microservices responses.
 
 KrakenD is an **API Gateway** that sits between the client and all the source servers, adding a new layer that removes all the complexity to the clients, providing them only the information that the UI needs.
 
-KrakenD acts as an **aggregator** of many sources into single endpoints and allows you to group, wrap, transform and shrink responses. Additionally, it supports a myriad of middleware and plugins that allow you to extend the functionality, such as adding OAuth authorization or security layers (SSL, certificates, HTTP Strict Transport Security, Clickjacking protection, HTTP Public Key Pinning, MIME-sniffing prevention, XSS protection).
+KrakenD acts as an **aggregator** of many sources into single endpoints and allows you to group, wrap, transform and shrink responses. Additionally, it supports a myriad of middleware and plugins that allow you to extend the functionality, such as adding OAuth2 authorization, security layers, circuit breaking, rate-limiting, connectivity, logging, metrics, traces, and much more.
 
-KrakenD is written in [Go](https://golang.org/) with support for multiple platforms and is based on the [Lura Project](https://luraproject.org).
 
 ### A practical example
-A mobile developer needs to construct a single front page that requires data from several calls to their backend services, e.g:
+A mobile or javascript developer needs to construct a single front page that requires data from several calls to their backend services, e.g.:
 
-    1) api.store.server/products
-    2) api.store.server/marketing-promos
-    3) api.users.server/users/{id_user}
-    4) api.users.server/shopping-cart/{id_user}
+- `api.store.server/products`
+- `api.store.server/marketing-promos`
+- `api.users.server/users/{id_user}`
+- `api.users.server/shopping-cart/{id_user}`
 
-The screen is straightforward and needs to retrieve data from only 4 different sources, wait for the round trip, and then pick only a few fields from the responses. Instead of doing these calls, the mobile client could call a single endpoint to KrakenD:
+The mobile application needs to retrieve data from these four different sources, authorize each of the services, wait for each round trip, and pick only a few fields from the responses (doesn't need the full response). What if, instead of doing these calls, the mobile client could call a single endpoint to KrakenD to get exactly what it needs?:
 
-    1) krakend.server/frontpage/{id_user}
+`api.krakend.server/frontpage/{id_user}`
 
-So this is how it would look like:
+This is what KrakenD can do:
 
 ![Gateway](/images/documentation/krakend-gateway.png)
 
-By choosing this implementation, the mobile client isolated itself from the backend implementation. Whenever the backends change their contract, the API contract for the mobile client remains the same and the gateway is updated via a simple change of configuration.
+With this approach, the mobile client isolated itself from the backend implementation. As a result, the backends do not need to address several shared concerns (authentication, rate-limiting, filtering malicious requests, etc.). Furthermore, whenever the backends change their contract, the API contract for the mobile client remains the same, and you can update the gateway via a simple change of configuration.
 
-At the same time, there is a difference in size between the amount of data generated by the backends and what is finally traveling to the client.
+The client becomes faster, as it needs to handle a single HTTP connection for this use case, and there is a difference in size between the amount of data generated by the backends and what is finally traveling to the client.
+
+As KrakenD is declarative and GitOps oriented, the mobile developers can update the configuration. There is no need to wait for the backend/infra team to make the changes.
