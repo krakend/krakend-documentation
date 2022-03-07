@@ -23,7 +23,7 @@ KrakenD needs **no programming** as it offers a declarative way to create the en
 
 KrakenD focuses on being a pure API gateway, not coupled to the HTTP transport layer, and it has been in production in large Internet businesses in Europe since early 2017. [See who is using KrakenD and use cases](/case-study/)
 
-KrakenD is written in [Go](https://golang.org/). Our engine joined [The Linux Foundation on 2021](http://localhost:1313/blog/krakend-framework-joins-the-linux-foundation/) codenamed as the [Lura Project](luraproject.org/) (previously known as the *Krakend Framework*)
+KrakenD is written in [Go](https://golang.org/). Our engine joined [The Linux Foundation on 2021](/blog/krakend-framework-joins-the-linux-foundation/) codenamed as the [Lura Project](https://luraproject.org/) (previously known as the *Krakend Framework*)
 
 ![Lura by The Linux Foundation](/images/documentation/lura-by-tlf.png)
 

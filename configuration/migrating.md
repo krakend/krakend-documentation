@@ -31,7 +31,7 @@ This migration allows you to:
 - Download the configuration [migration tool](https://github.com/devopsfaith/krakend-config-migrator) and execute it passing the path to your KrakenD project
 - Review the changes the migration tool did to your config and start the config with the new version
 
-**If you have custom go plugins**, recompile them. KrakenD has now a command [`krakend check-plugin`](http://localhost:1313/docs/extending/check-plugin/) to test them.
+**If you have custom go plugins**, recompile them. KrakenD has now a command [`krakend check-plugin`](/docs/extending/check-plugin/) to test them.
 
 {{< note title="Special attention to short words" >}}
 The migration script replaces words used by KrakenD in the past and are no longer supported that might collide with wording you use in your endpoints. Words like `whitelist` or `blacklist` will be replaced by `allow` and `deny`. Make sure to check the changes in the configuration and ensure that the migration tool didn't change any endpoint definition using those names.

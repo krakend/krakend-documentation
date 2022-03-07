@@ -28,7 +28,7 @@ Before digging any further, some answers to frequently asked questions:
 
 4) **Your self-hosted identity server doesn't need to be exposed to the Internet**, as it can live behind KrakenD and let the token generation requests be proxied through KrakenD. If you use a SaaS solution, then it's exposed.
 
-5) **If you are new to JWT validation**, start reading the [JSON Web Tokens overview]((/docs/authorization/jwt-overview/))
+5) **If you are new to JWT validation**, start reading the [JSON Web Tokens overview](/docs/authorization/jwt-overview/)
 
 ## JWT header requirements
 When KrakenD decodes the `base64` token string passed in the `Bearer` or a cookie, it expects to find in its **header** section the following **three fields**:
