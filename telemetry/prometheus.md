@@ -9,12 +9,14 @@ source: https://github.com/devopsfaith/krakend-opencensus
 aliases: ["/docs/logging-metrics-tracing/prometheus/"]
 menu:
   community_current:
-    parent: "080 Telemetry"
+    parent: "080 Telemetry and Analytics"
 meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
+  log_prefix:
+  - "[SERVICE: Opencensus]"
   scope:
   - service
 ---
@@ -23,9 +25,9 @@ meta:
 The Opencensus exporter allows you to expose data to Prometheus. Enabling it only requires you to include in the root level of your configuration the Opencensus middleware with the `prometheus` exporter. Specify the `port` which Prometheus should hit, the `namespace` (optional), and Prometheus will start receiving the data.
 {{< highlight json >}}
 {
-  "version": 2,
+  "version": 3,
   "extra_config": {
-    "github_com/devopsfaith/krakend-opencensus": {
+    "telemetry/opencensus": {
         "exporters": {
           "prometheus": {
               "port": 9091,
@@ -42,10 +44,10 @@ The Opencensus exporter allows you to expose data to Prometheus. Enabling it onl
 {{< /highlight >}}
 
 - `port` on which the Prometheus exporter should listen
-- `namespace` sets the domain the metric belongs to. Optional field.
 
 Optional fields (default to `false`):
 
+- `namespace` sets the domain the metric belongs to.
 - `tag_host` (*bool*): Whether to send the host as a metric or not.
 - `tag_path` (*bool*): Whether to send the path as a metric or not. Client metrics are reported as: `/hello/:hello/:world` and backend metrics are reported as: `/{hello}/{world}`. Paths are case insensitive, all metrics are reported lowercased.
 - `tag_method` (*bool*): Whether to send the HTTP method as a metric or not.

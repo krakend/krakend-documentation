@@ -7,7 +7,7 @@ title: Data manipulation
 weight: 10
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 ---
 This page describes the most basic options to manipulate the content you receive from the backend before delivering it to the client.
 
@@ -25,15 +25,19 @@ Prior to KrakenD 1.2 these terms where defined as `whitelist` and `blacklist`, p
 
 ### Deny
 
-The deny list filter can be read as the *don't show this* filter. KrakenD will remove from the backend response all matching fields defined in the list, and the ones that do not match are returned. Use the deny list to exclude some fields in the response.
+The deny list filter can be read as the *don't show this* filter. KrakenD will remove from the backend response all matching fields (case-sensitive) defined in the list, and the ones that do not match are returned. Use the deny list to exclude some fields in the response.
 
 To exclude a field from the response, add under the desired `endpoint` configuration a `deny` array with all the fields you don't want to show. E.g.:
 
+{{< highlight json >}}
+{
     "deny": [
       "token",
       "CVV",
       "password"
     ]
+}
+{{< /highlight >}}
 
 #### Nested fields (dot operator)
 The deny fields of your choice can also be nested ones. Use a **dot** as the level separator. For instance the `a1` field in the following JSON response `{ "a": { "a1": 1 } }` can be added in the deny list as `a.a1`.
@@ -53,29 +57,35 @@ We want to set up a KrakenD endpoint that returns the **posts for a specific use
 
 The KrakenD endpoint to accept URLs like`/posts/1` is defined as follows:
 
+{{< highlight json >}}
+{
+  "endpoint": "/posts/{user}",
+  "method": "GET",
+  "backend": [
     {
-        "endpoint": "/posts/{user}",
-        "method": "GET",
-        "backend": [
-          {
-            "url_pattern": "/posts/{user}",
-            "host": [
-              "https://jsonplaceholder.typicode.com"
-            ],
-            "deny": [
-              "body",
-              "userId"
-            ]
-          }
-        ]
-      }
+      "url_pattern": "/posts/{user}",
+      "host": [
+        "https://jsonplaceholder.typicode.com"
+      ],
+      "deny": [
+        "body",
+        "userId"
+      ]
+    }
+  ]
+}
+{{< /highlight >}}
+
+
 
 When calling the KrakenD endpoint `/posts/1` the response you would get will be as follows:
 
-    {
-      "id": 1,
-      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
-    }
+{{< highlight json >}}
+{
+  "id": 1,
+  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+}
+{{< /highlight >}}
 
 [Compared with the backend response](https://jsonplaceholder.typicode.com/posts/1), you'll see that the fields `body` and `userId` are no longer there.
 
@@ -88,29 +98,32 @@ The allowed fields of your choice can also be nested. Use a **dot** as the level
 
 We will repeat the same exercise we did in the deny list to get the same output. We only want to get the `id` and `title` fields from the backend.
 
-    {
-        "endpoint": "/posts/{user}",
-        "method": "GET",
-        "backend": [
-          {
-            "url_pattern": "/posts/{user}",
-            "host": [
-              "https://jsonplaceholder.typicode.com"
-            ],
-            "allow": [
-              "id",
-              "title"
-            ]
-          }
-        ]
-      }
+{{< highlight json >}}
+{
+  "endpoint": "/posts/{user}",
+  "method": "GET",
+  "backend": [{
+    "url_pattern": "/posts/{user}",
+    "host": [
+      "https://jsonplaceholder.typicode.com"
+    ],
+    "allow": [
+      "id",
+      "title"
+    ]
+  }]
+}
+{{< /highlight >}}
+
 
 When calling the KrakenD endpoint `/posts/1` the response you would get will be as follows:
 
-    {
-      "id": 1,
-      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
-    }
+{{< highlight json >}}
+{
+  "id": 1,
+  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+}
+{{< /highlight >}}
 
 Just exactly as we did with the deny list.
 
@@ -129,58 +142,56 @@ When grouping different backend responses **don't share the same group name**, a
 ### Grouping example
 
 The following code is an endpoint that gets data from two different backends, but one of the responses is encapsulated inside the field `last_post`.
-
-    {
-        "endpoint": "/users/{user}",
-        "method": "GET",
-        "backend": [
-          {
-            "url_pattern": "/users/{user}",
-            "host": [
-              "https://jsonplaceholder.typicode.com"
-            ]
-          },
-          {
-            "url_pattern": "/posts/{user}",
-            "host": [
-              "https://jsonplaceholder.typicode.com"
-            ],
-            "group": "last_post"
-          }
-        ]
+{{< highlight json "hl_lines=12" >}}
+{
+    "endpoint": "/users/{user}",
+    "method": "GET",
+    "backend": [
+      {
+        "url_pattern": "/users/{user}",
+        "host": ["https://jsonplaceholder.typicode.com"]
+      },
+      {
+        "url_pattern": "/posts/{user}",
+        "host": ["https://jsonplaceholder.typicode.com"],
+        "group": "last_post"
       }
+    ]
+  }
+{{< /highlight >}}
 
 This will generate responses like this one:
-
-    {
-      "id": 1,
-      "name": "Leanne Graham",
-      "username": "Bret",
-      "email": "Sincere@april.biz",
-      "address": {
-        "street": "Kulas Light",
-        "suite": "Apt. 556",
-        "city": "Gwenborough",
-        "zipcode": "92998-3874",
-        "geo": {
-          "lat": "-37.3159",
-          "lng": "81.1496"
-        }
-      },
-      "phone": "1-770-736-8031 x56442",
-      "website": "hildegard.org",
-      "company": {
-        "name": "Romaguera-Crona",
-        "catchPhrase": "Multi-layered client-server neural-net",
-        "bs": "harness real-time e-markets"
-      },
-      "last_post": {
-        "id": 1,
-        "userId": 1,
-        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-      }
+{{< highlight json "hl_lines=23-28">}}
+{
+  "id": 1,
+  "name": "Leanne Graham",
+  "username": "Bret",
+  "email": "Sincere@april.biz",
+  "address": {
+    "street": "Kulas Light",
+    "suite": "Apt. 556",
+    "city": "Gwenborough",
+    "zipcode": "92998-3874",
+    "geo": {
+      "lat": "-37.3159",
+      "lng": "81.1496"
     }
+  },
+  "phone": "1-770-736-8031 x56442",
+  "website": "hildegard.org",
+  "company": {
+    "name": "Romaguera-Crona",
+    "catchPhrase": "Multi-layered client-server neural-net",
+    "bs": "harness real-time e-markets"
+  },
+  "last_post": {
+    "id": 1,
+    "userId": 1,
+    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+  }
+}
+{{< /highlight >}}
 
 ## Mapping
 
@@ -191,50 +202,56 @@ In the `mapping` section, map the original field name with the desired name.
 ### Mapping example:
 Instead of showing the `email` field we want to name it `personal_email`:
 
+{{< highlight json >}}
+{
+  "endpoint": "/users/{user}",
+  "method": "GET",
+  "backend": [
     {
-        "endpoint": "/users/{user}",
-        "method": "GET",
-        "backend": [
-          {
-            "url_pattern": "/users/{user}",
-            "host": [
-              "https://jsonplaceholder.typicode.com"
-            ],
-            "mapping": {
-              "email": "personal_email"
-            }
-          }
-        ]
+      "url_pattern": "/users/{user}",
+      "host": [
+        "https://jsonplaceholder.typicode.com"
+      ],
+      "mapping": {
+        "email": "personal_email"
       }
+    }
+  ]
+}
+
+{{< /highlight >}}
 
 Will generate responses like this one:
 
-    {
-      "id": 1,
-      "name": "Leanne Graham",
-      "username": "Bret",
-      "personal_email": "Sincere@april.biz",
-      "address": {
-        "street": "Kulas Light",
-        "suite": "Apt. 556",
-        "city": "Gwenborough",
-        "zipcode": "92998-3874",
-        "geo": {
-          "lat": "-37.3159",
-          "lng": "81.1496"
-        }
-      },
-      "phone": "1-770-736-8031 x56442",
-      "website": "hildegard.org",
-      "company": {
-        "name": "Romaguera-Crona",
-        "catchPhrase": "Multi-layered client-server neural-net",
-        "bs": "harness real-time e-markets"
-      }
+{{< highlight json "hl_lines=5">}}
+{
+  "id": 1,
+  "name": "Leanne Graham",
+  "username": "Bret",
+  "personal_email": "Sincere@april.biz",
+  "address": {
+    "street": "Kulas Light",
+    "suite": "Apt. 556",
+    "city": "Gwenborough",
+    "zipcode": "92998-3874",
+    "geo": {
+      "lat": "-37.3159",
+      "lng": "81.1496"
     }
+  },
+  "phone": "1-770-736-8031 x56442",
+  "website": "hildegard.org",
+  "company": {
+    "name": "Romaguera-Crona",
+    "catchPhrase": "Multi-layered client-server neural-net",
+    "bs": "harness real-time e-markets"
+  }
+}
+{{< /highlight >}}
+
 
 ## Target
-It is frequent in many API implementations that the desired data lives inside a generic field like `data` or `content`, and you don't want to have this level included in your responses.
+It is frequent in many API implementations that the desired data lives inside a generic field like `data` or `content`, and you don't want to have the encapsulating level included in your responses.
 
 Use `target` when you want to capture the content inside these generic containers and work with the rest of the manipulation options as if it were on the root. The capture takes place before other options like allow list or mapping.
 
@@ -243,39 +260,46 @@ The capturing option uses the attribute `target` in the configuration file.
 ### Capturing a target example
 Given a backend endpoint with this kind of responses containing a level `data`:
 
-    {
-      "apiVersion":"2.0",
-      "data": {
-        "updated":"2010-01-07T19:58:42.949Z",
-        "totalItems":800,
-        "startIndex":1,
-        "itemsPerPage":1,
-        "items":[]
+{{< highlight json "hl_lines=3" >}}
+{
+  "apiVersion":"2.0",
+  "data": {
+    "updated":"2010-01-07T19:58:42.949Z",
+    "totalItems":800,
+    "startIndex":1,
+    "itemsPerPage":1,
+    "items":[]
+  }
+}
+{{< /highlight >}}
+
+And we want a response with the contents inside `data` only, like:
+
+{{< highlight json >}}
+{
+  "updated":"2010-01-07T19:58:42.949Z",
+  "totalItems":800,
+  "startIndex":1,
+  "itemsPerPage":1,
+  "items":[]
+}
+{{< /highlight >}}
+
+We need this KrakenD configuration:
+
+{{< highlight json "hl_lines=7" >}}
+{
+    "endpoint": "/foo",
+    "method": "GET",
+    "backend": [
+      {
+        "url_pattern": "/bar",
+        "target": "data"
       }
-    }
+    ]
+  }
+{{< /highlight >}}
 
-and with this KrakenD configuration
-
-    {
-        "endpoint": "/foo",
-        "method": "GET",
-        "backend": [
-          {
-            "url_pattern": "/bar",
-            "target": "data"
-          }
-        ]
-      }
-
-the gateway will generate responses like this one:
-
-    {
-        "updated":"2010-01-07T19:58:42.949Z",
-        "totalItems":800,
-        "startIndex":1,
-        "itemsPerPage":1,
-        "items":[]
-    }
 
 ## Collections
 Working with collections (or arrays) is a special manipulation case. There are two different scenarios regarding collections:
@@ -284,69 +308,75 @@ Working with collections (or arrays) is a special manipulation case. There are t
 - When you want to manipulate collections (e.g., a path like `data.item[N].property`)
 
 ### When the Backend response is inside an array
-KrakenD expects all backends to return an object as the response. For instance, a JSON response containing an object comes encapsulated in curly braces `{}`. E.g.:
-```
+KrakenD expects all backends to return an object as the response as the default behavior. For instance, a JSON response containing an object comes encapsulated in curly braces `{}`. E.g.:
+
+{{< highlight json >}}
 { "a": true, "b": false }
-```
+{{< /highlight >}}
+
 
 When your API does not return an object but a collection (`[]` or array) you need to declare it explicitly with `"is_collection": true` so that KrakenD can convert it to an object for further manipulation. An example of a JSON collection response is:
 
-```
-[    {"a": true },    {"b": false} ]
-```
+{{< highlight json >}}
+[ {"a": true }, {"b": false} ]
+{{< /highlight >}}
+
 In such cases, add inside the `backend` key the property `"is_collection": true` so KrakenD can convert this collection to an object.
 
+{{< note title="Automatic detection of arrays" type="note" >}}
+The use of `is_collection` can be avoided when the backend uses as `encoding` the value `safejson`. See [supported encodings](/docs/backends/supported-encodings/)
+{{< /note >}}
+
 By default, KrakenD adds the key `collection` in the response, e.g.:
-```
+
+{{< highlight json >}}
 {
   "collection": [
     {"a": true },
     {"b": false}
   ]
 }
-```
+{{< /highlight >}}
+
 You can rename the default key name `collection` to something else using the `mapping` attribute (docs above, the example below).
 
 The following is a real example based on a [collection response](http://jsonplaceholder.typicode.com/posts), copy and paste to test in your environment:
 
-```
-"endpoints": [
+{{< highlight json "hl_lines=8-11">}}
+{
+  "endpoint": "/posts",
+  "backend": [
     {
-      "endpoint": "/posts",
-      "backend": [
-        {
-          "url_pattern": "/posts",
-          "host": ["http://jsonplaceholder.typicode.com"],
-          "sd": "static",
-          "is_collection": true,
-          "mapping": {
-            "collection": "myposts"
-          }
-        }
-      ]
+      "url_pattern": "/posts",
+      "host": ["http://jsonplaceholder.typicode.com"],
+      "sd": "static",
+      "is_collection": true,
+      "mapping": {
+        "collection": "myposts"
+      }
     }
-]
-```
+  ]
+}
+{{< /highlight >}}
 
 The response will look like this:
 
-```
+{{< highlight json >}}
 {
   "myposts": [
-    {
-      ...
-    },
-    {
-      ...
-    }
+    {  },
+    {  }
+  ]
 }
-```
+{{< /highlight >}}
+
 ### When you need to manipulate arrays
-All the data manipulation operations (such as the allow list, deny list, etc.) expect to find objects in the response. When an object is nested inside another object, you can filter directly, but when there are arrays in the equation, KrakenD needs a special configuration that internally flattens this structure:
+All the data manipulation operations (such as the allow list, deny list, etc.) expect to find objects in the response `{}`. When there are arrays instead, KrakenD needs a special configuration that internally flattens this structure:
 
 See [Manipulating arrays - flatmap](/docs/backends/flatmap/)
 
-## Manipulations with Lua
-If you need more sophisticated manipulation options, they can be done using Lua scripting:
+## More advanced manipulations
+If you need more sophisticated manipulation options, there are two different approaches you can use:
 
-See [Lua scripts](/docs/endpoints/lua/) documentation
+- Through [Reponse modifier plugins](/docs/extending/plugin-modifiers/) - Very performant, requires compilation
+- Through [Lua scripting](/docs/endpoints/lua/) - Less performant, does not require compilation

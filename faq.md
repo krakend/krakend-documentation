@@ -35,10 +35,10 @@ E.g:
     2016/11/13 - 18:01:18 | 503 |       5.662µs | ::1 |   GET     /frontpage
     2016/11/13 - 18:01:18 | 503 |       5.662µs | ::1 |   GET     /frontpage
 
-The `maxRate` setting defines the maximum number of requests allowed in a single second to an endpoint or backend. When this number is reached, subsequent connections are rejected with a `503` error. This limitation is optional and is usually set to avoid hammering your own backends and compromising their stability.
+The `max_rate` setting defines the maximum number of requests allowed in a single second to an endpoint or backend. When this number is reached, subsequent connections are rejected with a `503` error. This limitation is optional and is usually set to avoid hammering your own backends and compromising their stability.
 
 ### Solution
-Increase the `maxRate` number or disable it (`maxRate = 0`). This setting can be set globally for all the endpoints,
+Increase the `max_rate` number or disable it (`max_rate = 0`). This setting can be set globally for all the endpoints,
 or overridden individually per endpoint.
 
 Remember: failing fast is always better than overloading your infrastructure and degrading the quality of your entire services.

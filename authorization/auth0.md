@@ -11,9 +11,11 @@ meta:
   #since: 
   source: https://github.com/devopsfaith/krakend-jose
   namespace:
-  - github.com/devopsfaith/krakend-jose/validator
+  - auth/validator
   scope:
   - endpoint
+  log_prefix:
+  - "[ENDPOINT: /foo][JWTValidator]"
 ---
 Let's start with the elephant in the room: when you face the challenge of creating a modern API that has to be scalable, secure, performant, and resilient, it might look like a daunting task.
 
@@ -50,16 +52,16 @@ Paste the following configuration into a `krakend.json` file.
 
 {{< highlight JSON "hl_lines=8-12" >}}
 {
-  "version": 2,
+  "version": 3,
   "timeout": "3s",
   "endpoints":[
   {
     "endpoint": "/auth0-protected",
     "extra_config": {
-        "github.com/devopsfaith/krakend-jose/validator": {
+        "auth/validator": {
             "alg": "SIGNING_ALGORITHM",
             "audience": ["AUDIENCE"],
-            "jwk-url": "https://DOMAIN/.well-known/jwks.json"
+            "jwk_url": "https://DOMAIN/.well-known/jwks.json"
         }
     },
     "backend": [
@@ -91,7 +93,7 @@ The previous screenshots correspond to a configuration like the one it follows (
 {
   "alg": "RS256",
   "audience": ["http://api.example.com"],
-  "jwk-url": "https://krakend-auth0-test.auth0.com/.well-known/jwks.json"
+  "jwk_url": "https://krakend-auth0-test.auth0.com/.well-known/jwks.json"
 }
 {{< /highlight >}}
 

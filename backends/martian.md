@@ -7,16 +7,16 @@ weight: 85
 aliases: ["/docs/endpoints/martian"]
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 meta:
   since: 0.7
-  source: https://github.com/devopsfaith/krakend-martian
+  source: https://modifier/martian
   namespace:
-  - github.com/devopsfaith/krakend-martian
+  - modifier/martian
   scope:
   - backend
 ---
-The [krakend-martian](https://github.com/devopsfaith/krakend-martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel/).
+The [krakend-martian](https://modifier/martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel/).
 
 Use Martian when you want to intercept the request of the end-user and make modifications before passing the content to the backends. Also, the other way around, transform the backends response before passing it to the user.
 
@@ -35,20 +35,24 @@ There are four different types of interactions you can do with Martian:
 
 ## Transforming requests and responses
 
-Add martian modifiers in your configuration under the `extra_config` of any `backend` using the namespace `github.com/devopsfaith/krakend-martian`.
+Add martian modifiers in your configuration under the `extra_config` of any `backend` using the namespace `modifier/martian`.
 
 Your configuration has to look as follows:
 
+{{< highlight json >}}
+{
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
+        "modifier/martian": {
             // modifier configuration here
         }
     }
+}
+{{< /highlight >}}
 
 See the possibilities and examples below.
 
 {{< note title="A note on client headers" >}}
-When **client headers** are needed, remember to add them under [`headers_to_pass`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
+When **client headers** are needed, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
 {{< /note >}}
 
 
@@ -60,8 +64,10 @@ In the examples below, you'll find that all modifiers have a configuration key n
 ## Transform headers
 The `header.Modifier` injects a header with a specific value. For instance, the following configuration adds a header `X-Martian` both in the request and the response.
 
+{{< highlight json >}}
+{
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
+        "modifier/martian": {
             "header.Modifier": {
               "scope": ["request", "response"],
               "name": "X-Martian",
@@ -69,14 +75,18 @@ The `header.Modifier` injects a header with a specific value. For instance, the 
             }
         }
     }
+}
+{{< /highlight >}}
 
 ## Modify the body
 Through the `body.Modifier` you can modify the body of the request and the response. The content of the `body` must be encoded in `base64`.
 
 The following modifier sets the body of the request and the response to `{"msg":"you rock!"}`. Notice that the `body` field is `base64` encoded.
 
+{{< highlight json >}}
+{
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian":
+        "modifier/martian":
           {
               "body.Modifier": {
                   "scope": ["request","response"],
@@ -84,13 +94,17 @@ The following modifier sets the body of the request and the response to `{"msg":
               }
           }
     }
+}
+{{< /highlight >}}
 
 
 ## Transform the URL
 The `url.Modifier` allows you to change settings in the URL. For instance:
 
+{{< highlight json >}}
+{
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
+        "modifier/martian": {
             "url.Modifier": {
               "scope": ["request"],
               "scheme": "https",
@@ -100,21 +114,26 @@ The `url.Modifier` allows you to change settings in the URL. For instance:
             }
         }
     }
+}
+{{< /highlight >}}
 
 ## Copying headers
 Although not widely used, the `header.Copy` lets you duplicate a header using another name.
 
-    {
-      extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
-          "header.Copy": {
-            "scope": ["request", "response"],
-            "from": "Original-Header",
-            "to": "Copy-Header"
-            }
-        }
-      }
-    }
+{{< highlight json >}}
+{
+	"extra_config": {
+		"modifier/martian": {
+			"header.Copy": {
+				"scope": ["request", "response"],
+				"from": "Original-Header",
+				"to": "Copy-Header"
+			}
+		}
+	}
+}
+{{< /highlight >}}
+
 
 ## Apply multiple modifiers consecutively
 All the examples above perform a single modification in the request or the response. However, the `fifo.Group` allows you to create a list of modifiers that execute consecutively. The group is needed when using more than one modifier and encapsulates all the following actions to perform in the `modifiers` array. You can use the FIFO group even when there is only one modifier in the list.
@@ -122,8 +141,10 @@ All the examples above perform a single modification in the request or the respo
 
 Example of usage (modify the body, and set a header):
 
+{{< highlight json >}}
+{
     "extra_config": {
-        "github.com/devopsfaith/krakend-martian": {
+        "modifier/martian": {
             "fifo.Group": {
                 "scope": ["request", "response"],
                 "aggregateErrors": true,
@@ -135,7 +156,7 @@ Example of usage (modify the body, and set a header):
                         }
                     },
                     {
-                      "header.Modifier": {
+                        "header.Modifier": {
                         "scope": ["request", "response"],
                         "name": "X-Martian",
                         "value": "true"
@@ -145,6 +166,8 @@ Example of usage (modify the body, and set a header):
             }
         }
     }
+}
+{{< /highlight >}}
 
 ## All Martian modifiers, verifiers and filters
 The Martian library comes with [+25 modifiers](https://github.com/google/martian) you can use, we are not listing all the options in the documentation. Instead, we provided the modifiers that are key when using Martian.

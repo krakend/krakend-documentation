@@ -23,77 +23,84 @@ For the benchmarks, we based the tests on the benchmarking project [varnish/api-
 
 ## Hardware
 
-    Model MacBook Pro (MacBookPro11,4) - August 2015
-    Processor:    Intel Core i7 2,2 GHz
+{{< terminal title="hardware specs" >}}
+Model MacBook Pro (MacBookPro11,4) - August 2015
+Processor: Intel Core i7 2,2 GHz
+{{< /terminal >}}
+
 
 ## Setup
 
 For this test, we stored this configuration at `krakend.json`
-
-    {
-      "version": 1,
-      "host": [
-        "http://webserver:8888"
-      ],
-      "endpoints": [
-        {
-          "endpoint": "/test01",
-          "method": "GET",
-          "concurrent_calls": "1",
-          "backend": [
-            {
-              "url_pattern": "/test01"
-            }
-          ]
-        },
-        {
-          "endpoint": "/test03",
-          "method": "GET",
-          "backend": [
-            {
-              "url_pattern": "/test03"
-            }
-          ],
-          "max_rate": "1000000"
-        },
-        {
-          "endpoint": "/test04",
-          "method": "GET",
-          "max_rate": "1",
-          "backend": [
-            {
-              "url_pattern": "/test04"
-            }
-          ]
-        }
-      ],
-      "oauth": {
-        "disable": true
+{{< highlight json >}}
+  {
+    "version": 1,
+    "host": [
+      "http://webserver:8888"
+    ],
+    "endpoints": [
+      {
+        "endpoint": "/test01",
+        "method": "GET",
+        "concurrent_calls": "1",
+        "backend": [
+          {
+            "url_pattern": "/test01"
+          }
+        ]
       },
-      "cache_ttl": "5m",
-      "timeout": "5s"
-    }
+      {
+        "endpoint": "/test03",
+        "method": "GET",
+        "backend": [
+          {
+            "url_pattern": "/test03"
+          }
+        ],
+        "max_rate": "1000000"
+      },
+      {
+        "endpoint": "/test04",
+        "method": "GET",
+        "max_rate": "1",
+        "backend": [
+          {
+            "url_pattern": "/test04"
+          }
+        ]
+      }
+    ],
+    "oauth": {
+      "disable": true
+    },
+    "cache_ttl": "5m",
+    "timeout": "5s"
+  }
+{{< /highlight >}}
 
 And we started the environment as described in the [README](https://github.com/varnish/api-gateway-benchmarks/blob/master/README.md#deployment-example)
 
-    $ cd deployment/vagrant
-    $ vagrant up
+{{< terminal title="Start the environment" >}}
+cd deployment/vagrant
+$ vagrant up
 
-    $ vagrant ssh webserver
-    [vagrant@webserver ~]$ cd /opt/benchmarks/webservers/dummy-api
-    [vagrant@webserver dummy-api]$ sudo ./deploy
-    [vagrant@webserver dummy-api]$ exit
+$ vagrant ssh webserver
+[vagrant@webserver ~]$ cd /opt/benchmarks/webservers/dummy-api
+[vagrant@webserver dummy-api]$ sudo ./deploy
+[vagrant@webserver dummy-api]$ exit
 
-    $ vagrant ssh gateway
-    [vagrant@gateway ~]$ cd /opt/benchmarks/gateways/krakend
-    [vagrant@gateway krakend]$ sudo ./deploy
-    [vagrant@gateway krakend]$ exit
+$ vagrant ssh gateway
+[vagrant@gateway ~]$ cd /opt/benchmarks/gateways/krakend
+[vagrant@gateway krakend]$ sudo ./deploy
+[vagrant@gateway krakend]$ exit
 
-    $ vagrant ssh consumer
-    [vagrant@consumer ~]$ cd /opt/benchmarks/consumers/boom
-    [vagrant@consumer boom]$ sudo ./deploy
-    [vagrant@consumer boom]$ /usr/local/bin/test00
-    [vagrant@consumer boom]$ /usr/local/bin/test01
+$ vagrant ssh consumer
+[vagrant@consumer ~]$ cd /opt/benchmarks/consumers/boom
+[vagrant@consumer boom]$ sudo ./deploy
+[vagrant@consumer boom]$ /usr/local/bin/test00
+[vagrant@consumer boom]$ /usr/local/bin/test01
+{{< /terminal >}}
+
 
 ## Results
 

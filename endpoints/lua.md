@@ -11,12 +11,17 @@ meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-lua
   namespace:
-  - "github.com/devopsfaith/krakend-lua/proxy"
-  - "github.com/devopsfaith/krakend-lua/router"
-  - "github.com/devopsfaith/krakend-lua/proxy/backend"
+  - "modifier/lua-proxy"
+  - "modifier/lua-endpoint"
+  - "modifier/lua-backend"
   scope:
   - endpoint
   - backend
+  - async_agent
+  log_prefix:
+  - "[SERVICE: Gin][Botdetector]"
+  - "[ENDPOINT: /foo][Lua]"
+  - "[BACKEND: /foo][Lua]"
 ---
 
 Scripting with Lua is an additional choice to extend your business logic, and is compatible with the rest of options such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or other Go plugins and middlewares.
@@ -29,19 +34,26 @@ For performance-first users, a Go plugin delivers much better results than a Lua
 
 KrakenD looks for the lua scripts in the root folder where KrakenD is running. You need to specify in the configuration which lua scripts are going to be loaded in Krakend, as well as several options. The `extra_config` can be set at `endpoint` level or `backend` level.
 
+{{< highlight json >}}
+{
     "extra_config": {
-          "github.com/devopsfaith/krakend-lua/proxy": {
-            "sources": ["file1.lua"],
+        "modifier/lua-proxy": {
+            "sources": [
+                "file1.lua"
+            ],
             "md5": {
-              "file1.lua": "49ae50f58e35f4821ad4550e1a4d1de0"
+                "file1.lua": "49ae50f58e35f4821ad4550e1a4d1de0"
             },
             "pre": "lua code to execute for pre",
             "post": "lua code to execute for post",
             "live": false,
             "allow_open_libs": false,
             "skip_next": true
-          }
+        }
     }
+}
+{{< /highlight >}}
+
 
 - `sources`: An array with all the files that will be processed
 - `md5`: (optional) The md5sum of each file that must match the one found in the disk. Used to make sure that the file has not been modified by a 3rd party.
@@ -51,7 +63,7 @@ KrakenD looks for the lua scripts in the root folder where KrakenD is running. Y
 - `skip_next`: only to be set when in a `backend` section, skips the query to the next backend.
 
 {{< note title="A note on client headers" >}}
-When **client headers** are needed, remember to add them under [`headers_to_pass`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
+When **client headers** are needed, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
 {{< /note >}}
 
 ## Namespaces (component name)
@@ -60,12 +72,12 @@ There are three namespaces that are used for the lua component.
 
 Under the `endpoint` section use the namespaces (these are described in the next section):
 
-- `"github.com/devopsfaith/krakend-lua/proxy"`
-- `"github.com/devopsfaith/krakend-lua/router"`
+- `"modifier/lua-proxy"`
+- `"modifier/lua-endpoint"`
 
 Under the `backend` use the name space:
 
-- `"github.com/devopsfaith/krakend-lua/proxy/backend"`
+- `"modifier/lua-backend"`
 
 ## Supported Lua types (cheatsheet)
 
@@ -169,11 +181,16 @@ It stops the script and the pipe execution.
 
 Example to throw a generic error (`500` status code ) with a message:
 
-    custom_error("Something weird happened")
+{{< highlight lua>}}
+custom_error("Something weird happened")
+{{< /highlight >}}
 
 Or even changing the http status code (`418 I'm a teapot`)
 
-    custom_error("I refuse to make any coffee, I'm a teapot!", 418)
+{{< highlight lua>}}
+custom_error("I refuse to make any coffee, I'm a teapot!", 418)
+{{< /highlight >}}
+
 
 ## Sequence of execution
 
@@ -201,7 +218,7 @@ An example setting a header in the response using Lua.
   {
     "endpoint": "/set-a-header",
     "extra_config": {
-        "github.com/devopsfaith/krakend-lua/proxy": {
+        "modifier/lua-proxy": {
           "pre": "print('Lua proxy!'); local r = request.load(); r:headers('X-from-lua', '1234');"
         }
     }
@@ -213,7 +230,7 @@ An example showing how to **print the backend response** in the console.
 {{< highlight json >}}
 {
     "extra_config": {
-          "github.com/devopsfaith/krakend-lua/proxy/backend": {
+          "modifier/lua-backend": {
             "pre": "print('Backend response, pre-logic:'); local r = request.load(); print(r:body());"
           }
     }
@@ -224,7 +241,7 @@ Another example **setting a cookie from Lua**:
 {{< highlight json >}}
 {
     "extra_config": {
-        "github.com/devopsfaith/krakend-lua/proxy": {
+        "modifier/lua-proxy": {
             "post": "local r = response.load(); r:headers('Set-Cookie', 'key1='.. r:data('response'));",
             "allow_open_libs": true
         }

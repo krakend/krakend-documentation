@@ -5,7 +5,8 @@ toc: true
 linktitle: Concurrent Requests
 title: Concurrent Requests
 weight: 30
-aliases: ["/docs/features/concurrent-requests/", "/docs/backends/concurrent-requests/"]
+aliases: ["/docs/backends/concurrent-requests/"]
+skip_header_image: true
 menu:
   community_current:
     parent: "040 Endpoint Configuration"
@@ -18,13 +19,14 @@ images:
 - /images/documentation/concurrency/PDF_concurrency_sad.png
 ---
 
-The concurrent requests are an excellent technique to **improve the response times and decrease error rates** by requesting in parallel the same information multiple times. When the first backend returns the information, the remaining threads are canceled.
+The concurrent requests are an excellent technique to **improve the response times and decrease error rates** by requesting in parallel the same information multiple times. Yes, you make the same request to several backends instead of asking to just one. When the first backend returns the information, the remaining requests are canceled.
 
-It depends a lot on your configuration, but **improving response times by a 75%** or more with the same application you are using today is not something rare.
+It depends a lot on your configuration, but **improving response times by a 75%** or more in comparison to direct usage without the gateway is not something rare.
 
-When using concurrent requests, the backend services must be able to handle an additional load. If this is the case, and your requests are idempotent, then you can use `concurrent_calls` as follows:
+When using concurrent requests, the backend services **must be able to handle an additional load**, as this technique adds more pressure to the backends. If this is the case, and your requests are idempotent, then you can use `concurrent_calls` as follows:
 
-    ...,
+{{< highlight json >}}
+{
     "endpoints": [
     {
       "endpoint": "/products",
@@ -36,8 +38,14 @@ When using concurrent requests, the backend services must be able to handle an a
                 "http://server-01.api.com:8000",
                 "http://server-02.api.com:8000"
             ],
-            "url_pattern": "/foo",
-      ...
+            "url_pattern": "/foo"
+        }
+      ]
+    }
+    ]
+}
+{{< /highlight >}}
+
 
 In the example above, when a user calls the `/products` endpoint, KrakenD opens three different connections to the backends and returns the first fastest successful response.
 
@@ -50,6 +58,9 @@ Nevertheless, we could say that if you are interested in this feature, `3` is a 
 
 Generally speaking, if you work on the cloud, enabling this feature is safer as you can grow the resources easily (but put an eye on the costs). If your hardware is limited (on-premise), do not activate this feature in production without doing your proper load tests.
 
+{{< note title="" type="warning" >}}
+Concurrent calls works better with encodings different than `no-op`. Endpoints returning chunked responses do not play nice with concurrency when `no-op` is enabled.
+{{< /note >}}
 
 ## How does `concurrent_calls` work?
 KrakenD sends up to N `concurrent_calls` to your backends for the **same request to an endpoint. When the first successful response is received, KrakenD cancels the remaining requests and ignores any previous failures. Only in the case that all `concurrent_calls` fail, the endpoint receives the failure as well.

@@ -1,80 +1,130 @@
 ---
-lastmod: 2018-11-27
+lastmod: 2022-02-28
 date: 2018-07-20
 aliases: ["/docs/features/parameter-forwarding/"]
-linktitle:  Parameter forwarding
-title: Parameter forwarding
-weight: 30
+linktitle:  Query strings and headers
+title: Forwarding query strings and headers
+weight: 10
 menu:
   community_current:
     parent: "040 Endpoint Configuration"
 ---
-KrakenD is an API Gateway, and when it comes to forward query strings, cookies, and headers, it **does not behave like a regular proxy** by forwarding parameters to the backend.
+KrakenD is an API Gateway with a **zero-trust policy**, and when it comes to forward query strings, cookies, and headers, you need to define what is allowed.
 
-The **default policy** for data forwarding works as follows:
+Part of the zero-trust policy implies that KrakenD **does not forward** any unexpected [query string](#query-string-forwarding), [headers](#headers-forwarding), or [cookies](#cookies-forwarding). See below how to set the forwarding rules.
 
-- No [query string](#query-string-forwarding) parameters are forwarded to the backend
-- No [headers](#headers-forwarding) are forwarded
-- No [cookies](#cookies-forwarding) are forwarded
+## Configuration to enable parameter forwarding
+You can change the default behavior according to your needs and define which elements can pass from the client to your backends. To do that, add the following configuration options under your `endpoint` definition:
 
-You can change this behavior according to your needs, and define which elements are allowed to pass.
+- `input_query_strings` (*array*): Defines the exact list of query strings that are allowed to reach the backend when passed
+- `input_headers` (*array*): Defines the list of all headers allowed to reach the backend when passed
+- A single *star* element (`["*"]`) as the value of the options above, forwards **everything** to the backend (it's safer avoiding this option)
 
-## Optional query string forwarding
-KrakenD **does not send any query string parameter to the backend by default**, avoiding the pollution of the backends. Meaning that if an endpoint `/foo` receives the query string `/foo?a=1&b=2` all its declared backends are not going to see neither `a` nor `b`.
+{{< note title="Case sensitive parameters" type="info" >}}
+The `input_query_strings` and `input_headers` lists are **case sensitive**. For instance, a request `?Page=1` wont pass to the backend when `"input_query_strings": ["page"]`
+{{< /note >}}
 
-The property list `querystring_params` in the `endpoint` configuration allows you to declare **optional query string parameters**. When this list exists in the configuration, the forwarding policy behaves like an allow list: all matching parameters declared in the `querystring_params` list are forwarded to the backend, and the rest dropped.
+**Example**:
 
-Parameters are always optional and the user can pass a subset of them, all, or none.
+*Send the query strings `items` and `page` to the backend, and also `User-Agent` and `Accept` headers:*
 
-For instance, let's forward `?a=1&b=2` to the backends:
-
+{{< highlight json "hl_lines=6-13">}}
+{
+  "version": 3,
+  "endpoints": [
     {
-      "version": 2,
-      "endpoints": [
+      "endpoint": "/v1/foo",
+      "input_query_strings": [
+        "items",
+        "page"
+      ],
+      "input_headers": [
+        "User-Agent",
+        "Accept"
+      ],
+      "backend": [
         {
-          "endpoint": "/v1/foo",
-          "querystring_params": [
-            "a",
-            "b"
-          ],
-          "backend": [
-            {
-              "url_pattern": "/catalog",
-              "host": [
-                "http://some.api.com:9000"
-              ]
-            }
+          "url_pattern": "/catalog",
+          "host": [
+            "http://some.api.com:9000"
           ]
         }
       ]
     }
+  ]
+}
+{{< /highlight >}}
 
-With this configuration, given a request like `http://krakend:8080/v1/foo?a=1&b=2&evil=here`, the backend receives `a` and `b`, but `evil` is missing.
+Read below for further details and examples.
 
-Also, if a request like `http://krakend:8080/v1/foo?a=1` does not include `b`, this parameter is simply missing in the backend request as well.
+## Query string forwarding
+The zero-trust policy implies that, for instance, if a KrakenD endpoint `/foo' receives the request `/foo?items=10&page=2`, all its declared backends are not going to see either `items` or `page`, **unless otherwise configured**.
+
+To enable the transition of query strings to your backend, add the **list** `input_query_strings` in your `endpoint` definition. For instance, let's forward `?items=10&page=2` to the backends now:
+
+{{< highlight json >}}
+{
+  "version": 3,
+  "endpoints": [
+    {
+      "endpoint": "/v1/foo",
+      "input_query_strings": [
+        "items",
+        "page"
+      ],
+      "backend": [
+        {
+          "url_pattern": "/catalog",
+          "host": [
+            "http://some.api.com:9000"
+          ]
+        }
+      ]
+    }
+  ]
+}
+{{< /highlight >}}
+
+The `input_query_strings` list has the following behavior:
+
+- **Items in the list** are forwarded to your backend when passed
+- **Additional query strings not in the list** are removed from the final call
+- **Writing a single *star* element** (`"input_query_strings":["*"]`) instead of individual strings, forwards **everything** to the backend
+
+With this configuration, given a request like `http://krakend:8080/v1/foo?items=10&page=2&evil=here`, the backend receives `items` and `page`, but `evil` is missing.
+
+Also, if a request like `http://krakend:8080/v1/foo?items=10` does not include `page`, this parameter is simply missing in the backend request as well.
+
+By definition, query string parameters are always optional, and the user can pass a subset of them, all or none. Suppose you want to enforce that the user provides a query string parameter. In that case, you must validate it with the [Common Expression Language](/docs/endpoints/common-expression-language-cel/) (faster) or with a [Lua script](/docs/endpoints/lua/) (slower).
 
 ### Sending all query string parameters
 While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
-```
-"querystring_params":[  
+
+{{< highlight json >}}
+{
+  "endpoint": "/foo",
+  "input_query_strings":[
       "*"
-]
-```
-Enabling the wildcard pollutes your backends, as any query string sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the query strings in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
+  ]
+}
+{{< /highlight >}}
+
+**Enabling the wildcard pollutes your backends**, as any query string sent by end-users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which query strings are in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
 ### Mandatory query string parameters
-When your backend requires query string parameters and you want to make them **mandatory** in KrakenD, use the `{variables}` placeholders in the endpoints definition. The variables can be injected in the backends as part of the query string parameters. For instance:
+When your backend requires mandatory **query string** parameters and you want to make them **mandatory** in KrakenD, the only way to enforce this (without scripting) is using the `{variable}` placeholders in the endpoints definition. Mandatory means that the endpoint won't exist unless the parameter is passed. For instance:
 
-    ...
+{{< highlight json >}}
+{
+  "endpoint": "/v3/{channel}/foo",
+  "backend": [
     {
-            "endpoint": "/v3/{channel}/foo",
-            "backend": [
-                    {
-                            "host": ["http://backend"],
-                            "url_pattern": "/foo?channel={channel}"
-                    }
-            ]
+            "host": ["http://backend"],
+            "url_pattern": "/foo?channel={channel}"
     }
+  ]
+}
+{{< /highlight >}}
 
 The parameter is mandatory as if a value for `channel` is not provided the server replies with a `404`.
 
@@ -82,21 +132,26 @@ With the configuration above a request to the KrakenD endpoint such as `http://k
 
     /foo?channel=iOS
 
-Nevertheless, the `querystring_params` could also be added in this configuration, creating a special case of optional and mandatory parameters! You would be passing query strings both hardcoded in the `url_pattern` and generated from the user input. What happens in this strange case is that if the user passes a single optional query string parameter that is declared in `querystring_params` then the mandatory value is lost. If the request does not contain any known optional parameter, then the mandatory value is used. For instance:
+Nevertheless, the `input_query_strings` could also be added in this configuration, creating a special case of optional and mandatory parameters! You would be passing query strings both hardcoded in the `url_pattern` and generated from the user input. In this strange case, if the user passes a single optional query string parameter that is declared in `input_query_strings`, then the mandatory value is lost. The mandatory value is used if the request does not contain any known optional parameter. For instance:
 
-    {
-            "endpoint": "/v3/{channel}/foo",
-            "querystring_params": [
-                    "page",
-                    "limit"
+{{< highlight json >}}
+{
+    "endpoint": "/v3/{channel}/foo",
+    "input_query_strings": [
+        "page",
+        "limit"
+    ],
+    "backend": [
+        {
+            "host": [
+                "http://backend"
             ],
-            "backend": [
-                    {
-                            "host": ["http://backend"],
-                            "url_pattern": "/foo?channel={channel}"
-                    }
-            ]
-    }
+            "url_pattern": "/foo?channel={channel}"
+        }
+    ]
+}
+{{< /highlight >}}
+
 
 With `http://krakend/v3/iOS/foo?limit=10&evil=here` the backend receives:
 
@@ -106,18 +161,18 @@ No mandatory `channel` here! Because the optional parameter `limit` has been dec
 
 On the other hand, `http://krakend/v3/iOS/foo?evil=here` produces:
 
-	 /foo?channel=iOS
+    /foo?channel=iOS
 
 No optional parameter has been passed, so the mandatory one is used.
 
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test query string parameters.
 
 ## Headers forwarding
-KrakenD **does not send client headers to the backend by default**.  Use `headers_to_pass`.
+KrakenD **does not send client headers to the backend by default**. Use `input_headers`.
 
-Declare the list of headers sent by the client that you want to let pass to the backend with the `headers_to_pass` option.
+Declare the list of headers sent by the client that you want to let pass to the backend with the `input_headers` option.
 
-A client request from a browser or a mobile client usually contains a lot of headers, including cookies. Typical examples of the variety of headers that clients send are `Host`, `Connection`, `Cache-Control`, `Cookie`... and a long, long etcetera. The backend usually does not need any of this to return the content.
+A client request from a browser or a mobile client usually contains a lot of headers, including cookies. Typical examples of the variety of headers that clients send are `Host`, `Connection`, `Cache-Control`, `Cookie`... and a long, long, etcetera. The backend usually does not need any of this to return the content.
 
 KrakenD passes only these essential headers to the backends:
 
@@ -126,74 +181,84 @@ KrakenD passes only these essential headers to the backends:
 - `User-Agent` (KrakenD Version {{< version >}})
 - `X-Forwarded-For`
 - `X-Forwarded-Host`
-- `X-Forwarded-Via` (only when `User-Agent` is in the `headers_to_pass`)
+- `X-Forwarded-Via` (only when `User-Agent` is in the `input_headers`)
 
-When you use the `headers_to_pass`, take into account that any of these headers are replaced with the ones you declare.
+When you use the `input_headers`, consider that any of these headers are replaced with the ones you declare.
 
- An example to pass the `User-Agent` to the backend:
+ An example of passing the `User-Agent` to the backend:
 
+{{< highlight json >}}
+{
+  "version": 3,
+  "endpoints": [
     {
-      "version": 2,
-      "endpoints": [
+      "endpoint": "/v1/foo",
+      "input_headers": [
+        "User-Agent"
+      ],
+      "backend": [
         {
-          "endpoint": "/v1/foo",
-          "headers_to_pass": [
-            "User-Agent"
-            ],
-          "backend": [
-            {
-              "url_pattern": "/catalog",
-              "host": [
-                "http://some.api.com:9000"
-              ]
-            }
+          "url_pattern": "/catalog",
+          "host": [
+            "http://some.api.com:9000"
           ]
         }
       ]
     }
+  ]
+}
+{{< /highlight >}}
 
 This setting changes the headers received by the backend to:
 
-    Accept-Encoding: gzip
-    Host: localhost:8080
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
-    X-Forwarded-For: ::1
+{{< highlight yaml >}}
+Accept-Encoding: gzip
+Host: localhost:8080
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
+X-Forwarded-For: ::1
+{{< /highlight >}}
 
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test headers.
 
 ### Sending all client headers to the backends
 While the default policy prevents forwarding unrecognized headers, setting an asterisk `*` as the parameter name makes the gateway to **forward any header to the backends**, including cookies:
-```
-"headers_to_pass":[  
-      "*"
-]
-```
-Enabling the wildcard pollutes your backends, as any header sent by end users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which are the headers in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
+{{< highlight json >}}
+{
+  "endpoint": "/foo",
+  "input_headers":[
+      "*"
+  ]
+}
+{{< /highlight >}}
+
+Enabling the wildcard pollutes your backends, as any header sent by end-users or malicious attackers gets through the gateway and impacts the backends behind. We recommend letting the gateway know which headers are in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
 ## Cookies forwarding
-A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `headers_to_pass`, just as you would do with any other header.
+A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `input_headers`, just as you would do with any other header.
 
 When doing this, **all your cookies** are sent to all backends inside the endpoint. Use this option wisely!
 
 Example:
 
+{{< highlight json >}}
+{
+  "version": 3,
+  "endpoints": [
     {
-      "version": 2,
-      "endpoints": [
+      "endpoint": "/v1/foo",
+      "input_headers": [
+        "Cookie"
+      ],
+      "backend": [
         {
-          "endpoint": "/v1/foo",
-          "headers_to_pass": [
-            "Cookie"
-            ],
-          "backend": [
-            {
-              "url_pattern": "/catalog",
-              "host": [
-                "http://some.api.com:9000"
-              ]
-            }
+          "url_pattern": "/catalog",
+          "host": [
+            "http://some.api.com:9000"
           ]
         }
       ]
     }
+  ]
+}
+{{< /highlight >}}

@@ -5,12 +5,19 @@ notoc: true
 linktitle: AWS X-Ray
 title: Exporting traces to AWS X-Ray
 weight: 110
-source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/xray/"]
 menu:
   community_current:
-    parent: "080 Telemetry"
+    parent: "080 Telemetry and Analytics"
+meta:
+  source: https://github.com/devopsfaith/krakend-opencensus
+  namespace:
+  - telemetry/opencensus
+  log_prefix:
+  - "[SERVICE: Opencensus]"
+  scope:
+  - service
 ---
 [AWS X-Ray](https://aws.amazon.com/xray/) is a service offered by Amazon that provides an end-to-end view of requests as they travel through your application, and shows a map of your application’s underlying components.
 
@@ -18,17 +25,23 @@ The Opencensus exporter allows you export data to AWS X-Ray. Enabling it only re
 
 The following configuration snippet sends data to your X-Ray:
 
-	"github_com/devopsfaith/krakend-opencensus": {
+{{< highlight json >}}
+{
+  "extra_config": {
+    "telemetry/opencensus": {
       "exporters": {
         "xray": {
-			"version": "latest",
-            "region": "eu-west-1",
-			"use_env": false,
-            "access_key_id": "myaccesskey",
-            "secret_access_key": "mysecretkey"
-		},
-	  }
-	}
+          "version": "latest",
+          "region": "eu-west-1",
+          "use_env": false,
+          "access_key_id": "myaccesskey",
+          "secret_access_key": "mysecretkey"
+        }
+      }
+    }
+  }
+}
+{{< /highlight >}}
 
 - `version`: The version of the AWS X-Ray service to use.
 - `region`: The AWS geographical region.

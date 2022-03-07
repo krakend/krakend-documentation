@@ -85,12 +85,14 @@ In the `FC_SETTINGS` directory, you can save different `.json` files with data s
 
 For instance, if you have a file `db.json` with the following content:
 
-    {
-        "host": "192.168.1.23",
-        "port": 8766,
-        "pass": "a-p4ssw0rd",
-        "label": "production"
-    }
+{{< highlight json >}}
+{
+    "host": "192.168.1.23",
+    "port": 8766,
+    "pass": "a-p4ssw0rd",
+    "label": "production"
+}
+{{< /highlight >}}
 
 You can access particular settings like using this syntax: `{{ .db.host }}`.
 
@@ -103,21 +105,27 @@ When you are doing a loop with a `range`, the variables inside are relative to t
 #### Insert structures from settings files
 When instead of a single value you need to insert a **JSON structure** (several elements), you need to use `marshal`.
 
-    {{ marshal .db }}
+{{< highlight go-text-template >}}
+{{ marshal .db }}
+{{< /highlight >}}
 
 The example would write the entire content of the `db.json` file.
 
 #### Include an external file
 To insert the content of an external partial file in-place use:
 
-    {{ include "partial_file_name.txt" }}
+{{< highlight go-text-template >}}
+{{ include "partial_file_name.txt" }}
+{{< /highlight >}}
 
 **The content inside the partial template is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension.
 
 #### Include and process a sub-template
 While the `include` is only meant to paste the content of a plain text file, the `template` gives you all the power of Go templating ([documentation](https://golang.org/pkg/text/template/)). The syntax is as follows:
 
-    {{ template "template_name.tmpl" context }}
+{{< highlight go-text-template >}}
+{{ template "template_name.tmpl" context }}
+{{< /highlight >}}
 
 The template `template_name.tmpl` is executed and processed. The value of `context` is passed in the template as the context, meaning that the sub-template can access it using the dot `{{ . }}`. This context variable could be an object, such as `{{ template "environment" .db.label }}`, but it can also be another type, like a string: ``{{ template "environment" "production" }}`.
 
@@ -155,12 +163,14 @@ As the configuration is now composed of several pieces, it's easy to make a mist
 
 You might also want to use the flag `FC_OUT` to write the content of the final file in a known path, so you can check its contents:
 
-    FC_ENABLE=1 \
-    FC_SETTINGS="$PWD/config/settings" \
-    FC_PARTIALS="$PWD/config/partials" \
-    FC_TEMPLATES="$PWD/config/templates" \
-    FC_OUT=out.json \
-    krakend check -t -d -c "$PWD/config/krakend.json"
+{{< terminal title="Term" >}}
+FC_ENABLE=1 \
+FC_SETTINGS="$PWD/config/settings" \
+FC_PARTIALS="$PWD/config/partials" \
+FC_TEMPLATES="$PWD/config/templates" \
+FC_OUT=out.json \
+krakend check -t -d -c "$PWD/config/krakend.json"
+{{< /terminal >}}
 
 When there are errors, the output contains information to help you resolve it, e.g.:
 
@@ -183,50 +193,58 @@ To demonstrate the usage of the flexible configuration, we are going to reorgani
 
 In this file, we have written the content of the rate limit configuration for a backend. This file is inserted when included "as is":
 
-    "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
-        "maxRate": "100",
-        "capacity": "100"
-    }
+{{< highlight go >}}
+"qos/ratelimit/proxy": {
+    "max_rate": "100",
+    "capacity": "100"
+}
+{{< /highlight >}}
+
 
 **settings/service.json**
 
 In the settings directory, we write all the files whose values can be accessed as variables.
 
-    {
-        "port": 8090,
-        "default_hosts": [
-            "https://catalog-api-01.srv",
-            "https://catalog-api-02.srv",
-            "https://catalog-api-03.srv"
-        ],
-        "extra_config": {
-            "github_com/devopsfaith/krakend-httpsecure": {
-            "allowed_hosts": [],
-            "ssl_proxy_headers": {
-                "X-Forwarded-Proto": "https"
-            },
-            "ssl_certificate": "/opt/rsa.cert",
-            "ssl_private_key": "/opt/rsa.key"
-            }
+{{< highlight json >}}
+{
+    "port": 8090,
+    "default_hosts": [
+        "https://catalog-api-01.srv",
+        "https://catalog-api-02.srv",
+        "https://catalog-api-03.srv"
+    ],
+    "extra_config": {
+        "security/http": {
+        "allowed_hosts": [],
+        "ssl_proxy_headers": {
+            "X-Forwarded-Proto": "https"
+        },
+        "ssl_certificate": "/opt/rsa.cert",
+        "ssl_private_key": "/opt/rsa.key"
         }
     }
+}
+{{< /highlight >}}
 
 **settings/endpoint.json**
 
 This file declares a couple of endpoints that feed on a single backend:
 
-    {
-        "example_group": [
-            {
-                "endpoint": "/users/{id}",
-                "backend": "/v1/users?userId={id}"
-            },
-            {
-                "endpoint": "/posts/{id}",
-                "backend": "/posts?postId={id}"
-            }
-        ]
-    }
+{{< highlight json >}}
+{
+    "example_group": [
+        {
+            "endpoint": "/users/{id}",
+            "backend": "/v1/users?userId={id}"
+        },
+        {
+            "endpoint": "/posts/{id}",
+            "backend": "/posts?postId={id}"
+        }
+    ]
+}
+{{< /highlight >}}
+
 
 **krakend.json**
 
@@ -236,7 +254,7 @@ Have a look at the highlighted lines:
 
 {{< highlight go-text-template "hl_lines=3-5 7 9 12 15" >}}
     {
-        "version": 2,
+        "version": 3,
         "port": {{ .service.port }},
         "extra_config": {{ marshal .service.extra_config }},
         "host": {{ marshal .service.default_hosts }},

@@ -7,7 +7,7 @@ title: Preconfigured Grafana dashboard
 weight: 30
 menu:
   community_v1.3:
-    parent: "100 Extended Metrics"
+    parent: "080 Telemetry and Analytics"
 skip_header_image: true
 images:
 - /images/documentation/grafana-screenshot.png
@@ -21,7 +21,7 @@ meta:
   - service
 ---
 
-The Grafana dashboard for KrakenD offers valuable information to understand the performance of your services and detect anomalies in the service. 
+The Grafana dashboard for KrakenD offers valuable information to understand the performance of your services and detect anomalies in the service.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ik18Zlwyap8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -95,13 +95,13 @@ docker run \
 4) Go to the browser and open http://localhost:3000. Use `admin` for both user and password
 
 5) Find the button to add the Data Source in the home screen. Select InfluxDB as the database and fill the details you provided when starting influxdb:
-  
+
 - URL: `http://localhost:8086`
 - Access: `Browser`
 - database: `krakend`
 - password: `supersecretpassword`
 - HTTP Method : `GET`
 
-5) Import the Dashboard via grafana.com. Type `5722` and click on Load. The Dashboard will be ready for you! 
+5) Import the Dashboard via grafana.com. Type `5722` and click on Load. The Dashboard will be ready for you!
 
 ![Grafana KrakenD Dashboard](/images/documentation/grafana-screenshot.png)

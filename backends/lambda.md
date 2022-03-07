@@ -9,13 +9,13 @@ images:
     - /images/krakend-lambda.png
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 notoc: true
 meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-lambda
   namespace:
-  - github.com/devopsfaith/krakend-lambda
+  - backend/lambda
   scope:
   - backend
 ---
@@ -31,7 +31,7 @@ You don't need to set an Amazon API Gateway in the middle as KrakenD does this j
 
 ## Lambda configuration
 
-The inclusion requires you to add the code in the `extra_config` of your `backend` section, using the `github.com/devopsfaith/krakend-lambda` namespace.
+The inclusion requires you to add the code in the `extra_config` of your `backend` section, using the `backend/lambda` namespace.
 
 The supported parameters are:
 
@@ -56,28 +56,35 @@ When setting the credentials make sure that the lambda is callable within the Kr
 
 When the KrakenD endpoint is attached to the same Lambda, use this configuration:
 
-    "backend": [
-    {
-        "github.com/devopsfaith/krakend-lambda": {
+{{< highlight json >}}
+{
+    "backend": [{
+        "backend/lambda": {
             "function_name": "lambda-function",
             "region": "us-west1",
             "max_retries": 1
         }
-    }
+    }]
+}
+{{< /highlight >}}
+
 
 ## Example: Take the lambda from the URL
 
 When the name of the Lambda to depends on a parameter passed in the endpoint, use this configuration instead:
 
-    "endpoint": "/call-a-lambda/{lambda},
-    "backend": [
-    {
-        "github.com/devopsfaith/krakend-lambda": {
+{{< highlight json >}}
+{
+    "endpoint": "/call-a-lambda/{lambda}",
+    "backend": [{
+        "backend/lambda": {
             "function_param_name": "Lambda",
             "region": "us-west1",
             "max_retries": 1
         }
-    }
+    }]
+}
+{{< /highlight >}}
 
 In this example, the `function_param_name` is telling us which is the placeholder in the endpoint setting the lambda. In this case, `{lambda}`.
 

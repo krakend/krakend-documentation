@@ -15,7 +15,7 @@ meta:
   scope:
   - endpoint
 ---
-KrakenD `no-op` (**no-operation**), is a special type of **encoding** that behaves as a **proxy** by passing the client's request to the backend ***as is***, and vice-versa.
+KrakenD `no-op` (**no-operation**), is a special type of **encoding** that behaves as a **proxy** by passing the client's request to the backend and returning the response to the client ***as it is***. Without any manipulation or operation.
 
 ## Using `no-op` to proxy requests
 When setting `no-op`, KrakenD does not inspect the request `body` or manipulates it in any way. Instead, when a request to a `no-op` endpoint is received, KrakenD directly forwards it to the backend without doing any operation with it.
@@ -32,8 +32,8 @@ The **key concepts** of `no-op` are:
 - The KrakenD endpoint works just like a regular proxy
 - The *router pipe* functionalities are available (e.g., rate limiting the endpoint)
 - The *proxy pipe* functionalities are disabled (aggregate/merge, filter, manipulations, body inspection, concurrency...)
-- Headers passing to the backend still need to be declared under `headers_to_pass`, as they hit the router layer first.
-- Query strings passing to the backend still need to be declared under `querystring_params`, as they hit the router layer first.
+- Headers passing to the backend still need to be declared under `input_headers`, as they hit the router layer first.
+- Query strings passing to the backend still need to be declared under `input_query_strings`, as they hit the router layer first.
 - Backend response and headers remain unchanged (including status codes)
 - The body cannot be changed and is set solely by the backend
 - `1:1` relationship between endpoint-backend (one backend per endpoint).

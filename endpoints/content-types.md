@@ -18,6 +18,7 @@ The gateway can work with several content types, even allowing your clients to c
 
 - `json`: The endpoint always returns a JSON object to the client. This is the **default encoding** if none is declared.
 - `json-collection`: The endpoint returns a JSON collection (array) to the client. The backend response must  have an object named `collection`. This is always true when you use in the `backend` section the `is_collection` attribute set to `true`.
+- `xml`: The endpoint returns an XML object.
 - `negotiate`: Allows the client to choose by parsing its `Accept` header. KrakenD can return:
   - JSON
   - XML

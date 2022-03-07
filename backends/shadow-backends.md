@@ -8,7 +8,7 @@ since: 0.9
 notoc: true
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 ---
 There are times when you have been working in a new version of your microservice, a complete refactor, a dangerous change, or any other valuable change that needs being careful, and it's too risky to put it live as there might be issues that impact your end users.
 
@@ -25,33 +25,39 @@ Mirroring the traffic to your microservices allows you to test your new backend 
 
 To define a backend as a *shadow backend* you only need to add the flag as follows:
 
+{{< highlight json >}}
+{
     "extra_config": {
-        "github.com/devopsfaith/krakend/proxy": {
+        "proxy": {
             "shadow": true
         }
     }
+}
+{{< /highlight >}}
 
 With this change, the backend containing the flag enters into production, but KrakenD ignores its responses.
 
 ## Traffic shadowing example
 The following example shows a backend that is changing from `v1` to `v2`, but we are still unsure of the effects of doing this change in production, so we want to send a copy of the requests to `v2` in the first place, but keep the end users receiving the responses from `v1` only:
 
-    {
-        "endpoint": "/user/{id}",
-        "timeout": "150ms",
-        "backend": [
-            {
-                "host": [ "http://my.api.com" ],
-                "url_pattern": "/v1/user/{id}"
-            },
-            {
-                "host": [ "http://my.api.com" ],
-                "url_pattern": "/v2/user/{id}",
-                "extra_config": {
-                    "github.com/devopsfaith/krakend/proxy": {
-                        "shadow": true
-                    }
+{{< highlight json >}}
+{
+    "endpoint": "/user/{id}",
+    "timeout": "150ms",
+    "backend": [
+        {
+            "host": [ "http://my.api.com" ],
+            "url_pattern": "/v1/user/{id}"
+        },
+        {
+            "host": [ "http://my.api.com" ],
+            "url_pattern": "/v2/user/{id}",
+            "extra_config": {
+                "proxy": {
+                    "shadow": true
                 }
             }
-        ]
-    },
+        }
+    ]
+}
+{{< /highlight >}}

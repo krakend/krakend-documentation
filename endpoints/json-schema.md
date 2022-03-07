@@ -12,22 +12,30 @@ meta:
   since: 1.2
   source: https://github.com/devopsfaith/krakend-jsonschema
   namespace:
-  - github.com/devopsfaith/krakend-jsonschema
+  - validation/json-schema
   scope:
   - endpoint
+  - async_agent
 ---
 KrakenD endpoints receiving a JSON object in its body can apply automatic validations using the [JSON Schema](https://json-schema.org/) vocabulary before the content passes to the backends. The json schema component allows you to define **validation rules** on the body, type definition, or even validate the fields' values.
 
-When the validation fails, KrakenD returns to the user a status code `400` (Bad Request), and only if it succeeds, the backend receives the request. 
+When the validation fails, KrakenD returns to the user a status code `400` (Bad Request), and only if it succeeds, the backend receives the request.
 
 ## JSON Schema Configuration
-The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `github.com/devopsfaith/krakend-jsonschema`. For instance, to **check if the body is a json object**:
+The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `validation/json-schema`. KrakenD offers compatibility for the specs **draft-04, draft-06 and draft-07**.
 
-    "extra_config":{
-        "github.com/devopsfaith/krakend-jsonschema": {
+The following example **checks if the body is a json object**:
+
+{{< highlight json >}}
+{
+    "extra_config": {
+        "validation/json-schema": {
             "type": "object"
         }
     }
+}
+{{< /highlight >}}
+
 
 You can apply constraints by adding keywords to the schema. For instance, you can check that the `type` is an instance of an object, array, string, number, boolean, or null.
 
@@ -36,7 +44,7 @@ All the configuration inside the namespace is pure JSON Schema vocabulary. [Read
  A full configuration for you to try on the localhost with the [debug endpoint](/docs/endpoints/debug-endpoint/) is:
 {{< highlight json "hl_lines=14-25" >}}
 {
-    "version": 2,
+    "version": 3,
     "port": 8080,
     "host": [ "http://127.0.0.1:8080" ],
     "endpoints": [
@@ -49,7 +57,7 @@ All the configuration inside the namespace is pure JSON Schema vocabulary. [Read
                 }
             ],
             "extra_config":{
-                "github.com/devopsfaith/krakend-jsonschema": {
+                "validation/json-schema": {
                   "type": "object",
                   "properties": {
                     "number":      { "type": "number" },

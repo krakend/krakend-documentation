@@ -10,22 +10,26 @@ notoc: true
 aliases: ["/docs/logging-metrics-tracing/logger/"]
 menu:
   community_current:
-    parent: "080 Telemetry"
+    parent: "080 Telemetry and Analytics"
 meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Opencensus]"
 ---
 Opencensus can export data to the system logger as another exporter.
 
 Enabling it only requires you to add the `logger` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet enables the logger:
-
-    "github_com/devopsfaith/krakend-opencensus": {
+{{< highlight json >}}
+{
+  "extra_config":{
+    "telemetry/opencensus": {
         "exporters": {
           "logger": {
               "stats": true,
@@ -33,6 +37,8 @@ The following configuration snippet enables the logger:
           }
         }
     }
+}
+{{< /highlight >}}
 
 - `stats`: Whether to log the statistics or not
 - `spans`: Whether to log the spans or not

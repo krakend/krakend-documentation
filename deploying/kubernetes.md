@@ -1,71 +1,70 @@
 ---
-lastmod: 2020-12-17
+lastmod: 2021-12-11
 date: 2017-01-21
-linktitle: Kubernetes
+linktitle: To Kubernetes
 title: Deploying to Kubernetes
 menu:
   community_current:
-    parent: "110 Deploying"
-weight: 20
+    parent: "110 Deployment and Go-Live"
+weight: 30
 ---
 
 Deploying KrakenD in Kubernetes requires a straightforward configuration.
 
-Create a `Dockerfile` that includes the configuration of the service. That should be as simple as:
-
-    FROM devopsfaith/krakend
-    COPY krakend.json /etc/krakend/krakend.json
-
-If you use [flexible-configuration](/docs/configuration/flexible-config/) you might want to add a previous generation of the krakend.json file using a multi-step Docker.
+Create a `Dockerfile` that includes the configuration of the service. Read how to generate a [Docker artifact](/docs/deploying/docker/) for detailed instructions. You could also use a ConfigMap, although the recommendation is to use immutable artifacts.
 
 From here you need to create a `NodePort` and send all the traffic to KrakenD.
 
 ## Deployment definition YAML
 The KrakenD `deployment` definition, in a file called `deployment-definition.yaml`:
 
-    apiVersion: apps/v1
-    kind: Deployment
+{{< highlight yaml >}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: krakend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: krakend
+  replicas: 2
+  template:
     metadata:
-      name: krakend-deployment
+      labels:
+        app: krakend
     spec:
-      selector:
-        matchLabels:
-          app: krakend
-      replicas: 2
-      template:
-        metadata:
-          labels:
-            app: krakend
-        spec:
-          containers:
-          - name: krakend
-            image: YOUR-KRAKEND-IMAGE:1.0.0
-            ports:
-            - containerPort: 8080
-            imagePullPolicy: Never
-            command: [ "/usr/bin/krakend" ]
-            args: [ "run", "-d", "-c", "/etc/krakend/krakend.json", "-p", "8080" ]
-            env:
-            - name: KRAKEND_PORT
-              value: "8080"
+      containers:
+      - name: krakend
+        image: YOUR-KRAKEND-IMAGE:1.0.0
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Never
+        command: [ "/usr/bin/krakend" ]
+        args: [ "run", "-d", "-c", "/etc/krakend/krakend.json", "-p", "8080" ]
+        env:
+        - name: KRAKEND_PORT
+          value: "8080"
+{{< /highlight >}}
+
 
 ## Service definition yaml
 
 The KrakenD `service` definition, in a file called `service-definition.yaml`:
-
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: krakend-service
-    spec:
-      type: NodePort
-      ports:
-      - name: http
-        port: 8000
-        targetPort: 8080
-        protocol: TCP
-      selector:
-        app: krakend
+{{< highlight yaml >}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: krakend-service
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: krakend
+{{< /highlight >}}
 
 ## Registering the service
 
@@ -83,4 +82,4 @@ For a more step by step process see [this blog entry](/blog/krakend-on-kubernete
 
 ## Helm Chart
 
-For an example of a Helm Chart, see [Mikescandy contribution](https://github.com/mikescandy/krakend-helm)
+There is no official Helm chart for KrakenD. But you can see as example [Mikescandy's contribution](https://github.com/mikescandy/krakend-helm)

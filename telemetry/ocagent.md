@@ -9,14 +9,16 @@ source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 menu:
   community_current:
-    parent: "080 Telemetry"
+    parent: "080 Telemetry and Analytics"
 meta:
   since: 1.1
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Opencensus]"
 ---
 
 The `ocagent` exporter sends OpenCensus Stats and Traces to the OpenCensus Agent, instead of pushing data to backends’ exporters.
@@ -29,7 +31,10 @@ Enabling it only requires you to add the `ocagent` exporter in the [opencensus m
 
 The following configuration snippet sends the data:
 
-    "github_com/devopsfaith/krakend-opencensus": {
+{{< highlight json >}}
+{
+  "extra_config": {
+    "telemetry/opencensus": {
       "exporters": {
        "ocagent": {
           "address": "collector",
@@ -43,6 +48,8 @@ The following configuration snippet sends the data:
         }
       }
     }
+}
+{{< /highlight >}}
 
 - `address` (*string*): The address of your Azure Monitor collector.
 - `service_name` (*string*): An identifier of your service.

@@ -9,7 +9,7 @@ images:
 - /images/features-event-driven.png
 menu:
   community_v1.3:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-pubsub
@@ -78,7 +78,7 @@ The configuration you need to use is:
 - `url` for subscriptions: `"projects/myproject/subscriptions/mysub"` or the shortened form `"myproject/mysub"`
 - Environment variables:  `GOOGLE_APPLICATION_CREDENTIALS`, see [Google documentation](https://cloud.google.com/docs/authentication/production/).
 
-Example: 
+Example:
 
 	"host": ["gcppubsub://"],
 	"disable_host_sanitize": true,
@@ -192,7 +192,7 @@ Example:
 Kafka connection requires KrakenD >= `1.1`.
 
 - `host`: `kafka://`
-- Environment var: `KAFKA_BROKERS` pointing to the server(s), e.g: `KAFKA_BROKERS=192.168.1.100:9092`	
+- Environment var: `KAFKA_BROKERS` pointing to the server(s), e.g: `KAFKA_BROKERS=192.168.1.100:9092`
 
 **Kafka subscriptions**:
 

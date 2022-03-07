@@ -2,21 +2,23 @@
 lastmod: 2021-04-28
 date: 2019-09-15
 notoc: true
-linktitle: InfluxDB
+linktitle: InfluxDB (opencensus)
 title: Exporting metrics and events to InfluxDB
-weight: 80
+weight: 25
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/influxdb/"]
 menu:
   community_current:
-    parent: "080 Telemetry"
+    parent: "080 Telemetry and Analytics"
 meta:
   since: 0.5
   source: https://github.com/devopsfaith/krakend-opencensus
   namespace:
-  - github_com/devopsfaith/krakend-opencensus
+  - telemetry/opencensus
   scope:
   - service
+  log_prefix:
+  - "[SERVICE: Opencensus]"
 ---
 [InfluxDB](https://www.influxdata.com/) is a time series database designed to handle high write and query loads.
 
@@ -24,7 +26,9 @@ The Opencensus exporter allows you export data to [InfluxDB](https://www.influxd
 
 The following configuration snippet sends data to your InfluxDB:
 
-    "github_com/devopsfaith/krakend-opencensus": {
+{{< highlight json >}}
+{
+    "telemetry/opencensus": {
       "exporters": {
         "influxdb": {
             "address": "http://192.168.99.100:8086",
@@ -35,7 +39,8 @@ The following configuration snippet sends data to your InfluxDB:
         },
       }
     }
-
+}
+{{< /highlight >}}
 - `address` is the URL (including port) where your InfluxDB is installed.
 - `db` is the database name.
 - `timeout` is the maximum time you will wait for InfluxDB to respond.

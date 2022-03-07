@@ -8,15 +8,17 @@ images:
 - /images/features-event-driven.png
 menu:
   community_current:
-    parent: "050 Backends Configuration "
+    parent: "050 Backends Configuration"
 meta:
   since: 1.0
   source: https://github.com/devopsfaith/krakend-pubsub
   namespace:
-  - github.com/devopsfaith/krakend-pubsub/publisher
-  - github.com/devopsfaith/krakend-pubsub/subscriber
+  - backend/pubsub/publisher
+  - backend/pubsub/subscriber
   scope:
   - backend
+  log_prefix:
+  - "[BACKEND: schema://host][PubSub]"
 ---
 Since KrakenD 1.0 you can connect an endpoint to multiple publish/subscribe backends, helping you integrate with **event driven architectures**. For instance, a frontend client can push events to a queue using a REST interface. Or a client could consume a REST endpoint that is plugged to the last events pushed in a backend. You can even **validate messages and formats** as all the KrakenD available middleware can be used. The list of supported backend technologies is:
 
@@ -28,29 +30,38 @@ Since KrakenD 1.0 you can connect an endpoint to multiple publish/subscribe back
 - Apache Kafka
 
 ## Configuration
-To add pub/sub functionality to your backends include the namespaces `github.com/devopsfaith/krakend-pubsub/subscriber` and `github.com/devopsfaith/krakend-pubsub/publisher` under the `extra_config` of your `backend` section.
+To add pub/sub functionality to your backends include the namespaces `backend/pubsub/subscriber` and `backend/pubsub/publisher` under the `extra_config` of your `backend` section.
 
 The `host` key defines the desired driver, and the actual host is usually set in an **environment variable** outside of KrakenD:
 
 For a **subscriber**:
 
-	"host": "schema://",
+{{< highlight json >}}
+{
+	"host": ["schema://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/subscriber": {
 			"subscription_url": "url"
 		}
 	}
+}
+{{< /highlight >}}
+
 
 For a **publisher**:
 
-	"host": "schema://",
+{{< highlight json >}}
+{
+	"host": ["schema://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/publisher": {
+		"backend/pubsub/publisher": {
 			"topic_url": "url"
 		}
 	}
+}
+{{< /highlight >}}
 
 See the specification of each individual technology.
 
@@ -58,13 +69,18 @@ See the specification of each individual technology.
 
 Set the envvar `RABBIT_SERVER_URL='guest:guest@localhost:5672'` and add in the configuration:
 
+{{< highlight json >}}
+{
 	"host": ["amqp://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/subscriber": {
 		"subscription_url": "myexchange"
 		}
-	},
+	}
+}
+{{< /highlight >}}
+
 
 
 ### GCP PubSub
@@ -77,15 +93,20 @@ The configuration you need to use is:
 - `url` for subscriptions: `"projects/myproject/subscriptions/mysub"` or the shortened form `"myproject/mysub"`
 - Environment variables:  `GOOGLE_APPLICATION_CREDENTIALS`, see [Google documentation](https://cloud.google.com/docs/authentication/production/).
 
-Example: 
+Example:
 
+{{< highlight json >}}
+{
 	"host": ["gcppubsub://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/subscriber": {
 		"subscription_url": "projects/myproject/subscriptions/mysub"
 		}
-	},
+	}
+}
+{{< /highlight >}}
+
 
 ### NATS
 [NATS.io](https://nats.io/) is a simple, secure and high performance open source messaging system for cloud native applications, IoT messaging, and microservices architectures.
@@ -100,13 +121,17 @@ No query parameters are supported.
 
 Example:
 
+{{< highlight json >}}
+{
 	"host": ["nats://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/subscriber": {
 			"subscription_url": "mysubject"
 		}
 	}
+}
+{{< /highlight >}}
 
 
 ### AWS SNS
@@ -114,13 +139,17 @@ Example:
 
 AWS SNS sets the `url` without any `host` or environment variables, e.g:
 
-	"host": ["awssns:///arn:aws:sns:us-east-2:123456789012:mytopic""],
+{{< highlight json >}}
+{
+	"host": ["awssns:///arn:aws:sns:us-east-2:123456789012:mytopic"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/subscriber": {
 			"subscription_url": "?region=us-east-2"
 		}
 	}
+}
+{{< /highlight >}}
 
 
 ### AWS SQS
@@ -130,14 +159,17 @@ AWS SQS sets the `url` without any `host` or environment variables, e.g:
 
 Url: `awssqs://sqs-queue-url`
 
-
+{{< highlight json >}}
+{
 	"host": ["awssqs://https://sqs.us-east-2.amazonaws.com/123456789012"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/subscriber": {
 			"subscription_url": "/myqueue?region=us-east-2"
 		}
 	}
+}
+{{< /highlight >}}
 
 ### Azure Service Bus Topic and Subscription
 [Microsoft Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions) supports a set of cloud-based, message-oriented middleware technologies including reliable message queuing and durable publish/subscribe messaging. These "brokered" messaging capabilities can be thought of as decoupled messaging features that support publish-subscribe, temporal decoupling, and load balancing scenarios using the Service Bus messaging workload.
@@ -153,13 +185,17 @@ Note that for subscriptions, the subscription name must be provided in the `?sub
 
 Example:
 
+{{< highlight json >}}
+{
 	"host": ["azuresb://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/subscriber": {
 			"subscription_url": "mytopic"
 		}
 	}
+}
+{{< /highlight >}}
 
 ### RabbitMQ
 [RabbitMQ](https://www.rabbitmq.com/) is one of the most popular open source message brokers.
@@ -177,13 +213,17 @@ No query parameters are supported.
 
 Example:
 
+{{< highlight json >}}
+{
 	"host": ["rabbit://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/subscriber": {
 			"subscription_url": "myexchange"
 		}
 	}
+}
+{{< /highlight >}}
 
 ### Kafka
 [Apache Kafka](https://kafka.apache.org/) is a distributed streaming platform.
@@ -191,25 +231,31 @@ Example:
 Kafka connection requires KrakenD >= `1.1`.
 
 - `host`: `kafka://`
-- Environment var: `KAFKA_BROKERS` pointing to the server(s), e.g: `KAFKA_BROKERS=192.168.1.100:9092`	
+- Environment var: `KAFKA_BROKERS` pointing to the server(s), e.g: `KAFKA_BROKERS=192.168.1.100:9092`
 
 **Kafka subscriptions**:
 
+{{< highlight json >}}
+{
 	"host": ["kafka://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/subscriber": {
+		"backend/pubsub/subscriber": {
 			"subscription_url": "group?topic=mytopic"
 		}
 	}
-
+}
+{{< /highlight >}}
 
 **Kafka topics**:
-
+{{< highlight json >}}
+{
 	"host": ["kafka://"],
 	"disable_host_sanitize": true,
 	"extra_config": {
-		"github.com/devopsfaith/krakend-pubsub/publisher": {
+		"backend/pubsub/publisher": {
 			"topic_url": "mytopic"
 		}
 	}
+}
+{{< /highlight >}}

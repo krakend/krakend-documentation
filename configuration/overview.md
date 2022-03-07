@@ -37,12 +37,11 @@ Through all the documentation we refer to the configuration file as the `krakend
 Validate the syntax (not the logic) of your configuration file using the `krakend check` command:
 
 {{< terminal title="Check the configuration" >}}
-krakend check --config ./krakend.toml --debug
-Syntax OK!
+krakend check --config ./krakend.toml --debug --lint
 {{< /terminal >}}
 
 When the syntax is correct, you'll see the message `Syntax OK!`, otherwise the error is shown.
 
-You can also start the service directly as this is done right before the server starts.
+You can also start the service directly as this is done right before the server starts (except the linting).
 
-Read more about [`krakend check`](/docs/commands/check/)
+Read more about [`krakend check`](/docs/configuration/check/)
