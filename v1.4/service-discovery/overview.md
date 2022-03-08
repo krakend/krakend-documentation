@@ -39,13 +39,6 @@ The most typical setup is KrakenD + [Consul](https://www.consul.io/) (see [stand
 
 See [DNS SRV service discovery](/docs/v1.4/service-discovery/dns-srv/)
 
-## etcd
-KrakenD can watch the values of the keys in an etcd installation and reconfigure itself when they change.
-
-The integration with etcd allows you to set up your distributed key-value store and configure details such as the timeouts, keep-alive, and certificates.
-
-See [etcd service discovery](/docs/v1.4/service-discovery/etcd/)
-
 ## Eureka
 There is support for the Netflix Eureka client. The package is an open source contribution via [Schibsted](https://www.schibsted.com/) engineers.
 
