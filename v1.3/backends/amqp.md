@@ -1,5 +1,6 @@
 ---
 lastmod: 2021-05-02
+canonical: "/docs/backends/amqp-producer/"
 old_version: true
 date: 2018-04-05
 linktitle: AMQP - RabbitMQ

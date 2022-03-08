@@ -1,5 +1,6 @@
 ---
 lastmod: 2019-02-13
+canonical: "/docs/backends/service-discovery/"
 old_version: true
 date: 2016-09-30
 notoc: true

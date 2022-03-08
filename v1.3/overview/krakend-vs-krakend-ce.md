@@ -1,5 +1,6 @@
 ---
 lastmod: 2018-10-20
+canonical: "/docs/overview/lura-vs-krakend/"
 old_version: true
 date: 2018-06-23
 linktitle: Lura vs. KrakenD

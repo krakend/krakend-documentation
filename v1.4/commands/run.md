@@ -1,5 +1,6 @@
 ---
 lastmod: 2016-10-28
+canonical: "/docs/overview/run/"
 old_version: true
 date: 2016-10-28
 linktitle: Run

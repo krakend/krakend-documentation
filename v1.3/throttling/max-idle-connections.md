@@ -1,5 +1,6 @@
 ---
 lastmod: 2018-09-27
+canonical: "/docs/service-settings/http-transport-settings/"
 old_version: true
 date: 2018-01-04
 linktitle: Max IDLE connections

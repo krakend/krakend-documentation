@@ -15,9 +15,9 @@ If you had a quick look at our git repositories or the documentation, you might 
 
 ## TL;DR; Difference between Lura, KrakenD, and Enterprise
 
-- [**Lura**](https://luraproject.org) is the KrakenD's engine. Formerly known as "**KrakenD framework**" until we [donated it to The Linux Foundation on 2021](/blog/krakend-framework-joins-the-linux-foundation/). It is not a product itself but a toolkit/set of libraries to build API gateways.
-- **KrakenD** is our open-source API Gateway ready to use
-- **KrakenD Enterprise** is our commercial version with added functionality and includes services to businesses
+- [**Lura**](https://luraproject.org) is the KrakenD's engine. Formerly known as "**KrakenD framework**" until we [donated it to The Linux Foundation on 2021](/blog/krakend-framework-joins-the-linux-foundation/). It is not a product itself but a toolkit/set of libraries to build API gateways. KrakenD founders are in the steering commitee of Lura at The Linux Foundation.
+- **KrakenD** is driven by KRAKEND SL, and is our open-source API Gateway ready to use.
+- **KrakenD Enterprise** is our commercial version with added functionality and includes services to businesses.
 
 ### Lura Project
 The [Lura Project](https://luraproject.org) is our original *KrakenD framework* that we [donated to The Linux Foundation on 2021](/blog/krakend-framework-joins-the-linux-foundation/). Previously it lived from 2006 to 2021 under the KrakenD's team organization ([@krakend_io](https://twitter.com/krakend_io)) until it became a [Linux Foundation](https://linuxfoundation.org/) project. KrakenD team continues to be part of the steering committee.
