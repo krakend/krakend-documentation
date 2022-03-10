@@ -16,7 +16,7 @@ Hardware can fail at any time, and a Gateway is a piece critical enough to have 
 
 KrakenD can run in different regions and datacenters transparently without any problem as its nodes do not need to communicate to each other.
 
-[Setup a cluster of machines](/docs/deploying/clustering)
+[Setup a cluster of machines](/docs/deploying/clustering/)
 
 ### Place a balancer in front of KrakenD
 Put a load balancer in front of KrakenD to distribute traffic between the different nodes of the cluster (Kubernetes already does this for you). Use always at least two KrakenD instances for High Availability.

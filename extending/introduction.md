@@ -29,8 +29,8 @@ There are four different types of plugins you can write:
 
 1.  **[HTTP server plugins](/docs/extending/http-server-plugins/)** (or handler plugins): They belong to the **router layer** and let you modify the request before KrakenD starts processing it, or modify the final response. You can have several plugins at once.
 2.  **[HTTP client plugins](/docs/extending/http-client-plugins/)** (or proxy client plugins): They belong to the **proxy layer** and let you change how KrakenD interacts (as a client) with your backend services. You can have one plugin per backend.
-3.  **[Response Modifier plugins](/docs/extending/plugin-modifiers)**: They are strictly modifiers and let you change the responses received from your backends.
-4.  **[Request Modififer plugins](/docs/extending/plugin-modifiers)**: They are strictly modifiers and let you change the requests sent to your backends.
+3.  **[Response Modifier plugins](/docs/extending/plugin-modifiers/)**: They are strictly modifiers and let you change the responses received from your backends.
+4.  **[Request Modififer plugins](/docs/extending/plugin-modifiers/)**: They are strictly modifiers and let you change the requests sent to your backends.
 
 
 All types of plugins are marked with colored dots in the following diagram. 
