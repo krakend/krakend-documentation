@@ -57,6 +57,7 @@ import (
     "fmt"
     "io"
     "net/url"
+    "github.com/luraproject/lura/v2/proxy"
 )
 
 func main() {}
@@ -105,20 +106,13 @@ type RequestWrapper interface {
     Path() string
 }
 
-// ResponseWrapper is an interface for passing proxy response metadata between the
-// krakend pipe and the loaded plugins
-type ResponseMetadataWrapper interface {
-    Headers() map[string][]string
-    StatusCode() int
-}
-
 // ResponseWrapper is an interface for passing proxy response between the krakend pipe
 // and the loaded plugins
 type ResponseWrapper interface {
     Data() map[string]interface{}
     Io() io.Reader
     IsComplete() bool
-    Metadata() ResponseMetadataWrapper
+    Metadata() proxy.ResponseMetadataWrapper
 }
 {{< /highlight >}}
 
