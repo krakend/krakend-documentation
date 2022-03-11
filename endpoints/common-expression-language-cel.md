@@ -64,14 +64,16 @@ Finally, when combined with the [sequential proxy](/docs/endpoints/sequential-pr
 
 The configuration is as follows:
 
-{{< highlight js>}}
-    "extra_config":{
-      "validation/cel": [
-        {
-          "check_expr": "CONDITION1 && CONDITION2"
-        }
-      ]
+{{< highlight json>}}
+{
+    "extra_config": {
+        "validation/cel": [
+            {
+                "check_expr": "CONDITION1 && CONDITION2"
+            }
+        ]
     }
+}
 {{< /highlight>}}
 
 - Notice that the CEL object is an array. In this example, it contains one object.
@@ -131,21 +133,22 @@ The following example demonstrates how to reject a user request that does not fu
 
 {{< highlight json>}}
 {
-      "endpoints": [{
-          "endpoint": "/nick/{nick}",
-          "extra_config":{
-            "validation/cel": [
-              {
-                "check_expr": "req_params.Nick.matches('k.*')"
-              }
-            ]
-          },
-          "backend": [...]
-        }]
+    "endpoints": [
+        {
+            "endpoint": "/nick/{nick}",
+            "extra_config": {
+                "validation/cel": [
+                    {
+                        "check_expr": "req_params.Nick.matches('k.*')"
+                    }
+                ]
+            }
+        }
+    ]
 }
 {{< /highlight >}}
 
-With this configuration, any request to `/nick/kate` or `/nick/kevin` will make it to the backend, while a request to `/nick/ray` will be immediately rejected.
+With this configuration, any request to `/nick/kate` or `/nick/kevin` will make it to the backend, while a request to `/nick/ray` will be immediately rejected (`backend` section omitted intentionally for simplification purposes)
 
 ### Example: Check if the backend response has a specific field or abort
 This example can be copied/pasted into a new configuration. The CEL validation happens at the backend level. After querying the backend, the CEL expression checks that a field `company` exists inside the response body. If the user does not have that field, the call to the endpoint will fail:
@@ -153,29 +156,26 @@ This example can be copied/pasted into a new configuration. The CEL validation h
 {{< highlight json>}}
 {
     "version": 3,
-    "endpoints": [{
-      "endpoint": "/nick/{nick}",
-      "backend": [
+    "endpoints": [
         {
-          "host": [
-            "https://api.github.com"
-          ],
-          "url_pattern": "/users/{nick}",
-          "allow": [
-            "name",
-            "company"
-          ],
-          "group": "github",
-          "extra_config":{
-            "validation/cel": [
-              {
-                "check_expr": "'company' in resp_data.github"
-              }
+            "endpoint": "/nick/{nick}",
+            "backend": [
+                {
+                    "host": ["https://api.github.com"],
+                    "url_pattern": "/users/{nick}",
+                    "allow": ["name","company"],
+                    "group": "github",
+                    "extra_config": {
+                        "validation/cel": [
+                            {
+                                "check_expr": "'company' in resp_data.github"
+                            }
+                        ]
+                    }
+                }
             ]
-          }
         }
-      ]
-    }]
+    ]
 }
 {{< /highlight >}}
 
@@ -185,15 +185,16 @@ Also, notice how we are accessing a `github` element in the data, a new attribut
 Let's close the access to the API endpoint during the weekend:
 
 {{< highlight json>}}
-    {
-      "endpoint": "/weekdays",
-      "extra_config":{
+{
+    "endpoint": "/weekdays",
+    "extra_config": {
         "validation/cel": [
-          {
-            "check_expr": "(timestamp(now).getDayOfWeek() + 6) % 7 <= 4"
-          }
+            {
+                "check_expr": "(timestamp(now).getDayOfWeek() + 6) % 7 <= 4"
+            }
         ]
     }
+}
 {{< /highlight >}}
 Note: The function `getDayOfWeek()` starts at `0` (Sunday), so the only days with a `mod <=4 ` are 0 and 6.
 
@@ -201,20 +202,21 @@ Note: The function `getDayOfWeek()` starts at `0` (Sunday), so the only days wit
 Let's say that the JWT token the user sent contains an attribute named `enabled_days` in its payload. This attribute lists all the integers representing which days the resource can be accessed:
 
 {{< highlight json>}}
-    {
-      "endpoint": "/combination/{id}",
-      "extra_config":{
+{
+    "endpoint": "/combination/{id}",
+    "extra_config": {
         "validation/cel": [
-          {
-            "check_expr": "has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)"
-          }
+            {
+                "check_expr": "has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)"
+            }
         ]
     }
+}
 {{< /highlight >}}
 The expression checks that the JWT token has both the `user_id` and the `enabled_days` and that today is good.
 
 ### Example: Conditional call of sequential backends (a.k.a "skip backends")
-The following example is a bit more complex, as it **combines the sequential proxy with the CEL component**. You can copy and paste this example and start KrakenD with the `krakend run -d' flag.
+The following example is a bit more complex, as it **combines the sequential proxy with the CEL component**. You can copy and paste this example and start KrakenD with the `krakend run -d` flag.
 
 {{< highlight json >}}
 {
@@ -276,7 +278,6 @@ The following example is a bit more complex, as it **combines the sequential pro
                         ]
                     }
                 }
-
             ],
             "extra_config": {
                 "proxy": {
