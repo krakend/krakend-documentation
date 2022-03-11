@@ -83,8 +83,8 @@ func (r registerer) RegisterModifiers(f func(
     appliesToRequest bool,
     appliesToResponse bool,
 )) {
-    f(string(r), r.requestDump, true, false)
-    f(string(r), r.responseDump, false, true)
+    f(string(r)+"-request", r.requestDump, true, false)
+    f(string(r)+"-response", r.responseDump, false, true)
     fmt.Println(string(r), "registered!!!")
 }
 {{< /highlight >}}
