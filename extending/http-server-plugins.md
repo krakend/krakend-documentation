@@ -11,7 +11,7 @@ menu:
     parent: "150 Custom Plugins and Middleware"
 meta:
   since: 2.0
-  namespace: 
+  namespace:
   - plugin/http-server
 images:
 - /images/documentation/krakend-plugins.png

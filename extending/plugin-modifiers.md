@@ -255,5 +255,5 @@ For the test, we'll build a small gateway with a single endpoint merging the res
 If we send a request to the generated endpoint, we'll see the dumps for the three pairs of requests and responses at the console:
 
 {{< terminal title="Test the code">}}
-curl -i http://localhost:8080/github/orgs/devopsfaith
+curl -i http://localhost:8080/github/orgs/krakendio
 {{< /terminal >}}
