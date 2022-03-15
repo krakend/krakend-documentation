@@ -227,7 +227,7 @@ For the test, we'll build a small gateway with a single endpoint merging the res
           "group": "org",
           "extra_config":{
             "plugin/req-resp-modifier":{
-              "name":["krakend-debugger"]
+              "name":["krakend-debugger-request"]
             }
           }
         },
@@ -237,20 +237,25 @@ For the test, we'll build a small gateway with a single endpoint merging the res
           "is_collection": true,
           "extra_config":{
             "plugin/req-resp-modifier":{
-              "name":["krakend-debugger"]
+              "name":["krakend-debugger-response"]
             }
           }
         }
       ],
       "extra_config":{
         "plugin/req-resp-modifier":{
-          "name":["krakend-debugger"]
+          "name": [
+                "krakend-debugger-request",
+                "krakend-debugger-response"
+          ]
         }
       }
     }
   ]
 }
 {{< /highlight >}}
+
+Notice the modifier names which needs to be combination of the modifier name and the string used while registering it in `RegisterModifiers`. Also these needs to be unique for request and response modifier.
 
 If we send a request to the generated endpoint, we'll see the dumps for the three pairs of requests and responses at the console:
 
