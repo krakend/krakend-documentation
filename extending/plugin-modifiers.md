@@ -192,6 +192,8 @@ func (r registerer) responseDump(
 }
 {{< /highlight >}}
 
+You can also refer [this example](https://github.com/luraproject/lura/blob/v2.0.1/proxy/plugin/tests/main.go) on how to update the request and [this example](https://github.com/luraproject/lura/blob/master/proxy/plugin.go#L130) on how to update the response.
+
 ### Building the plugin
 
 With the `main.go` file complete, it's time to build and test the plugin. For compiling Go plugins, the flag `-buildmode=plugin` is required:
