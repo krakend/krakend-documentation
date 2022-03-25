@@ -74,7 +74,7 @@ Use `krakend check` in combination with the following flags:
 - `-c` or `--config` to specify the path to the configuration file in any of the [supported formats](/docs/configuration/supported-formats/), or to the starting template if used in combination with flexible configuration.
 - `-d' or `--debug` (*optional*) to enable the debug and see information about how KrakenD is interpreting your configuration file. Use from 1 to 3 levels of verbosity using `-d', `-dd`, or `-ddd`.
 - `-t` or `--test-gin-routes` (*optional*) to test the configuration by trying to start the service for a second. This option is highly recommended as it prevents conflicting routes and other problems unrelated to the linting itself and would end up in a *panic*.
-- `-l` or `--lint` (*optional*) to check that your configuration file is properly linted and does not contain unrecognized options or wrong types. **Your configuration must be in JSON format**. This option requires Internet access as the schema is published online under `http://www.krakend.io/schema/v3.json`.
+- `-l` or `--lint` (*optional*) to check that your configuration file is properly linted and does not contain unrecognized options or wrong types. **Your configuration must be in JSON format**. This option requires Internet access as the schema is published online under `https://www.krakend.io/schema/v3.json`.
 - `-i` or `--indent` (*optional*) in combination with `-d`, to change the indentation when the debug information renders (default: `TAB`). E.g.: `-i "#" ` uses a hash instead of a tab for every nesting level.
 
 

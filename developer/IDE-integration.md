@@ -30,7 +30,7 @@ KrakenD has published an updated JSON-schema definition ([source](https://github
 
 {{< highlight json >}}
 {
-    "$schema": "http://www.krakend.io/schema/v3.json"
+    "$schema": "https://www.krakend.io/schema/v3.json"
 }
 {{< /highlight >}}
 

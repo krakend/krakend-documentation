@@ -54,7 +54,7 @@ To get started right away, you can paste the following content inside a `krakend
 
 {{< highlight json >}}
 {
-    "$schema": "http://www.krakend.io/schema/v3.json",
+    "$schema": "https://www.krakend.io/schema/v3.json",
     "version": 3
 }
 {{< /highlight >}}

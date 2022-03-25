@@ -13,19 +13,20 @@ All KrakenD behavior depends on its configuration file(s). Although the configur
 ## Configuration file structure
 There are a large number of options you can put in this file. Let's focus now only on the main structure:
 {{< highlight json >}}
-    {
-        "version": 3,
-        "endpoints": [],
-        "extra_config": {}
-    }
+{
+    "$schema": "https://www.krakend.io/schema/v3.json",
+    "version": 3,
+    "endpoints": [],
+    "extra_config": {}
+}
 {{< /highlight >}}
 
 
-- `$schema`: Optional, which JSON schema is used to validate your configuration.
-- `version`: The version of the KrakenD file format.
+- `$schema`: Optional, which JSON schema is used to validate your configuration. Is used by ` krakend check --lint`
+- `version` (*mandatory*): The version of the KrakenD file format.
   - Version `3`: Current version (since `v2.0`)
   - Version `2`: Deprecated in 2022, for versions between `v0.4` and `v1.4.1`
-  - Version `1`: Deprecated in 2016, for version `v0.3.9` and older.
+  - Version `1`: Deprecated in 2016, for versions `v0.3.9` and older.
 - `endpoints[]`: An array of endpoint objects offered by the gateway and all the associated backends and configurations. This is your API definition.
 - `extra_config{}`: Components' configuration. Whatever is not a core functionality of the [Lura Project](https://luraproject.org) is declared in a unique **namespace** in the configuration, so that you can configure multiple elements without collisions.
 

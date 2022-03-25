@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-01-28
+lastmod: 2022-03-21
 date: 2016-09-30
 toc: true
 linktitle: Declaring backends
@@ -25,28 +25,27 @@ If you need to have a write method (POST, PUT, DELETE, PATCH) together with othe
 {{< /note >}}
 
 
-## Backend configuration
-Inside the `backend` array, you need to create an object for each backend entry. The more important options are:
+## Backend/Upstream configuration
+Inside the `backend` array, you need to create an object for each upstream service used by its declaring endpoint. The combination of `host` + `url_pattern`set the full URL that KrakenD will use to fetch your upstream services. Most of the backends will require a simple configuration like:
+{{< highlight json >}}
+{
+    "host": ["http://your-api"],
+    "url_pattern": "/url"
+}
+{{< /highlight >}}
 
-- `encoding`: Define your [needed encoding](/docs/backends/supported-encodings/) to inform KrakenD how to parse the response.
-- `sd`: When you use a [Service Discovery](/docs/backends/service-discovery/) system to resolve your backend services
-- `method`: One of `GET`, `POST`, `PUT`, `DELETE`, `PATCH` (in **uppercase**!). The method does not need to match the endpoint's method.
-- `url_pattern` The path inside the service (no protocol, no host, no method). E.g: `/users`
-- `host` an array with all the available hosts to **load balance** requests using the format `protocol://host:port`. E.g.: ' https://my.users-ms.com`. If you are in a platform where hosts are balanced, write a single name in the array with the service name/balancer address.
-- `extra_config` when there is additional configuration related to a specific component or middleware that you want to enable
+
+The options relative to the **backend definition** are:
+
+- `host` (*array* - required): An array with all the available hosts to **load balance** requests, including the schema (when possible) `schema://host:port`. E.g.: ` https://my.users-ms.com`. If you are in a platform where hosts or services are balanced (e.g., a K8S service), write a single name in the array with the service name/balancer address. Defaults to the `host` declaration at the configuration's root level, and KrakenD fails starting when none.
+- `url_pattern` (*string* - required): The path inside the service (no protocol, no host, no method). E.g: `/users`. Some functionalities under `extra_config` might drop the requirement of declaring an `url_pattern`.
+- `encoding` (*string* - optional): Define your [needed encoding](/docs/backends/supported-encodings/) to inform KrakenD how to parse the response. Defaults to the value of its endpoint's `encoding`, or to `json` if not defined anywhere else.
+- `sd` (*string* - optional): The service [Service Discovery](/docs/backends/service-discovery/) system to resolve your backend services. Defaults to `static` (no external Service Discovery). Use `dns` to use DNS SRV records.
+- `method` (*string* - optional): One of `GET`, `POST`, `PUT`, `DELETE`, `PATCH` (in **uppercase**!). The method does not need to match the endpoint's method.
+- `disable_sanitize` (*boolean* - optional): Set to `true` when the host doesn't need to be checked for an HTTP protocol. This is the case of `sd=dns` or when using other protocols like `amqp://`, `nats://`, `kafka://`, etc. Defaults to `false`.
+- `extra_config` (*object* - optional ): When there is additional configuration related to a specific component or middleware (like a circuit breaker, rate limit, etc.) it is declared under this section.
 
 Other configuration options such as the ones for [data manipulation](/docs/backends/data-manipulation/) are available. You will find them in each specific feature section.
-
-### Default values
-All properties named as the endpoint are automatically inherited when declaring a backend. So, if your endpoint uses a `POST` `method`, unless otherwise changed, the backend will use `POST` as well.
-
-There are also some attributes that you can omit if you don't need to override the value:
-
-- `host`: If you have a `host` declaration at the configuration's root level, its value is used.
-- `method`: The endpoint's method is used. Declare it to change it in the backend call when it differs.
-- `encoding`: Will use the endpoint encoding, or `json` if not defined anywhere else.
-- `sd`: The service discovery always defaults to `static` (no external Service Discovery).
-- `extra_config`: Not required unless additional non-core middleware is needed (like a circuit breaker, rate limit, etc.)
 
 ## Backend configuration example
 In the example below, KrakenD offers an endpoint `/v1/products` that merges the content from two different services using the URLs `/products` and `/offers`. The marketing (`marketing.myapi.com`) and the products (`products-XX.myapi.com`) API requests are fired simultaneously. KrakenD will load balance among the listed hosts (here or in your [service discovery](/docs/backends/service-discovery/)) to pick one of the three hosts.
