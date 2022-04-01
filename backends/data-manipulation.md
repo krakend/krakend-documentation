@@ -20,14 +20,14 @@ You can use two different filtering strategies, pick one or the other in each en
 - **Allow list** (`allow`)
 
 {{< note title="Renamed attributes" >}}
-Prior to KrakenD 1.2 these terms where defined as `whitelist` and `blacklist`, please upgrade your configuration with the new terms as the next version will not understand them.
+Prior to KrakenD 1.2 these terms where known as `whitelist` and `blacklist`.
 {{< /note >}}
 
 ### Deny
 
 The deny list filter can be read as the *don't show this* filter. KrakenD will remove from the backend response all matching fields (case-sensitive) defined in the list, and the ones that do not match are returned. Use the deny list to exclude some fields in the response.
 
-To exclude a field from the response, add under the desired `endpoint` configuration a `deny` array with all the fields you don't want to show. E.g.:
+To exclude a field from the response, add under the desired `backend` configuration a `deny` array with all the fields you don't want to show. E.g.:
 
 {{< highlight json >}}
 {

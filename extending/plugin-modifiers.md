@@ -11,8 +11,7 @@ menu:
 meta:
   since: 2.0
   namespace:
-  - plugin/request-modifier
-  - plugin/response-modifier
+  - plugin/req-resp-modifier
 images:
 - /images/documentation/krakend-plugins.png
 - /images/documentation/request-response-plugin.png
