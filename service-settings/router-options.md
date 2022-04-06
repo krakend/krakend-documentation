@@ -107,7 +107,10 @@ The `app_engine` *boolean* trusts headers starting with `X-AppEngine...` for bet
 The `max_multipart_memory` *integer* sets the 'maxMemory' param that is given to http.Request's Multipart Form method call.
 
 ### Remove requests from logs
-The `logger_skip_paths` *list* defines the set of paths that are removed from the logging
+There are two options to remove content from logs:
+- `logger_skip_paths` *list* defines the set of paths that are removed from the logging.
+- `disable_access_log` *boolean* stops registering access requests to KrakenD and leaving any logs out from the output.
+
 {{< highlight json >}}
 {
   "version": 3,
@@ -115,7 +118,8 @@ The `logger_skip_paths` *list* defines the set of paths that are removed from th
       "router":{
           "logger_skip_paths":[
             "/__health"
-          ]
+          ],
+          "disable_access_log": true
       }
 }
 {{< /highlight >}}
