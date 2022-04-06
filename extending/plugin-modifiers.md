@@ -118,6 +118,8 @@ type ResponseWrapper interface {
 After this minimal code repetition, implementing the modifier factories is an easy task. The factory must accept a configuration as a map and return the final modifier once it's ready. Depending on your requirements, the factory could access its dedicated configuration and do whatever logic is required by your scenario. This configuration section should use the plugin name as namespace (check the comments below).
 
 {{< highlight go >}}
+var unkownTypeErr = errors.New("unknow request type")
+
 func (r registerer) requestDump(
     cfg map[string]interface{},
 ) func(interface{}) (interface{}, error) {
