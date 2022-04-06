@@ -22,7 +22,7 @@ A template system gives you full flexibility to work with the configuration file
 - Inject variables, like environment settings, into the configuration
 - Use placeholders and reusable code blocks to avoid repeating code
 - Organize your code better when there are multiple developers modifying the gateway
-- Track changes and review code more easily 
+- Track changes and review code more easily
 - Have the full power of the go template  system!
 
 ## Requirements
@@ -51,7 +51,7 @@ For instance, let's assume you decided to organize your configuration as follows
            |   └── db.json
            └── dev
                └── db.json
-       
+
 Then you can run KrakenD from the terminal with this command:
 
 {{< terminal title="Enabling flexible configuration with your custom dirs" >}}
@@ -134,7 +134,7 @@ Go templates allow you to introduce handy stuff like conditionals or loops and a
 ### Advanced functions
 Complementing the [Go built-in template language](http://golang.org/pkg/text/template/), KrakenD adds to the Flexible Configuration more than 100 commonly used template functions using **Sprig**.
 
-Some examples are: 
+Some examples are:
 - String Functions: `trim`, `wrap`, `randAlpha`, `plural` and more.
   - String List Functions: `splitList`, `sortAlpha` and more.
 - Integer Math Functions: `add`, `max`, `mul` and more.
@@ -270,7 +270,7 @@ Have a look at the highlighted lines:
                         {{ include "rate_limit_backend.tmpl" }}
                     }
                 }
-            ]
+            ]}
             {{ end }}
         ]
     }

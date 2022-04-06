@@ -1,6 +1,6 @@
 ---
-lastmod: 2021-12-7
-date: 2021-12-7
+lastmod: 2021-12-07
+date: 2021-12-07
 linktitle: CI/CD integration
 title: Automated KrakenD deployments with CI/CD
 notoc: true
