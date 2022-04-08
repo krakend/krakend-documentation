@@ -47,7 +47,7 @@ KrakenD adds to Lura more functionality like logging, service discovery, develop
 {{< /button-group >}}
 
 ### KrakenD Enterprise
-Customers of the [KrakenD Enterprise](/enterprise/) package enjoy the development, consultancy, support, and training services offered by the very same KrakenD creators (and Lura steering committee). As per the software, KrakenD Enterprise users have SaaS functionalities that allow remote management, observability, and other features. There is also more tooling around KrakenD to increase productivity and enable working with KrakenD in large groups of developers.
+Customers of the [KrakenD Enterprise](/enterprise/) package enjoy the development, consultancy, support, and training services offered by the very same KrakenD creators (and Lura steering committee). As per the software, KrakenD Enterprise offers more functionality than the open source edition, including the integration with additional proprietary observability solutions, wildcards, GeoIP, OpenAPI, Postman collections and more. There is also more tooling around KrakenD to increase productivity and enable working with KrakenD in large groups of developers.
 
 **Our commitment to open-source is in the center of our business**, and this is why our Enterprise solution is built on top of the open-source version.  The Enterprise version uses the same OSS binary and extends it with a great variety of pluggable solutions. We want to make sure that both enterprise and community users have the excellent quality and reliability they are used to.
 
