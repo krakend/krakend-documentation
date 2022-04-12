@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-04-12
+lastmod: 2020-03-29
 date: 2019-01-24
 linktitle: "Conditional requests and responses"
 title: Conditional requests and responses with CEL
@@ -112,6 +112,10 @@ You can use the following variables inside the `check_expr`:
 - `resp_metadata_headers`: Returns an array with all the headers of the response
 - `resp_data`: An object with all the data captured in the response. Using the dot notation, you can access its fields, e.g.:`resp_data.user_id`. If you use the `group` operator in the backend, then you need to add it to access the object, e.g., `resp_data.mygroup.user_id`
 - `now`: An object containing the current timestamp
+
+{{< note title="A note on response metadata" >}}
+The response metadata is only filled for no-op pipes. In non no-op cases it will be always empty, and the pipe will end the execution by itself if the status code is not 200/201.
+{{< /note >}}
 
 ### Variables for the JWT rejecter
 You can also use CEL expressions during the JWT token validation. Use the `JWT` variable to access its metadata. For instance:
@@ -236,7 +240,7 @@ The following example is a bit more complex, as it **combines the sequential pro
                 },
                 {
                     "url_pattern": "/__debug/1?ignore={resp0_message}",
-                    "group": "sequence1",
+                    "group": "sequence-1",
                     "extra_config": {
                         "validation/cel": [
                             {
@@ -247,18 +251,18 @@ The following example is a bit more complex, as it **combines the sequential pro
                 },
                 {
                     "url_pattern": "/__debug/2",
-                    "group": "sequence2",
+                    "group": "sequence-2",
                     "extra_config": {
                         "validation/cel": [
                             {
-                                "check_expr": "resp_data.sequence2.message == 'pong'"
+                                "check_expr": "resp_data.sequence-2.message == 'pong'"
                             }
                         ]
                     }
                 },
                 {
                     "url_pattern": "/__debug/3",
-                    "group": "sequence3",
+                    "group": "sequence-3",
                     "extra_config": {
                         "validation/cel": [
                             {
@@ -269,7 +273,7 @@ The following example is a bit more complex, as it **combines the sequential pro
                 },
                 {
                     "url_pattern": "/__debug/4",
-                    "group": "sequence4",
+                    "group": "sequence-4",
                     "extra_config": {
                         "validation/cel": [
                             {
