@@ -113,6 +113,10 @@ You can use the following variables inside the `check_expr`:
 - `resp_data`: An object with all the data captured in the response. Using the dot notation, you can access its fields, e.g.:`resp_data.user_id`. If you use the `group` operator in the backend, then you need to add it to access the object, e.g., `resp_data.mygroup.user_id`
 - `now`: An object containing the current timestamp
 
+{{< note title="A note on response metadata" >}}
+The response metadata is only filled for no-op pipes. In non no-op cases it will be always empty, and the pipe will end the execution by itself if the status code is not 200/201.
+{{< /note >}}
+
 ### Variables for the JWT rejecter
 You can also use CEL expressions during the JWT token validation. Use the `JWT` variable to access its metadata. For instance:
 
