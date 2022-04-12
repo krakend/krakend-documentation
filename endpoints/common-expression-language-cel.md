@@ -298,7 +298,7 @@ Here is what it does:
 - The backend 0 (first item in the `backend` list) calls the URL `/__debug/0`. It returns the object `{"message": "pong"}` as per the [debug endpoint](/docs/endpoints/debug-endpoint/) definition.
 - KrakenD will execute the rest of the backends one by one in the order defined, as the proxy is sequential.
 - The next backend 1 will call `/__debug/1?ignore=pong`, as `pong` is the value of `resp0_message`. We are using an `ignore` querystring as if you were unable to modify your backend URL, but it could be part of the URL (e.g: `/__debug/1/{resp0_message}`). You must use at least one `resp_` variable to make KrakenD initialize them properly. In addition, as it has a CEL expression inside, this backend will be called **ONLY** if the backend 0 contains a `message` field. Notice that the backend does not have access to the body of the previous call, but it has access to the parameters in the `url_pattern`. Thus, we can use the `req_params` and access any `{parameter}` as `req_params.Resp0_parameter` (all parameters capitalize the first letter: **R**esp0)
-- The backend 2 will always be triggered but will return the content only when the backend response has a `pong` string in the response. Notice that since we are working with a `group`ed response, the `sequence-2` is inside the expression.
+- The backend 2 will always be triggered but will return the content only when the backend response has a `pong` string in the response. Notice that since we are working with a `group`ed response, the `sequence2` is inside the expression.
 - The backend 3 will be called only if the original request contains a querystring ` foo'
 - The backend 4 will never be called, as the endpoint does not define a `{NEVER_CALLED_BACKEND}` parameter
 
