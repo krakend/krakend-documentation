@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-03-29
+lastmod: 2021-04-12
 date: 2019-01-24
 linktitle: "Conditional requests and responses"
 title: Conditional requests and responses with CEL
@@ -236,7 +236,7 @@ The following example is a bit more complex, as it **combines the sequential pro
                 },
                 {
                     "url_pattern": "/__debug/1?ignore={resp0_message}",
-                    "group": "sequence-1",
+                    "group": "sequence1",
                     "extra_config": {
                         "validation/cel": [
                             {
@@ -247,18 +247,18 @@ The following example is a bit more complex, as it **combines the sequential pro
                 },
                 {
                     "url_pattern": "/__debug/2",
-                    "group": "sequence-2",
+                    "group": "sequence2",
                     "extra_config": {
                         "validation/cel": [
                             {
-                                "check_expr": "resp_data.sequence-2.message == 'pong'"
+                                "check_expr": "resp_data.sequence2.message == 'pong'"
                             }
                         ]
                     }
                 },
                 {
                     "url_pattern": "/__debug/3",
-                    "group": "sequence-3",
+                    "group": "sequence3",
                     "extra_config": {
                         "validation/cel": [
                             {
@@ -269,7 +269,7 @@ The following example is a bit more complex, as it **combines the sequential pro
                 },
                 {
                     "url_pattern": "/__debug/4",
-                    "group": "sequence-4",
+                    "group": "sequence4",
                     "extra_config": {
                         "validation/cel": [
                             {
