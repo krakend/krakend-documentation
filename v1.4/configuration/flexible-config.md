@@ -23,7 +23,7 @@ A template system gives you full flexibility to work with the configuration file
 - Inject variables, like environment settings, into the configuration
 - Use placeholders and reusable code blocks to avoid repeating code
 - Organize your code better when there are multiple developers modifying the gateway
-- Track changes and review code more easily 
+- Track changes and review code more easily
 - Have the full power of the go template  system!
 
 ## Requirements
@@ -52,7 +52,7 @@ For instance, let's assume you decided to organize your configuration as follows
            |   └── db.json
            └── dev
                └── db.json
-       
+
 Then you can run KrakenD from the terminal with this command:
 
 {{< terminal title="Enabling flexible configuration with your custom dirs" >}}
@@ -127,19 +127,18 @@ Go templates allow you to introduce handy stuff like conditionals or loops and a
 ### Advanced functions
 Complementing the [Go built-in template language](http://golang.org/pkg/text/template/), KrakenD adds to the Flexible Configuration more than 100 commonly used template functions using **Sprig**.
 
-Some examples are: 
+Some examples are:
 - String Functions: `trim`, `wrap`, `randAlpha`, `plural` and more.
   - String List Functions: `splitList`, `sortAlpha` and more.
 - Integer Math Functions: `add`, `max`, `mul` and more.
   - Integer Slice Functions: `until`, `untilStep`
-- Float Math Functions: `addf`, `maxf`, `mulf` and more.
 - Date Functions: `now`, `date` and more.
-- Defaults Functions: `default`, `empty`, `coalesce`, `fromJson`, `toJson`, `toPrettyJson`, `toRawJson`, `ternary`
+- Defaults Functions: `default`, `empty`, `coalesce`, `toJson`, `toPrettyJson`, `ternary`
 - Encoding Functions: `b64enc`, `b64dec` and more.
 - Lists and List Functions: `list`, `first`, `uniq` and more.
-- Dictionaries and Dict Functions: `get`, `set`, `dict`, `hasKey`, `pluck`, `dig`, `deepCopy` and more.
+- Dictionaries and Dict Functions: `set`, `dict`, `hasKey`, `pluck`, `deepCopy` and more.
 - Type Conversion Functions: `atoi`, `int64`, `toString` and more.
-- Path and Filepath Functions: `base`, `dir`, `ext`, `clean`, `isAbs`, `osBase`, `osDir`, `osExt`, `osClean`, `osIsAbs`
+- Path and Filepath Functions: `base`, `dir`, `ext`, `clean`, `isAbs`
 - Flow Control Functions: `fail`
 - Advanced Functions
   - UUID Functions: `uuidv4`

@@ -139,14 +139,13 @@ Some examples are:
   - String List Functions: `splitList`, `sortAlpha` and more.
 - Integer Math Functions: `add`, `max`, `mul` and more.
   - Integer Slice Functions: `until`, `untilStep`
-- Float Math Functions: `addf`, `maxf`, `mulf` and more.
 - Date Functions: `now`, `date` and more.
-- Defaults Functions: `default`, `empty`, `coalesce`, `fromJson`, `toJson`, `toPrettyJson`, `toRawJson`, `ternary`
+- Defaults Functions: `default`, `empty`, `coalesce`, `toJson`, `toPrettyJson`, `ternary`
 - Encoding Functions: `b64enc`, `b64dec` and more.
 - Lists and List Functions: `list`, `first`, `uniq` and more.
-- Dictionaries and Dict Functions: `get`, `set`, `dict`, `hasKey`, `pluck`, `dig`, `deepCopy` and more.
+- Dictionaries and Dict Functions: `set`, `dict`, `hasKey`, `pluck`, `deepCopy` and more.
 - Type Conversion Functions: `atoi`, `int64`, `toString` and more.
-- Path and Filepath Functions: `base`, `dir`, `ext`, `clean`, `isAbs`, `osBase`, `osDir`, `osExt`, `osClean`, `osIsAbs`
+- Path and Filepath Functions: `base`, `dir`, `ext`, `clean`, `isAbs`
 - Flow Control Functions: `fail`
 - Advanced Functions
   - UUID Functions: `uuidv4`
