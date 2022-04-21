@@ -56,7 +56,7 @@ Then you can run KrakenD from the terminal with this command:
 
 {{< terminal title="Enabling flexible configuration with your custom dirs" >}}
 FC_ENABLE=1 \
-FC_SETTINGS="config/prod/settings" \
+FC_SETTINGS="config/settings/prod" \
 FC_PARTIALS="config/partials" \
 FC_TEMPLATES="config/templates" \
 krakend run -c "config/krakend.json"
