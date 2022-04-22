@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2022-04-06
 date: 2019-02-22
 toc: true
 linktitle: No-op (proxy only)
@@ -48,10 +48,7 @@ Examples:
 
 
 ## How to use `no-op`
-To declare endpoints that go directly to the backend as they are you need to define the `no-op` encoding **both** in the `endpoint` **and** the `backend` section, specifically:
-
-  - Add `"output_encoding": "no-op"` in the `endpoint` section
-  - Add `"encoding": "no-op"` in the `backend` section
+To declare endpoints that return the backend response as it is you need to define `"output_encoding": "no-op"`. KrakenD will set the `"encoding": "no-op"` in the `backend` section automatically, ignoring any different value you might have set.
 
 When using the no-op encoding remember that the endpoint can only have **one backend** as KrakenD is not going to inspect or manipulate the response (no merging happens). Also, other pipe options like the concurrent requests, the circuit breaker, or the backend rate-limit specific to the proxy pipe aren't available (but still have endpoint rate limit -> router pipe).
 
