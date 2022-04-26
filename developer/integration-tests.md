@@ -1,18 +1,18 @@
 ---
 lastmod: 2021-12-11
 date: 2021-12-11
+aliases: ["/docs/deploying/integration-tests/"]
 linktitle: Run integration tests
 title: Automated integration tests
+notoc: true
 menu:
   community_current:
-    parent: "110 Deployment and Go-Live"
+    parent: "140 Developer Tools"
 weight: 30
 ---
 In addition to checking the syntax of your KrakenD configuration and make sure that the gateway can start, you can run **integration tests** to make sure that the gateway returns the expected content from the consumed backends. to make sure all endpoints are properly connected and that they reply with the expected content. To do that, you can use the library that KrakenD is relying on to run its **integration tests**, and complement the unit testing battery.
 
 KrakenD comes with a small program that lets you define a folder with tests and execute them all at once, reporting any failures it found.
-
-
 
 The way this library works is quite simple. You create a folder with all the different specs you want to tested, one per file. Each file is a `.json` file with two keys:
 
