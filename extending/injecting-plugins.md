@@ -31,7 +31,7 @@ KrakenD registers plugins **during startup** according to its plugin configurati
 {{< /highlight >}}
 Add the `plugin` keyword at the root of your configuration to let KrakenD know the rules to register plugins. The **mandatory** options you need to declare are:
 
-- `folder` (*string*): The directory path in the filesystem where all the plugins you **want to load** are. **MUST END IN SLASH**. The folder can be a relative or absolute path, but end it in slash!. E.g: KrakenD Enterprise stores the plugins in the path  `/opt/krakend/plugins/`.
+- `folder` (*string*): The directory path in the filesystem where all the plugins you **want to load** are. The folder can be a relative or absolute path!. E.g: KrakenD Enterprise stores the plugins in the path  `/opt/krakend/plugins/`.
 - `pattern` (*string*): The pattern narrows down the folder's contents and acts as a filter. It represents the **substring that must be present** in the plugin name to load. KrakenD will load any plugin with a `.so` extension in the example above. You could also use any prefix or suffix to match the content or even the full name of a single plugin. For instance, if you want to load the rewrite plugin, use `"pattern":"krakend-rewrite.so"`, or use `-prod.so` to load all safe production plugins ending with that suffix. The rules are up to you.
 
 Place the plugin in the folder you have declared in the configuration and start KrakenD. At this point and with the previous configuration, you have **registered plugins during startup**, and you should see a line early in the logs when starting KrakenD. The log lines depend on the type of plugin you have chosen, an example:

@@ -111,7 +111,8 @@ type ResponseWrapper interface {
     Data() map[string]interface{}
     Io() io.Reader
     IsComplete() bool
-    Metadata() proxy.ResponseMetadataWrapper
+    StatusCode() int
+    Headers() map[string][]string
 }
 {{< /highlight >}}
 
@@ -185,8 +186,8 @@ func (r registerer) responseDump(
 
         fmt.Println("data:", resp.Data())
         fmt.Println("is complete:", resp.IsComplete())
-        fmt.Println("headers:", resp.Metadata().Headers())
-        fmt.Println("status code:", resp.Metadata().StatusCode())
+        fmt.Println("headers:", resp.Headers())
+        fmt.Println("status code:", resp.StatusCode())
 
         return input, nil
     }

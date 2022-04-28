@@ -1,7 +1,7 @@
 ---
 lastmod: 2022-01-28
 date: 2022-01-28
-linktitle: Throttling clusters
+linktitle: Cluster rate-limit
 title: Stateless rate-limiting on clusters
 weight: 100
 notoc: true
