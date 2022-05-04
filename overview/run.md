@@ -17,14 +17,7 @@ After installing KrakenD, you can start using KrakenD by typing `krakend`. To se
 {{< terminal title="Run command help" >}}
 krakend run -h
 
-`7MMF' `YMM'                  `7MM                         `7MM"""Yb.
-  MM   .M'                      MM                           MM    `Yb.
-  MM .d"     `7Mb,od8 ,6"Yb.    MM  ,MP'.gP"Ya `7MMpMMMb.    MM     `Mb
-  MMMMM.       MM' "'8)   MM    MM ;Y  ,M'   Yb  MM    MM    MM      MM
-  MM  VMA      MM     ,pm9MM    MM;Mm  8M""""""  MM    MM    MM     ,MP
-  MM   `MM.    MM    8M   MM    MM `Mb.YM.    ,  MM    MM    MM    ,dP'
-.JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'
-_______________________________________________________________________
+{{< ascii-logo >}}
 
 Version: {{< version >}}
 

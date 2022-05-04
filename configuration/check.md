@@ -35,15 +35,7 @@ The `krakend check` command accepts the following options:
 
 {{< terminal title="Usage of KrakenD check" >}}
 ./krakend check -h
-
-`7MMF' `YMM'                  `7MM                         `7MM"""Yb.
-  MM   .M'                      MM                           MM    `Yb.
-  MM .d"     `7Mb,od8 ,6"Yb.    MM  ,MP'.gP"Ya `7MMpMMMb.    MM     `Mb
-  MMMMM.       MM' "'8)   MM    MM ;Y  ,M'   Yb  MM    MM    MM      MM
-  MM  VMA      MM     ,pm9MM    MM;Mm  8M""""""  MM    MM    MM     ,MP
-  MM   `MM.    MM    8M   MM    MM `Mb.YM.    ,  MM    MM    MM    ,dP'
-.JMML.   MMb..JMML.  `Moo9^Yo..JMML. YA.`Mbmmd'.JMML  JMML..JMMmmmdP'
-_______________________________________________________________________
+{{< ascii-logo >}}
 
 Version: {{< version >}}
 
@@ -72,12 +64,10 @@ Flags:
 Use `krakend check` in combination with the following flags:
 
 - `-c` or `--config` to specify the path to the configuration file in any of the [supported formats](/docs/configuration/supported-formats/), or to the starting template if used in combination with flexible configuration.
-- `-d' or `--debug` (*optional*) to enable the debug and see information about how KrakenD is interpreting your configuration file. Use from 1 to 3 levels of verbosity using `-d', `-dd`, or `-ddd`.
+- `-d` or `--debug` (*optional*) to enable the debug and see information about how KrakenD is interpreting your configuration file. Use from 1 to 3 levels of verbosity using `-d`, `-dd`, or `-ddd`.
 - `-t` or `--test-gin-routes` (*optional*) to test the configuration by trying to start the service for a second. This option is highly recommended as it prevents conflicting routes and other problems unrelated to the linting itself and would end up in a *panic*.
 - `-l` or `--lint` (*optional*) to check that your configuration file is properly linted and does not contain unrecognized options or wrong types. **Your configuration must be in JSON format**. This option requires Internet access as the schema is published online under `https://www.krakend.io/schema/v3.json`.
 - `-i` or `--indent` (*optional*) in combination with `-d`, to change the indentation when the debug information renders (default: `TAB`). E.g.: `-i "#" ` uses a hash instead of a tab for every nesting level.
-
-
 
 {{< note title="Use --lint to do strict parsing" >}}
 The command `krakend run` will run any syntax-valid file, **ignoring unknown configuration keys**. Use the `--lint` flag in the check command to find incorrect entries.
