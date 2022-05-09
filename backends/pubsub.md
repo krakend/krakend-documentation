@@ -161,7 +161,7 @@ Url: `awssqs://sqs-queue-url`
 
 {{< highlight json >}}
 {
-	"host": ["awssqs://https://sqs.us-east-2.amazonaws.com/123456789012"],
+	"host": ["awssqs://sqs.us-east-2.amazonaws.com/123456789012"],
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
