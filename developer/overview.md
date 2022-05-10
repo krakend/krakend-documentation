@@ -5,21 +5,23 @@ linktitle: Developer Tools
 menu:
   community_current:
     parent: "140 Developer Tools"
-title: Developer Tools
+title: Custom developer tools
 weight: 10
 ---
 
-There are some resources that make your life easier when developing with KrakenD. These tools are meant to be used only in development and **never in production**
+There are some additional resources that might help you when developing with KrakenD. These tools are meant to be used only in development and **never in production**, they are **not bundled with KrakenD** and are separate components that you must compile.
 
 ## Hot reload the configuration
-A Docker image using Reflex watches the configuration directory and reloads KrakenD when the configuration changes. This is very convenient while you are developing as it allows you to test new changes without having to restart manually and making the process less tedious.
+There is an additional KrakenD Docker image using Reflex to watch the configuration directory and reload KrakenD when there are changes. This is very convenient while you are developing as it allows you to test new changes without having to restart manually and making the process less tedious.
 
-[More information in our blog post](https://www.krakend.io/blog/reloading-the-krakend-configuration/)
+You can use the Docker image `docker pull devopsfaith/krakend:config-watcher`
 
-## Generate graphs from configuration
-The [config2dot](https://github.com/devopsfaith/krakend-config2dot) is a tool to create graphs automatically after reading your configuration file `krakend.json`.
+[More information in our blog post](/blog/reloading-the-krakend-configuration/)
 
-![Config2Dot example](https://github.com/devopsfaith/krakend-config2dot/blob/master/docs/config_1.png?raw=true)
+## Generating an image with the configuration
+The [config2dot](https://github.com/devopsfaith/krakend-config2dot) is a tool to create graphs automatically after reading your configuration file `krakend.json`. For instance:
+
+![config2dot example](/images/documentation/config2dot.png)
 
 ## Debugging the activity
 ### krakend-memviz

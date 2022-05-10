@@ -180,7 +180,7 @@ KrakenD passes only these essential headers to the backends:
 
 - `Accept-Encoding`
 - `Host`
-- `User-Agent` (KrakenD Version {{< version >}})
+- `User-Agent` (KrakenD Version {{< product latest_version >}})
 - `X-Forwarded-For`
 - `X-Forwarded-Host`
 - `X-Forwarded-Via` (only when `User-Agent` is in the `input_headers`)

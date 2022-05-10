@@ -84,7 +84,7 @@ Automate the go-live process through a [CI/CD pipeline](/docs/deploying/ci-cd/) 
 On Docker deployments, creating an immutable Docker image with your desired configuration takes a few seconds in your CI/CD pipeline. Create a `Dockerfile` with at least the following code and deploy the resulting image in production:
 
 {{< highlight Dockerfile >}}
-FROM devopsfaith/krakend
+FROM {{< product image >}}:{{< product latest_version >}}
 COPY krakend.json /etc/krakend/krakend.json
 {{< /highlight >}}
 

@@ -33,7 +33,7 @@ The `krakend check-plugin` command accepts the following options:
 
 {{< ascii-logo >}}
 
-Version: {{< version >}}
+Version: {{< product latest_version >}}
 
 Validates that the active configuration file has a valid syntax to run the service.
 Change the configuration file by using the --config flag

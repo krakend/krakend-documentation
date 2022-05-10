@@ -19,7 +19,7 @@ krakend run -h
 
 {{< ascii-logo >}}
 
-Version: {{< version >}}
+Version: {{< product latest_version >}}
 
 The API Gateway builder
 
@@ -61,7 +61,7 @@ krakend run -c krakend.json
 Or if you use Docker:
 
 {{< terminal title="Command to start KrakenD with Docker" >}}
-docker run -p "8080:8080" -v $PWD:/etc/krakend/ devopsfaith/krakend run -c /etc/krakend/krakend.json
+docker run -p "8080:8080" -v $PWD:/etc/krakend/ {{< product image >}}:{{< product latest_version >}} run -c /etc/krakend/krakend.json
 {{< /terminal >}}
 
 Now KrakenD is listening on `8080`, and you can see it working under `http://localhost:8080/__health`.

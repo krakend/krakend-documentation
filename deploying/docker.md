@@ -8,12 +8,11 @@ menu:
     parent: "110 Deployment and Go-Live"
 weight: 20
 ---
-
 If you use containers, the recommended approach is to write your own `Dockerfile` and deploy an **immutable artifact** (embedding the config).
 
 In its simplified form would be:
 {{< highlight Dockerfile >}}
-FROM devopsfaith/krakend
+FROM {{< product image >}}:{{< product latest_version >}}
 COPY krakend.json /etc/krakend/krakend.json
 {{< /highlight >}}
 
@@ -24,7 +23,7 @@ Even though you can use the official container directly and attach the configura
 A more real-life example illustrates below a combination of the `check` command with a multi-stage build to compile a [flexible configuration](/docs/configuration/flexible-config/) in a `Dockerfile`:
 
 {{< highlight docker >}}
-FROM devopsfaith/krakend as builder
+FROM {{< product image >}}:{{< product latest_version >}} as builder
 ARG ENV=prod
 
 COPY krakend.tmpl .
@@ -38,7 +37,10 @@ RUN FC_ENABLE=1 \
     FC_TEMPLATES="/etc/krakend/templates" \
     krakend check -d -t -c krakend.tmpl
 
-FROM devopsfaith/krakend
+# The linting needs the final krakend.json file
+RUN krakend check -c /tmp/krakend.json --lint
+
+FROM {{< product image >}}:{{< product latest_version >}}
 COPY --from=builder --chown=krakend /tmp/krakend.json .
 {{< /highlight >}}
 

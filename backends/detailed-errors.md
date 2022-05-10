@@ -4,8 +4,6 @@ date: 2019-10-02
 linktitle: Return backend errors
 title: Returning the details of backend errors
 weight: 130
-#since: 0.9
-#source: https://github.com/devopsfaith/krakend
 menu:
   community_current:
     parent: "050 Backends Configuration"

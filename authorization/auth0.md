@@ -8,7 +8,7 @@ menu:
   community_current:
     parent: "060 Authentication & Authorization"
 meta:
-  #since: 
+  #since:
   source: https://github.com/devopsfaith/krakend-jose
   namespace:
   - auth/validator
@@ -100,11 +100,11 @@ The previous screenshots correspond to a configuration like the one it follows (
 That's all you need for the basic configuration! You can expand the structure now to include checking specific roles, claims, etc.
 
 ### Testing the configuration
-The gateway will use itself as a backend. Make sure to replace the `backend` configuration with your API configuration. 
+The gateway will use itself as a backend. Make sure to replace the `backend` configuration with your API configuration.
 
 Let's open a terminal now and from the folder where we create our `krakend.json` file we run:
 {{< terminal title="Start the gateway with your configuration">}}
-docker run --rm -v "$PWD:/etc/krakend" -p "8080:8080" devopsfaith/krakend
+docker run --rm -v "$PWD:/etc/krakend" -p "8080:8080" {{< product image >}}:{{< product latest_version >}}
 {{< /terminal >}}
 
 The API Gateway is listening in port `8080` now, let's check the `/__health` endpoint, which is unprotected:

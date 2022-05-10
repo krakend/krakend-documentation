@@ -50,4 +50,4 @@ Default status codes can be overridden per endpoint, following different impleme
 - **[Using no-operation](/docs/endpoints/no-op/)**: When your call is not idempotent (i.e., a write operation), and you want the client to receive whatever the backend is responding.
 - **[Using a Lua script](/docs/endpoints/lua/)**: To write in the configuration any logic, you need to evaluate and return a `custom_error`, with any status code of your choice.
 - As `custom_error` will end the pipe execution. If you just want to alter the status code, you can (in a no-op pipe) use the `statusCode` dynamic helper on the response.
-- **Injecting your own [HTTPStatusHandler](https://github.com/devopsfaith/krakend/issues/102#issuecomment-373657911)**
+- **Injecting your own [HTTPStatusHandler](https://github.com/luraproject/lura/issues/102#issuecomment-373657911)**

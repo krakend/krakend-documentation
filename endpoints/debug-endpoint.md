@@ -101,7 +101,7 @@ In the KrakenD log, we can see that `a`, `b`, and `c` do not appear in the backe
     DEBUG: URL: /__debug/default
     DEBUG: Query: map[]
     DEBUG: Params: [{param /default}]
-    DEBUG: Headers: map[User-Agent:[KrakenD Version {{< version >}}] X-Forwarded-For:[::1] Accept-Encoding:[gzip]]
+    DEBUG: Headers: map[User-Agent:[KrakenD Version {{< product latest_version >}}] X-Forwarded-For:[::1] Accept-Encoding:[gzip]]
     DEBUG: Body:
     [GIN] 2018/11/27 - 22:32:44 | 200 |     118.543µs |             ::1 | GET      /__debug/default
     [GIN] 2018/11/27 - 22:32:44 | 200 |     565.971µs |             ::1 | GET      /default-behavior?a=1&b=2&c=3

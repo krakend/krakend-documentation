@@ -14,7 +14,7 @@ images:
 
 KrakenD allows you to perform several manipulations of the responses out of the box, just by adding them to the configuration file. You can also add your own or 3rd parties middlewares to extend this behavior.
 
-KrakenD manipulations are measured in `nanoseconds`, you can find the benchmark for every response manipulation in the [benchmarks](https://github.com/devopsfaith/krakend/blob/master/docs/BENCHMARKS.md#response-manipulation)
+KrakenD manipulations are measured in `nanoseconds`, you can find the benchmark for every response manipulation in the [benchmarks](https://github.com/luraproject/lura/blob/master/docs/BENCHMARKS.md#response-manipulation)
 
 The following manipulations are available by default:
 
@@ -108,7 +108,7 @@ Imagine an endpoint with the following configuration:
 }
 {{< /highlight >}}
 
-	
+
 
 When a user calls the endpoint `/users/1`, KrakenD will send two requests and, in the happy scenario, it will receive these responses:
 
