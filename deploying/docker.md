@@ -3,6 +3,7 @@ lastmod: 2021-12-07
 date: 2021-12-07
 linktitle: Docker artifact
 title: Generating a Docker artifact
+notoc: true
 menu:
   community_current:
     parent: "110 Deployment and Go-Live"
@@ -14,6 +15,8 @@ In its simplified form would be:
 {{< highlight Dockerfile >}}
 FROM {{< product image >}}:{{< product latest_version >}}
 COPY krakend.json /etc/krakend/krakend.json
+# Uncomment with Enterprise image:
+# COPY LICENSE /etc/krakend/LICENSE
 {{< /highlight >}}
 
 {{< note title="Volume or copy?" type="question" >}}
@@ -42,6 +45,8 @@ RUN krakend check -c /tmp/krakend.json --lint
 
 FROM {{< product image >}}:{{< product latest_version >}}
 COPY --from=builder --chown=krakend /tmp/krakend.json .
+# Uncomment with Enterprise image:
+# COPY LICENSE /etc/krakend/LICENSE
 {{< /highlight >}}
 
 The `Dockerfile` above has two stages:
