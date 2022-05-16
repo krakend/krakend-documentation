@@ -32,7 +32,7 @@ The following configuration snippet sends data to your InfluxDB:
             "timeout": "1s",
             "username": "your-influxdb-user",
             "password": "your-influxdb-password"
-        },
+        }
       }
     }
 
