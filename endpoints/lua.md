@@ -1,8 +1,8 @@
 ---
-lastmod: 2021-06-13
+lastmod: 2022-05-17
 date: 2019-09-15
 linktitle:  Lua scripting
-title: Transformations using Lua scripting
+title: Lua scripting
 weight: 90
 menu:
   community_current:
@@ -19,20 +19,27 @@ meta:
   - backend
   - async_agent
   log_prefix:
-  - "[SERVICE: Gin][Botdetector]"
   - "[ENDPOINT: /foo][Lua]"
   - "[BACKEND: /foo][Lua]"
 ---
 
-Scripting with Lua is an additional choice to extend your business logic, and is compatible with the rest of options such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or other Go plugins and middlewares.
+Scripting with Lua allows you to extend your business logic and make **transformations on requests and responses**. The Lua module is compatible with the rest of components such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or other [Go plugins](/docs/extending/introduction/) and middlewares.
 
-If you are more familiar with Lua than Go, this module can help you solve exceptional cases that need solution using a little bit of scripting. The introduction of Lua scripts in your Gateway does not require to recompile KrakenD, but unlike Go, Lua scripts are interpreted in real-time.
+The introduction of Lua scripts in your Gateway does not require recompiling KrakenD, but unlike Go, Lua scripts are interpreted in real-time. If you are new to Lua, see [Lua Documentation](https://www.lua.org/).
 
-For performance-first users, a Go plugin delivers much better results than a Lua script.
+{{< note title="Lua vs Go Plugins" type="note" >}}
+A [Go plugin](/docs/extending/introduction/) delivers much more speed and power than a Lua script for performance-first seeking users, but requires a little bit more work as you need to compile your plugins and side-load them on KrakenD.
+{{< /note >}}
 
 ## Configuration
 
-KrakenD looks for the lua scripts in the root folder where KrakenD is running. You need to specify in the configuration which lua scripts are going to be loaded in Krakend, as well as several options. The `extra_config` can be set at `endpoint` level or `backend` level.
+You can add your Lua scripts under the `extra_config` at the `endpoint` level or the `backend` level. You can choose **three different namespaces** (explained below):
+
+- `"modifier/lua-endpoint"`
+- `"modifier/lua-proxy"`
+- `"modifier/lua-backend"`
+
+The configuration options are:
 
 {{< highlight json >}}
 {
@@ -54,160 +61,209 @@ KrakenD looks for the lua scripts in the root folder where KrakenD is running. Y
 }
 {{< /highlight >}}
 
+- `sources`: An array with all the external files that KrakenD will include in the first place. You can define the functions in external files and refer them on `pre` or `post`.
+- `md5`: (optional) The md5sum of each Lua file. Used to make sure that a 3rd party has not modified the file.
+- `pre`: The inline Lua code that is executed before performing the request.
+- `post`: The inline Lia code that is execute after the request. **Available when used in the `backend` section**.
+- `live`: Live reload of the script in every execution. Set to `true` if you intend to modify the Lua script while KrakenD is running (mostly during development)
+`allow_open_libs`: As an efficiency point, the regular Lua libraries are not open by default. But if you need to use the Lua libraries (for file io for example), then set this to true.  If not present, the default value is `false`.
+- `skip_next`: Only to be set when in a `backend` section, skips the query to the next backend.
 
-- `sources`: An array with all the external files that will be included. You can add in those files the functions called by `pre` or `post` evaluators.
-- `md5`: (optional) The md5sum of each file that must match the one found in the disk. Used to make sure that the file has not been modified by a 3rd party.
-- `pre` and `post` contain the code to start the execution in every step. `post` is only available when Lua is placed in the `backend` section.
-- `live`: Live reload of the script in every execution
-- `allow_open_libs`: The regular lua libraries are not open by default, as an efficiency point. But if you need to use the lua libraries (for file io for example), then set this to true.  If not present, default value is false.
-- `skip_next`: only to be set when in a `backend` section, skips the query to the next backend.
-
-{{< note title="A note on client headers" >}}
-When **client headers** are needed, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
+{{< note title="Using client headers and querystrings" >}}
+When **client headers** or **query strings** are needed in a script, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) or [`input_query_strings`](/docs/endpoints/parameter-forwarding/#query-string-forwarding) accordingly.
 {{< /note >}}
 
-## Namespaces (component name)
+## Configuration placement and sequence of execution
+When running Lua scripts, you can place them at the `proxy` level, or the `router` level:
 
-There are three namespaces that are used for the lua component.
+![lua namespaces](/images/documentation/diagrams/lua.mmd.png)
 
-Under the `endpoint` section use the namespaces (these are described in the next section):
+These two places have the following considerations:
 
-- `"modifier/lua-proxy"`
-- `"modifier/lua-endpoint"`
+- **Router** (at `endpoint`'s `extra_config`): Communication between the end-user and KrakenD. You can inspect and modify the **request** of the user.
+  - With `"modifier/lua-endpoint"`you can modify the **HTTP request context** early in the transport layer. However, KrakenD has not converted the request into an internal request just yet.
+  - With `"modifier/lua-proxy"`you can modify the internal KrakenD request before reaching all backends in the endpoint and modify the response **AFTER the merge** of all backends.
+- **Proxy** (at `backend`'s `extra_config`): Communication between KrakenD and your services. For both the **request** and the **response**.
+  - With `"modifier/lua-backend"`you can modify the internal KrakenD request before reaching a particular backend and change its response **BEFORE is passed for the merge** of backends at the endpoint level.
 
-Under the `backend` use the name space:
+In a request/response execution, this is how the different namespaces for Lua placement work:
 
-- `"modifier/lua-backend"`
+![Lua - Sequence of execution](/images/documentation/diagrams/lua-2.mmd.png)
 
-## Supported Lua types (cheatsheet)
+## Functions for Proxy
 
-When running Lua scripts on KrakenD, there are two different types you can use in their coding. Depending on the place of the pipe you want to place the script you can use a `proxy` type or a `router` type:
+You can use the following Lua functions to access and manipulate requests and responses in `"modifier/lua-proxy"` and `"modifier/lua-backend"` namespaces.
 
-    End User <--[router]--> KrakenD <--[proxy]--> Services
+### Request functions (`request`)
+If you have a script that needs access to the request, use the `request` object in Lua. The request is set when KrakenD is about to do a call to the backend services. The `request.` functions are:
 
-These two types are described as follows:
+*   `load()` (_Static_): The constructor to view and manipulate requests. E.g.: `local r = request.load()`. **Notice that the rest of the functions rely on this one**.
+*   `method()` (_Dynamic_): Getter that retrieves the method of the request. E.g.: `r:method()` could return a string `GET`.
+*   `method(value)` (_Dynamic_): Setter that changes the method of the request. E.g.: `r:method('POST')`.
+*   `path()` (_Dynamic_): Getter that retrieves the path of the request. E.g.: `r:path()` could return a string `/foo/var`.
+*   `path(value)` (_Dynamic_): Setter that changes the path of the request. E.g.: `r:path('/foo/var')`.
+*   `query()` (_Dynamic_): Getter that retrieves the query string of the request, URL encoded. E.g.: `r:query()` could return a string `?foo=var&vaz=42`.
+*   `query(value)` (_Dynamic_): Setter that changes the query of the request. E.g.: `r:query('?foo=var&vaz=42')`.
+*   `url()` (_Dynamic_): Getter that retrieves the full URL string of the request, including the host and path. E.g.: `r:url()` could return a string `http://domain.com/api/test`. The URL might be empty depending on the step where this information is requested, as the URL is a calculated field just before performing the request to the backend.
+*   `url(value)` (_Dynamic_): Setter that changes the URL of the request. E.g.: `r:url('http://domain.com/api/test')`. Changing the value before the `url` is calculated will result in KrakenD overwriting its value.
+*   `params(param)` (_Dynamic_): Getter that retrieves the `{params}` of the request as defined in the endpoint. E.g.: For an endpoint `/users/{user}` the function `r:params('User')` could return a string `alice`. **The parameters must have the first letter capitalized**.
+*   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. E.g.: `r:params('User','bob')`. **The parameters must have the first letter capitalized**.
+*   `headers(header)` (_Dynamic_): Getter that retrieves the headers of the request as allowed to pass (by `input_headers`) in the endpoint. E.g.: `r:headers('Accept')` could return a string `*/*`.
+*   `headers(header,value)` (_Dynamic_): Setter that changes the headers of the request. E.g.: `r:headers('Accept','*/*')`.
+*   `body()` (_Dynamic_): Getter that retrieves the body of the request sent by the user. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
+*   `body(value)` (_Dynamic_): Setter that changes the body of the request. E.g.: `r:body('{"foo": "bar"}')`.
 
-- Router: The router layer is what happens between the end-user and KrakenD
-- Proxy: The proxy layer is between KrakenD and your services
+### Response functions (`response`)
 
-### `proxy` type
+Scripts that need to modify a request that KrakenD that just got from the backend service.
 
-Use this type when you need to intercept requests and responses between KrakenD and your services.
+*   `load()` (_Static_): The constructor to view and manipulate responses. E.g.: `local r = response.load()`. **Notice that the rest of the functions rely on this one**.
+*   `isComplete()` (_Dynamic_): Getter that returns a boolean if the response from the backend (or a merge of backends) succeeded with a `20x` code, and completed successfully before the timeout. E.g.: `r:isComplete()` returns `true` or `false`.
+*   `isComplete(bool)` (_Dynamic_): Setter that allows you to mark a response as completed. It will change the internal `X-KrakenD-Complete: true` header. E.g.: `r:isComplete(true)` tells KrakenD everything went OK (even not true).
+*   `statusCode()` (_Dynamic_): Getter that retrieves the response status code when you use `no-op` encoding. You will always get a `0` in the other cases. E.g.: `r:statusCode()` returns an integer `200`.
+*   `statusCode(integer)` (_Dynamic_): Setter that allows you to set a new status for the response. E.g.: `r:statusCode(301)`.
+*   `data()` (_Dynamic_): Getter that returns a Lua table with all the parsed data from the response. It only works if you don't use `no-op` encoding.
+*   `data(table)` (_Dynamic_): Setter that lets you assign the whole Lua table with all the parsed data from the response. It will make more sense to do a `local responseData = r:data()` first, and then set individual items with `responseData:set("key", value)` instead. It only works if you don't use `no-op` encoding.
+*   `headers(header)` (_Dynamic_): Getter that retrieves one header from the response when you use `no-op` encoding. In the rest of the responses, you will always get an empty string `''`. E.g.: `r:headers('Content-Type')` returns an integer `application/json`.
+*   `headers(header,value)` (_Dynamic_): Setter that allows you to replace or set a new header for the response when you use `no-op` encoding. E.g.: `r:headers('Content-Type', 'application/json')`.
+*   `body()` (_Dynamic_): Getter that retrieves the body of the response when you use encoding `no-op`. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
+*   `body(value)` (_Dynamic_): Setter that changes the body of the response when you use encoding `no-op`. E.g.: `r:body('{"foo": "bar"}')`.
 
-#### Request
+## Functions for Router
 
-Scripts that need to modify a request that KrakenD is about to do against the backend services.
+Use this type when you need to script the router layer, traffic between end-users, and KrakenD with the `"modifier/lua-endpoint"` namespace.
 
-*   `load` (_Static_)
-*   `method` (_Dynamic_)
-*   `path` (_Dynamic_)
-*   `query` (_Dynamic_)
-*   `url` (_Dynamic_)
-*   `params` (_Dynamic_)
-*   `headers` (_Dynamic_)
-*   `body` (_Dynamic_)
+### Context functions (`ctx`)
 
-Example: Access the request getter with `req:url()` and the setter with `req:url("foo")`.
+*   `load()` (_Static_): The constructor to view and manipulate requests. E.g.: `local c = ctx.load()`. **Notice that the rest of the functions rely on this one**.
+*   `method()` (_Dynamic_): Getter that retrieves the method of the request. E.g.: `c:method()` could return a string `GET`.
+*   `method(value)` (_Dynamic_): Setter that changes the method of the request. E.g.: `c:method('POST')`.
+*   `query()` (_Dynamic_): Getter that retrieves the query string of the request, URL encoded. E.g.: `c:query()` could return a string `?foo=var&vaz=42`.
+*   `query(value)` (_Dynamic_): Setter that changes the query of the request. E.g.: `c:query('?foo=var&vaz=42')`.
+*   `url()` (_Dynamic_): Getter that retrieves the full URL string of the request, including the host and path. E.g.: `c:url()` could return a string `http://domain.com/api/test`. The URL might be empty depending on the step where this information is requested, as the URL is a calculated field just before performing the request to the backend.
+*   `url(value)` (_Dynamic_): Setter that changes the url of the request. E.g.: `c:url('http://domain.com/api/test')`. Changing the value before the `url` is calculated will result in KrakenD overwriting its value.
+*   `params(param)` (_Dynamic_): Getter that retrieves the `{params}` of the request as defined in the endpoint. E.g.: For an endpoint `/users/{user}` the function `c:params('User')` could return a string `alice`. **The parameters must have the first letter capitalized**.
+*   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. E.g.: `c:params('User','bob')`. **The parameters must have the first letter capitalized**.
+*   `headers(header)` (_Dynamic_): Getter that retrieves the headers of the request as allowed to pass (by `input_headers`) in the endpoint. E.g.: `c:headers('Accept')` could return a string `*/*`.
+*   `headers(header,value)` (_Dynamic_): Setter that changes the headers of the request. E.g.: `c:headers('Accept','*/*')`.
+*   `body()` (_Dynamic_): Getter that retrieves the body of the request sent by the user. E.g.: `c:body()` could return a string `{"foo": "bar"}`.
+*   `body(value)` (_Dynamic_): Setter that changes the body of the request. E.g.: `c:body('{"foo": "bar"}')`.
+*   `host()` (_Dynamic_): Getter that retrieves the `Host` header of the request sent by the user. E.g.: `c:host()` could return a string `api.domain.com`.
+*   `host(value)` (_Dynamic_): Setter that changes the host header of the request. E.g.: `c:host('api.domain.com')`.
 
-#### Response
 
-Scripts that need to modify a request that KrakenD is about to get from the backend services.
+## Lua helpers
+Now you know where to put the Lua code according to what you want to do, and how to access and modify the requests and responses. In addition, the following helper functions are brought by KrakenD to extend the possibilities of your scripts without using third parties:
 
-*   `load` (_Static_)
-*   `isComplete` (_Dynamic_)
-*   `statusCode` (_Dynamic_)
-*   `data` (_Dynamic_)
-*   `headers` (_Dynamic_)
-*   `body` (_Dynamic_)
+### Tables helper (`table`)
+To work with associative arrays on Lua you have the following functions:
 
-### `router` type
+*   `get(key)` (_Dynamic_): Retrieves the value of a key inside the table. E.g.: `local r = response.load(); local responseData = r:data(); responseData:get('key')`
+*   `set(key,value)` (_Dynamic_): Adds or replaces a key in the table. E.g.: `local r = response.load(); local responseData = r:data(); responseData:set('key',value)`
+*   `len()` (_Dynamic_): Returns the length of the whole table so you can iterate over it. E.g.: `local r = response.load(); local responseData = r:data(); local length = responseData:len()`
+*   `del(key)` (_Dynamic_): Deletes a key from a table. E.g.: `local r = response.load(); local responseData = r:data(); responseData:del('key')`
 
-Use this type when you need to script the router layer, traffic between end-users and KrakenD.
+An example of Lua script that gets a field `source_result` from a table and sets a new key `result` accordingly by reading the response text (decorator pattern):
 
-#### ctx
+{{< highlight lua >}}
+function post_proxy_decorator( resp )
+  local responseData = resp:data()
+  local responseContent = responseData:get("source_result")
+  local message = responseContent:get("message")
 
-*   `load` (_Static_)
-*   `method` (_Dynamic_)
-*   `query` (_Dynamic_)
-*   `url` (_Dynamic_)
-*   `params` (_Dynamic_)
-*   `headers` (_Dynamic_)
-*   `body` (_Dynamic_)
-*   `host` (_Dynamic_)
+  local c = string.match(message, "Successfully")
 
-## Additional helpers (cheatsheet)
-
-The following helpers are available in your scripts:
-
-### `table`
-
-*   `get` (_Dynamic_)
-*   `set` (_Dynamic_)
-*   `len` (_Dynamic_)
-*   `del` (_Dynamic_)
-
-Example of Lua code to delete an element named `element` from a table:
-
-{{< highlight lua>}}
-t:del("element")
+  if not not c
+  then
+    responseData:set("result", "success")
+  else
+    responseData:set("result", "failed")
+  end
+end
 {{< /highlight >}}
 
-### `list`
+### Collections helper (`list`)
 
-*   `get` (_Dynamic_)
-*   `set` (_Dynamic_)
-*   `len` (_Dynamic_)
-*   `del` (_Dynamic_)
+*   `get(key)` (_Dynamic_): Retrieves the value of a key inside the list. E.g.: `local r = response.load(); local responseData = r:data(); local l = responseData:get('collection'); l:get(1)` gets the item at position 1 from the list.
+*   `set(key,value)` (_Dynamic_): Adds or replaces a key in the list. E.g.: `local r = response.load(); local responseData = r:data(); local l = responseData:get('collection'); l:set(1,value)` sets the value of position `1`.
+*   `len()` (_Dynamic_): Returns the length of the whole list so you can iterate over it. E.g.: `local r = response.load(); local responseData = r:data(); local l = responseData:get('collection'); l:len()`
+*   `del(key)` (_Dynamic_): Deletes an offset from a list. E.g.: `local r = response.load(); local responseData = r:data(); local l = responseData:get('collection'); l:del(1)`
 
-Example of Lua code to replace a list named `collection` with deleted content:
+Example of Lua code that iterates the items under the array `collection` and also uses sets and deletes tables:
 
 {{< highlight lua>}}
-local original_collection = responseData:get("collection")
-original_collection:del(2)
+-- A function that receives a response object through response.load()
+function post_proxy( resp )
+  local data = {}
+  local responseData = resp:data()
+  local col = responseData:get("collection")
+  local size = col:len()
+
+  -- Sets a new attribute "total" in the response with the number of elements in the array
+  responseData:set("total", size)
+
+  local paths = {}
+  for i=0,size-1 do
+    local element = col:get(i)
+    local t = element:get("path")
+    table.insert(paths, t)
+  end
+  responseData:set("paths", paths)
+  responseData:del("collection")
+end
 {{< /highlight >}}
 
-### `http_response`
+### Making additional requests (`http_response`)
+The `http_response` helper allows you to make an additional HTTP request and access its response.
 
-*   `new` (_Static_)
-*   `statusCode` (_Dynamic_)
-*   `headers` (_Dynamic_)
-*   `body` (_Dynamic_)
+*   `new(url)` (_Static_): Constructor. Sets the URL you want to call and makes the request. E.g.: `local r = http_response.new('http://api.domain.com/test')`. **Notice that the rest of the functions rely on this one**. The constructor accepts 1, 3, or 4 arguments, respectively. See examples below.
+*   `statusCode()` (_Dynamic_): Getter for the status code of the response. E.g.: `r:statusCode()` could return `200`
+*   `headers(header)` (_Dynamic_): : Getter for a specific header of the response. E.g.: `r:headers('Content-Type')` could return `application/json`
+*   `body()` (_Dynamic_): Getter for the full response body.
+*   `close()` (_Dynamic_): Closes the HTTP connection to free resources. Although it will be done automatically later by KrakenD, a better approach is to close the resource as soon as you don't need it anymore.
 
-### `custom_error`
+{{< highlight lua >}}
+local url = 'http://api.domain.com/test'
 
-A generic helper in pre and post scripts that allows you to set **custom http status codes**. For instance, when you want to send an immediate response to the client from within a Lua script without further querying the backend, or after evaluating the response of the backend.
+-- Constructor with 1 parameter
+local r = http_response.new(url)
+print(r:statusCode())
+print(r:headers('Content-Type'))
+print(r:body())
+r:close()
+
+-- Constructor with 3 parameters
+local r = http_response.new(url, "POST", '{"foo":"bar"}')
+print(r:statusCode())
+print(r:headers('Content-Type'))
+print(r:body())
+r:close()
+
+-- Constructor with 4 parameters
+local r = http_response.new(url, "POST", '{"foo":"bar"}', {["foo"] = "bar", ["123"] = "456"})
+print(r:statusCode())
+print(r:headers('Content-Type'))
+print(r:body())
+r:close()
+{{< /highlight >}}
+
+### Set custom HTTP status codes (`custom_error`)
+
+A generic helper in pre and post-scripts that allows you to set **custom HTTP status codes**. For instance, when you want to send an immediate response to the client from within a Lua script without further querying the backend, or after evaluating the response of the backend.
 
 It stops the script and the pipe execution.
 
-Example to throw a generic error (`500` status code ) with a message:
+Example of throwing a generic error (`500` status code ) with a message:
 
 {{< highlight lua>}}
 custom_error("Something weird happened")
 {{< /highlight >}}
 
-Or even changing the http status code (`418 I'm a teapot`)
+Or even changing the HTTP status code (`418 I'm a teapot`)
 
 {{< highlight lua>}}
 custom_error("I refuse to make any coffee, I'm a teapot!", 418)
 {{< /highlight >}}
-
-
-## Sequence of execution
-
-Request sequence:
-
-1. Router  "source" files
-2. Router  "pre" logic
-3. Proxy   "source" files
-4. Proxy   "pre" logic
-5. Backend "source" files
-6. Backend "pre" logic
-
-
-The returned response then goes through:
-
-7. Backend "post" logic
-8. Proxy   "post" logic
 
 ## Lua examples in different pipes
 The following snippets show how to add Lua code in different sections.
