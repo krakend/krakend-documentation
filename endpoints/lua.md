@@ -95,7 +95,7 @@ In a request/response execution, this is how the different namespaces for Lua pl
 You can use the following Lua functions to access and manipulate requests and responses in `"modifier/lua-proxy"` and `"modifier/lua-backend"` namespaces.
 
 ### Request functions (`request`)
-If you have a script that needs access to the request, use the `request` object in Lua. The request is set when KrakenD is about to do a call to the backend services. The `request.` functions are:
+If you have a script that needs access to the request, use the `request` object in Lua. The request is set when KrakenD is about to do a call to the backend services. The `request` functions are:
 
 *   `load()` (_Static_): The constructor to view and manipulate requests. E.g.: `local r = request.load()`. **Notice that the rest of the functions rely on this one**.
 *   `method()` (_Dynamic_): Getter that retrieves the method of the request. E.g.: `r:method()` could return a string `GET`.
