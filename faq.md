@@ -72,3 +72,6 @@ The following names cannot be used as endpoint names as they are reserved:
     /__stats
     /__health
     /favicon.ico
+
+## I have found a vulnerability
+If you think you have find a security problem, please [report us the vulnerability](/security-policy/)
