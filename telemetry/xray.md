@@ -43,11 +43,11 @@ The following configuration snippet sends data to your X-Ray:
 }
 {{< /highlight >}}
 
-- `version`: The version of the AWS X-Ray service to use.
-- `region`: The AWS geographical region.
-- `use_env`: When `true` the AWS credentials (`access_key_id` and `secret_access_key`) are taken from environment vars. Don't specify them then.
-- `access_key_id`: Your access key ID provided by Amazon. Needed when `use_env` is unset or set to `false`.
-- `secret_access_key`: Your secret access key provided by Amazon. Needed when `use_env` is unset or set to `false`.
+- `version` (*string*): The version of the running application that is reporting data. Defaults to `KrakenD-opencensus`.
+- `region` (*string*): The AWS geographical region.
+- `use_env` (*boolean*): When `true` the AWS credentials (`access_key_id` and `secret_access_key`) are taken from environment vars. Don't specify them then.
+- `access_key_id` (*string*): Your access key ID provided by Amazon. Needed when `use_env` is unset or set to `false`.
+- `secret_access_key` (*string*): Your secret access key provided by Amazon. Needed when `use_env` is unset or set to `false`.
 
 
 See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
