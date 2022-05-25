@@ -6,7 +6,7 @@ menu:
   community_current:
     parent: "010 Configuration file(s)"
 title: Migrating config from KrakenD 1.x or 0.x
-weight: 100
+weight: 1000
 ---
 
 The KrakenD 2.0 release is a major version that **simplifies the configuration** of `v1.x` and **standardizes field names** that were using different criteria to declare the attributes.

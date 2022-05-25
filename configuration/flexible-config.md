@@ -1,7 +1,7 @@
 ---
 lastmod: 2020-06-13
 date: 2018-09-21
-linktitle: Multiple configuration files
+linktitle: Flexible configuration
 source: https://github.com/devopsfaith/krakend-flexibleconfig
 since: 0.5
 menu:
