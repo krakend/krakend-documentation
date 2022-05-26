@@ -378,5 +378,5 @@ See [Manipulating arrays - flatmap](/docs/backends/flatmap/)
 ## More advanced manipulations
 If you need more sophisticated manipulation options, there are two different approaches you can use:
 
-- Through [Reponse modifier plugins](/docs/extending/plugin-modifiers/) - Very performant, requires compilation
+- Through [Response modifier plugins](/docs/extending/plugin-modifiers/) - Very performant, requires compilation
 - Through [Lua scripting](/docs/endpoints/lua/) - Less performant, does not require compilation
