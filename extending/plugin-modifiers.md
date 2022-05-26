@@ -41,6 +41,12 @@ The following table shows what you can do with modifiers:
 | 5. Complex workflows | 5. Complex workflows |
 | 6. Coordinated rate-limiting and quota management | 6. Coordinated quota control (response size, service consumption, etc.)|
 
+{{< note title="The encoding marks what you can manipulate in responses" type="warning" >}}
+If your endpoint uses an `output_encoding` different than `no-op` you can work with `ResponseWrapper.Data()` and `ResponseWrapper.IsComplete()`. If you use `no-op` you can work with `ResponseWrapper.Io()`, `ResponseWrapper.StatusCode()`, and `ResponseWrapper.Headers()`.
+
+If you set data in a different place than specified above, **it will be ignored**.
+{{< /note >}}
+
 ## Example
 
 {{< note title="Compatibility note" type="warning" >}}Go plugins are only supported on Linux, FreeBSD, and macOS {{< /note >}}
