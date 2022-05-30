@@ -304,7 +304,7 @@ The [KrakenD Playground](/docs/overview/playground/) demonstrates how to protect
 - Integration with an external third party using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa/)
 - Integration with an internal identity provider service (mocked) using a symmetric key algorithm and a signer middleware.
 
-To try it, [clone the playground](https://github.com/devopsfaith/krakend-playground) and follow the README.
+To try it, [clone the playground](https://github.com/krakendio/krakend-playground) and follow the README.
 
 ## Supported hashing algorithms and cipher suites
 

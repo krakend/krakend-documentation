@@ -67,7 +67,7 @@ The `alg` and `kid` values depend on your implementation, but they must be prese
 {{< note title="Important!" >}}
 Make sure you are declaring the right `kid` in your JWT. Paste a token in a [debugger](https://jwt.io/#debugger-io). to find out.
 
-The value provided in the `kid` must match with the `kid` declared at the `jwk-url` or `jwk_local_path`. 
+The value provided in the `kid` must match with the `kid` declared at the `jwk-url` or `jwk_local_path`.
 {{< /note >}}
 
 The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches both the single key present in the JWK document and the token header.
@@ -225,7 +225,7 @@ See this test to [understand how to generate and encrypt payloads](https://githu
 ```
 awskms://keyID
 ```
-The URL Host + Path are used as the key ID, which can be in the form of an Amazon Resource Name (ARN), alias name, or alias ARN. See https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html#find-cmk-id-arn for more details. Note that ARNs may contain ":" characters, which cannot be escaped in the Host part of a URL, so the `awskms:///<ARN>` form should be used. 
+The URL Host + Path are used as the key ID, which can be in the form of an Amazon Resource Name (ARN), alias name, or alias ARN. See https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html#find-cmk-id-arn for more details. Note that ARNs may contain ":" characters, which cannot be escaped in the Host part of a URL, so the `awskms:///<ARN>` form should be used.
 
 [More information about AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html#find-cmk-id-arn)
 
@@ -234,7 +234,7 @@ The URL Host + Path are used as the key ID, which can be in the form of an Amazo
 ```
 azurekeyvault://keyID
 ```
-The credentials are taken from the environment unless the `AZURE_KEYVAULT_AUTH_VIA_CLI` environment variable is set to true, in which case it uses the `az` command line. 
+The credentials are taken from the environment unless the `AZURE_KEYVAULT_AUTH_VIA_CLI` environment variable is set to true, in which case it uses the `az` command line.
 
 
 [More information about Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/general/basic-concepts)
@@ -281,7 +281,7 @@ Keep in mind that this syntax in the `url_pattern` field is only available if th
 If KrakenD can't replace the claim's content for any reason, the backend receives a request to the literal URL `/foo/{JWT.sub}`.
 
 ## Propagate JWT claims as request headers
-Since KrakenD 1.3.0, it is possible to forward claims in a JWT as request headers. It is a common use case to have, for instance, the sub claim added as an `X-User` header to the request. 
+Since KrakenD 1.3.0, it is possible to forward claims in a JWT as request headers. It is a common use case to have, for instance, the sub claim added as an `X-User` header to the request.
 
 **Important:** The endpoint `headers_to_pass` needs to be set as well, so the backend can see it.
 
@@ -304,7 +304,7 @@ The [KrakenD Playground](/docs/v1.4/overview/playground/) demonstrates how to pr
 - Integration with an external third party using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa/)
 - Integration with an internal identity provider service (mocked) using a symmetric key algorithm and a signer middleware.
 
-To try it, [clone the playground](https://github.com/devopsfaith/krakend-playground) and follow the README.
+To try it, [clone the playground](https://github.com/krakendio/krakend-playground) and follow the README.
 
 ## Supported hashing algorithms and cipher suites
 
