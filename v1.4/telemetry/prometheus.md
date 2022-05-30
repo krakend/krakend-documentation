@@ -6,13 +6,13 @@ notoc: true
 linktitle: Prometheus
 title: Exporting metrics to Prometheus
 weight: 70
-source: https://github.com/devopsfaith/krakend-opencensus
+source: https://github.com/krakendio/krakend-opencensus
 menu:
   community_v1.4:
     parent: "080 Telemetry"
 meta:
   since: 0.5
-  source: https://github.com/devopsfaith/krakend-opencensus
+  source: https://github.com/krakendio/krakend-opencensus
   namespace:
   - github_com/devopsfaith/krakend-opencensus
   scope:

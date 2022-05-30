@@ -5,7 +5,6 @@ notoc: true
 linktitle: Logger
 title: Exporting to the logger
 weight: 1000
-source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/logger/"]
 menu:
@@ -13,7 +12,7 @@ menu:
     parent: "080 Telemetry and Analytics"
 meta:
   since: 0.5
-  source: https://github.com/devopsfaith/krakend-opencensus
+  source: https://github.com/krakendio/krakend-opencensus
   namespace:
   - telemetry/opencensus
   scope:

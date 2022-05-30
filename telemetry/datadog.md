@@ -6,7 +6,7 @@ linktitle: Datadog
 title: Exporting traces to Datadog
 weight: 90
 since: 1.2
-source: https://github.com/devopsfaith/krakend-opencensus
+source: https://github.com/krakendio/krakend-opencensus
 notoc: true
 images: ["/images/documentation/datadog-screenshot.png"]
 aliases: ["/docs/logging-metrics-tracing/datadog/"]
@@ -15,7 +15,7 @@ menu:
     parent: "080 Telemetry and Analytics"
 meta:
   since: 1.2
-  source: https://github.com/devopsfaith/krakend-opencensus
+  source: https://github.com/krakendio/krakend-opencensus
   namespace:
   - telemetry/opencensus
   scope:

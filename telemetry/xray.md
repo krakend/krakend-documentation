@@ -11,7 +11,7 @@ menu:
   community_current:
     parent: "080 Telemetry and Analytics"
 meta:
-  source: https://github.com/devopsfaith/krakend-opencensus
+  source: https://github.com/krakendio/krakend-opencensus
   namespace:
   - telemetry/opencensus
   log_prefix:

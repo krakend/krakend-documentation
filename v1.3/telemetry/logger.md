@@ -6,14 +6,14 @@ notoc: true
 linktitle: Logger
 title: Exporting to the logger
 weight: 1000
-source: https://github.com/devopsfaith/krakend-opencensus
+source: https://github.com/krakendio/krakend-opencensus
 notoc: true
 menu:
   community_v1.3:
     parent: "080 Telemetry"
 meta:
   since: 0.5
-  source: https://github.com/devopsfaith/krakend-opencensus
+  source: https://github.com/krakendio/krakend-opencensus
   namespace:
   - github_com/devopsfaith/krakend-opencensus
   scope:
