@@ -34,7 +34,7 @@ Lura focuses on providing the core functionality that a pure API gateway needs. 
 {{< /button-group >}}
 
 ### KrakenD API gateway
-`KrakenD` ([repo](https://github.com/devopsfaith/krakend-ce)) is our ready-to-use API gateway, assembled the way we think it delivers more value to the general audience. KrakenD uses the Lura Project in its core and extends its functionality by adding in the final binary multiple middlewares [contributions](https://github.com/devopsfaith/krakend-contrib) we thought an API Gateway should have.
+`KrakenD` ([repo](https://github.com/devopsfaith/krakend-ce)) is our ready-to-use API gateway, assembled the way we think it delivers more value to the general audience. KrakenD uses the Lura Project in its core and extends its functionality by adding in the final binary multiple middlewares [contributions](https://github.com/krakendio/krakend-contrib) we thought an API Gateway should have.
 
 KrakenD adds to Lura more functionality like logging, service discovery, developer tools, metrics, circuit breaker, rate limiting, OAuth, security, and other exciting stuff.
 
