@@ -8,7 +8,7 @@ weight: 20
 notoc: true
 meta:
   since: 0.6
-  source: https://github.com/devopsfaith/krakend-cors
+  source: https://github.com/krakendio/krakend-cors
   namespace:
   - github_com/devopsfaith/krakend-cors
   scope:
@@ -52,7 +52,7 @@ CORS configuration lives in the root of the file, as it's a service component. A
 
 The configuration options of this component are as follows:
 
-- `allow_methods` *(list)*: The array of all HTTP methods accepted, in uppercase.  
+- `allow_methods` *(list)*: The array of all HTTP methods accepted, in uppercase.
 - `allow_origins` *(list)*: An array with all the origins allowed, examples of values are `https://example.com`, or `*` (any origin).
 - `expose_headers` *(list)*: Headers that are safe to expose to the API of a CORS API specification
 - `max_age` *(string)*: For how long the response can be cached. The value needs to specify units. Valid time units are: `ns`, `us`, (or `µs`), `ms`, `s`, `m`, `h` E.g., `12h` for 12 hours.
