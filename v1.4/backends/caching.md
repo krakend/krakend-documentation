@@ -11,7 +11,7 @@ menu:
 notoc: true
 meta:
   since: 0.4
-  source: https://github.com/devopsfaith/krakend-httpcache
+  source: https://github.com/krakendio/krakend-httpcache
   namespace:
   - github.com/devopsfaith/krakend-httpcache
   scope:
