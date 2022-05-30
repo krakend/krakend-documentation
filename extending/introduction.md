@@ -53,6 +53,6 @@ The recommended way to customize KrakenD is through plugins. But as all open-sou
 
 The **krakend-ce** repository is the one assembling all the middlewares and manages the dependencies (including [Lura](https://github.com/luraproject/lura)). It lets you effortlessly include your company customizations, as the project itself is mostly a wrapper for all components. Be aware that when you fork KrakenD you will need to maintain your custom version, which differs from the official binaries.
 
-There are many examples of different modules (included in KrakenD-CE and not) on our [contributions list](https://github.com/krakendio/krakend-cobra). If you create new middlewares, feel free to open a pull request and let us know.
+There are many examples of different modules (included in KrakenD-CE and not) on our [contributions list](https://github.com/devopsfaith/krakend-contrib). If you create new middlewares, feel free to open a pull request and let us know.
 
 A relaxed start to build a custom component for KrakenD is our article "[Website development as a sysadmin"](/blog/website-development-as-a-sysadmin/) where you can find custom code to add automatic API authentication against a backend. This functionality can be achieved without forking the code, but still, it is an illustrative example.
