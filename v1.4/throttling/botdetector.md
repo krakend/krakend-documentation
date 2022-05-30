@@ -5,7 +5,6 @@ date: 2019-09-15
 linktitle: Bot detector
 title: Control of bot traffic
 weight: 10
-source: https://github.com/devopsfaith/krakend-botdetector
 images:
 - /images/krakend-botdetector.png
 menu:
@@ -13,7 +12,7 @@ menu:
     parent: "070 Traffic Management"
 meta:
   since: 1.0
-  source: https://github.com/devopsfaith/krakend-botdetector
+  source: https://github.com/krakendio/krakend-botdetector
   namespace:
   - github_com/devopsfaith/krakend-botdetector
   scope:
@@ -51,7 +50,7 @@ The available configuration options in the bot detector module are:
 *   `allowlist`: An array with EXACT MATCHES of trusted user agents that can connect.
 *   `denylist`: An array of EXACT MATCHES of undesired bots, to reject immediately.
 *   `patterns`: An array with all the **regular expressions** that define bots. Matching bots are rejected.
-*   `cacheSize`: Size of the LRU cache that helps speed the bot detection. The size is the mumber of users agents that you want to keep in memory. 
+*   `cacheSize`: Size of the LRU cache that helps speed the bot detection. The size is the mumber of users agents that you want to keep in memory.
 
 
 Notice that the `allowlist` and the `denylist` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
