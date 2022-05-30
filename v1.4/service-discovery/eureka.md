@@ -11,7 +11,7 @@ menu:
     parent: "050 Backends Configuration"
 ---
 
-Users of the Netflix's service [Eureka](https://github.com/Netflix/eureka) have a couple of user contributed integrations available listed in our [krakend-contrib](https://github.com/devopsfaith/krakend-contrib) repository.
+Users of the Netflix's service [Eureka](https://github.com/Netflix/eureka) have a couple of user contributed integrations available listed in our [krakend-contrib](https://github.com/krakendio/krakend-cobra) repository.
 
 The integrations are not bundled with KrakenD-CE releases but they can be added to the project and make a custom build without difficulties.
 

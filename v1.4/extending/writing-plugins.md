@@ -110,7 +110,7 @@ The KrakenD repository is the one assembling all the blocks and manages the depe
 
 The small drawback of this approach is that you need to maintain your custom version, which differs from our official binaries.
 
-There are many examples of different modules, included in KrakenD-CE and not on our [contributions list](https://github.com/devopsfaith/krakend-contrib).
+There are many examples of different modules, included in KrakenD-CE and not on our [contributions list](https://github.com/krakendio/krakend-cobra).
 
 A relaxed start to build a component KrakenD is our article "[Website development as a sysadmin"](/blog/website-development-as-a-sysadmin/) where you can find custom code to add automatic API authentication against a backend.
 
