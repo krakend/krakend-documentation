@@ -5,7 +5,7 @@ date: 2018-11-03
 linktitle: JWT Signing
 title: JWT Signing
 weight: 30
-source: https://github.com/devopsfaith/krakend-jose
+source: https://github.com/krakendio/krakend-jose
 images: ["/images/krakend-signer-flow.png"]
 menu:
   community_v1.4:

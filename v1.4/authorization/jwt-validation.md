@@ -5,7 +5,7 @@ date: 2018-11-03
 linktitle: JWT Validation
 title: JWT Validation
 weight: 20
-source: https://github.com/devopsfaith/krakend-jose
+source: https://github.com/krakendio/krakend-jose
 menu:
   community_v1.4:
     parent: "060 Authentication & Authorization"
@@ -219,7 +219,7 @@ The URL host must be base64 encoded and must decode to exactly 32 bytes. Here is
 ```
 This config will use the key `smGbjm71Nxd1Ig5FS0wj9SlbzAIrnolCz9bQQ6uAhl4=` for decrypting de `cypher_key` and then decrypting the content of the file `./jwt.txt`.
 
-See this test to [understand how to generate and encrypt payloads](https://github.com/devopsfaith/krakend-jose/blob/master/jwk_test.go).
+See this test to [understand how to generate and encrypt payloads](https://github.com/krakendio/krakend-jose/blob/master/jwk_test.go).
 
 #### Amazon KMS
 ```

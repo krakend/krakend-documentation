@@ -9,7 +9,7 @@ menu:
   community_current:
     parent: "060 Authentication & Authorization"
 meta:
-  source: https://github.com/devopsfaith/krakend-jose
+  source: https://github.com/krakendio/krakend-jose
   namespace:
   - auth/signer
   scope:

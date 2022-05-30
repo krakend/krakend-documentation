@@ -8,8 +8,8 @@ menu:
   community_current:
     parent: "060 Authentication & Authorization"
 meta:
-  #since: 
-  source: https://github.com/devopsfaith/krakend-jose
+  #since:
+  source: https://github.com/krakendio/krakend-jose
   namespace:
   - auth/validator
   scope:
@@ -24,7 +24,7 @@ The Keycloak integration allows one of the many possible OpenID Connect differen
 
 [Keycloak](https://www.keycloak.org/) is an Open Source **Identity and Access Management** project, sponsored by RedHat. The KrakenD configuration for Keycloak relies internally on the [JWT validation](/docs/authorization/jwt-validation/) component.
 
-## Keycloak integration 
+## Keycloak integration
 JSON web tokens (JWT) are an open standard ([RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519)) that define a way for securely transmitting information between parties. JWT tokens are compact, secure (digitally signed), and have become an industry-standard used at internet scale. KrakenD supports [any system using this open standard](https://www.krakend.io/docs/authorization/jwt-validation/), including Keycloak.
 
 Either if you are trying to protect your API from end-users or machine-to-machine access, the workflow is the same:
