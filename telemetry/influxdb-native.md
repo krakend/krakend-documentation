@@ -11,7 +11,7 @@ menu:
     parent: "080 Telemetry and Analytics"
 meta:
   since: 0.5
-  source: https://github.com/devopsfaith/krakend-influx
+  source: https://github.com/krakendio/krakend-influx
   namespace:
   - telemetry/influx
   - telemetry/metrics
