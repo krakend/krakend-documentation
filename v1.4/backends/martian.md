@@ -10,13 +10,13 @@ menu:
     parent: "050 Backends Configuration"
 meta:
   since: 0.7
-  source: https://github.com/devopsfaith/krakend-martian
+  source: https://github.com/krakendio/krakend-martian
   namespace:
   - github.com/devopsfaith/krakend-martian
   scope:
   - backend
 ---
-The [krakend-martian](https://github.com/devopsfaith/krakend-martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/v1.4/endpoints/common-expression-language-cel/).
+The [krakend-martian](https://github.com/krakendio/krakend-martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/v1.4/endpoints/common-expression-language-cel/).
 
 Use Martian when you want to intercept the request of the end-user and make modifications before passing the content to the backends. Also, the other way around, transform the backends response before passing it to the user.
 
