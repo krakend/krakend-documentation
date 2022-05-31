@@ -6,14 +6,14 @@ notoc: true
 linktitle: Graylog - GELF
 title: Graylog and the GELF format
 weight: 40
-source: https://github.com/devopsfaith/krakend-gelf
+source: https://github.com/krakendio/krakend-gelf
 since: 0.7
 notoc: true
 menu:
   community_v1.4:
     parent: "090 Logging"
 ---
-KrakenD supports sending structured events in GELF format to your Graylog Cluster thanks to the [krakend-gelf](https://github.com/devopsfaith/krakend-gelf) integration.
+KrakenD supports sending structured events in GELF format to your Graylog Cluster thanks to the [krakend-gelf](https://github.com/krakendio/krakend-gelf) integration.
 
 The setup of GELF is straightforward and requires only to set two parameters:
 

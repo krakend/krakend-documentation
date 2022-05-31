@@ -14,7 +14,7 @@ menu:
 notoc: true
 meta:
   since: 1.0
-  source: https://github.com/devopsfaith/krakend-lambda
+  source: https://github.com/krakendio/krakend-lambda
   namespace:
   - github.com/devopsfaith/krakend-lambda
   scope:
