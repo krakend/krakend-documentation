@@ -56,7 +56,7 @@ The most important packages are:
 
 The rest of the framework packages contain some helpers and adapters for additional tasks, like encoding, logging, or service discovery.
 
-Additionally, KrakenD bundles a lot of middleware and components that are in its scope and package. These packages and others are listed in our [KrakenD Contrib](https://github.com/devopsfaith/krakend-contrib) repository.
+Additionally, KrakenD bundles a lot of middleware and components that are in its scope and package. These packages and others are listed in our [KrakenD Contrib](https://github.com/krakendio/krakend-contrib) repository.
 
 
 ### The `config` package
@@ -73,7 +73,7 @@ The `router` package contains an interface and several implementations for the K
 
 The router layer is responsible for setting up the HTTP(S) services, binding the endpoints defined at the `ServiceConfig` struct, and transforming the HTTP request into proxy requests before delegating the task to the inner layer (proxy). Once the internal proxy layer returns a proxy response, the router layer converts it into a proper HTTP response and sends it to the user.
 
-This layer can be easily extended to use any HTTP router, framework, or middleware of your choice. 
+This layer can be easily extended to use any HTTP router, framework, or middleware of your choice.
 
 ### The `proxy` package
 

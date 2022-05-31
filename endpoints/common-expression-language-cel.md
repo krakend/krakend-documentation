@@ -10,7 +10,7 @@ menu:
     parent: "040 Endpoint Configuration"
 meta:
   since: 0.8
-  source: https://github.com/devopsfaith/krakend-cel
+  source: https://github.com/krakendio/krakend-cel
   namespace:
   - validation/cel
   scope:

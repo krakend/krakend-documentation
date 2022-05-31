@@ -7,7 +7,7 @@ weight: 10
 notoc: false
 meta:
   since: 2.0
-  source: https://github.com/devopsfaith/krakend-cors
+  source: https://github.com/krakendio/krakend-cors
   namespace:
   - router
   scope:

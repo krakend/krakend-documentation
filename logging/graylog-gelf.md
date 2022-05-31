@@ -12,7 +12,7 @@ menu:
     parent: "090 Logging"
 meta:
   since: 0.7
-  source: https://github.com/devopsfaith/krakend-gelf
+  source: https://github.com/krakendio/krakend-gelf
   namespace:
   - telemetry/gelf
   scope:
@@ -20,7 +20,7 @@ meta:
 log_prefix:
   - "[SERVICE: Logging][GELF]"
 ---
-KrakenD supports sending structured events in GELF format to your Graylog Cluster thanks to the [krakend-gelf](https://github.com/devopsfaith/krakend-gelf) integration.
+KrakenD supports sending structured events in GELF format to your Graylog Cluster thanks to the [krakend-gelf](https://github.com/krakendio/krakend-gelf) integration.
 
 The setup of GELF is straightforward and requires only to set two parameters:
 

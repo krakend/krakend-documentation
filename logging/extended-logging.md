@@ -5,7 +5,7 @@ toc: true
 linktitle: Improved logging
 title: Improved Logging - Syslog, stdout
 weight: 10
-source: https://github.com/devopsfaith/krakend-gologging
+source: https://github.com/krakendio/krakend-gologging
 aliases: ["/docs/logging-metrics-tracing/logging/"]
 menu:
   community_current:

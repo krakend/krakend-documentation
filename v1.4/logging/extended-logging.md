@@ -6,7 +6,7 @@ toc: true
 linktitle: Logging overview
 title: Logging - Syslog, stdout and GELF
 weight: 10
-source: https://github.com/devopsfaith/krakend-gologging
+source: https://github.com/krakendio/krakend-gologging
 menu:
   community_v1.4:
     parent: "090 Logging"

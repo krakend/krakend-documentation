@@ -6,7 +6,7 @@ notoc: true
 linktitle: AWS X-Ray
 title: Exporting traces to AWS X-Ray
 weight: 110
-source: https://github.com/devopsfaith/krakend-opencensus
+source: https://github.com/krakendio/krakend-opencensus
 notoc: true
 menu:
   community_v1.4:

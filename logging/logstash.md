@@ -5,7 +5,7 @@ notoc: true
 linktitle: Logstash
 title: Logstash
 weight: 50
-source: https://github.com/devopsfaith/krakend-logstash
+source: https://github.com/krakendio/krakend-logstash
 aliases: ["/docs/logging-metrics-tracing/logstash/"]
 menu:
   community_current:

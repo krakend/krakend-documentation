@@ -5,14 +5,13 @@ notoc: true
 linktitle: OpenCensus Agent
 title: Exporting metrics, logs, and events to the OpenCensus Agent
 weight: 140
-source: https://github.com/devopsfaith/krakend-opencensus
 notoc: true
 menu:
   community_current:
     parent: "080 Telemetry and Analytics"
 meta:
   since: 1.1
-  source: https://github.com/devopsfaith/krakend-opencensus
+  source: https://github.com/krakendio/krakend-opencensus
   namespace:
   - telemetry/opencensus
   scope:

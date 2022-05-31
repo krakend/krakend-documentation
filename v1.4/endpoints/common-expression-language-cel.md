@@ -5,14 +5,13 @@ date: 2019-01-24
 linktitle: Checking requests and responses
 title: Checking requests and responses with the Common Expression Language (CEL)
 weight: 80
-source: https://github.com/devopsfaith/krakend-cel
 images: ["/images/documentation/krakend-cel.png"]
 menu:
   community_v1.4:
     parent: "040 Endpoint Configuration"
 meta:
   since: 0.8
-  source: https://github.com/devopsfaith/krakend-cel
+  source: https://github.com/krakendio/krakend-cel
   namespace:
   - github.com/devopsfaith/krakend-cel
   scope:
@@ -21,7 +20,7 @@ meta:
 ---
 There are times when you might want to include **additional logic** in the gateway to decide if a request has to be fulfilled or not.
 
-The [Common Expression Language (CEL)](https://github.com/devopsfaith/krakend-cel)
+The [Common Expression Language (CEL)](https://github.com/krakendio/krakend-cel)
 middleware enables Google's [CEL spec](https://github.com/google/cel-spec)
 which implements common semantics for expression evaluation, and is a very
 simple and powerful option to have full control during requests and responses.
@@ -47,9 +46,9 @@ CEL expressions can be used in five different places: during the **request** and
 - **Endpoint response** evaluation (can evaluate all merged data)
 
 ## Configuration
-The CEL component goes inside the `extra_config` of your `endpoints` or your `backend` using the namespace `github.com/devopsfaith/krakend-cel`. 
+The CEL component goes inside the `extra_config` of your `endpoints` or your `backend` using the namespace `github.com/devopsfaith/krakend-cel`.
 
-Depending on the place where you put the `extra_config`, the expressions will be checked at the `endpoint` level, or the `backend` level. 
+Depending on the place where you put the `extra_config`, the expressions will be checked at the `endpoint` level, or the `backend` level.
 
 For instance, you might want to reject users that do not adhere to some criteria related to the content in their JWT token. There is no reason to delay this check, and you would place the check at the endpoint level, right before hitting any backend. In another scenario, you might want to make sure that the response of a specific backend contains a must-have field; that configuration would go under the `backend` section, and isolated from the rest of sibling backends under the same endpoint umbrella.
 
@@ -115,7 +114,7 @@ within one of the allowed days to see the endpoint.
 ## CEL Syntax and examples
 See the CEL [language definition](https://github.com/google/cel-spec/blob/master/doc/langdef.md) for the full list of supported options.
 
-The following example snippets demonstrate how to check requests and responses. 
+The following example snippets demonstrate how to check requests and responses.
 
 ### Example: Discard an invalid request before reaching the backend
 The following example demonstrates how to reject a user request that does not fulfill a specific expression, checking at the endpoint level that when `/nick/{nick}` is called, a constraining format applies. More specifically, the example requires that the parameter `{nick}` matches the expression `k.*`:
@@ -178,7 +177,7 @@ Because we engineers prefer not to paged over the weekends when backends go down
         ]
     }
 
-Note: The function `getDayOfWeek()` starts at `0` (Sunday), so the only days with a `mod <=4 ` are 0 and 6. 
+Note: The function `getDayOfWeek()` starts at `0` (Sunday), so the only days with a `mod <=4 ` are 0 and 6.
 
 ### Example: Use custom data from JWT payload
 Let's say that the JWT token the user sent contains an attribute named `enabled_days` in its payload. This attribute lists all the integers representing which days the resource can be accessed:

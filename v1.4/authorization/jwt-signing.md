@@ -5,14 +5,14 @@ date: 2018-11-03
 linktitle: JWT Signing
 title: JWT Signing
 weight: 30
-source: https://github.com/devopsfaith/krakend-jose
+source: https://github.com/krakendio/krakend-jose
 images: ["/images/krakend-signer-flow.png"]
 menu:
   community_v1.4:
     parent: "060 Authentication & Authorization"
 ---
 
-The JWT signing component creates a **wrapper for your login endpoint** that signs with your secret key the selected fields of the backend payload right before returning the content to the end-user. 
+The JWT signing component creates a **wrapper for your login endpoint** that signs with your secret key the selected fields of the backend payload right before returning the content to the end-user.
 
 The primary usage for this component is in **migrations from monolith to microservices**, or in ecosystems where there is no Identity server yet, as it allows the immediate adoption of signed JSON Web Tokens without the need to implement a new service.
 
@@ -141,13 +141,13 @@ The following example contains every single option available:
 {{< /highlight >}}
 
 ## How to generate a JWT token
-Essentially, what you need to adopt JWT in your backend is to adapt your existing `/login` function (maybe passing an additional `?token=true` flag), so when a user logs in, instead of setting the session in a cookie, you return the JSON Web Token for KrakenD to sign. 
+Essentially, what you need to adopt JWT in your backend is to adapt your existing `/login` function (maybe passing an additional `?token=true` flag), so when a user logs in, instead of setting the session in a cookie, you return the JSON Web Token for KrakenD to sign.
 
-The token is no more than a JSON output adhering to the [JWT standard](https://tools.ietf.org/html/rfc7519). 
+The token is no more than a JSON output adhering to the [JWT standard](https://tools.ietf.org/html/rfc7519).
 
-There are a lot of **open source libraries to generate JWT tokens** in all major languages. Use them or write the JSON output directly with a simple template. 
+There are a lot of **open source libraries to generate JWT tokens** in all major languages. Use them or write the JSON output directly with a simple template.
 
-Here is a [dummy token](https://github.com/devopsfaith/krakend-playground/blob/master/data/token.json) for you to check how it looks like.
+Here is a [dummy token](https://github.com/krakendio/krakend-playground/blob/master/data/token.json) for you to check how it looks like.
 
 ## Live running example
-The [KrakenD Playground](/docs/v1.4/overview/playground/) demonstrates how to sign tokens in the `/token` endpoint and includes an example ready to use. To try it, [clone the playground](https://github.com/devopsfaith/krakend-playground) and follow the README.
+The [KrakenD Playground](/docs/v1.4/overview/playground/) demonstrates how to sign tokens in the `/token` endpoint and includes an example ready to use. To try it, [clone the playground](https://github.com/krakendio/krakend-playground) and follow the README.

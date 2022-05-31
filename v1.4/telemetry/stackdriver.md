@@ -6,14 +6,14 @@ notoc: true
 linktitle: Google Stackdriver
 title: Exporting metrics, logs and events to Google Stackdriver
 weight: 120
-source: https://github.com/devopsfaith/krakend-opencensus
+source: https://github.com/krakendio/krakend-opencensus
 notoc: true
 menu:
   community_v1.4:
     parent: "080 Telemetry"
 meta:
   since: 0.7
-  source: https://github.com/devopsfaith/krakend-opencensus
+  source: https://github.com/krakendio/krakend-opencensus
   namespace:
   - github_com/devopsfaith/krakend-opencensus
   scope:

@@ -9,7 +9,7 @@ menu:
     parent: "040 Endpoint Configuration"
 meta:
   since: 1.0
-  source: https://github.com/devopsfaith/krakend-lua
+  source: https://github.com/krakendio/krakend-lua
   namespace:
   - "modifier/lua-proxy"
   - "modifier/lua-endpoint"

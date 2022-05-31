@@ -11,7 +11,7 @@ menu:
     parent: "050 Backends Configuration"
 meta:
   since: 1.0
-  source: https://github.com/devopsfaith/krakend-pubsub
+  source: https://github.com/krakendio/krakend-pubsub
   namespace:
   - backend/pubsub/publisher
   - backend/pubsub/subscriber
