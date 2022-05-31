@@ -5,14 +5,13 @@ date: 2018-10-29
 linktitle: Proxy rate limit
 title: Rate-limiting backends
 weight: 10
-source: https://github.com/devopsfaith/krakend-ratelimit
 menu:
   community_v1.4:
     parent: "050 Backends Configuration"
 notoc: true
 meta:
   since: false
-  source: https://github.com/devopsfaith/krakend-ratelimit
+  source: https://github.com/krakendio/krakend-ratelimit
   namespace:
   - github.com/devopsfaith/krakend-ratelimit/juju/proxy
   scope:

@@ -11,7 +11,7 @@ menu:
     parent: "040 Endpoint Configuration"
 meta:
   since: 0.4
-  source: https://github.com/devopsfaith/krakend-ratelimit
+  source: https://github.com/krakendio/krakend-ratelimit
   namespace:
   - qos/ratelimit/router
   scope:
