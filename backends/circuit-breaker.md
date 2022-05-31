@@ -13,7 +13,7 @@ images:
 notoc: true
 meta:
   since: false
-  source: https://github.com/devopsfaith/krakend-circuitbreaker
+  source: https://github.com/krakendio/krakend-circuitbreaker
   namespace:
   - qos/circuit-breaker
   scope:
