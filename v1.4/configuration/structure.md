@@ -64,7 +64,7 @@ That's the basic structure of endpoints; for more information see [how to create
 ### The `extra_config` structure
 KrakenD is very modular and comes bundled with many components that extend the core functionality of the [Lura Project](https://luraproject.org). The `extra_config` stores each component configuration that is not handled by Lura itself.
 
-Components declare in their source code a **unique namespace**. KrakenD registers the component during the startup, and it passes to the component the configuration found under a key matching the **namespace** inside the `extra_config` object. 
+Components declare in their source code a **unique namespace**. KrakenD registers the component during the startup, and it passes to the component the configuration found under a key matching the **namespace** inside the `extra_config` object.
 
 
 {{< highlight json >}}
@@ -80,7 +80,7 @@ Components declare in their source code a **unique namespace**. KrakenD register
     }
 {{< /highlight >}}
 
-All components built by the KrakenD team **use namespaces inspired by the location of the original package**, so they might *look like an URL* but it's just a unique identifier that clearly defines where the original package is. 
+All components built by the KrakenD team **use namespaces inspired by the location of the original package**, so they might *look like an URL* but it's just a unique identifier that clearly defines where the original package is.
 
 For instance, the [extended logging component](/docs/v1.4/logging/extended-logging/) uses the **namespace** `github_com/devopsfaith/krakend-gologging`:
 {{< highlight JSON >}}
@@ -98,7 +98,7 @@ For instance, the [extended logging component](/docs/v1.4/logging/extended-loggi
 {{< /highlight >}}
 
 ### Placements for the `extra_config`
-The `extra_config` can appear in the root of the file and on other placements (or levels) as well. It depends entirely on **the scope** of every component and the nature of its functionality. 
+The `extra_config` can appear in the root of the file and on other placements (or levels) as well. It depends entirely on **the scope** of every component and the nature of its functionality.
 
 An `extra_config` in the **root level** usually sets functionalities with a **service scope**: these influence the gateway globally and on every request (e.g., metrics). On the other hand, `extra_config` placed more profound in the configuration affects a tinier scope. An example could be a configuration that is loaded when a certain endpoint is called.
 
@@ -115,7 +115,7 @@ For instance, you might want to set a rate limit between a user and KrakenD. And
 #### Spot the difference: github_com and github.com
 Service scopes do not use any dot in their namespace (notice the `github_com` in the previous example). It is to avoid problems with parsers, but when the `extra_config` is placed at `endpoint` level or even `backend` level, the dots can be present.
 
-### Example 
+### Example
 The following code is an example defining two simultaneous rate limiting strategies: A limit of 5000 reqs/s for a specific endpoint, but yet, one of its backends accepts a maximum of 100 reqs/s. As you can imagine, when the backend limit is reached, the user will have partial responses.
 
 Notice how `extra_config` is present in the endpoints and backend scopes.
@@ -154,7 +154,7 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
 }
 {{< /highlight >}}
 
-Check [this larger sample file](https://github.com/devopsfaith/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you can see an example on how to modify the application headers, configure the circuit breaker, or apply rate limits.
+Check [this larger sample file](https://github.com/krakendio/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you can see an example on how to modify the application headers, configure the circuit breaker, or apply rate limits.
 
 ### Advanced tips for shorter configurations
 To keep shorter configuration files, and easier to read, have a look at the best practices to do [housekeeping of your configuration files](/blog/housekeeping-configuration-file/)

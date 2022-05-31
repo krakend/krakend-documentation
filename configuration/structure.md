@@ -152,4 +152,4 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
 }
 {{< /highlight >}}
 
-Check [this larger sample file](https://github.com/devopsfaith/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you can see an example on how to modify the application headers, configure the circuit breaker, or apply rate limits.
+Check [this larger sample file](https://github.com/krakendio/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you can see an example on how to modify the application headers, configure the circuit breaker, or apply rate limits.

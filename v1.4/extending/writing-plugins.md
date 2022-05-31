@@ -104,7 +104,7 @@ Writing an http handler plugin requires you to implement the [plugin server inte
 
 #### Writing your custom middleware
 
-The last option is to write code and compile it along with KrakenD. When writing your custom code, the usual choice is to fork the [KrakenD-CE](https://github.com/devopsfaith/krakend-ce) repository.
+The last option is to write code and compile it along with KrakenD. When writing your custom code, the usual choice is to fork the [KrakenD-CE](https://github.com/krakendio/krakend-ce) repository.
 
 The KrakenD repository is the one assembling all the blocks and manages the dependencies (including [Lura](https://github.com/luraproject/lura)), and lets you effortlessly include your company customizations.
 
