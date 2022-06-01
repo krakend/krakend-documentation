@@ -61,7 +61,7 @@ It looks like this:
 
 The configuration above declares an endpoint `/v1/foo-bar`, which returns the result of merging the responses from two backends `https://my.foo-api.com/foo` and `https://my.bar-api.com/bar`. These two calls execute in parallel.
 
-That's the basic structure of endpoints; for more information see [how to create endpoints](/docs/endpoints/creating-endpoints/).
+That's the basic structure of endpoints; for more information see [how to create endpoints](/docs/endpoints/).
 
 ### The `extra_config` structure
 KrakenD is very modular and comes bundled with many components that extend the core functionality of the [Lura Project](https://luraproject.org). The `extra_config` stores each component configuration that is not handled by Lura itself.

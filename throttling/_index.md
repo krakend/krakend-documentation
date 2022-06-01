@@ -1,5 +1,6 @@
 ---
 lastmod: 2018-09-29
+aliases: ["/docs/throttling/"]
 date: 2016-07-01
 linktitle: Throttling overview
 title: Traffic management overview

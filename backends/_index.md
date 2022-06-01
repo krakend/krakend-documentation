@@ -3,18 +3,19 @@ lastmod: 2022-03-21
 date: 2016-09-30
 toc: true
 aliases: ["/docs/backends/overview/"]
-linktitle: Backends overview
-title: Backends Overview - Declaring backends
+linktitle: The backend object
+title: Declaring and connecting to backends
 weight: -1000
+notoc: true
 menu:
   community_current:
     parent: "050 Backends Configuration"
 ---
 The concept of `backend` refers to the origin servers providing the necessary data to populate your endpoints. A backend can be something like your HTTP-based API, a Lambda function, or a Kafka queue, to name a few examples.
 
-A backend can be any server inside or outside your network, as long it is reachable by KrakenD. For instance, you can create endpoints fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook, or other services. You can also return everything aggregated in a single glorified response.
+A `backend` can be any server inside or outside your network, as long it is reachable by KrakenD. For instance, you can create endpoints fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook, or other services. You can also return everything aggregated in a single glorified response.
 
-A `backend` object is an array of all the services that an endpoint connects to. It defines the list of hostnames that connects to and the URL to send or receive the data.
+A `backend` object is an array of all the services that an [`endpoint`](/docs/endpoints/) connects to. It defines the list of hostnames that connects to and the URL to send or receive the data.
 
 When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy/) is used, or you use [`no-op` encoding](/docs/endpoints/no-op/)). The returned content is parsed according to its `encoding` or in some cases its`extra_config` configuration.
 

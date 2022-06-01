@@ -25,7 +25,7 @@ The router rate limit feature allows you to set a number of **maximum requests p
 
 Both types keep **in-memory** an updated counter with the number of requests processed per second in that endpoint.
 
-For additional types of rate-limiting see the [Traffic management overview](/docs/throttling/overview/).
+For additional types of rate-limiting see the [Traffic management overview](/docs/throttling/).
 
 ## Endpoint rate-limiting (`max_rate`)
 The endpoint rate limit acts on the number of simultaneous transactions an endpoint can process. This type of limit protects the service for all customers. In addition, these limits mitigate abusive actions such as rapidly writing content, aggressive polling, or excessive API calls.
