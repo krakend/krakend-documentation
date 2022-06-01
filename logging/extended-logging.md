@@ -17,7 +17,7 @@ By default,  when KrakenD starts all the log events are sent to the **standard o
 
 Different logging components allow you to extend the logging functionality, such as sending the events to the **syslog**, choosing the verbosity level, or use the **Graylog Extended Log Format (GELF)**.
 
-In addition to this, a lot of exporters are available to send your logs out (see [Telemetry](/docs/telemetry/overview/))
+In addition to this, a lot of exporters are available to send your logs out (see [Telemetry](/docs/telemetry/))
 
 ### Improved logging with `gologging`.
 

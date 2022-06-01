@@ -23,12 +23,12 @@ meta:
   - "[BACKEND: /foo][Lua]"
 ---
 
-Scripting with Lua allows you to extend your business logic and make **transformations on requests and responses**. The Lua module is compatible with the rest of components such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or other [Go plugins](/docs/extending/introduction/) and middlewares.
+Scripting with Lua allows you to extend your business logic and make **transformations on requests and responses**. The Lua module is compatible with the rest of components such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or other [Go plugins](/docs/extending/) and middlewares.
 
 The introduction of Lua scripts in your Gateway does not require recompiling KrakenD, but unlike Go, Lua scripts are interpreted in real-time. If you are new to Lua, see [Lua Documentation](https://www.lua.org/).
 
 {{< note title="Lua vs Go Plugins" type="note" >}}
-A [Go plugin](/docs/extending/introduction/) delivers much more speed and power than a Lua script for performance-first seeking users, but requires a little bit more work as you need to compile your plugins and side-load them on KrakenD.
+A [Go plugin](/docs/extending/) delivers much more speed and power than a Lua script for performance-first seeking users, but requires a little bit more work as you need to compile your plugins and side-load them on KrakenD.
 {{< /note >}}
 
 ## Configuration

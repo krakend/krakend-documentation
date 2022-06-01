@@ -5,9 +5,7 @@ date: 2016-10-25
 menu:
   community_v1.4:
     parent: "000 Getting Started"
-next: /overview/configuration
 notoc: true
-prev: /overview/installing
 title: Using KrakenD
 weight: 30
 ---

@@ -6,7 +6,6 @@ linktitle: Introduction
 menu:
   community_v1.4:
     parent: "000 Getting Started"
-next: /overview/quickstart
 title: Introduction to KrakenD
 notoc: true
 weight: -10000

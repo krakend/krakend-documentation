@@ -2,6 +2,7 @@
 lastmod: 2018-11-02
 date: 2017-01-21
 linktitle: Developer Tools
+aliases: ["/docs/developer/overview/"]
 menu:
   community_current:
     parent: "140 Developer Tools"

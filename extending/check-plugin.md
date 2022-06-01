@@ -23,7 +23,7 @@ Notice that the `check-plugin` command does not check the plugin's validity itse
 
 To get started writing your plugins see:
 
-- [Introduction to custom plugins](/docs/extending/introduction/)
+- [Introduction to custom plugins](/docs/extending/)
 - [Writing custom plugins](/docs/extending/writing-plugins/)
 
 The `krakend check-plugin` command accepts the following options:

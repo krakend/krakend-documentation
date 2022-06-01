@@ -3,6 +3,8 @@ lastmod: 2021-11-25
 date: 2021-11-25
 linktitle: Introduction to plugins
 title: Introduction to custom plugins and middlewares
+description: Differences between plugins and middlewares and how to start using your own plugins
+aliases: ["/docs/extending/introduction/"]
 weight: -100
 skip_header_image: true
 menu:

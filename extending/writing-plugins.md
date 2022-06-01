@@ -15,7 +15,7 @@ images:
 All different types of plugins let you freely implement your logic without restrictions. To start using your own plugins make sure to write them implementing the right interface and compile them respecting the requirements.
 
 {{< note title="Introduction to plugins" type="info" >}}
-Before getting your hands dirty, read the [introduction to plugins](/docs/extending/introduction/) for understanding **the different types of plugins** you can use.
+Before getting your hands dirty, read the [introduction to plugins](/docs/extending/) for understanding **the different types of plugins** you can use.
 {{< /note >}}
 
 

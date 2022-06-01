@@ -4,6 +4,7 @@ date: 2016-10-28
 linktitle: Benchmarks Overview
 title: Benchmarks Overview
 description: Performance tests of KrakenD
+aliases: ["/docs/benchmarks/overview/"]
 weight: 1
 menu:
   community_current:

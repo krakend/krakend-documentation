@@ -7,7 +7,7 @@ title: Telemetry
 weight: 10
 images:
 - /images/documentation/exporters.png
-aliases: ["/docs/logging-metrics-tracing/tracing/"]
+aliases: ["/docs/logging-metrics-tracing/tracing/", "/docs/telemetry/overview/"]
 menu:
   community_current:
     parent: "080 Telemetry and Analytics"
