@@ -122,4 +122,4 @@ Make sure your plugin uses the libraries and versions required by the chosen Kra
 
 ## Ask the community
 
-Finally, we recommend you joining our [Slack channel](/support) and explain what you are trying to do. Probably there is someone who was in your situation before, and you might even get a free code snippet!
+Finally, we recommend you joining our [Slack channel](/support/) and explain what you are trying to do. Probably there is someone who was in your situation before, and you might even get a free code snippet!

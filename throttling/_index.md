@@ -4,6 +4,7 @@ aliases: ["/docs/throttling/"]
 date: 2016-07-01
 linktitle: Throttling overview
 title: Traffic management overview
+notoc: true
 weight: -10
 menu:
   community_current:
