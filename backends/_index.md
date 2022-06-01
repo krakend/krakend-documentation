@@ -2,24 +2,24 @@
 lastmod: 2022-03-21
 date: 2016-09-30
 toc: true
-linktitle: Declaring backends
-title: Backends Overview
+aliases: ["/docs/backends/overview/"]
+linktitle: Backends overview
+title: Backends Overview - Declaring backends
 weight: -1000
 menu:
   community_current:
     parent: "050 Backends Configuration"
 ---
-
 The concept of `backend` refers to the origin servers providing the necessary data to populate your endpoints. A backend can be something like your HTTP-based API, a Lambda function, or a Kafka queue, to name a few examples.
 
 A backend can be any server inside or outside your network, as long it is reachable by KrakenD. For instance, you can create endpoints fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook, or other services. You can also return everything aggregated in a single glorified response.
 
-When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy/) is used). The returned content is parsed according to its `encoding` or in some cases its`extra_config` configuration.
+A `backend` object is an array of all the services that an endpoint connects to. It defines the list of hostnames that connects to and the URL to send or receive the data.
 
-The backends are declared inside every endpoint using a `backend` array.
+When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy/) is used, or you use [`no-op` encoding](/docs/endpoints/no-op/)). The returned content is parsed according to its `encoding` or in some cases its`extra_config` configuration.
 
 {{< note title="Multiple non-safe methods" type="info" >}}
-KrakenD **does not allow you to define multiple non-safe (write) backends**. This is a (sometimes controversial) design decision to disable the gateway to handle transactions.
+Despite you can use several backends in one endpoint, KrakenD **does not allow you to define multiple non-safe (write) backends**. This is a (sometimes controversial) design decision to disable the gateway to handle transactions.
 
 If you need to have a write method (POST, PUT, DELETE, PATCH) together with other GET methods, use the [sequential proxy](/docs/endpoints/sequential-proxy/) and place a maximum of 1 write method at the end of the sequence.
 {{< /note >}}

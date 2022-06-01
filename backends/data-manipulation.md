@@ -4,12 +4,17 @@ date: 2016-09-30
 toc: true
 linktitle: Data manipulation
 title: Data manipulation
-weight: 10
+weight: 5
 menu:
   community_current:
     parent: "050 Backends Configuration"
 ---
 This page describes the most basic options to manipulate the content you receive from the backend before delivering it to the client.
+
+<!--more-->
+{{< note title="Before you begin..." type="tip" >}}
+See what kind of response you are getting from your backend in the first place. If you get the response inside an object `{}`, you can apply the manipulations right away. But if you get an array `[]`, see how to manipulate collections below.
+{{< /note >}}
 
 ## Filtering
 When you offer a KrakenD endpoint, you can decide whether to return all the fields from the backend (default behavior) or specify which ones are allowed through an allow or deny list. You might want to use this functionality for many different reasons. Still, we strongly encourage you to consider using it frequently to save the user's bandwidth, provide the client what is needed, and decrease the load and render times.
@@ -19,9 +24,9 @@ You can use two different filtering strategies, pick one or the other in each en
 - **Deny list** (`deny`)
 - **Allow list** (`allow`)
 
-{{< note title="Renamed attributes" >}}
-Prior to KrakenD 1.2 these terms where known as `whitelist` and `blacklist`.
-{{< /note >}}
+
+**Note**: Prior to KrakenD 1.2 these terms where known as `whitelist` and `blacklist`.
+
 
 ### Deny
 

@@ -45,7 +45,7 @@ The **endpoint object** accepts the following attributes:
 - `endpoint`: The resource URL you want to expose
 - `method` (*optional*): Must be **written in uppercase** `GET`, `POST`, `PUT`, `PATCH`, `DELETE`. Defaults to `GET`.
 - `output_encoding`: See the [supported encodings](/docs/endpoints/content-types/). Defaults to `json`.
-- `backend`: List of all the [backend objects](/docs/backends/overview/) queried for this endpoint.
+- `backend`: List of all the [backend objects](/docs/backends/) queried for this endpoint.
 - `extra_config` (*optional*): Configuration of components and middlewares that are executed with this endpoint.
 - `input_query_strings` (*optional*): Recognized GET parameters. See [parameter forwarding](/docs/endpoints/parameter-forwarding/).
 - `input_headers` (*optional*): Forwarded headers. See [headers forwarding](/docs/endpoints/parameter-forwarding/#headers-forwarding).

@@ -16,7 +16,7 @@ The name `krakend.json` is just **an alias**, a convention, that we use everywhe
 Provided this simple configuration mechanism, the **versioning and automation are very convenient**. Any change in the API Gateway is always under the version control system, and the code controls the state of the gateway.
 
 
-{{< note title="Configuration using multiple files" >}}
+{{< note title="Configuration using multiple files" type="tip" >}}
 If your configuration file is too large or repetitive, it can be split into several files using a templating system. See the [flexible configuration documentation](/docs/configuration/flexible-config/) for more information on this feature.
 {{< /note >}}
 
@@ -28,7 +28,10 @@ The KrakenDesigner is a simple javascript application that helps you understand 
 
 The Kraken Designer is a **pure static** page that **does not send any of your configuration elsewhere**, and as it happens with all our software, is also open sourced and you can download it and run it in your own web server. See the [Krakendesigner](https://github.com/krakendio/krakendesigner) repository.
 
-<a class="btn btn-secondary btn-circle" href="https://designer.krakend.io/">Generate configuration now</a>
+{{< button-group >}}
+{{< button url="https://designer.krakend.io/" text="Generate configuration now" >}}
+{{< /button >}}
+{{< /button-group >}}
 
 ## Supported file formats
 Through all the documentation we refer to the configuration file as the `krakend.json` file, but the configuration file can be written using `.json`, `.toml`, `.yaml`, `.yml`, `.properties`, `.props`, `.prop` or `.hcl`. For more information and recommendations see [supported file formats](/docs/configuration/supported-formats/).

@@ -103,7 +103,7 @@ The configuration accepts the following parameters. Most of them are optional:
     - `topic` (*string*): The topic name you want to consume. The syntax depends on the driver. Examples for AMQP: `*`, `mytopic`, `lazy.#`, `*`, `foo.*`
     - `workers` (*integer* - optional): The number of workers (consuming processes) you want to start simultaneously for this agent. Defaults to `1`.
     - `max_rate` (*float* - optional): The maximum number of messages you allow each worker to consume per second. Use `0` or `-1` for unlimited speed. Defaults to `0`.
-- `backend` (*list*): The [backend definition](/docs/backends/overview/) (as you might have in any endpoint) indicating where the event data is sent. It is a full backend object definition, with all its possible options, transformations, filters, validations, etc.
+- `backend` (*list*): The [backend definition](/docs/backends/) (as you might have in any endpoint) indicating where the event data is sent. It is a full backend object definition, with all its possible options, transformations, filters, validations, etc.
 - `extra_config` (*map*): In the extra configuration section you have to **define the driver** that connects to your queue or PubSub system. In addition, you can place other middlewares to modify the request (message) or the response, apply logic or any other endpoint middleware, but adding the driver is mandatory. Supported drivers are:
     - `async/amqp` (see below)
 
