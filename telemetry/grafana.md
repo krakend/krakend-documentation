@@ -58,7 +58,7 @@ Add the following configuration to your `krakend.json` at the root level:
 }
 {{< /highlight >}}
 
-For more details of this configuration see the [InfluxDb exporter](/docs/extended-metrics/influxdb/)
+For more details of this configuration see the [InfluxDb exporter](/docs/telemetry/influxdb/)
 
 Then, import our [Grafana dashboard for Krakend](https://grafana.com/dashboards/5722).
 

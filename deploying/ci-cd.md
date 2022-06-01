@@ -13,7 +13,7 @@ KrakenD operates with its single binary and your associated configuration. There
 
 1. Make sure the configuration file is valid. When using Flexible Configuration, generate the final `krakend.json` using `FC_OUT` as the final artifact
 2. Optional - [Generate an immutable docker image](/docs/deploying/docker/)
-3. Optional - [Run integration tests](/docs/deploying/integration-tests/)
+3. Optional - [Run integration tests](/docs/developer/integration-tests/)
 4. Deploy the new configuration
 
 There are several ways to automate KrakenD deployments, but **you must always test your configuration** before applying it in production. You'll find a few notes that might help you automate this process in this document.

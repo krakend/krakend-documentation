@@ -29,6 +29,6 @@ The following telemetry systems are supported:
 - [Google Stackdriver](/docs/telemetry/stackdriver/)
 - [Datadog](/docs/telemetry/datadog/)
 - [Azure Monitor](/docs/telemetry/opencensus/) (OpenCensus Agent)
-- [Grafana](/docs/extended-metrics/grafana/)
+- [Grafana](/docs/telemetry/grafana/)
 - Newrelic (KrakenD Enterprise only)
 - Instana (KrakenD Enterprise only)

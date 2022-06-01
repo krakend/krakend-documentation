@@ -16,7 +16,7 @@ The timeouts can apply to:
 - **The duration of the whole pipe** (from user request to user response)
 - **The HTTP request related timeouts**
 
-Additionally, you can control the number of [**maximum IDLE connections**](/docs/throttling/max-idle-connections/).
+Additionally, you can control the number of [**maximum IDLE connections**](/docs/service-settings/http-transport-settings/).
 
 ## Global timeout
 The `timeout` key in the `krakend.json` at the root level is used in the first place to apply a **default timeout** for the **whole duration of the pipe** (and not only the connection to the backends). The timeout takes into account all the time involved between the request, the fetching of the data, manipulation and any other middleware. You can see it is an **end-user timeout**.

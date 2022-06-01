@@ -203,7 +203,7 @@ Example:
 ### RabbitMQ
 [RabbitMQ](https://www.rabbitmq.com/) is one of the most popular open source message brokers.
 
-Rabbit can alternatively be configured using the [AMQP component](/docs/backends/amqp/).
+Rabbit can alternatively be configured using the [AMQP component](/docs/backends/amqp-consumer/).
 
 Configuration:
 

@@ -42,7 +42,7 @@ The [Homebrew](https://brew.sh/) formula will download the source code, build th
 brew install krakend
 {{< /terminal >}}
 
-After the installation completes go to [Using KrakenD](/docs/overview/usage/)
+After the installation completes go to [Using KrakenD](/docs/overview/run/)
 
 ### Linux
 
