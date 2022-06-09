@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2022-06-09
 date: 2018-11-11
 toc: true
 linktitle: Lambda functions
@@ -24,12 +24,17 @@ The Lambda integration allows you to **invoke Amazon Lambda functions** on a Kra
 
 The **payload** that is sent to the Lambda function comes from the request and depends on the method used by the `endpoint`:
 
-*   Method `GET`: The payload contains all the parameters of the request.
+*   Method `GET`: The payload contains all the request parameters.
 *   Non-`GET` methods: The payload is defined by the content of the **body** in the request.
 
 You don't need to set an Amazon API Gateway in the middle as KrakenD does this job for you.
 
+
 ## Lambda configuration
+
+{{< note title="Dummy hosts and url_pattern" type="info" >}}
+Notice in the examples that the `host` and `url_pattern` are needed as per the [backend definition](/docs/backends/), but KrakenD will never use them. Feel free to add any value in there, but they must be present.
+{{< /note >}}
 
 The inclusion requires you to add the code in the `extra_config` of your `backend` section, using the `backend/lambda` namespace.
 
@@ -46,46 +51,103 @@ Notice the capitalization of the first letter of the parameter names at the conf
 {{< /note >}}
 
 
-### Authentication
+### Authentication and connectivity
 
-The KrakenD machine needs to have the AWS credentials in the default file, `~/.aws/credentials`.
+The KrakenD machine needs to have connectivity with your AWS account and have the credentials to do so. There are several ways you can achieve this:
 
-When setting the credentials make sure that the lambda is callable within the KrakenD box with the credentials provided. This translates in having an IAM user with a policy and execution role that let you invoke the function.
+- By copying your AWS credentials in the default file, `~/.aws/credentials` (and maybe an additional `~/.aws/config` and the env var `AWS_PROFILE` if you have several profiles)
+- By passing the environment variables with at least `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` (and maybe `AWS_REGION`) when starting KrakenD.
+- By having an IAM user with a policy and execution role that let you invoke the function from the machine
+
+When setting the credentials, ensure the Lambda is callable within the KrakenD box with the selected method.
+
+If your machine has the AWS CLI installed, you can test your Lambda:
+
+{{< terminal title="Invoking a Lambda function" >}}
+aws lambda invoke --region us-east-1 --function-name myLambdaFunction --output json result.json
+{{< /terminal >}}
+
+#### Authentication examples
+Mounting an existing `.aws` directory with the credentials in it (notice that the home of the Docker user is `krakend`):
+
+{{< terminal title="Term" >}}
+docker run --rm -it -p "8080:8080" \
+    -e "AWS_PROFILE=default" \
+    -v "/home/user/.aws:/home/krakend/.aws:ro" \
+    -v "$PWD:/etc/krakend" {{< product image >}}:{{< product latest_version >}}
+{{< /terminal >}}
+
+Passing the credentials directly:
+
+{{< terminal title="Term" >}}
+docker run --rm -it -p "8080:8080" \
+    -e "AWS_ACCESS_KEY_ID=XXX" \
+    -e "AWS_SECRET_ACCESS_KEY=XXX" \
+    -e "AWS_REGION=eu-west-1" \
+    -v "$PWD:/etc/krakend" {{< product image >}}:{{< product latest_version >}}
+{{< /terminal >}}
+
 
 ## Example: Associate a lambda to a backend
 
-When the KrakenD endpoint is attached to the same Lambda, use this configuration:
+When you associate a KrakenD endpoint to a unique lambda function, use this configuration:
 
 {{< highlight json >}}
 {
-    "backend": [{
+  "endpoint": "/call-a-lambda",
+  "backend": [
+    {
+      "host": ["ignore"],
+      "url_pattern": "/ignore",
+      "extra_config": {
         "backend/lambda": {
-            "function_name": "lambda-function",
-            "region": "us-west1",
-            "max_retries": 1
+          "function_name": "myLambdaFunction",
+          "region": "us-east-1",
+          "max_retries": 1
         }
-    }]
+      }
+    }
+  ]
 }
 {{< /highlight >}}
 
+Here is an example of Lambda code that could run a Hello World (NodeJS):
+
+{{< highlight js >}}
+exports.handler = async (event) => {
+    // TODO implement
+    const response = {
+        statusCode: 200,
+        body: {"message": "Hello World"},
+
+    };
+    return response;
+};
+{{< /highlight >}}
 
 ## Example: Take the lambda from the URL
 
-When the name of the Lambda to depends on a parameter passed in the endpoint, use this configuration instead:
+When the name of the Lambda depends on a parameter passed in the endpoint, use this configuration instead:
 
 {{< highlight json >}}
 {
-    "endpoint": "/call-a-lambda/{lambda}",
-    "backend": [{
+  "endpoint": "/call-a-lambda/{lambda}",
+  "backend": [
+    {
+      "host": ["ignore"],
+      "url_pattern": "/ignore",
+      "extra_config": {
         "backend/lambda": {
-            "function_param_name": "Lambda",
-            "region": "us-west1",
-            "max_retries": 1
+          "function_param_name": "Lambda",
+          "region": "us-west1",
+          "max_retries": 1
         }
-    }]
+      }
+    }
+  ]
 }
 {{< /highlight >}}
 
-In this example, the `function_param_name` is telling us which is the placeholder in the endpoint setting the lambda. In this case, `{lambda}`.
+In this example, the `function_param_name` tells us which is the placeholder in the endpoint setting the Lambda. In this case, `{lambda}`.
 
 Following the code, a call `GET /call-a-lambda/my-lambda` would produce a call to the `My-lambda` function in AWS.
