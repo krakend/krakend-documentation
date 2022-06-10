@@ -82,7 +82,7 @@ For instance, you declared and `"endpoint": "/user/{id}"` and you expected to re
 
 ### Endpoints listening to multiple methods
 
-The `method` attribute defines the HTTP verb you can use with the endpoint. If you need to support multiple methods (e.g., ' GET`, `POST`, `DELETE`) in the same endpoint, you will need to declare **one endpoint object for each method**. So if you want the same endpoint to listen to `GET` and `POST` requests, you need the following configuration:
+The `method` attribute defines the HTTP verb you can use with the endpoint. If you need to support multiple methods (e.g.,  `GET`, `POST`, `DELETE`) in the same endpoint, you will need to declare **one endpoint object for each method**. So if you want the same endpoint to listen to `GET` and `POST` requests, you need the following configuration:
 {{< highlight json "hl_lines=4 5 9 17 18 22">}}
 {
   "endpoints": [
