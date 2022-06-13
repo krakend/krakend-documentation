@@ -50,7 +50,7 @@ Make sure you have visibility of what is going on. Choose any of the systems whe
 Pay attention to the cardinality of the metrics. Logs and metrics might produce a lot of data and CPU activity. Aggregate and consolidate data in InfluxDB (e.g: When looking at the past year metrics, you don't need minute resolution and days will be enough).
 
 ### Add logging
-If you don't add any logging, KrakenD will spit on stdout all the activity of the gateway. This behavior is not recommended for production. Enable the [logging](/docs/logging/extended-logging/) with `CRITICAL`, `ERROR` or `WARNING` levels at most. Avoid `INFO` and `DEBUG` levels in production at all times. This is the **recommended configuration** in production for a good performance:
+If you don't add any logging, KrakenD will spit on stdout all the activity of the gateway. This behavior is not recommended for production. Enable the [logging](/docs/logging/) with `CRITICAL`, `ERROR` or `WARNING` levels at most. Avoid `INFO` and `DEBUG` levels in production at all times. This is the **recommended configuration** in production for a good performance:
 
 {{< highlight json >}}
 {
@@ -66,7 +66,7 @@ If you don't add any logging, KrakenD will spit on stdout all the activity of th
 {{< /highlight >}}
 
 
-Send logs to an [ELK](/docs/logging/logstash/), the [syslog](/docs/logging/extended-logging/#write-to-syslog-or-stdout), or a [GELF server](/docs/logging/graylog-gelf/).
+Send logs to an [ELK](/docs/logging/logstash/), the [syslog](/docs/logging/#write-to-syslog-or-stdout), or a [GELF server](/docs/logging/graylog-gelf/).
 
 {{< note title="Redirect ouput to /dev/null for maximum performance" type="tip" >}}
 **When the output of KrakenD stdout is not important to you**, set the logging level to `CRITICAL` and redirect its output to `/dev/null` to have even more performance. To do that, start KrakenD with:

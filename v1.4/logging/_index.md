@@ -5,6 +5,7 @@ date: 2018-10-30
 toc: true
 linktitle: Logging overview
 title: Logging - Syslog, stdout and GELF
+aliases: ["/docs/v1.4/logging/extended-logging/"]
 weight: 10
 source: https://github.com/krakendio/krakend-gologging
 menu:

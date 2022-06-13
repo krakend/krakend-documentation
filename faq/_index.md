@@ -52,13 +52,16 @@ The main reasons for having responses are:
 See the solutions below.
 
 ### Solution to cuts by timeout
-Whenever possible add caching layers in your backends, scale the infrastructure, etc. so that can answer requests in a
-decent time. Increasing the `timeout` variable is an option but should be always **your last option**. If your
-backends are not able to respond in a short time think that when you increment the timeout what you really do is
-to block connections waiting for the backend. The memory consumption will increase and the number of connections you can
+When there is a timeout you'll see the `context deadline exceeded` in the log, and it means only one thing: KrakenD couldn't get the info on time (because of a network problem, or backend slowliness).
+
+    Error #01: context deadline exceeded
+
+Whenever possible add caching layers in your backends, scale the infrastructure, etc. so backends answer on time. **Increasing the `timeout` variable should be always your last option**. If your backends are not able to respond in a short time think that when you increment the timeout what you really do is to block connections waiting for the backend. The memory consumption will increase and the number of connections you can
 open is finite. In a gateway, your focus should be freeing the connections as soon as possible.
 
 Values above `2000ms` are not recommended.
+
+There are other times when KrakenD simply cannot reach the host due to a networking issue.
 
 ### Solution to invalid responses.
 Make sure your backend sources return valid Json/Xml/... data. Try any online service to check the validity and format

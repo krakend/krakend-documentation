@@ -82,7 +82,7 @@ Components declare in their source code a **unique namespace**. KrakenD register
     }
 {{< /highlight >}}
 
-For instance, the [extended logging component](/docs/logging/extended-logging/) uses the **namespace** `telemetry/logging`:
+For instance, the [extended logging component](/docs/logging/) uses the **namespace** `telemetry/logging`:
 
 {{< highlight JSON >}}
 {

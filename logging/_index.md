@@ -1,14 +1,14 @@
 ---
 lastmod: 2019-01-30
-old_version: true
 date: 2018-10-30
 toc: true
-linktitle: Logging overview
-title: Logging - Syslog, stdout and GELF
+linktitle: Improved logging
+title: Improved Logging - Syslog, stdout
 weight: 10
 source: https://github.com/krakendio/krakend-gologging
+aliases: ["/docs/logging-metrics-tracing/logging/", "/docs/logging/extended-logging/"]
 menu:
-  community_v1.3:
+  community_current:
     parent: "090 Logging"
 ---
 By default,  when KrakenD starts all the log events are sent to the **standard output** using the basic logger capabilities of the [Lura Project](https://luraproject.org). The reporting level, in that case, is `DEBUG` and adds no prefix to the log lines.
@@ -17,7 +17,7 @@ By default,  when KrakenD starts all the log events are sent to the **standard o
 
 Different logging components allow you to extend the logging functionality, such as sending the events to the **syslog**, choosing the verbosity level, or use the **Graylog Extended Log Format (GELF)**.
 
-In addition to this, a lot of exporters are available to send your logs out (see [Telemetry](/docs/v1.3/telemetry/))
+In addition to this, a lot of exporters are available to send your logs out (see [Telemetry](/docs/telemetry/))
 
 ### Improved logging with `gologging`.
 
@@ -33,18 +33,22 @@ The component `gologging` extends the default logging capabilities with the foll
 
 To enjoy the extended logging capabilities the component needs to be added in the `krakend.json` configuration. Add its namespace in the `extra_config` at the root level:
 
-    {
-      "version": 2,
-      "extra_config": {
-        "github_com/devopsfaith/krakend-gologging": {
-          "level": "INFO",
-          "prefix": "[KRAKEND]",
-          "syslog": true,
-          "stdout": true,
-          "format": "custom",
-          "custom_format": "%{message}"
-        }
-      }
+{{< highlight json >}}
+{
+  "version": 3,
+  "extra_config": {
+    "telemetry/logging": {
+      "level": "INFO",
+      "prefix": "[KRAKEND]",
+      "syslog": true,
+      "stdout": true,
+      "format": "custom",
+      "custom_format": "%{message}"
+    }
+  }
+}
+{{< /highlight >}}
+
 
 The snippet above shows the four options you can configure, explained below.
 
@@ -74,15 +78,11 @@ If you want to follow other patterns for logging, you're able to.
 - `"format": "custom"`
 
 The valid formats are:
- - `default`
- - `logstash`
- - `custom`
+ - `default` uses the pattern `%{time:2006/01/02 - 15:04:05.000} %{color}▶ %{level:.6s}%{color:reset} %{message}`
+ - `logstash` uses the pattern `{"@timestamp":"%{time:2006-01-02T15:04:05.000+00:00}", "@version": 1, "level": "%{level}", "message": "%{message}", "module": "%{module}"}`
+ - `custom` lets you write your own pattern, e.g: `%{message}`
 
-If you select the `custom` format, you'll be able to use the `custom_format` field:
-
-- `"custom_format": "%{message}"`
-
-The pattern to use is the same as the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
+To know more about the possible pattern format see the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
 
 ## Logstash
 If you want to log using the Logstash standard via stdout, you have to add the `krakend-logstash` integration in the
@@ -91,10 +91,10 @@ root level of your `krakend.json`, inside the `extra_config` section. **The `gol
 For instance:
 
     "extra_config": {
-      "github_com/devopsfaith/krakend-logstash": {
+      "telemetry/logstash": {
         "enabled": true
       },
-      "github_com/devopsfaith/krakend-gologging": {
+      "telemetry/logging": {
         "level": "INFO",
         "prefix": "[KRAKEND]",
         "syslog": false,

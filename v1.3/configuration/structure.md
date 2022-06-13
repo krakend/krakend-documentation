@@ -80,7 +80,7 @@ Components declare in their source code a **unique namespace**. KrakenD register
 
 All components built by the KrakenD team **use namespaces inspired by the location of the original package**, so they might *look like an URL* but it's just a unique identifier that clearly defines where the original package is.
 
-For instance, the [extended logging component](/docs/v1.3/logging/extended-logging/) uses the **namespace** `github_com/devopsfaith/krakend-gologging`:
+For instance, the [extended logging component](/docs/v1.3/logging/) uses the **namespace** `github_com/devopsfaith/krakend-gologging`:
 {{< highlight JSON >}}
 {
     "version": 2,

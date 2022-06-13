@@ -79,4 +79,4 @@ To start the KrakenD service in a different port (the port can be set in the con
 krakend run --config path/to/krakend.json --port 8888
 {{< /terminal >}}
 
-In development and testing phase [increase the verbosity of the logs](/docs/v1.3/logging/extended-logging/#set-the-reporting-level)
+In development and testing phase [increase the verbosity of the logs](/docs/v1.3/logging/#set-the-reporting-level)
