@@ -24,7 +24,7 @@ The AMQP component allows to **send and receive messages to and from a queue** t
 
 The configuration of the queue is a straightforward process. To connect the endpoints to the messaging system you only need to include the `extra_config` key with the namespaces `backend/amqp/consumer` or `backend/amqp/producer`.
 
-To create Async agents that consume messages asynchronously and without requiring a user request, see [Async Agents](/docs/async/agent/).
+To create Async agents that consume messages asynchronously and without requiring a user request, see [Async Agents](/docs/async/).
 
 The parameters of this integration follow the AMQP specification. To understand
 what are the implications of a certain parameter, see the **[AMQP Complete Reference Guide](https://www.rabbitmq.com/amqp-0-9-1-reference.html)**.
@@ -37,7 +37,7 @@ The consumer retrieves messages from the queue when a KrakenD endpoint plugs to 
 
 A single endpoint can consume messages from N queues, or can consume N messages from the same queue by adding N backends with the proper queue name.
 
-See [Async Agents](/docs/async/agent/) to consume messages without an endpoint.
+See [Async Agents](/docs/async/) to consume messages without an endpoint.
 
 The needed configuration to run a consumer is:
 

@@ -23,7 +23,7 @@ The AMQP driver for **Async agents** allows you to have KrakenD consuming AMQP q
 This driver is different from the [AMQP backend consumer](/docs/backends/amqp-consumer/). As opposed to endpoints, async agents do not require users to request something to trigger an action. Instead, the agents connect to the queue and fire an action when an event is delivered.
 
 ## Async/AMQP Driver Configuration
-The AMQP driver has to be placed inside the `extra_config` of the [async component](/docs/async/agent/) and allows you connect to an AMQP queue (e.g: RabbitMQ). The settings are as follows:
+The AMQP driver has to be placed inside the `extra_config` of the [async component](/docs/async/) and allows you connect to an AMQP queue (e.g: RabbitMQ). The settings are as follows:
 
 {{< highlight json >}}
 {

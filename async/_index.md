@@ -4,6 +4,7 @@ date: 2022-01-21
 linktitle:  Async Agents
 title: Async agents
 weight: 10
+aliases: ["/docs/async/agent/"]
 images:
   - /images/documentation/async-agents.png
 menu:

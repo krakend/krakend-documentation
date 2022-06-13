@@ -33,7 +33,7 @@ curl http://localhost:8080/__health
 There are three keys inside the response:
 
 - `status` with an `ok` value simply tells you that the API is processing HTTP requests correctly. There is no other possible state if the server is up.
-- `agents` is a map of all [Async Agents](/docs/async/agent/) you have running on KrakenD. The map will be empty if you don't use them. When agents are running, the value shows the time of the last working ping.
+- `agents` is a map of all [Async Agents](/docs/async/) you have running on KrakenD. The map will be empty if you don't use them. When agents are running, the value shows the time of the last working ping.
 - `now` is the current time in the server.
 
 ## Disabling or renaming the health endpoint
