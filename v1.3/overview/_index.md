@@ -1,4 +1,5 @@
 ---
+aliases: ["/docs/v1.3/overview/introduction/"]
 lastmod: 2018-11-26
 old_version: true
 date: 2016-10-25

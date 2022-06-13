@@ -8,6 +8,7 @@ menu:
     parent: "010 Configuration file(s)"
 title: KrakenD's configuration file(s)
 weight: -1000
+aliases: ["/docs/v1.4/overview/configuration/","/docs/v1.4/configuration/overview/"]
 ---
 All the configuration that the KrakenD server needs to start and operate is a single configuration file. This file is referred to as `krakend.json` through all the documentation.
 
