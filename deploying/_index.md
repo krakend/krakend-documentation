@@ -2,6 +2,7 @@
 lastmod: 2020-03-27
 date: 2017-01-21
 linktitle: Best practices
+aliases: ["/docs/deploying/best-practices/"]
 menu:
   community_current:
     parent: "110 Deployment and Go-Live"
@@ -40,14 +41,13 @@ Add a [circuit breaker](/docs/backends/circuit-breaker/) to your backends to avo
 
 ## Monitoring
 ### Enable traces and metrics
-Make sure you have visibility of what is going on. Choose any of the systems where you can send the metrics and enable them. There are many choices, if you don't use any SaaS provider, **a good self-hosted start** would be:
+Make sure you have visibility of what is going on. Choose any of the systems where you can send the metrics and enable them. There are many choices, but choose wisely and do not enable them all!. If you don't use a SaaS provider, **a good self-hosted start** would be:
 
 - A [Grafana Dashboard](/docs/telemetry/grafana/)
 - Fueled by [InfluxDB](/docs/telemetry/influxdb-native/)
 - And full traces by [Jaeger](/docs/telemetry/jaeger/)
 
-Pay attention to the cardinality of the metrics. Aggregate and consolidate data in InfluxDB (e.g: When looking at the past year metrics, you don't need minute resolution and days will be enough).
-
+Pay attention to the cardinality of the metrics. Logs and metrics might produce a lot of data and CPU activity. Aggregate and consolidate data in InfluxDB (e.g: When looking at the past year metrics, you don't need minute resolution and days will be enough).
 
 ### Add logging
 If you don't add any logging, KrakenD will spit on stdout all the activity of the gateway. This behavior is not recommended for production. Enable the [logging](/docs/logging/extended-logging/) with `CRITICAL`, `ERROR` or `WARNING` levels at most. Avoid `INFO` and `DEBUG` levels in production at all times. This is the **recommended configuration** in production for a good performance:

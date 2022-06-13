@@ -35,4 +35,4 @@ If you are in the cloud, something like an [ELB](https://aws.amazon.com/elasticl
 
 When all the desired nodes of KrakenD run, every instance honors its config and reports the traces and metrics to the services of your choice.
 
-For best practices deploying KrakenD, see [Deploying KrakenD](/docs/deploying/best-practices/)
+For best practices deploying KrakenD, see [Deploying KrakenD](/docs/deploying/)
