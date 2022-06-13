@@ -15,7 +15,7 @@ There are some additional resources that might help you when developing with Kra
 ## Hot reload the configuration
 There is an additional KrakenD Docker image using Reflex to watch the configuration directory and reload KrakenD when there are changes. This is very convenient while you are developing as it allows you to test new changes without having to restart manually and making the process less tedious.
 
-You can use the Docker image `docker pull devopsfaith/krakend:config-watcher`
+You can use the Docker image `docker pull devopsfaith/krakend:watch`
 
 [More information in our blog post](/blog/reloading-the-krakend-configuration/)
 
