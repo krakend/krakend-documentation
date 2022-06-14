@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-21
+lastmod: 2022-06-14
 date: 2021-05-21
 toc: true
 linktitle: HTTP server plugins
@@ -17,11 +17,12 @@ images:
 - /images/documentation/krakend-plugins.png
 - /images/documentation/http-handler-plugin.png
 ---
-The HTTP handler plugins (or HTTP server plugins) belong to the **router layer** and let you modify the requests before KrakenD starts processing them, or modify the final response back to the user. The HTTP handler plugin allows you to write your own server right in KrakenD and lets you implement anything you can imagine. This plugin type is so powerful that can be used to implement custom monetization, tracking, tenant control, special protocol conversion, and heavy modifications to put a few examples.
+The HTTP server plugins (codenamed as *handler plugins*) belong to the **router layer** and let you modify the requests before KrakenD starts processing them or modify the final response back to the user. The HTTP handler plugin lets you write your servers and HTTP middlewares right in KrakenD and enables you to implement anything you can imagine. This plugin type is so powerful that you can use it to implement custom monetization, tracking, tenant control, protocol conversion, and heavy modifications, for example.
 
-{{< note title="What is a Handler?" >}}A Handler responds to an HTTP request, and is an interface modeling an HTTP processor.{{< /note >}}
+{{< note title="What is a Handler?" >}}A Handler responds to an HTTP request and is an interface modeling an HTTP processor.
+{{< /note >}}
 
-From KrakenD's perspective, **your handler plugins are black boxes** that expose an `http.Handler`, and you can do anything you want inside. Each plugin is wrapping the next element in the pipe, meaning that for some operations, **it must deal with an HTTP request and response writer**. If you chain several plugins you will add **two extra cycles** of decoding and encoding the body:
+From KrakenD's perspective, **your handler plugins are black boxes** that expose an `http.Handler`, and you can do anything you want inside them. Each plugin is wrapping the next element in the pipe, meaning that for some operations, **it must deal with an HTTP request and response writer**. If you chain several plugins, you will add **two extra cycles** of decoding and encoding the body. From a performance perspective is better having one plugin doing two things, that two plugins doing one thing:
 
 ![http handler plugin](/images/documentation/http-handler-plugin.png)
 
@@ -30,10 +31,199 @@ From KrakenD's perspective, **your handler plugins are black boxes** that expose
 Read the introduction to [writing plugins](/docs/extending/writing-plugins/) for compilation and configuration options if you haven't done it yet.
 {{< /note >}}
 
-To start with a *hello world* for your first plugin you have to implement the plugin server interface by copying the example provided in the Go documentation:
+To start with a *hello world* for your first plugin, you have to implement the plugin server interface provided in the [Go documentation](https://godoc.org/github.com/luraproject/lura/transport/http/server/plugin). A step-by-step example follows below.
 
-{{< button-group >}}
-{{< button url="https://godoc.org/github.com/luraproject/lura/transport/http/server/plugin" text="Go Documentation" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-</svg>{{< /button >}}
-{{< /button-group >}}
+### Example: Building your first server plugin
+The easiest way to demonstrate how HTTP server plugins work is with a hello world plugin. So let's start by creating a new Go project named `krakend-server-example`:
+
+    mkdir krakend-server-example
+    cd krakend-server-example
+    go mod init krakend-server-example
+
+Now we have to create a file `main.go` with the content below:
+
+{{< highlight go >}}
+// SPDX-License-Identifier: Apache-2.0
+
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"html"
+	"net/http"
+)
+
+// HandlerRegisterer is the symbol the plugin loader will try to load. It must implement the Registerer interface
+var HandlerRegisterer = registerer("krakend-server-example")
+
+type registerer string
+
+var logger Logger = nil
+
+func (registerer) RegisterLogger(v interface{}) {
+	l, ok := v.(Logger)
+	if !ok {
+		return
+	}
+	logger = l
+	logger.Debug(fmt.Sprintf("[PLUGIN: %s] Logger loaded", HandlerRegisterer))
+}
+
+func (r registerer) RegisterHandlers(f func(
+	name string,
+	handler func(context.Context, map[string]interface{}, http.Handler) (http.Handler, error),
+)) {
+	f(string(r), r.registerHandlers)
+}
+
+func (r registerer) registerHandlers(_ context.Context, extra map[string]interface{}, h http.Handler) (http.Handler, error) {
+	// check the passed configuration and initialize the plugin
+	name, ok := extra["name"].([]interface{})
+	if !ok {
+		return nil, errors.New("wrong config")
+	}
+	if v, ok := name[0].(string); !ok || v != string(r) {
+		return nil, fmt.Errorf("unknown register %s", name)
+	}
+	// check the cfg. If the modifier requires some configuration,
+	// it should be under the name of the plugin. E.g.:
+	/*
+	   "extra_config":{
+	       "plugin/http-server":{
+	           "name":["krakend-server-example"],
+	           "krakend-server-example":{
+	               "path": "/some-path"
+	           }
+	       }
+	   }
+	*/
+
+	// The config variable contains all the keys you hace defined in the configuration:
+	config, _ := extra["krakend-server-example"].(map[string]interface{})
+
+	// The plugin will look for this path:
+	path, _ := config["path"].(string)
+	logger.Debug(fmt.Sprintf("The plugin is now hijacking the path %s", path))
+
+	// return the actual handler wrapping or your custom logic so it can be used as a replacement for the default http handler
+	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+
+    // If the requested path is not what we defined, continue.
+		if req.URL.Path != path {
+			h.ServeHTTP(w, req)
+			return
+		}
+
+    // The path has to be hijacked:
+		fmt.Fprintf(w, "Hello, %q", html.EscapeString(req.URL.Path))
+		logger.Debug("request:", html.EscapeString(req.URL.Path))
+	}), nil
+}
+
+func main() {}
+
+type Logger interface {
+	Debug(v ...interface{})
+	Info(v ...interface{})
+	Warning(v ...interface{})
+	Error(v ...interface{})
+	Critical(v ...interface{})
+	Fatal(v ...interface{})
+}
+{{< /highlight >}}
+
+The plugin above aborts the request and replies itself printing a `Hello, %q` without actually passing the request to the endpoint. It is a simple example, but it shows the necessary structure to start working with plugins.
+
+If you look now closely at the plugin code, notice that the loader looks for the symbol `HandlerRegisterer` and, if found, the loader checks if the symbol implements the `plugin.Registerer` interface. Once the plugin is validated, the loader registers handlers from the plugin by calling the exposed `RegisterHandlers` method.
+
+With the `main.go` file saved, it's time to build and test the plugin. If you added more code and external dependencies, you must run a `go mod tidy` before the compilation, but it is unnecessary for this example.
+
+For compiling Go plugins, the flag `-buildmode=plugin` is required. The command is:
+
+{{< terminal >}}
+go build -buildmode=plugin -o krakend-server-example.so .
+{{< /terminal >}}
+
+There is no output for this command. Now you have a file `krakend-server-example.so`, the binary that KrakenD has to side load. Remember that you cannot use this binary in a different architecture (e.g., compiling the binary in Mac and loading it in a Docker container).
+
+The plugin is ready to use! You can now load your plugin in the configuration. Add the `plugin` and `extra_config` entries in your configuration. Here's an example of `krakend.json`:
+
+{{< highlight json >}}
+{
+  "version": 3,
+  "plugin": {
+    "pattern": ".so",
+    "folder": "./krakend-server-example/"
+  },
+  "endpoints": [
+    {
+      "endpoint": "/test/{id}",
+      "backend": [
+        {
+          "host": [
+            "http://localhost:8080"
+          ],
+          "url_pattern": "/__health"
+        }
+      ]
+    }
+  ],
+  "extra_config": {
+    "plugin/http-server": {
+      "name": ["krakend-server-example"],
+      "krakend-server-example": {
+        "path": "/hijack-me"
+      }
+    }
+  }
+}
+{{< /highlight >}}
+
+Start the server with `krakend run -dc krakend.json`. When you run the server, the expected output (with `DEBUG` log level) is:
+
+    2022/06/14 16:46:02 KRAKEND ERROR: [SERVICE: Logging] Unable to create the logger: getting the extra config for the krakend-gologging module
+    2022/06/14 16:46:02 KRAKEND DEBUG: [SERVICE: Plugin Loader] Starting loading process
+    2022/06/14 16:46:02 KRAKEND DEBUG: [SERVICE: Executor Plugin] plugin #0 (krakend-server-example/krakend-server-example.so): plugin: symbol ClientRegisterer not found in plugin krakend-server-example
+    2022/06/14 16:46:02 KRAKEND DEBUG: [PLUGIN: krakend-server-example] Logger loaded
+    2022/06/14 16:46:02 KRAKEND INFO: [SERVICE: Handler Plugin] Total plugins loaded: 1
+    2022/06/14 16:46:02 KRAKEND DEBUG: [SERVICE: Modifier Plugin] plugin #0 (krakend-server-example/krakend-server-example.so): plugin: symbol ModifierRegisterer not found in plugin krakend-server-example
+    2022/06/14 16:46:02 KRAKEND DEBUG: [SERVICE: Plugin Loader] Loading process completed
+    2022/06/14 16:46:02 KRAKEND INFO: Starting the KrakenD instance
+    2022/06/14 16:46:02 KRAKEND DEBUG: [ENDPOINT: /test/:id] Building the proxy pipe
+    2022/06/14 16:46:02 KRAKEND DEBUG: [BACKEND: /__health] Building the backend pipe
+    2022/06/14 16:46:02 KRAKEND DEBUG: [ENDPOINT: /test/:id] Building the http handler
+    2022/06/14 16:46:02 KRAKEND DEBUG: [ENDPOINT: /test/:id][JWTSigner] Signer disabled
+    2022/06/14 16:46:02 KRAKEND INFO: [ENDPOINT: /test/:id][JWTValidator] Validator disabled for this endpoint
+    2022/06/14 16:46:02 KRAKEND INFO: [SERVICE: Gin] Listening on port: 8080
+    2022/06/14 16:46:02 KRAKEND DEBUG: The plugin is now hijacking the path /hijack-me
+    2022/06/14 16:46:02 KRAKEND DEBUG: [PLUGIN: Server] Injecting plugin krakend-server-example
+
+    ...
+
+Let's take a closer look at the log. First, notice that the plugin tried registering itself for each plugin type (`[SERVICE: Executor Plugin]`, `[SERVICE: Handler Plugin]`, and `[SERVICE: Modifier Plugin]`), but we are only building a Handler Plugin in this case.
+
+As we are implementing only one of the types, the other two types will fail to load (`symbol not found`). The logline is expected and is not an error but just an informational `DEBUG` message.
+
+The essential lines are:
+- `[PLUGIN: krakend-server-example] Logger loaded` printed by the plugin logger we introduced in our code telling us that the plugin is loaded
+- The `[SERVICE: Handler Plugin] Total plugins loaded: 1` telling us there is one type of plugin for this type
+- `[PLUGIN: Server] Injecting plugin krakend-server-example` telling us that the plugin is loaded AND injected by the configuration.
+
+If you see these lines, you did great! Your plugin is working.
+
+To test the plugin, request an endpoint. If you request a path not declared in the configuration like `/__health` the plugin will do nothing about it, and will delegate the request to the router to continue its execution. If you request to `/hijack-me` then the plugin will respond itself with the content `Hello, /`
+
+{{< terminal title="Delegate the request" >}}
+curl http://localhost:8080/__health
+{"agents":{},"now":"2022-06-14 16:53:41.845285857 +0200 CEST m=+459.332136249","status":"ok"}%
+{{< /terminal >}}
+
+
+{{< terminal title="Hijack the request" >}}
+curl http://localhost:8080/hijack-me
+Hello, "/hijack-me"
+{{< /terminal >}}
+
+The plugin is now working.

@@ -20,6 +20,10 @@ Before getting your hands dirty, read the [introduction to plugins](/docs/extend
 
 
 ## Plugin requirements
+{{< note title="Plugin binaries are not cross-platform compatible" type="error" >}}
+You must compile the plugin with the same architecture/platform where it will be run.
+{{< /note >}}
+
 Writing, compiling and using plugins need to comply with the following list:
 
 - **Right interface**: Your plugin implements the proper interface (see each plugin type)
@@ -27,6 +31,7 @@ Writing, compiling and using plugins need to comply with the following list:
 - **Same architecture/platform**: You compile the plugin using the same architecture where KrakenD will run. E.g., you cannot compile a plugin in a Mac and use it in a Docker container).
 - **Same import versions**: When using external libraries if KrakenD also uses them, they must be in the same version.
 - **Register and inject** your plugins in the configuration.
+
 
 ## Compiling plugins
 As your custom plugins need to match the Go and libraries versions used to build KrakenD, you have to make sure your plugin is compatible by checking your `go.sum` file with the command `check-plugin` (read the documentation)

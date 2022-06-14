@@ -49,8 +49,7 @@ If you set data in a different place than specified above, **it will be ignored*
 
 ## Example
 
-{{< note title="Compatibility note" type="warning" >}}Go plugins are only supported on Linux, FreeBSD, and macOS {{< /note >}}
-
+{{< note title="Compatibility note" type="warning" >}}Go plugins are supported on Linux, FreeBSD, and macOS {{< /note >}}
 
 The easiest way to demonstrate how the modifier plugins work is with the debugger plugin, so let's start with a new Go project by creating a new module with `go mod init your_package_name`, and adding a single `main.go` file with the minimal boilerplate.
 
