@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-09-01
+lastmod: 2022-06-15
 date: 2020-07-24
 notoc: true
 linktitle: Datadog
@@ -23,10 +23,10 @@ meta:
   log_prefix:
   - "[SERVICE: Opencensus]"
 ---
-[Datadog](https://www.datadoghq.com/) is a monitoring and security platform for developers, IT operations teams and business in the cloud.
+[Datadog](https://www.datadoghq.com/) is a cloud monitoring and security platform for developers, IT operations teams, and businesses.
 
 ## Datadog configuration
-The Opencensus exporter allows you export data to Datadog. Enabling it only requires you to add the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/).
+The Opencensus exporter allows you to export data to Datadog. Enabling it only requires you to add the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your Datadog:
 {{< highlight json >}}
@@ -62,3 +62,10 @@ The following configuration snippet sends data to your Datadog:
 
 
 See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+
+## B3 propagation
+The Opencensus module uses B3 style propagation headers, while the rest of your services might be using datadog-specific propagation headers. If this difference is actual, krakend traces will show up in Datadog but they won't be connected to the frontend and backend traces.
+
+The `ddtrace-run` adds an option to support B3 style propagation using the environment variables `DD_TRACE_PROPAGATION_STYLE_EXTRACT` and `DD_TRACE_PROPAGATION_STYLE_INJECT`. Use these variables to have your traces perfectly aligned.
+
+For more information see [its configuration](https://ddtrace.readthedocs.io/en/stable/configuration.html).
