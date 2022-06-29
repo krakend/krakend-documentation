@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-02-28
+lastmod: 2022-06-29
 date: 2018-07-20
 aliases: ["/docs/features/parameter-forwarding/"]
 linktitle:  Query strings and headers
@@ -170,13 +170,12 @@ No optional parameter has been passed, so the mandatory one is used.
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test query string parameters.
 
 ## Headers forwarding
-KrakenD **does not send client headers to the backend by default**. Use `input_headers`.
+KrakenD **does not send client headers to the backend**, unless they are under the `input_headers` list. The list of headers sent by the client that you want to let pass to the backend must be written as an entry of the `input_headers` array (or there is an `"*"` entry).
 
-Declare the list of headers sent by the client that you want to let pass to the backend with the `input_headers` option.
+**A client request from a browser or a mobile client contains a lot of headers**, including cookies. Typical examples of the variety of headers that clients send are `Host`, `Connection`, `Content-Type`,`Accept`, `Cache-Control`, `Cookie`... and a long, long, etcetera. Remember that unless explicitly defined, KrakenD won't let them pass. This security policy will save you from a lot of trouble.
 
-A client request from a browser or a mobile client usually contains a lot of headers, including cookies. Typical examples of the variety of headers that clients send are `Host`, `Connection`, `Cache-Control`, `Cookie`... and a long, long, etcetera. The backend usually does not need any of this to return the content.
-
-KrakenD passes only these essential headers to the backends:
+### Default headers sent from KrakenD to Backends
+KrakenD will act as an independent client connecting to your backends and will send this headers with its own values:
 
 - `Accept-Encoding`
 - `Host`
@@ -185,9 +184,16 @@ KrakenD passes only these essential headers to the backends:
 - `X-Forwarded-Host`
 - `X-Forwarded-Via` (only when `User-Agent` is in the `input_headers`)
 
-When you use the `input_headers`, consider that any of these headers are replaced with the ones you declare.
+In addition, when you use **tracing**, you might also see arrive **B3 propagation headers** in your backends, e.g.:
 
- An example of passing the `User-Agent` to the backend:
+- `X-B3-Sampled`
+- `X-B3-Spanid`
+- `X-B3-Traceid`
+
+### Overriding headers sent from KrakenD to Backends
+When you use the `input_headers`, consider that any of the headers listed above are replaced with the ones you declare.
+
+An example of passing the `User-Agent` to the backend:
 
 {{< highlight json >}}
 {
@@ -220,6 +226,8 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (
 X-Forwarded-For: ::1
 {{< /highlight >}}
 
+The `User-Agent` is no longer a KrakenD user-agent but a Mozilla one.
+
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test headers.
 
 ### Sending all client headers to the backends
@@ -234,7 +242,7 @@ While the default policy prevents forwarding unrecognized headers, setting an as
 }
 {{< /highlight >}}
 
-Enabling the wildcard pollutes your backends, as any header sent by end-users or malicious attackers gets through the gateway and impacts the backends behind. We recommend letting the gateway know which headers are in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
+Enabling the wildcard **pollutes your backends**, as any header sent by end-users or malicious attackers gets through the gateway and impacts the backends behind (a famous exploit is the Log4J vulnerability). We recommend letting the gateway know which headers are in the API contract and specify them in the list, even when the list is long try to not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
 ## Cookies forwarding
 A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `input_headers`, just as you would do with any other header.
