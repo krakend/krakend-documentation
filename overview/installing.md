@@ -46,7 +46,7 @@ After the installation completes go to [Using KrakenD](/docs/overview/run/)
 
 ### Linux
 
-#### CentOS and Redhat
+#### CentOS, Oracle Linux, and Redhat (yum)
 The installation process requires following these steps:
 
 1. Install the repo package
