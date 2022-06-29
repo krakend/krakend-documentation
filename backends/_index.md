@@ -39,7 +39,7 @@ Inside the `backend` array, you need to create an object for each upstream servi
 The options relative to the **backend definition** are:
 
 - `host` (*array* - required): An array with all the available hosts to **load balance** requests, including the schema (when possible) `schema://host:port`. E.g.: ` https://my.users-ms.com`. If you are in a platform where hosts or services are balanced (e.g., a K8S service), write a single name in the array with the service name/balancer address. Defaults to the `host` declaration at the configuration's root level, and KrakenD fails starting when none.
-- `url_pattern` (*string* - required): The path inside the service (no protocol, no host, no method). E.g: `/users`. Some functionalities under `extra_config` might drop the requirement of declaring an `url_pattern`.
+- `url_pattern` (*string* - required): The path inside the service (no protocol, no host, no method). E.g: `/users`. Some functionalities under `extra_config` might drop the requirement of declaring an `url_pattern`. The URL must be RESTful, if it is not (e.g.: `/url.{some_variable}.json`) see below how to [disable RESTful checking](#disable-restful-checking).
 - `encoding` (*string* - optional): Define your [needed encoding](/docs/backends/supported-encodings/) to inform KrakenD how to parse the response. Defaults to the value of its endpoint's `encoding`, or to `json` if not defined anywhere else.
 - `sd` (*string* - optional): The service [Service Discovery](/docs/backends/service-discovery/) system to resolve your backend services. Defaults to `static` (no external Service Discovery). Use `dns` to use DNS SRV records.
 - `method` (*string* - optional): One of `GET`, `POST`, `PUT`, `DELETE`, `PATCH` (in **uppercase**!). The method does not need to match the endpoint's method.
@@ -75,5 +75,32 @@ In the example below, KrakenD offers an endpoint `/v1/products` that merges the 
             ]
         }
     ]
+}
+{{< /highlight >}}
+
+
+
+
+### Disable RESTful checking
+By default KrakenD only works with **RESTful URL patterns** to connect to backends. Enable the option `disable_rest` in the root of your configuration if you have backends that aren't RESTful, e.g.: `/url.{some_variable}.json`
+
+{{< highlight json "hl_lines=4 13">}}
+{
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "version": 3,
+  "disable_rest": true,
+  "endpoints": [
+    {
+      "endpoint": "/foo",
+      "backend": [
+        {
+          "host": [
+            "http://mybackend"
+          ],
+          "url_pattern": "/url.{some_variable}.json"
+        }
+      ]
+    }
+  ]
 }
 {{< /highlight >}}
