@@ -18,7 +18,7 @@ Through the [OpenCensus exporters](/docs/telemetry/opencensus/) you can send log
 
 Enabling tracing is key to have a good detail of what is going on inside the Gateway and between the user, the Gateway and your services.
 
-The following telemetry systems are supported:
+The following telemetry third-party systems are supported:
 
 - [Jaeger](/docs/telemetry/jaeger/)
 - [Zipkin](/docs/telemetry/zipkin/)
@@ -30,5 +30,8 @@ The following telemetry systems are supported:
 - [Datadog](/docs/telemetry/datadog/)
 - [Azure Monitor](/docs/telemetry/opencensus/) (OpenCensus Agent)
 - [Grafana](/docs/telemetry/grafana/)
-- Newrelic (KrakenD Enterprise only)
-- Instana (KrakenD Enterprise only)
+
+Plus the Enterprise-only exporters:
+
+- [Newrelic](/docs/enterprise/telemetry/newrelic/)
+- [Instana](/docs/enterprise/telemetry/instana/)
