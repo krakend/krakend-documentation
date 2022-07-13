@@ -10,13 +10,13 @@ menu:
     parent: "050 Backends Configuration"
 meta:
   since: 0.7
-  source: https://modifier/martian
+  source: https://github.com/krakendio/krakend-martian
   namespace:
   - modifier/martian
   scope:
   - backend
 ---
-The [krakend-martian](https://modifier/martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel/).
+The [krakend-martian](https://github.com/krakendio/krakend-martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel/).
 
 Use Martian when you want to intercept the request of the end-user and make modifications before passing the content to the backends. Also, the other way around, transform the backends response before passing it to the user.
 
@@ -181,6 +181,7 @@ For the complete list of modifiers and usage see [Google's Martian repository](h
 - [github.com/google/martian/martianurl](https://github.com/google/martian/tree/master/martianurl)
 - [github.com/google/martian/port](https://github.com/google/martian/tree/master/port)
 - [github.com/google/martian/priority](https://github.com/google/martian/tree/master/priority)
+- [github.com/google/martian/querystring](https://github.com/google/martian/tree/master/querystring)
 - [github.com/google/martian/stash](https://github.com/google/martian/tree/master/stash)
 - [github.com/google/martian/status](https://github.com/google/martian/tree/master/status)
 
