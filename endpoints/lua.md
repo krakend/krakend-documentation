@@ -66,7 +66,7 @@ The configuration options are:
 - `pre`: The inline Lua code that is executed before performing the request.
 - `post`: The inline Lua code that is execute after the request. **Available when used in the `backend` section**.
 - `live`: Live reload of the script in every execution. Set to `true` if you intend to modify the Lua script while KrakenD is running (mostly during development)
-`allow_open_libs`: As an efficiency point, the regular Lua libraries are not open by default. But if you need to use the Lua libraries (for file io for example), then set this to true.  If not present, the default value is `false`.
+- `allow_open_libs`: As an efficiency point, the regular Lua libraries are not open by default. But if you need to use the Lua libraries (for file io for example), then set this to true.  If not present, the default value is `false`.
 - `skip_next`: Only to be set when in a `backend` section, skips the query to the next backend.
 
 {{< note title="Using client headers and querystrings" >}}
