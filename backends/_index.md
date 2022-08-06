@@ -43,7 +43,7 @@ The options relative to the **backend definition** are:
 - `encoding` (*string* - optional): Define your [needed encoding](/docs/backends/supported-encodings/) to inform KrakenD how to parse the response. Defaults to the value of its endpoint's `encoding`, or to `json` if not defined anywhere else.
 - `sd` (*string* - optional): The service [Service Discovery](/docs/backends/service-discovery/) system to resolve your backend services. Defaults to `static` (no external Service Discovery). Use `dns` to use DNS SRV records.
 - `method` (*string* - optional): One of `GET`, `POST`, `PUT`, `DELETE`, `PATCH` (in **uppercase**!). The method does not need to match the endpoint's method.
-- `disable_sanitize` (*boolean* - optional): Set to `true` when the host doesn't need to be checked for an HTTP protocol. This is the case of `sd=dns` or when using other protocols like `amqp://`, `nats://`, `kafka://`, etc. Defaults to `false`.
+- `disable_sanitize` (*boolean* - optional): Set to `true` when the host doesn't need to be checked for an HTTP protocol. This is the case of `sd=dns` or when using other protocols like `amqp://`, `nats://`, `kafka://`, etc. When set to true, and the protocol is not http, KrakenD fails with `invalid host` error. Defaults to `false`.
 - `extra_config` (*object* - optional ): When there is additional configuration related to a specific component or middleware (like a circuit breaker, rate limit, etc.) it is declared under this section.
 
 Other configuration options such as the ones for [data manipulation](/docs/backends/data-manipulation/) are available. You will find them in each specific feature section.
