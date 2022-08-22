@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-01-28
+lastmod: 2022-08-22
 date: 2022-01-28
 aliases: ["/docs/extending/plugin-tools/"]
 linktitle: Checking your plugins
@@ -42,18 +42,20 @@ Usage:
   krakend check-plugin [flags]
 
 Examples:
-krakend check-plugin --go 1.17.7 --libc MUSL-1.2.2 --sum ./go.sum
+krakend check-plugin -g 1.17.0 -s ./go.sum
 
 Flags:
-  -h, --help          help for plugin
-  -s, --sum string    Path to the go.sum file to analize (default "./go.sum")
-  -g, --go string     Version of the go compiler used (default "1.17.7")
+  -f, --format        Dump the commands to update
+  -g, --go string     The version of the go compiler used for your plugin (default "1.17.11")
+  -h, --help          help for check-plugin
   -l, --libc string   Version of the libc library used
+  -s, --sum string    Path to the go.sum file to analize (default "./go.sum")
 {{< /terminal >}}
 
 ## Flags
 Use `krakend check-plugin` in combination with the following flags:
 
+- `-f` or `--format` to let KrakenD suggest you about the `go get` commands you should launch.
 - `-s` or `--sum` to specify the path to the `go.sum` file of your plugin.
 - `-g` or `--go` to specify the Go version you are using to compile the plugin.
 - `-l` or `--libc` to specify the libc version installed in the system. The libc version must have the preffix `MUSL-`, `GLIBC-`, `DARWIN-`. For instance, a plugin in Mac Monterrey might use `DARWIN-12.2.1`, an Alpine container will need something like `MUSL-1.2.2`, and a Linux box will have `GLIBC-2.32`.
@@ -108,3 +110,30 @@ golang.org/x/text
     have: v0.3.2
     want: v0.3.7
 {{< /terminal >}}
+
+## Updating plugin dependencies
+A quick attempt to fix your dependencies is to run the command with the `-f` flag, which will suggest a series of `go get` commands that you can execute to solve the incompatibilities. For instance:
+
+{{< terminal title="Fixing dependencies" >}}
+krakend check-plugin -s ~/Downloads/go.sum -f
+14 incompatibility(ies) found...
+libc
+	have:
+	want: GLIBC-2.31
+go get cloud.google.com/go/pubsub@v1.19.0
+go get github.com/census-instrumentation/opencensus-proto@v0.3.0
+go get github.com/google/martian@v2.1.1-0.20190517191504-25dcb96d9e51+incompatible
+go get github.com/googleapis/gax-go/v2@v2.2.0
+go get github.com/hashicorp/golang-lru@v0.5.4
+go get golang.org/x/mod@v0.6.0-dev.0.20211013180041-c96bc1413d57
+go get golang.org/x/oauth2@v0.0.0-20220309155454-6242fa91716a
+go get golang.org/x/sys@v0.0.0-20220330033206-e17cdc41300f
+go get golang.org/x/time@v0.0.0-20220224211638-0e9765cccd65
+go get google.golang.org/api@v0.74.0
+go get google.golang.org/genproto@v0.0.0-20220502173005-c8bf987b8c21
+go get google.golang.org/grpc@v1.46.0
+{{< /terminal >}}
+
+Copy and paste the `go get` commands in your terminal to update the dependencies. The commands are in alphabetical order.
+
+You might need to use the `-f` several times and use `go mod tidy` as well.
