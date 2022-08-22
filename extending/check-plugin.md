@@ -58,7 +58,7 @@ Use `krakend check-plugin` in combination with the following flags:
 - `-f` or `--format` to let KrakenD suggest you about the `go get` commands you should launch.
 - `-s` or `--sum` to specify the path to the `go.sum` file of your plugin.
 - `-g` or `--go` to specify the Go version you are using to compile the plugin.
-- `-l` or `--libc` to specify the libc version installed in the system. The libc version must have the preffix `MUSL-`, `GLIBC-`, `DARWIN-`. For instance, a plugin in Mac Monterrey might use `DARWIN-12.2.1`, an Alpine container will need something like `MUSL-1.2.2`, and a Linux box will have `GLIBC-2.32`.
+- `-l` or `--libc` to specify the libc version installed in the system. The libc version must have the preffix `MUSL-`, `GLIBC-`, `DARWIN-`. For instance, a plugin in Mac Monterrey might use `DARWIN-12.2.1`, an Alpine container will need something like `MUSL-1.2.2`, and a Linux box will have `GLIBC-2.32`. To know your glibc version execute the [Find GLIBC script](https://github.com/krakendio/krakend-ce/blob/master/find_glibc.sh)
 
 
 {{< terminal title="Checking a failing plugin example" >}}
@@ -116,10 +116,7 @@ A quick attempt to fix your dependencies is to run the command with the `-f` fla
 
 {{< terminal title="Fixing dependencies" >}}
 krakend check-plugin -s ~/Downloads/go.sum -f
-14 incompatibility(ies) found...
-libc
-	have:
-	want: GLIBC-2.31
+12 incompatibility(ies) found...
 go get cloud.google.com/go/pubsub@v1.19.0
 go get github.com/census-instrumentation/opencensus-proto@v0.3.0
 go get github.com/google/martian@v2.1.1-0.20190517191504-25dcb96d9e51+incompatible
