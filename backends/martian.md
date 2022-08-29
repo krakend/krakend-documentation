@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2022-08-29
 date: 2019-01-24
 linktitle: Transform requests and responses
 title: Modify requests and responses with Martian
@@ -18,9 +18,9 @@ meta:
 ---
 The [krakend-martian](https://github.com/krakendio/krakend-martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel/).
 
-Use Martian when you want to intercept the request of the end-user and make modifications before passing the content to the backends. Also, the other way around, transform the backends response before passing it to the user.
+Use Martian when you want to intercept the end-user's request and make modifications before passing the content to the backends. Also, the other way around, transform the backends response before passing it to the user.
 
-Martian is mighty and gives you endless possibilities to control what is going in and out the gateway. Some **examples of typical Martian scenarios** are:
+Martian is mighty and gives you endless possibilities to control what is going in and out of the gateway. Some **examples of typical Martian scenarios** are:
 
 - Set a new cookie during gateway processing
 - Add, remove or change specific headers
@@ -58,7 +58,7 @@ When **client headers** are needed, remember to add them under [`input_headers`]
 
 ### Modifier configuration
 
-In the examples below, you'll find that all modifiers have a configuration key named `scope`. The scope indicates when to apply the modifier, it can be an array containing `request`, `response`, or both. The rest of the keys in every modifier depends on the modifier itself.
+In the examples below, you'll find that all modifiers have a configuration key named `scope`. The scope indicates when to apply the modifier. It can be an array containing `request`, `response`, or both. The rest of the keys in every modifier depends on the modifier itself.
 
 
 ## Transform headers
@@ -79,7 +79,7 @@ The `header.Modifier` injects a header with a specific value. For instance, the 
 {{< /highlight >}}
 
 ## Modify the body
-Through the `body.Modifier` you can modify the body of the request and the response. The content of the `body` must be encoded in `base64`.
+Through the `body.Modifier`, you can modify the body of the request and the response. You must encode in `base64` the content of the `body`.
 
 The following modifier sets the body of the request and the response to `{"msg":"you rock!"}`. Notice that the `body` field is `base64` encoded.
 
@@ -122,15 +122,15 @@ Although not widely used, the `header.Copy` lets you duplicate a header using an
 
 {{< highlight json >}}
 {
-	"extra_config": {
-		"modifier/martian": {
-			"header.Copy": {
-				"scope": ["request", "response"],
-				"from": "Original-Header",
-				"to": "Copy-Header"
-			}
-		}
-	}
+    "extra_config": {
+        "modifier/martian": {
+            "header.Copy": {
+                "scope": ["request", "response"],
+                "from": "Original-Header",
+                "to": "Copy-Header"
+            }
+        }
+    }
 }
 {{< /highlight >}}
 
@@ -169,10 +169,48 @@ Example of usage (modify the body, and set a header):
 }
 {{< /highlight >}}
 
-## All Martian modifiers, verifiers and filters
-The Martian library comes with [+25 modifiers](https://github.com/google/martian) you can use, we are not listing all the options in the documentation. Instead, we provided the modifiers that are key when using Martian.
+## Connecting to Basic Auth (user/pass) backends
+Sometimes your backends are protected, and you need KrakenD to provide a user and password to connect. The basic authentication requires you to provide a header with the form `Authorization: Basic <credentials>`. The credentials are the concatenation of the username and password using a colon `:` in base64.
 
-For the complete list of modifiers and usage see [Google's Martian repository](https://github.com/google/martian). These are the packages included in KrakenD-CE:
+For instance, if your username is `user` and your password `pa55w0rd`, you should generate the base64 as follows:
+
+{{< terminal title="Term" >}}
+echo -n "user:pa55w0rd" | base64
+dXNlcjpwYTU1dzByZA==
+{{< /terminal >}}
+
+When using `echo`, make sure to add the `-n` option to avoid the final line break from being encoded. You can test if the connection succeeds now with:
+
+{{< terminal title="Term" >}}
+curl -i https://yourapi --header 'Authorization: Basic dXNlcjpwYTU1dzByZA=='
+{{< /terminal >}}
+
+
+If the connection works, it means that your credentials are correct, and you can add the resulting base64 string `dXNlcjpwYTU1dzByZA==` to the Martian modifier right before connecting to your `backend`:
+
+{{< highlight json >}}
+{
+    "url_pattern": "/protected",
+    "extra_config": {
+        "modifier/martian": {
+            "header.Modifier": {
+              "scope": ["request"],
+              "name": "Authorization",
+              "value": "Basic dXNlcjpwYTU1dzByZA=="
+            }
+        }
+    }
+}
+{{< /highlight >}}
+
+With the configuration above, whenever a request is made to the backend, the `Authorization` header is added automatically.
+
+For more complex examples of authentication using Martian, see the example [Adding automatic API authentication](/blog/website-development-as-a-sysadmin/)
+
+## All Martian modifiers, verifiers, and filters
+The Martian library comes with [+25 modifiers](https://github.com/google/martian) you can use. We are not listing all the options in the documentation. Instead, we provided the modifiers that are key when using Martian.
+
+For the complete list of modifiers and usage, see [Google's Martian repository](https://github.com/google/martian). These are the packages included in KrakenD-CE:
 
 - [github.com/google/martian/body](https://github.com/google/martian/tree/master/body)
 - [github.com/google/martian/cookie](https://github.com/google/martian/tree/master/cookie)
@@ -186,8 +224,8 @@ For the complete list of modifiers and usage see [Google's Martian repository](h
 - [github.com/google/martian/status](https://github.com/google/martian/tree/master/status)
 
 ## Building new modifiers
-There will be times when you want to create a new modifier that covers your specific use case and does some other dynamic operations. Creating more modifiers is a straightforward process and only requires to `make` the gateway once you have it coded.
+Sometimes you want to create a new modifier that covers your specific use case and does some other dynamic operations. Creating more modifiers is a straightforward process and only requires `make` the gateway once you have it coded.
 
-Nothing better than an example to demonstrate how to create a new modifier. Our SRE Director (who wasn't familiar with Go) went through the process of creating a new Modifier that would authenticate automatically against the Marvel API adding an API Key, a timestamp and a calculated hash.
+Nothing better than an example to demonstrate how to create a new modifier. Our SRE Director (who wasn't familiar with Go) went through the process of creating a new Modifier that would authenticate automatically against the Marvel API, adding an API Key, a timestamp, and a calculated hash.
 
 Read it here (contains the source code): [Martian example: Adding automatic API authentication](/blog/website-development-as-a-sysadmin/)
