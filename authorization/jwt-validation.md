@@ -22,9 +22,9 @@ Before digging any further, some answers to frequently asked questions:
 
 1) **KrakenD does not generate the tokens itself**. Still, you can plug it into any SaaS or self-hosted OpenID Identity Provider (**IdP**) using industry standards (e.g., Auth0, Azure AD, Google Firebase, Keycloak, etc.)
 
-2) **KrakenD does not need to validate all calls using your IdP**. KrakenD validates every incoming call's signature, and **it doesn't make token introspection** (asking the IdP data about the token owner).
+2) **KrakenD does not need to validate all calls using your IdP**. KrakenD validates every incoming call's signature and **it doesn't make token introspection** (asking the IdP data about the token owner).
 
-3) **If you don't have an identity server**, you can still use your classic monolith/backend login system and adapt it to return a JWT payload (which is a simple JSON). From here, let KrakenD [sign the token for you](/docs/authorization/jwt-signing/) and start using tokens right away.
+3) **If you don't have an identity server**, you can still use your classic monolith/backend login system and adapt it to return a JWT payload (a simple JSON). From here, let KrakenD [sign the token for you](/docs/authorization/jwt-signing/) and start using tokens right away.
 
 4) **Your self-hosted identity server doesn't need to be exposed to the Internet**, as it can live behind KrakenD and let the token generation requests be proxied through KrakenD. If you use a SaaS solution, then it's exposed.
 
@@ -49,7 +49,7 @@ Make sure you are declaring the right `kid` in your JWT. Paste a token in a [deb
 The value provided in the `kid` must match with the `kid` declared at the `jwk_url` or `jwk_local_path`.
 {{< /note >}}
 
-The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json), notice how the `kid` matches the single key present in the JWK document and the token header.
+The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json). Notice how the `kid` matches the single key present in the JWK document and the token header.
 
 **KrakenD is built with security in mind** and uses **JWS** (instead of plain JWT or JWE), and the `kid` points to the right key in the JWS. This is why this entry is mandatory to validate your tokens.
 
@@ -99,13 +99,13 @@ These options are for the `extra_config`'s namespace `"auth/validator"` placed i
 - `jwk_local_path` (*string*): Local path to the JWK public keys. Instead of pointing to an external URL (`jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add:
     - `secret_url` (*string*): An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers below)
     - `cypher_key` (*string*): The cyphering key.
-- `cache` (*boolean*): Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, recommended for performance. The cache can store up to 100 different public keys simultaneously.
-- `cache_duration` (*int*): Change the default duration of 15 minutes. Value in **seconds**.
+- `cache` (*boolean*): Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, as recommended for performance. The cache can store up to 100 different public keys simultaneously.
+- `cache_duration` (*int*): Change the default duration to 15 minutes. Value in **seconds**.
 - `audience` (*list*): Set when you want to reject tokens that do not contain the given audience.
 - `roles_key` (*string*):  When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: ["myrole"] } } `.
-- `roles` (*list*):  When set, the JWT token not having at least one of the listed roles is rejected.
-- `roles_key_is_nested` (*bool*):  If the roles key is using a nested object using the `.` dot notation must be set to `true` in order to traverse the object.
-- `scopes` (*list*): A list of scopes to validate. Make sure to use a list `[]` in the config but, when passing the token, the scopes should be separated by spaces, e.g: `"my_scopes": "resource1:action1 resource3:action7"`.
+- `roles` (*list*):  When set, the JWT token not having at least one listed role is rejected.
+- `roles_key_is_nested` (*bool*):  If the roles key uses a nested object using the `.` dot notation, you must set it to `true` to traverse the object.
+- `scopes` (*list*): A list of scopes to validate. Make sure to use a list `[]` in the config, but when passing the token, the scopes should be separated by spaces, e.g.: `"my_scopes": "resource1:action1 resource3:action7"`.
 - `scopes_key`: The key name where KrakenD can find the scopes. The key can be a nested object using the `.` dot notation, e.g.: `data.data2.scopes`
 - `scopes_matcher` (*string*): Valid options are `all` or `any`. When you use `all`, every scope defined in the endpoint must be present in the token. Otherwise, any matching scope will let you pass.
 - `issuer` (*string*): When set,  tokens not matching the issuer are rejected.
@@ -114,7 +114,7 @@ These options are for the `extra_config`'s namespace `"auth/validator"` placed i
 - `jwk_fingerprints` (*strings list*): A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man-in-the-middle attacks. Add fingerprints in base64 format.
 - `cipher_suites` (*integers list*): Override the default cipher suites. Use it if you want to enforce an even higher security standard.
 - `jwk_local_ca` (*string*): Path to the CA's certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
-- `propagate_claims` (*list*): Enables passing claims in the backend's request header (see below)
+- `propagate_claims` (*list*): Enables passing claims in the backend's request header (see below). You can pass nested claims using the dot `.` operator. E.g.: `realm_access.roles`.
 - `key_identify_strategy` (*string*): Allows strategies other than `kid` to load keys. Allowed values are: `kid`, `x5t`, `kid_x5t`
 - `operation_debug` (*bool*): When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.
 
@@ -287,7 +287,8 @@ It is possible to forward claims in a JWT as request headers. It is a common use
     "extra_config": {
         "auth/validator": {
             "propagate_claims": [
-                ["sub", "x-user"]
+                ["sub", "x-user"],
+                ["realm_access.role", "x-role"]
             ]
         }
     }
@@ -296,6 +297,8 @@ It is possible to forward claims in a JWT as request headers. It is a common use
 
 
 In this case, the `sub` claim's value will be added as `x-user` header to the request. If the claim does not exist, the mapping is just skipped.
+
+In addition, the nested property `role` (inside `realm_access`) is passed as an `x-role` header.
 
 ## A complete running example
 
