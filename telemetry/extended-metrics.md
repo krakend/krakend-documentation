@@ -19,7 +19,7 @@ meta:
   log_prefix:
   - "[SERVICE: Stats]"
 ---
-Collect **extended metrics** to push them to [InfluxDB](/docs/telemetry/influxdb-native/) or expose them in the `/__stats/` endpoint. The `/__stats/` endpoint runs in a different port and contains a lot of metrics. This component is the richest in terms of metric data that you can use.
+Collect **extended metrics** to push them to [InfluxDB](/docs/telemetry/influxdb/) or expose them in the `/__stats/` endpoint. The `/__stats/` endpoint runs in a different port and contains a lot of metrics. This component is the richest in terms of metric data that you can use.
 
 Through the extended metrics you can create new tools or integrate with existing ones. For instance, combining the metrics with the InfluxDB extended metrics you can have a [Grafana dashboard](/docs/telemetry/grafana/).
 

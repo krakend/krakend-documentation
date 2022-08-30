@@ -44,7 +44,7 @@ Add a [circuit breaker](/docs/backends/circuit-breaker/) to your backends to avo
 Make sure you have visibility of what is going on. Choose any of the systems where you can send the metrics and enable them. There are many choices, but choose wisely and do not enable them all!. If you don't use a SaaS provider, **a good self-hosted start** would be:
 
 - A [Grafana Dashboard](/docs/telemetry/grafana/)
-- Fueled by [InfluxDB](/docs/telemetry/influxdb-native/)
+- Fueled by [InfluxDB](/docs/telemetry/influxdb/)
 - And full traces by [Jaeger](/docs/telemetry/jaeger/)
 
 Pay attention to the cardinality of the metrics. Logs and metrics might produce a lot of data and CPU activity. Aggregate and consolidate data in InfluxDB (e.g: When looking at the past year metrics, you don't need minute resolution and days will be enough).
