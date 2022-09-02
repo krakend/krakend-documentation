@@ -10,6 +10,8 @@ menu:
     parent: "040 Endpoint Configuration"
 images:
 - /images/documentation/krakend-merge.png
+meta:
+  noop_incompatible: true
 ---
 
 KrakenD allows you to perform several manipulations of the responses out of the box, just by adding them to the configuration file. You can also add your own or 3rd parties middlewares to extend this behavior.
@@ -223,3 +225,6 @@ KrakenD expects all backends to return objects in the response. There are times 
 In any case, manipulations over arrays work differently than the objects.
 
 See [collections documentation](/docs/backends/data-manipulation/#collections)
+
+## Query language manipulation
+The [JMESpath component](/docs/enterprise/endpoints/jmespath/) allows you apply manipulations using a powerful JSON query language. **Enterprise only**

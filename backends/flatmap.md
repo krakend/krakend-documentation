@@ -9,6 +9,7 @@ menu:
   community_current:
     parent: "050 Backends Configuration"
 meta:
+  noop_incompatible: true
   since: 0.9
   source: https://github.com/krakendio/flatmap
   namespace:

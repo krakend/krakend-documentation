@@ -8,6 +8,8 @@ weight: 5
 menu:
   community_current:
     parent: "050 Backends Configuration"
+meta:
+  noop_incompatible: true
 ---
 This page describes the most basic options to manipulate the content you receive from the backend before delivering it to the client.
 

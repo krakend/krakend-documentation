@@ -13,6 +13,7 @@ menu:
   community_current:
     parent: "040 Endpoint Configuration"
 meta:
+  noop_incompatible: true
   since: 0.7
   source: https://github.com/luraproject/lura
   namespace:
