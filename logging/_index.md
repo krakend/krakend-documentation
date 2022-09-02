@@ -1,46 +1,70 @@
 ---
-lastmod: 2022-06-15
+lastmod: 2022-09-02
 date: 2018-10-30
 toc: true
 linktitle: Improved logging
-title: Improved Logging - Syslog, stdout
+title: Logging to Syslog and Stdout
 weight: 10
-source: https://github.com/krakendio/krakend-gologging
 aliases: ["/docs/logging-metrics-tracing/logging/", "/docs/logging/extended-logging/"]
 menu:
   community_current:
     parent: "090 Logging"
+meta:
+  source: https://github.com/krakendio/krakend-gologging
+  namespace:
+  - telemetry/logging
+  scope:
+  - service
 ---
-By default,  when KrakenD starts all the log events are sent to the **standard output** using the basic logger capabilities of the [Lura Project](https://luraproject.org). The reporting level, in that case, is `DEBUG` and adds no prefix to the log lines.
+The logging component is an essential configuration block for any installation that lets you choose **where** and **how** to log the gateway activity. It also opens the door to integrating other components for more advanced usage.
 
-There are two types of logs:
+When you add the logging component, you can customize the format of the logs and send them both to the *stdout* and the *syslog*. However, if you don't use this component, then KrakenD uses the basic capabilities of [Lura](https://luraproject.org) (standard output only and a `DEBUG` level).
 
-- **Access logs** (activity from users)
-- **Application logs** (errors, debugging information and other application messages)
+The `telemetry/logging` has the following logging capabilities:
 
-## Access logs
-The access log shows with the following format:
-
-    [GIN] 2022/06/15 - 15:38:58 | 200 |       4.529µs |      172.17.0.1 | GET      "/test/foo"
-    [GIN] 2022/06/15 - 15:38:59 | 200 |       3.647µs |      172.17.0.1 | GET      "/test/bar"
-
-The access log is not customizable, but it can be disabled using `disable_access_log` (see how to [remove requests from logs options](/docs/service-settings/router-options/#remove-requests-from-logs)).
-
-## Application logs
-
-Different logging components allow you to extend the application logging functionality, such as sending the events to the **syslog**, use JSON format, choosing the verbosity level, or use the **Graylog Extended Log Format (GELF)**.
-
-In addition to this, a lot of exporters are available to send your logs out (see [Telemetry](/docs/telemetry/))
-
-The component `telemetry/logging` extends the default logging capabilities with the following capabilities:
-
-- Option to write to the stdout
-- Option to write to the syslog
+- Write to the **Stdout (the console)**
+- Write to the **Syslog (local file or remote server)**
 - Add a prefix to log lines
 - Select the reporting level
 - Option to use a predefined or custom format
 
-To enjoy the extended logging capabilities the component needs to be added in the `krakend.json` configuration. Add its namespace in the `extra_config` at the root level:
+## Types of log messages
+The content that KrakenD writes in its log is:
+
+- Access logs
+- Application logs
+
+### Access logs
+The access log shows users' activity and prints which endpoints are requested, when, the status code, the duration, the requesting IP, and the method. An example of the format us:
+
+    [GIN] yyyy/mm/dd - hh:mm:ss | 200 |       4.529µs |      172.17.0.1 | GET      "/user/foo"
+    [GIN] yyyy/mm/dd - hh:mm:ss | 200 |       3.647µs |      172.17.0.1 | GET      "/category/bar"
+
+The access log content is not customizable. It can be disabled using `disable_access_log` (see how to [remove requests from logs options](/docs/service-settings/router-options/#remove-requests-from-logs)).
+
+**Access logs are not written in the syslog**, only in stdout.
+
+### Application logs
+The application log messages are the errors, warnings, debugging information, and other messages shown by the gateway while it operates.
+
+The application logs are customizable as you can extend the functionality, such as sending the events to the **syslog**, using JSON format, choosing the verbosity level, or using the **Graylog Extended Log Format (GELF)**.
+
+In addition to this, a lot of **exporters** are available to send your logs out (see [Telemetry](/docs/telemetry/))
+
+Application logs might look different on each application, but this is an example:
+
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: Gin] Debug enabled
+    yyyy/mm/dd hh:mm:ss KRAKEND INFO: Starting the KrakenD instance
+    yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: Gin] Building the router
+    yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: Gin] Listening on port: 8080
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: AsyncAgent][mkt-event] Starting the async agent
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [ENDPOINT: mkt-event] Building the proxy pipe
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [BACKEND: /__debug/some] Building the backend pipe
+    yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: AsyncAgent][AMQP][mkt-event] Starting the consumer
+    yyyy/mm/dd hh:mm:ss KRAKEND ERROR: [SERVICE: Asyncagent][mkt-event] building the amqp subscriber: dial tcp 192.168.2.223:5672: connect: connection refused
+
+## Logging Configuration
+To add extended logging capabilities, you need to add the component at the service level of your `krakend.json` configuration, under the `extra_config` key:
 
 {{< highlight json >}}
 {
@@ -49,7 +73,7 @@ To enjoy the extended logging capabilities the component needs to be added in th
     "telemetry/logging": {
       "level": "INFO",
       "prefix": "[KRAKEND]",
-      "syslog": true,
+      "syslog": false,
       "stdout": true,
       "format": "custom",
       "custom_format": "%{message}"
@@ -58,40 +82,66 @@ To enjoy the extended logging capabilities the component needs to be added in th
 }
 {{< /highlight >}}
 
+These are the different configuration options:
 
-The snippet above shows the four options you can configure, explained below.
+- `level` (*string*): What type of **reporting level** do you expect from the application? Accepted values are (from more verbose to least):, `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`. Use the `DEBUG` level in the development stages but not in production.
+- `prefix` (optional - *string*): Adds a string to the beginning of every logged message line, so you can quickly filter messages with external tools later.
+- `syslog` (optional - *boolean*): Whether you want to log to the syslog or not
+- `stdout` (optional - *boolean*): Whether you want to log to the stdout or not
+- `format` (optional - *string*): Allows you to use different logging pattern formats. Defaults to `default`. The valid values are:
+    - `default`: Uses the pattern `%{time:2006/01/02 - 15:04:05.000} %{color}▶ %{level:.6s}%{color:reset} %{message}`
+    - `logstash`: **Logs in JSON format** using the logstash format. See [Logstash](/docs/logging/logstash/) for more information. E.g.: `{"@timestamp":"%{time:2006-01-02T15:04:05.000+00:00}", "@version": 1, "level": "%{level}", "message": "%{message}", "module": "%{module}"}`.
+    - `custom` Lets you write a custom logging pattern using variables, e.g: `%{message}`. To know more about the possible **patterns** see the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
+- `syslog_facility` (optional - *string*): When using syslog, the facility tells KrakenD where to send the messages as set by the locals of the [syslog standard](https://www.rfc-editor.org/rfc/rfc5424.html) being one of `local0`,`local1`,`local2`,`local3`,`local4`,`local5`,`local6`, or `local7`. Defaults to `local3`.
 
-### Set the *reporting level*
-Define the severity you would like to see in the logs with `level`. The recognized options from more to less verbosity are:
+## Writing the log on a file
+Although logging on disk might impact software performance and is discouraged in high-throughput systems, you can still store the logs in a file.
 
-- `DEBUG`
-- `INFO`
-- `WARNING`
-- `ERROR`
-- `CRITICAL`
+Avoid redirecting the output of KrakenD (e.g.: `krakend run > krakend.log`) and use the *syslog* of your machine instead.
 
-### Write to Syslog or Stdout
-For each log event triggered, the output can write to the **syslog**, the **stdout**, or both. The accepted values are a boolean. When true, the log writes in the selected target:
+To setup logs on disk, you should consider the following steps:
 
-- `"syslog": true`
-- `"stdout": true`
+1) Add the syslog configuration to yor `krakend.json`
+2) Add a specific entry for krakend under `/etc/rsyslog.d/`
+3) Optionally add log rotation
 
-### Add a prefix to all lines
-Besides, you might want to choose to add a string to every logged line, so you can quickly filter messages with external tools later.
+### 1. Syslog configuration
+{{< highlight json >}}
+{
+  "version": 3,
+  "extra_config": {
+    "telemetry/logging": {
+      "level": "WARNING",
+      "syslog": true,
+      "stdout": true
+    }
+  }
+}
+{{< /highlight >}}
 
-- `"prefix": "[ANY STRING]"`
+You might set the `stdout` to `false` if you don't want to check on the console but only on the logs.
 
-### Predefined and customs formats
-If you want to follow other patterns for logging, you're able to.
+Then create
 
-- `"format": "custom"`
+### 2. Add an entry to `rsyslog`
+The folder `/etc/rsyslog.d/` shows the different configurations of the system. We will create a new file `/etc/rsyslog.d/krakend.conf` and place this content inside:
 
-The valid formats are:
- - `default` uses the pattern `%{time:2006/01/02 - 15:04:05.000} %{color}▶ %{level:.6s}%{color:reset} %{message}`
- - `logstash` uses the pattern `{"@timestamp":"%{time:2006-01-02T15:04:05.000+00:00}", "@version": 1, "level": "%{level}", "message": "%{message}", "module": "%{module}"}`. See [Logstash](/docs/logging/logstash/)
- - `custom` lets you write your own pattern, e.g: `%{message}`
+    local3.*    -/var/log/krakend.log
 
-To know more about the possible pattern format see the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
+If you are familiar with *syslog*, you change the `syslog_facility` to any other (local) value and adjust it in the file above.
 
-## Log in JSON format
-If you want to log in the stdout using **JSON format** see [Logstash](/docs/logging/logstash/)
+### 3. KrakenD log rotation
+The syslog will take care of populating the log and can be used conveniently with the default system tools like **rotating the logs** with `logrotate`. Add a new configuration file `/logrotate.d/krakend` and add the content below:
+
+```
+/var/log/krakend.log {
+  rotate 7
+  daily
+  missingok
+  delaycompress
+  compress
+  postrotate
+    /usr/lib/rsyslog/rsyslog-rotate
+  endscript
+}
+```
