@@ -13,7 +13,7 @@ images:
 - /images/documentation/grafana-screenshot.png
 meta:
   since: 0.5
-  source: https://grafana.com/dashboards/5722
+  source: https://grafana.com/grafana/dashboards/15029-krakend/
   namespace:
   - telemetry/influx
   - telemetry/metrics
@@ -60,10 +60,10 @@ Add the following configuration to your `krakend.json` at the root level:
 
 For more details of this configuration see the [InfluxDb exporter](/docs/telemetry/influxdb/)
 
-Then, import our [Grafana dashboard for Krakend](https://grafana.com/dashboards/5722).
+Then, import our [Grafana dashboard for Krakend](https://grafana.com/grafana/dashboards/15029-krakend/ ).
 
 ## Importing the Grafana dashboard
-To import the dashboard: From the Grafana UI, click the + icon in the side menu, and then click Import. Choose import via Grafana.com and use the ID `5722`.
+To import the dashboard: From the Grafana UI, click the + icon in the side menu, and then click Import. Choose import via Grafana.com and use the ID `15029 `.
 
 ## Local testing with Docker
 After adding your configuration to KrakenD, to test the configuration locally with Docker, you will need to:
@@ -105,6 +105,6 @@ docker run \
 - password: `supersecretpassword`
 - HTTP Method : `GET`
 
-5) Import the Dashboard via grafana.com. Type `5722` and click on Load. The Dashboard will be ready for you!
+5) Import the Dashboard via grafana.com. Type `15029 ` and click on Load. The Dashboard will be ready for you!
 
 ![Grafana KrakenD Dashboard](/images/documentation/grafana-screenshot.png)
