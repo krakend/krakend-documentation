@@ -15,7 +15,7 @@ meta:
   scope:
   - endpoint
 ---
-KrakenD `no-op` (**no-operation**), is a special type of **encoding** that behaves as a **proxy** by passing the client's request to the backend and returning the response to the client ***as it is***. Without any manipulation or operation.
+KrakenD `no-op` (**no-operation**), is a special type of **encoding** that behaves as a **proxy** by passing the client's request to the backend and returning the response to the client ***as it is*** (some additional operations are permitted). Essentially without any manipulation or operation.
 
 ## Using `no-op` to proxy requests
 When setting `no-op`, KrakenD does not inspect the request `body` or manipulates it in any way. Instead, when a request to a `no-op` endpoint is received, KrakenD directly forwards it to the backend without doing any operation with it.

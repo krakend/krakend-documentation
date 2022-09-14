@@ -123,7 +123,7 @@ services:
     ports:
       - "8086:8086"
   krakend:
-    image: devopsfaith/krakend
+    image: {{< product image >}}:{{< product latest_version >}}
     volumes:
       - ./krakend:/etc/krakend
     ports:
