@@ -15,7 +15,7 @@ If you want to customize any of the settings below, they must be written at the 
 
 | Setting parameter | Type | Description |
 |-------------------|---------------|-------------|
-| `port`  | *integer* | The TCP port where KrakenD listens to. Recommended value is in the range 1024-65535 to run as an unpriviliged user. Defaults to `8080`. |
+| `port`  | *integer* | The TCP port where KrakenD listens to. Recommended value is in the range 1024-65535 to run as an unpriviliged user. If you use ports under 1024 (e.g.: 80, 443) you'll need to start the service as root. Defaults to `8080`. |
 | `cache_ttl`  | *duration* | Sets a default `Cache-Control: public, max-age=%d` header to all endpoints where `%d` is the conversion to seconds of any duration you wrote, indicating for how long the client can cache the content of the request. You can override this value per endpoint. Notice that KrakenD does not cache the content with this parameter, but tells the client how to do it. Defaults to `0s` (no cache). **For KrakenD cache, see [backend caching](/docs/backends/caching/)** |
 | `sequential_start`  | *boolean* | A sequential start registers async agents in order when you run the server, allowing you to read the starting logs in sequential order. The startup speed depends on the number of async agents to register and the number of CPUs. A non-sequential start (default) is much faster, but logs are not in order. Defaults to `false`. |
 | `read_timeout`| *duration* | Is the maximum duration for reading the entire request, including the body. Because `read_timeout` does not let Handlers make per-request decisions on each request body's acceptable deadline or upload rate, most users will prefer to use `read_header_timeout`. It is valid to use them both.|

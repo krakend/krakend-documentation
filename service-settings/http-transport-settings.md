@@ -16,6 +16,7 @@ If you want to customize any of the settings below, they must be written at the 
 
 | Setting parameter | Type | Description |
 |-------------------|---------------|-------------|
+| `allow_insecure_connections` | *boolean* | By default, KrakenD verifies every SSL connection. This option allows you to connect to backends considered insecure, for instance when you are using **self-signed certificates** |
 | `disable_rest` | *boolean* | Only RESTful URL patterns are valid to access backends. Set to true if your backends aren't RESTful, e.g.: `/url.{some_variable}.json` |
 | `dialer_timeout` | *duration* | The timeout of the dial function for creating connections |
 | `dialer_keep_alive` | *duration* | The amount of time you want to keep alive the connection |
@@ -32,11 +33,11 @@ Finally, the **TLS Handshake Timeout** is hardcoded to 10 seconds and cannot be 
 
 
 ## Override settings using environment vars
-When you declare in the configuration file any of the HTTP server settings declared above, you can [override its value through environment variables](/docs/configuration/environment-vars/) when starting the server.
+When you declare in the configuration file any of the HTTP server or transport settings declared above, you can [override its value through environment variables](/docs/configuration/environment-vars/) when starting the server.
 
-All the environment variables have the same name are the same settings above in uppercase and with the `KRAKEND_` preffix. The following env vars are available:
+All the environment variables have the same name as the settings above in uppercase and with the `KRAKEND_` prefix. The following env vars are available:
 
-
+- `KRAKEND_ALLOW_INSECURE_CONNECTIONS`
 - `KRAKEND_DIALER_TIMEOUT`
 - `KRAKEND_DIALER_KEEP_ALIVE`
 - `KRAKEND_DIALER_FALLBACK_DELAY`
@@ -54,6 +55,13 @@ You can start KrakenD with the desired variables to override what you have in th
 {{< terminal title="Term" >}}
 KRAKEND_MAX_IDLE_CONNECTIONS_PER_HOST=200 krakend run -c krakend.json
 {{< /terminal >}}
+
+Or
+
+{{< terminal title="Connect using self-signed certificates" >}}
+KRAKEND_ALLOW_INSECURE_CONNECTIONS=true krakend run -c krakend.json
+{{< /terminal >}}
+
 
 ## Max IDLE connections
 Having a high number of IDLE connections to every backend affects directly to the performance of the proxy layer. This is why you can control the number using the `max_idle_connections` setting. For instance:
