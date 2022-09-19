@@ -7,6 +7,7 @@ menu:
     parent: "040 Endpoint Configuration"
 title: The `/__debug/` endpoint
 weight: 35
+notoc: true
 ---
 The `/__debug/` endpoint is available when you start the server with the `-d` flag.
 
