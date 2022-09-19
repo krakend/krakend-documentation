@@ -133,35 +133,44 @@ services:
 In the fields `db`, `username`, and `password` of the component configuration reflect the same values as in `INFLUXDB_DB`, `INFLUXDB_USER`, and `INFLUXDB_USER_PASSWORD` accordingly.
 
 ### Connecting to Influx v2
-There are four steps you need to do to connect to an InfluxDB v2:
+There are three steps you need to do to connect to an InfluxDB v2:
 
 - Install or run an InfluxDB
-- Setup InfluxDB for the first time
 - Creating a configuration using a token
 - Create a v1 authorization
 
 Let's see them in detail
 
-#### Start an InfluxDB v2
-If you use Docker you can start InfluxDB as part of a docker compose file, or independently. For instance:
+#### Install or run an InfluxDB
+If you use Docker you can start InfluxDB as part of a docker compose file. You need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following `docker-compose.yml` sets the credentials you need to reflect in the KrakenD configuration.
 
-{{< terminal title="Term" >}}
-docker run -it -d --name influxdb -p 8086:8086 influxdb:2.4
-{{< /terminal >}}
+{{< highlight yaml >}}
+version: "3"
+services:
+  influxdb:
+    image: influxdb:2.4
+    environment:
+      - "DOCKER_INFLUXDB_INIT_MODE=setup"
+      - "DOCKER_INFLUXDB_INIT_USERNAME=krakend-dev"
+      - "DOCKER_INFLUXDB_INIT_PASSWORD=pas5w0rd"
+      - "DOCKER_INFLUXDB_INIT_ORG=my-org"
+      - "DOCKER_INFLUXDB_INIT_BUCKET=krakend"
+      - "DOCKER_INFLUXDB_INIT_RETENTION=1w"
+      - "DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-auth-token"
+    ports:
+      - "8086:8086"
+  krakend:
+    image: {{< product image >}}:{{< product latest_version >}}
+    volumes:
+      - ./krakend:/etc/krakend
+    ports:
+      - "8080:8080"
+{{< /highlight >}}
 
-#### Setup InfluxDB for the first time
-Once InfluxDB is started, access with a web browser to `http://localhost:8086` (or the server with InfluxDB), and click the Get Started button to begin the onboarding.
+In the fields `db`, `username`, and `password` of the component configuration reflect the same values as in `DOCKER_INFLUXDB_INIT_BUCKET`, `DOCKER_INFLUXDB_INIT_USERNAME`, and `DOCKER_INFLUXDB_INIT_PASSWORD` accordingly.
 
-![Setting up Influx](/images/documentation/influx_setup.png)
-
-Create a **username and password** that KrakenD will use to connect and send the metrics. Write your **organization name** and a **bucket name** (database). Write down these values as you will need them later. Now InfluxDB is ready.
 
 #### Create a configuration
-Select the **Advanced** button and go to the section **API TOKENS**.
-
-Click on the title of the user's Token and **Copy to Clipboard**, save it somewhere, you will use it in a minute.
-
-![Getting a token](/images/documentation/influx_token.png)
 
 The last step is to create the configuration and auth. For this, connect to the container's shell:
 
@@ -174,8 +183,8 @@ And now create the configuration as follows:
 {{< terminal title="Term" >}}
 influx config create --config-name krakend-config \
   --host-url http://localhost:8086 \
-  --org KrakenD \
-  --token TiukK5nTFsnPhpT360pHRlB5G0Qigbq6yct6IzNDX70cjw-90tsFFAjVPw7D7_ALiARFU8X7ldgIlF03qgbT-A== \
+  --org my-org \
+  --token my-super-secret-auth-token \
   --active
 {{< /terminal >}}
 
@@ -183,12 +192,12 @@ Make sure to replace the values below as follows:
 
 - `config-name` is a random name to identify your configuration
 - `org` Your organization name as written during the setup of InfluxDB
-- `token` The one you copied in the step above
+- `token` The one you started influx with
 - `host-url` The address where the influxdb is running (inside Docker is as shown)
 
 The final step is to create the auth for KrakenD.
 
-Return to the InfluxDB UI and select **BUCKETS**. You'll see that there is an ID next to the bucket you created during the Setup. **Copy the bucket ID**.
+Access with a web browser to `http://localhost:8086` and select **BUCKETS** from the UI. You'll see that there is an ID next to the bucket you created during the Setup. **Copy the bucket ID**.
 
 ![Getting a token](/images/documentation/influx_bucket.png)
 
@@ -196,12 +205,12 @@ And now launch the last command in the shell:
 
 {{< terminal title="Term" >}}
 influx v1 auth create \
-  --read-bucket b492e6f8f3b13aaa
-  --write-bucket b492e6f8f3b13aaa
-  --username user
+  --read-bucket b492e6f8f3b13aaa \
+  --write-bucket b492e6f8f3b13aaa \
+  --username krakend-dev
 {{< /terminal >}}
 
-Replace the ID of the buckets above with the ID you just copied. The shell will ask for your password.
+Replace the ID of the buckets above with the ID you just copied, and the username as in the docker compose. The shell will ask for your password.
 
 Now your configuration should work and start sending data to InfluxDB:
 
