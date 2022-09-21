@@ -12,7 +12,7 @@ menu:
 images:
 - /images/documentation/screenshots/kibana-krakend-dashboard.png
 ---
-KrakenD can push logs to external services; a good example is an integration with the ELK Stack (Elastic + Logstash + Kibana). The ELK integration allows you to have KrakenD pushing logs to your Elastic server and **visualize them through a Kibana dashboard**.
+KrakenD can push logs to external services; a good example is an integration with the ELK Stack (**Elastic + Logstash + Kibana**). The ELK integration allows you to have KrakenD pushing logs to your Elastic server and **visualize them through a Kibana dashboard**.
 
 The Kibana dashboard lets you monitor the logging activity of the gateway and identify problems quickly. The included dashboard is a starting point that provides typical graphs and metrics, but you can extend it as per your needs and add other metrics to watch.
 
@@ -46,7 +46,7 @@ When you enable the ELK integration, you will stop seeing the application logs o
 {{< /note >}}
 
 ## Logstash and Kibana configuration
-The configuration files you need for Logstash and Kibana can be downloaded from the [ELK integration repository](https://github.com/krakendio/elk-integration).
+The configuration files you need for Logstash and Kibana can be downloaded from the [ELK integration repository](https://github.com/krakendio/elk-dashboard).
 
 Copy the configuration file `logstash.conf` to your logstash server and adjust the address as needed.
 
