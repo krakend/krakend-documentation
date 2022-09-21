@@ -26,7 +26,7 @@ The configuration you need on your `krakend.json` to enable ELK integration is:
   "extra_config": {
     "telemetry/logging": {
       "level": "DEBUG",
-      "@comment": "Prefix should always be inside [] to keep the grok expression working"
+      "@comment": "Prefix should always be inside [] to keep the grok expression working",
       "prefix": "[KRAKEND]",
       "syslog": false,
       "stdout": true
