@@ -50,10 +50,11 @@ COPY --from=builder --chown=krakend /tmp/krakend.json .
 {{< /highlight >}}
 
 The `Dockerfile` above has two stages:
- The `check` command compiles the template `krakend.tmpl` and any included sub-template inside and outputs (`FC_OUT`) the resulting `/tmp/krakend.json` file.
-The `krakend.json` file is the only addition to the final Docker image.
 
-The example above assumes you have a file structure like this:
+1. The copy of all templates and intermediate files to end with a `check` command that compiles the template `krakend.tmpl` and any included sub-template inside. The command outputs (thanks to `FC_OUT`) the result into a `/tmp/krakend.json` file.
+2. The `krakend.json` file from the previous build is the only addition to the final Docker image.
+
+The example `Dockerfile` above assumes that you have a file structure like this:
 
     .
     ├── config
@@ -68,11 +69,13 @@ The example above assumes you have a file structure like this:
     ├── Dockerfile
     └── krakend.tmpl
 
-Generate the skeleton above with:
+If you want to try this code, you can either download a [working Flexible Config example](https://github.com/krakendio/examples/tree/main/3.flexible-configuration), or generate an **empty skeleton** like this:
 {{< highlight bash >}}
 mkdir -p config/{partials,settings,templates}
 mkdir -p config/settings/{prod,test}
-touch Dockerfile krakend.tmpl
+touch config/settings/{prod,test}/env.json
+touch Dockerfile
+touch krakend.tmpl
 {{< /highlight >}}
 
 Now the only missing step to generate the image, is to build it, making sure that the environment argument matches our folder inside the `settings` folder:

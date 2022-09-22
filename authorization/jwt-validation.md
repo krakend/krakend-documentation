@@ -99,7 +99,7 @@ These options are for the `extra_config`'s namespace `"auth/validator"` placed i
 - `jwk_local_path` (*string*): Local path to the JWK public keys. Instead of pointing to an external URL (`jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add:
     - `secret_url` (*string*): An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers below)
     - `cypher_key` (*string*): The cyphering key.
-- `cache` (*boolean*): Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, as recommended for performance. The cache can store up to 100 different public keys simultaneously.
+- `cache` (*boolean*): Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, as recommended for performance. The cache can store up to 100 different `keys` from the JWK URL response.
 - `cache_duration` (*int*): Change the default duration to 15 minutes. Value in **seconds**.
 - `audience` (*list*): Set when you want to reject tokens that do not contain the given audience.
 - `roles_key` (*string*):  When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: ["myrole"] } } `.
@@ -307,7 +307,7 @@ The [KrakenD Playground](/docs/overview/playground/) demonstrates how to protect
 - Integration with an external third party using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa/)
 - Integration with an internal identity provider service (mocked) using a symmetric key algorithm and a signer middleware.
 
-To try it, [clone the playground](https://github.com/krakendio/krakend-playground) and follow the README.
+To try it, [clone the playground](https://github.com/krakendio/playground-community) and follow the README.
 
 ## Supported hashing algorithms and cipher suites
 

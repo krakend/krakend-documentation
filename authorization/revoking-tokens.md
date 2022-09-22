@@ -31,7 +31,7 @@ The bloom filter component brings the following functionalities:
 ### Bloom filter client
 The communication with the bloom filter is RPC-based. The component exposes a listening port of your choice to receive updates of the bloom filter (single or batch), but a client is needed to communicate with the component.
 
-The bloom filter library includes a [client](https://github.com/krakendio/bloomfilter/tree/master/cmd/client), so you can send the updates. In addition, the KrakenD Playground project consists of a sample [web page with a form and an RPC client](https://github.com/krakendio/krakend-playground/tree/master/jwt-revoker) that sends commands to the bloom filter and updates it.
+The bloom filter library includes a [client](https://github.com/krakendio/bloomfilter/tree/master/cmd/client), so you can send the updates. In addition, the KrakenD Playground project consists of a sample [web page with a form and an RPC client](https://github.com/krakendio/playground-community/tree/master/jwt-revoker) that sends commands to the bloom filter and updates it.
 
 ### Bloom filter performance
 The Bloom filter is ideal for supporting a massive rejection of tokens with very little memory consumption. For instance, **100 million tokens** of any size consume around 0.5GB RAM (with a rate of false positives of 1 in 999,925,224 tokens), and lookups complete in constant time (*k* number of hashes). These numbers are impossible to get with a key-value or a relational database.
