@@ -43,7 +43,7 @@ The following configuration snippet sends the data:
       "exporters": {
         "stackdriver": {
           "project_id": "my-krakend-project",
-          "metrics_prefix": "krakend",
+          "metric_prefix": "krakend",
           "default_labels": {
           "env": "production"
           }
@@ -58,7 +58,7 @@ The following configuration snippet sends the data:
 - `reporting_period` is the number of **seconds** passing between reports. It must be **`60` or greater**, otherwise, Google will reject the connection.
 - `exporters` is a key-value with all the exporters you want to use. See each exporter configuration for the underlying keys.
   - `project_id`: The identifier of your Google Cloud project. The `project_id` **is not the project name**. You can omit this value from the configuration if you have an application credential file for Google.
-  - `metrics_prefix`: A prefix that you can add to all your metrics for better organization.
+  - `metric_prefix`: A prefix that you can add to all your metrics for better organization.
   - `default_labels`: Enter any label assigned by default to the reported metric so you can filter later on Stack Driver. In the example, we set the label `env` with the value `production`.
 - `enabled_layers` let you specify what data you want to export. All layers are enabled by default:
   - Use `backend` to report the activity between KrakenD and your services
