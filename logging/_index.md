@@ -97,7 +97,7 @@ These are the different configuration options:
 ## Writing the log on a file
 Although logging on disk might impact software performance and is discouraged in high-throughput systems, you can still store the logs in a file.
 
-Avoid redirecting the output of KrakenD (e.g.: `krakend run > krakend.log`) and use the *syslog* of your machine instead.
+**Avoid redirecting the output** (e.g.: `krakend run > krakend.log`) and **use the *syslog* of your machine instead**.
 
 To setup logs on disk, you should consider the following steps:
 
