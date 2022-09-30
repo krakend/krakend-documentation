@@ -50,7 +50,7 @@ In a nutshell, **the sequence of a request-response** depicted in the graph of t
 When you have chosen the type of plugin that fits best your scenario, it's time to [write your plugin](/docs/extending/writing-plugins/).
 
 ## Custom middleware
-The recommended way to customize KrakenD is through plugins. But as all open-source code, you can modify KrakenD and its middlewares and do your own version. When writing your custom code, fork the [KrakenD-CE](https://github.com/krakendio/krakend-ce) repository, and read "[Understanding the big picture](/docs/extending/the-big-picture/#the-important-packages)" to identify the important packages.
+The recommended way to customize KrakenD is through plugins. But as all open-source code, you can modify KrakenD and its middlewares and do your own version. When writing your custom code, fork the [KrakenD-CE](https://github.com/krakendio/krakend-ce) repository, and read "[Understanding the big picture](/docs/design/#the-important-packages)" to identify the important packages.
 
 
 The **krakend-ce** repository is the one assembling all the middlewares and manages the dependencies (including [Lura](https://github.com/luraproject/lura)). It lets you effortlessly include your company customizations, as the project itself is mostly a wrapper for all components. Be aware that when you fork KrakenD you will need to maintain your custom version, which differs from the official binaries.

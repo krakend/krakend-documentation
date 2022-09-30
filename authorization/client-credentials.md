@@ -14,7 +14,7 @@ meta:
   #since:
   source: https://github.com/krakendio/krakend-oauth2-clientcredentials
   namespace:
-  - auth/validator
+  - auth/client-credentials
   scope:
   - backend
 ---

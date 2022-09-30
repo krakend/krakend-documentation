@@ -31,6 +31,7 @@ Available Commands:
   check-plugin  Check the compatibility with the plugin deps.
   help          Help about any command
   run           Run the KrakenD server.
+  version       Shows KrakenD version.
 
 Flags:
   -c, --config string   Path to the configuration filename

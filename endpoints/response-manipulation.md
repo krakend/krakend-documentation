@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-01-31
+lastmod: 2022-09-30
 date: 2016-09-30
 toc: true
 linktitle: Response manipulation
@@ -10,22 +10,26 @@ menu:
     parent: "040 Endpoint Configuration"
 images:
 - /images/documentation/krakend-merge.png
+meta:
+  noop_incompatible: true
 ---
 
-KrakenD allows you to perform several manipulations of the responses out of the box, just by adding them to the configuration file. You can also add your own or 3rd parties middlewares to extend this behavior.
+KrakenD allows you to perform several manipulations of the responses out of the box by adding them to the configuration file. You can also add your own or 3rd parties middleware to extend this behavior.
 
-KrakenD manipulations are measured in `nanoseconds`, you can find the benchmark for every response manipulation in the [benchmarks](https://github.com/luraproject/lura/blob/master/docs/BENCHMARKS.md#response-manipulation)
+KrakenD performance tests measure the operations in `nanoseconds`, and you can find the benchmark for every response manipulation in the [benchmarks section](https://github.com/luraproject/lura/blob/master/docs/BENCHMARKS.md#response-manipulation)
 
 The following manipulations are available by default:
 
-## Merging
-When you create KrakenD endpoints, if a specific endpoint feeds from 2 or more backend sources (APIs), they will be automatically merged in a single response to the client. For instance, imagine you have 3 different API services exposing the resources `/a`,`/b`, and `/c` and you want to expose them all together in the KrakenD endpoint `/abc`. This is what you would get:
+## Aggregation and merging
+When you have more than one `backend` connected to an `endpoint` that **is not** using the `no-op` encoding, the gateway **aggregates and merges** the responses from all backends automatically in the final response.
+
+For instance, imagine you have three different API services exposing the resources `/a`,`/b`, and `/c`, and you want to disclose them all together in the KrakenD endpoint `/abc`. This is what you would get:
 
 ![Merge](/images/documentation/krakend-merge.png)
 
-The merge operation is implemented in a way where user experience and responsiveness goes first. It does its *best effort* to get all the required parts from the involved backends and returning the composed object as soon as possible.
+The merge operation chooses user experience and responsiveness first. It makes its *best effort* to get all the necessary parts from the involved backends and return the composed object as soon as possible.
 
-By simply adding several backends into an endpoint, you get the merge operation automatically.
+KrakenD marks the result of the merging operation with the `X-KrakenD-Completed` header, being `true` if all backends succeeded or `false` if some failed. When none succeeded, the gateway returns a `500` status code to the user.
 
 The configuration for the image above could be like this:
 
@@ -65,17 +69,16 @@ The configuration for the image above could be like this:
 {{< /highlight >}}
 
 ### Merging timeouts
-Keep in mind that in order to avoid any degraded user experience, KrakenD won't be stuck forever until all the backends decide to respond. In a gateway **failing fast is better than succeeding slowly** and KrakenD will make sure this happens as it will **apply the timeout policy**. This will put your users safe during high load peaks, network errors, or any other problems that stress your backends.
+Keep in mind that to avoid any degraded user experience, KrakenD won't be stuck forever until all the backends decide to respond. In a gateway **failing fast is better than succeeding slowly**, and KrakenD will make sure this happens as it will **apply the timeout policy**. It will protect your users during high load peaks, network errors, or other problems that stress your backends.
 
-The `timeout` value can be introduced inside each endpoint or globally placing `timeout` in the root of the configuration file. The most specific definition always overwrites the generic one.
+The `timeout` value can be introduced inside each endpoint or globally, placing `timeout` at the root of the configuration file. The most specific definition always overwrites the generic one.
 
-
-#### What happens when the timeout is triggered or some backend failed?
-If KrakenD is waiting for the backends to respond and the timeout is reached, the response will be incomplete and missing any data that couldn't be fetched before the timeout happened. On the other hand, all the parts that could effectively be retrieved before the timeout happened they will do appear in the response.
+#### What happens when the timeout is triggered, or some backend fails?
+If KrakenD waits for the backends to respond and the timeout is reached, the response will be incomplete and missing any data it couldn't fetch before the timeout happened. On the other hand, all the parts that the gateway could effectively retrieve before the timeout occurred will appear in the response.
 
 If the response has missing parts, the cache header won't exist, as we don't want clients to cache incomplete responses.
 
-At all times, the `x-krakend-completed` header returned by KrakenD contains a boolean telling you if all backends returned its content (`x-krakend-completed: true`) or a partial response (`x-krakend-completed: false`).
+At all times, the `X-Krakend-Completed` header contains a boolean telling you if all backends returned their content (`x-krakend-completed: true`) or it's a partial response (`x-krakend-completed: false`).
 
 
 ### Merge example
@@ -84,27 +87,27 @@ Imagine an endpoint with the following configuration:
 
 {{< highlight json >}}
 {
-	"endpoints": [
-		{
-			"endpoint": "/users/{user}",
-			"method": "GET",
-			"timeout": "800ms",
-			"backend": [
-				{
-					"url_pattern": "/users/{user}",
-					"host": [
-						"https://jsonplaceholder.typicode.com"
-					]
-				},
-				{
-					"url_pattern": "/posts/{user}",
-					"host": [
-						"https://jsonplaceholder.typicode.com"
-					]
-				}
-			]
-		}
-	]
+    "endpoints": [
+        {
+            "endpoint": "/users/{user}",
+            "method": "GET",
+            "timeout": "800ms",
+            "backend": [
+                {
+                    "url_pattern": "/users/{user}",
+                    "host": [
+                        "https://jsonplaceholder.typicode.com"
+                    ]
+                },
+                {
+                    "url_pattern": "/posts/{user}",
+                    "host": [
+                        "https://jsonplaceholder.typicode.com"
+                    ]
+                }
+            ]
+        }
+    ]
 }
 {{< /highlight >}}
 
@@ -185,8 +188,8 @@ With these 'partial responses' and the given configuration, KrakenD will return 
 
 ## Filtering
 
-When you create a KrakenD endpoint you can decide to show only a subset of the fields coming from the response of your backends.
-There are a number of different reasons you might want to use this functionality, but we strongly encourage you to use it to save user's bandwidth and increase load and render times.
+When you create an endpoint, you can choose to show only a subset of the fields coming from the response of your backends.
+You might want to use this functionality for several reasons, but we strongly encourage you to use it to save users' bandwidth and decrease load and render times.
 
 There are two different strategies you can use to filter content:
 
@@ -196,24 +199,26 @@ There are two different strategies you can use to filter content:
 See [filtering documentation](/docs/backends/data-manipulation/#filtering)
 
 ## Grouping
-KrakenD is able to group your backend responses inside different objects. In other words, when you set a `group` attribute for a backend, instead of placing all the response attributes in the root of the response, KrakenD creates a new key and places the response inside.
+You can group (or encapsulate or wrap) your backend responses inside different objects. In other words, when you set a `group` attribute for a backend, instead of placing all the response attributes in the root of the response, KrakenD creates a new key and places the response inside.
 
-Encapsulating backend responses inside each own group is especially interesting when different backend responses can have colliding key names (e.g: all responses contain an `id` with different values).
+Encapsulating backend responses inside each group is interesting when different backend responses can have colliding key names (e.g: all responses contain an `id` with different values).
+
+When you consume aggregated content, use the `group` strategy.
 
 See [grouping documentation](/docs/backends/data-manipulation/#grouping)
 
 ## Mapping (renaming)
 
-KrakenD is also able to manipulate the name of the fields of the generated responses, so your composed response would be as close to your use case as possible without changing a line on any backend.
+KrakenD can also manipulate the name of the fields of the generated responses, so your composing response would be as close to your use case as possible without changing a line on any backend.
 
-In the `mapping` section map the original field name with the desired name.
+In the `mapping` section, map the original field name with the desired name.
 
 See [mapping documentation](/docs/backends/data-manipulation/#mapping)
 
 ## Target (or capturing)
-It is frequent in many API implementations that the important data is always encapsulated inside a generic field like `data`, `response` or `content`, as there are other fields showing the status code and other metadata. Sometimes we neither want to let the client handle with this nor drag this first level container through all the configuration.
+It is frequent in many API implementations that the vital data is always encapsulated inside a generic field like `data`, `response`, or `content`, along with other fields showing the status code and metadata. Sometimes we neither want to let the client handle this nor drag this first-level container through all the configurations.
 
-When setting a `target` in your backend, these generic containers (the target) disappear and all content extracted to the root as it never existed. As this capturing takes place before other options like `allow` or `mapping`, you don't need to use nesting.
+When setting a `target` in your backend, these generic containers (the target) disappear, and all content is extracted to the root as if it never existed. As this capturing takes place before other options like `allow` or `mapping`, you don't need to use nesting.
 
 See [target documentation](/docs/backends/data-manipulation/#target)
 

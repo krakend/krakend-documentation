@@ -17,6 +17,8 @@ images:
 - /images/documentation/concurrency/PDF_concurrency_happy.png
 - /images/documentation/concurrency/CDF_concurrency_sad.png
 - /images/documentation/concurrency/PDF_concurrency_sad.png
+meta:
+  noop_incompatible: true
 ---
 
 The concurrent requests are an excellent technique to **improve the response times and decrease error rates** by requesting in parallel the same information multiple times. Yes, you make the same request to several backends instead of asking to just one. When the first backend returns the information, the remaining requests are canceled.

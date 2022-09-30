@@ -1,12 +1,13 @@
 ---
 lastmod: 2019-01-15
+old_version: true
 date: 2019-01-14
 toc: true
 linktitle: The big picture
 title: Extending KrakenD, the big picture.
 weight: 10000
 menu:
-  community_current:
+  community_v2.0:
     parent: "150 Custom Plugins and Middleware"
 images:
 - /images/documentation/config-router-proxy-packages.png

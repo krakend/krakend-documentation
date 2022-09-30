@@ -12,6 +12,7 @@ menu:
   community_current:
     parent: "050 Backends Configuration"
 meta:
+  noop_incompatible: true
   since: 2.0
   source: https://github.com/luraproject/lura
   namespace:

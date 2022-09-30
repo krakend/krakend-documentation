@@ -9,6 +9,8 @@ notoc: true
 menu:
   community_current:
     parent: "050 Backends Configuration"
+meta:
+  noop_incompatible: true
 ---
 There are times when you have been working in a new version of your microservice, a complete refactor, a dangerous change, or any other valuable change that needs being careful, and it's too risky to put it live as there might be issues that impact your end users.
 

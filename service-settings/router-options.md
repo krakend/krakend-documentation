@@ -31,6 +31,34 @@ See below the list of supported flags.
 ## Supported router flags
 The following sections describe the flags and options available to configure the router. Include only those that you need to override.
 
+### Custom JSON body for 404 and 405 errors
+The `error_body` attribute lets you set custom body messages for the following status codes that your backend has no control over:
+- `404` for all the not found endpoints
+- `405` for all no-method errors (e.g.: user requested a GET but endpoint was a POST )
+
+As value of the `404` and `405` keys below, write **any JSON object** structure you would like to return to users. Example:
+
+{{< highlight json >}}
+{
+  "version": 3,
+  "extra_config": {
+    "router": {
+      "error_body": {
+        "404": {
+          "msg": "Unknown endpoint",
+          "status": 404
+        },
+        "405": {
+          "oh-my-god": "What on earth are you requesting?"
+        }
+      }
+    }
+  }
+}
+{{< /highlight >}}
+
+
+
 ### Customizing the health endpoint
 You can set the following router options to customize how the [health endpoint](/docs/service-settings/health/) behaves:
 
