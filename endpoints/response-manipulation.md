@@ -228,3 +228,13 @@ KrakenD expects all backends to return objects in the response. There are times 
 In any case, manipulations over arrays work differently than the objects.
 
 See [collections documentation](/docs/backends/data-manipulation/#collections)
+
+## Query language manipulation
+The most powerful option to manipulate content without scripts or plugins is via the JMESpath component, which allows you to apply changes using a JSON query language. **Enterprise only feature**
+
+For example: *return the name of all the students older than 18*:
+{{< highlight js >}}
+students[?age > `18` ].name
+{{< /highlight >}}
+
+See [Advanced query language manipulation](/docs/enterprise/endpoints/jmespath/)
