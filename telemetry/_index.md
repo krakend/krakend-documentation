@@ -34,3 +34,4 @@ Plus the Enterprise-only exporters:
 
 - [Newrelic](/docs/enterprise/telemetry/newrelic/)
 - [Instana](/docs/enterprise/telemetry/instana/)
+- [Google Analytics](/docs/enterprise/telemetry/google-analytics/)
