@@ -1,6 +1,7 @@
 ---
 lastmod: 2019-01-15
 old_version: true
+canonical: /docs/design/
 date: 2019-01-14
 toc: true
 linktitle: The big picture

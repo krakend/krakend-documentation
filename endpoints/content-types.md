@@ -19,7 +19,7 @@ KrakenD can send responses back to the client **in a different format** than wha
 
 **The response flow is**:
 
-- The `encoding` is how KrakenD expects to find the response data of your backends. It is declared in the [`backend` section](/docs/backends/supported-encodings/])
+- The `encoding` is how KrakenD expects to find the response data of your backends. It is declared in the [`backend` section](/docs/backends/supported-encodings/)
 - The `output_encoding` is how you would like to process and return the responses to the client. It is declared in the `endpoint` section.
 
 After KrakenD has queried your services, the flow looks like this:
