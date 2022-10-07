@@ -1,8 +1,8 @@
 ---
 lastmod: 2021-05-02
 date: 2020-07-10
-linktitle: JSON Schema validation
-title: Validating the body with the JSON Schema integration
+linktitle: JSON Schema request validation
+title: Validating the requests with JSON Schema
 weight: 130
 menu:
   community_current:
