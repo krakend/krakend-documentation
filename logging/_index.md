@@ -121,8 +121,6 @@ To setup logs on disk, you should consider the following steps:
 
 You might set the `stdout` to `false` if you don't want to check on the console but only on the logs.
 
-Then create
-
 ### 2. Add an entry to `rsyslog`
 The folder `/etc/rsyslog.d/` shows the different configurations of the system. We will create a new file `/etc/rsyslog.d/krakend.conf` and place this content inside:
 
