@@ -88,3 +88,5 @@ Example to generate a self-signed certificate from the command line:
 {{< terminal title="Generate a certificate" >}}
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 365 -out cert.pem -keyout key.pem -subj \"/C=US/ST=California/L=Mountain View/O=Your Organization/OU=Your Unit/CN=localhost\"
 {{< /terminal >}}
+
+If you use self-signed certificates, you should add the certificate to the CA, or while developing setting the `allow_insecure_connections` to `true` (avoid in production).

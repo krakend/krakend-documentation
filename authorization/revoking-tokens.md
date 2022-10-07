@@ -9,13 +9,19 @@ source: https://github.com/krakendio/bloomfilter
 menu:
   community_current:
     parent: "060 Authentication & Authorization"
+meta:
+  namespace:
+  - auth/revoker
+  log_prefix:
+  - "[SERVICE: Revoker Agent]"
 ---
 The API Gateway authorizes users that provide valid tokens according to your criteria, but at some point, you might want to change your mind and decide to **revoke JWT tokens that are still valid**.
 
 When are you going to need this? Examples of situations where you might need to revoke perfectly legit tokens:
-As a user, I want to log me out of all my devices.
-As an administrator, I want to kick out someone from the platform.
-As a software releaser, my new backend version requires new fields in the tokens. I want all my sessions renegotiated again, or all users of a specific app (Android, iOS, Web app, etc.) have to be invalidated.
+
+- A user wants to log out from all my devices.
+- An administrator wants to kick out someone from the platform.
+- A software release needs all sessions renegotiated again, or users of a specific app (Android, iOS, Web app, etc.) have to be invalidated.
 
 ## Storing blocked tokens using the bloom filter
 KrakenD integrates the [bloom filter](https://github.com/krakendio/bloomfilter) component that allows you to store in an optimized way tokens to revoke on the subsequent requests.
