@@ -237,4 +237,22 @@ For example: *return the name of all the students older than 18*:
 students[?age > `18` ].name
 {{< /highlight >}}
 
-See [Advanced query language manipulation](/docs/enterprise/endpoints/jmespath/)
+See [Advanced query language manipulation](/docs/enterprise/endpoints/jmespath/) (Enterprise)
+
+## Content replacement with regular expressions
+Another **Enterprise only feature** is the Content Replacer plugin, which allows you to search objects in the responses and apply regular expression replacements, or literal replacements.
+
+For instance:
+
+```json
+    {
+        "payment.credit_card": {
+            "@comment": "Ridiculous card masking. Take 4 digits and remove the rest. Credit card is nested inside the payment object.",
+            "find": "(^\\d{4})(.*)",
+            "replace": "${1}-XXXX",
+            "regexp": true
+        }
+    }
+```
+
+See [Content Replacer](/docs/enterprise/endpoints/content-replacer/) (Enterprise)
