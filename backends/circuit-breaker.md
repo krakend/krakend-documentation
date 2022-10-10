@@ -33,7 +33,7 @@ The Circuit Breaker is an **automatic protection measure** for your API stack an
 ## Circuit breaker configuration
 
 The Circuit Breaker is available in the namespace `qos/circuit-breaker` inside the `extra_config` key. The following configuration is an example of how to add circuit breaker capabilities to a backend:
-{{< highlight json >}}
+```json
 {
     "endpoints": [
     {
@@ -59,7 +59,7 @@ The Circuit Breaker is available in the namespace `qos/circuit-breaker` inside t
     }
     ]
 }
-{{< /highlight >}}
+```
 
 The attributes available for the configuration are:
 

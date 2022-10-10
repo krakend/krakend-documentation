@@ -39,7 +39,7 @@ The easiest way to demonstrate how HTTP client plugins work is with a hello worl
 
 Now we have to create a file `main.go` with the content below:
 
-{{< highlight go >}}
+```go
 // SPDX-License-Identifier: Apache-2.0
 
 package main
@@ -156,7 +156,7 @@ type Logger interface {
 	Critical(v ...interface{})
 	Fatal(v ...interface{})
 }
-{{< /highlight >}}
+```
 
 The plugin above aborts the request and replies itself printing a `Hello, %q` without actually passing the request to the backend. It is a simple example, but it shows the necessary structure to start working with plugins.
 
@@ -182,7 +182,7 @@ There is no output for this command. Now you have a file `krakend-client-example
 
 The plugin is ready to use! You can now load your plugin in the configuration. Add the `plugin` and `extra_config` entries in your configuration. Here's an example of `krakend.json`:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "plugin": {
@@ -211,7 +211,7 @@ The plugin is ready to use! You can now load your plugin in the configuration. A
     }
   ]
 }
-{{< /highlight >}}
+```
 
 Start the server with `krakend run -dc krakend.json`. When you run the server, the expected output (with `DEBUG` log level) is:
 

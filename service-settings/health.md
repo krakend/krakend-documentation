@@ -48,7 +48,7 @@ When setting custom health checks, try not to use external backends connected to
 
 A custom health configuration could look like this:
 
-{{< highlight json >}}
+```json
     {
         "version": 3,
         "port": 8080,
@@ -77,7 +77,7 @@ A custom health configuration could look like this:
         }
         ]
     }
-{{< /highlight >}}
+```
 
 In this configuration, KrakenD connects to itself, but instead of returning the content of the internal health endpoint, it sets the `data` defined in the static structure. Notice that the listening `port` in the configuration and the `host` match your deployed KrakenD.
 

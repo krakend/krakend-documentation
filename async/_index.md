@@ -44,7 +44,7 @@ Notice that as it happens with the endpoints, the messages you consume can be se
 
 The configuration needs to declare in the `extra_config` the connection driver you want to use. like this:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "async_agent": [
@@ -86,7 +86,7 @@ The configuration needs to declare in the `extra_config` the connection driver y
         }
     ]
 }
-{{< /highlight >}}
+```
 The configuration accepts the following parameters. Most of them are optional:
 
 - `name` (*string*): A unique name for this agent. KrakenD shows it in the [health endpoint](/docs/service-settings/health/) and logs and metrics. KrakenD does not check collision names, so make sure each agent has a different name.

@@ -42,7 +42,7 @@ The easiest way to demonstrate how HTTP server plugins work is with a hello worl
 
 Now we have to create a file `main.go` with the content below:
 
-{{< highlight go >}}
+```go
 // SPDX-License-Identifier: Apache-2.0
 
 package main
@@ -81,12 +81,12 @@ func (r registerer) RegisterHandlers(f func(
 func (r registerer) registerHandlers(_ context.Context, extra map[string]interface{}, h http.Handler) (http.Handler, error) {
 	// check the passed configuration and initialize the plugin
 	name, ok := extra["name"].([]interface{})
+	cfgRaw, ok := extra["krakend-server-example"]
 	if !ok {
-		return nil, errors.New("wrong config")
+		return cfg, errors.New("no config")
 	}
-	if v, ok := name[0].(string); !ok || v != string(r) {
-		return nil, fmt.Errorf("unknown register %s", name)
-	}
+
+	config, ok := extra["krakend-server-example"].(map[string]interface{})
 	// check the cfg. If the modifier requires some configuration,
 	// it should be under the name of the plugin. E.g.:
 	/*
@@ -132,7 +132,7 @@ type Logger interface {
 	Critical(v ...interface{})
 	Fatal(v ...interface{})
 }
-{{< /highlight >}}
+```
 
 The plugin above aborts the request and replies itself printing a `Hello, %q` without actually passing the request to the endpoint. It is a simple example, but it shows the necessary structure to start working with plugins.
 
@@ -158,7 +158,7 @@ There is no output for this command. Now you have a file `krakend-server-example
 
 The plugin is ready to use! You can now load your plugin in the configuration. Add the `plugin` and `extra_config` entries in your configuration. Here's an example of `krakend.json`:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "plugin": {
@@ -187,7 +187,7 @@ The plugin is ready to use! You can now load your plugin in the configuration. A
     }
   }
 }
-{{< /highlight >}}
+```
 
 Start the server with `krakend run -dc krakend.json`. When you run the server, the expected output (with `DEBUG` log level) is:
 

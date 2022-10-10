@@ -36,13 +36,13 @@ The supported strategies to inject static data are the following:
 
 Pay attention to the different strategies as they might offer subtle differences. The code associated to these strategies is:
 
-{{< highlight go >}}
+```go
 func staticAlwaysMatch(_ *Response, _ error) bool       { return true }
 func staticIfSuccessMatch(_ *Response, err error) bool  { return err == nil }
 func staticIfErroredMatch(_ *Response, err error) bool  { return err != nil }
 func staticIfCompleteMatch(r *Response, err error) bool { return err == nil && r != nil && r.IsComplete }
 func staticIfIncompleteMatch(r *Response, _ error) bool { return r == nil || !r.IsComplete }
-{{< /highlight >}}
+```
 
 
 
@@ -54,7 +54,7 @@ The static data always has a priority as it's the last computed part. When an en
 ## Adding static responses
 To add a static response add under any `endpoint` an `extra_config` entry as follows:
 
-{{< highlight json >}}
+```json
 {
     "endpoint": "/static",
     "extra_config": {
@@ -68,7 +68,7 @@ To add a static response add under any `endpoint` an `extra_config` entry as fol
         }
     }
 }
-{{< /highlight >}}
+```
 
 Inside the `strategy` key choose the strategy that fits your use case (one of `always`, `success`, `complete`, `errored`or `incomplete`), and inside `data` you need to add the JSON object as it's returned.
 
@@ -79,7 +79,7 @@ Notice two things in the example trying to avoid collisions.  First, each backen
 
 Secondly, when one of the 2 backends fail, it creates a new group "oh-snap" (see `data`).
 
-{{< highlight json >}}
+```json
 {
     "endpoints": [
         {
@@ -112,4 +112,4 @@ Secondly, when one of the 2 backends fail, it creates a new group "oh-snap" (see
         }
     ]
 }
-{{< /highlight >}}
+```

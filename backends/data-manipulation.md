@@ -36,7 +36,7 @@ The deny list filter can be read as the *don't show this* filter. KrakenD will r
 
 To exclude a field from the response, add under the desired `backend` configuration a `deny` array with all the fields you don't want to show. E.g.:
 
-{{< highlight json >}}
+```json
 {
     "deny": [
       "token",
@@ -44,7 +44,7 @@ To exclude a field from the response, add under the desired `backend` configurat
       "password"
     ]
 }
-{{< /highlight >}}
+```
 
 #### Nested fields (dot operator)
 The deny fields of your choice can also be nested ones. Use a **dot** as the level separator. For instance the `a1` field in the following JSON response `{ "a": { "a1": 1 } }` can be added in the deny list as `a.a1`.
@@ -64,7 +64,7 @@ We want to set up a KrakenD endpoint that returns the **posts for a specific use
 
 The KrakenD endpoint to accept URLs like`/posts/1` is defined as follows:
 
-{{< highlight json >}}
+```json
 {
   "endpoint": "/posts/{user}",
   "method": "GET",
@@ -81,18 +81,18 @@ The KrakenD endpoint to accept URLs like`/posts/1` is defined as follows:
     }
   ]
 }
-{{< /highlight >}}
+```
 
 
 
 When calling the KrakenD endpoint `/posts/1` the response you would get will be as follows:
 
-{{< highlight json >}}
+```json
 {
   "id": 1,
   "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
 }
-{{< /highlight >}}
+```
 
 [Compared with the backend response](https://jsonplaceholder.typicode.com/posts/1), you'll see that the fields `body` and `userId` are no longer there.
 
@@ -105,7 +105,7 @@ The allowed fields of your choice can also be nested. Use a **dot** as the level
 
 We will repeat the same exercise we did in the deny list to get the same output. We only want to get the `id` and `title` fields from the backend.
 
-{{< highlight json >}}
+```json
 {
   "endpoint": "/posts/{user}",
   "method": "GET",
@@ -120,17 +120,17 @@ We will repeat the same exercise we did in the deny list to get the same output.
     ]
   }]
 }
-{{< /highlight >}}
+```
 
 
 When calling the KrakenD endpoint `/posts/1` the response you would get will be as follows:
 
-{{< highlight json >}}
+```json
 {
   "id": 1,
   "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
 }
-{{< /highlight >}}
+```
 
 Just exactly as we did with the deny list.
 
@@ -198,7 +198,7 @@ This will generate responses like this one:
     "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
   }
 }
-{{< /highlight >}}
+```
 
 ## Mapping
 
@@ -209,7 +209,7 @@ In the `mapping` section, map the original field name with the desired name.
 ### Mapping example:
 Instead of showing the `email` field we want to name it `personal_email`:
 
-{{< highlight json >}}
+```json
 {
   "endpoint": "/users/{user}",
   "method": "GET",
@@ -226,7 +226,7 @@ Instead of showing the `email` field we want to name it `personal_email`:
   ]
 }
 
-{{< /highlight >}}
+```
 
 Will generate responses like this one:
 
@@ -282,7 +282,7 @@ Given a backend endpoint with this kind of responses containing a level `data`:
 
 And we want a response with the contents inside `data` only, like:
 
-{{< highlight json >}}
+```json
 {
   "updated":"2010-01-07T19:58:42.949Z",
   "totalItems":800,
@@ -290,7 +290,7 @@ And we want a response with the contents inside `data` only, like:
   "itemsPerPage":1,
   "items":[]
 }
-{{< /highlight >}}
+```
 
 We need this KrakenD configuration:
 
@@ -317,16 +317,16 @@ Working with collections (or arrays) is a special manipulation case. There are t
 ### When the Backend response is inside an array
 KrakenD expects all backends to return an object as the response as the default behavior. For instance, a JSON response containing an object comes encapsulated in curly braces `{}`. E.g.:
 
-{{< highlight json >}}
+```json
 { "a": true, "b": false }
-{{< /highlight >}}
+```
 
 
 When your API does not return an object but a collection (`[]` or array) you need to declare it explicitly with `"is_collection": true` so that KrakenD can convert it to an object for further manipulation. An example of a JSON collection response is:
 
-{{< highlight json >}}
+```json
 [ {"a": true }, {"b": false} ]
-{{< /highlight >}}
+```
 
 In such cases, add inside the `backend` key the property `"is_collection": true` so KrakenD can convert this collection to an object.
 
@@ -336,14 +336,14 @@ The use of `is_collection` can be avoided when the backend uses as `encoding` th
 
 By default, KrakenD adds the key `collection` in the response, e.g.:
 
-{{< highlight json >}}
+```json
 {
   "collection": [
     {"a": true },
     {"b": false}
   ]
 }
-{{< /highlight >}}
+```
 
 You can rename the default key name `collection` to something else using the `mapping` attribute (docs above, the example below).
 
@@ -368,14 +368,14 @@ The following is a real example based on a [collection response](http://jsonplac
 
 The response will look like this:
 
-{{< highlight json >}}
+```json
 {
   "myposts": [
     {  },
     {  }
   ]
 }
-{{< /highlight >}}
+```
 
 ### When you need to manipulate arrays
 All the data manipulation operations (such as the allow list, deny list, etc.) expect to find objects in the response `{}`. When there are arrays instead, KrakenD needs a special configuration that internally flattens this structure:

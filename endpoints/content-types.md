@@ -56,7 +56,7 @@ The following `output_encoding` strategies are available to choose from for ever
 ## Output encoding examples
 Each endpoint declaration can define which encoder should be used, as shown in this example. By default, when the `output_encoding` is omitted, KrakenD falls back to JSON:
 
-{{< highlight json >}}
+```json
 {
   "endpoints": [
     {
@@ -87,5 +87,5 @@ Each endpoint declaration can define which encoder should be used, as shown in t
     }
   ]
 }
-{{< /highlight >}}
+```
 The endpoint `/baz` will use the default encoding `json` as no encoding has been defined.

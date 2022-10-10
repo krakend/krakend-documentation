@@ -25,7 +25,7 @@ The Opencensus exporter allows you export data to AWS X-Ray. Enabling it only re
 
 The following configuration snippet sends data to your X-Ray:
 
-{{< highlight json >}}
+```json
 {
   "extra_config": {
     "telemetry/opencensus": {
@@ -41,7 +41,7 @@ The following configuration snippet sends data to your X-Ray:
     }
   }
 }
-{{< /highlight >}}
+```
 
 - `version` (*string*): The version of the running application that is reporting data. Defaults to `KrakenD-opencensus`.
 - `region` (*string*): The AWS geographical region.

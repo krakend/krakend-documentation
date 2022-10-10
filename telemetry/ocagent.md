@@ -30,7 +30,7 @@ Enabling it only requires you to add the `ocagent` exporter in the [opencensus m
 
 The following configuration snippet sends the data:
 
-{{< highlight json >}}
+```json
 {
   "extra_config": {
     "telemetry/opencensus": {
@@ -48,7 +48,7 @@ The following configuration snippet sends the data:
       }
     }
 }
-{{< /highlight >}}
+```
 
 - `address` (*string*): The address of your Azure Monitor collector.
 - `service_name` (*string*): An identifier of your service.

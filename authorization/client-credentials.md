@@ -29,7 +29,7 @@ Successfully setting the client credentials for a backend means that KrakenD can
 To access a protected resource using client-credentials, add under every `backend` the appropriate `extra_config`.
 
 The namespace used is `"auth/client-credentials"`. Sample configuration below:
-{{< highlight json >}}
+```json
 {
     "backend": [
         {
@@ -47,7 +47,7 @@ The namespace used is `"auth/client-credentials"`. Sample configuration below:
         }
     ]
 }
-{{< /highlight >}}
+```
 The settings of this component are:
 
 - `client_id` *string*: The Client ID provided to the Auth server
@@ -62,7 +62,7 @@ The settings of this component are:
 
 ## Auth0 integration
 The following example demonstrates a complete configuration to fulfill the requirements of [Auth0](https://auth0.com/). It is essentially the same configuration we have shown above, but with some additions, explained after the code:
-{{< highlight json >}}
+```json
 {
     "endpoint": "/endpoint",
     "backend": [{
@@ -96,6 +96,6 @@ The following example demonstrates a complete configuration to fulfill the requi
         }
     }]
 }
-{{< /highlight >}}
+```
 
 The code above works with Auth0. The difference with the basic example is the way both the id and the secret are passed as `endpoint_params`, as auth0 ignores the auth header and expects the credentials sent as JSON data or form body.

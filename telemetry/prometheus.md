@@ -26,7 +26,7 @@ The Opencensus exporter allows you to expose data to Prometheus, and publishes a
 Example: `http://localhost:9091/metrics`
 
 Enabling it only requires you to include in the root level of your configuration the Opencensus middleware with the `prometheus` exporter. Specify the `port` which Prometheus should hit, the `namespace` (optional), and Prometheus now can pull the data.
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -44,7 +44,7 @@ Enabling it only requires you to include in the root level of your configuration
     }
   }
 }
-{{< /highlight >}}
+```
 
 - `port` on which the Prometheus exporter should listen
 
@@ -61,7 +61,7 @@ See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensu
 ## Example of `prometheus.yml`
 This is a simple example to pull data from the Prometheus integration every minute:
 
-{{< highlight yaml >}}
+```yaml
 global:
   scrape_interval:     60s
   evaluation_interval: 60s
@@ -77,10 +77,10 @@ scrape_configs:
   - job_name: 'krakend'
     static_configs:
       - targets: ['krakend:9091']
-{{< /highlight >}}
+```
 
 ## Prometheus output example
-{{< highlight bash >}}
+```bash
 # HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
 # TYPE go_gc_duration_seconds summary
 go_gc_duration_seconds{quantile="0"} 8.0701e-05
@@ -348,4 +348,4 @@ process_virtual_memory_bytes 7.93280512e+08
 # HELP process_virtual_memory_max_bytes Maximum amount of virtual memory available in bytes.
 # TYPE process_virtual_memory_max_bytes gauge
 process_virtual_memory_max_bytes -1
-{{< /highlight >}}
+```

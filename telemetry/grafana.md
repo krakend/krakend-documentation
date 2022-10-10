@@ -62,7 +62,7 @@ Grafana does not require any specific configuration on KrakenD, but its data sou
 
 For the data sources listed above, you will need to add the [InfluxDb exporter](/docs/telemetry/influxdb/)into your `krakend.json`, which is a configuration like this:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -80,7 +80,7 @@ For the data sources listed above, you will need to add the [InfluxDb exporter](
     }
   }
 }
-{{< /highlight >}}
+```
 
 For more in-depth explanation, see the [InfluxDB exporter configuration](/docs/telemetry/influxdb/)
 

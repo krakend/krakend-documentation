@@ -30,7 +30,7 @@ what are the implications of a certain parameter, see the **[AMQP Complete Refer
 
 ## Producer Configuration
 
-{{< highlight json >}}
+```json
 {
     "backend": [{
         "host": ["amqp://guest:guest@myqueue.host.com:5672"],
@@ -52,7 +52,7 @@ what are the implications of a certain parameter, see the **[AMQP Complete Refer
         }
     }]
 }
-{{< /highlight >}}
+```
 
 - `name` - *string* as the queue name
 - `exchange` - *string* the exchange name (must have a **topic** type if already exists).
@@ -80,7 +80,7 @@ Notice the capitalization of the first letter of the parameter names at the conf
 
 For instance, an `endpoint` URL could be declared as `/produce/{a}/{b}/{id}/{prio}/{route}` and the producer knows how to map them with a configuration like this:
 
-{{< highlight json >}}
+```json
 {
     ...
     "exp_key":"A",
@@ -89,4 +89,4 @@ For instance, an `endpoint` URL could be declared as `/produce/{a}/{b}/{id}/{pri
     "priority_key":"Prio",
     "routing_key":"Route"
 }
-{{< /highlight >}}
+```

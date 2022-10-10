@@ -21,12 +21,12 @@ Additionally, you can control the number of [**maximum IDLE connections**](/docs
 ## Global timeout
 The `timeout` key in the `krakend.json` at the root level is used in the first place to apply a **default timeout** for the **whole duration of the pipe** (and not only the connection to the backends). The timeout takes into account all the time involved between the request, the fetching of the data, manipulation and any other middleware. You can see it is an **end-user timeout**.
 
-{{< highlight json >}}
+```json
 {
 	"version": 3,
 	"timeout": "2000ms"
 }
-{{< /highlight >}}
+```
 
 
 ## Endpoint-specific timeout
@@ -34,7 +34,7 @@ Even the `timeout` value in the root level sets a default timeout for all the en
 
 To do so, just place it inside the desired endpoint:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "timeout": "2000ms",
@@ -48,7 +48,7 @@ To do so, just place it inside the desired endpoint:
         }
     ]
 }
-{{< /highlight >}}
+```
 
 The example above will use **1 second** timeout for the `/different-timeout` endpoint and **2 seconds** (expressed in milliseconds) for any the other endpoint. Note that the `backend` section is omitted for better reading.
 

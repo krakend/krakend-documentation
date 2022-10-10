@@ -38,7 +38,7 @@ The `error_body` attribute lets you set custom body messages for the following s
 
 As value of the `404` and `405` keys below, write **any JSON object** structure you would like to return to users. Example:
 
-{{< highlight json >}}
+```
 {
   "version": 3,
   "extra_config": {
@@ -55,7 +55,7 @@ As value of the `404` and `405` keys below, write **any JSON object** structure 
     }
   }
 }
-{{< /highlight >}}
+```
 
 
 
@@ -72,7 +72,7 @@ The secure choice of KrakenD is that all errors generated at the gateway **are n
 This option does not relates to the body of your backend errors. If you are looking for this option see [return detailed errors](/docs/backends/detailed-errors/#showing-backend-errors) instead.
 {{< /note >}}
 
-{{< highlight json "hl_lines=4-5" >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -80,7 +80,7 @@ This option does not relates to the body of your backend errors. If you are look
           "return_error_msg":true
       }
 }
-{{< /highlight >}}
+```
 
 ### URLs, methods, and automatic redirections
 There are two types of automatic redirections that happen at the router level. They can be disabled as follows:
@@ -103,7 +103,8 @@ The following three flags determine how to get the client IP address:
 - `forwarded_by_client_ip` (*boolean*): When set to true, client IP will be parsed from the request's headers. If no IP can be fetched, it falls back to the IP obtained from the request's remote address.
 - `remote_ip_headers` (*list*): List of headers used to obtain the client IP when `forwarded_by_client_ip` is set to `true` and the remote address is matched by at least one of the network origins of `trusted_proxies`.
 - `trusted_proxies` (*list*): List of network origins (IPv4 addresses, IPv4 CIDRs, IPv6 addresses or IPv6 CIDRs) from which to trust request's headers that contain alternative client IP when `forwarded_by_client_ip` is `true`.
-{{< highlight json >}}
+
+```json
 {
   "version": 3,
   "extra_config": {
@@ -117,12 +118,13 @@ The following three flags determine how to get the client IP address:
           ]
       }
 }
-{{< /highlight >}}
+```
 
 
 ### App Engine integration
 The `app_engine` *boolean* trusts headers starting with `X-AppEngine...` for better integration with that PaaS.
-{{< highlight json >}}
+
+```json
 {
   "version": 3,
   "extra_config": {
@@ -130,7 +132,7 @@ The `app_engine` *boolean* trusts headers starting with `X-AppEngine...` for bet
           "app_engine": true
       }
 }
-{{< /highlight >}}
+```
 
 ### Memory available for Multipart forms
 The `max_multipart_memory` *integer* sets the 'maxMemory' param that is given to http.Request's Multipart Form method call.
@@ -140,7 +142,7 @@ There are two options to remove content from logs:
 - `logger_skip_paths` *list* defines the set of paths that are removed from the logging.
 - `disable_access_log` *boolean* stops registering access requests to KrakenD and leaving any logs out from the output.
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -151,4 +153,4 @@ There are two options to remove content from logs:
           "disable_access_log": true
       }
 }
-{{< /highlight >}}
+```

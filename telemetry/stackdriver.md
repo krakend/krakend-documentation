@@ -29,7 +29,7 @@ The Opencensus exporter allows you to export **metrics and traces** to Google Cl
 
 The following configuration snippet sends the data:
 
-{{< highlight json >}}
+```json
 {
   "extra_config": {
     "telemetry/opencensus": {
@@ -52,7 +52,7 @@ The following configuration snippet sends the data:
     }
   }
 }
-{{< /highlight >}}
+```
 
 - `sample_rate` is the percentage of sampled requests. A value of `100` means that all requests are exported (100%). If you are processing a considerable amount of traffic, you might want to sample only a part of what's happening.
 - `reporting_period` is the number of **seconds** passing between reports. It must be **`60` or greater**, otherwise, Google will reject the connection.

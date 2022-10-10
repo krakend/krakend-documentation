@@ -43,7 +43,7 @@ Pushing data to InfluxDB using the native middleware requires adding two differe
 
 You can accomplish it with the following snippet.
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "extra_config": {
@@ -61,7 +61,7 @@ You can accomplish it with the following snippet.
       }
     }
 }
-{{< /highlight >}}
+```
 
 
 - `address` (*string*): The complete URL of the InfluxDB, including the port
@@ -79,7 +79,7 @@ The Opencensus exporter allows you export data to [InfluxDB](https://www.influxd
 
 The following configuration snippet sends data to your InfluxDB:
 
-{{< highlight json >}}
+```json
 {
     "telemetry/opencensus": {
       "exporters": {
@@ -93,7 +93,7 @@ The following configuration snippet sends data to your InfluxDB:
       }
     }
 }
-{{< /highlight >}}
+```
 - `address` is the URL (including port) where your InfluxDB is installed.
 - `db` is the database name.
 - `timeout` is the maximum time you will wait for InfluxDB to respond.
@@ -109,7 +109,7 @@ For **InfluxDB v1.x** (older) the process is straightforward and requires you no
 ### Influx v2
 If you use Docker, you can start InfluxDB as part of a docker-compose file. You need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following `docker-compose.yml` sets the credentials you need to reflect in the KrakenD configuration.
 
-{{< highlight yaml >}}
+```yaml
 version: "3"
 services:
   influxdb:
@@ -132,7 +132,7 @@ services:
       - ./krakend:/etc/krakend
     ports:
       - "8080:8080"
-{{< /highlight >}}
+```
 
 In the fields `db`, `username`, and `password` of the component configuration reflect the same values as in `DOCKER_INFLUXDB_INIT_BUCKET`, `DOCKER_INFLUXDB_INIT_USERNAME`, and `DOCKER_INFLUXDB_INIT_PASSWORD` accordingly.
 
@@ -180,7 +180,7 @@ Replace the ID of the buckets above with the ID you just copied, and the usernam
 
 Now your configuration should work and start sending data to InfluxDB:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "extra_config": {
@@ -198,14 +198,14 @@ Now your configuration should work and start sending data to InfluxDB:
         }
     }
 }
-{{< /highlight >}}
+```
 
 Make sure to type in `db` the bucket name you created on InfluxDB and the `username` and `password` as well.
 
 ### Influx v1
 When using InfluxDB v1.x, you need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following docker-compose sets the credentials you need to reflect in the KrakenD configuration.
 
-{{< highlight yaml >}}
+```yaml
 version: "3"
 services:
   influxdb:
@@ -224,6 +224,6 @@ services:
       - ./krakend:/etc/krakend
     ports:
       - "8080:8080"
-{{< /highlight >}}
+```
 
 In the fields `db`, `username`, and `password` of the component configuration reflect the same values as in `INFLUXDB_DB`, `INFLUXDB_USER`, and `INFLUXDB_USER_PASSWORD` accordingly.

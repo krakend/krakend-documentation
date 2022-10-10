@@ -32,13 +32,13 @@ Before digging any further, some answers to frequently asked questions:
 
 ## JWT header requirements
 When KrakenD decodes the `base64` token string passed in the `Bearer` or a cookie, it expects to find in its **header** section the following **three fields**:
-{{< highlight json >}}
+```json
 {
     "alg": "RS256",
     "typ": "JWT",
     "kid": "MDNGMjU2M0U3RERFQUEwOUUzQUMwQ0NBN0Y1RUY0OEIxNTRDM0IxMw"
 }
-{{< /highlight >}}
+```
 
 The `alg` and `kid` values depend on your implementation, but they must be present.
 
@@ -122,7 +122,7 @@ For the complete list of recognized algorithms and cipher suites, scroll down to
 
 Here there is an example using an external `jwk_url`:
 
-{{< highlight JSON >}}
+```json
 {
     "endpoint": "/foo",
     "extra_config": {
@@ -159,7 +159,7 @@ Here there is an example using an external `jwk_url`:
     }
 }
 }
-{{< /highlight >}}
+```
 
 {{< note title="Performance considerations" type="tip" >}}
 If you use cryptographic algorithms that require high computation such as `RS512`, make sure your KrakenD instances have a proper CPU setting. Additionally, enable `cache` to avoid hammering your identity servers and save internal network traffic.
@@ -199,13 +199,13 @@ base64key://base64content
 
 The URL host must be base64 encoded and must decode to exactly 32 bytes. Here is an example of the `extra_config`:
 
-{{< highlight json >}}
+```json
 {
     "jwk_local_path":"./jwk.txt",
     "secret_url":"base64key://smGbjm71Nxd1Ig5FS0wj9SlbzAIrnolCz9bQQ6uAhl4=",
     "cypher_key":"gCERmfqHMoEu3+utqBa/R1oMZYIvh0OOKtJmnX/hDPDxbXCGXGvO3SF7B5FWxrJnRW7rnjGIV4eP2VLrYX2q9pJM49BpP+A9"
 }
-{{< /highlight >}}
+```
 
 This config will use the key `smGbjm71Nxd1Ig5FS0wj9SlbzAIrnolCz9bQQ6uAhl4=` for decrypting de `cypher_key` and then decrypting the content of the file `./jwt.txt`.
 
@@ -249,28 +249,28 @@ Since KrakenD 1.2.0, it is possible to use data present in the claims to inject 
 
 For instance, when your JWT payload is represented by something like this:
 
-{{< highlight json >}}
+```json
 {
     "sub": "1234567890",
     "name": "Mr. KrakenD"
 }
-{{< /highlight >}}
+```
 
 Having a `backend` defined with:
 
-{{< highlight json >}}
+```json
 {
     "url_pattern": "/foo/{JWT.sub}",
     "method": "POST"
 }
-{{< /highlight >}}
+```
 
 
 The call to your backend would produce the request:
 
-{{< highlight nginx >}}
+```nginx
 POST /foo/1234567890
-{{< /highlight >}}
+```
 
 
 Keep in mind that this syntax in the `url_pattern` field is only available if the backend loads the extra_config `"auth/validator"` and that **it does not work with nested attributes** in the payload.
@@ -282,7 +282,7 @@ It is possible to forward claims in a JWT as request headers. It is a common use
 
 **Important:** The endpoint `input_headers` needs to be set as well, so the backend can see it.
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "auth/validator": {
@@ -293,7 +293,7 @@ It is possible to forward claims in a JWT as request headers. It is a common use
         }
     }
 }
-{{< /highlight >}}
+```
 
 
 In this case, the `sub` claim's value will be added as `x-user` header to the request. If the claim does not exist, the mapping is just skipped.

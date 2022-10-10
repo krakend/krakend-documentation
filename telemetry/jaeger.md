@@ -25,7 +25,7 @@ meta:
 The Opencensus exporter allows you export data to Jaeger. Enabling it only requires you to add the `jaeger` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your Jaeger:
-{{< highlight json >}}
+```json
 {
   "extra_config":{
     "telemetry/opencensus": {
@@ -39,7 +39,7 @@ The following configuration snippet sends data to your Jaeger:
     }
   }
 }
-{{< /highlight >}}
+```
 
 - `endpoint` is the URL (including port) where your Jaeger is
 - `service_name` the service name registered in Jaeger

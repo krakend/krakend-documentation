@@ -28,12 +28,12 @@ If you need to have a write method (POST, PUT, DELETE, PATCH) together with othe
 
 ## Backend/Upstream configuration
 Inside the `backend` array, you need to create an object for each upstream service used by its declaring endpoint. The combination of `host` + `url_pattern`set the full URL that KrakenD will use to fetch your upstream services. Most of the backends will require a simple configuration like:
-{{< highlight json >}}
+```json
 {
     "host": ["http://your-api"],
     "url_pattern": "/url"
 }
-{{< /highlight >}}
+```
 
 
 The options relative to the **backend definition** are:
@@ -51,7 +51,7 @@ Other configuration options such as the ones for [data manipulation](/docs/backe
 ## Backend configuration example
 In the example below, KrakenD offers an endpoint `/v1/products` that merges the content from two different services using the URLs `/products` and `/offers`. The marketing (`marketing.myapi.com`) and the products (`products-XX.myapi.com`) API requests are fired simultaneously. KrakenD will load balance among the listed hosts (here or in your [service discovery](/docs/backends/service-discovery/)) to pick one of the three hosts.
 
-{{< highlight json >}}
+```json
 {
     "endpoints": [
         {
@@ -76,7 +76,7 @@ In the example below, KrakenD offers an endpoint `/v1/products` that merges the 
         }
     ]
 }
-{{< /highlight >}}
+```
 
 
 

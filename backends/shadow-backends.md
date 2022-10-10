@@ -27,7 +27,7 @@ Mirroring the traffic to your microservices allows you to test your new backend 
 
 To define a backend as a *shadow backend* you only need to add the flag as follows:
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "proxy": {
@@ -35,14 +35,14 @@ To define a backend as a *shadow backend* you only need to add the flag as follo
         }
     }
 }
-{{< /highlight >}}
+```
 
 With this change, the backend containing the flag enters into production, but KrakenD ignores its responses.
 
 ## Traffic shadowing example
 The following example shows a backend that is changing from `v1` to `v2`, but we are still unsure of the effects of doing this change in production, so we want to send a copy of the requests to `v2` in the first place, but keep the end users receiving the responses from `v1` only:
 
-{{< highlight json >}}
+```json
 {
     "endpoint": "/user/{id}",
     "timeout": "150ms",
@@ -62,4 +62,4 @@ The following example shows a backend that is changing from `v1` to `v2`, but we
         }
     ]
 }
-{{< /highlight >}}
+```

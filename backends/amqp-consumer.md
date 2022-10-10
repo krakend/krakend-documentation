@@ -41,7 +41,7 @@ See [Async Agents](/docs/async/) to consume messages without an endpoint.
 
 The needed configuration to run a consumer is:
 
-{{< highlight json >}}
+```json
 {
     "backend": [{
         "host": ["amqp://guest:guest@myqueue.host.com:5672"],
@@ -62,7 +62,7 @@ The needed configuration to run a consumer is:
         }
     }]
 }
-{{< /highlight >}}
+```
 
 - `name` - *string* as the queue name
 - `exchange` - *string* the exchange name (must have a **topic** type if already exists).

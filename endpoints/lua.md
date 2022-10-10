@@ -41,7 +41,7 @@ You can add your Lua scripts under the `extra_config` at the `endpoint` level or
 
 The configuration options are:
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/lua-proxy": {
@@ -59,7 +59,7 @@ The configuration options are:
         }
     }
 }
-{{< /highlight >}}
+```
 
 - `sources`: An array with all the external files that KrakenD will include in the first place. You can define the functions in external files and refer them on `pre` or `post`.
 - `md5`: (optional) The md5sum of each Lua file. Used to make sure that a 3rd party has not modified the file.
@@ -165,7 +165,7 @@ To work with associative arrays on Lua you have the following functions:
 
 An example of Lua script that gets a field `source_result` from a table and sets a new key `result` accordingly by reading the response text (decorator pattern):
 
-{{< highlight lua >}}
+```lua
 function post_proxy_decorator( resp )
   local responseData = resp:data()
   local responseContent = responseData:get("source_result")
@@ -180,7 +180,7 @@ function post_proxy_decorator( resp )
     responseData:set("result", "failed")
   end
 end
-{{< /highlight >}}
+```
 
 ### Collections helper (`list`)
 
@@ -191,7 +191,7 @@ end
 
 Example of Lua code that iterates the items under the array `collection` and also uses sets and deletes tables:
 
-{{< highlight lua>}}
+```lua
 -- A function that receives a response object through response.load()
 function post_proxy( resp )
   local data = {}
@@ -211,7 +211,7 @@ function post_proxy( resp )
   responseData:set("paths", paths)
   responseData:del("collection")
 end
-{{< /highlight >}}
+```
 
 ### Making additional requests (`http_response`)
 The `http_response` helper allows you to make an additional HTTP request and access its response.
@@ -222,7 +222,7 @@ The `http_response` helper allows you to make an additional HTTP request and acc
 *   `body()` (_Dynamic_): Getter for the full response body.
 *   `close()` (_Dynamic_): Closes the HTTP connection to free resources. Although it will be done automatically later by KrakenD, a better approach is to close the resource as soon as you don't need it anymore.
 
-{{< highlight lua >}}
+```lua
 local url = 'http://api.domain.com/test'
 
 -- Constructor with 1 parameter
@@ -245,7 +245,7 @@ print(r:statusCode())
 print(r:headers('Content-Type'))
 print(r:body())
 r:close()
-{{< /highlight >}}
+```
 
 ### Set custom HTTP status codes (`custom_error`)
 
@@ -255,22 +255,22 @@ It stops the script and the pipe execution.
 
 Example of throwing a generic error (`500` status code ) with a message:
 
-{{< highlight lua>}}
+```lua
 custom_error("Something weird happened")
-{{< /highlight >}}
+```
 
 Or even changing the HTTP status code (`418 I'm a teapot`)
 
-{{< highlight lua>}}
+```lua
 custom_error("I refuse to make any coffee, I'm a teapot!", 418)
-{{< /highlight >}}
+```
 
 ## Lua examples in different pipes
 The following snippets show how to add Lua code in different sections.
 
 ### Lua in the endpoint
 An example setting a header in the response using Lua.
-{{< highlight json >}}
+```json
   {
     "endpoint": "/set-a-header",
     "extra_config": {
@@ -279,11 +279,11 @@ An example setting a header in the response using Lua.
         }
     }
   }
-{{< /highlight >}}
+```
 
 ### Lua in the backend
 An example showing how to **print the backend response** in the console.
-{{< highlight json >}}
+```json
 {
     "extra_config": {
           "modifier/lua-backend": {
@@ -291,10 +291,10 @@ An example showing how to **print the backend response** in the console.
           }
     }
 }
-{{< /highlight >}}
+```
 
 Another example **setting a cookie from Lua**:
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/lua-proxy": {
@@ -303,4 +303,4 @@ Another example **setting a cookie from Lua**:
         }
     }
 }
-{{< /highlight >}}
+```

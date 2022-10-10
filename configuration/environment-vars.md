@@ -28,14 +28,14 @@ To replace configuration parameters during runtime, capitalize them and add a pr
 
 For instance, take the following `krakend.json` configuration as an example:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "timeout": "3s",
     "name": "Example gateway.",
     "cache_ttl": "0s"
 }
-{{< /highlight >}}
+```
 
 To replace values using env vars, you could start krakend with the following command:
 
@@ -48,13 +48,13 @@ krakend run -c krakend.json
 
 The resulting configuration will be:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "timeout": "500ms",
     "name": "Build ABC0123"
 }
-{{< /highlight >}}
+```
 
 
 Notice that the `port` attribute is not present in the configuration, despite passing a `KRAKEND_PORT` parameter. This is because the `port` didn't exist previously in the configuration file, and the environment variables can only override values.

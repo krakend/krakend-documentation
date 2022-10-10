@@ -36,7 +36,7 @@ The configuration rules of the bot detector have to be included inside the `extr
 
 For instance:
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "security/bot-detector": {
@@ -50,7 +50,7 @@ For instance:
         }
     }
 }
-{{< /highlight >}}
+```
 
 The available configuration options in the bot detector module are:
 

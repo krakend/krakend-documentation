@@ -20,7 +20,7 @@ KrakenD has implemented several security strategies, controlled via [krakend-htt
 
 The following configuration describes all possible options:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "extra_config": {
@@ -48,7 +48,7 @@ The following configuration describes all possible options:
         "is_development": false
       }
 }
-{{< /highlight >}}
+```
 
 See below the different options described in this configuration file.
 

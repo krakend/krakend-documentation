@@ -89,13 +89,13 @@ From the configuration above, we will **replace the UPPERCASED values** with the
 
 The previous screenshots correspond to a configuration like the one it follows (showing only the replaced content):
 
-{{< highlight JSON >}}
+```json
 {
   "alg": "RS256",
   "audience": ["http://api.example.com"],
   "jwk_url": "https://krakend-auth0-test.auth0.com/.well-known/jwks.json"
 }
-{{< /highlight >}}
+```
 
 That's all you need for the basic configuration! You can expand the structure now to include checking specific roles, claims, etc.
 

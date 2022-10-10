@@ -29,7 +29,7 @@ meta:
 The Opencensus exporter allows you to export data to Datadog. Enabling it only requires you to add the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your Datadog:
-{{< highlight json >}}
+```json
 {
       "extra_config": {
         "telemetry/opencensus": {
@@ -51,7 +51,8 @@ The following configuration snippet sends data to your Datadog:
         }
       }
 }
-{{< /highlight  >}}
+```
+
 - `namespace`(*string*) the namespace to which metric keys are appended.
 - `tags` (*list*) specifies a set of global tags to attach to each metric
 - `global_tags` (*object*) GlobalTags holds a set of tags (key/value) that will automatically be applied to all exported spans.

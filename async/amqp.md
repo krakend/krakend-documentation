@@ -25,7 +25,7 @@ This driver is different from the [AMQP backend consumer](/docs/backends/amqp-co
 ## Async/AMQP Driver Configuration
 The AMQP driver has to be placed inside the `extra_config` of the [async component](/docs/async/) and allows you connect to an AMQP queue (e.g: RabbitMQ). The settings are as follows:
 
-{{< highlight json >}}
+```json
 {
     "async/amqp": {
         "host": "amqp://guest:guest@localhost:5672/",
@@ -40,7 +40,7 @@ The AMQP driver has to be placed inside the `extra_config` of the [async compone
         "no_local": true
     }
 }
-{{< /highlight >}}
+```
 
 
 - `host`- *string* The connection string, **ends in slash**. E.g: `amqp://user:password@host:5672/`

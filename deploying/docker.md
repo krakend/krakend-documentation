@@ -12,12 +12,12 @@ weight: 20
 If you use containers, the recommended approach is to write your own `Dockerfile` and deploy an **immutable artifact** (embedding the config).
 
 In its simplified form would be:
-{{< highlight Dockerfile >}}
+```Dockerfile
 FROM {{< product image >}}:{{< product latest_version >}}
 COPY krakend.json /etc/krakend/krakend.json
 # Uncomment with Enterprise image:
 # COPY LICENSE /etc/krakend/LICENSE
-{{< /highlight >}}
+```
 
 {{< note title="Volume or copy?" type="question" >}}
 Even though you can use the official container directly and attach the configuration mounting an external volume (or ConfigMap in Kubernetes), a custom image with your configuration copied inside has benefits. It guarantees that you can do safe rollbacks and have effective testing and debugging. If you break something at any point, you only need to deploy the previous container, while if you use a volume, you are exposed to downtime or impossible scaling until you fix it.
@@ -25,7 +25,7 @@ Even though you can use the official container directly and attach the configura
 
 A more real-life example illustrates below a combination of the `check` command with a multi-stage build to compile a [flexible configuration](/docs/configuration/flexible-config/) in a `Dockerfile`:
 
-{{< highlight docker >}}
+```docker
 FROM {{< product image >}}:{{< product latest_version >}} as builder
 ARG ENV=prod
 
@@ -47,7 +47,7 @@ FROM {{< product image >}}:{{< product latest_version >}}
 COPY --from=builder --chown=krakend /tmp/krakend.json .
 # Uncomment with Enterprise image:
 # COPY LICENSE /etc/krakend/LICENSE
-{{< /highlight >}}
+```
 
 The `Dockerfile` above has two stages:
 
@@ -70,13 +70,13 @@ The example `Dockerfile` above assumes that you have a file structure like this:
     └── krakend.tmpl
 
 If you want to try this code, you can either download a [working Flexible Config example](https://github.com/krakendio/examples/tree/main/3.flexible-configuration), or generate an **empty skeleton** like this:
-{{< highlight bash >}}
+```bash
 mkdir -p config/{partials,settings,templates}
 mkdir -p config/settings/{prod,test}
 touch config/settings/{prod,test}/env.json
 touch Dockerfile
 touch krakend.tmpl
-{{< /highlight >}}
+```
 
 Now the only missing step to generate the image, is to build it, making sure that the environment argument matches our folder inside the `settings` folder:
 

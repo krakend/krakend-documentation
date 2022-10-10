@@ -26,7 +26,7 @@ The JSON Schema configuration has to be declared at the **endpoint level** with 
 
 The following example **checks if the body is a json object**:
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "validation/json-schema": {
@@ -34,7 +34,7 @@ The following example **checks if the body is a json object**:
         }
     }
 }
-{{< /highlight >}}
+```
 
 
 You can apply constraints by adding keywords to the schema. For instance, you can check that the `type` is an instance of an object, array, string, number, boolean, or null.

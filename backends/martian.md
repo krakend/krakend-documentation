@@ -39,7 +39,7 @@ Add martian modifiers in your configuration under the `extra_config` of any `bac
 
 Your configuration has to look as follows:
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/martian": {
@@ -47,7 +47,7 @@ Your configuration has to look as follows:
         }
     }
 }
-{{< /highlight >}}
+```
 
 See the possibilities and examples below.
 
@@ -64,7 +64,7 @@ In the examples below, you'll find that all modifiers have a configuration key n
 ## Transform headers
 The `header.Modifier` injects a header with a specific value. For instance, the following configuration adds a header `X-Martian` both in the request and the response.
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/martian": {
@@ -76,14 +76,14 @@ The `header.Modifier` injects a header with a specific value. For instance, the 
         }
     }
 }
-{{< /highlight >}}
+```
 
 ## Modify the body
 Through the `body.Modifier`, you can modify the body of the request and the response. You must encode in `base64` the content of the `body`.
 
 The following modifier sets the body of the request and the response to `{"msg":"you rock!"}`. Notice that the `body` field is `base64` encoded.
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/martian":
@@ -95,13 +95,13 @@ The following modifier sets the body of the request and the response to `{"msg":
           }
     }
 }
-{{< /highlight >}}
+```
 
 
 ## Transform the URL
 The `url.Modifier` allows you to change settings in the URL. For instance:
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/martian": {
@@ -115,12 +115,12 @@ The `url.Modifier` allows you to change settings in the URL. For instance:
         }
     }
 }
-{{< /highlight >}}
+```
 
 ## Copying headers
 Although not widely used, the `header.Copy` lets you duplicate a header using another name.
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/martian": {
@@ -132,7 +132,7 @@ Although not widely used, the `header.Copy` lets you duplicate a header using an
         }
     }
 }
-{{< /highlight >}}
+```
 
 
 ## Apply multiple modifiers consecutively
@@ -141,7 +141,7 @@ All the examples above perform a single modification in the request or the respo
 
 Example of usage (modify the body, and set a header):
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/martian": {
@@ -167,7 +167,7 @@ Example of usage (modify the body, and set a header):
         }
     }
 }
-{{< /highlight >}}
+```
 
 ## Connecting to Basic Auth (user/pass) backends
 Sometimes your backends are protected, and you need KrakenD to provide a user and password to connect. The basic authentication requires you to provide a header with the form `Authorization: Basic <credentials>`. The credentials are the concatenation of the username and password using a colon `:` in base64.
@@ -188,7 +188,7 @@ curl -i https://yourapi --header 'Authorization: Basic dXNlcjpwYTU1dzByZA=='
 
 If the connection works, it means that your credentials are correct, and you can add the resulting base64 string `dXNlcjpwYTU1dzByZA==` to the Martian modifier right before connecting to your `backend`:
 
-{{< highlight json >}}
+```json
 {
     "url_pattern": "/protected",
     "extra_config": {
@@ -201,7 +201,7 @@ If the connection works, it means that your credentials are correct, and you can
         }
     }
 }
-{{< /highlight >}}
+```
 
 With the configuration above, whenever a request is made to the backend, the `Authorization` header is added automatically.
 

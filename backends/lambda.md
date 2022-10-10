@@ -92,7 +92,7 @@ docker run --rm -it -p "8080:8080" \
 
 When you associate a KrakenD endpoint to a unique lambda function, use this configuration:
 
-{{< highlight json >}}
+```json
 {
   "endpoint": "/call-a-lambda",
   "backend": [
@@ -109,11 +109,11 @@ When you associate a KrakenD endpoint to a unique lambda function, use this conf
     }
   ]
 }
-{{< /highlight >}}
+```
 
 Here is an example of Lambda code that could run a Hello World (NodeJS):
 
-{{< highlight js >}}
+```js
 exports.handler = async (event) => {
     // TODO implement
     const response = {
@@ -123,13 +123,13 @@ exports.handler = async (event) => {
     };
     return response;
 };
-{{< /highlight >}}
+```
 
 ## Example: Take the lambda from the URL
 
 When the name of the Lambda depends on a parameter passed in the endpoint, use this configuration instead:
 
-{{< highlight json >}}
+```json
 {
   "endpoint": "/call-a-lambda/{lambda}",
   "backend": [
@@ -146,7 +146,7 @@ When the name of the Lambda depends on a parameter passed in the endpoint, use t
     }
   ]
 }
-{{< /highlight >}}
+```
 
 In this example, the `function_param_name` tells us which is the placeholder in the endpoint setting the Lambda. In this case, `{lambda}`.
 

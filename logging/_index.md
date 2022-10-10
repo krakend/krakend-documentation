@@ -66,7 +66,7 @@ Application logs might look different on each application, but this is an exampl
 ## Logging Configuration
 To add extended logging capabilities, you need to add the component at the service level of your `krakend.json` configuration, under the `extra_config` key:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -80,7 +80,7 @@ To add extended logging capabilities, you need to add the component at the servi
     }
   }
 }
-{{< /highlight >}}
+```
 
 These are the different configuration options:
 
@@ -106,7 +106,7 @@ To setup logs on disk, you should consider the following steps:
 3) Optionally add log rotation
 
 ### 1. Syslog configuration
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -117,7 +117,7 @@ To setup logs on disk, you should consider the following steps:
     }
   }
 }
-{{< /highlight >}}
+```
 
 You might set the `stdout` to `false` if you don't want to check on the console but only on the logs.
 

@@ -31,7 +31,7 @@ The setup of GELF is straightforward and requires only to set two parameters:
 Add the `krakend-gelf` integration in the root level of your `krakend.json`, inside the `extra_config` section. **The `telemetry/logging` needs to be enabled too**.
 
 For instance:
-{{< highlight json >}}
+```json
 {
     "extra_config": {
       "telemetry/gelf": {
@@ -46,4 +46,4 @@ For instance:
       }
     }
 }
-{{< /highlight >}}
+```

@@ -32,7 +32,7 @@ Processor: Intel Core i7 2,2 GHz
 ## Setup
 
 For this test, we stored this configuration at `krakend.json`
-{{< highlight json >}}
+```json
   {
     "version": 1,
     "host": [
@@ -76,7 +76,7 @@ For this test, we stored this configuration at `krakend.json`
     "cache_ttl": "5m",
     "timeout": "5s"
   }
-{{< /highlight >}}
+```
 
 And we started the environment as described in the [README](https://github.com/varnish/api-gateway-benchmarks/blob/master/README.md#deployment-example)
 

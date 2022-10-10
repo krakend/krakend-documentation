@@ -27,7 +27,7 @@ It depends a lot on your configuration, but **improving response times by a 75%*
 
 When using concurrent requests, the backend services **must be able to handle an additional load**, as this technique adds more pressure to the backends. If this is the case, and your requests are idempotent, then you can use `concurrent_calls` as follows:
 
-{{< highlight json >}}
+```json
 {
     "endpoints": [
     {
@@ -46,7 +46,7 @@ When using concurrent requests, the backend services **must be able to handle an
     }
     ]
 }
-{{< /highlight >}}
+```
 
 
 In the example above, when a user calls the `/products` endpoint, KrakenD opens three different connections to the backends and returns the first fastest successful response.

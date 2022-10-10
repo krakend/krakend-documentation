@@ -19,7 +19,7 @@ In case you want to enable TLS in KrakenD you need to add a `tls` key at service
 ## TLS Configuration
 To start KrakenD with TLS you need to generate the certificate and provide both the public and the private key:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "tls": {
@@ -27,7 +27,7 @@ To start KrakenD with TLS you need to generate the certificate and provide both 
     "private_key": "/path/to/key.pem"
   }
 }
-{{< /highlight >}}
+```
 
 The mandatory options of the TLS configuration are:
 

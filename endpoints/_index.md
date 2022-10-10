@@ -25,7 +25,7 @@ To create an endpoint, you only need to add an **endpoint object** under the `en
 
 An `endpoints` section might look like this:
 
-{{< highlight json >}}
+```json
 {
   "endpoints": [
     {
@@ -43,7 +43,7 @@ An `endpoints` section might look like this:
     }
   ]
 }
-{{< /highlight >}}
+```
 
 
 The previous example exposes to the clients a `GET /v1/users/{user}` endpoint and takes the data from your existing backend `GET https://api.mybackend.com/users/summary/{user}`.
@@ -83,6 +83,7 @@ For instance, you declared and `"endpoint": "/user/{id}"` and you expected to re
 ### Endpoints listening to multiple methods
 
 The `method` attribute defines the HTTP verb you can use with the endpoint. If you need to support multiple methods (e.g.,  `GET`, `POST`, `DELETE`) in the same endpoint, you will need to declare **one endpoint object for each method**. So if you want the same endpoint to listen to `GET` and `POST` requests, you need the following configuration:
+
 {{< highlight json "hl_lines=4 5 9 17 18 22">}}
 {
   "endpoints": [
@@ -122,11 +123,11 @@ Notice that the `method` is declared both in the endpoint and in the backend (as
 
 As you can see in the examples above, endpoints can define variables in its endpoint definition. To do so, encapsulate the variable name with curly braces, like `{var}`.
 
-{{< highlight json >}}
+```json
 {
   "endpoint": "/user/{id}"
 }
-{{< /highlight >}}
+```
 
 
 The previous endpoint will accept requests like `/user/123` or `/user/A-B-C`. But **it won't accept** a request like `/user/1/2`, as there is an extra slash than the definition, and KrakenD considers this to be a different endpoint.

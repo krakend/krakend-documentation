@@ -26,7 +26,7 @@ When the Cross-Origin Resource Sharing (CORS) configuration is enabled, KrakenD 
 ## Configuration
 CORS configuration lives in the root of the file, as it's a service component. Add the namespace `security/cors` under the global `extra_config`, as follows:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -51,7 +51,7 @@ CORS configuration lives in the root of the file, as it's a service component. A
       "debug": false
     }
   }
-{{< /highlight >}}
+```
 The configuration options of this component are as follows:
 
 - `allow_methods` *(list)*: The array of all HTTP methods accepted, in uppercase.
@@ -68,7 +68,7 @@ According to the CORS specification, you are not allowed to use wildcards and cr
 ## Debugging configuration
 The following configuration might help you debugging your CORS configuration. Check the inline `@comments`:
 
-{{< highlight json >}}
+```json
 {
   "endpoints":[
         {
@@ -132,4 +132,4 @@ The following configuration might help you debugging your CORS configuration. Ch
             ]
         }
 ]}
-{{< /highlight >}}
+```

@@ -53,12 +53,12 @@ To start the server, invoke the `krakend run` command with a configuration file 
 
 Or to get started right away, you can paste the following content inside a `krakend.json` file:
 
-{{< highlight json >}}
+```json
 {
     "$schema": "https://www.krakend.io/schema/v3.json",
     "version": 3
 }
-{{< /highlight >}}
+```
 
 And then you can start KrakenD:
 

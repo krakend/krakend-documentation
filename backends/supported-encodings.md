@@ -49,7 +49,7 @@ When hesitating whether to use `safejson` or `json` and the `is_collection=true`
 
 The following example demonstrates how an endpoint `/abc` is feeding on three different services and urls  `/a`, `/b`, and `/c` and aggregates their responses:
 
-{{< highlight json >}}
+```json
 {
 	"endpoints": [
     {
@@ -80,6 +80,6 @@ The following example demonstrates how an endpoint `/abc` is feeding on three di
     }
   ]
 }
-{{< /highlight >}}
+```
 
 As you can see, having the `encoding` declaration inside every backend allows you to consume services with different content types. The endpoint `/abc` instead uses the encoding of your choice (e.g., JSON), but is feeding and merging from XML, RSS and JSON content simultaneously.

@@ -66,12 +66,12 @@ KRAKEND_ALLOW_INSECURE_CONNECTIONS=true krakend run -c krakend.json
 ## Max IDLE connections
 Having a high number of IDLE connections to every backend affects directly to the performance of the proxy layer. This is why you can control the number using the `max_idle_connections` setting. For instance:
 
-{{< highlight json >}}
+```json
 {
 	"version": 3,
 	"max_idle_connections": 150
 }
-{{< /highlight >}}
+```
 
 
 KrakenD will close connections sitting idle in a "keep-alive" state when `max_idle_connections` is reached. If no value is set in the configuration file, KrakenD will use `250` by default.

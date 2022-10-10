@@ -55,7 +55,7 @@ So, in most of the cases, is better to play together.
 ## Configuration
 The configuration allows you to use both types of rate limits at the same time:
 
-{{< highlight json>}}
+```json
 {
     "endpoint": "/limited-endpoint",
     "extra_config": {
@@ -66,7 +66,7 @@ The configuration allows you to use both types of rate limits at the same time:
         }
     }
 }
-{{< /highlight >}}
+```
 
 The following options are available to configure. You can use `max_rate` and `client_max_rate` together or separated.
 

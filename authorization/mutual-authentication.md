@@ -21,7 +21,7 @@ When mTLS is enabled, **all KrakenD endpoints** require clients to provide a kno
 
 To enable it you need to add `enable_mtls` to your `tls` configuration:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "tls": {
@@ -30,6 +30,6 @@ To enable it you need to add `enable_mtls` to your `tls` configuration:
       "enable_mtls": true
     }
 }
-{{< /highlight >}}
+```
 
 Connections not having a recognized certificate in KrakenD's system CA, will be rejected. For further documentation on TLS, see the [`TLS` documentation](/docs/service-settings/tls/)

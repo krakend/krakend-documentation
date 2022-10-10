@@ -23,7 +23,7 @@ The Opencensus exporter is a single component that allows you to **export data t
 
 You will be interested in Opencensus when you want to see data in one of its supported `exporters`. For instance, you might want to send metrics to Prometheus. That would be as easy as adding this snippet in the **root level** of your `krakend.json` file:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "extra_config": {
@@ -37,7 +37,7 @@ You will be interested in Opencensus when you want to see data in one of its sup
         }
     }
 }
-{{< /highlight >}}
+```
 
 ## Configuration
 
@@ -47,7 +47,7 @@ Every exporter has its own configuration and it's described in its section.
 
 By default, **all exporters sample the 100% of the requests received every second**, but this can be changed by specifying more configuration:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "extra_config": {
@@ -67,7 +67,7 @@ By default, **all exporters sample the 100% of the requests received every secon
         }
     }
 }
-{{< /highlight >}}
+```
 
 
 

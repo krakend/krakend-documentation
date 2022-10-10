@@ -25,7 +25,7 @@ Opencensus can export data to the system logger as another exporter.
 Enabling it only requires you to add the `logger` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet enables the logger:
-{{< highlight json >}}
+```json
 {
   "extra_config":{
     "telemetry/opencensus": {
@@ -37,7 +37,7 @@ The following configuration snippet enables the logger:
         }
     }
 }
-{{< /highlight >}}
+```
 
 - `stats`: Whether to log the statistics or not
 - `spans`: Whether to log the spans or not
