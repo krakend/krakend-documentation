@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-06-14
+lastmod: 2022-10-10
 date: 2021-05-21
 toc: true
 linktitle: HTTP server plugins
@@ -143,6 +143,14 @@ With the `main.go` file saved, it's time to build and test the plugin. If you ad
 For compiling Go plugins, the flag `-buildmode=plugin` is required. The command is:
 
 {{< terminal >}}
+go build -buildmode=plugin -o krakend-server-example.so .
+{{< /terminal >}}
+
+If you are using Docker and wanting to load your plugin on Docker, compile it in the [Plugin Builder](/docs/extending/writing-plugins/#plugin-builder) for an easier integration.
+
+{{< terminal title="Build your plugin" >}}
+docker run -it -v "$PWD:/app" -w /app \
+{{< product image_plugin_builder >}}:{{< product latest_version >}} \
 go build -buildmode=plugin -o krakend-server-example.so .
 {{< /terminal >}}
 

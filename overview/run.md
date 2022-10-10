@@ -41,10 +41,17 @@ Flags:
 Use "krakend [command] --help" for more information about a command.
 {{< /terminal >}}
 
+You can use the following commands:
 
-To start the server, invoke the `krakend run` command. The command will require a configuration file with your API definition. You can create your first `krakend.json` file using the [KrakenDesigner](https://designer.krakend.io/) if you prefer a UI.
+- `krakend check`: Use [krakend check](/docs/configuration/structure/) to make sure the configuration file you have generated is not broken and has the required attributes to start the gateway.
+- `krakend check-plugin`: Use the [check-plugin](/docs/extending/check-plugin/) when you are developing custom plugins and you want to check that they are compatible with the server.
+- `krakend run`: Use run to start the API gateway server.
+- `krakend version`: Use the version command to print the current KrakenD version and the Glibc and Go versions used during compilation.
 
-To get started right away, you can paste the following content inside a `krakend.json` file:
+## Starting the gateway server
+To start the server, invoke the `krakend run` command with a configuration file containing your API definition. You can visually create your first `krakend.json` file using the [KrakenDesigner](https://designer.krakend.io/) if you prefer a UI.
+
+Or to get started right away, you can paste the following content inside a `krakend.json` file:
 
 {{< highlight json >}}
 {
@@ -62,7 +69,7 @@ krakend run -c krakend.json
 Or if you use Docker:
 
 {{< terminal title="Command to start KrakenD with Docker" >}}
-docker run -p "8080:8080" -v $PWD:/etc/krakend/ {{< product image >}}:{{< product latest_version >}} run -c /etc/krakend/krakend.json
+docker run -p "8080:8080" -v $PWD:/etc/krakend/ {{< product image >}}:{{< product latest_version >}} run -c krakend.json
 {{< /terminal >}}
 
 Now KrakenD is listening on `8080`, and you can see it working under `http://localhost:8080/__health`.

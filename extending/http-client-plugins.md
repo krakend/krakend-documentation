@@ -170,6 +170,14 @@ For compiling Go plugins, the flag `-buildmode=plugin` is required. The command 
 go build -buildmode=plugin -o krakend-client-example.so .
 {{< /terminal >}}
 
+If you are using Docker and wanting to load your plugin on Docker, compile it in the [Plugin Builder](/docs/extending/writing-plugins/#plugin-builder) for an easier integration.
+
+{{< terminal title="Build your plugin" >}}
+docker run -it -v "$PWD:/app" -w /app \
+{{< product image_plugin_builder >}}:{{< product latest_version >}} \
+go build -buildmode=plugin -o krakend-client-example.so .
+{{< /terminal >}}
+
 There is no output for this command. Now you have a file `krakend-client-example.so`, the binary that KrakenD has to side load. Remember that you cannot use this binary in a different architecture (e.g., compiling the binary in Mac and loading it in a Docker container).
 
 The plugin is ready to use! You can now load your plugin in the configuration. Add the `plugin` and `extra_config` entries in your configuration. Here's an example of `krakend.json`:

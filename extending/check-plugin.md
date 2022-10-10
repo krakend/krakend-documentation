@@ -29,7 +29,7 @@ To get started writing your plugins see:
 The `krakend check-plugin` command accepts the following options:
 
 {{< terminal title="Usage of KrakenD check" >}}
-./krakend check-plugin -h
+krakend check-plugin -h
 
 {{< ascii-logo >}}
 

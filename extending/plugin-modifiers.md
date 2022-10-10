@@ -209,6 +209,14 @@ With the `main.go` file complete, it's time to build and test the plugin. For co
 go build -buildmode=plugin -o krakend-debugger.so .
 {{< /terminal >}}
 
+If you are using Docker and wanting to load your plugin on Docker, compile it in the [Plugin Builder](/docs/extending/writing-plugins/#plugin-builder) for an easier integration.
+
+{{< terminal title="Build your plugin" >}}
+docker run -it -v "$PWD:/app" -w /app \
+{{< product image_plugin_builder >}}:{{< product latest_version >}} \
+go build -buildmode=plugin -o krakend-debugger.so .
+{{< /terminal >}}
+
 For the test, we'll build a small gateway with a single endpoint merging the responses from two different backends.
 
 {{< highlight json >}}
