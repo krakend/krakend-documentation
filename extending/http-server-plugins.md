@@ -55,21 +55,13 @@ import (
 	"net/http"
 )
 
+// pluginName is the plugin name
+var pluginName = "krakend-server-example"
+
 // HandlerRegisterer is the symbol the plugin loader will try to load. It must implement the Registerer interface
-var HandlerRegisterer = registerer("krakend-server-example")
+var HandlerRegisterer = registerer(pluginName)
 
 type registerer string
-
-var logger Logger = nil
-
-func (registerer) RegisterLogger(v interface{}) {
-	l, ok := v.(Logger)
-	if !ok {
-		return
-	}
-	logger = l
-	logger.Debug(fmt.Sprintf("[PLUGIN: %s] Logger loaded", HandlerRegisterer))
-}
 
 func (r registerer) RegisterHandlers(f func(
 	name string,
@@ -79,16 +71,7 @@ func (r registerer) RegisterHandlers(f func(
 }
 
 func (r registerer) registerHandlers(_ context.Context, extra map[string]interface{}, h http.Handler) (http.Handler, error) {
-	// check the passed configuration and initialize the plugin
-	name, ok := extra["name"].([]interface{})
-	cfgRaw, ok := extra["krakend-server-example"]
-	if !ok {
-		return cfg, errors.New("no config")
-	}
-
-	config, ok := extra["krakend-server-example"].(map[string]interface{})
-	// check the cfg. If the modifier requires some configuration,
-	// it should be under the name of the plugin. E.g.:
+	// If the plugin requires some configuration, it should be under the name of the plugin. E.g.:
 	/*
 	   "extra_config":{
 	       "plugin/http-server":{
@@ -99,9 +82,12 @@ func (r registerer) registerHandlers(_ context.Context, extra map[string]interfa
 	       }
 	   }
 	*/
-
-	// The config variable contains all the keys you hace defined in the configuration:
-	config, _ := extra["krakend-server-example"].(map[string]interface{})
+	// The config variable contains all the keys you have defined in the configuration
+	// if the key doesn't exists or is not a map the plugin returns an error and the default handler
+	config, ok := extra[pluginName].(map[string]interface{})
+	if !ok {
+		return h, errors.New("configuration not found")
+	}
 
 	// The plugin will look for this path:
 	path, _ := config["path"].(string)
@@ -110,19 +96,31 @@ func (r registerer) registerHandlers(_ context.Context, extra map[string]interfa
 	// return the actual handler wrapping or your custom logic so it can be used as a replacement for the default http handler
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 
-    // If the requested path is not what we defined, continue.
+		// If the requested path is not what we defined, continue.
 		if req.URL.Path != path {
 			h.ServeHTTP(w, req)
 			return
 		}
 
-    // The path has to be hijacked:
+		// The path has to be hijacked:
 		fmt.Fprintf(w, "Hello, %q", html.EscapeString(req.URL.Path))
 		logger.Debug("request:", html.EscapeString(req.URL.Path))
 	}), nil
 }
 
 func main() {}
+
+// This logger is replaced by the RegisterLogger method to load the one from KrakenD
+var logger Logger = noopLogger{}
+
+func (registerer) RegisterLogger(v interface{}) {
+	l, ok := v.(Logger)
+	if !ok {
+		return
+	}
+	logger = l
+	logger.Debug(fmt.Sprintf("[PLUGIN: %s] Logger loaded", HandlerRegisterer))
+}
 
 type Logger interface {
 	Debug(v ...interface{})
@@ -132,6 +130,16 @@ type Logger interface {
 	Critical(v ...interface{})
 	Fatal(v ...interface{})
 }
+
+// Empty logger implementation
+type noopLogger struct{}
+
+func (n noopLogger) Debug(_ ...interface{})    {}
+func (n noopLogger) Info(_ ...interface{})     {}
+func (n noopLogger) Warning(_ ...interface{})  {}
+func (n noopLogger) Error(_ ...interface{})    {}
+func (n noopLogger) Critical(_ ...interface{}) {}
+func (n noopLogger) Fatal(_ ...interface{})    {}
 ```
 
 The plugin above aborts the request and replies itself printing a `Hello, %q` without actually passing the request to the endpoint. It is a simple example, but it shows the necessary structure to start working with plugins.
