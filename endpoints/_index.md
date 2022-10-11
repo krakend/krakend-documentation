@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-01-28
+lastmod: 2022-10-11
 date: 2020-02-26
 aliases: ["/docs/endpoints/creating-endpoints/"]
 description: Endpoints are the API URLs you expose through KrakenD. Learn how to create KrakenD endpoints and build your API programmatically.
@@ -10,7 +10,7 @@ menu:
   community_current:
     parent: "040 Endpoint Configuration"
 ---
-KrakenD `endpoints` are the most critical configuration part of KrakenD as they are what your end users consume. By adding endpoint objects, you create the API contract your users will consume.
+KrakenD `endpoints` are the most critical configuration part of KrakenD, as they are what your end users consume. Adding endpoint objects creates the API contract your users will consume.
 
 {{< note title="Configuration overview" type="tip" >}}
 If you are still unfamiliar with KrakenD's configuration structure, take a moment to read [Understanding the configuration file](/docs/configuration/structure/).
@@ -48,7 +48,7 @@ An `endpoints` section might look like this:
 
 The previous example exposes to the clients a `GET /v1/users/{user}` endpoint and takes the data from your existing backend `GET https://api.mybackend.com/users/summary/{user}`.
 
-Inside this object, you can add manipulation options and transform the response before its returned to the end-user.
+Inside this object, you can add manipulation options and transform the response before it returns to the end user.
 
 ### Endpoint configuration
 The **endpoint object** accepts the following attributes. As you can see, most of them are optional:
@@ -61,8 +61,8 @@ The **endpoint object** accepts the following attributes. As you can see, most o
 - `input_query_strings` (*optional*): Recognized GET parameters. See [parameter forwarding](/docs/endpoints/parameter-forwarding/).
 - `input_headers` (*optional*): Forwarded headers. See [headers forwarding](/docs/endpoints/parameter-forwarding/#headers-forwarding).
 - `concurrent_calls` (*optional*): A technique to improve response times. See [concurrent requests](/docs/endpoints/concurrent-requests/)
-- `cache_ttl` (*optional*): (*time unit*) The cache headers informing for how long the CDN can cache the request to this endpoint. Related: [caching backend responses](/docs/backends/caching/).
-- `timeout` (*optional*): (*time unit*) Maximum time you'll wait for the slowest backend response. Usually specified in seconds (`s`) or milliseconds (`ms`. E.g: `2000ms` or `2s`)
+- `cache_ttl` (*optional*): (*time unit*) The cache headers inform for how long the CDN can cache the request to this endpoint. Related: [caching backend responses](/docs/backends/caching/).
+- `timeout` (*optional*): (*time unit*) The duration you write in the timeout represents the **whole duration of the pipe**, so it counts the time all your backends take to respond and the processing of all the components involved in the endpoint (the request, fetching data, manipulation, etc.). Usually specified in seconds (`s`) or milliseconds (`ms`. e.g.: `2000ms` or `2s`). See [default timeout](/docs/throttling/timeouts/).
 
 \* Valid _time units_ are: `ns`, `us`, (or `µs`), `ms`, `s`, `m`, `h` E.g: `1s`
 
@@ -72,9 +72,9 @@ If you want the internal router to match a request URL with an endpoint, the str
 {{< /note >}}
 
 ### Endpoints with multiple nesting levels
-You might have envisioned KrakenD as a proxy and expected its `endpoint` declaration **works as a prefix** and listens to any path with an undetermined number of nesting levels. **But KrakenD does not work like this by default**. Instead, it expects you to declare every possible URL structure.
+You might have envisioned KrakenD as a proxy and expected its `endpoint` declaration to **work as a prefix** and listen to any path with an undetermined number of nesting levels. **But KrakenD does not work like this by default**. Instead, it expects you to declare every possible URL structure.
 
-For instance, you declared and `"endpoint": "/user/{id}"` and you expected to resolve URLs like `/user/john/profile/preferences`, but you are getting a *404* instead. There are two solutions to this problem:
+For instance, you declared an `"endpoint": "/user/{id}"` and you expected to resolve URLs like `/user/john/profile/preferences`, but you are getting a *404* instead. There are two solutions to this problem:
 
 1. You declare all possible endpoints: `/user/{id}`, `/user/{id}/{level2}`, `/user/{id}/{level2}/{level3}`, etc.
 2. You use a [Wildcard](/docs/enterprise/endpoints/wildcard/) (Enterprise only)
@@ -121,7 +121,7 @@ Notice that the `method` is declared both in the endpoint and in the backend (as
 
 ### Endpoint variables
 
-As you can see in the examples above, endpoints can define variables in its endpoint definition. To do so, encapsulate the variable name with curly braces, like `{var}`.
+As you can see in the examples above, endpoints can define variables in their endpoint definition. To do so, encapsulate the variable name with curly braces, like `{var}`.
 
 ```json
 {
@@ -130,4 +130,4 @@ As you can see in the examples above, endpoints can define variables in its endp
 ```
 
 
-The previous endpoint will accept requests like `/user/123` or `/user/A-B-C`. But **it won't accept** a request like `/user/1/2`, as there is an extra slash than the definition, and KrakenD considers this to be a different endpoint.
+The previous endpoint will accept requests like `/user/123` or `/user/A-B-C`. But **it won't take** a request like `/user/1/2`, as there is an extra slash than the definition, and KrakenD considers this to be a different endpoint.
