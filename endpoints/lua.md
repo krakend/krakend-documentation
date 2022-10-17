@@ -15,6 +15,7 @@ meta:
   - "modifier/lua-endpoint"
   - "modifier/lua-backend"
   scope:
+  - service
   - endpoint
   - backend
   - async_agent
@@ -33,11 +34,11 @@ A [Go plugin](/docs/extending/) delivers much more speed and power than a Lua sc
 
 ## Configuration
 
-You can add your Lua scripts under the `extra_config` at the `endpoint` level or the `backend` level. You can choose **three different namespaces** (explained below):
+You can add your Lua scripts under the `extra_config` at the service level, the `endpoint` level or the `backend` level. You can choose **three different namespaces** (explained below):
 
-- `"modifier/lua-endpoint"`
-- `"modifier/lua-proxy"`
-- `"modifier/lua-backend"`
+- `"modifier/lua-endpoint"` (endpoint and service level)
+- `"modifier/lua-proxy"` (endpoint level)
+- `"modifier/lua-backend"` (backend level)
 
 The configuration options are:
 
@@ -80,7 +81,7 @@ When running Lua scripts, you can place them at the `proxy` level, or the `route
 
 These two places have the following considerations:
 
-- **Router** (at `endpoint`'s `extra_config`): Communication between the end-user and KrakenD. You can inspect and modify the **request** of the user.
+- **Router** (at `endpoint`'s `extra_config` or service level): Communication between the end-user and KrakenD. You can inspect and modify the **request** of the user.
   - With `"modifier/lua-endpoint"`you can modify the **HTTP request context** early in the transport layer. However, KrakenD has not converted the request into an internal request just yet.
   - With `"modifier/lua-proxy"`you can modify the internal KrakenD request before reaching all backends in the endpoint and modify the response **AFTER the merge** of all backends.
 - **Proxy** (at `backend`'s `extra_config`): Communication between KrakenD and your services. For both the **request** and the **response**.
@@ -268,8 +269,23 @@ custom_error("I refuse to make any coffee, I'm a teapot!", 418)
 ## Lua examples in different pipes
 The following snippets show how to add Lua code in different sections.
 
+### Lua in the service for all endpoints
+An example setting a common header in the request to all endpoints.
+
+```json
+  {
+    "version": 3,
+    "extra_config": {
+        "modifier/lua-endpoint": {
+          "pre": "print('Lua service!'); local r = request.load(); r:headers('X-from-lua', '1234');"
+        }
+    }
+  }
+```
+
 ### Lua in the endpoint
-An example setting a header in the response using Lua.
+An example setting a header in the request using Lua.
+
 ```json
   {
     "endpoint": "/set-a-header",
