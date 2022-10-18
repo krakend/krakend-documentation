@@ -39,13 +39,14 @@ Examples: `2s` for 2 seconds or `1500ms` for 1500 milliseconds.
 ## Override settings using environment vars
 When you declare in the configuration file any of the HTTP server settings declared above, you can [override its value through environment variables](/docs/configuration/environment-vars/) when starting the server.
 
-All the environment variables have the same name are the same settings above in uppercase and with the `KRAKEND_` preffix. The following env vars are available:
+All the environment variables have the same name are the same settings above in uppercase and with the `KRAKEND_` preffix. For instance, looking at the list of settings above, you could override:
 
 - `KRAKEND_PORT`
 - `KRAKEND_READ_TIMEOUT`
 - `KRAKEND_READ_HEADER_TIMEOUT`
 - `KRAKEND_WRITE_TIMEOUT`
 - `KRAKEND_IDLE_TIMEOUT`
+- etc...
 
 You can start KrakenD with the desired variables to override what you have in the configuration:
 
