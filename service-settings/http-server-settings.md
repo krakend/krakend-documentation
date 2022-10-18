@@ -8,6 +8,12 @@ notoc: true
 menu:
   community_current:
     parent: "030 Service Settings"
+meta:
+  source: https://github.com/luraproject/lura
+  scope:
+  - service
+  log_prefix:
+  - "[SERVICE: HTTP Server]"
 ---
 KrakenD starts an HTTP server to offer the API Gateway server. You can personalize some of the settings used to start the service and also override the default settings of the underlying Go [standard library](https://pkg.go.dev/net/http#Server).
 
@@ -22,6 +28,9 @@ If you want to customize any of the settings below, they must be written at the 
 | `read_header_timeout` | *duration* | The amount of time allowed to read request headers. The connection's read deadline is reset after reading the headers and the Handler can decide what is considered too slow for the body. |
 |`write_timeout`| *duration* | The maximum duration before timing out writes of the response. It is reset whenever a new request's header is read. Like `read_timeout`, it does not let Handlers make decisions on a per-request basis.|
 | `idle_timeout` | *duration* | The maximum amount of time to wait for the next request when keep-alives are enabled. If `idle_timeout` is zero, the value of `read_timeout` is used. If both are zero, there is no timeout. |
+| `ca_certs` | *list* | An array with all the CA certificates you would like to load to KrakenD, in addition to the certificates present in the system's CA. |
+| `disable_system_ca_pool` | *boolean* | Make that any certificate in the system's CA is not recognized by KrakenD. The only certificates loaded will be the ones in the `ca_certs` list when true. Defaults to `false`.|
+
 
 The *duration* is positive integer value with time units. Valid time units are: `ns` (nanoseconds), `us` or `µs` (microseconds), `ms` (milliseconds), `s` (seconds), `m` (minutes), `h` (hours - don't!)
 
