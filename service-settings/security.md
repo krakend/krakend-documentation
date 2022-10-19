@@ -52,14 +52,8 @@ The following configuration describes all possible options:
 
 See below the different options described in this configuration file.
 
-## General security
+{{< schema data="security/http.json" >}}
 
-- `is_development` (*bool*): This will cause the AllowedHosts, SSLRedirect, and STSSeconds/STSIncludeSubdomains options to be ignored during development. When deploying to production, be sure to set this to false.
-- `referrer_policy` (*string*): Allows the Referrer-Policy header with the value to be set with a custom value. Default is "".
-- `host_proxy_headers` (*list*): A set of header keys that may hold a proxied hostname value for the request.
-- `ssl_proxy_headers` (*map*): Header keys with associated values that would indicate a valid https request. Useful when using Nginx, e.g: "X-Forwarded-Proto": "https"
-- `ssl_redirect` (*bool*): Redirect any request that is not using HTTPS
-- `ssl.host.domain` (*string*): When the `ssl_redirect` flag is set to true, the host where the user is redirected.
 
 ### Restrict connections by host
 Use `allowed_hosts`

@@ -4,7 +4,7 @@ date: 2021-10-29
 linktitle: Router options
 title: Customizing router behavior
 weight: 10
-notoc: false
+notoc: true
 meta:
   since: 2.0
   source: https://github.com/krakendio/krakend-cors
@@ -24,21 +24,20 @@ The **optional router configuration** allows you to set global flags that change
 
 Generally speaking **you don't need this**. But in every case there is an exception and you might eventually need to change some value.
 
-To change the router behavior, add the namespace `router` under the global `extra_config`. The following example shows how to return the error to the client:
+## Configuration for the router
 
-See below the list of supported flags.
+To change the router behavior, add the namespace `router` under the global `extra_config`, and set one or more flags as depicted below:
 
-## Supported router flags
-The following sections describe the flags and options available to configure the router. Include only those that you need to override.
+{{< schema data="router.json" >}}
 
-### Custom JSON body for 404 and 405 errors
-The `error_body` attribute lets you set custom body messages for the following status codes that your backend has no control over:
-- `404` for all the not found endpoints
-- `405` for all no-method errors (e.g.: user requested a GET but endpoint was a POST )
 
-As value of the `404` and `405` keys below, write **any JSON object** structure you would like to return to users. Example:
+{{< note title="Caution with `disable_redirect_fixed_path`" type="error" >}}
+This flag can lead to malfunctioning of your router. If your API configuration has paths that could collide leave its value with the **safe choice** `disable_redirect_fixed_path=true` to avoid possible panics.
+{{< /note >}}
 
-```
+
+## Example: Custom JSON body for 404 and 405 errors
+```json
 {
   "version": 3,
   "extra_config": {
@@ -57,15 +56,7 @@ As value of the `404` and `405` keys below, write **any JSON object** structure 
 }
 ```
 
-
-
-### Customizing the health endpoint
-You can set the following router options to customize how the [health endpoint](/docs/service-settings/health/) behaves:
-
-- `disable_health` (*boolean*): When true you don't have any exposed health endpoint. You can still use a TCP checker or build an endpoint yourself.
-- `health_path` (*string*): The path where you'd like to expose the health endpoint. The default value is `/__health`.
-
-### Returning the gateway error message
+## Example: Returning the gateway error message
 The secure choice of KrakenD is that all errors generated at the gateway **are not returned to the client in the body**. By settting `return_error_msg` (*boolean*) to `true`, when there is an error in the gateway (such as a timeout, a non-200 status code, etc.) it returns to the client the reason for the failure. The error is **written in the body as is**.
 
 {{< note title="Gateway errors != backend errors" >}}
@@ -82,27 +73,10 @@ This option does not relates to the body of your backend errors. If you are look
 }
 ```
 
-### URLs, methods, and automatic redirections
-There are two types of automatic redirections that happen at the router level. They can be disabled as follows:
+## Example: Obtaining the real IP
+The flags - `forwarded_by_client_ip`, `remote_ip_headers`, and `trusted_proxies` determine how to get the client IP address (read its documentation above)
 
-- `disable_redirect_trailing_slash` (*boolean*): Disables automatic redirection if the current route can't be matched but a handler for the path with (without) the trailing slash exists. For example if `/foo/` is requested but a route only exists for `/foo`, the client is redirected to `/foo` with http status code `301` for GET requests and `307` for all other request methods.
-- `disable_redirect_fixed_path` (*boolean*): If enabled, the router tries to fix the current request path, if no handle is registered for it. First superfluous path elements like `../` or `//` are removed. Afterwards the router does a case-insensitive lookup of the cleaned path. If a handle can be found for this route, the router makes a redirection to the corrected path with status code `301` for GET requests and `307` for all other request methods. For example `/FOO` and `/..//Foo` could be redirected to `/foo`. The flag `disable_redirect_trailing_slash` is independent of this option.
-- `disable_path_decoding` (*boolean*): Disables automatic validation of the url params looking for url encoded ones. The default behavior (`false`) is to avoid double URL encoding of parameters that could lead to backend exploration. The server rejects with a `400` when the user is trying to make an injection with double (or more) URL-encoded parameters.
-- `remove_extra_slash` (*boolean*): A parameter can be parsed from the URL even with extra slashes.
-- `disable_handle_method_not_allowed` (*boolean*): Whether to checks if another method is allowed for the current route, if the current request can not be routed. If this is the case, the request is answered with `Method Not Allowed` and HTTP status code `405`. If no other Method is allowed, the request is a `404`.
-- `auto_options` (*boolean*): Auto Options enables the autogenerated `OPTIONS` endpoint for all the registered paths
-
-{{< note title="Caution with redirecting fixed paths" type="error" >}}
-This flag can lead to malfunctioning of your router. If your API configuration has paths that could collide leave its value with the **safe choice** `disable_redirect_fixed_path=true` to avoid possible panics.
-{{< /note >}}
-
-
-### Obtaining the real IP
-The following three flags determine how to get the client IP address:
-
-- `forwarded_by_client_ip` (*boolean*): When set to true, client IP will be parsed from the request's headers. If no IP can be fetched, it falls back to the IP obtained from the request's remote address.
-- `remote_ip_headers` (*list*): List of headers used to obtain the client IP when `forwarded_by_client_ip` is set to `true` and the remote address is matched by at least one of the network origins of `trusted_proxies`.
-- `trusted_proxies` (*list*): List of network origins (IPv4 addresses, IPv4 CIDRs, IPv6 addresses or IPv6 CIDRs) from which to trust request's headers that contain alternative client IP when `forwarded_by_client_ip` is `true`.
+The following example shows a configuration that takes the user IP from the `X-Custom-Ip` header only when the network origin is `172.20.0.1/16`:
 
 ```json
 {
@@ -120,27 +94,8 @@ The following three flags determine how to get the client IP address:
 }
 ```
 
-
-### App Engine integration
-The `app_engine` *boolean* trusts headers starting with `X-AppEngine...` for better integration with that PaaS.
-
-```json
-{
-  "version": 3,
-  "extra_config": {
-      "router":{
-          "app_engine": true
-      }
-}
-```
-
-### Memory available for Multipart forms
-The `max_multipart_memory` *integer* sets the 'maxMemory' param that is given to http.Request's Multipart Form method call.
-
-### Remove requests from logs
-There are two options to remove content from logs:
-- `logger_skip_paths` *list* defines the set of paths that are removed from the logging.
-- `disable_access_log` *boolean* stops registering access requests to KrakenD and leaving any logs out from the output.
+## Example: Remove requests from logs
+There are two options to remove content from logs, the `logger_skip_paths` (list of paths you don't want to see in the logs), and `disable_access_log` which stops registering access requests.
 
 ```json
 {
