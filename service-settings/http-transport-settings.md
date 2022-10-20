@@ -14,20 +14,7 @@ When KrakenD communicates using http, it implements a concurrent-safe round trip
 
 If you want to customize any of the settings below, they must be written at the top level of the configuration.
 
-| Setting parameter | Type | Description |
-|-------------------|---------------|-------------|
-| `allow_insecure_connections` | *boolean* | By default, KrakenD verifies every SSL connection. This option allows you to connect to backends considered insecure, for instance when you are using **self-signed certificates** |
-| `disable_rest` | *boolean* | Only RESTful URL patterns are valid to access backends. Set to true if your backends aren't RESTful, e.g.: `/url.{some_variable}.json` |
-| `dialer_timeout` | *duration* | The timeout of the dial function for creating connections |
-| `dialer_keep_alive` | *duration* | The amount of time you want to keep alive the connection |
-| `dialer_fallback_delay` | *duration* |  Specifies the length of time to wait before spawning a fallback connection |
-| `disable_compression` | *boolean* | When true prevents requesting compression with an `"Accept-Encoding: gzip"` request header when the Request contains no existing Accept-Encoding value. If the Transport requests gzip on its own and gets a gzipped response, it's transparently decoded. However, if the user explicitly requested gzip it is not automatically uncompressed. |
-| `disable_keep_alives` | *boolean* | When true it disables HTTP keep-alives and will only use the connection to the server for a single HTTP request.|
-| `max_idle_connections` | *integer* | The maximum number of idle (keep-alive) connections across all hosts. Zero means no limit. |
-| `max_idle_connections_per_host` | *integer* | If non-zero, controls the maximum idle (keep-alive) connections to keep per-host. If zero, the default (`2`) is used. |
-| `idle_connection_timeout` | *duration* | The maximum amount of time an idle (keep-alive) connection will remain idle before closing itself. Zero means no limit. |
-| `response_header_timeout` | *duration* | If non-zero, specifies the amount of time to wait for a server's response headers after fully writing the request (including its body, if any). This time does not include the time to read the response body.|
-| `expect_continue_timeout` | *duration* | If non-zero, specifies the amount of time to wait for a server's first response headers after fully writing the request headers if the request has an `"Expect: 100-continue"` header. Zero means no timeout and causes the body to be sent immediately, without waiting for the server to approve. This time does not include the time to send the request header.|
+{{< schema data="v3.json" filter="allow_insecure_connections,disable_rest,dialer_timeout,dialer_keep_alive,dialer_fallback_delay,disable_compression,disable_keep_alives,max_idle_connections,max_idle_connections_per_host,idle_connection_timeout,response_header_timeout,expect_continue_timeout">}}
 
 Finally, the **TLS Handshake Timeout** is hardcoded to 10 seconds and cannot be changed.
 
