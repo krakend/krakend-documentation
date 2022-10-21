@@ -68,19 +68,9 @@ The configuration allows you to use both types of rate limits at the same time:
 }
 ```
 
-The following options are available to configure. You can use `max_rate` and `client_max_rate` together or separated.
+The following options are available to configure. You can use `max_rate` and `client_max_rate` together or separated. The rate limiting uses the [Token Bucket](/docs/throttling/token-bucket/).
 
-- `max_rate` (*float*): Sets the number of tokens added per second to the [Token Bucket](/docs/throttling/token-bucket/). The remaining tokens in the bucket are the **maximum requests the endpoint can handle per second**. The absence of `max_rate` in the configuration or `0` is the equivalent to no limitation.
-- `client_max_rate` (*float*): Number of tokens added per second to the [Token Bucket](/docs/throttling/token-bucket/) for each individual user (*user quota*). Remaining tokens for a user are the requests per second a specific user can do. The client is defined by `strategy`. Instead of counting all the connections to the endpoint as the option above, the `client_max_rate` keeps a counter for every client and endpoint. Keep in mind that every KrakenD instance keeps its counters in memory for **every single client**.
-- `capacity` (*integer* - optional): Number of tokens you can store in the Token Bucket. Traduces into maximum concurrent requests this endpoint will accept for all users.
-- `client_capacity` (*integer* - optional): Number of tokens you can store in the Token Bucket for each individual user. Traduces into maximum concurrent requests this endpoint will accept for the connected user. The client is defined by the `strategy` field. The `client_max_rate` keeps a counter for every client and endpoint.
-- `strategy` (*string*): The strategy you will use to set client counters. One of `ip` or `header`. Only to be used in combination with `client_max_rate`.
-  - `"strategy": "ip"` When the restrictions apply to the client's IP, and every IP is considered to be a different user. Optionally a `key` can be used to extract the IP from a custom header:
-    - E.g, set `"key": "X-Original-Forwarded-For"` to extract the IP from a header containing a list of space-separated IPs (will take the first one).
-  - `"strategy": "header"` When the criteria for identifying a user comes from the value of a `key` inside the header. With this strategy, the `key` must also be present.
-    - E.g., set `"key": "X-TOKEN"` to use the `X-TOKEN` header as the unique user identifier.
-
-
+{{< schema data="qos/ratelimit/router.json" >}}
 
 ### Example
 The following example demonstrates a configuration with several endpoints, each one setting different limits:

@@ -76,6 +76,9 @@ The configuration is as follows:
 }
 ```
 
+{{< schema data="validation/cel.json" >}}
+
+
 - Notice that the CEL object is an array. In this example, it contains one object.
 - `check_expr`: The expression that evaluates as a boolean, you can write here any conditional. If all stacked conditions are *true* the request continues, *false*, it fails to retrieve data from the token, the request, or the response. The expressions can use a set of **additional variables**, shown in the sections below.
 
