@@ -21,16 +21,16 @@ meta:
   - "[ENDPOINT: /foo][CEL]"
   - "[BACKEND: /foo][CEL]"
 ---
-There are times when you might want to incorporate **additional logic** to check if the gateway has to **skip the backend call**. For example, maybe the request from the user is undoubtedly wrong, and there is no point in adding more traffic to your backends.
+There are times when you might want to incorporate **additional logic** to check if the gateway has to **skip the backend call**. For example, maybe the request from the user is undoubtedly wrong, and there is no point in hitting your backend(s).
 
-There are other times that you might need to **skip returning the response** because after parsing it you realize that it is not worth showing it to the user.
+There are other times that you might need to **skip returning the response** because after parsing it you realize that it is not worth showing it to the user, but rather return an error.
 
 In both scenarios where you check requests and responses, the **Common Expression Language (CEL)** implements standard semantics for expression evaluation and is a straightforward and powerful option to have complete control during requests and responses.
 
 When the CEL component is enabled, you can set any number of expressions to check both requests and responses, either at the endpoint or backend level. **CEL does not transform the data, but it gives you the control of deciding what to do in the next step.**
 
 ## How CEL works
-In any `endpoint` or `backend`, you can define a sequence of expressions you'd like to check using [Google's CEL spec](https://github.com/google/cel-spec) to write the conditions.
+In any `endpoint`, `backend`, or `async_agent`, you can define a sequence of expressions you'd like to check using [Google's CEL spec](https://github.com/google/cel-spec) to write the conditions.
 
 During runtime, when an expression returns `false`, KrakenD aborts the execution of that layer: it does not return the content or it does not perform the request (depending on the type). Otherwise, KrakenD serves the content if all expressions return `true`.
 
@@ -70,26 +70,28 @@ The configuration is as follows:
         "validation/cel": [
             {
                 "check_expr": "CONDITION1 && CONDITION2"
+            },
+            {
+                "check_expr": "CONDITION3 && CONDITION4"
             }
         ]
     }
 }
 ```
+**Notice that the CEL object is an array**, even when you need a single evaluation object. If **all stacked conditions** in the array are *true*, the request/response continues. As soon as it finds a *false*, the validation fails.
 
-{{< schema data="validation/cel.json" >}}
+Each object in the array has the following syntax:
 
+{{< schema data="validation/cel.json" property="items" >}}
 
-- Notice that the CEL object is an array. In this example, it contains one object.
-- `check_expr`: The expression that evaluates as a boolean, you can write here any conditional. If all stacked conditions are *true* the request continues, *false*, it fails to retrieve data from the token, the request, or the response. The expressions can use a set of **additional variables**, shown in the sections below.
-
-
+See the sections below to use **additional variables**.
 {{< note title="A note on client headers" >}}
 When **client headers** are needed, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
 {{< /note >}}
 
 
 ## Adding logic in the requests and responses.
-There are three different ways to access the metadata of requests and responses to decide whether or not to continue serving the user command.
+There are three different ways to access the metadata of requests and responses when you are inside the `check_expr` to decide whether or not to continue serving the user command.
 
 - Use a `req_` type variable to access **request** data.
 - Use a `resp_` type variable to access **response** data.
