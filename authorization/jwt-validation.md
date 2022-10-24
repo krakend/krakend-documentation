@@ -94,31 +94,7 @@ The following settings are available for JWT validation. There are many options,
 
 These options are for the `extra_config`'s namespace `"auth/validator"` placed in every endpoint (use [flexible configuration](/docs/configuration/flexible-config/) to avoid code repetition):
 
-- `alg` (*recognized string*): The hashing algorithm used by the issuer. See the [hashing algorithms](#hashing-algorithms) section for a comprehensive list of supported algorithms.
-- `jwk_url` (*string*): The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
-- `jwk_local_path` (*string*): Local path to the JWK public keys. Instead of pointing to an external URL (`jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add:
-    - `secret_url` (*string*): An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers below)
-    - `cypher_key` (*string*): The cyphering key.
-- `cache` (*boolean*): Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, as recommended for performance.
-- `cache_duration` (*int*): Change the default duration to 15 minutes. Value in **seconds**.
-- `audience` (*list*): Set when you want to reject tokens that do not contain the given audience.
-- `roles_key` (*string*):  When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: ["myrole"] } } `.
-- `roles` (*list*):  When set, the JWT token not having at least one listed role is rejected.
-- `roles_key_is_nested` (*bool*):  If the roles key uses a nested object using the `.` dot notation, you must set it to `true` to traverse the object.
-- `scopes` (*list*): A list of scopes to validate. Make sure to use a list `[]` in the config, but when passing the token, the scopes should be separated by spaces, e.g.: `"my_scopes": "resource1:action1 resource3:action7"`.
-- `scopes_key`: The key name where KrakenD can find the scopes. The key can be a nested object using the `.` dot notation, e.g.: `data.data2.scopes`
-- `scopes_matcher` (*string*): Valid options are `all` or `any`. When you use `all`, every scope defined in the endpoint must be present in the token. Otherwise, any matching scope will let you pass.
-- `issuer` (*string*): When set,  tokens not matching the issuer are rejected.
-- `cookie_key` (*string*): Add the key name of the cookie containing the token when it is not passed in the headers
-- `disable_jwk_security` (*boolean*): When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.
-- `jwk_fingerprints` (*strings list*): A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man-in-the-middle attacks. Add fingerprints in base64 format.
-- `cipher_suites` (*integers list*): Override the default cipher suites. Use it if you want to enforce an even higher security standard.
-- `jwk_local_ca` (*string*): Path to the CA's certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
-- `propagate_claims` (*list*): Enables passing claims in the backend's request header (see below). You can pass nested claims using the dot `.` operator. E.g.: `realm_access.roles`.
-- `key_identify_strategy` (*string*): Allows strategies other than `kid` to load keys. Allowed values are: `kid`, `x5t`, `kid_x5t`
-- `operation_debug` (*bool*): When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.
-
-For the complete list of recognized algorithms and cipher suites, scroll down to the end of the document.
+{{< schema data="auth/validator.json" >}}
 
 Here there is an example using an external `jwk_url`:
 
@@ -316,18 +292,18 @@ To try it, [clone the playground](https://github.com/krakendio/playground-commun
 Accepted values for the `alg` field are:
 
 - `EdDSA`: EdDSA
-- `HS256`: HS256 - HMAC using SHA-256
-- `HS384`: HS384 - HMAC using SHA-384
-- `HS512`: HS512 - HMAC using SHA-512
-- `RS256`: RS256 - RSASSA-PKCS-v1.5 using SHA-256
-- `RS384`: RS384 - RSASSA-PKCS-v1.5 using SHA-384
-- `RS512`: RS512 - RSASSA-PKCS-v1.5 using SHA-512
-- `ES256`: ES256 - ECDSA using P-256 and SHA-256
-- `ES384`: ES384 - ECDSA using P-384 and SHA-384
-- `ES512`: ES512 - ECDSA using P-521 and SHA-512
-- `PS256`: PS256 - RSASSA-PSS using SHA256 and MGF1-SHA256
-- `PS384`: PS384 - RSASSA-PSS using SHA384 and MGF1-SHA384
-- `PS512`: PS512 - RSASSA-PSS using SHA512 and MGF1-SHA512
+- `HS256`: HMAC using SHA-256
+- `HS384`: HMAC using SHA-384
+- `HS512`: HMAC using SHA-512
+- `RS256`: RSASSA-PKCS-v1.5 using SHA-256
+- `RS384`: RSASSA-PKCS-v1.5 using SHA-384
+- `RS512`: RSASSA-PKCS-v1.5 using SHA-512
+- `ES256`: ECDSA using P-256 and SHA-256
+- `ES384`: ECDSA using P-384 and SHA-384
+- `ES512`: ECDSA using P-521 and SHA-512
+- `PS256`: RSASSA-PSS using SHA256 and MGF1-SHA256
+- `PS384`: RSASSA-PSS using SHA384 and MGF1-SHA384
+- `PS512`: RSASSA-PSS using SHA512 and MGF1-SHA512
 
 ### Cipher suites
 
