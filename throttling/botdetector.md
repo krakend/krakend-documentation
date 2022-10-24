@@ -54,11 +54,7 @@ For instance:
 
 The available configuration options in the bot detector module are:
 
-- `allow`: An array with EXACT MATCHES of trusted user agents that can connect.
-- `deny`: An array of EXACT MATCHES of undesired bots, to reject immediately.
-- `patterns`: An array with all the **regular expressions** that define bots. Matching bots are rejected.
-- `cache_size`: Size of the LRU cache that helps speed the bot detection. The size is the mumber of users agents that you want to keep in memory.
-
+{{< schema data="security/bot-detector.json" >}}
 
 Notice that the `allow` and the `deny` do not expect regular expressions, but **literal strings**. The purpose of this design is to get the best performance as comparing a literal string is much faster than evaluating a regular expression.
 

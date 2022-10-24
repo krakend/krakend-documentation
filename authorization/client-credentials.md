@@ -25,6 +25,11 @@ The client credentials **authorize KrakenD, as the client, to access the protect
 
 Successfully setting the client credentials for a backend means that KrakenD can get the protected content. Still, the endpoint offered to the end-user will be public unless you protect it with [JWT](/docs/authorization/jwt-overview/) or another end-user authentication mechanism.
 
+{{< note title="Does this feature generate a new token for each backend request?" type="question" >}}
+**No way!** The token will be **automatically refreshed as necessary** (usually when it expires or the server is restarted).
+{{< /note >}}
+
+
 ## Configuring OAuth2 Client Credentials
 To access a protected resource using client-credentials, add under every `backend` the appropriate `extra_config`.
 
@@ -50,15 +55,7 @@ The namespace used is `"auth/client-credentials"`. Sample configuration below:
 ```
 The settings of this component are:
 
-- `client_id` *string*: The Client ID provided to the Auth server
-- `client_secret` *string*: The secret string provided to the Auth server
-- `token_url` *string*: The endpoint URL where the negotiation of the token happens
-- `scopes`: *string,optional* A comma-separated list of scopes needed, e.g.: `scopeA,scopeB`
-- `endpoint_params` *list, optional*: Any additional parameters you want to include **in the payload** when requesting the token. For instance, adding the `audience` request parameter may denote the target API for which the token should be issued.
-
-{{< note title="Does this feature generate a new token for each backend request?" type="question" >}}
-**No way!** The token will be **automatically refreshed as necessary** (usually when it expires or the server is restarted).
-{{< /note >}}
+{{< schema data="auth/client-credentials.json" >}}
 
 ## Auth0 integration
 The following example demonstrates a complete configuration to fulfill the requirements of [Auth0](https://auth0.com/). It is essentially the same configuration we have shown above, but with some additions, explained after the code:

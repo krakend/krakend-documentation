@@ -69,6 +69,7 @@ By default, **all exporters sample the 100% of the requests received every secon
 }
 ```
 
+{{< schema data="telemetry/opencensus.json" norecurse="exporters">}}
 
 
 - `sample_rate` is the percentage of sampled requests. A value of `100` means that all requests are exported (100%). If you are processing a huge amount of traffic you might want to sample only a part of what's going on.

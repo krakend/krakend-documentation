@@ -42,7 +42,7 @@ Notice that as it happens with the endpoints, the messages you consume can be se
 
 ## Configuration
 
-The configuration needs to declare in the `extra_config` the connection driver you want to use. like this:
+The `async_agent` entry is **an array** with all the different agents you want to have running. Each configuration needs to declare in the `extra_config` the connection driver you want to use. like this:
 
 ```json
 {
@@ -87,28 +87,19 @@ The configuration needs to declare in the `extra_config` the connection driver y
     ]
 }
 ```
-The configuration accepts the following parameters. Most of them are optional:
+The configuration accepts the following parameters:
 
-- `name` (*string*): A unique name for this agent. KrakenD shows it in the [health endpoint](/docs/service-settings/health/) and logs and metrics. KrakenD does not check collision names, so make sure each agent has a different name.
-- `connection` (optional): A key defining all the connection settings between the agent and your messaging system, as follows:
-    - ` max_retries` (*integer* - optional): The maximum number of times you will allow KrakenD to retry reconnecting to a broken messaging system. Use `0` for unlimited retries. Defaults to `0`.
-    - `health_interval`: The time between pings checking that the agent is connected to the queue and alive. Regardless of the health interval, if an agent fails, KrakenD will restart it again immediately as defined by `max_retries`and `backoff_strategy`. Defaults to `1s`
-    - `backoff_strategy` (*string* - optional): When the connection to your event source gets interrupted for whatever reason, KrakenD keeps trying to reconnect until it succeeds or until it reaches the `max_retries`. The backoff strategy defines the delay in seconds in between consecutive failed retries. Defaults to `fallback`:
-        - `linear`: The delay time (`d`) grows linearly after each failed retry (`r`) using the formula `d = r`. E.g.: 1st failure retries in 1s, 2nd failure in 2s, 3rd in 3s, and so on.
-        - `linear-jitter`: Similar to `linear` but adds or subtracts a random number: `d = r ± random`. The randomness prevents all agents connected to a mutual service from retrying simultaneously as all have a slightly different delay. The random number never exceeds `±r*0.33`
-        - `exponential`: Multiplicatively increase the time between retries using `d = 2^r`. E.g: `2s`, `4s`, `8s`, `16s`...
-        - `exponential-jitter`: Same as exponential, but adds or subtracts a random number up to 33% of the value using `d = 2^r ± random`. This is the **preferred strategy** when you want to protect the system you are consuming.
-        - **Fallback**: When the strategy is missing or none of the above (e.g.:`fallback`) then it will use **constant** backoff strategy `d=1`. Will retry after one second every time.
-- `consumer`: Defines all the settings for each agent consuming messages.
-    - `timeout` (*duration* - optional): The maximum time the agent will wait to process an event sent to the backend. If the backend fails to process it, the message is reinserted for later consumption. Defaults to the timeout in the root level, or to `2s` if no value is declared.
-    - `topic` (*string*): The topic name you want to consume. The syntax depends on the driver. Examples for AMQP: `*`, `mytopic`, `lazy.#`, `*`, `foo.*`
-    - `workers` (*integer* - optional): The number of workers (consuming processes) you want to start simultaneously for this agent. Defaults to `1`.
-    - `max_rate` (*float* - optional): The maximum number of messages you allow each worker to consume per second. Use `0` or `-1` for unlimited speed. Defaults to `0`.
-- `backend` (*list*): The [backend definition](/docs/backends/) (as you might have in any endpoint) indicating where the event data is sent. It is a full backend object definition, with all its possible options, transformations, filters, validations, etc.
-- `extra_config` (*map*): In the extra configuration section you have to **define the driver** that connects to your queue or PubSub system. In addition, you can place other middlewares to modify the request (message) or the response, apply logic or any other endpoint middleware, but adding the driver is mandatory. Supported drivers are:
-    - `async/amqp` (see below)
-
+{{< schema data="async_agent.json" property="items">}}
 
 When agents are defined, their activity is shown in the health endpoint with the name of the agent you have chosen.  The health endpoint will show for each agent, when was the last time the agent reported itself as alive. The frequency of this checking is as defined in the `health_interval`.
 
 Check [how agents report in the health endpoint](/docs/service-settings/health/)
+
+### Backoff strategies
+The `backoff_strategies` you can set are defined below:
+
+- `linear`: The delay time (`d`) grows linearly after each failed retry (`r`) using the formula `d = r`. E.g.: 1st failure retries in 1s, 2nd failure in 2s, 3rd in 3s, and so on.
+- `linear-jitter`: Similar to `linear` but adds or subtracts a random number: `d = r ± random`. The randomness prevents all agents connected to a mutual service from retrying simultaneously as all have a slightly different delay. The random number never exceeds `±r*0.33`
+- `exponential`: Multiplicatively increase the time between retries using `d = 2^r`. E.g: `2s`, `4s`, `8s`, `16s`...
+- `exponential-jitter`: Same as exponential, but adds or subtracts a random number up to 33% of the value using `d = 2^r ± random`. This is the **preferred strategy** when you want to protect the system you are consuming.
+- **Fallback**: When the strategy is missing or none of the above (e.g.:`fallback`) then it will use **constant** backoff strategy `d=1`. Will retry after one second every time.

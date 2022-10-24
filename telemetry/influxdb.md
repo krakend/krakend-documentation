@@ -63,25 +63,21 @@ You can accomplish it with the following snippet.
 }
 ```
 
-
-- `address` (*string*): The complete URL of the InfluxDB, including the port
-- `ttl` (*duration*): Valid time units are: `ns` (nanoseconds), `us` or `µs` (microseconds), `ms` (milliseconds), `s` (seconds), `m` (minutes - don't!), `h` (hours - don't!)
-- `buffer_size` (*integer*): Use `0` to send events immediately or set the number of points that KrakenD should send together.
-- `db` (*string*): Name of the database or bucket, defaults to *krakend*.
-- `username` and `password` are optional and used to authenticate against InfluxDB.
+{{< schema data="telemetry/influx.json" >}}
 
 See below how to configure InfluxDB, and you are ready to [publish a Grafana dashboard](/docs/telemetry/grafana/).
 
 ### OpenCensus InfluxDB exporter
 [InfluxDB](https://www.influxdata.com/) is a time series database designed to handle high write and query loads.
 
-The Opencensus exporter allows you export data to [InfluxDB](https://www.influxdata.com) for monitoring metrics and events. Enabling it only requires you to add the `influxdb` exporter in the [opencensus module](/docs/telemetry/opencensus/).
+The Opencensus exporter allows you export data to [InfluxDB](https://www.influxdata.com) for monitoring metrics and events. Enabling it only requires you to add as `exporter` the `influxdb` entry.
 
 The following configuration snippet sends data to your InfluxDB:
 
 ```json
 {
     "telemetry/opencensus": {
+      "sample_rate": 100,
       "exporters": {
         "influxdb": {
             "address": "http://192.168.99.100:8086",
@@ -94,12 +90,15 @@ The following configuration snippet sends data to your InfluxDB:
     }
 }
 ```
-- `address` is the URL (including port) where your InfluxDB is installed.
-- `db` is the database name.
-- `timeout` is the maximum time you will wait for InfluxDB to respond.
-- `username` and `password` are optional and used to authenticate against InfluxDB.
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
 
-See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
+
+
+Then, the `exporters` key must contain an `influxdb` entry with the following properties:
+
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="influxdb" >}}
+
 
 ## Setting up Influx
 For **InfluxDB v2.x**, we have included in our [Telemetry Dashboards](https://github.com/krakendio/telemetry-dashboards/) the files that create the authorization part.

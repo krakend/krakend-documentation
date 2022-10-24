@@ -32,4 +32,7 @@ To enable it you need to add `enable_mtls` to your `tls` configuration:
 }
 ```
 
+{{< schema data="tls.json" >}}
+
+
 Connections not having a recognized certificate in KrakenD's system CA, will be rejected. For further documentation on TLS, see the [`TLS` documentation](/docs/service-settings/tls/)
