@@ -70,12 +70,7 @@ The bloom filter lives at the `extra_config` in the root level of the configurat
 
 All the configuration fields **are mandatory** and are explained below:
 
-- `N`: The maximum number of elements you want to keep in memory.
-- `P`: The probability of returning a false positive. The values `N` and `P` determine the size of the resulting bloom filter to fulfill your expectations. You can play with the numbers by using this [bloom filter calculator](https://hur.st/bloomfilter/?n=1000000&p=1.0E-9&m=&k=).
-- `hash_name`: Either `optimal` (recommended) or `default`.
-- `TTL`: The lifespan of the JWT you are generating in seconds. The value must match the expiration you are setting in the backend.
-- `port`: The port number exposed (has to be free) for the RPC service to communicate with the bloomfilter.
-- `token_keys`: The list with all the fields in your JWT payload that need watching. These fields establish the criteria to revoke accesses in the future.
+{{< schema data="auth/revoker.json" filter="N,P,hash_name,TTL,port,token_keys">}}
 
 If you use the bloom filter together with the Revoken Server {{< badge >}}Enterprise{{< /badge >}}, see [its configuration](/docs/enterprise/authentication/revoke-server/).
 
