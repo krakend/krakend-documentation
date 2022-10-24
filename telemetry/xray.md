@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: AWS X-Ray
@@ -42,12 +42,12 @@ The following configuration snippet sends data to your X-Ray:
   }
 }
 ```
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
 
-- `version` (*string*): The version of the running application that is reporting data. Defaults to `KrakenD-opencensus`.
-- `region` (*string*): The AWS geographical region.
-- `use_env` (*boolean*): When `true` the AWS credentials (`access_key_id` and `secret_access_key`) are taken from environment vars. Don't specify them then.
-- `access_key_id` (*string*): Your access key ID provided by Amazon. Needed when `use_env` is unset or set to `false`.
-- `secret_access_key` (*string*): Your secret access key provided by Amazon. Needed when `use_env` is unset or set to `false`.
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
 
+Then, the `exporters` key must contain an `xray` entry with the following properties:
+
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="xray" >}}
 
 See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.

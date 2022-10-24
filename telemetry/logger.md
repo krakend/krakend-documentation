@@ -1,15 +1,15 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
-linktitle: Logger
-title: Exporting to the logger
-weight: 1000
+linktitle: Logging through OpenCensus
+title: Exporting to the logger with OpenCensus
+weight: 150
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/logger/"]
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "090 Logging"
 meta:
   since: 0.5
   source: https://github.com/krakendio/krakend-opencensus
@@ -20,7 +20,7 @@ meta:
   log_prefix:
   - "[SERVICE: Opencensus]"
 ---
-Opencensus can export data to the system logger as another exporter.
+Opencensus can export data to the system logger as another exporter. This **is not** the [standard KrakenD Logging](/docs/logging/).
 
 Enabling it only requires you to add the `logger` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
@@ -39,8 +39,10 @@ The following configuration snippet enables the logger:
 }
 ```
 
-- `stats`: Whether to log the statistics or not
-- `spans`: Whether to log the spans or not
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
 
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
 
-See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+Then, the `exporters` key must contain an `logger` entry with the following properties:
+
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="logger" >}}

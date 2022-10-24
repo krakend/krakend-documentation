@@ -1,10 +1,10 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Opencensus
 title: Sending out logs, metrics, and traces
-weight: 60
+weight: 20
 aliases: ["/docs/logging-metrics-tracing/opencensus/"]
 menu:
   community_current:

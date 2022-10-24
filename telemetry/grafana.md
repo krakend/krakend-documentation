@@ -3,7 +3,7 @@ lastmod: 2022-09-28
 date: 2020-11-17
 linktitle: Grafana Dashboard
 title: Preconfigured Grafana dashboard
-weight: 20
+weight: 30
 aliases: ["/docs/extended-metrics/grafana/"]
 menu:
   community_current:

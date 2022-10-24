@@ -2,7 +2,7 @@
 lastmod: 2022-09-02
 date: 2018-10-30
 toc: true
-linktitle: Improved logging
+linktitle: Standard Logging
 title: Logging to Syslog and Stdout
 weight: 10
 aliases: ["/docs/logging-metrics-tracing/logging/", "/docs/logging/extended-logging/"]

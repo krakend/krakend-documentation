@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-10-11
+lastmod: 2022-10-24
 date: 2019-10-11
 notoc: true
 linktitle: Jaeger
@@ -41,9 +41,10 @@ The following configuration snippet sends data to your Jaeger:
 }
 ```
 
-- `endpoint` is the URL (including port) where your Jaeger is
-- `service_name` the service name registered in Jaeger
-- `buffer_max_count` defines the total number of traces that can be buffered in memory
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
 
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
 
-See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+Then, the `exporters` key must contain an `jaeger` entry with the following properties:
+
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="jaeger" >}}
