@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-03-29
+lastmod: 2022-10-24
 date: 2018-11-03
 linktitle: JWT Signing
 title: JWT Signing
@@ -58,6 +58,45 @@ Besides these example keys, the payload can contain any other elements you might
 
 If you come from a classic login system, based on cookie sessions, you'll realize that adapting your `/login` to this output is straightforward. See [how to generate a token](#how-to-generate-a-jwt-token) at the end of the document for more details.
 
+
+## JWT signing settings
+The following settings are available to sign JWT:
+
+{{< highlight json "hl_lines=7-24" >}}
+{
+  "endpoints": [
+    {
+      "endpoint": "/token",
+      "method": "POST",
+      "extra_config": {
+        "auth/signer": {
+          "alg": "HS256",
+          "jwk_url": "http://your-backend/jwk/symmetric.json",
+          "keys_to_sign": [
+            "access_token",
+            "refresh_token"
+          ],
+          "kid": "sim2",
+          "cipher_suites": [
+            5,
+            10
+          ],
+          "jwk_fingerprints": [
+            "S3Jha2VuRCBpcyB0aGUgYmVzdCBnYXRld2F5LCBhbmQgeW91IGtub3cgaXQ=="
+          ],
+          "full": false,
+          "disable_jwk_security": false
+        }
+      }
+    }
+  ]
+}
+{{< /highlight >}}
+
+The example above contains every single option available, but you don't need them all. See them explained below:
+
+{{< schema data="auth/signer.json" >}}
+
 ## Basic JWT signing
 Your backend application knows how to issue tokens now, so the gateway can sign them before passing to the user. To achieve that, instead of publishing our internal backend that generates plain tokens under `/token-issuer`, we only expose via KrakenD a new endpoint named `/token` (choose your name). This endpoint forwards the data received in the `POST` (as selected in the example) and returns a signed token when the backend replies.
 
@@ -98,61 +137,6 @@ What happens here is that the user requests a `/token` to the gateway and the is
     "refresh_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6InNcdTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpf1MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjf1J0NzU2eXVcd21uMTI4NzZidmN4OThlcnR5dWlvcCIsInN1YiI6IjEyMzQ1Njc4OTBxd2VydHl1aW8ifQ.4v36tuYHe4E9gCVO-_asuXfzSzoJdoR0NJfVQdVKidw"
 }
 ```
-
-
-
-## JWT signing settings
-The following settings are available to sign JWT:
-
-- `alg`: *recognized string*. The hashing algorithm used by the issuer. Usually `RS256`.
-- `jwk_url`: *string*. The URL to the JWK endpoint with the private keys used to sign the token.
-- `kid`: *string*. The key ID purpose is to match a specific key, as the jwk_url might contain several keys (see [JWT validation](/docs/authorization/jwt-validation/))
-- `keys_to_sign`: *string list*. List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).
-
-**Optional fields**:
-
-- `full`: *boolean*. Use JSON format instead of the compact form JWT is giving.
-- `disable_jwk_security`: *boolean*. When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Not recommended for production.
-
-**Security enforcement**:
-
-- `jwk_fingerprints`: *string list*. A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in `base64` format.
-- `cipher_suites`: *integers list*. Override the default cipher suites. Unless you have a legacy JWK, you don't need to add this value.
-- `jwk_local_ca`: *string*. Path to the certificate of the CA that verifies a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
-
-
-The following example contains every single option available:
-
-{{< highlight json "hl_lines=7-24" >}}
-{
-  "endpoints": [
-    {
-      "endpoint": "/token",
-      "method": "POST",
-      "extra_config": {
-        "auth/signer": {
-          "alg": "HS256",
-          "jwk_url": "http://your-backend/jwk/symmetric.json",
-          "keys_to_sign": [
-            "access_token",
-            "refresh_token"
-          ],
-          "kid": "sim2",
-          "cipher_suites": [
-            5,
-            10
-          ],
-          "jwk_fingerprints": [
-            "S3Jha2VuRCBpcyB0aGUgYmVzdCBnYXRld2F5LCBhbmQgeW91IGtub3cgaXQ=="
-          ],
-          "full": true,
-          "disable_jwk_security": true
-        }
-      }
-    }
-  ]
-}
-{{< /highlight >}}
 
 ## How to generate a JWT token
 Essentially, what you need to adopt JWT in your backend is to adapt your existing `/login` function (maybe passing an additional `?token=true` flag), so when a user logs in, instead of setting the session in a cookie, you return the JSON Web Token for KrakenD to sign.
