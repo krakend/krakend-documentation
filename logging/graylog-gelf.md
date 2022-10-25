@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2022-10-25
 date: 2019-09-15
 notoc: true
 linktitle: Graylog - GELF
@@ -22,15 +22,13 @@ log_prefix:
 ---
 KrakenD supports sending structured events in GELF format to your Graylog Cluster thanks to the [krakend-gelf](https://github.com/krakendio/krakend-gelf) integration.
 
-The setup of GELF is straightforward and requires only to set two parameters:
+The setup of GELF is straightforward and requires to add **two components** in the configuration:
 
-- `address`: The address (including the port) of your Graylog cluster (or any other service that receives GELF inputs).
-- `enable_tcp`: Set to `false` (recommended) to use UDP. When using TCP performance might be affected.
+- `telemetry/logging` to capture the logs
+- `telemetry/gelf` to format the logs
 
-## Enabling GELF
-Add the `krakend-gelf` integration in the root level of your `krakend.json`, inside the `extra_config` section. **The `telemetry/logging` needs to be enabled too**.
+The configuration you need to add is this, and explained below:
 
-For instance:
 ```json
 {
     "extra_config": {
@@ -47,3 +45,11 @@ For instance:
     }
 }
 ```
+
+The GELF configuration parameters for `telemetry/gelf` are:
+
+{{< schema data="telemetry/gelf.json" >}}
+
+In addition, you must also add the `telemetry/logging`:
+
+{{< schema data="telemetry/logging.json" filter="level,prefix,stdout,syslog">}}

@@ -20,7 +20,7 @@ meta:
   log_prefix:
   - "[SERVICE: Opencensus]"
 ---
-Opencensus can export data to the system logger as another exporter. This **is not** the [standard KrakenD Logging](/docs/logging/).
+Opencensus can export data to the system logger as another exporter. This **is not** the [standard KrakenD Logging](/docs/logging/), and you should not enable both.
 
 Enabling it only requires you to add the `logger` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
