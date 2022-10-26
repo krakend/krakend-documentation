@@ -9,7 +9,7 @@ menu:
 title: Production best practices
 weight: 1
 ---
-Setting up KrakenD is a straightforward process, but here are some not-so-obvious recommendations to get a good start when going live. This section has generalistic advice, despite that every KrakenD installation is is different. Let's dip the toe into the deployment waters!
+Setting up KrakenD is a straightforward process, but here are some not-so-obvious recommendations to get a good start when going live. This section has generalistic advice, despite that every KrakenD installation is different. Let's dip the toe into the deployment waters!
 
 ## Architecture recommendations
 ### High Availability
