@@ -47,7 +47,9 @@ The configuration options are:
     "extra_config": {
         "modifier/lua-proxy": {
             "sources": [
-                "file1.lua"
+                "file1.lua",
+                "./relative/path/file2.lua",
+                "/etc/krakend/absolute/path.lua"
             ],
             "md5": {
                 "file1.lua": "49ae50f58e35f4821ad4550e1a4d1de0"

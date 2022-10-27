@@ -63,11 +63,7 @@ The Circuit Breaker is available in the namespace `qos/circuit-breaker` inside t
 
 The attributes available for the configuration are:
 
-- `interval`: (*integer*) Time window where the errors count, in seconds.
-- `timeout`: (*integer*) For how long the circuit breaker will wait before testing again that the backend is healthy.
-- `max_errors`: (*integer*) The consecutive number of errors within the `interval` window to consider the backend unhealthy.
-- `name`: (*string*) A friendly name to identify this circuit breaker's activity in the logs.
-- `log_status_change`: (*boolean*)  Whether to log the changes of state of this circuit breaker or not.
+{{< schema data="qos/circuit-breaker.json" >}}
 
 ## How it works
 
