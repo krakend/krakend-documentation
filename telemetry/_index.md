@@ -1,10 +1,10 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Telemetry integrations
 title: Telemetry
-weight: 10
+weight: 1
 images:
 - /images/documentation/exporters.png
 aliases: ["/docs/logging-metrics-tracing/tracing/", "/docs/telemetry/overview/"]

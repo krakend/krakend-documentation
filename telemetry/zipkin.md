@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-09-15
+lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Zipkin
@@ -25,8 +25,9 @@ meta:
 The Opencensus exporter allows you export data to Zipkin. Enabling it only requires you to add the `zipkin` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your Zipkin:
-{{< highlight json >}}
+```json
 {
+  "version": 3,
   "extra_config": {
     "telemetry/opencensus": {
       "exporters": {
@@ -38,10 +39,12 @@ The following configuration snippet sends data to your Zipkin:
     }
   }
 }
-{{< /highlight >}}
+```
 
-- `collector_url` is the URL (including port and path) where your Zipkin is accepting the spans
-- `service_name` the service name registered in Zipkin
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
 
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
 
-See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+Then, the `exporters` key must contain an `zipkin` entry with the following properties:
+
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="zipkin" >}}

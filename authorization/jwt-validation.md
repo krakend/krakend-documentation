@@ -32,13 +32,13 @@ Before digging any further, some answers to frequently asked questions:
 
 ## JWT header requirements
 When KrakenD decodes the `base64` token string passed in the `Bearer` or a cookie, it expects to find in its **header** section the following **three fields**:
-{{< highlight json >}}
+```json
 {
     "alg": "RS256",
     "typ": "JWT",
     "kid": "MDNGMjU2M0U3RERFQUEwOUUzQUMwQ0NBN0Y1RUY0OEIxNTRDM0IxMw"
 }
-{{< /highlight >}}
+```
 
 The `alg` and `kid` values depend on your implementation, but they must be present.
 
@@ -94,35 +94,11 @@ The following settings are available for JWT validation. There are many options,
 
 These options are for the `extra_config`'s namespace `"auth/validator"` placed in every endpoint (use [flexible configuration](/docs/configuration/flexible-config/) to avoid code repetition):
 
-- `alg` (*recognized string*): The hashing algorithm used by the issuer. See the [hashing algorithms](#hashing-algorithms) section for a comprehensive list of supported algorithms.
-- `jwk_url` (*string*): The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity.
-- `jwk_local_path` (*string*): Local path to the JWK public keys. Instead of pointing to an external URL (`jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add:
-    - `secret_url` (*string*): An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers below)
-    - `cypher_key` (*string*): The cyphering key.
-- `cache` (*boolean*): Set this value to `true` to store the required keys (from the JWK descriptor) in memory for the next `cache_duration` period and avoid hammering the key server, as recommended for performance. The cache can store up to 100 different `keys` from the JWK URL response.
-- `cache_duration` (*int*): Change the default duration to 15 minutes. Value in **seconds**.
-- `audience` (*list*): Set when you want to reject tokens that do not contain the given audience.
-- `roles_key` (*string*):  When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: ["myrole"] } } `.
-- `roles` (*list*):  When set, the JWT token not having at least one listed role is rejected.
-- `roles_key_is_nested` (*bool*):  If the roles key uses a nested object using the `.` dot notation, you must set it to `true` to traverse the object.
-- `scopes` (*list*): A list of scopes to validate. Make sure to use a list `[]` in the config, but when passing the token, the scopes should be separated by spaces, e.g.: `"my_scopes": "resource1:action1 resource3:action7"`.
-- `scopes_key`: The key name where KrakenD can find the scopes. The key can be a nested object using the `.` dot notation, e.g.: `data.data2.scopes`
-- `scopes_matcher` (*string*): Valid options are `all` or `any`. When you use `all`, every scope defined in the endpoint must be present in the token. Otherwise, any matching scope will let you pass.
-- `issuer` (*string*): When set,  tokens not matching the issuer are rejected.
-- `cookie_key` (*string*): Add the key name of the cookie containing the token when it is not passed in the headers
-- `disable_jwk_security` (*boolean*): When `true`, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.
-- `jwk_fingerprints` (*strings list*): A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man-in-the-middle attacks. Add fingerprints in base64 format.
-- `cipher_suites` (*integers list*): Override the default cipher suites. Use it if you want to enforce an even higher security standard.
-- `jwk_local_ca` (*string*): Path to the CA's certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).
-- `propagate_claims` (*list*): Enables passing claims in the backend's request header (see below). You can pass nested claims using the dot `.` operator. E.g.: `realm_access.roles`.
-- `key_identify_strategy` (*string*): Allows strategies other than `kid` to load keys. Allowed values are: `kid`, `x5t`, `kid_x5t`
-- `operation_debug` (*bool*): When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.
-
-For the complete list of recognized algorithms and cipher suites, scroll down to the end of the document.
+{{< schema data="auth/validator.json" >}}
 
 Here there is an example using an external `jwk_url`:
 
-{{< highlight JSON >}}
+```json
 {
     "endpoint": "/foo",
     "extra_config": {
@@ -159,7 +135,7 @@ Here there is an example using an external `jwk_url`:
     }
 }
 }
-{{< /highlight >}}
+```
 
 {{< note title="Performance considerations" type="tip" >}}
 If you use cryptographic algorithms that require high computation such as `RS512`, make sure your KrakenD instances have a proper CPU setting. Additionally, enable `cache` to avoid hammering your identity servers and save internal network traffic.
@@ -199,13 +175,13 @@ base64key://base64content
 
 The URL host must be base64 encoded and must decode to exactly 32 bytes. Here is an example of the `extra_config`:
 
-{{< highlight json >}}
+```json
 {
     "jwk_local_path":"./jwk.txt",
     "secret_url":"base64key://smGbjm71Nxd1Ig5FS0wj9SlbzAIrnolCz9bQQ6uAhl4=",
     "cypher_key":"gCERmfqHMoEu3+utqBa/R1oMZYIvh0OOKtJmnX/hDPDxbXCGXGvO3SF7B5FWxrJnRW7rnjGIV4eP2VLrYX2q9pJM49BpP+A9"
 }
-{{< /highlight >}}
+```
 
 This config will use the key `smGbjm71Nxd1Ig5FS0wj9SlbzAIrnolCz9bQQ6uAhl4=` for decrypting de `cypher_key` and then decrypting the content of the file `./jwt.txt`.
 
@@ -249,28 +225,28 @@ Since KrakenD 1.2.0, it is possible to use data present in the claims to inject 
 
 For instance, when your JWT payload is represented by something like this:
 
-{{< highlight json >}}
+```json
 {
     "sub": "1234567890",
     "name": "Mr. KrakenD"
 }
-{{< /highlight >}}
+```
 
 Having a `backend` defined with:
 
-{{< highlight json >}}
+```json
 {
     "url_pattern": "/foo/{JWT.sub}",
     "method": "POST"
 }
-{{< /highlight >}}
+```
 
 
 The call to your backend would produce the request:
 
-{{< highlight nginx >}}
+```nginx
 POST /foo/1234567890
-{{< /highlight >}}
+```
 
 
 Keep in mind that this syntax in the `url_pattern` field is only available if the backend loads the extra_config `"auth/validator"` and that **it does not work with nested attributes** in the payload.
@@ -282,7 +258,7 @@ It is possible to forward claims in a JWT as request headers. It is a common use
 
 **Important:** The endpoint `input_headers` needs to be set as well, so the backend can see it.
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "auth/validator": {
@@ -293,7 +269,7 @@ It is possible to forward claims in a JWT as request headers. It is a common use
         }
     }
 }
-{{< /highlight >}}
+```
 
 
 In this case, the `sub` claim's value will be added as `x-user` header to the request. If the claim does not exist, the mapping is just skipped.
@@ -316,18 +292,18 @@ To try it, [clone the playground](https://github.com/krakendio/playground-commun
 Accepted values for the `alg` field are:
 
 - `EdDSA`: EdDSA
-- `HS256`: HS256 - HMAC using SHA-256
-- `HS384`: HS384 - HMAC using SHA-384
-- `HS512`: HS512 - HMAC using SHA-512
-- `RS256`: RS256 - RSASSA-PKCS-v1.5 using SHA-256
-- `RS384`: RS384 - RSASSA-PKCS-v1.5 using SHA-384
-- `RS512`: RS512 - RSASSA-PKCS-v1.5 using SHA-512
-- `ES256`: ES256 - ECDSA using P-256 and SHA-256
-- `ES384`: ES384 - ECDSA using P-384 and SHA-384
-- `ES512`: ES512 - ECDSA using P-521 and SHA-512
-- `PS256`: PS256 - RSASSA-PSS using SHA256 and MGF1-SHA256
-- `PS384`: PS384 - RSASSA-PSS using SHA384 and MGF1-SHA384
-- `PS512`: PS512 - RSASSA-PSS using SHA512 and MGF1-SHA512
+- `HS256`: HMAC using SHA-256
+- `HS384`: HMAC using SHA-384
+- `HS512`: HMAC using SHA-512
+- `RS256`: RSASSA-PKCS-v1.5 using SHA-256
+- `RS384`: RSASSA-PKCS-v1.5 using SHA-384
+- `RS512`: RSASSA-PKCS-v1.5 using SHA-512
+- `ES256`: ECDSA using P-256 and SHA-256
+- `ES384`: ECDSA using P-384 and SHA-384
+- `ES512`: ECDSA using P-521 and SHA-512
+- `PS256`: RSASSA-PSS using SHA256 and MGF1-SHA256
+- `PS384`: RSASSA-PSS using SHA384 and MGF1-SHA384
+- `PS512`: RSASSA-PSS using SHA512 and MGF1-SHA512
 
 ### Cipher suites
 

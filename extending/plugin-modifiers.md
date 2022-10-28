@@ -53,7 +53,7 @@ If you set data in a different place than specified above, **it will be ignored*
 
 The easiest way to demonstrate how the modifier plugins work is with the debugger plugin, so let's start with a new Go project by creating a new module with `go mod init your_package_name`, and adding a single `main.go` file with the minimal boilerplate.
 
-{{< highlight go >}}
+```go
 package main
 
 import (
@@ -91,13 +91,13 @@ func (r registerer) RegisterModifiers(f func(
     f(string(r)+"-response", r.responseDump, false, true)
     fmt.Println(string(r), "registered!!!")
 }
-{{< /highlight >}}
+```
 
 As with other KrakenD plugins, the loader looks for a given symbol (in this case, "ModifierRegisterer") and, if found, the loader checks if the symbol implements the `plugin.Registerer` interface. Once the plugin is validated, the loader registers the modifiers from the plugin by calling the exposed `RegisterModifiers` method.
 
 For the debugger plugin we'll register two different modifiers: `requestDump` and `responseDump`. The modifiers are registered under the same namespace so both will be injected with a single config line. In order to avoid weird dependency collisions, the `modifierFactory` signature uses basic types and `interface{}`, so some type assertion against the interfaces declared at the [`proxy` package](https://github.com/luraproject/lura/blob/master/proxy/plugin.go#L187-L209) are required. Include the interfaces into your plugin by adding the following lines:
 
-{{< highlight go >}}
+```go
 // RequestWrapper is an interface for passing proxy request between the krakend pipe
 // and the loaded plugins
 type RequestWrapper interface {
@@ -119,11 +119,11 @@ type ResponseWrapper interface {
     StatusCode() int
     Headers() map[string][]string
 }
-{{< /highlight >}}
+```
 
 After this minimal code repetition, implementing the modifier factories is an easy task. The factory must accept a configuration as a map and return the final modifier once it's ready. Depending on your requirements, the factory could access its dedicated configuration and do whatever logic is required by your scenario. This configuration section should use the plugin name as namespace (check the comments below).
 
-{{< highlight go >}}
+```go
 var unkownTypeErr = errors.New("unknow request type")
 
 func (r registerer) requestDump(
@@ -197,7 +197,7 @@ func (r registerer) responseDump(
         return input, nil
     }
 }
-{{< /highlight >}}
+```
 
 You can also refer [this example](https://github.com/luraproject/lura/blob/v2.0.1/proxy/plugin/tests/main.go) on how to update the request and [this example](https://github.com/luraproject/lura/blob/master/proxy/plugin.go#L130) on how to update the response.
 
@@ -209,9 +209,17 @@ With the `main.go` file complete, it's time to build and test the plugin. For co
 go build -buildmode=plugin -o krakend-debugger.so .
 {{< /terminal >}}
 
+If you are using Docker and wanting to load your plugin on Docker, compile it in the [Plugin Builder](/docs/extending/writing-plugins/#plugin-builder) for an easier integration.
+
+{{< terminal title="Build your plugin" >}}
+docker run -it -v "$PWD:/app" -w /app \
+{{< product image_plugin_builder >}}:{{< product latest_version >}} \
+go build -buildmode=plugin -o krakend-debugger.so .
+{{< /terminal >}}
+
 For the test, we'll build a small gateway with a single endpoint merging the responses from two different backends.
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "port": 8080,
@@ -262,7 +270,7 @@ For the test, we'll build a small gateway with a single endpoint merging the res
     }
   ]
 }
-{{< /highlight >}}
+```
 
 Notice the modifier names which needs to be combination of the modifier name and the string used while registering it in `RegisterModifiers`. Also these needs to be unique for request and response modifier.
 

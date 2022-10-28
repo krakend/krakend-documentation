@@ -28,10 +28,10 @@ This is how it could look like:
 KrakenD has published an updated JSON-schema definition ([source](https://github.com/krakendio/krakend-schema)) to validate configuration files from your IDE automatically. The editors with built-in json-schema validation will offer this feature **without installing any additional plugin**. All you need to do, is add in the beginning of your `krakend.json` configuration file a line specifing the schema:
 
 
-{{< highlight json >}}
+```json
 {
     "$schema": "https://www.krakend.io/schema/v3.json"
 }
-{{< /highlight >}}
+```
 
 There is nothing else you need to do!

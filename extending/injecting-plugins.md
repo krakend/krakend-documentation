@@ -19,7 +19,7 @@ You have developed your plugin or are in the middle of it. There are two phases 
 ## Loading the plugin
 KrakenD registers plugins **during startup** according to its plugin configuration:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "plugin": {
@@ -27,7 +27,7 @@ KrakenD registers plugins **during startup** according to its plugin configurati
         "folder": "/opt/krakend/plugins/"
     }
 }
-{{< /highlight >}}
+```
 
 Add the `plugin` keyword at the root of your configuration to let KrakenD know the rules to register plugins. The **mandatory** options you need to declare are:
 
@@ -82,7 +82,7 @@ At this point, KrakenD has registered the plugin and is ready to use. The next s
 ### Injecting HTTP server plugins
 Below there is a sample configuration for an HTTP server fake plugin:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "plugin": {
@@ -98,7 +98,7 @@ Below there is a sample configuration for an HTTP server fake plugin:
         }
     }
 }
-{{< /highlight >}}
+```
 
 - `name` (*list*): The list of all the plugins you want to inject in reverse order.
 - After the name, you can include any key that your plugin requires to load configuration. In the example `my_plugin`.
@@ -109,7 +109,7 @@ Plugins **execute** according to the resulting order of **STACKING** when readin
 ### Injecting HTTP client plugins
 HTTP client plugins live in the backend's `extra_config`, and you can declare one plugin per backend.
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "plugin": {
@@ -132,14 +132,14 @@ HTTP client plugins live in the backend's `extra_config`, and you can declare on
         }
     ]
 }
-{{< /highlight >}}
+```
 
 - `name` (*string*): The name of the plugin you want to inject.
 
 ### Injecting request and response modifier plugins
 You can place the request/modifier plugins at the `endpoint` or the `backend` level. In both cases, you can inject several plugins used in the order you declare them.
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "plugin": {
@@ -167,3 +167,4 @@ You can place the request/modifier plugins at the `endpoint` or the `backend` le
     }
   ]
 }
+```

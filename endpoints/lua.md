@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-05-17
+lastmod: 2022-10-21
 date: 2019-09-15
 linktitle:  Lua scripting
 title: Lua scripting
@@ -15,6 +15,7 @@ meta:
   - "modifier/lua-endpoint"
   - "modifier/lua-backend"
   scope:
+  - service
   - endpoint
   - backend
   - async_agent
@@ -33,45 +34,37 @@ A [Go plugin](/docs/extending/) delivers much more speed and power than a Lua sc
 
 ## Configuration
 
-You can add your Lua scripts under the `extra_config` at the `endpoint` level or the `backend` level. You can choose **three different namespaces** (explained below):
+You can add your Lua scripts under the `extra_config` at the service level, the `endpoint` level or the `backend` level. You can choose **three different namespaces** (explained below):
 
-- `"modifier/lua-endpoint"`
-- `"modifier/lua-proxy"`
-- `"modifier/lua-backend"`
+- `"modifier/lua-endpoint"` (endpoint and service level)
+- `"modifier/lua-proxy"` (endpoint level)
+- `"modifier/lua-backend"` (backend level)
 
 The configuration options are:
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/lua-proxy": {
             "sources": [
-                "file1.lua"
+                "file1.lua",
+                "./relative/path/file2.lua",
+                "/etc/krakend/absolute/path.lua"
             ],
             "md5": {
                 "file1.lua": "49ae50f58e35f4821ad4550e1a4d1de0"
             },
-            "pre": "lua code to execute for pre",
-            "post": "lua code to execute for post",
+            "pre": "print('Hi from pre!'); my_file1_function()",
+            "post": "print('Hi from post!'); my_file1_function()",
             "live": false,
             "allow_open_libs": false,
-            "skip_next": true
+            "skip_next": false
         }
     }
 }
-{{< /highlight >}}
+```
 
-- `sources`: An array with all the external files that KrakenD will include in the first place. You can define the functions in external files and refer them on `pre` or `post`.
-- `md5`: (optional) The md5sum of each Lua file. Used to make sure that a 3rd party has not modified the file.
-- `pre`: The inline Lua code that is executed before performing the request.
-- `post`: The inline Lua code that is execute after the request. **Available when used in the `backend` section**.
-- `live`: Live reload of the script in every execution. Set to `true` if you intend to modify the Lua script while KrakenD is running (mostly during development)
-- `allow_open_libs`: As an efficiency point, the regular Lua libraries are not open by default. But if you need to use the Lua libraries (for file io for example), then set this to true.  If not present, the default value is `false`.
-- `skip_next`: Only to be set when in a `backend` section, skips the query to the next backend.
-
-{{< note title="Using client headers and querystrings" >}}
-When **client headers** or **query strings** are needed in a script, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) or [`input_query_strings`](/docs/endpoints/parameter-forwarding/#query-string-forwarding) accordingly.
-{{< /note >}}
+{{< schema data="modifier/lua.json" >}}
 
 ## Configuration placement and sequence of execution
 When running Lua scripts, you can place them at the `proxy` level, or the `router` level:
@@ -80,7 +73,7 @@ When running Lua scripts, you can place them at the `proxy` level, or the `route
 
 These two places have the following considerations:
 
-- **Router** (at `endpoint`'s `extra_config`): Communication between the end-user and KrakenD. You can inspect and modify the **request** of the user.
+- **Router** (at `endpoint`'s `extra_config` or service level): Communication between the end-user and KrakenD. You can inspect and modify the **request** of the user.
   - With `"modifier/lua-endpoint"`you can modify the **HTTP request context** early in the transport layer. However, KrakenD has not converted the request into an internal request just yet.
   - With `"modifier/lua-proxy"`you can modify the internal KrakenD request before reaching all backends in the endpoint and modify the response **AFTER the merge** of all backends.
 - **Proxy** (at `backend`'s `extra_config`): Communication between KrakenD and your services. For both the **request** and the **response**.
@@ -95,7 +88,13 @@ In a request/response execution, this is how the different namespaces for Lua pl
 You can use the following Lua functions to access and manipulate requests and responses in `"modifier/lua-proxy"` and `"modifier/lua-backend"` namespaces.
 
 ### Request functions (`request`)
-If you have a script that needs access to the request, use the `request` object in Lua. The request is set when KrakenD is about to do a call to the backend services. The `request` functions are:
+If you have a script that needs access to the request, use the `request` object in Lua. The request is set when KrakenD is about to do a call to the backend services.
+
+{{< note title="Using client headers and querystrings" >}}
+When **client headers** or **query strings** are needed in a script, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) or [`input_query_strings`](/docs/endpoints/parameter-forwarding/#query-string-forwarding) accordingly.
+{{< /note >}}
+
+The `request` functions are:
 
 *   `load()` (_Static_): The constructor to view and manipulate requests. E.g.: `local r = request.load()`. **Notice that the rest of the functions rely on this one**.
 *   `method()` (_Dynamic_): Getter that retrieves the method of the request. E.g.: `r:method()` could return a string `GET`.
@@ -165,7 +164,7 @@ To work with associative arrays on Lua you have the following functions:
 
 An example of Lua script that gets a field `source_result` from a table and sets a new key `result` accordingly by reading the response text (decorator pattern):
 
-{{< highlight lua >}}
+```lua
 function post_proxy_decorator( resp )
   local responseData = resp:data()
   local responseContent = responseData:get("source_result")
@@ -180,7 +179,7 @@ function post_proxy_decorator( resp )
     responseData:set("result", "failed")
   end
 end
-{{< /highlight >}}
+```
 
 ### Collections helper (`list`)
 
@@ -191,7 +190,7 @@ end
 
 Example of Lua code that iterates the items under the array `collection` and also uses sets and deletes tables:
 
-{{< highlight lua>}}
+```lua
 -- A function that receives a response object through response.load()
 function post_proxy( resp )
   local data = {}
@@ -211,7 +210,7 @@ function post_proxy( resp )
   responseData:set("paths", paths)
   responseData:del("collection")
 end
-{{< /highlight >}}
+```
 
 ### Making additional requests (`http_response`)
 The `http_response` helper allows you to make an additional HTTP request and access its response.
@@ -222,7 +221,7 @@ The `http_response` helper allows you to make an additional HTTP request and acc
 *   `body()` (_Dynamic_): Getter for the full response body.
 *   `close()` (_Dynamic_): Closes the HTTP connection to free resources. Although it will be done automatically later by KrakenD, a better approach is to close the resource as soon as you don't need it anymore.
 
-{{< highlight lua >}}
+```lua
 local url = 'http://api.domain.com/test'
 
 -- Constructor with 1 parameter
@@ -245,7 +244,7 @@ print(r:statusCode())
 print(r:headers('Content-Type'))
 print(r:body())
 r:close()
-{{< /highlight >}}
+```
 
 ### Set custom HTTP status codes (`custom_error`)
 
@@ -255,22 +254,37 @@ It stops the script and the pipe execution.
 
 Example of throwing a generic error (`500` status code ) with a message:
 
-{{< highlight lua>}}
+```lua
 custom_error("Something weird happened")
-{{< /highlight >}}
+```
 
 Or even changing the HTTP status code (`418 I'm a teapot`)
 
-{{< highlight lua>}}
+```lua
 custom_error("I refuse to make any coffee, I'm a teapot!", 418)
-{{< /highlight >}}
+```
 
 ## Lua examples in different pipes
 The following snippets show how to add Lua code in different sections.
 
+### Lua in the service for all endpoints
+An example setting a common header in the request to all endpoints.
+
+```json
+  {
+    "version": 3,
+    "extra_config": {
+        "modifier/lua-endpoint": {
+          "pre": "print('Lua service!'); local r = request.load(); r:headers('X-from-lua', '1234');"
+        }
+    }
+  }
+```
+
 ### Lua in the endpoint
-An example setting a header in the response using Lua.
-{{< highlight json >}}
+An example setting a header in the request using Lua.
+
+```json
   {
     "endpoint": "/set-a-header",
     "extra_config": {
@@ -279,11 +293,11 @@ An example setting a header in the response using Lua.
         }
     }
   }
-{{< /highlight >}}
+```
 
 ### Lua in the backend
 An example showing how to **print the backend response** in the console.
-{{< highlight json >}}
+```json
 {
     "extra_config": {
           "modifier/lua-backend": {
@@ -291,10 +305,10 @@ An example showing how to **print the backend response** in the console.
           }
     }
 }
-{{< /highlight >}}
+```
 
 Another example **setting a cookie from Lua**:
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "modifier/lua-proxy": {
@@ -303,4 +317,4 @@ Another example **setting a cookie from Lua**:
         }
     }
 }
-{{< /highlight >}}
+```

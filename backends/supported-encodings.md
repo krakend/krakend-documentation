@@ -15,7 +15,7 @@ Setting the `encoding` is an important part of the backend definition, as it inf
 Each backend can reply with a different encoding and KrakenD does not have any problem working with mixed encodings at the same time. You can use the following `encoding` in each `backend` section:
 
 - `json`
-- `fast-json` (Enterprise only) 30% faster on objects, 140% faster on collections.
+- `fast-json` (Enterprise only)
 - `safejson`
 - `xml`
 - `rss`
@@ -49,7 +49,7 @@ When hesitating whether to use `safejson` or `json` and the `is_collection=true`
 
 The following example demonstrates how an endpoint `/abc` is feeding on three different services and urls  `/a`, `/b`, and `/c` and aggregates their responses:
 
-{{< highlight json >}}
+```json
 {
 	"endpoints": [
     {
@@ -80,6 +80,6 @@ The following example demonstrates how an endpoint `/abc` is feeding on three di
     }
   ]
 }
-{{< /highlight >}}
+```
 
 As you can see, having the `encoding` declaration inside every backend allows you to consume services with different content types. The endpoint `/abc` instead uses the encoding of your choice (e.g., JSON), but is feeding and merging from XML, RSS and JSON content simultaneously.

@@ -52,7 +52,7 @@ Pay attention to the cardinality of the metrics. Logs and metrics might produce 
 ### Add logging
 If you don't add any logging, KrakenD will spit on stdout all the activity of the gateway. This behavior is not recommended for production. Enable the [logging](/docs/logging/) with `CRITICAL`, `ERROR` or `WARNING` levels at most. Avoid `INFO` and `DEBUG` levels in production at all times. This is the **recommended configuration** in production for a good performance:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -63,7 +63,7 @@ If you don't add any logging, KrakenD will spit on stdout all the activity of th
     }
   }
 }
-{{< /highlight >}}
+```
 
 
 Send logs to an [ELK](/docs/logging/logstash/), the [syslog](/docs/logging/#write-to-syslog-or-stdout), or a [GELF server](/docs/logging/graylog-gelf/).
@@ -83,10 +83,10 @@ Automate the go-live process through a [CI/CD pipeline](/docs/deploying/ci-cd/) 
 ### Use Docker and immutable containers
 On Docker deployments, creating an immutable Docker image with your desired configuration takes a few seconds in your CI/CD pipeline. Create a `Dockerfile` with at least the following code and deploy the resulting image in production:
 
-{{< highlight Dockerfile >}}
+```Dockerfile
 FROM {{< product image >}}:{{< product latest_version >}}
 COPY krakend.json /etc/krakend/krakend.json
-{{< /highlight >}}
+```
 
 Read more on [Docker artifacts](/docs/deploying/docker/)
 
@@ -101,12 +101,12 @@ This methodology ensures that there is no downtime when applying changes. On-pre
 ### Name your configurations
 Add a `name` key in the configuration file with useful information so you can identify which specific version your cluster is running. Whatever type of information you write inside the `name` is open to your imagination. Any value you write is **available in the metrics** for inspection.
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "name": "Production Cluster rev-db6a182"
 }
-{{< /highlight >}}
+```
 
 
 **During the build in the pipeline**, it might be a good idea to **replace the content** of the `name` attribute by a content showing the deployed version (the short SHA from the commit maybe).

@@ -19,7 +19,7 @@ The Kibana dashboard lets you monitor the logging activity of the gateway and id
 ## ELK Configuration
 The configuration you need on your `krakend.json` to enable ELK integration is:
 
-{{< highlight json >}}
+```json
 {
   "$id": "https://www.krakend.io/schema/v3.json",
   "version": 3,
@@ -37,7 +37,7 @@ The configuration you need on your `krakend.json` to enable ELK integration is:
     }
   }
 }
-{{< /highlight >}}
+```
 
 There's nothing else on KrakenD that you need to do.
 

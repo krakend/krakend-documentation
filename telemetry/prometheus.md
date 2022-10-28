@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-06-13
+lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Prometheus
@@ -26,7 +26,7 @@ The Opencensus exporter allows you to expose data to Prometheus, and publishes a
 Example: `http://localhost:9091/metrics`
 
 Enabling it only requires you to include in the root level of your configuration the Opencensus middleware with the `prometheus` exporter. Specify the `port` which Prometheus should hit, the `namespace` (optional), and Prometheus now can pull the data.
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -44,24 +44,20 @@ Enabling it only requires you to include in the root level of your configuration
     }
   }
 }
-{{< /highlight >}}
+```
 
-- `port` on which the Prometheus exporter should listen
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
 
-Optional fields (default to `false`):
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
 
-- `namespace` sets the domain the metric belongs to.
-- `tag_host` (*bool*): Whether to send the host as a metric or not.
-- `tag_path` (*bool*): Whether to send the path as a metric or not. Client metrics are reported as: `/hello/:hello/:world` and backend metrics are reported as: `/{hello}/{world}`. Paths are case insensitive, all metrics are reported lowercased.
-- `tag_method` (*bool*): Whether to send the HTTP method as a metric or not.
-- `tag_statuscode` (*bool*): Whether to send the status code as a metric or not.
+Then, the `exporters` key must contain an `prometheus` entry with the following properties:
 
-See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="prometheus" >}}
 
 ## Example of `prometheus.yml`
 This is a simple example to pull data from the Prometheus integration every minute:
 
-{{< highlight yaml >}}
+```yaml
 global:
   scrape_interval:     60s
   evaluation_interval: 60s
@@ -77,10 +73,10 @@ scrape_configs:
   - job_name: 'krakend'
     static_configs:
       - targets: ['krakend:9091']
-{{< /highlight >}}
+```
 
 ## Prometheus output example
-{{< highlight bash >}}
+```bash
 # HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
 # TYPE go_gc_duration_seconds summary
 go_gc_duration_seconds{quantile="0"} 8.0701e-05
@@ -348,4 +344,4 @@ process_virtual_memory_bytes 7.93280512e+08
 # HELP process_virtual_memory_max_bytes Maximum amount of virtual memory available in bytes.
 # TYPE process_virtual_memory_max_bytes gauge
 process_virtual_memory_max_bytes -1
-{{< /highlight >}}
+```

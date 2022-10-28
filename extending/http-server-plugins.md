@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-06-14
+lastmod: 2022-10-10
 date: 2021-05-21
 toc: true
 linktitle: HTTP server plugins
@@ -42,7 +42,7 @@ The easiest way to demonstrate how HTTP server plugins work is with a hello worl
 
 Now we have to create a file `main.go` with the content below:
 
-{{< highlight go >}}
+```go
 // SPDX-License-Identifier: Apache-2.0
 
 package main
@@ -55,21 +55,13 @@ import (
 	"net/http"
 )
 
+// pluginName is the plugin name
+var pluginName = "krakend-server-example"
+
 // HandlerRegisterer is the symbol the plugin loader will try to load. It must implement the Registerer interface
-var HandlerRegisterer = registerer("krakend-server-example")
+var HandlerRegisterer = registerer(pluginName)
 
 type registerer string
-
-var logger Logger = nil
-
-func (registerer) RegisterLogger(v interface{}) {
-	l, ok := v.(Logger)
-	if !ok {
-		return
-	}
-	logger = l
-	logger.Debug(fmt.Sprintf("[PLUGIN: %s] Logger loaded", HandlerRegisterer))
-}
 
 func (r registerer) RegisterHandlers(f func(
 	name string,
@@ -79,16 +71,7 @@ func (r registerer) RegisterHandlers(f func(
 }
 
 func (r registerer) registerHandlers(_ context.Context, extra map[string]interface{}, h http.Handler) (http.Handler, error) {
-	// check the passed configuration and initialize the plugin
-	name, ok := extra["name"].([]interface{})
-	if !ok {
-		return nil, errors.New("wrong config")
-	}
-	if v, ok := name[0].(string); !ok || v != string(r) {
-		return nil, fmt.Errorf("unknown register %s", name)
-	}
-	// check the cfg. If the modifier requires some configuration,
-	// it should be under the name of the plugin. E.g.:
+	// If the plugin requires some configuration, it should be under the name of the plugin. E.g.:
 	/*
 	   "extra_config":{
 	       "plugin/http-server":{
@@ -99,9 +82,12 @@ func (r registerer) registerHandlers(_ context.Context, extra map[string]interfa
 	       }
 	   }
 	*/
-
-	// The config variable contains all the keys you hace defined in the configuration:
-	config, _ := extra["krakend-server-example"].(map[string]interface{})
+	// The config variable contains all the keys you have defined in the configuration
+	// if the key doesn't exists or is not a map the plugin returns an error and the default handler
+	config, ok := extra[pluginName].(map[string]interface{})
+	if !ok {
+		return h, errors.New("configuration not found")
+	}
 
 	// The plugin will look for this path:
 	path, _ := config["path"].(string)
@@ -110,19 +96,31 @@ func (r registerer) registerHandlers(_ context.Context, extra map[string]interfa
 	// return the actual handler wrapping or your custom logic so it can be used as a replacement for the default http handler
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 
-    // If the requested path is not what we defined, continue.
+		// If the requested path is not what we defined, continue.
 		if req.URL.Path != path {
 			h.ServeHTTP(w, req)
 			return
 		}
 
-    // The path has to be hijacked:
+		// The path has to be hijacked:
 		fmt.Fprintf(w, "Hello, %q", html.EscapeString(req.URL.Path))
 		logger.Debug("request:", html.EscapeString(req.URL.Path))
 	}), nil
 }
 
 func main() {}
+
+// This logger is replaced by the RegisterLogger method to load the one from KrakenD
+var logger Logger = noopLogger{}
+
+func (registerer) RegisterLogger(v interface{}) {
+	l, ok := v.(Logger)
+	if !ok {
+		return
+	}
+	logger = l
+	logger.Debug(fmt.Sprintf("[PLUGIN: %s] Logger loaded", HandlerRegisterer))
+}
 
 type Logger interface {
 	Debug(v ...interface{})
@@ -132,7 +130,17 @@ type Logger interface {
 	Critical(v ...interface{})
 	Fatal(v ...interface{})
 }
-{{< /highlight >}}
+
+// Empty logger implementation
+type noopLogger struct{}
+
+func (n noopLogger) Debug(_ ...interface{})    {}
+func (n noopLogger) Info(_ ...interface{})     {}
+func (n noopLogger) Warning(_ ...interface{})  {}
+func (n noopLogger) Error(_ ...interface{})    {}
+func (n noopLogger) Critical(_ ...interface{}) {}
+func (n noopLogger) Fatal(_ ...interface{})    {}
+```
 
 The plugin above aborts the request and replies itself printing a `Hello, %q` without actually passing the request to the endpoint. It is a simple example, but it shows the necessary structure to start working with plugins.
 
@@ -146,11 +154,19 @@ For compiling Go plugins, the flag `-buildmode=plugin` is required. The command 
 go build -buildmode=plugin -o krakend-server-example.so .
 {{< /terminal >}}
 
+If you are using Docker and wanting to load your plugin on Docker, compile it in the [Plugin Builder](/docs/extending/writing-plugins/#plugin-builder) for an easier integration.
+
+{{< terminal title="Build your plugin" >}}
+docker run -it -v "$PWD:/app" -w /app \
+{{< product image_plugin_builder >}}:{{< product latest_version >}} \
+go build -buildmode=plugin -o krakend-server-example.so .
+{{< /terminal >}}
+
 There is no output for this command. Now you have a file `krakend-server-example.so`, the binary that KrakenD has to side load. Remember that you cannot use this binary in a different architecture (e.g., compiling the binary in Mac and loading it in a Docker container).
 
 The plugin is ready to use! You can now load your plugin in the configuration. Add the `plugin` and `extra_config` entries in your configuration. Here's an example of `krakend.json`:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "plugin": {
@@ -179,7 +195,7 @@ The plugin is ready to use! You can now load your plugin in the configuration. A
     }
   }
 }
-{{< /highlight >}}
+```
 
 Start the server with `krakend run -dc krakend.json`. When you run the server, the expected output (with `DEBUG` log level) is:
 

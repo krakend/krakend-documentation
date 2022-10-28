@@ -33,7 +33,7 @@ KrakenD marks the result of the merging operation with the `X-KrakenD-Completed`
 
 The configuration for the image above could be like this:
 
-{{< highlight json >}}
+```json
 {
     "endpoints": [
         {
@@ -66,7 +66,7 @@ The configuration for the image above could be like this:
         }
     ]
 }
-{{< /highlight >}}
+```
 
 ### Merging timeouts
 Keep in mind that to avoid any degraded user experience, KrakenD won't be stuck forever until all the backends decide to respond. In a gateway **failing fast is better than succeeding slowly**, and KrakenD will make sure this happens as it will **apply the timeout policy**. It will protect your users during high load peaks, network errors, or other problems that stress your backends.
@@ -85,7 +85,7 @@ At all times, the `X-Krakend-Completed` header contains a boolean telling you if
 
 Imagine an endpoint with the following configuration:
 
-{{< highlight json >}}
+```json
 {
     "endpoints": [
         {
@@ -109,13 +109,13 @@ Imagine an endpoint with the following configuration:
         }
     ]
 }
-{{< /highlight >}}
+```
 
 
 
 When a user calls the endpoint `/users/1`, KrakenD will send two requests and, in the happy scenario, it will receive these responses:
 
-{{< highlight json >}}
+```json
 {
     "id": 1,
     "name": "Leanne Graham",
@@ -139,24 +139,24 @@ When a user calls the endpoint `/users/1`, KrakenD will send two requests and, i
         "bs": "harness real-time e-markets"
     }
 }
-{{< /highlight >}}
+```
 
 
 and
 
-{{< highlight json >}}
+```json
 {
     "userId": 1,
     "id": 1,
     "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
     "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
 }
-{{< /highlight >}}
+```
 
 
 With these 'partial responses' and the given configuration, KrakenD will return the following response:
 
-{{< highlight json >}}
+```json
 {
     "id": 1,
     "name": "Leanne Graham",
@@ -183,7 +183,7 @@ With these 'partial responses' and the given configuration, KrakenD will return 
     "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
     "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
 }
-{{< /highlight >}}
+```
 
 
 ## Filtering
@@ -228,3 +228,31 @@ KrakenD expects all backends to return objects in the response. There are times 
 In any case, manipulations over arrays work differently than the objects.
 
 See [collections documentation](/docs/backends/data-manipulation/#collections)
+
+## Query language manipulation
+The most powerful option to manipulate content without scripts or plugins is via the JMESpath component, which allows you to apply changes using a JSON query language.
+
+For example: *return the name of all the students older than 18*:
+```js
+students[?age > `18` ].name
+```
+
+See [Advanced query language manipulation {{< badge color="denim">}}Enterprise{{< /badge >}}](/docs/enterprise/endpoints/jmespath/)
+
+## Content replacement with regular expressions
+Another Enterprise feature is the Content Replacer plugin, which allows you to search objects in the responses and apply regular expression replacements, or literal replacements.
+
+For instance:
+
+```json
+    {
+        "payment.credit_card": {
+            "@comment": "Ridiculous card masking. Take 4 digits and remove the rest. Credit card is nested inside the payment object.",
+            "find": "(^\\d{4})(.*)",
+            "replace": "${1}-XXXX",
+            "regexp": true
+        }
+    }
+```
+
+See [Content Replacer {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/endpoints/content-replacer/)

@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-09-22
+lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Google Cloud
@@ -29,7 +29,7 @@ The Opencensus exporter allows you to export **metrics and traces** to Google Cl
 
 The following configuration snippet sends the data:
 
-{{< highlight json >}}
+```json
 {
   "extra_config": {
     "telemetry/opencensus": {
@@ -45,25 +45,28 @@ The following configuration snippet sends the data:
           "project_id": "my-krakend-project",
           "metric_prefix": "krakend",
           "default_labels": {
-          "env": "production"
+            "env": "production"
           }
         }
       }
     }
   }
 }
-{{< /highlight >}}
+```
 
-- `sample_rate` is the percentage of sampled requests. A value of `100` means that all requests are exported (100%). If you are processing a considerable amount of traffic, you might want to sample only a part of what's happening.
-- `reporting_period` is the number of **seconds** passing between reports. It must be **`60` or greater**, otherwise, Google will reject the connection.
-- `exporters` is a key-value with all the exporters you want to use. See each exporter configuration for the underlying keys.
-  - `project_id`: The identifier of your Google Cloud project. The `project_id` **is not the project name**. You can omit this value from the configuration if you have an application credential file for Google.
-  - `metric_prefix`: A prefix that you can add to all your metrics for better organization.
-  - `default_labels`: Enter any label assigned by default to the reported metric so you can filter later on Stack Driver. In the example, we set the label `env` with the value `production`.
-- `enabled_layers` let you specify what data you want to export. All layers are enabled by default:
-  - Use `backend` to report the activity between KrakenD and your services
-  - Use `router` to report the activity between end-users and KrakenD
-  - Use `pipe` to report the activity at the beginning of the proxy layer. It gives a more detailed view of the internals of the pipe between end-users and KrakenD.
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
+
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
+
+Then, the `exporters` key must contain an `stackdriver` entry with the following properties:
+
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="stackdriver" >}}
+
+See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+
+{{< note title="Google does not accept low reporting periods" type="warning" >}}
+The number of **seconds** passing between reports in `reporting_period` must be **`60` or greater**, otherwise, Google will reject the connection.
+{{< /note >}}
 
 ## Authentication to Google Cloud
 The exporter searches for the **Application Default Credentials**. It looks for credentials in the following places, preferring the first location found:

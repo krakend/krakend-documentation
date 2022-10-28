@@ -1,8 +1,8 @@
 ---
 lastmod: 2021-05-02
 date: 2020-07-10
-linktitle: JSON Schema validation
-title: Validating the body with the JSON Schema integration
+linktitle: JSON Schema request validation
+title: Validating the requests with JSON Schema
 weight: 130
 menu:
   community_current:
@@ -26,7 +26,7 @@ The JSON Schema configuration has to be declared at the **endpoint level** with 
 
 The following example **checks if the body is a json object**:
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "validation/json-schema": {
@@ -34,7 +34,7 @@ The following example **checks if the body is a json object**:
         }
     }
 }
-{{< /highlight >}}
+```
 
 
 You can apply constraints by adding keywords to the schema. For instance, you can check that the `type` is an instance of an object, array, string, number, boolean, or null.

@@ -19,7 +19,12 @@ meta:
   - endpoint
 ---
 
-The flatmap middleware allows you to **manipulate collections** (or arrays, or lists, you name it) from the **backend response**. While the [basic manipulation operations](/docs/backends/data-manipulation/) allow you to work directly with objects, the collections require a different approach: the **flatmap component**.
+The flatmap middleware allows you to **manipulate collections** (or arrays, or lists, you name it) from the **backend response**, although **it can be used for objects** as well. While the [basic manipulation operations](/docs/backends/data-manipulation/) allow you to work directly with objects, the collections require a different approach: the **flatmap component**.
+
+{{< note title="Looking for a Query Language manipulation?" type="info" >}}
+If you are an Enterprise user, you might want to use [Response manipulation with query language ](/docs/enterprise/endpoints/jmespath/) instead
+{{< /note >}}
+
 
 When working with lists, KrakenD needs to flatten and expand array structures to objects to operate with them, and vice versa. This process is automatically done by the flatmap component, letting you concentrate only on the type of operation you want to execute.
 
@@ -39,15 +44,15 @@ There are different types of operations you can do:
 *   **Deleting** specific items (similar concept to [`deny`](/docs/backends/data-manipulation/#deny))
 *   **Appending** items from one list to the other
 
-{{< note title="Avoid flatmap when not using arrays" type="warning">}}
-Use a basic [data manipulation](/docs/backends/data-manipulation/) operation such as [`target`](/docs/backends/data-manipulation/#target), [`deny`](/docs/backends/data-manipulation/#deny) or [`allow`](/docs/backends/data-manipulation/#allow) whenever you work with objects as their computational cost is lower. The flatmap component is **not a general solution for all objects**, and makes sense only when you need to manipulate collections.
+{{< note title="Avoid default usage of flatmap when not using arrays" type="warning">}}
+Use a basic [data manipulation](/docs/backends/data-manipulation/) operation such as [`target`](/docs/backends/data-manipulation/#target), [`deny`](/docs/backends/data-manipulation/#deny) or [`allow`](/docs/backends/data-manipulation/#allow) whenever you work with objects as their computational cost is lower. The flatmap component is **not a general solution for all objects**, and makes sense only when you need to manipulate collections or other corner cases with objects.
 {{< /note >}}
 
 ## Flatmap configuration
 Depending on the stage you want to do the manipulation, you will need an `extra_config` configuration inside your `endpoint` or `backend` section. For both cases, the namespace is `proxy`.
 
 The component structure with three operations would be as follows:
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "proxy": {
@@ -68,12 +73,10 @@ The component structure with three operations would be as follows:
         }
     }
 }
-{{< /highlight >}}
+```
+Then the `flatmap_filter` is an **array** with the **list of operations to execute sequentially** (top down). Each flatmap step takes the output of its previous execution, and every operation is defined with an object containing two properties:
 
-
-- `flatmap_filter` (*list*) The list of operations to **execute sequentially** (top down). Every operation is defined with an object containing two properties:
-  - `type` (*string*) One of the recognized operation types
-  - `args` (*list*) The arguments passed to the operation.
+{{< schema data="proxy/flatmap.json" property="items" >}}
 
 ### Operations and arguments
 
@@ -90,7 +93,7 @@ The types of operations are defined as follows:
     *   `"args": ["collection_to_append", "returned_collection"]`
 
 
-The format of the arguments (`args`) to proceed with the operation is very simple. In short, object nesting is represented with **dots**, while the index of an array is represented with a **number**. Or all matching items with **wildcards**. So:
+The format of the arguments (`args`) to proceed with the operation is very simple. In short, **object nesting** is represented with **dots**, while the index of an array is represented with a **number**. Or all matching items with **wildcards**. So:
 
 *   The dot operator `.` indicates a new array nesting level
 *   The wildcard `*` matches any key (property name, collection key name, or index)
@@ -102,7 +105,7 @@ Operations always apply to ** the last item** in the arguments. For instance, a 
 
 We are going to use an elementary JSON structure as an example of data representation. See below:
 
-{{< highlight json >}}
+```json
 {
     "a": [
         {
@@ -128,7 +131,7 @@ We are going to use an elementary JSON structure as an example of data represent
         }
     ]
 }
-{{< /highlight >}}
+```
 
 #### Observations
 
@@ -172,7 +175,7 @@ Some individual operations **on the example structure above**:
 
 The following example demonstrates how to modify a collection doing these operations:
 
-{{< highlight json >}}
+```json
 {
     "extra_config": {
         "proxy": {
@@ -201,7 +204,7 @@ The following example demonstrates how to modify a collection doing these operat
         }
     }
 }
-{{< /highlight >}}
+```
 
 **What did we do here?**
 

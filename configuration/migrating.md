@@ -62,7 +62,7 @@ Summing up, see the before and after of the following snippet which has 3 of the
 
 **KrakenD 1**:
 
-{{< highlight json >}}
+```json
 {
     "endpoint": "/foo",
     "extra_config": {
@@ -78,7 +78,7 @@ Summing up, see the before and after of the following snippet which has 3 of the
         }
     ]
 }
-{{< /highlight >}}
+```
 
 
 **KrakenD 2**:

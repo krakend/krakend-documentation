@@ -44,7 +44,7 @@ Enable the caching of the backend services in the `backend` section of your `kra
 
 There is no additional configuration besides its simple inclusion, although you can pass the `shared` attribute. See an example with shared cache:
 
-{{< highlight json >}}
+```json
 {
     "endpoint": "/cached",
     "backend": [{
@@ -57,7 +57,7 @@ There is no additional configuration besides its simple inclusion, although you 
       }
     }]
 }
-{{< /highlight >}}
+```
 
 The `shared` cache makes that different backend definitions with this flag enabled can reuse the cache between them when the request is the same. Otherwise, each backend uses a private cache context when the `shared` flag is missing or set to false.
 
@@ -73,7 +73,7 @@ As you have seen, the caching module does not accept any parameters to control t
 
 The [Martian module](/docs/backends/martian/) is the component that can transform the headers from the backend as long as you don't use the `no-op` encoding (as it does not allow manipulation). Let's illustrate how you can do this in the following example.
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "$schema": "https://www.krakend.io/schema/v3.json",
@@ -102,6 +102,6 @@ The [Martian module](/docs/backends/martian/) is the component that can transfor
         }
     ]
 }
-{{< /highlight >}}
+```
 
 Notice in the configuration above how KrakenD consumed a backend without an actionable cache-control header, but it set a cache of one minute anyway. This technique might be handy when you have little control of the cache headers in the response.

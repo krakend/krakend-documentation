@@ -64,7 +64,7 @@ The zero-trust policy implies that, for instance, if a KrakenD endpoint `/foo' r
 
 To enable the transition of query strings to your backend, add the **list** `input_query_strings` in your `endpoint` definition. For instance, let's forward `?items=10&page=2` to the backends now:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "endpoints": [
@@ -85,7 +85,7 @@ To enable the transition of query strings to your backend, add the **list** `inp
     }
   ]
 }
-{{< /highlight >}}
+```
 
 The `input_query_strings` list has the following behavior:
 
@@ -102,21 +102,21 @@ By definition, query string parameters are always optional, and the user can pas
 ### Sending all query string parameters
 While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
 
-{{< highlight json >}}
+```json
 {
   "endpoint": "/foo",
   "input_query_strings":[
       "*"
   ]
 }
-{{< /highlight >}}
+```
 
 **Enabling the wildcard pollutes your backends**, as any query string sent by end-users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which query strings are in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
 ### Mandatory query string parameters
 When your backend requires mandatory **query string** parameters and you want to make them **mandatory** in KrakenD, the only way to enforce this (without scripting) is using the `{variable}` placeholders in the endpoints definition. Mandatory means that the endpoint won't exist unless the parameter is passed. For instance:
 
-{{< highlight json >}}
+```json
 {
   "endpoint": "/v3/{channel}/foo",
   "backend": [
@@ -126,7 +126,7 @@ When your backend requires mandatory **query string** parameters and you want to
     }
   ]
 }
-{{< /highlight >}}
+```
 
 The parameter is mandatory as if a value for `channel` is not provided the server replies with a `404`.
 
@@ -136,7 +136,7 @@ With the configuration above a request to the KrakenD endpoint such as `http://k
 
 Nevertheless, the `input_query_strings` could also be added in this configuration, creating a special case of optional and mandatory parameters! You would be passing query strings both hardcoded in the `url_pattern` and generated from the user input. In this strange case, if the user passes a single optional query string parameter that is declared in `input_query_strings`, then the mandatory value is lost. The mandatory value is used if the request does not contain any known optional parameter. For instance:
 
-{{< highlight json >}}
+```json
 {
     "endpoint": "/v3/{channel}/foo",
     "input_query_strings": [
@@ -152,7 +152,7 @@ Nevertheless, the `input_query_strings` could also be added in this configuratio
         }
     ]
 }
-{{< /highlight >}}
+```
 
 
 With `http://krakend/v3/iOS/foo?limit=10&evil=here` the backend receives:
@@ -195,7 +195,7 @@ When you use the `input_headers`, consider that any of the headers listed above 
 
 An example of passing the `User-Agent` to the backend:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "endpoints": [
@@ -215,16 +215,16 @@ An example of passing the `User-Agent` to the backend:
     }
   ]
 }
-{{< /highlight >}}
+```
 
 This setting changes the headers received by the backend to:
 
-{{< highlight yaml >}}
+```yaml
 Accept-Encoding: gzip
 Host: localhost:8080
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
 X-Forwarded-For: ::1
-{{< /highlight >}}
+```
 
 The `User-Agent` is no longer a KrakenD user-agent but a Mozilla one.
 
@@ -233,14 +233,14 @@ Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand h
 ### Sending all client headers to the backends
 While the default policy prevents forwarding unrecognized headers, setting an asterisk `*` as the parameter name makes the gateway to **forward any header to the backends**, including cookies:
 
-{{< highlight json >}}
+```json
 {
   "endpoint": "/foo",
   "input_headers":[
       "*"
   ]
 }
-{{< /highlight >}}
+```
 
 Enabling the wildcard **pollutes your backends**, as any header sent by end-users or malicious attackers gets through the gateway and impacts the backends behind (a famous exploit is the Log4J vulnerability). We recommend letting the gateway know which headers are in the API contract and specify them in the list, even when the list is long try to not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
 
@@ -251,7 +251,7 @@ When doing this, **all your cookies** are sent to all backends inside the endpoi
 
 Example:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "endpoints": [
@@ -271,4 +271,4 @@ Example:
     }
   ]
 }
-{{< /highlight >}}
+```

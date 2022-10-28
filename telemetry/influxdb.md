@@ -1,9 +1,9 @@
 ---
-lastmod: 2022-09-28
+lastmod: 2022-10-24
 date: 2019-09-15
 linktitle: InfluxDB
 title: Exporting metrics and events to InfluxDB
-weight: 20
+weight: 10
 #notoc: true
 aliases: ["/docs/extended-metrics/influxdb/","/docs/logging-metrics-tracing/influxdb/","/docs/telemetry/influxdb-native/"]
 menu:
@@ -43,7 +43,7 @@ Pushing data to InfluxDB using the native middleware requires adding two differe
 
 You can accomplish it with the following snippet.
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "extra_config": {
@@ -61,27 +61,23 @@ You can accomplish it with the following snippet.
       }
     }
 }
-{{< /highlight >}}
+```
 
-
-- `address` (*string*): The complete URL of the InfluxDB, including the port
-- `ttl` (*duration*): Valid time units are: `ns` (nanoseconds), `us` or `µs` (microseconds), `ms` (milliseconds), `s` (seconds), `m` (minutes - don't!), `h` (hours - don't!)
-- `buffer_size` (*integer*): Use `0` to send events immediately or set the number of points that KrakenD should send together.
-- `db` (*string*): Name of the database or bucket, defaults to *krakend*.
-- `username` and `password` are optional and used to authenticate against InfluxDB.
+{{< schema data="telemetry/influx.json" >}}
 
 See below how to configure InfluxDB, and you are ready to [publish a Grafana dashboard](/docs/telemetry/grafana/).
 
 ### OpenCensus InfluxDB exporter
 [InfluxDB](https://www.influxdata.com/) is a time series database designed to handle high write and query loads.
 
-The Opencensus exporter allows you export data to [InfluxDB](https://www.influxdata.com) for monitoring metrics and events. Enabling it only requires you to add the `influxdb` exporter in the [opencensus module](/docs/telemetry/opencensus/).
+The Opencensus exporter allows you export data to [InfluxDB](https://www.influxdata.com) for monitoring metrics and events. Enabling it only requires you to add as `exporter` the `influxdb` entry.
 
 The following configuration snippet sends data to your InfluxDB:
 
-{{< highlight json >}}
+```json
 {
     "telemetry/opencensus": {
+      "sample_rate": 100,
       "exporters": {
         "influxdb": {
             "address": "http://192.168.99.100:8086",
@@ -93,13 +89,16 @@ The following configuration snippet sends data to your InfluxDB:
       }
     }
 }
-{{< /highlight >}}
-- `address` is the URL (including port) where your InfluxDB is installed.
-- `db` is the database name.
-- `timeout` is the maximum time you will wait for InfluxDB to respond.
-- `username` and `password` are optional and used to authenticate against InfluxDB.
+```
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
 
-See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
+
+
+Then, the `exporters` key must contain an `influxdb` entry with the following properties:
+
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="influxdb" >}}
+
 
 ## Setting up Influx
 For **InfluxDB v2.x**, we have included in our [Telemetry Dashboards](https://github.com/krakendio/telemetry-dashboards/) the files that create the authorization part.
@@ -109,7 +108,7 @@ For **InfluxDB v1.x** (older) the process is straightforward and requires you no
 ### Influx v2
 If you use Docker, you can start InfluxDB as part of a docker-compose file. You need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following `docker-compose.yml` sets the credentials you need to reflect in the KrakenD configuration.
 
-{{< highlight yaml >}}
+```yaml
 version: "3"
 services:
   influxdb:
@@ -132,7 +131,7 @@ services:
       - ./krakend:/etc/krakend
     ports:
       - "8080:8080"
-{{< /highlight >}}
+```
 
 In the fields `db`, `username`, and `password` of the component configuration reflect the same values as in `DOCKER_INFLUXDB_INIT_BUCKET`, `DOCKER_INFLUXDB_INIT_USERNAME`, and `DOCKER_INFLUXDB_INIT_PASSWORD` accordingly.
 
@@ -180,7 +179,7 @@ Replace the ID of the buckets above with the ID you just copied, and the usernam
 
 Now your configuration should work and start sending data to InfluxDB:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "extra_config": {
@@ -198,14 +197,14 @@ Now your configuration should work and start sending data to InfluxDB:
         }
     }
 }
-{{< /highlight >}}
+```
 
 Make sure to type in `db` the bucket name you created on InfluxDB and the `username` and `password` as well.
 
 ### Influx v1
 When using InfluxDB v1.x, you need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following docker-compose sets the credentials you need to reflect in the KrakenD configuration.
 
-{{< highlight yaml >}}
+```yaml
 version: "3"
 services:
   influxdb:
@@ -224,6 +223,6 @@ services:
       - ./krakend:/etc/krakend
     ports:
       - "8080:8080"
-{{< /highlight >}}
+```
 
 In the fields `db`, `username`, and `password` of the component configuration reflect the same values as in `INFLUXDB_DB`, `INFLUXDB_USER`, and `INFLUXDB_USER_PASSWORD` accordingly.

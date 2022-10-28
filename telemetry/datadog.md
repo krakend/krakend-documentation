@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-06-15
+lastmod: 2022-10-24
 date: 2020-07-24
 notoc: true
 linktitle: Datadog
@@ -29,8 +29,9 @@ meta:
 The Opencensus exporter allows you to export data to Datadog. Enabling it only requires you to add the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet sends data to your Datadog:
-{{< highlight json >}}
+```json
 {
+      "version": 3,
       "extra_config": {
         "telemetry/opencensus": {
           "exporters": {
@@ -51,17 +52,14 @@ The following configuration snippet sends data to your Datadog:
         }
       }
 }
-{{< /highlight  >}}
-- `namespace`(*string*) the namespace to which metric keys are appended.
-- `tags` (*list*) specifies a set of global tags to attach to each metric
-- `global_tags` (*object*) GlobalTags holds a set of tags (key/value) that will automatically be applied to all exported spans.
-- `service` (*string*) Service specifies the service name used for tracing
-- `trace_address` (*string*) TraceAddr specifies the `host[:port]` address of the Datadog Trace Agent. It defaults to localhost:8126.
-- `stats_address` (*string*) StatsAddr specifies the `host[:port]` address for DogStatsD. It defaults to localhost:8125. To enable ingestion using [Unix Domain Socket (UDS)](https://docs.datadoghq.com/developers/dogstatsd/unix_socket/?tab=kubernetes) mount your UDS path and reference it in the `stats_address` using a path like `unix:///var/run/datadog/dsd.socket`.
-- `disable_count_per_buckets` (*bool*) Specifies whether to emit count_per_bucket metrics
+```
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
 
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
 
-See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+Then, the `exporters` key must contain an `datadog` entry with the following properties:
+
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="datadog" >}}
 
 ## B3 propagation
 The Opencensus module uses B3 style propagation headers, while the rest of your services might be using datadog-specific propagation headers. If this difference is actual, krakend traces will show up in Datadog but they won't be connected to the frontend and backend traces.

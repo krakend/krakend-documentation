@@ -1,8 +1,8 @@
 ---
-lastmod: 2022-09-02
+lastmod: 2022-10-25
 date: 2018-10-30
 toc: true
-linktitle: Improved logging
+linktitle: Standard Logging
 title: Logging to Syslog and Stdout
 weight: 10
 aliases: ["/docs/logging-metrics-tracing/logging/", "/docs/logging/extended-logging/"]
@@ -29,44 +29,48 @@ The `telemetry/logging` has the following logging capabilities:
 - Option to use a predefined or custom format
 
 ## Types of log messages
-The content that KrakenD writes in its log is:
+The content that KrakenD writes in its log represents two types of logging:
 
-- Access logs
-- Application logs
+- **Access logs**
+- **Application logs**
 
 ### Access logs
-The access log shows users' activity and prints which endpoints are requested, when, the status code, the duration, the requesting IP, and the method. An example of the format us:
+The access log shows users' activity and prints: which endpoints are requested, when, the status code, the duration, the requesting IP, and the method. An example of the format is:
 
-    [GIN] yyyy/mm/dd - hh:mm:ss | 200 |       4.529µs |      172.17.0.1 | GET      "/user/foo"
-    [GIN] yyyy/mm/dd - hh:mm:ss | 200 |       3.647µs |      172.17.0.1 | GET      "/category/bar"
+```log
+[GIN] yyyy/mm/dd - hh:mm:ss | 200 |       4.529µs |      172.17.0.1 | GET      "/user/foo"
+[GIN] yyyy/mm/dd - hh:mm:ss | 200 |       3.647µs |      172.17.0.1 | GET      "/category/bar"
+```
 
 The access log content is not customizable. It can be disabled using `disable_access_log` (see how to [remove requests from logs options](/docs/service-settings/router-options/#remove-requests-from-logs)).
 
-**Access logs are not written in the syslog**, only in stdout.
+**Access logs are never written in the syslog**, regardless of their configuration, and they show only in **stdout**.
 
 ### Application logs
 The application log messages are the errors, warnings, debugging information, and other messages shown by the gateway while it operates.
 
-The application logs are customizable as you can extend the functionality, such as sending the events to the **syslog**, using JSON format, choosing the verbosity level, or using the **Graylog Extended Log Format (GELF)**.
+The application logs are customizable as you can extend the functionality, such as sending the events to the **syslog**, using JSON format, choosing the verbosity level, or using the [Graylog Extended Log Format](/docs/logging/graylog-gelf/) (GELF).
 
-In addition to this, a lot of **exporters** are available to send your logs out (see [Telemetry](/docs/telemetry/))
+In addition to this, a lot of **exporters** are available to send your logs out to third parties (see [Telemetry](/docs/telemetry/))
 
 Application logs might look different on each application, but this is an example:
 
-    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: Gin] Debug enabled
-    yyyy/mm/dd hh:mm:ss KRAKEND INFO: Starting the KrakenD instance
-    yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: Gin] Building the router
-    yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: Gin] Listening on port: 8080
-    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: AsyncAgent][mkt-event] Starting the async agent
-    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [ENDPOINT: mkt-event] Building the proxy pipe
-    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [BACKEND: /__debug/some] Building the backend pipe
-    yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: AsyncAgent][AMQP][mkt-event] Starting the consumer
-    yyyy/mm/dd hh:mm:ss KRAKEND ERROR: [SERVICE: Asyncagent][mkt-event] building the amqp subscriber: dial tcp 192.168.2.223:5672: connect: connection refused
+```log
+yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: Gin] Debug enabled
+yyyy/mm/dd hh:mm:ss KRAKEND INFO: Starting the KrakenD instance
+yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: Gin] Building the router
+yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: Gin] Listening on port: 8080
+yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: AsyncAgent][mkt-event] Starting the async agent
+yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [ENDPOINT: mkt-event] Building the proxy pipe
+yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [BACKEND: /__debug/some] Building the backend pipe
+yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: AsyncAgent][AMQP][mkt-event] Starting the consumer
+yyyy/mm/dd hh:mm:ss KRAKEND ERROR: [SERVICE: Asyncagent][mkt-event] building the amqp subscriber: dial tcp 192.168.2.223:5672: connect: connection refused
+```
 
 ## Logging Configuration
-To add extended logging capabilities, you need to add the component at the service level of your `krakend.json` configuration, under the `extra_config` key:
+To add ample logging capabilities, you need to add the component at the service level of your `krakend.json` configuration under the `extra_config` key:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -74,25 +78,21 @@ To add extended logging capabilities, you need to add the component at the servi
       "level": "INFO",
       "prefix": "[KRAKEND]",
       "syslog": false,
-      "stdout": true,
-      "format": "custom",
-      "custom_format": "%{message}"
+      "stdout": true
     }
   }
 }
-{{< /highlight >}}
+```
+These are the different supported configuration options:
 
-These are the different configuration options:
+{{< schema data="telemetry/logging.json" >}}
 
-- `level` (*string*): What type of **reporting level** do you expect from the application? Accepted values are (from more verbose to least):, `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`. Use the `DEBUG` level in the development stages but not in production.
-- `prefix` (optional - *string*): Adds a string to the beginning of every logged message line, so you can quickly filter messages with external tools later.
-- `syslog` (optional - *boolean*): Whether you want to log to the syslog or not
-- `stdout` (optional - *boolean*): Whether you want to log to the stdout or not
-- `format` (optional - *string*): Allows you to use different logging pattern formats. Defaults to `default`. The valid values are:
-    - `default`: Uses the pattern `%{time:2006/01/02 - 15:04:05.000} %{color}▶ %{level:.6s}%{color:reset} %{message}`
-    - `logstash`: **Logs in JSON format** using the logstash format. See [Logstash](/docs/logging/logstash/) for more information. E.g.: `{"@timestamp":"%{time:2006-01-02T15:04:05.000+00:00}", "@version": 1, "level": "%{level}", "message": "%{message}", "module": "%{module}"}`.
-    - `custom` Lets you write a custom logging pattern using variables, e.g: `%{message}`. To know more about the possible **patterns** see the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
-- `syslog_facility` (optional - *string*): When using syslog, the facility tells KrakenD where to send the messages as set by the locals of the [syslog standard](https://www.rfc-editor.org/rfc/rfc5424.html) being one of `local0`,`local1`,`local2`,`local3`,`local4`,`local5`,`local6`, or `local7`. Defaults to `local3`.
+When setting a predefined `format` the output is:
+
+- `default`: Uses the pattern `%{time:2006/01/02 - 15:04:05.000} %{color}▶ %{level:.6s}%{color:reset} %{message}`
+- `logstash`: **Logs in JSON format** using the logstash format. See [Logstash](/docs/logging/logstash/) for more information. E.g.: `{"@timestamp":"%{time:2006-01-02T15:04:05.000+00:00}", "@version": 1, "level": "%{level}", "message": "%{message}", "module": "%{module}"}`.
+- `custom`: You set the format using `custom_format`. To know more about the possible **patterns** see the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
+
 
 ## Writing the log on a file
 Although logging on disk might impact software performance and is discouraged in high-throughput systems, you can still store the logs in a file.
@@ -106,7 +106,7 @@ To setup logs on disk, you should consider the following steps:
 3) Optionally add log rotation
 
 ### 1. Syslog configuration
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -117,7 +117,7 @@ To setup logs on disk, you should consider the following steps:
     }
   }
 }
-{{< /highlight >}}
+```
 
 You might set the `stdout` to `false` if you don't want to check on the console but only on the logs.
 

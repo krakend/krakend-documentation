@@ -21,24 +21,24 @@ meta:
   - "[ENDPOINT: /foo][CEL]"
   - "[BACKEND: /foo][CEL]"
 ---
-There are times when you might want to incorporate **additional logic** to check if the gateway has to **skip the backend call**. For example, maybe the request from the user is undoubtedly wrong, and there is no point in adding more traffic to your backends.
+There are times when you might want to incorporate **additional logic** to check if the gateway has to **skip the backend call**. For example, maybe the request from the user is undoubtedly wrong, and there is no point in hitting your backend(s).
 
-There are other times that you might need to **skip returning the response** because after parsing it you realize that it is not worth showing it to the user.
+There are other times that you might need to **skip returning the response** because after parsing it you realize that it is not worth showing it to the user, but rather return an error.
 
 In both scenarios where you check requests and responses, the **Common Expression Language (CEL)** implements standard semantics for expression evaluation and is a straightforward and powerful option to have complete control during requests and responses.
 
 When the CEL component is enabled, you can set any number of expressions to check both requests and responses, either at the endpoint or backend level. **CEL does not transform the data, but it gives you the control of deciding what to do in the next step.**
 
 ## How CEL works
-In any `endpoint` or `backend`, you can define a sequence of expressions you'd like to check using [Google's CEL spec](https://github.com/google/cel-spec) to write the conditions.
+In any `endpoint`, `backend`, or `async_agent`, you can define a sequence of expressions you'd like to check using [Google's CEL spec](https://github.com/google/cel-spec) to write the conditions.
 
 During runtime, when an expression returns `false`, KrakenD aborts the execution of that layer: it does not return the content or it does not perform the request (depending on the type). Otherwise, KrakenD serves the content if all expressions return `true`.
 
 The CEL expressions will sound familiar if you are used to languages like javascript, C, C++, or Java to name a few. The expressions need to represent a boolean condition. For instance:
 
-{{< highlight js>}}
+```js
 '::1' in req_headers['X-Forwarded-For']
-{{< /highlight >}}
+```
 
 This expression checks that the request comes from localhost by checking that the header array `X-Forwarded-For`. In this example `::1` is the loopback address for IPv6 (`127.0.0.1` in IPv4)
 
@@ -64,29 +64,34 @@ Finally, when combined with the [sequential proxy](/docs/endpoints/sequential-pr
 
 The configuration is as follows:
 
-{{< highlight json>}}
+```json
 {
     "extra_config": {
         "validation/cel": [
             {
                 "check_expr": "CONDITION1 && CONDITION2"
+            },
+            {
+                "check_expr": "CONDITION3 && CONDITION4"
             }
         ]
     }
 }
-{{< /highlight>}}
+```
+**Notice that the CEL object is an array**, even when you need a single evaluation object. If **all stacked conditions** in the array are *true*, the request/response continues. As soon as it finds a *false*, the validation fails.
 
-- Notice that the CEL object is an array. In this example, it contains one object.
-- `check_expr`: The expression that evaluates as a boolean, you can write here any conditional. If all stacked conditions are *true* the request continues, *false*, it fails to retrieve data from the token, the request, or the response. The expressions can use a set of **additional variables**, shown in the sections below.
+Each object in the array has the following syntax:
 
+{{< schema data="validation/cel.json" property="items" >}}
 
+See the sections below to use **additional variables**.
 {{< note title="A note on client headers" >}}
 When **client headers** are needed, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
 {{< /note >}}
 
 
 ## Adding logic in the requests and responses.
-There are three different ways to access the metadata of requests and responses to decide whether or not to continue serving the user command.
+There are three different ways to access the metadata of requests and responses when you are inside the `check_expr` to decide whether or not to continue serving the user command.
 
 - Use a `req_` type variable to access **request** data.
 - Use a `resp_` type variable to access **response** data.
@@ -120,9 +125,9 @@ The response metadata is only filled for no-op pipes. In non no-op cases it will
 ### Variables for the JWT rejecter
 You can also use CEL expressions during the JWT token validation. Use the `JWT` variable to access its metadata. For instance:
 
-{{< highlight js>}}
+```js
     has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)
-{{< /highlight>}}
+```
 
 This example checks that the JWT token contains the metadata `user_id` and
 `enabled_days` with the macro `has()`, and then checks that today's weekday is within one of the allowed days to see the endpoint.
@@ -135,7 +140,7 @@ The following example snippets demonstrate how to check requests and responses.
 ### Example: Discard an invalid request before reaching the backend
 The following example demonstrates how to reject a user request that does not fulfill a specific expression, checking at the endpoint level that when `/nick/{nick}` is called, a constraining format applies. More specifically, the example requires that the parameter `{nick}` matches the expression `k.*`:
 
-{{< highlight json>}}
+```json
 {
     "endpoints": [
         {
@@ -150,14 +155,14 @@ The following example demonstrates how to reject a user request that does not fu
         }
     ]
 }
-{{< /highlight >}}
+```
 
 With this configuration, any request to `/nick/kate` or `/nick/kevin` will make it to the backend, while a request to `/nick/ray` will be immediately rejected (`backend` section omitted intentionally for simplification purposes)
 
 ### Example: Check if the backend response has a specific field or abort
 This example can be copied/pasted into a new configuration. The CEL validation happens at the backend level. After querying the backend, the CEL expression checks that a field `company` exists inside the response body. If the user does not have that field, the call to the endpoint will fail:
 
-{{< highlight json>}}
+```json
 {
     "version": 3,
     "endpoints": [
@@ -181,14 +186,14 @@ This example can be copied/pasted into a new configuration. The CEL validation h
         }
     ]
 }
-{{< /highlight >}}
+```
 
 Also, notice how we are accessing a `github` element in the data, a new attribute added by KrakenD thanks to the `group` functionality (it does not exist in the origin API). The takeaway is that the CEL evaluation is applied **after** KrakenD has processed the backend.
 
 ### Example: Time-based access
 Let's close the access to the API endpoint during the weekend:
 
-{{< highlight json>}}
+```json
 {
     "endpoint": "/weekdays",
     "extra_config": {
@@ -199,13 +204,13 @@ Let's close the access to the API endpoint during the weekend:
         ]
     }
 }
-{{< /highlight >}}
+```
 Note: The function `getDayOfWeek()` starts at `0` (Sunday), so the only days with a `mod <=4 ` are 0 and 6.
 
 ### Example: Use custom data from JWT payload
 Let's say that the JWT token the user sent contains an attribute named `enabled_days` in its payload. This attribute lists all the integers representing which days the resource can be accessed:
 
-{{< highlight json>}}
+```json
 {
     "endpoint": "/combination/{id}",
     "extra_config": {
@@ -216,13 +221,13 @@ Let's say that the JWT token the user sent contains an attribute named `enabled_
         ]
     }
 }
-{{< /highlight >}}
+```
 The expression checks that the JWT token has both the `user_id` and the `enabled_days` and that today is good.
 
 ### Example: Conditional call of sequential backends (a.k.a "skip backends")
 The following example is a bit more complex, as it **combines the sequential proxy with the CEL component**. You can copy and paste this example and start KrakenD with the `krakend run -d` flag.
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "host": [
@@ -291,7 +296,7 @@ The following example is a bit more complex, as it **combines the sequential pro
         }
     ]
 }
-{{< /highlight >}}
+```
 
 Here is what it does:
 

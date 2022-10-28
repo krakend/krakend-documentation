@@ -39,7 +39,7 @@ The `host` key defines the desired driver, and the actual host is usually set in
 
 For a **subscriber**:
 
-{{< highlight json >}}
+```json
 {
 	"host": ["schema://"],
 	"disable_host_sanitize": true,
@@ -49,12 +49,12 @@ For a **subscriber**:
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 
 For a **publisher**:
 
-{{< highlight json >}}
+```json
 {
 	"host": ["schema://"],
 	"disable_host_sanitize": true,
@@ -64,7 +64,7 @@ For a **publisher**:
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 See the specification of each individual technology.
 
@@ -72,7 +72,7 @@ See the specification of each individual technology.
 
 Set the envvar `RABBIT_SERVER_URL='guest:guest@localhost:5672'` and add in the configuration:
 
-{{< highlight json >}}
+```json
 {
 	"host": ["amqp://"],
 	"disable_host_sanitize": true,
@@ -82,7 +82,7 @@ Set the envvar `RABBIT_SERVER_URL='guest:guest@localhost:5672'` and add in the c
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 
 
@@ -98,7 +98,7 @@ The configuration you need to use is:
 
 Example:
 
-{{< highlight json >}}
+```json
 {
 	"host": ["gcppubsub://"],
 	"disable_host_sanitize": true,
@@ -108,7 +108,7 @@ Example:
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 
 ### NATS
@@ -124,7 +124,7 @@ No query parameters are supported.
 
 Example:
 
-{{< highlight json >}}
+```json
 {
 	"host": ["nats://"],
 	"disable_host_sanitize": true,
@@ -134,7 +134,7 @@ Example:
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 
 ### AWS SNS
@@ -142,7 +142,7 @@ Example:
 
 AWS SNS sets the `url` without any `host` or environment variables, e.g:
 
-{{< highlight json >}}
+```json
 {
 	"host": ["awssns:///arn:aws:sns:us-east-2:123456789012:mytopic"],
 	"disable_host_sanitize": true,
@@ -152,7 +152,7 @@ AWS SNS sets the `url` without any `host` or environment variables, e.g:
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 
 ### AWS SQS
@@ -162,7 +162,7 @@ AWS SQS sets the `url` without any `host` or environment variables, e.g:
 
 Url: `awssqs://sqs-queue-url`
 
-{{< highlight json >}}
+```json
 {
 	"host": ["awssqs://sqs.us-east-2.amazonaws.com/123456789012"],
 	"disable_host_sanitize": true,
@@ -172,7 +172,7 @@ Url: `awssqs://sqs-queue-url`
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 ### Azure Service Bus Topic and Subscription
 [Microsoft Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions) supports a set of cloud-based, message-oriented middleware technologies including reliable message queuing and durable publish/subscribe messaging. These "brokered" messaging capabilities can be thought of as decoupled messaging features that support publish-subscribe, temporal decoupling, and load balancing scenarios using the Service Bus messaging workload.
@@ -188,7 +188,7 @@ Note that for subscriptions, the subscription name must be provided in the `?sub
 
 Example:
 
-{{< highlight json >}}
+```json
 {
 	"host": ["azuresb://"],
 	"disable_host_sanitize": true,
@@ -198,7 +198,7 @@ Example:
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 ### RabbitMQ
 [RabbitMQ](https://www.rabbitmq.com/) is one of the most popular open source message brokers.
@@ -216,7 +216,7 @@ No query parameters are supported.
 
 Example:
 
-{{< highlight json >}}
+```json
 {
 	"host": ["rabbit://"],
 	"disable_host_sanitize": true,
@@ -226,7 +226,7 @@ Example:
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 ### Kafka
 [Apache Kafka](https://kafka.apache.org/) is a distributed streaming platform.
@@ -238,7 +238,7 @@ Kafka connection requires KrakenD >= `1.1`.
 
 **Kafka subscriptions**:
 
-{{< highlight json >}}
+```json
 {
 	"host": ["kafka://"],
 	"disable_host_sanitize": true,
@@ -248,10 +248,10 @@ Kafka connection requires KrakenD >= `1.1`.
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 **Kafka topics**:
-{{< highlight json >}}
+```json
 {
 	"host": ["kafka://"],
 	"disable_host_sanitize": true,
@@ -261,4 +261,4 @@ Kafka connection requires KrakenD >= `1.1`.
 		}
 	}
 }
-{{< /highlight >}}
+```

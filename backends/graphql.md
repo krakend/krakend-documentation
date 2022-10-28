@@ -105,7 +105,7 @@ In this approach, KrakenD gets in the middle to validate or rate limit requests,
 
 When working in this mode, all you need to do is to configure the GraphQL endpoint, and add as the backend your GraphQL. An example:
 
-{{< highlight json >}}
+```json
 {
     "endpoint": "/graphql",
 	"input_query_strings":[
@@ -121,7 +121,7 @@ When working in this mode, all you need to do is to configure the GraphQL endpoi
         }
     ]
 }
-{{< /highlight >}}
+```
 
 The previous example uses a set of recognized query strings to pass to the GraphQL server. You can also use `"input_query_strings":["*"]` to forward any query string. The exact configuration works with a `POST` method.
 
@@ -137,8 +137,7 @@ Create rest endpoints with fixed graphs you'd like to consume in the configurati
 
 The following example is a REST endpoint consuming data from 2 different subgraphs in parallel. You could add here any other KrakenD components you could need:
 
-{{< highlight json >}}
-
+```json
 {
     "endpoint": "/user-data/{id_user}",
     "backend": [
@@ -178,4 +177,4 @@ The following example is a REST endpoint consuming data from 2 different subgrap
         }
     ]
 }
-{{< /highlight >}}
+```

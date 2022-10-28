@@ -12,14 +12,14 @@ All KrakenD behavior depends on its configuration file(s). Although the configur
 
 ## Configuration file structure
 There are a large number of options you can put in this file. Let's focus now only on the main structure:
-{{< highlight json >}}
+```json
 {
     "$schema": "https://www.krakend.io/schema/v3.json",
     "version": 3,
     "endpoints": [],
     "extra_config": {}
 }
-{{< /highlight >}}
+```
 
 
 - `$schema`: Optional, which JSON schema is used to validate your configuration. Is used by ` krakend check --lint`
@@ -35,14 +35,14 @@ Inside the `endpoints`, you declare an array with every `endpoint` (the URL) the
 
 It looks like this:
 
-{{< highlight JSON >}}
+```json
 {
     "endpoints": [
         {
           "endpoint": "/v1/foo-bar",
           "backend": [
             {
-              "url_pattern": "/foo",
+              ```
               "host": [
                 "https://my.foo-api.com"
               ]
@@ -57,7 +57,7 @@ It looks like this:
         }
       ]
 }
-{{< /highlight >}}
+```
 
 The configuration above declares an endpoint `/v1/foo-bar`, which returns the result of merging the responses from two backends `https://my.foo-api.com/foo` and `https://my.bar-api.com/bar`. These two calls execute in parallel.
 
@@ -69,34 +69,34 @@ KrakenD is very modular and comes bundled with many components that extend the c
 Components declare in their source code a **unique namespace**. KrakenD registers the component during the startup, and it passes to the component the configuration found under a key matching the **namespace** inside the `extra_config` object.
 
 
-{{< highlight json >}}
+```json
     {
         "extra_config": {
           "component-1-namespace": {
             "some": "config"
           },
           "component-2-namespace": {
-            "another": "config"
+            ```
           }
         }
     }
-{{< /highlight >}}
+```
 
 For instance, the [extended logging component](/docs/logging/) uses the **namespace** `telemetry/logging`:
 
-{{< highlight JSON >}}
+```json
 {
     "version": 3,
     "extra_config": {
         "telemetry/logging": {
           "level": "WARNING",
           "prefix": "[KRAKEND]",
-          "syslog": false,
+          ```
           "stdout": true
         }
     }
 }
-{{< /highlight >}}
+```
 
 ### Placements for the `extra_config`
 The `extra_config` can appear in the root of the file and on other placements (or levels) as well. It depends entirely on **the scope** of every component and the nature of its functionality.
@@ -150,6 +150,6 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
         }]
     }]
 }
-{{< /highlight >}}
+```
 
 Check [this larger sample file](https://github.com/krakendio/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you can see an example on how to modify the application headers, configure the circuit breaker, or apply rate limits.

@@ -8,7 +8,7 @@ notoc: true
 How to make sure what you are downloading is legit.
 
 ## PGP
-We will check the detached signature [PGP]({{< param download_repo >}}/bin/krakend_v2.0_amd64.tar.gz.asc) against our package [KrakenD]({{< param download_repo >}}/bin/krakend_v2.0_amd64.tar.gz).
+We will check the detached signature [PGP]({{< product download_repo >}}/bin/krakend_v2.0_amd64.tar.gz.asc) against our package [KrakenD]({{< product download_repo >}}/bin/krakend_v2.0_amd64.tar.gz).
 
 {{< terminal title="Term" >}}
 gpg --verify krakend_v2.0_amd64.tar.gz.asc krakend_v2.0_amd64.tar.gz
@@ -43,7 +43,7 @@ Primary key fingerprint: {{< param pgp_fingerprint >}}
 
 ## SHA256
 
-To make sure the binary downloaded matches our SHA256 ensure the next 2 commands produce the same [SHA]({{< param download_repo >}}/bin/krakend_v2.0_amd64.tar.gz.sha256) output.
+To make sure the binary downloaded matches our SHA256 ensure the next 2 commands produce the same [SHA]({{< product download_repo >}}/bin/krakend_v2.0_amd64.tar.gz.sha256) output.
 
 {{< terminal title="Term" >}}
 shasum -a 256 -b krakend_v2.0_amd64.tar.gz
@@ -51,5 +51,5 @@ shasum -a 256 -b krakend_v2.0_amd64.tar.gz
 
 Compare it to:
 {{< terminal title="Term" >}}
-curl {{< param download_repo >}}/bin/krakend_v2.0_amd64.tar.gz.sha256
+curl {{< product download_repo >}}/bin/krakend_v2.0_amd64.tar.gz.sha256
 {{< /terminal >}}

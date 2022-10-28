@@ -27,7 +27,7 @@ The way this library works is quite simple. You create a folder with all the dif
 
 For instance:
 
-{{< highlight json >}}
+```json
 {
 	"in": {
 		"method": "GET",
@@ -48,7 +48,7 @@ For instance:
 		}
 	}
 }
-{{< /highlight >}}
+```
 
 In the example above, the response must contain the `content-type` and `X-Krakend-Completed` with the specified values, and the `Cache-Control` cannot be present.
 

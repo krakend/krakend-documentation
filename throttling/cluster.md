@@ -21,7 +21,7 @@ Let's say that you have a cluster deployed with three instances of KrakenD. If y
 
 When you have to do small math like this, through the [Flexible Configuration](/docs/configuration/flexible-config/), you might inject environment variables when starting KrakenD with the total number of machines you have. For instance:
 
-{{< highlight tpl >}}
+```tpl
 {
     "endpoint": "/limited-endpoint",
     "extra_config": {
@@ -30,7 +30,7 @@ When you have to do small math like this, through the [Flexible Configuration](/
         }
     }
 }
-{{< /highlight >}}
+```
 
 You can execute krakend like this:
 
@@ -43,7 +43,7 @@ NUM_PODS=3 krakend check -c krakend.json
 
 And you get in the compiled.json the following content:
 
-{{< highlight json >}}
+```json
 {
     "endpoint": "/limited-endpoint",
     "extra_config": {
@@ -52,4 +52,4 @@ And you get in the compiled.json the following content:
         }
     }
 }
-{{< /highlight >}}
+```

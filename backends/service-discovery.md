@@ -33,7 +33,7 @@ When the consumed hosts are behind a balancer or a service name, write a single 
 
 You don't need to declare anything other than the `host` list to use static resolution. However, you can also add the `"sd": "static"` property in the backend configuration. It is the default value when `sd` is not declared). Example:
 
-{{< highlight json >}}
+```json
 {
 "backend": [
     {
@@ -46,7 +46,7 @@ You don't need to declare anything other than the `host` list to use static reso
     }
 ]
 }
-{{< /highlight >}}
+```
 
 
 ## DNS SRV Service Discovery (Kubernetes/Consul)
@@ -73,7 +73,7 @@ Add these keys in the `backend` section of your configuration. If there is anoth
 
 For instance:
 
-{{< highlight json >}}
+```json
 {
     "backend": [
         {
@@ -86,7 +86,7 @@ For instance:
         }
     ]
 }
-{{< /highlight >}}
+```
 
 ### Priority and weight importance on balancing
 The `SRV` record provides the hostname, port, priority, and weight that KrakenD uses to balance. KrakenD reads these values **every 30 seconds**and generates an internal balancing list.

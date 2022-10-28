@@ -18,7 +18,7 @@ From here you need to create a `NodePort` and send all the traffic to KrakenD.
 ## Deployment definition YAML
 The KrakenD `deployment` definition, in a file called `deployment-definition.yaml`:
 
-{{< highlight yaml >}}
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,13 +44,13 @@ spec:
         env:
         - name: KRAKEND_PORT
           value: "8080"
-{{< /highlight >}}
+```
 
 
 ## Service definition yaml
 
 The KrakenD `service` definition, in a file called `service-definition.yaml`:
-{{< highlight yaml >}}
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -64,7 +64,7 @@ spec:
     protocol: TCP
   selector:
     app: krakend
-{{< /highlight >}}
+```
 
 ## Registering the service
 

@@ -41,7 +41,7 @@ See [Async Agents](/docs/async/) to consume messages without an endpoint.
 
 The needed configuration to run a consumer is:
 
-{{< highlight json >}}
+```json
 {
     "backend": [{
         "host": ["amqp://guest:guest@myqueue.host.com:5672"],
@@ -62,15 +62,6 @@ The needed configuration to run a consumer is:
         }
     }]
 }
-{{< /highlight >}}
+```
 
-- `name` - *string* as the queue name
-- `exchange` - *string* the exchange name (must have a **topic** type if already exists).
-- `routing_key` - *list*: The list of routing keys you will use to consume messages.
-- `durable` - *bool* `true` is recommended, but depends on the use case. Durable queues will survive server restarts and remain when there are no remaining consumers or bindings.
-- `delete` - *bool* `false` is recommended to avoid deletions when the consumer is disconnected
-- `no_wait` - *bool*: When true, do not wait for the server to confirm the request and immediately begin deliveries. If it is not possible to consume, a channel exception will be raised and the channel will be closed.
-- `prefetch_count` - *int* (optional): Is the number of messages you want to prefetch prior to consume them.
-- `prefetch_size` - *int* (optional): Is the number of bytes you want to use to prefetch messages.
-- `no_local` - *bool* (optional) - The no_local flag is not supported by RabbitMQ.
-- `auto_ack` - *bool*. When KrakenD retrieves the messages, regardless of the success or failure of the operation, it marks them as `ACK`. Defaults to `false`.
+{{< schema data="backend/amqp/consumer.json" >}}

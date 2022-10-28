@@ -3,7 +3,7 @@ lastmod: 2022-09-28
 date: 2020-11-17
 linktitle: Grafana Dashboard
 title: Preconfigured Grafana dashboard
-weight: 20
+weight: 30
 aliases: ["/docs/extended-metrics/grafana/"]
 menu:
   community_current:
@@ -62,7 +62,7 @@ Grafana does not require any specific configuration on KrakenD, but its data sou
 
 For the data sources listed above, you will need to add the [InfluxDb exporter](/docs/telemetry/influxdb/)into your `krakend.json`, which is a configuration like this:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "extra_config": {
@@ -80,7 +80,7 @@ For the data sources listed above, you will need to add the [InfluxDb exporter](
     }
   }
 }
-{{< /highlight >}}
+```
 
 For more in-depth explanation, see the [InfluxDB exporter configuration](/docs/telemetry/influxdb/)
 

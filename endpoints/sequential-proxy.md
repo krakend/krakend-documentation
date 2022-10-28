@@ -31,7 +31,7 @@ The sequential proxy allows you to **chain backend requests**.
 ## Chaining the requests
 All you need to enable the sequential proxy is add in the endpoint definition the following configuration:
 
-{{< highlight json >}}
+```json
 {
     "endpoint": "/hotels/{id}",
     "extra_config": {
@@ -40,14 +40,14 @@ All you need to enable the sequential proxy is add in the endpoint definition th
           }
       }
 }
-{{< /highlight >}}
+```
 
 
 When the sequential proxy is enabled, the `url_pattern` of every backend can use a new variable that references the **resp**onse of a previous API call. The variable has the following construction:
 
-{{< highlight js >}}
+```js
 {resp0_XXXX}
-{{< /highlight >}}
+```
 
 
 
@@ -62,18 +62,18 @@ It's easier to understand with the example of the graph:
 
 KrakenD calls a backend `/hotels/{hotel_id}` that returns data for the requested hotel. When we request for the hotel ID `25` the backend service responds with the hotel data, including a `destination_id` that is a relationship identifier. The output for `GET /hotels/25` is like the following:
 
-{{< highlight json >}}
+```json
 {
     "hotel_id": 25,
     "name": "Hotel California",
     "destination_id": 1034
 }
-{{< /highlight >}}
+```
 
 
 KrakenD waits for the response of the backend and looks for the field `destination_id`. And then injects the value in the next backend call to `/destinations/{destination_id}`. In this case the next call is `GET /destinations/1034`, and the response is:
 
-{{< highlight json >}}
+```json
 {
     "destination_id": 1034,
     "destinations": [
@@ -82,12 +82,12 @@ KrakenD waits for the response of the backend and looks for the field `destinati
         "OAK"
     ]
 }
-{{< /highlight >}}
+```
 
 
 Now KrakenD has both responses from the backends and can merge the data, returning the following object to the user:
 
-{{< highlight json >}}
+```json
 {
     "hotel_id": 25,
     "name": "Hotel California",
@@ -98,12 +98,12 @@ Now KrakenD has both responses from the backends and can merge the data, returni
         "OAK"
     ]
 }
-{{< /highlight >}}
+```
 
 
 The configuration needed for this example is:
 
-{{< highlight json >}}
+```json
 {
     "endpoint": "/hotel-destinations/{id}",
     "backend": [
@@ -126,7 +126,7 @@ The configuration needed for this example is:
         }
     }
 }
-{{< /highlight >}}
+```
 
 
 

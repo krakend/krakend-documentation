@@ -13,11 +13,11 @@ The `/__debug/` endpoint is available when you start the server with the `-d` fl
 
 The endpoint can be used as a **fake backend** and is very useful to see the interaction between the gateway and the backends as its activity is printed in the log using the `DEBUG` log level. The endpoint returns this content:
 
-{{< highlight json >}}
+```json
 {
   "message": "pong"
 }
-{{< /highlight >}}
+```
 
 
 When developing, add KrakenD itself as another backend using the `/__debug/` endpoint so you can see exactly what headers and query string parameters your backends are receiving.
@@ -39,7 +39,7 @@ We are going to test the following endpoints:
 
 To test it right now, save the content of this file in a `krakend-test.json` and start the server with the `-d` flag:
 
-{{< highlight json >}}
+```json
 {
   "version": 3,
   "port": 8080,
@@ -79,7 +79,7 @@ To test it right now, save the content of this file in a `krakend-test.json` and
     }
   ]
 }
-{{< /highlight >}}
+```
 
 
 Start the server:

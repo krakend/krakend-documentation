@@ -16,7 +16,7 @@ The [Logstash](https://www.elastic.co/es/logstash/) integration prints **KrakenD
 ## Configuration
 The configuration you need to enable logstash is:
 
-{{< highlight json >}}
+```json
 {
     "version": 3,
     "extra_config": {
@@ -29,7 +29,7 @@ The configuration you need to enable logstash is:
         }
     }
 }
-{{< /highlight >}}
+```
 
 When the `format` of the logging format is `logstash` then the output of the application log (not the access log) is printed in JSON format, as follows:
 

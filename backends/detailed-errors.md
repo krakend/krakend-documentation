@@ -28,7 +28,7 @@ If you prefer revealing these details to the client, you can choose to show them
 
 Place the following configuration inside the `backend` configuration:
 
-{{< highlight json >}}
+```json
 {
 	"url_pattern": "/return-my-errors",
 	"extra_config": {
@@ -37,21 +37,21 @@ Place the following configuration inside the `backend` configuration:
         }
     }
 }
-{{< /highlight >}}
+```
 
 Notice that `return_error_details` sets an alias for this backend.
 
 ## Response for failing backends
 When a backend fails, you'll find an object named `error_` + its `backend_alias` containing the detailed errors of the backend. The returned structure on error contains the status code and the body:
 
-{{< highlight json >}}
+```json
 {
 	"error_backend_alias": {
 		"http_status_code": 404,
 		"http_body": "404 page not found\\n"
 	}
 }
-{{< /highlight >}}
+```
 
 
 
@@ -61,7 +61,7 @@ If there are no errors, the key won't exist.
 ## Example
 The following configuration sets an endpoint with two backends that return its errors in two different keys:
 
-{{< highlight json >}}
+```json
 {
 		"endpoint": "/detail_error",
 		"backend": [
@@ -85,11 +85,11 @@ The following configuration sets an endpoint with two backends that return its e
 			}
 		]
     }
-{{< /highlight >}}
+```
 
 Let's say your `backend_b` has failed, but your `backend_a` worked just fine. The client response could look like this:
 
-{{< highlight json >}}
+```json
 {
 	"error_backend_b": {
 		"http_status_code": 404,
@@ -97,4 +97,4 @@ Let's say your `backend_b` has failed, but your `backend_a` worked just fine. Th
 	},
 	"foo": 42
 }
-{{< /highlight >}}
+```

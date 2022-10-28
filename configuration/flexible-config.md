@@ -85,14 +85,14 @@ In the `FC_SETTINGS` directory, you can save different `.json` files with data s
 
 For instance, if you have a file `db.json` with the following content:
 
-{{< highlight json >}}
+```json
 {
     "host": "192.168.1.23",
     "port": 8766,
     "pass": "a-p4ssw0rd",
     "label": "production"
 }
-{{< /highlight >}}
+```
 
 You can access particular settings like using this syntax: `{{ .db.host }}`.
 
@@ -105,27 +105,27 @@ When you are doing a loop with a `range`, the variables inside are relative to t
 #### Insert structures from settings files
 When instead of a single value you need to insert a **JSON structure** (several elements), you need to use `marshal`.
 
-{{< highlight go-text-template >}}
+```go-text-template
 {{ marshal .db }}
-{{< /highlight >}}
+```
 
 The example would write the entire content of the `db.json` file.
 
 #### Include an external file
 To insert the content of an external partial file in-place use:
 
-{{< highlight go-text-template >}}
+```go-text-template
 {{ include "partial_file_name.txt" }}
-{{< /highlight >}}
+```
 
 **The content inside the partial template is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension.
 
 #### Include and process a sub-template
 While the `include` is only meant to paste the content of a plain text file, the `template` gives you all the power of Go templating ([documentation](https://golang.org/pkg/text/template/)). The syntax is as follows:
 
-{{< highlight go-text-template >}}
+```go-text-template
 {{ template "template_name.tmpl" context }}
-{{< /highlight >}}
+```
 
 The template `template_name.tmpl` is executed and processed. The value of `context` is passed in the template as the context, meaning that the sub-template can access it using the dot `{{ . }}`. This context variable could be an object, such as `{{ template "environment" .db.label }}`, but it can also be another type, like a string: ``{{ template "environment" "production" }}`.
 
@@ -192,19 +192,19 @@ To demonstrate the usage of the flexible configuration, we are going to reorgani
 
 In this file, we have written the content of the rate limit configuration for a backend. This file is inserted when included "as is":
 
-{{< highlight go >}}
+```go
 "qos/ratelimit/proxy": {
     "max_rate": "100",
     "capacity": "100"
 }
-{{< /highlight >}}
+```
 
 
 **settings/service.json**
 
 In the settings directory, we write all the files whose values can be accessed as variables.
 
-{{< highlight json >}}
+```json
 {
     "port": 8090,
     "default_hosts": [
@@ -223,13 +223,13 @@ In the settings directory, we write all the files whose values can be accessed a
         }
     }
 }
-{{< /highlight >}}
+```
 
 **settings/endpoint.json**
 
 This file declares a couple of endpoints that feed on a single backend:
 
-{{< highlight json >}}
+```json
 {
     "example_group": [
         {
@@ -242,7 +242,7 @@ This file declares a couple of endpoints that feed on a single backend:
         }
     ]
 }
-{{< /highlight >}}
+```
 
 
 **krakend.json**

@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-03
+lastmod: 2022-10-24
 date: 2020-11-16
 notoc: true
 linktitle: OpenCensus Agent
@@ -30,7 +30,7 @@ Enabling it only requires you to add the `ocagent` exporter in the [opencensus m
 
 The following configuration snippet sends the data:
 
-{{< highlight json >}}
+```json
 {
   "extra_config": {
     "telemetry/opencensus": {
@@ -48,15 +48,13 @@ The following configuration snippet sends the data:
       }
     }
 }
-{{< /highlight >}}
+```
 
-- `address` (*string*): The address of your Azure Monitor collector.
-- `service_name` (*string*): An identifier of your service.
-- `reconnection` (*time*): The reconnection time, you need to specify its units, examples: `1000ms`, `2s`, `1m`
-- `insecure` (*bool*): Whether the connection can be established in plain or not.
-- `enable_compression` (*bool*): Whether to send data compressed or not.
-- `headers` (*object*): List of keys and values for the headers sent:
-  - header key: *string*
-  - header value: *string*
 
-See also the [additional settings](/docs/telemetry/opencensus/) of the Opencensus module that can be declared.
+As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
+
+{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
+
+Then, the `exporters` key must contain an `ocagent` entry with the following properties:
+
+{{< schema data="telemetry/opencensus.json" property="exporters" filter="ocagent" >}}
