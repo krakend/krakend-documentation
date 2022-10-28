@@ -15,7 +15,7 @@ Setting the `encoding` is an important part of the backend definition, as it inf
 Each backend can reply with a different encoding and KrakenD does not have any problem working with mixed encodings at the same time. You can use the following `encoding` in each `backend` section:
 
 - `json`
-- `fast-json` (Enterprise only) 30% faster on objects, 140% faster on collections.
+- `fast-json` (Enterprise only)
 - `safejson`
 - `xml`
 - `rss`
