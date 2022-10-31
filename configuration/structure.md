@@ -42,7 +42,6 @@ It looks like this:
           "endpoint": "/v1/foo-bar",
           "backend": [
             {
-              ```
               "host": [
                 "https://my.foo-api.com"
               ]
