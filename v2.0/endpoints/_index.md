@@ -77,7 +77,7 @@ You might have envisioned KrakenD as a proxy and expected its `endpoint` declara
 For instance, you declared and `"endpoint": "/user/{id}"` and you expected to resolve URLs like `/user/john/profile/preferences`, but you are getting a *404* instead. There are two solutions to this problem:
 
 1. You declare all possible endpoints: `/user/{id}`, `/user/{id}/{level2}`, `/user/{id}/{level2}/{level3}`, etc.
-2. You use a [Wildcard](/docs/v2.0/enterprise/endpoints/wildcard/) (Enterprise only)
+2. You use a [Wildcard](/docs/enterprise/v2.0/endpoints/wildcard/) (Enterprise only)
 
 
 ### Endpoints listening to multiple methods

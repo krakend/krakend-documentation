@@ -32,5 +32,5 @@ The following telemetry third-party systems are supported:
 
 Plus the Enterprise-only exporters:
 
-- [Newrelic](/docs/v2.0/enterprise/telemetry/newrelic/)
-- [Instana](/docs/v2.0/enterprise/telemetry/instana/)
+- [Newrelic](/docs/enterprise/v2.0/telemetry/newrelic/)
+- [Instana](/docs/enterprise/v2.0/telemetry/instana/)

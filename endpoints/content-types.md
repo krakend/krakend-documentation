@@ -42,7 +42,7 @@ The following `output_encoding` strategies are available to choose from for ever
 
 - `json`: This is the **default encoding** when no `output_encoding` is declared or when you pass an invalid option. The endpoint always returns a JSON object to the client, no matter what the `encoding` of your backend is.
 - `fast-json`: Same as `json` but it's ~140% faster on collections and ~30% faster on objects (average tests). Only available on the Enterprise Edition. You will notice the difference in speed of the fast-json encoding when the payloads increase in size (a small payload has an insignificant comparison to `json` encoding).
-- `json-collection`: Returning an array or collection is not treated equally to an object. When the endpoint must return a JSON collection `[...]` instead of an object `{...}`, you must use this output. The backend response expects an object named `collection`, but this is automatically done by KrakenD when you use in the `backend` the [`is_collection` or `safejson`](/docs/backends/supported-encodings/]).
+- `json-collection`: Returning an array or collection is not treated equally to an object. When the endpoint must return a JSON collection `[...]` instead of an object `{...}`, you must use this output. The backend response expects an object named `collection`, but this is automatically done by KrakenD when you use in the `backend` the [`is_collection` or `safejson`](/docs/backends/supported-encodings/).
 
 ### Working with non-JSON
 
