@@ -29,6 +29,10 @@ To start KrakenD with TLS you need to generate the certificate and provide both 
 }
 ```
 
+If you want to enable mTLS see [Mutual TLS configuration](/docs/authorization/mutual-authentication/)
+
+All TLS options are described below:
+
 {{< schema data="tls.json" >}}
 
 The list of cipher suites with its values is:
