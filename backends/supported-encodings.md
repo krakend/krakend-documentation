@@ -36,7 +36,7 @@ Follow this table to determine how to treat your backend content:
 | JSON inside an array/collection (`[]`) | `json` or `fast-json` with `"is_collection": true` |
 | JSON with variable types               | `safejson`                          |
 | XML                                    | `xml`                               |
-| RSS                                    | `rss`                               |
+| RSS Feed (types Atom, RSS or JSON )    | `rss`                               |
 | Not an object, but a string            | `string`                            |
 | Nevermind, just proxy                  | `no-op` ([read how](/docs/endpoints/no-op/)) |
 
