@@ -198,7 +198,7 @@ This will generate responses like this one:
     "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
   }
 }
-```
+{{< /highlight >}}
 
 ## Mapping
 
@@ -225,7 +225,6 @@ Instead of showing the `email` field we want to name it `personal_email`:
     }
   ]
 }
-
 ```
 
 Will generate responses like this one:
