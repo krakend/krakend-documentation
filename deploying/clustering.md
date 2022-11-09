@@ -28,7 +28,7 @@ Having a KrakenD cluster provides these immediate **benefits**:
 ## Running the cluster
 Running a cluster of machines is a straightforward process that only requires two conditions:
 
-- Having a balancer in front of the machines (e.g., ELB, Haproxy, Kubernetes...)
+- Having a [balancer in front of the machines](/docs/throttling/load-balancing/) (e.g., ELB, Haproxy, Kubernetes...)
 - Run two or more KrakenD services with the same configuration file
 
 If you are in the cloud, something like an [ELB](https://aws.amazon.com/elasticloadbalancing) or equivalent does the job. On-premises users can use [HAProxy](http://www.haproxy.org/). When you have your load balancer in place, register all the KrakenD instances so they can start receiving traffic.

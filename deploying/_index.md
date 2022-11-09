@@ -20,7 +20,7 @@ KrakenD can run in different regions and datacenters transparently without any p
 [Setup a cluster of machines](/docs/deploying/clustering/)
 
 ### Place a balancer in front of KrakenD
-Put a load balancer in front of KrakenD to distribute traffic between the different nodes of the cluster (Kubernetes already does this for you). Use always at least two KrakenD instances for High Availability.
+Put a [load balancer](/docs/throttling/load-balancing/) in front of KrakenD to distribute traffic between the different nodes of the cluster (Kubernetes already does this for you). Use always at least two KrakenD instances for High Availability.
 
 ### Server dimensioning
 Dimension KrakenD nodes according to your expected needs and throughput.
@@ -34,7 +34,7 @@ The API gateway doesn't need to be unique. We recommend using an independent Kra
 Whenever possible, enable HTTP2 between your balancer and KrakenD API gateway for the best performance. There is nothing additional you need to configure in KrakenD.
 
 ### SSL Certificates
-Even that you can start KrakenD with SSL, you can add your public SSL certificate in the load balancer or PaaS and use **internal certificates**, or even no certificates at all (termination), between the load balancer and KrakenD.
+Even that you can start KrakenD with SSL, you can add your public SSL certificate in the load balancer or PaaS and use **internal certificates**, or even no certificates at all (termination), between the [load balancer](/docs/throttling/load-balancing/) and KrakenD.
 
 ### Prepare for failure
 Add a [circuit breaker](/docs/backends/circuit-breaker/) to your backends to avoid KrakenD keep pushing a failing system and throttle down for a while. If you know that a certain backend does not support more than a number of requests, add a maximum number of requests using the [proxy rate limit](/docs/backends/rate-limit/).
