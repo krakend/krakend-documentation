@@ -40,7 +40,7 @@ The configuration you need to add is this, and explained below:
           "level": "INFO",
           "prefix": "[KRAKEND]",
           "syslog": false,
-          "stdout": true
+          "stdout": false
       }
     }
 }
