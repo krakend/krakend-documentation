@@ -20,9 +20,9 @@ Its core functionality is to create an API that acts as an aggregator of many mi
 
 KrakenD needs **no programming** as it offers a declarative way to create the endpoints. It is well structured and layered, and open to extending its functionality using plug-and-play middleware developed by the community or in-house.
 
-KrakenD focuses on being a pure API gateway, not coupled to the HTTP transport layer, and it has been in production in large Internet businesses in Europe since early 2017. [See who is using KrakenD and use cases](/case-study/)
+KrakenD focuses on being a pure Layer 7 API gateway, not coupled to the HTTP transport layer, and it has been in production in large Internet businesses since early 2017. [See who is using KrakenD and use cases](/case-study/)
 
-KrakenD is written in [Go](https://golang.org/). Our engine joined [The Linux Foundation on 2021](/blog/krakend-framework-joins-the-linux-foundation/) codenamed as the [Lura Project](https://luraproject.org/) (previously known as the *Krakend Framework*)
+KrakenD is written in [Go](https://golang.org/). Our engine joined [The Linux Foundation on 2021](/blog/krakend-framework-joins-the-linux-foundation/) codenamed as the [Lura Project](https://luraproject.org/) and was previously known as the *Krakend Framework*.
 
 ![Lura by The Linux Foundation](/images/documentation/lura-by-tlf.png)
 
@@ -32,8 +32,7 @@ When consumers of API content (especially in microservices) query backend servic
 
 KrakenD is an **API Gateway** that sits between the client and all the source servers, adding a new layer that removes all the complexity to the clients, providing them only the information that the UI needs.
 
-KrakenD acts as an **aggregator** of many sources into single endpoints and allows you to group, wrap, transform and shrink responses. Additionally, it supports a myriad of middleware and plugins that allow you to extend the functionality, such as adding OAuth2 authorization, security layers, circuit breaking, rate-limiting, connectivity, logging, metrics, traces, and much more.
-
+KrakenD **goes beyond other tools** that are mere reverse proxies, and acts as an **aggregator** of many sources, allowing you to consume in a single call many endpoints. It allows you to group, validate, wrap, transform and shrink requests and responses. Additionally, it supports a myriad of middleware and plugins that allow you to extend the functionality, such as adding OAuth2 authorization, security layers, circuit breaking, rate-limiting, connectivity, logging, metrics, traces, and much more.
 
 ### A practical example
 A mobile or javascript developer needs to construct a single front page that requires data from several calls to their backend services, e.g.:
