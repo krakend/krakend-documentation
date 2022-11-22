@@ -95,7 +95,7 @@ That being said:
 - `method=get` + `type=query`: Generates a querystring using any `{variables}` in the endpoint
 - `method=post` + `type=query`: Generates a body using any `{variables}` in the endpoint
 - `method=get` + `type=mutation`: Generates a querystring including any variables in the body of the REST call
-- `method=post` + `type=query`: Generates a body including any variables in the REST body plus the ones in the configuration
+- `method=post` + `type=mutation`: Generates a body including any variables in the REST body plus the ones in the configuration
 
 
 ## GraphQL gateway as a proxy
