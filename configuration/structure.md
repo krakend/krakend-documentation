@@ -118,7 +118,7 @@ The following code is an example defining two simultaneous rate limiting strateg
 
 Notice how `extra_config` is present in the endpoints and backend scopes.
 
-{{< highlight JSON "hl_lines=3 6 11 17" >}}
+```json
 {
     "version": 3,
     "endpoints": [

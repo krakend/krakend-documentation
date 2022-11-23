@@ -28,6 +28,12 @@ The best experience consumers can have with KrakenD API is by letting the system
 
 The sequential proxy allows you to **chain backend requests**.
 
+{{< note title="Chained calls are considered an anti-pattern" type="info" >}}
+Making use of sequential calls is considered an anti-pattern. This is because when you make a service dependent on the other, you are increasing the latency of the service, decreasing its performance, and augmenting its error rate.
+
+For instance, if you have three backends with an error rate of 10% each when calling them in series, it produces an error rate of 27%.
+{{< /note >}}
+
 ## Chaining the requests
 All you need to enable the sequential proxy is add in the endpoint definition the following configuration:
 
