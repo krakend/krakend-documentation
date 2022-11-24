@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-09-26
+lastmod: 2022-11-24
 date: 2018-11-11
 toc: true
 linktitle: Sequential Proxy (chain reqs.)
@@ -60,13 +60,15 @@ When the sequential proxy is enabled, the `url_pattern` of every backend can use
 Where `0` is the index of the specific backend you want to access ( `backend` array), and where `XXXX` is the attribute name you want to inject from the previous call.
 
 {{< note title="Unsafe operations" >}}
-If you use unsafe methods (not a `GET`), they can only be placed in the last position of the sequence. Sequences are meant to be used in read-only operations except for the last call. Sequence is not meant to be used in distributed transactions.
+If you use unsafe methods (not a `GET`), they can only be placed in the last position of the sequence. Sequences are meant to be used in read-only operations except for the last call. A sequence is not meant to be used in distributed transactions.
 {{< /note >}}
 
 ## Example
 It's easier to understand with the example of the graph:
 
-KrakenD calls a backend `/hotels/{hotel_id}` that returns data for the requested hotel. When we request for the hotel ID `25` the backend service responds with the hotel data, including a `destination_id` that is a relationship identifier. The output for `GET /hotels/25` is like the following:
+![Chained call](/images/documentation/krakend-sequential-call.png)
+
+The user calls the gateway with an URL like `/hotel-destinations/{id}`, which needs to fetch the hotel information and all its associated destinations. Let's say the ID they request is `25`. The gateway calls a backend `/hotels/25` that returns data for the requested hotel, including a `destination_id` field that is a relationship identifier. The output for `GET /hotels/25` is like the following:
 
 ```json
 {
@@ -76,8 +78,7 @@ KrakenD calls a backend `/hotels/{hotel_id}` that returns data for the requested
 }
 ```
 
-
-KrakenD waits for the response of the backend and looks for the field `destination_id`. And then injects the value in the next backend call to `/destinations/{destination_id}`. In this case the next call is `GET /destinations/1034`, and the response is:
+KrakenD waits for the backend response and injects the value of `destination_id` in the URL of the next backend call. In this case, the next call is `GET /destinations/1034`, and the response is:
 
 ```json
 {
@@ -90,8 +91,7 @@ KrakenD waits for the response of the backend and looks for the field `destinati
 }
 ```
 
-
-Now KrakenD has both responses from the backends and can merge the data, returning the following object to the user:
+Now KrakenD has both responses from the backends and can merge the data, returning the following aggregated object to the user:
 
 ```json
 {
@@ -106,23 +106,25 @@ Now KrakenD has both responses from the backends and can merge the data, returni
 }
 ```
 
-
 The configuration needed for this example is:
 
 ```json
 {
     "endpoint": "/hotel-destinations/{id}",
     "backend": [
-        { <--- Index 0
+        {
+            "@comment": "This is the index position 0",
             "host": [
                 "https://hotels.api"
             ],
             "url_pattern": "/hotels/{id}"
         },
-        { <--- Index 1
+        {
+            "@comment": "This is the index position 1",
             "host": [
                 "https://destinations.api"
             ],
+            "@comment2": "resp0_ is the response of index position 0",
             "url_pattern": "/destinations/{resp0_destination_id}"
         }
     ],
@@ -133,7 +135,5 @@ The configuration needed for this example is:
     }
 }
 ```
-
-
 
 The key here is the variable `{resp0_destination_id}` that refers to `destination_id` for the backend with index `0` (first in the list).
