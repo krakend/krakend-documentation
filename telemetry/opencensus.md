@@ -45,7 +45,7 @@ The Opencensus needs at least an exporter to work, although multiple exporters c
 
 Every exporter has its own configuration and it's described in its section.
 
-By default, **all exporters sample the 100% of the requests received every second**, but this can be changed by specifying more configuration:
+By default, **all exporters use a sample_rate=0**, meaning that they won't report anything, but this can be changed by specifying the de configuration:
 
 ```json
 {
@@ -71,11 +71,3 @@ By default, **all exporters sample the 100% of the requests received every secon
 
 {{< schema data="telemetry/opencensus.json" norecurse="exporters">}}
 
-
-- `sample_rate` is the percentage of sampled requests. A value of `100` means that all requests are exported (100%). If you are processing a huge amount of traffic you might want to sample only a part of what's going on.
-- `reporting_period` is the number of **seconds** passing between reports
-- `exporters` is a key-value with all the exporters you want to use. See each exporter configuration for the underlying keys.
-- `enabled_layers` let you specify what data you want to export. All layers are enabled by default:
-  - Use `backend` to report the activity between KrakenD and your services
-  - Use `router` to report the activity between end-users and KrakenD
-  - Use `pipe` to report the activity at the beginning of the proxy layer. It gives a more detailed view of the internals of the pipe between end-users and KrakenD.
