@@ -34,6 +34,8 @@ The following configuration snippet sends data to your Datadog:
       "version": 3,
       "extra_config": {
         "telemetry/opencensus": {
+          "sample_rate": 100,
+          "reporting_period": 0,
           "exporters": {
             "datadog": {
               "tags": [

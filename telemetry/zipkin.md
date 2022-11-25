@@ -30,6 +30,8 @@ The following configuration snippet sends data to your Zipkin:
   "version": 3,
   "extra_config": {
     "telemetry/opencensus": {
+      "sample_rate": 100,
+      "reporting_period": 0,
       "exporters": {
         "zipkin": {
           "collector_url": "http://192.168.99.100:9411/api/v2/spans",

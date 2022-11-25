@@ -53,7 +53,7 @@ By default, **all exporters use a sample_rate=0**, meaning that they won't repor
     "extra_config": {
         "telemetry/opencensus": {
             "sample_rate": 100,
-            "reporting_period": 1,
+            "reporting_period": 0,
             "enabled_layers": {
                 "backend": true,
                 "router": true,

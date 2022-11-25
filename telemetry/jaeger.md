@@ -29,6 +29,8 @@ The following configuration snippet sends data to your Jaeger:
 {
   "extra_config":{
     "telemetry/opencensus": {
+      "sample_rate": 100,
+      "reporting_period": 0,
       "exporters": {
         "jaeger": {
           "endpoint": "http://192.168.99.100:14268/api/traces",

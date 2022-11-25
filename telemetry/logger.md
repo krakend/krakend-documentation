@@ -29,6 +29,8 @@ The following configuration snippet enables the logger:
 {
   "extra_config":{
     "telemetry/opencensus": {
+        "sample_rate": 100,
+        "reporting_period": 0,
         "exporters": {
           "logger": {
               "stats": true,

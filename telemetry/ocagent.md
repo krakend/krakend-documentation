@@ -34,6 +34,8 @@ The following configuration snippet sends the data:
 {
   "extra_config": {
     "telemetry/opencensus": {
+      "sample_rate": 100,
+      "reporting_period": 0,
       "exporters": {
        "ocagent": {
           "address": "collector",
