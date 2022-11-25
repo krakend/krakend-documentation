@@ -55,9 +55,7 @@ When the sequential proxy is enabled, the `url_pattern` of every backend can use
 {resp0_XXXX}
 ```
 
-
-
-Where `0` is the index of the specific backend you want to access ( `backend` array), and where `XXXX` is the attribute name you want to inject from the previous call.
+Where `0` is the index of the specific `backend` you want to access (`0` is the first backend), and where `XXXX` is the attribute name you want to inject from the response of the previous call. You can access **nested objects** of the response using the dot notation, for example `{resp0_user.hash}` will retrieve the value `abcdef` from the response `{"user": { "hash": "abcdef }}`. **You cannot access nested objects inside arrays or collections, they must be objects**.
 
 {{< note title="Unsafe operations" >}}
 If you use unsafe methods (not a `GET`), they can only be placed in the last position of the sequence. Sequences are meant to be used in read-only operations except for the last call. A sequence is not meant to be used in distributed transactions.
