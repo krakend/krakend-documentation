@@ -9,7 +9,7 @@ title: The `/__debug/` endpoint
 weight: 35
 notoc: true
 ---
-The `/__debug/` endpoint is available when you start the server with the `-d` flag.
+The `/__debug/` endpoint is available when you start the server with the `-d` flag, or when you add the `debug_endpoint=true` in the configuration.
 
 The endpoint can be used as a **fake backend** and is very useful to see the interaction between the gateway and the backends as its activity is printed in the log using the `DEBUG` log level. The endpoint returns this content:
 
@@ -26,7 +26,14 @@ The debug endpoint might save you much trouble, as your application might not wo
 
 For instance, your client might be sending a `Content-Type` or `Accept` header and these are perhaps necessary for the proper functioning of your backend, but unless these are recognized headers by the gateway (they are in `input_headers`), they are not going to reach the backend ever. Seeing the specific headers and parameters in the log clears all the doubts, and you can reproduce the call and conditions easily.
 
-## Debug endpoint configuration example
+## Configuration
+To enable the debug endpoint add the following in the configuration:
+
+{{< schema data="v3.json" filter="debug_endpoint">}}
+
+Or to do it during runtime, add `-d` when starting the server. E.g., `krakend run -dc krakend.json`
+
+## Debug endpoint example
 The following configuration demonstrates how to test what headers and query string parameters are sent and received by the backends by using the `/__debug/` endpoint.
 
 We are going to test the following endpoints:
@@ -37,13 +44,14 @@ We are going to test the following endpoints:
     - Recognizes `User-Agent` and `Accept` as forwarded headers
 - `/mandatory/{variable}`: The query string parameters taken from a variable in the endpoint or other query string parameters
 
-To test it right now, save the content of this file in a `krakend-test.json` and start the server with the `-d` flag:
+To test it right now, save the content of this file in a `krakend-test.json` and start the server:
 
 ```json
 {
   "version": 3,
   "port": 8080,
   "host": ["http://127.0.0.1:8080"],
+  "debug_endpoint": true,
   "endpoints": [
     {
       "endpoint": "/default-behavior",
