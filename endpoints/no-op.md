@@ -50,8 +50,7 @@ Examples:
 ## How to use `no-op`
 To declare endpoints that return the backend response as it is you need to define `"output_encoding": "no-op"`. KrakenD will set the `"encoding": "no-op"` in the `backend` section automatically, ignoring any different value you might have set.
 
-When using the no-op encoding remember that the endpoint can only have **one backend** as KrakenD is not going to inspect or manipulate the response (no merging happens). Also, other pipe options like the concurrent requests, the circuit breaker, or the backend rate-limit specific to the proxy pipe aren't available (but still have endpoint rate limit -> router pipe).
-
+When using the no-op encoding remember that the endpoint can only have **one backend** as KrakenD is not going to inspect or manipulate the response (no merging happens). Also, other pipe options like the concurrent requests, or manipulation options are not available: you will find them flagged across the documentation as not compatible with no-op.
 
 ## Example
 The following snippet shows an endpoint that is passed to the backend as is. Notice that both the endpoint and the backend have a `no-op` encoding. The backend is using KrakenD's debug endpoint to capture the request in the console:
