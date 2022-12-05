@@ -275,25 +275,34 @@ An example setting a common header in the request to all endpoints.
     "version": 3,
     "extra_config": {
         "modifier/lua-endpoint": {
-          "pre": "print('Lua service!'); local r = request.load(); r:headers('X-from-lua', '1234');"
+          "pre": "print('Lua service!'); local c = ctx.load(); c:headers('X-from-lua', '1234');"
         }
     }
   }
 ```
 
 ### Lua in the endpoint
-An example setting a header in the request using Lua.
+An example of setting lua scripts in three different stages that modify headers.
 
 ```json
   {
     "endpoint": "/set-a-header",
     "extra_config": {
+        "modifier/lua-endpoint": {
+          "pre": "print('Modifies the HTTP request'); local c = ctx.load(); c:headers('X-from-lua-endpoint', '1234');"
+        },
         "modifier/lua-proxy": {
-          "pre": "print('Lua proxy!'); local r = request.load(); r:headers('X-from-lua', '1234');"
+          "@comment-pre": "Modifies the internal proxy request before the split to all backends",
+          "pre": "print('Lua proxy pre modifier'); local r = request.load(); r:headers('X-from-lua-proxy', '1234');",
+          "@comment-post": "Modifies the response after merging all backends",
+          "post": "print('Lua proxy post modifier'); local r = response.load(); r:headers('X-from-lua-proxy', '1234');",
         }
     }
   }
 ```
+- The `modifier/lua-endpoint` hits first as it modifies the HTTP request directly. Can't modify the response (`post`).
+- The `pre` in `modifier/lua-proxy` modifies the internal request before it's sent to each of the backends you have configured in the endpoint. Backends see an extra header.
+- The `post` in `modifier/lua-proxy` modifies the response after having merged all the contents from all backends.
 
 ### Lua in the backend
 An example showing how to **print the backend response** in the console.
