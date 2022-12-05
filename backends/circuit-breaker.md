@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2022-12-05
 date: 2016-07-01
 linktitle: Circuit Breaker
 title: The Circuit Breaker
@@ -10,7 +10,7 @@ menu:
 images:
 - /images/documentation/circuit-breaker.png
 - /images/documentation/circuit-breaker-states.png
-notoc: true
+skip_header_image: true
 meta:
   since: false
   source: https://github.com/krakendio/krakend-circuitbreaker
@@ -21,12 +21,12 @@ meta:
   log_prefix:
   - "[BACKEND: /foo][CB]"
 ---
-The **Circuit Breaker** is a straightforward **state machine** in the middle of the request and response that monitors all your backend failures. When they reach a configured threshold, the circuit breaker will prevent sending more traffic to a failing backend.
+The **Circuit Breaker** is a straightforward **state machine** in the middle of the request and response that monitors all your backend failures. When they reach a configured threshold, the circuit breaker will prevent sending more traffic to a failing backend alleviating its pressure under challenging conditions.
 
-When KrakenD demands more throughput than your actual API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also useful for dealing with network and other communication problems by preventing too many requests to fail due to timeouts, etc.
+When KrakenD demands more throughput than your actual API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also helpful for dealing with network and other communication problems by preventing too many requests from dying due to timeouts, etc.
 
 {{< note title="A must have configuration" type="warning" >}}
-The Circuit Breaker is an **automatic protection measure** for your API stack and avoids cascade failures keeping your API responsive and resilient. It has a small consumption of resources, try to implement it always.
+The Circuit Breaker is an **automatic protection measure** for your API stack and **avoids cascade failures**, keeping your API responsive and resilient. It has a small consumption of resources. Try to implement it always.
 {{< /note >}}
 
 
@@ -65,23 +65,20 @@ The attributes available for the configuration are:
 
 {{< schema data="qos/circuit-breaker.json" >}}
 
-## How it works
+## How the Circuit Breaker works
+It's easy to picture the state of the circuit breaker as an electrical component, where an open circuit means no flow of electricity between the ends, and a closed one normal flow:
 
-The Circuit Breaker retains the state of the connections to your backend (s) over a series of requests
-and when it sees more than the configured number of **consecutive failures** (`max_errors`) in a given time interval (`interval`)
-it stops all the interaction with the backend for the next N seconds (the `timeout`). After waiting for this time window, the system will allow a single connection to trial the system again: if it fails, it will wait N seconds more, and if it succeeds, it will return to the normal state, and the system is considered healthy.
+![Krakend logo](/images/documentation/circuit-breaker.png)
 
-The circuit breaker works with three different internal states, and the easiest way to imagine it is like in an electrical circuit:
+The Circuit Breaker starts with the `CLOSED` state, meaning the electricty can flow to the backends as they are considered healthy (*innocent until proven guilty*).
 
-| Circuit Breaker |
-|-----------|
-| ![Krakend logo](/images/documentation/circuit-breaker.png) |
+Then the component watches the state of the connections with your backend(s), with a tolerance to **consecutive failures** (`max_errors`) during a time interval (`interval`). it stops all the interaction with the backend for the next N seconds (the `timeout`). We call this state `OPEN`.
 
-- `CLOSED`: This is the normal state. When the circuit is closed, the electricity flows uninterrupted, and the connection to the backend is allowed.
-- `OPEN`: No connection to the backend is allowed when the circuit is open.
-- `HALF-OPEN`: When the system has seen repeated problems, only the necessary connection to test the backend is permitted.
+After waiting for this time window, the state changes to `HALF-OPEN` and allows **a single connection** to pass and **test the system** again. At this stage:
+- If the test connection fails, the state returns to "open" and the circuit breaker will wait N seconds again to test it again.
+- If it succeeds, it will return to the "closed "state,  and the system is considered healthy.
 
-And this is the way the states change:
+This is the way the states change:
 
 | Circuit Breaker transitions |
 |-----|
@@ -90,3 +87,25 @@ And this is the way the states change:
 - `CLOSED`: In the initial state, the system is healthy and sending connections to the backend.
 - `OPEN`: When a consecutive number of supported errors from the backend (`max_errors`) is exceeded, the system changes to `OPEN`, and no further connections are sent to the backend. The system will stay in `OPEN` state for N seconds ( the `timeout`).
 - `HALF-OPEN`: After the timeout, it changes to this state and allows one connection to pass. If the connection succeeds, the state changes to `CLOSED`, and the backend is considered to be healthy again. But if it fails, it switches back to `OPEN` for another timeout.
+
+### Definition of failure
+
+A failure that counts for the circuit breaker could be anything that prevents having a successful connection with the service. There is a small difference in behavior when you use the circuit breaker with `no-op` encoding vs. the rest of the encodings.
+
+Regardless of the encoding, the Circuit Breaker will react to:
+
+- Network or connectivity problems
+- Security policies
+- Timeouts
+- Components in the list returning errors or having issues:
+    - Proxy rate limit (`qos/ratelimit/proxy`)
+    - Lua backend scripts (`modifier/lua-backend`)
+    - CEL in the backend (`validation/cel`)
+    - Lambda (`backend/lambda`)
+    - AMQP or PubSub issues
+
+In addition, when you work with `json`, or **any other encoding different than `no-op`**, the gateway also checks the HTTP responses back from the backend and marks as failures:
+
+- Status codes different than `200` or `201` (including client credentials)
+- Decoding issues
+- Martian issues
