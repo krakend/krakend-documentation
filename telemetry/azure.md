@@ -16,12 +16,44 @@ meta:
   - service
   log_prefix:
   - "[SERVICE: Opencensus]"
+skip_header_image: true
 images:
+- /images/documentation/screenshots/azure-app-insights-1.png
+- /images/documentation/screenshots/azure-app-insights-2.png
+- /images/documentation/screenshots/azure-app-insights-3.png
 - /images/documentation/diagrams/azure-collector.mmd.png
 - /images/documentation/screenshots/azure-application-insights-instrumentation-key.png
 ---
 
 [Azure Monitor](https://azure.microsoft.com/en-us/services/monitor/) collects, analyzes, and acts on telemetry data from your Azure and on-premises environments. Azure Monitor helps you maximize performance and availability of your applications and proactively identify problems in seconds.
+
+<section class="overflow-hidden text-gray-700 ">
+  <div class="container">
+    <div class="flex flex-wrap -m-1 md:-m-2">
+      <div class="flex flex-wrap w-1/3">
+        <div class="w-full p-1 md:p-2">
+          <a href="/images/documentation/screenshots/azure-app-insights-1.png">
+            <img alt="Azure Monitor screenshot" class="shadow-lg hover:scale-110 block object-cover object-center w-full h-full rounded-lg" src="/images/documentation/screenshots/azure-app-insights-1.png">
+          </a>
+        </div>
+      </div>
+      <div class="flex flex-wrap w-1/3">
+        <div class="w-full p-1 md:p-2">
+          <a href="/images/documentation/screenshots/azure-app-insights-2.png">
+            <img alt="Azure Monitor screenshot" class="shadow-lg hover:scale-110 block object-cover object-center w-full h-full rounded-lg" src="/images/documentation/screenshots/azure-app-insights-2.png">
+          </a>
+        </div>
+      </div>
+      <div class="flex flex-wrap w-1/3">
+        <div class="w-full p-1 md:p-2">
+          <a href="/images/documentation/screenshots/azure-app-insights-3.png">
+            <img alt="Azure Monitor screenshot" class="shadow-lg hover:scale-110 block object-cover object-center w-full h-full rounded-lg" src="/images/documentation/screenshots/azure-app-insights-3.png">
+          </a>
+        </div>
+      </div>
+  </div>
+</section>
+
 
 The gateway sends all the traces to a local **OpenTelemetry Collector** ([see repository](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/azuremonitorexporter)), allowing the gateway to offload data quickly and the collector can take care of additional handling like retries, batching, encryption or even sensitive data filtering. Finally, the Otel Collector pushes all the data to your **Application Insights** on Azure Monitor.
 
