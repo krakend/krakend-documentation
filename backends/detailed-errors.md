@@ -123,3 +123,35 @@ Place the following configuration inside the `backend` configuration:
 ```
 
 Notice that the `return_error_code` and the `return_error_details` are mutually exclusive, you can use one or the other but not both. If you declare them together, the gateway will use only `return_error_details`.
+
+If in addition, you want to return the original error body to the client, you need to enable the option in the router layer as follows:
+
+```json
+{
+  "version": 3,
+  "$schema": "http://www.krakend.io/schema/v3.json",
+  "extra_config": {
+    "router": {
+      "return_error_msg": true
+    }
+  },
+  "endpoints": [
+    {
+      "endpoint": "/return-status-and-error",
+      "backend": [
+        {
+          "url_pattern": "/404",
+          "host": [
+            "http://somehost"
+          ],
+          "extra_config": {
+            "backend/http": {
+              "return_error_code": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
