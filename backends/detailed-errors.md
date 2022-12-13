@@ -41,6 +41,11 @@ Place the following configuration inside the `backend` configuration:
 
 Notice that `return_error_details` sets an alias for this backend.
 
+{{< note title="All status are 200" type="note" >}}
+When you use `return_error_details` all status codes returned to the client are `200`. The client must parse the response for the presence of the `backend_alias` or any other key you have set to determine if there's a problem or not.
+{{< /note >}}
+
+
 ## Response for failing backends
 When a backend fails, you'll find an object named `error_` + its `backend_alias` containing the detailed errors of the backend. The returned structure on error contains the status code and the body:
 
@@ -98,3 +103,23 @@ Let's say your `backend_b` has failed, but your `backend_a` worked just fine. Th
 	"foo": 42
 }
 ```
+
+## Returning backend HTTP status code
+When you have **one backend only** and use an encoding different than `no-op` you can choose to return the original HTTP status code to the client.
+
+If you prefer using the HTTP status code of the backend instead of the calculated HTTP status code of the gateway, enable the `return_error_code` flag. The body of the error will be empty.
+
+Place the following configuration inside the `backend` configuration:
+
+```json
+{
+	"url_pattern": "/return-http-status-codes",
+	"extra_config": {
+        "backend/http": {
+            "return_error_code": true
+        }
+    }
+}
+```
+
+Notice that the `return_error_code` and the `return_error_details` are mutually exclusive, you can use one or the other but not both. If you declare them together, the gateway will use only `return_error_details`.
