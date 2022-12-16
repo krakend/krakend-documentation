@@ -55,3 +55,9 @@ You can also highlight a line, specific lines `6 7`, or a range `6-8`:
         server "github.com/devopsfaith/krakend/transport/http/server/plugin"
     )
     {{< /highlight >}}
+
+The documentation of the attributes is autoloaded from its json schema definition. You will find lines like the following:
+
+    {{< schema data="folder/file.json" >}}
+
+The `data` attribute loads the file from the [`krakend-schema` repository](https://github.com/krakendio/krakend-schema), using the same path.
