@@ -51,6 +51,8 @@ Notice the capitalization of the first letter of the parameter names at the conf
 {{< /note >}}
 
 
+{{< schema data="backend/lambda.json" >}}
+
 ### Authentication and connectivity
 
 The KrakenD machine needs to have connectivity with your AWS account and have the credentials to do so. There are several ways you can achieve this:

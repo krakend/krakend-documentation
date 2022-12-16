@@ -51,6 +51,8 @@ For a **subscriber**:
 }
 ```
 
+{{< schema data="backend/pubsub/subscriber.json" >}}
+
 
 For a **publisher**:
 
@@ -65,6 +67,8 @@ For a **publisher**:
 	}
 }
 ```
+
+{{< schema data="backend/pubsub/publisher.json" >}}
 
 See the specification of each individual technology.
 
@@ -83,7 +87,7 @@ Set the envvar `RABBIT_SERVER_URL='guest:guest@localhost:5672'` and add in the c
 	}
 }
 ```
-
+## Supported PubSub Drivers
 
 
 ### GCP PubSub

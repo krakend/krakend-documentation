@@ -73,17 +73,15 @@ The configuration to consume GraphQL content from your GrapQL graphs could look 
 }
 {{< /highlight >}}
 
+In the example above, the GraphQL server receives a variable `user` with the `{user_id}` declared in the endpoint. The dictionary can have any nesting level you need, but nested variables cannot contain `{placeholders}`.
+
 The configuration for the namespace `backend/graphql` has the following structure:
 
-- `type` (*string*): The type of query you are declaring. The valid types are:
-    - `query` (read)
-    - `mutation` (write).
-- `query` (*string*): An inline GraphQL query you want to send to the server. Use this attribute for simple and inline queries, use `query_path` instead for larger queries. Use escaping when needed. Examples:
+{{< schema data="backend/graphql.json" >}}
+
+When using an inline `query` (as opposed to using a file from the `query_path`), make sure to use escaping when needed. Examples:
     - `"query": "{ \n find_follower(func: uid(\"0x3\")) {\n    name \n    }\n  }"`.
     - `"query": "{ q(func: uid(1)) { uid } }"`
-- `query_path` (*string*): Path to the file containing the query. This file is loaded during startup and never checked again, if it changes KrakenD will be unaware of it.
-- `variables` (*dictionary*): A dictionary defining all the variables sent to the GraphQL server. You can use `{placeholders}` to inject parameters from the endpoint URL. In the example above, the GraphQL server receives a variable `user` with the `{user_id}` declared in the endpoint. The dictionary can have any nesting level you need, but nested variables cannot contain `{placeholders}`.
-- `operationName` (*string*): A meaningful and explicit name for your operation, required in multi-operation documents and for helpful debugging and server-side logging.
 
 The combination of `type` and the endpoint/backend `method` has the following behavior:
 
