@@ -3,7 +3,7 @@ lastmod: 2018-10-20
 date: 2018-06-23
 aliases: ["krakend-vs-krakend-ce"]
 linktitle: Lura vs. KrakenD
-description: What is the difference between Lura and KrakenD?
+description: The Lura Project is the code libraries we donated to the Linux Foundation (and still maintain!) and KrakenD the distributable software that runs on top of it.
 notoc: true
 menu:
   community_current:

@@ -3,7 +3,7 @@ lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: On Amazon Web Services
 title: KrakenD Benchmarks on AWS
-description: Performance tests of KrakenD on Amazon AWS environment
+description: Performance tests of KrakenD running on different Amazon Web Services instance types and final conclusions to choose the right one.
 weight: 10
 menu:
   community_current:

@@ -3,7 +3,7 @@ lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: Benchmarks Overview
 title: Benchmarks Overview
-description: Performance tests of KrakenD
+description: Experience the speed and scalability of KrakenD for yourself with our transparent benchmark results and instructions to reproduce.
 aliases: ["/docs/benchmarks/overview/"]
 weight: 1
 menu:

@@ -4,7 +4,7 @@ lastmod: 2021-03-01
 date: 2016-10-28
 linktitle: Validating the config
 title: Validating the configuration with `check`
-description: KrakenD Check Command
+description: The krakend check command validates KrakenD configuration files written in any of its supported formats and outputs syntax or linting problems.
 weight: 20
 notoc: true
 menu:

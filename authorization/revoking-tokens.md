@@ -3,7 +3,7 @@ lastmod: 2021-10-18
 date: 2018-11-05
 linktitle: Revoking tokens
 title: Revoking valid tokens with a Bloom filter
-description: How to invalidate JWT tokens using the Bloom filter
+description: Invalidate valid JWT tokens individually or in groups according to your criteria with the bloom filter component
 weight: 40
 source: https://github.com/krakendio/bloomfilter
 menu:

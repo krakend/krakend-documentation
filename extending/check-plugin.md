@@ -4,7 +4,7 @@ date: 2022-01-28
 aliases: ["/docs/extending/plugin-tools/"]
 linktitle: Checking your plugins
 title: Validate your plugin compatibility
-description: KrakenD check-plugin Command
+description: "The command check-plugin inspects your plugin's go.sum file to find incompatibilities. Use it in your CI/CD pipeline for a seamless integration experience"
 weight: 50
 notoc: true
 meta:

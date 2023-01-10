@@ -3,7 +3,7 @@ lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: Local machine
 title: Local Benchmarks
-description: Performance tests of KrakenD
+description: Performance tests of KrakenD running on a local machine (laptop) with measurements of different concurrency levels.
 weight: 15
 menu:
   community_current:
@@ -69,7 +69,7 @@ Response from the KrakenD:
     Content-Length: 19
 
     {"message":"pong"}
-   
+
 ## Results
 
     $ hey -c 200 -n 100000 http://127.0.0.1:8080/foo

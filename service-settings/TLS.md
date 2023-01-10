@@ -81,7 +81,8 @@ You can acquire, use external tools, or self-generate your certificates.
 For example, to generate a self-signed certificate from the command line you can do:
 
 {{< terminal title="Generate a certificate" >}}
-openssl req -newkey rsa:2048 -new -nodes -x509 -days 365 -out cert.pem -keyout key.pem -subj \"/C=US/ST=California/L=Mountain View/O=Your Organization/OU=Your Unit/CN=localhost\"
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 365 -out cert.pem -keyout key.pem \
+    -subj "/C=US/ST=California/L=Mountain View/O=Your Organization/OU=Your Unit/CN=localhost"
 {{< /terminal >}}
 
 When you are using **self-signed certificates**, you must add the certificates to the local CA, or at least add while developing the `allow_insecure_connections` setting to `true`. Example:
