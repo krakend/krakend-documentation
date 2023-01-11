@@ -4,7 +4,7 @@ lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: Running KrakenD
 title: Running KrakenD server
-description: Using KrakenD command
+description: All options of the krakend command to manage the service, write plugins, or get information about the installed version.
 weight: 30
 notoc: true
 menu:

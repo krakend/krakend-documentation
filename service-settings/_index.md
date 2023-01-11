@@ -2,7 +2,7 @@
 lastmod: 2022-10-20
 date: 2022-06-07
 linktitle:  Service Settings
-description: Changing the service settings of KrakenD API Gateway
+description: Service settings are optional flags that allow you to change how KrakenD behaves globally for all endpoints across configuration.
 title: Service Settings
 weight: -1000
 notoc: true

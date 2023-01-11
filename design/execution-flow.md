@@ -3,7 +3,7 @@ date: 2022-09-06
 lastmod: 2022-09-06
 linktitle: The execution flow
 title: KrakenD Execution Flow
-description: How KrakenD components are loaded and executed
+description: Is the configuration X executed before the configuration Y? How KrakenD components are loaded and executed and in which order.
 menu:
   community_current:
     parent: "170 Design principles"

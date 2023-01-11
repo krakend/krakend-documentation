@@ -3,7 +3,7 @@ lastmod: 2022-10-10
 date: 2021-11-25
 linktitle: Introduction to plugins
 title: Introduction to custom plugins and middlewares
-description: Differences between plugins and middlewares and how to start using your plugins
+description: Understand the differences between side load your plugins versus forking the project and compiling your own middlewares, and how to start coding plugins
 aliases: ["/docs/extending/introduction/"]
 weight: -100
 skip_header_image: true
