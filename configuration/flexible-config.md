@@ -69,7 +69,9 @@ Consider adding an alias or bash script with the command above to speed up your 
 {{< /note >}}
 
 ### Template syntax
-The configuration file passed with the `-c` flag is treated as a **Go template** ([documentation](https://golang.org/pkg/text/template/)), and you can make use of all the power the template engine brings. In addition, it also loads [Sprig functions](http://masterminds.github.io/sprig/). The data evaluations or control structures are easily recognized as they are surrounded by `{{` and `}}`. Any other text outside the delimiters is copied to the output unchanged.
+The configuration file passed with the `-c` flag is treated as a **Go template** ([documentation](https://golang.org/pkg/text/template/)), and you can make use of all the power the template engine brings. In addition, the templating system is overloaded with [Sprig functions](http://masterminds.github.io/sprig/), adding more features.
+
+The data evaluations or control structures are easily recognized as they are surrounded by `{{` and `}}`. Any other text outside these delimiters is unprocessed text copied to the output as it is.
 
 These are all the syntax possibilities:
 
