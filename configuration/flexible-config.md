@@ -118,7 +118,7 @@ To insert the content of an external partial file in-place use:
 {{ include "partial_file_name.txt" }}
 ```
 
-**The content inside the partial template is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension.
+**The content inside the partial template is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension. Filenames referenced are **case sensitive**, and although your host operating system might work with case insensitive files (e.g.: A docker volume on Mac), when copied to a Docker image not respecting the case will fail.
 
 #### Include and process a sub-template
 While the `include` is only meant to paste the content of a plain text file, the `template` gives you all the power of Go templating ([documentation](https://golang.org/pkg/text/template/)). The syntax is as follows:
