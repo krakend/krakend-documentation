@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-21
+lastmod: 2022-01-12
 date: 2021-05-21
 toc: true
 linktitle: Req/resp modifier plugins
@@ -279,3 +279,97 @@ If we send a request to the generated endpoint, we'll see the dumps for the thre
 {{< terminal title="Test the code">}}
 curl -i http://localhost:8080/github/orgs/krakendio
 {{< /terminal >}}
+
+## Returning errors
+Your custom plugin can set errors using two different approaches:
+
+- Return an error message only
+- Return an error message and a status code
+- Return an error message, status code, and `Content-Type`.
+
+### Plugin returning an error message only
+The simple example could be something like (as seen in the code above):
+
+```go
+    func(input interface{}) (interface{}, error) {
+      // your plugin code
+        return nil, errors.New("Something went really wrong")
+    }
+```
+### Plugin returning an error message and a status code
+You should implement in this case the HTTP error interface below, which provides more control:
+
+```go
+type responseError interface {
+  error
+  StatusCode() int
+}
+```
+This option allows you to set the status code that you want to return to the client, along with the error message. An example of the code your plugin will need:
+
+```go
+// HTTPResponseError is the error to be returned by the ErrorHTTPStatusHandler
+type HTTPResponseError struct {
+  Code int    `json:"http_status_code"`
+  Msg  string `json:"http_body,omitempty"`
+}
+
+// Error returns the error message
+func (r HTTPResponseError) Error() string {
+  return r.Msg
+}
+
+// StatusCode returns the status code returned by the backend
+func (r HTTPResponseError) StatusCode() int {
+  return r.Code
+}
+
+func(input interface{}) (interface{}, error) {
+  // ...
+  return nil, HTTPResponseError{Code:429,Msg:"Something went really wrong"}
+}
+```
+
+### Return an error message, status code, and `Content-Type`
+Finally you can also add the `Content-Type` header in the response. The interface to implement is:
+
+```go
+type encodedResponseError interface {
+  responseError
+  Encoding() string
+}
+```
+An example of the code your plugin will need:
+
+```go
+
+type HTTPResponseError struct {
+  Code int    `json:"http_status_code"`
+  Msg  string `json:"http_body,omitempty"`
+  HTTPEncoding string `json:"http_encoding"`
+}
+
+// Error returns the error message
+func (r HTTPResponseError) Error() string {
+  return r.Msg
+}
+
+// StatusCode returns the status code returned by the backend
+func (r HTTPResponseError) StatusCode() int {
+  return r.Code
+}
+
+// Encoding returns the HTTP output encoding
+func (r HTTPResponseError) Encoding() string {
+  return r.HTTPEncoding
+}
+
+func(input interface{}) (interface{}, error) {
+  // your plugin code
+  return nil, HTTPResponseError{
+    Code:429,
+    Msg:"{\"status\": \"ko\"}",
+    HTTPEncoding:"application/json",
+  }
+}
+```
