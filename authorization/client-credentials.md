@@ -19,7 +19,7 @@ meta:
   - backend
 ---
 
- Through the **OAuth 2.0 Client Credentials Grant**, KrakenD can do a **2-legged OAuth2 flow**, which means that the gateway requests to your authorization server an access token before reaching the backend's protected resources. The token refreshes when needed.
+ Through the **OAuth 2.0 Client Credentials Grant**, KrakenD can do a **2-legged OAuth2 flow**, which means that the gateway requests to your authorization server an access token before reaching the backend's protected resources. This token is passed in the "Authorization" header. The token refreshes when needed.
 
 The client credentials **authorize KrakenD, as the client, to access the protected resources**.
 
