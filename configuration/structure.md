@@ -42,7 +42,7 @@ It looks like this:
           "endpoint": "/v1/foo-bar",
           "backend": [
             {
-              ```
+              "url_pattern": "/foo",
               "host": [
                 "https://my.foo-api.com"
               ]
