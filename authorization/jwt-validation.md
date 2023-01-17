@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-11-02
+lastmod: 2023-01-17
 date: 2018-11-03
 linktitle: JWT Validation
 title: JSON Web Token Validation
@@ -157,7 +157,7 @@ KrakenD does the following validation to let users hit protected endpoints:
 
 The configuration allows you to define the set of required roles. For example, a user who passes a token with roles `A` and `B`, can access an endpoint requiring `"roles": ["A","C"]` as it has one of the required options (`A`).
 
-If the token is expired, the signature doesn't match, the required claims do not match, or the token is revoked, a `401 Unauthorized` is returned.
+If the token is expired, the configuration inside the namespace is incorrect, the signature doesn't match, the required claims do not match, or the token is revoked, a `401 Unauthorized` is returned.
 
 When the token doesn't include the defined ACL's required roles, a `403 Forbidden` is returned.
 
