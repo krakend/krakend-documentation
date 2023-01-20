@@ -75,9 +75,9 @@ Removing the access log increases the number of requests per second the gateway 
 ```json
 {
   "version": 3,
-  "router": {
-    "extra_config": {
-      "disable_access_log": true
+  "extra_config": {
+    "router": {
+       "disable_access_log": true
     }
   }
 }
