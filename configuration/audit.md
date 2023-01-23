@@ -96,7 +96,7 @@ The variables available in the custom template are:
     - `.severity`: The level of severity for this recommendation
 - `.stats`
 
-## Audit Rules
-The following is the list of **recommendations** you can find in the audit results. The recommendations are classified using a numeric code with the format `x.y.z`. You can use this rule identifier to exclude future checking, as explained above.
+## Audit recommendations
+The following is the list of **recommendations** you can find in the audit results. The recommendations are classified using a numeric code with the format `x.y.z`. You can use this rule identifier to exclude the rules during its checking, as explained above.
 
 {{% audit_rules %}}
