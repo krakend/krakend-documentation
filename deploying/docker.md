@@ -44,7 +44,7 @@ RUN FC_ENABLE=1 \
 RUN krakend check -c /tmp/krakend.json --lint
 
 FROM {{< product image >}}:{{< product latest_version >}}
-COPY --from=builder --chown=krakend /tmp/krakend.json .
+COPY --from=builder --chown=krakend:nogroup /tmp/krakend.json .
 # Uncomment with Enterprise image:
 # COPY LICENSE /etc/krakend/LICENSE
 ```
