@@ -138,7 +138,9 @@ Lastly, add at the service level of KrakenD the following configuration:
           "exporters": {
               "ocagent": {
                 "address": "otel-collector:55678",
-                "service_name": "myKrakenD"
+                "service_name": "myKrakenD",
+                "@comment": "Connection to the internal collector is rarely under SSL (insecure flag)",
+                "insecure": true
               }
           }
       }
@@ -148,6 +150,11 @@ Lastly, add at the service level of KrakenD the following configuration:
 The `otel-collector` above is the name of the Docker-compose service running the collector. You might need to replace it if you are not using this example.
 
 With these three steps, you can start sending data to KrakenD. You should start seeing the graphs populated on Azure Monitor in a couple of minutes.
+
+{{< note title="Insecure flag" type="warning" >}}
+Most of the times, the communication between KrakenD and the collector happens in the same machine. It is rare that this connection uses SSL, and if it doesn't the `insecure` flag must be set to `true`. Otherwise, KrakenD will fail silently.
+{{< /note >}}
+
 
 ## Other Resources
 
