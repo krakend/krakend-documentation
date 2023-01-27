@@ -1,7 +1,7 @@
 ---
 lastmod: 2023-01-18
 date: 2023-01-18
-linktitle: Security audit
+linktitle: Auditing the config's security
 title: Auditing the security of the configuration
 description: The krakend audit command evaluates a configuration file's integrity and prints security recommendations and statistical information.
 weight: 30
@@ -11,13 +11,18 @@ menu:
     parent: "010 Configuration file(s)"
 ---
 
-The `krakend audit` command **evaluates the integrity of KrakenD configuration files** written in any of its [supported formats](/docs/configuration/supported-formats/), and returns **security recommendations**, but also other practical and helpful information, including (but not limited to) misconfigurations opening the door to vulnerabilities, presence/absence of key components, dangerous flags or combinations, conflicting declarations, and statistics to put a few examples.
+The `krakend audit` command is a rule evaluation tool that checks configuration files written in any of its [supported formats](/docs/configuration/supported-formats/) and returns practical **security recommendations**. It is designed to raise basic red flags and provide essential advice on your configuration. The output of the configuration and classification is inspired by the [CIS Benchmarks](https://www.cisecurity.org/communities/benchmarks).
 
-The output of the configuration and classification is inspired by the [CIS Benchmarks](https://www.cisecurity.org/communities/benchmarks).
+
+{{< note title="Security disclaimer" type="warning" >}}
+If the audit command passes, it does not mean that your API is necessarily secure but that the evaluated rules have passed (find them as recommendations below). 
+{{< /note >}}
+
+The tool displays practical and helpful information, including (but not limited to) misconfigurations opening the door to vulnerabilities, presence/absence of key components, dangerous flags or combinations, conflicting declarations, and statistics (planned), to put a few examples.
 
 The `audit` command is complementary to the [`check` command](/docs/configuration/check/). Still, instead of focusing on the configuration file structure and linting, it evaluates the logic at a different stage. The command executes after parsing the configuration, using a **summarized tree** of the final recognized components and flags loaded. It **does not has access to the values of the properties**. For instance, if you write a `jwk_url` to validate tokens, it does not know if you are using HTTPS or HTTP or which domain, but it does see if you have `disable_jwk_security`, which is dangerous in production.
 
-The purpose of the audit command is to add extra checks in your [automated CI pipeline](/docs/deploying/ci-cd/) to have safer deployments.
+The purpose of the audit command is to add **extra checks** in your [automated CI pipeline](/docs/deploying/ci-cd/), and have safer deployments. It is not the holy grail, though.
 
 ## Audit configuration
 The simplest version of the command requires the configuration file only and shows the detected problems with your configuration:
@@ -39,21 +44,21 @@ It also accepts different flags to customize its behavior:
 More details of the flags below:
 
 ### Configuring the audit severity
-By default the audit command will include **all severity levels**, although you can choose through the `--severity` flag which levels you want to be printed in the console, separated by commas. The list is:
+By default, the audit command will include **all severity levels**. However, you can choose through the `--severity` flag which groups you want to be printed in the console, separated by commas. The list is:
 
 - `CRITICAL`
 - `HIGH`
 - `MEDIUM`
 - `LOW`
 
-When the `--severity` is not defined, KrakenD uses `--severity CRITICAL,HIGH,MEDIUM,LOW`. You can use a **comma separated** string (no spaces) with all the severities you want to print. For instance, to see only the most severe problems you would type:
+When the `--severity` is not defined, KrakenD uses `--severity CRITICAL,HIGH,MEDIUM,LOW`. You can use a **comma-separated** string (no spaces) with all the severities you want to print. For instance, to see only the most severe problems, you would type:
 
 {{< terminal title="Term" >}}
 krakend audit --severity CRITICAL,HIGH -c krakend.json
 {{< /terminal >}}
 
 #### Excluding security audit rules
-The printed security recommendations by the command are generic to any installation and might not apply to your setup, or you might disagree with our assigned severity. You can exclude checking any specific audit rules by passing the list or creating an exception file. To do that, use the `--ignore` flag passing a comma-separated list (no spaces) with all the ignore rules or a `--ignore-file` with the path to an ignore file.
+The printed security recommendations by the command are generic to any installation and might not apply to your setup, or you might disagree with our assigned severity. You can exclude checking any specific audit rules by passing the list or creating an exception file. To do that, use the `--ignore` flag, giving a comma-separated list (no spaces) with all the ignore rules or a `--ignore-file` with the path to an ignore file.
 
 **All rules must have the numeric format `x.y.z`**.
 
