@@ -31,10 +31,10 @@ krakend audit -c krakend.json
 
 It also accepts different flags to customize its behavior:
 
-- `--severity`: Severity requirements
-- `--ignore`: Rules to ignore (inline)
-- `--ignore-file`: Rules to ignore (from file)
-- `--f`: Format of the output (Go template)
+- `--severity`, `-s`: Severity requirements
+- `--ignore`, `-i`: Rules to ignore (inline)
+- `--ignore-file`, `-I`: Rules to ignore (from file)
+- `--format`, `--f`: Format of the output (Go template)
 
 More details of the flags below:
 
@@ -54,6 +54,8 @@ krakend audit --severity CRITICAL,HIGH -c krakend.json
 
 #### Excluding security audit rules
 The printed security recommendations by the command are generic to any installation and might not apply to your setup, or you might disagree with our assigned severity. You can exclude checking any specific audit rules by passing the list or creating an exception file. To do that, use the `--ignore` flag passing a comma-separated list (no spaces) with all the ignore rules or a `--ignore-file` with the path to an ignore file.
+
+**All rules must have the numeric format `x.y.z`**.
 
 For the inline option, you could do the following:
 
@@ -78,23 +80,30 @@ krakend audit --ignore-file=.audit_ignore -c krakend.json
 Finally, you can choose the **format of the output** according to your needs by injecting a Go template using the `-f` flag. The flag expects an inline template. For instance:
 
 {{< terminal title="Custom output" >}}
-krakend audit -f '{{range .recommendations}}
+krakend audit -f '{{range .Recommendations}}
 [[recommendation]]
-  rule = "{{.rule}}"
-  title = "{{.title}}"
-  severity = "{{.severity}}"
+  rule = "{{.Rule}}"
+  message = "{{.Message}}"
+  severity = "{{.Severity}}"
 {{end}}' > recommendations.toml
 {{< /terminal >}}
 
 The example above generates a `recommendations.toml` file with a very different format. You could format it like JSON or any other format.
 
+Or in JSON...
+
+{{< terminal title="JSON output" >}}
+krakend audit -f '{{ marshal . }}' > recommendations.json
+{{< /terminal >}}
+
 The variables available in the custom template are:
 
-- `.recommendations`: An array with all the recommendations, where each recommendation has the following structure:
-    - `.rule`: The identifier of this rule. E.g., `1.1.1`
-    - `.title`: The title describing this rule.
-    - `.severity`: The level of severity for this recommendation
-- `.stats`
+- `.Recommendations`: An array with all the recommendations, where each recommendation has the following structure:
+    - `.Rule`: The identifier of this rule. E.g., `1.1.1`
+    - `.Message`: A short message describing the recommendation.
+    - `.Severity`: The level of severity for this recommendation
+
+<!--  -`.Stats` -->
 
 ## Audit recommendations
 The following is the list of **recommendations** you can find in the audit results. The recommendations are classified using a numeric code with the format `x.y.z`. You can use this rule identifier to exclude the rules during its checking, as explained above.
