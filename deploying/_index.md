@@ -120,6 +120,10 @@ At least your pipeline should have:
 
 If you don't use flexible configuration, you can do it all in one line: `krakend check -d - t -c krakend.json --lint`
 
+It is also important adding the [audit command](/docs/configuration/audit/), excluding any rules that do not apply to you:
+
+- `krakend audit -c krakend.json`
+
 ### Use Docker and immutable containers
 Creating an immutable Docker image with your desired configuration takes a few seconds in your CI/CD pipeline on Docker deployments. Create a `Dockerfile` with at least the following code and deploy the resulting image in production:
 

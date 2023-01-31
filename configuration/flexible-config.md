@@ -10,7 +10,7 @@ menu:
 images:
 - /images/krakend-flexible-config.png
 title: Flexible configuration
-weight: 20
+weight: 30
 ---
 The **Flexible Configuration** component is included in the KrakenD API Gateway and allows you to **split the configuration into multiple files** while **using variables** and **templates**.
 

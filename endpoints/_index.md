@@ -50,8 +50,8 @@ The previous example exposes to the clients a `GET /v1/users/{user}` endpoint an
 
 Inside this object, you can add manipulation options and transform the response before it returns to the end user.
 
-### Endpoint configuration
-The configuration attributes of endpoints are:
+### Endpoint object configuration
+The configuration attributes of **endpoints objects** are:
 {{< schema data="endpoint.json" >}}
 
 ### Endpoints with multiple nesting levels

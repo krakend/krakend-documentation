@@ -2,7 +2,7 @@
 aliases: ["/docs/commands/check/"]
 lastmod: 2021-03-01
 date: 2016-10-28
-linktitle: Validating the config
+linktitle: Configuration check
 title: Validating the configuration with `check`
 description: The krakend check command validates KrakenD configuration files written in any of its supported formats and outputs syntax or linting problems.
 weight: 20
@@ -18,7 +18,7 @@ It's able to perform three things:
 
 - **Syntax validation** - For any format (`.yml`, `.json`, `.toml`, etc)
 - **Linting** - Besides checking that the file isn't malformed, the linter checks your config exhaustively against KrakenD's [official schema](https://github.com/krakendio/krakend-schema) to detect wrong types, unknown attributes, or misplaced components. Only available when you work with `JSON` formats.
-- **Testing** - It tests a run of the service to catch problems that are not strictly related to linting but to the runtime. For instance, you could declare a colliding endpoint, and the syntax would validate and lint, yet the configuration would be impossible to run.
+- **Testing** - It tests a run of the service to catch problems that are not strictly related to linting but to the runtime. For instance, you could declare a colliding endpoint (two endpoints in the same route), and the syntax would validate and lint, yet the configuration would be impossible to run.
 
 **The `check` command can guarantee that a configuration is valid with the three validations**.
 
