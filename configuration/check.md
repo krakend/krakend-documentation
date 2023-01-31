@@ -1,6 +1,6 @@
 ---
 aliases: ["/docs/commands/check/"]
-lastmod: 2021-03-01
+lastmod: 2023-01-31
 date: 2016-10-28
 linktitle: Configuration check
 title: Validating the configuration with `check`
@@ -34,7 +34,7 @@ See the usage below.
 The `krakend check` command accepts the following options:
 
 {{< terminal title="Usage of KrakenD check" >}}
-./krakend check -h
+krakend check --help
 {{< ascii-logo >}}
 
 Version: {{< product latest_version >}}

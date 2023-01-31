@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-01-18
+lastmod: 2023-01-31
 date: 2023-01-18
 linktitle: Configuration audit
 title: Security audit of your configuration
@@ -26,8 +26,34 @@ The tool displays practical and helpful information, including (but not limited 
 The `audit` command is complementary to the [`check` command](/docs/configuration/check/). Still, instead of focusing on the configuration file structure and linting, it evaluates the logic at a different stage. The command executes after parsing the configuration, using a **summarized tree** of the final recognized components and flags loaded. It **does not has access to the values of the properties** (but `check` does). For instance, if you write a `jwk_url` to validate tokens, `audit` does not know if you are using HTTPS or HTTP or which domain, but it does see if you have `disable_jwk_security`, which is dangerous in production.
 
 The purpose of the audit command is to add extra checks in your [automated CI pipeline](/docs/deploying/ci-cd/) to have safer deployments.
+
 ## Audit configuration
-The simplest version of the command requires the path to the configuration file only:
+The `audit` command has the following options:
+
+{{< terminal title="Usage of KrakenD audit" >}}
+krakend audit --help
+{{< ascii-logo >}}
+
+Version: {{< product latest_version >}}
+
+Audits a KrakenD configuration.
+
+Usage:
+  krakend audit [flags]
+
+Examples:
+krakend audit -i 1.1.1,1.1.2 -s CRITICAL -c krakend.json
+
+Flags:
+  -c, --config string        Path to the configuration file
+  -f, --format string        Inline go template to render the results (default "{{ range .Recommendations }}{{.Rule}}\t[{{colored .Severity}}]   \t{{.Message}}\n{{ end }}")
+  -h, --help                 help for audit
+  -i, --ignore string        List of rules to ignore (comma-separated, no spaces)
+  -I, --ignore-file string   Path to a text-plain file containing the list of rules to exclude
+  -s, --severity string      List of severities to include (comma-separated, no spaces) (default "CRITICAL,HIGH,MEDIUM,LOW")
+{{< /terminal >}}
+
+The simplest version of the command requires the path to the configuration file only, and outputs any problems found:
 
 {{< terminal title="Audit configuration" >}}
 krakend audit -c krakend.json
