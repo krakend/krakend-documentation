@@ -73,3 +73,10 @@ go build -buildmode=plugin -o yourplugin.so .
 {{< /terminal >}}
 
 Now load it in KrakenD, as described in [injecting plugins](/docs/extending/injecting-plugins/)
+
+## Debugging plugins in an IDE
+If you'd like to debug your plugins with an IDE, you can enable **delve flags** when compiling. Do not use these flags for the `.so` file you will use in production.
+
+{{< terminal title="Delve flags">}}
+go build -gcflags='all=-N -l' -buildmode=plugin -o yourplugin.so .
+{{< /terminal >}}
