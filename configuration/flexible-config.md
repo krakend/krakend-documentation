@@ -17,21 +17,21 @@ The **Flexible Configuration** allows you to declare the configuration using **m
 
 The Flexible Configuration enables a **template processor** based on [Go templates](https://golang.org/pkg/text/template/) and is enriched with [Sprig functions](http://masterminds.github.io/sprig/) and KrakenD functions.
 
-You can encode your configuration files in any of the [supported formats](/docs/configuration/supported-formats/) (`json`, `yaml`, `toml`, etc), as the template is agnostic of its contents.
+You can encode your configuration files in any of the [supported formats](/docs/configuration/supported-formats/) (`json`, `yaml`, `toml`, etc.), as the template is agnostic of its contents.
 
 Use the Flexible Configuration when you need to:
 
-- Split a large configuration into several files
+- Split an extensive configuration into several files
 - Inject variables, like environment settings, into the configuration
 - Use placeholders and reusable code blocks to avoid repeating code
-- Organize your code better when there are multiple developers modifying the gateway
+- Organize your code better when multiple developers are modifying the gateway
 - Manage KrakenD using multiple repositories (and merging the files in the CI)
 - Track changes, avoid conflicts, and review code more easily
 - Have the full power of a templates system!
 
 ## How it works
 
-The activation of the Flexible Configuration requires injecting the **environment variable** `FC_ENABLE=1` when running a krakend `run` or `check` command, but you can use **additional variables** depending on the features you'd like to enable.
+The activation of the Flexible Configuration requires injecting the **environment variable** `FC_ENABLE=1` when running a krakend `run` or `check` command. Still, you can use **additional variables** depending on the features you'd like to enable.
 
 ### Flexible Configuration variables
 The list of all recognized **environment variables** is:
@@ -61,7 +61,7 @@ Syntax OK!
 
 We know that it works because KrakenD will fail with a different `version` value, but we can also check the contents of `result.json` for debugging purposes.
 
-Let's introduce now the rest of the **optional** variables. For instance, let's assume you decided to organize your code as follows:
+Let's now introduce the rest of the **optional** variables. For instance, let's assume you decided to organize your code as follows:
 
 ```
 .
@@ -90,7 +90,7 @@ FC_OUT="output.json" \
 krakend run -c "krakend.tmpl"
 {{< /terminal >}}
 
-In the example above notice that the `FC_SETTINGS` includes the path to the `prod`uction folder. This is how you would set a specific environment. You might inject here an env var if you have multiple environments. **The directory structure is completely up to you**.
+In the example above, notice that the `FC_SETTINGS` includes the path to the `prod`uction folder. This is how you would set a specific environment. You might inject here an env var if you have multiple environments. **The directory structure is completely up to you**.
 
 {{< note title="Use a docker-compose" type="info">}}
 Consider using a docker-compose in combination with the `:watch` image to speed up your development time.
@@ -102,7 +102,7 @@ The configuration file passed with the `-c` flag is treated as a **Go template**
 The data evaluations or control structures are easily recognized as they are surrounded by `{{` and `}}`. Any other text outside these delimiters is unprocessed text copied to the output as it is.
 
 #### KrakenD-specific functions
-Tp use the partials, templates, and settings as defined in the environment variables, you have the following functions available:
+To use the partials, templates, and settings as defined in the environment variables, you have the following functions available:
 
 - `{{ marshal .var }}`: Insert a JSON structure taking the content from `.var`
 - `{{ include "file.txt" }}`: Insert the content of the `file.txt` "as is". You can use any extension in these files.
@@ -145,7 +145,7 @@ To insert the content of an external partial file in-place use:
 {{ include "partial_file_name.txt" }}
 ```
 
-**The content inside the partial template is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension. Filenames referenced are **case sensitive**, and although your host operating system might work with case insensitive files (e.g.: A docker volume on Mac), when copied to a Docker image not respecting the case will fail.
+**The content inside the partial template is not parsed**, and is inserted *as is* in plain text. The file is assumed to live inside the directory defined in `FC_PARTIALS` and can have any name and extension. Filenames referenced are **case sensitive**, and although your host operating system might work with case insensitive files (e.g., A docker volume on Mac), when copied to a Docker image not respecting the case will fail.
 
 #### Include and process a sub-template
 While the `include` is only meant to paste the content of a plain text file, the `template` gives you all the power of Go templating. The syntax is as follows:
@@ -171,7 +171,7 @@ For instance, you could get a string from an environment variable `COMMIT_SHA`, 
 }
 ```
 
-Sprig provides many functions, in the following categories:
+Sprig provides many functions in the following categories:
 
 - String Functions: `trim`, `wrap`, `randAlpha`, `plural` and more.
     - String List Functions: `splitList`, `sortAlpha` and more.
@@ -204,7 +204,7 @@ Sprig provides many functions, in the following categories:
 
 
 ### Testing the configuration
-As the configuration is now composed of several pieces, it's easy to make a mistake at some point. Test the syntax of all the files is good with the `krakend check` command and pay attention to the output to verify there aren't any errors.
+As the configuration is now composed of several pieces, it's easy to make a mistake at some point. Test the syntax of all the files with the `krakend check` command and pay attention to the output to verify there aren't any errors.
 
 You might also want to use the flag `FC_OUT` to write the content of the final file in a known path, so you can check its contents:
 
@@ -228,7 +228,7 @@ ERROR parsing the configuration file: loading flexible-config settings:
 The flexible configuration is a very simple tool (this documentation in fact is way larger than its implementation), but it can hold very complex setups. Here there are a few tips and tricks that you can use.
 
 ### Directory boilerplate
-You can create the Flexible Configuration directory structure depicted above with:
+You can create the Flexible Configuration directory structure depicted above with the following:
 
 {{< terminal title="Template boilerplate" >}}
 mkdir -p config/{partials,settings,templates} config/settings/{prod,test}
@@ -254,20 +254,32 @@ services:
 ```
 
 ### Understanding the context
-When you call a subtemplate from another template, you are in a `{{ range }}` (loop), or use a `{{ with }}`, you are using a specific context. The context is the variables you have available inside that block. When calling templates from templates, make sure to add the final dot `.` to pass all the settings files to the next template, or pass those variables that are needed:
+When you call a subtemplate from another template, you are in a `{{ range }}` (loop), or use a `{{ with }}`, you are using a specific context. The context is the variables you have available inside that block. When calling templates from templates, make sure to add the final dot `.` to pass all the settings files to the next template or pass those variables that are needed:
 
 - `{{ template "hello.tmpl" . }}`: the hello template receives all setting files and works as its calling template.
 - `{{ template "hello.tmpl" .urls.users_api }}`: receives only the string value of the users API.
 - `{{ template "hello.tmpl" "hello world" }}`: receives only a constant string
 
 ### Using the $ notation
-Similary, when you are doing a loop with a `range`, or accessing a `with`, the variables inside are relative to its context one more time. But to access outsider variables you can use the `$` notation. For instance: `{{ $.urls.users_api }}`
+Similarly, when you are making a loop with a `range` or accessing a `with`, the variables inside are relative to its context one more time. But to access outsider variables you can use the `$` notation. For instance: `{{ $.urls.users_api }}`
 
+### How to separate objects with commas
+A lot of times, you need to iterate content and separate it using a comma. To do so, place the comma insertion at the beginning instead of the end when the index in the loop is not zero:
+
+```go-text-template
+{{ range $index, $endpoint := .endpoints_list }}
+    {{if $index}},{{end}}
+    {
+        "endpoint": "{{ $endpoint.path }}",
+        "backend": []
+    }
+{{end}}
+```
 ### Remove white spaces and line breaks
-When you use code `{{ blocks }}` on your templates, you can add a left dash `{{- blocks }}` to supress preceding whitespaces and linebreaks, or a right dash `{{ blocks -}}` to remove the following ones, or both `{{- blocks -}}`.
+When you use code `{{ blocks }}` on your templates, you can add a left dash `{{- blocks }}` to suppress preceding whitespaces and linebreaks or a right dash `{{ blocks -}}` to remove the following ones, or both `{{- blocks -}}`.
 
 ### Inserting an external file as base64
-There are a few fields in KrakenD that require you to set its value in base64 format instead of the raw counterpart. There will be times when you want to version control the raw file in an external file and reference it as base64. To do so you could have a template `render_as_base64.tmpl` with the following content:
+A few fields in KrakenD require you to set their value in base64 format instead of the raw counterpart. For example, sometimes you want to version control the raw file in an external file and reference it as base64. To do so, you could have a template `render_as_base64.tmpl` with the following content:
 
 ```go-text-template
 {{/* Notice the dashes (-) at the beginning and end of the following code.
@@ -285,7 +297,7 @@ And call it in the `krakend.tmpl` like this:
 ```
 
 ## Practical example
-To demonstrate the usage of the flexible configuration, we are going to reorganize a configuration file in several pieces. This is a simple example to see the basics of the templates system:
+To demonstrate the usage of the flexible configuration, we will reorganize a configuration file into several pieces. This is a simple example to see the basics of the templates system:
 
 ```
 .
@@ -357,7 +369,7 @@ This file declares a couple of endpoints that feed on a single backend:
 
 **krakend.tmpl**
 
-Finally, introducing the base template. It inserts the content of other files using `include`, uses the variables declared in the settings files and writes json content with `marshal`.
+Finally, let's introduce the base template. It inserts the content of other files using `include`, uses the variables declared in the settings files, and writes json content with `marshal`.
 
 Have a look at the highlighted lines:
 
@@ -393,7 +405,7 @@ Have a look at the highlighted lines:
 
 Notice that there is a `{{ range }}`. If you wanted to use it inside a template, and not the base file, you would need to include it inside a sub-template with ``{{ template "template.tmp" .endpoint.example_group }}``.
 
-To parse the configuration use:
+To parse the configuration, use:
 
 {{< terminal title="Check and test (-t) the config">}}
 FC_ENABLE=1 \
