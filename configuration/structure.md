@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2023-01-31
 date: 2018-09-21
 linktitle: The configuration file
 menu:
@@ -8,7 +8,9 @@ menu:
 title: Understanding the configuration file
 weight: 10
 ---
-All KrakenD behavior depends on its configuration file(s). Although the configuration [supports formats other than JSON](/docs/configuration/supported-formats/) and it can be described [using multiple files](/docs/configuration/flexible-config/), you'll find it referenced through all this documentation and for simplicity as the `krakend.json`. Being familiar with its structure it's essential.
+All KrakenD behavior depends on its configuration file(s). You'll find it referenced through all this documentation and for simplicity as the `krakend.json`, although the configuration [supports formats other than JSON](/docs/configuration/supported-formats/) and it can be described [using multiple files and templates](/docs/configuration/flexible-config/). Being familiar with its structure it's essential.
+
+The correctness of a configuration file is determined by the [check](/docs/configuration/check/) and [audit](/docs/configuration/audit/) commands using different perspectives.
 
 ## Configuration file structure
 There are a large number of options you can put in this file. Let's focus now only on the main structure:
@@ -22,16 +24,16 @@ There are a large number of options you can put in this file. Let's focus now on
 ```
 
 
-- `$schema`: Optional, which JSON schema is used to validate your configuration. Is used by ` krakend check --lint`
-- `version` (*mandatory*): The version of the KrakenD file format.
-  - Version `3`: Current version (since `v2.0`)
-  - Version `2`: Deprecated in 2022, for versions between `v0.4` and `v1.4.1`
-  - Version `1`: Deprecated in 2016, for versions `v0.3.9` and older.
-- `endpoints[]`: An array of endpoint objects offered by the gateway and all the associated backends and configurations. This is your API definition.
-- `extra_config{}`: Components' configuration. Whatever is not a core functionality of the [Lura Project](https://luraproject.org) is declared in a unique **namespace** in the configuration, so that you can configure multiple elements without collisions.
+- `$schema`: *Optional*. When added, enables [IDE integration](/docs/developer/ide-integration/) with autocompletion and documentation. Defines the JSON schema to validate your configuration. Is used by ` krakend check --lint`.
+- `version` (*mandatory*): The version of the configuration file format (not the version of KrakenD).
+  - Format version `3`: **Current** (since `v2.0`)
+  - Format version `2`: Deprecated in 2022, for versions between `v0.4` and `v1.4.1`
+  - Format version `1`: Deprecated in 2016, for versions `v0.3.9` and older.
+- `endpoints[]`: An array of [endpoint objects](/docs/endpoints/) offered by the gateway and all the associated backends and configurations. This is your API definition.
+- `extra_config{}`: Service components' configuration. Whatever is not a core functionality of the [Lura Project](https://luraproject.org) is declared in a unique **namespace** (a key) in the configuration, so that you can configure multiple elements without collisions.
 
 ### The `endpoints` structure
-Inside the `endpoints`, you declare an array with every `endpoint` (the URL) the gateway offers to users. For each endpoint, you need to declare at least a `backend` (the data origin).
+Inside the `endpoints`, you declare an array with [endpoint objects](/docs/endpoints/). Every object has an `endpoint` (the URL) the gateway offers to users. For each endpoint, you need to declare at least one `backend` (the data origin).
 
 It looks like this:
 
@@ -76,7 +78,6 @@ Components declare in their source code a **unique namespace**. KrakenD register
             "some": "config"
           },
           "component-2-namespace": {
-            ```
           }
         }
     }
@@ -91,7 +92,6 @@ For instance, the [extended logging component](/docs/logging/) uses the **namesp
         "telemetry/logging": {
           "level": "WARNING",
           "prefix": "[KRAKEND]",
-          ```
           "stdout": true
         }
     }
@@ -109,47 +109,49 @@ All components will seek the `extra_config` in its defined scope. The possible p
 - `endpoint`
 - `backend`
 
-For instance, you might want to set a rate limit between a user and KrakenD. And for that, you would place the `extra_config` inside the `endpoints` scope. Or you might want to limit the connections between KrakenD and your backends; then you would place the `extra_config` in the `backend` scope.
+For instance, you might want to set a [rate limit](/docs/throttling/) between a user and a `/my-rate-limited` endpoint in KrakenD. And for that, you would place the `extra_config` inside that `endpoint` scope. Or you might want to limit the connections between a KrakenD endpoint against your services; then you would place the `extra_config` in the `backend` scope.
 
-**You don't have to guess where to put the `extra_config`**. Each component has in the documentation what is the scope is built for.
+**You don't have to guess where to put the `extra_config`**. Each component has in the documentation what is the scope(s) is built for.
 
 ### Example
-The following code is an example defining two simultaneous rate limiting strategies: A limit of 5000 reqs/s for a specific endpoint, but yet, one of its backends accepts a maximum of 100 reqs/s. As you can imagine, when the backend limit is reached, the user will have partial responses.
+The following code is an example defining two simultaneous [rate limiting strategies](/docs/throttling/): A limit of 5000 reqs/second for a specific endpoint, but yet, one of its backends accepts a maximum of 100 reqs/s. When the backend limit is reached, the user will have partial responses, and when both are surpassed the user won't have data from any of the backends.
 
 Notice how `extra_config` is present in the endpoints and backend scopes.
 
 ```json
 {
-    "version": 3,
-    "endpoints": [
+  "version": 3,
+  "endpoints": [
     {
-        "endpoint": "/limited-to-5000-per-second",
-        "extra_config": {
-            "qos/ratelimit/router": {
-                "max_rate": 5000
+      "endpoint": "/limited-to-5000-per-second",
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5000
+        }
+      },
+      "backend": [
+        {
+          "host": [
+            "http://slow.backend.com/"
+          ],
+          "url_pattern": "/slow/endpoint",
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+              "max_rate": 100,
+              "capacity": 1
             }
-        },
-        "backend":
-        [{
-            "host": [
-                "http://slow.backend.com/"
-            ],
-            "url_pattern": "/slow/endpoint",
-            "extra_config": {
-                "qos/ratelimit/proxy": {
-                    "max_rate": 100,
-                    "capacity": 1
-                }
-            }
+          }
         },
         {
-            "host": [
-                "http://fast.backend.com/"
-            ],
-            "url_pattern": "/fast/endpoint"
-        }]
-    }]
+          "host": [
+            "http://fast.backend.com/"
+          ],
+          "url_pattern": "/fast/endpoint"
+        }
+      ]
+    }
+  ]
 }
 ```
 
-Check [this larger sample file](https://github.com/krakendio/krakend-ce/blob/master/krakend.json) (distributed with KrakenD) where you can see an example on how to modify the application headers, configure the circuit breaker, or apply rate limits.
+For larger sample files with more options you can have a look a the [KrakenD Playground](/docs/overview/playground/).

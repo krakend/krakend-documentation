@@ -15,9 +15,9 @@ The concept of `backend` refers to the origin servers providing the necessary da
 
 A `backend` can be any server inside or outside your network if it is reachable by KrakenD. For instance, you can create endpoints fetching data from your internal servers and enrich them by adding third-party data from an external API like Github, Facebook, or other services. You can also return everything aggregated in a single glorified response.
 
-A `backend` object is an array of all the services that an [`endpoint`](/docs/endpoints/) connects to. It defines the list of hostnames connected to and the URL to send or receive the data.
+A `backend` object is an array of all the services that an [`endpoint`](/docs/endpoints/) connects to. It defines the list of hostnames connected to and the URL to send or receive the data. If a backend has more than one `host`, then the array is the [egress load balancing list](/docs/throttling/load-balancing/#balancing-egress-traffic-to-upstream).
 
-When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy/) is used, or you use [`no-op` encoding](/docs/endpoints/no-op/)). The returned content is parsed according to its `encoding` or in some cases its`extra_config` configuration.
+When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy/) is used) and the content [merged and aggregated](/docs/endpoints/response-manipulation/#aggregation-and-merging) (unless you just proxy using the [`no-op` encoding](/docs/endpoints/no-op/)). The returned content is parsed according to its `encoding` or in some cases its `extra_config` configuration.
 
 {{< note title="Multiple non-safe methods" type="info" >}}
 Even though you can use several backends in one endpoint, KrakenD **does not allow you to define multiple non-safe (write) backends**. This is a (sometimes controversial) design decision to disable the gateway to handle transactions.

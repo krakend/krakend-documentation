@@ -1,8 +1,8 @@
 ---
 aliases: ["/docs/commands/check/"]
-lastmod: 2021-03-01
+lastmod: 2023-01-31
 date: 2016-10-28
-linktitle: Validating the config
+linktitle: Configuration check
 title: Validating the configuration with `check`
 description: The krakend check command validates KrakenD configuration files written in any of its supported formats and outputs syntax or linting problems.
 weight: 20
@@ -18,7 +18,7 @@ It's able to perform three things:
 
 - **Syntax validation** - For any format (`.yml`, `.json`, `.toml`, etc)
 - **Linting** - Besides checking that the file isn't malformed, the linter checks your config exhaustively against KrakenD's [official schema](https://github.com/krakendio/krakend-schema) to detect wrong types, unknown attributes, or misplaced components. Only available when you work with `JSON` formats.
-- **Testing** - It tests a run of the service to catch problems that are not strictly related to linting but to the runtime. For instance, you could declare a colliding endpoint, and the syntax would validate and lint, yet the configuration would be impossible to run.
+- **Testing** - It tests a run of the service to catch problems that are not strictly related to linting but to the runtime. For instance, you could declare a colliding endpoint (two endpoints in the same route), and the syntax would validate and lint, yet the configuration would be impossible to run.
 
 **The `check` command can guarantee that a configuration is valid with the three validations**.
 
@@ -34,7 +34,7 @@ See the usage below.
 The `krakend check` command accepts the following options:
 
 {{< terminal title="Usage of KrakenD check" >}}
-./krakend check -h
+krakend check --help
 {{< ascii-logo >}}
 
 Version: {{< product latest_version >}}
@@ -66,7 +66,7 @@ Use `krakend check` in combination with the following flags:
 - `-c` or `--config` to specify the path to the configuration file in any of the [supported formats](/docs/configuration/supported-formats/), or to the starting template if used in combination with flexible configuration.
 - `-d` or `--debug` (*optional*) to enable the debug and see information about how KrakenD is interpreting your configuration file. Use from 1 to 3 levels of verbosity using `-d`, `-dd`, or `-ddd`.
 - `-t` or `--test-gin-routes` (*optional*) to test the configuration by trying to start the service for a second. This option is highly recommended as it prevents conflicting routes and other problems unrelated to the linting itself and would end up in a *panic*.
-- `-l` or `--lint` (*optional*) to check that your configuration file is properly linted and does not contain unrecognized options or wrong types. **Your configuration must be in JSON format**. When using Flexible Configuration, you cannot check directly the .`krakend.tmpl` file, you need to do it in a second round using the content of the `FC_OUT` file. This option requires Internet access as the schema is published online under `https://www.krakend.io/schema/v3.json`.
+- `-l` or `--lint` (*optional*) to check that your configuration file is properly linted and does not contain unrecognized options or wrong types. **The input configuration must be in JSON format**. When using Flexible Configuration, you cannot check directly the .`krakend.tmpl` file, you need to do it in a second round using the content of the `FC_OUT` file. This option requires Internet access as the schema is published online under `https://www.krakend.io/schema/v3.json`.
 - `-i` or `--indent` (*optional*) in combination with `-d`, to change the indentation when the debug information renders (default: `TAB`). E.g.: `-i "#" ` uses a hash instead of a tab for every nesting level.
 
 {{< note title="Use --lint to do strict parsing" >}}
