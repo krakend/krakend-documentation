@@ -60,7 +60,7 @@ The `input_query_strings` and `input_headers` lists are **case sensitive**. For 
 Read below for further details and examples.
 
 ## Query string forwarding
-The zero-trust policy implies that, for instance, if a KrakenD endpoint `/foo' receives the request `/foo?items=10&page=2`, all its declared backends are not going to see either `items` or `page`, **unless otherwise configured**.
+The zero-trust policy implies that, for instance, if a KrakenD endpoint `/foo` receives the request `/foo?items=10&page=2`, all its declared backends are not going to see either `items` or `page`, **unless otherwise configured**.
 
 To enable the transition of query strings to your backend, add the **list** `input_query_strings` in your `endpoint` definition. For instance, let's forward `?items=10&page=2` to the backends now:
 
