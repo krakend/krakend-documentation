@@ -113,9 +113,9 @@ exporters:
     instrumentation_key: XXXXXXX
 
 service:
-  # telemetry:
-  #   logs:
-  #     level: "debug"
+   telemetry:
+     logs:
+       level: "warn"
   pipelines:
     traces:
       receivers: [opencensus]
