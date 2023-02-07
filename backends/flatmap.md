@@ -1,10 +1,11 @@
 ---
-lastmod: 2020-07-24
+lastmod: 2023-02-07
 date: 2019-04-05
 toc: true
-linktitle: Array manipulations
-title: Array manipulation - flatmap
-weight: 70
+linktitle: Array manipulations, object flattening
+title: "Flatmap: Array manipulation, object flattening"
+description: The flatmap middleware allows you to manipulate collections (or arrays, or lists, you name it) or to flatten objects from the response.
+weight: 6
 menu:
   community_current:
     parent: "050 Backends Configuration"
@@ -19,14 +20,15 @@ meta:
   - endpoint
 ---
 
-The flatmap middleware allows you to **manipulate collections** (or arrays, or lists, you name it) from the **backend response**, although **it can be used for objects** as well. While the [basic manipulation operations](/docs/backends/data-manipulation/) allow you to work directly with objects, the collections require a different approach: the **flatmap component**.
+The flatmap middleware allows you to **manipulate collections** (or arrays, or lists; you name it) or to **flatten objects** from the response.
+
+While the [basic manipulation operations](/docs/backends/data-manipulation/) allow you to work directly with objects, the collections require you to use this **flatmap component**. The flatmap also will enable you to **extract or move nested objects** to have a customized object structure.
 
 {{< note title="Looking for a Query Language manipulation?" type="info" >}}
 If you are an Enterprise user, you might want to use [Response manipulation with query language ](/docs/enterprise/endpoints/jmespath/) instead
 {{< /note >}}
 
-
-When working with lists, KrakenD needs to flatten and expand array structures to objects to operate with them, and vice versa. This process is automatically done by the flatmap component, letting you concentrate only on the type of operation you want to execute.
+When working with lists, KrakenD needs to flatten and expand array structures to objects to operate with them and vice versa. This process is automatically done by the flatmap component, letting you concentrate only on the type of operation you want to execute.
 
 ## When to manipulate arrays
 You can manipulate collections at two different stages:
@@ -36,20 +38,27 @@ You can manipulate collections at two different stages:
 
 You can do simultaneous combinations to output the desired result. For instance, declare an endpoint with three backends that apply transformations independently and a final change within the endpoint after merging the three.
 
-## Types of manipulations
+## When to manipulate objects with flatmap
+The flatmap can be used on objects when the [basic data manipulation](/docs/backends/data-manipulation/) options fall short. For instance, when you need to extract and rename nested objects to the root, append, and other more sophisticated operations.
 
+## Types of manipulations
 There are different types of operations you can do:
 
-*   **Moving**, **embedding** or **extracting** items from one place to another (equivalent concepts to [`mapping`](/docs/backends/data-manipulation/#mapping) and [`allow`](/docs/backends/data-manipulation/#allow))
-*   **Deleting** specific items (similar concept to [`deny`](/docs/backends/data-manipulation/#deny))
-*   **Appending** items from one list to the other
+- `move`: To **move**, **rename**, **embed** or **extract** items from one place to another (equivalent concepts to  and [`allow`](/docs/backends/data-manipulation/#allow))
+- `del`: To **delete** specific items
+- `append`: To **append** items from one list to the other
 
-{{< note title="Avoid default usage of flatmap when not using arrays" type="warning">}}
-Use a basic [data manipulation](/docs/backends/data-manipulation/) operation such as [`target`](/docs/backends/data-manipulation/#target), [`deny`](/docs/backends/data-manipulation/#deny) or [`allow`](/docs/backends/data-manipulation/#allow) whenever you work with objects as their computational cost is lower. The flatmap component is **not a general solution for all objects**, and makes sense only when you need to manipulate collections or other corner cases with objects.
+{{< note title="Basic manipulation is faster" type="warning">}}
+Prefer basic [data manipulation](/docs/backends/data-manipulation/) operations such as [`mapping`](/docs/backends/data-manipulation/#mapping), [`target`](/docs/backends/data-manipulation/#target), [`deny`](/docs/backends/data-manipulation/#deny) or [`allow`](/docs/backends/data-manipulation/#allow) over flatmap whenever you work with objects as their computational cost is lower. Reserve the flatmap component for collections or operations that basic manipulation can't do (such as flattening objects)
 {{< /note >}}
 
 ## Flatmap configuration
 Depending on the stage you want to do the manipulation, you will need an `extra_config` configuration inside your `endpoint` or `backend` section. For both cases, the namespace is `proxy`.
+
+{{< note title="Flatmap at the endpoint level requires +1 backend" type="info" >}}
+The flatmap does not load at the `endpoint` level unless there is more than one backend configured, as its purpose is to manipulate responses after the merge operation. Therefore, use it in the `backend` if you only have one.
+{{< /note >}}
+
 
 The component structure with three operations would be as follows:
 ```json
@@ -74,7 +83,7 @@ The component structure with three operations would be as follows:
     }
 }
 ```
-Then the `flatmap_filter` is an **array** with the **list of operations to execute sequentially** (top down). Each flatmap step takes the output of its previous execution, and every operation is defined with an object containing two properties:
+Then the `flatmap_filter` is an **array** with the **list of operations to execute sequentially** (top-down). Each flatmap step takes the output of its previous execution, and every operation is defined with an object containing two properties:
 
 {{< schema data="proxy/flatmap.json" property="items" >}}
 
@@ -82,15 +91,15 @@ Then the `flatmap_filter` is an **array** with the **list of operations to execu
 
 The types of operations are defined as follows:
 
-*   **Move**: To move or rename a collection to another. It needs two arguments.
-    *   `"type": "move"`
-    *   `"args": ["target_in_collection", "destination_in_collection"]`
-*   **Delete**: To remove all matching patterns within a collection. Needs one or more arguments.
-    *   `"type": "del"`
-    *   `"args": ["target_in_collection_to_delete", "another_collection_to_delete", "..."]`
-*   **Append**: To append a collection after another one, and return only the latter. Needs 2 arguments.
-    *   `"type": "append"`
-    *   `"args": ["collection_to_append", "returned_collection"]`
+- **Move**: To move or rename a collection to another. It needs two arguments.
+    - `"type": "move"`
+    - `"args": ["target_in_collection", "destination_in_collection"]`
+- **Delete**: To remove all matching patterns within a collection. It needs one or more arguments.
+    - `"type": "del"`
+    - `"args": ["target_in_collection_to_delete", "another_collection_to_delete", "..."]`
+- **Append**: To append a collection after another and return only the latter. It needs two arguments.
+    - `"type": "append"`
+    - `"args": ["collection_to_append", "returned_collection"]`
 
 
 The format of the arguments (`args`) to proceed with the operation is very simple. In short, **object nesting** is represented with **dots**, while the index of an array is represented with a **number**. Or all matching items with **wildcards**. So:
@@ -99,11 +108,11 @@ The format of the arguments (`args`) to proceed with the operation is very simpl
 *   The wildcard `*` matches any key (property name, collection key name, or index)
 *   A `number` identifies the Nth-1 member of a collection, being `0` its first item.
 
-Operations always apply to ** the last item** in the arguments. For instance, a deletion of `a.b.c` deletes `c` but leaves `a.b` in the response.
+Operations always apply to ** the last item** in the arguments. So, for instance, the deletion of `a.b.c` deletes `c` but leaves `a.b` in the response.
 
 ### Notation by example
 
-We are going to use an elementary JSON structure as an example of data representation. See below:
+We will use an elementary JSON structure as an example of data representation. See below:
 
 ```json
 {
@@ -137,13 +146,13 @@ We are going to use an elementary JSON structure as an example of data represent
 
 Notice from this example that...
 
-*   `a` and `b1` contain arrays (`[...]`) with objects inside.
-*   `b2`, `c` and `d` are not arrays
-*   Since `a` is an array (`"a": []`) we need to use the flatmap component. If it were an object (`"a": {}`) we would use [deny or allow](/docs/backends/data-manipulation/)
+- `a` and `b1` contain arrays (`[...]`) with objects inside.
+- `b2`, `c` and `d` are not arrays
+- Since `a` is an array (`"a": []`), we need to use the flatmap component. If it were an object (`"a": {}`), we would use [deny or allow](/docs/backends/data-manipulation/)
 
 #### Representing some values
 
-Now that we are familiar with the structure let's represent same values:
+Now that we are familiar with the structure let's represent some values:
 
 | Notation     | Value                                                                                                               |
 | ------------ | ------------------------------------------------------------------------------------------------------------------- |
@@ -171,52 +180,129 @@ Some individual operations **on the example structure above**:
 | `"a.*.b1.*.c"` | `"a.*.x.*.c.d.e.f.g"`  | No         | Incorrect, renaming to an element `x` that is not in the last position |
 | `"a.*.b1.*.c"` | `"a.*.b1.*.d.*.e"`     | No         | Incorrect, destination path has more wildcards than source path        |
 
-## Configuration example
+## Configuration examples
 
-The following example demonstrates how to modify a collection doing these operations:
+The following examples demonstrate how to modify a collection or objects using flatmap.
+
+### Example: Extract objects to another level
+We have a backend that provides the following response as Input for flatmap:
+
+**Input**:
+```json
+{
+    "shipping_id": "f15f8c62-8c63-46de-a7f6-a08f131848c5",
+    "zone": {
+        "state": "NY",
+        "zip": "10001"
+    }
+}
+```
+And we want to **extract fields** from `zone`, rename them, and **place them in the root**, like this:
+
+**Output**:
 
 ```json
 {
-    "extra_config": {
-        "proxy": {
-            "flatmap_filter": [
-                {
-                    "type": "append",
-                    "args": ["kindergarten", "schools"]
-                },
-                {
-                    "type": "move",
-                    "args": ["schools.42.students", "alumni"]
-                },
-                {
-                    "type": "del",
-                    "args": ["schools"]
-                },
-                {
-                    "type": "del",
-                    "args": ["alumni.*.password"]
-                },
-                {
-                    "type": "move",
-                    "args": ["alumni.*.PK_ID", "alumni.*.id"]
-                }
-            ]
+    "shipping_id": "f15f8c62-8c63-46de-a7f6-a08f131848c5",
+    "shipping_state": "NY",
+    "shipping_zip": "10001"
+}
+```
+
+**Configuration**:
+
+```json
+{
+  "backend": [{
+      "url_pattern": "/shipping",
+      "extra_config": {
+          "proxy": {
+              "flatmap_filter": [
+                  { "type": "move", "args": ["zone.state","shipping_state"] },
+                  { "type": "move", "args": ["zone.zip","shipping_zip"] },
+                  { "type": "del","args": ["zone"] }
+              ]
+          }
+      }
+  }]
+}
+```
+
+As you can see, we did three operations:
+
+1. Move the state to the root with a new name
+2. Move the zip to the root with a new name
+3. Delete `zone` as it became a null object after emptying it.
+
+### Example: Moving around data in arrays
+In this example we have a couple of arrays that we want to manipulate.
+
+**Input**:
+```json
+{
+    "kindergarten": [
+        { "name": "TEST Kinder" },
+        { "name": "Lil' Elephants" },
+        { "name": "Bright Rainbows" }
+    ],
+    "schools": [
+        { "title": "Brookside Elementary" },
+        { "title": "Oak Tree School" }
+    ]
+}
+```
+And we want an output where both arrays are merged, using consistent naming. And we also want to get rid of the first TEST element. As follows:
+
+**Output**:
+
+```json
+{
+    "schools":[
+        {"name":"Lil' Elephants"},
+        {"name":"Bright Rainbows"},
+        {"name":"Brookside Elementary"},
+        {"name":"Oak Tree School"}
+    ]
+}
+```
+Then we need the following **configuration**:
+
+```json
+{
+    "endpoint": "/education-clean",
+    "backend": [{
+        "url_pattern": "/education",
+        "extra_config": {
+            "proxy": {
+                "flatmap_filter": [
+                    {
+                        "type": "del",
+                        "args": ["kindergarten.0"]
+                    },
+                    {
+                        "type": "move",
+                        "args": ["schools.*.title", "schools.*.name"]
+                    },
+                    {
+                        "type": "append",
+                        "args": ["kindergarten", "schools"]
+                    }
+                ]
+            }
         }
-    }
+    }]
 }
 ```
 
 **What did we do here?**
 
-There is a sequence of 4 operations to:
+There is a sequence of three operations:
 
-*   Extract all items inside `kindergarten` and append them to the `students` collection.
-*   Extract all `students` of the `43rd` school (array starts at 0) and put them under a new property `alumni`
-*   Get rid of all the remaining schools
-*   Delete all items with a property `password` inside the array
-*   Rename all items with a property `PK_ID` to `id`
+- Delete the first element (index `0`) of `kindergarten`.
+- Rename all `title` attributes of `schools` to `name`.
+- Append all the `kindergarten` content to `schools`.
 
-For more examples, [see the test file](https://github.com/krakendio/flatmap/blob/master/tree/tree_example_test.go).
+For more examples, [see this test file](https://github.com/krakendio/flatmap/blob/master/tree/tree_example_test.go).
 
 
 ## Mixing flatmap with other manipulation operations

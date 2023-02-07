@@ -15,11 +15,11 @@ This page describes the most basic options to manipulate the content you receive
 
 <!--more-->
 {{< note title="Before you begin..." type="tip" >}}
-See what kind of response you are getting from your backend in the first place. If you get the response inside an object `{}`, you can apply the manipulations right away. But if you get an array `[]`, see how to manipulate collections below.
+See what kind of response you are getting from your backend in the first place. If you get the response inside an object `{}`, you can apply the manipulations right away. But if you get an array `[]`, see how to manipulate **collections** below.
 {{< /note >}}
 
 ## Filtering
-When you offer a KrakenD endpoint, you can decide whether to return all the fields from the backend (default behavior) or specify which ones are allowed through an allow or deny list. You might want to use this functionality for many different reasons. Still, we strongly encourage you to consider using it frequently to save the user's bandwidth, provide the client what is needed, and decrease the load and render times.
+When you offer a KrakenD endpoint, you can decide whether to return all the fields from the backend (default behavior) or specify which ones are allowed through an allow or deny list. You might want to use this functionality for many different reasons. Still, we strongly encourage you to consider **using it frequently to save the user's bandwidth**, provide the client what is needed, and decrease the load and render times.
 
 You can use two different filtering strategies, pick one or the other in each endpoint:
 
@@ -27,7 +27,7 @@ You can use two different filtering strategies, pick one or the other in each en
 - **Allow list** (`allow`)
 
 
-**Note**: Prior to KrakenD 1.2 these terms where known as `whitelist` and `blacklist`.
+**Note**: Prior to KrakenD 1.2 these terms where known with the outdated term `whitelist` and `blacklist`.
 
 
 ### Deny
@@ -51,7 +51,7 @@ The deny fields of your choice can also be nested ones. Use a **dot** as the lev
 
 Also worth mentioning, the operator works with **objects only** and not with arrays. When working with collections `[]`, see the special case [manipulating arrays](/docs/backends/flatmap/).
 
-For instance, `{ "a": [ { "a1": 1 } ] }` can't be denied as `a.a1` because `a1` is inside an array.
+For instance, `{ "a": [ { "a1": 1 } ] }` does not work as `a.a1` because `a1` is inside an array, but `{ "a": { "a1": 1 } }` would work.
 
 {{< note title="Working with arrays" >}}
 Deny list and allow list filters expect objects. When working with collections, see the [flatmap approach](/docs/backends/flatmap/)
@@ -255,7 +255,6 @@ Will generate responses like this one:
 }
 {{< /highlight >}}
 
-
 ## Target
 It is frequent in many API implementations that the desired data lives inside a generic field like `data` or `content`, and you don't want to have the encapsulating level included in your responses.
 
@@ -306,9 +305,52 @@ We need this KrakenD configuration:
   }
 {{< /highlight >}}
 
+## Moving, extracting, or flattening
+There will be times when you want to move one item to another place, or flatten its structure. In these cases you need to use the [flatmap component](/docs/backends/flatmap/).
+
+For instance, you have a nested response like the following:
+
+```json
+{
+    "shipping_id": "f15f8c62-8c63-46de-a7f6-a08f131848c5",
+    "zone": {
+        "state": "NY",
+        "zip": "10001"
+    }
+}
+```
+And you would like to **extract out its fields**, like this:
+
+```json
+{
+    "shipping_id": "f15f8c62-8c63-46de-a7f6-a08f131848c5",
+    "shipping_state": "NY",
+    "shipping_zip": "10001"
+}
+```
+
+You would need a configuration like this:
+
+```json
+{
+  "backend": [{
+      "url_pattern": "/shipping",
+      "extra_config": {
+          "proxy": {
+              "flatmap_filter": [
+                  { "type": "move", "args": ["zone.state","shipping_state"] },
+                  { "type": "move", "args": ["zone.zip","shipping_zip"] },
+                  { "type": "del","args": ["zone"] }
+              ]
+          }
+      }
+  }]
+}
+```
+See how the [flatmap filter](/docs/backends/flatmap/) works for more options.
 
 ## Collections
-Working with collections (or arrays) is a special manipulation case. There are two different scenarios regarding collections:
+Working with collections (or arrays) is a special manipulation case. There are different scenarios regarding collections:
 
 - When the whole backend response is inside an array instead of an object
 - When you want to manipulate collections (e.g., a path like `data.item[N].property`)
@@ -344,7 +386,7 @@ By default, KrakenD adds the key `collection` in the response, e.g.:
 }
 ```
 
-You can rename the default key name `collection` to something else using the `mapping` attribute (docs above, the example below).
+You can rename the default key name `collection` to something else using the `mapping` attribute (docs above, the example below), but you can also **return directly the array** to the end-user, without any wrapping, if the endpoint has `"output_encoding": "json-collection"`.
 
 The following is a real example based on a [collection response](http://jsonplaceholder.typicode.com/posts), copy and paste to test in your environment:
 
@@ -382,7 +424,8 @@ All the data manipulation operations (such as the allow list, deny list, etc.) e
 See [Manipulating arrays - flatmap](/docs/backends/flatmap/)
 
 ## More advanced manipulations
-If you need more sophisticated manipulation options, there are two different approaches you can use:
+If you need more sophisticated manipulation options, there are different approaches you can use:
 
+- Through a [Query Language](/docs/enterprise/endpoints/jmespath/) {{< badge >}}Enterprise{{< /badge >}}
 - Through [Response modifier plugins](/docs/extending/plugin-modifiers/) - Very performant, requires compilation
 - Through [Lua scripting](/docs/endpoints/lua/) - Less performant, does not require compilation
