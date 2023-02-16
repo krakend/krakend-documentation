@@ -97,6 +97,15 @@ The following modifier sets the body of the request and the response to `{"msg":
 }
 ```
 
+The Flexible Configuration has a `b64enc` function that will allow you to have an easier to read configuration. For instance (notice the backticks as delimiters):
+
+```go-text-template
+"body": "{{- `{"msg":"you rock!"}` | b64enc -}}"
+```
+Or from an external file:
+```go-text-template
+"body": "{{- include "external_file.txt" | b64enc -}}"
+```
 
 ## Transform the URL
 The `url.Modifier` allows you to change settings in the URL. For instance:
