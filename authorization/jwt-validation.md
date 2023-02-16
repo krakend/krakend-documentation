@@ -254,7 +254,7 @@ Keep in mind that this syntax in the `url_pattern` field is only available if th
 If KrakenD can't replace the claim's content for any reason, the backend receives a request to the literal URL `/foo/{JWT.sub}`.
 
 ## Propagate JWT claims as request headers
-It is possible to forward claims in a JWT as request headers. It is a common use case to have, for instance, the sub claim added as an `X-User` header to the request.
+It is possible to forward claims in a JWT as request headers. It is a common use case to have, for instance, the sub claim added as an `X-User` header to the request. The propagation makes that other KrakenD components, such as rate-limiting, can work with information in the token.
 
 **Important:** The endpoint `input_headers` needs to be set as well, so the backend can see it.
 

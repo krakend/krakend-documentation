@@ -44,7 +44,6 @@ These are two parameters you can set:
 ## Comparison of `max_rate` vs `client_max_rate`
 The `max_rate` (available both in router and proxy layers) is an absolute number where you have the exact control over how much traffic you are allowing to hit the backend or endpoint. In an eventual DDoS, the `max_rate` can help in a way since it won't accept more traffic than allowed. But on the other hand a single host could abuse the system taking a big percentage of that quota.
 
-The `client_max_rate` is a limit per client and it won't help you if you just want to control the total traffic, as
-the total traffic supported by the backend or endpoint depends on the number of different requesting clients. A DDoS will then happily pass through, but on the other hand, you can keep any particular abuser limited to its quota.
+The `client_max_rate` is a limit per client and it won't help you if you just want to control the total traffic, as the total traffic supported by the backend or endpoint depends on the number of different requesting clients. A DDoS will then happily pass through, but on the other hand, you can keep any particular abuser limited to its quota.
 
-Depending on your use case you will need to decide if you use one, the other, the two, or none of them (fastest!)
+Depending on your use case you will need to decide if you use one, the other, the two, or none of them.

@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-11-22
+lastmod: 2023-02-16
 date: 2016-07-01
 linktitle: Rate Limits
 title: Router Rate-limiting
@@ -73,11 +73,37 @@ The following options are available to configure. You can use `max_rate` and `cl
 
 {{< schema data="qos/ratelimit/router.json" >}}
 
+### Rate-limiting by token claim
+When you use rate-limiting with a `strategy` of `header`, you can set an arbitrary header name that will be used as the counter identifier. Then, when played in combination with JWT validation, you can extract values from the token and propagate them as new headers.
+
+Propagated headers are available at the endpoint and backend levels, allowing you to set limits based on JWT criteria. For instance, let's say you want to rate-limit a specific department, and your JWT token contains a claim `department`. You could have a configuration like this:
+```json
+{
+    "endpoint": "/token-ratelimited",
+    "input_headers": ["x-limit-department"],
+    "extra_config": {
+        "auth/validator": {
+            "propagate_claims": [
+                ["department","x-limit-department"]
+            ]
+        },
+        "qos/ratelimit/router": {
+            "max_rate": 50,
+            "client_max_rate": 5,
+            "strategy": "header",
+            "key": "x-limit-department"
+        }
+    }
+}
+```
+
+Notice that the `propagate_claims` in the validator adds the department value into a new header, `x-limit-department`. The header is also added under `input_headers` because otherwise, the endpoint wouldn't see it (zero-trust policy). Finally, the rate limit uses the new header as a strategy and specifies its name under `key`.
+
 ### Examples of per-second rate limiting
 The following examples demonstrate a configuration with several endpoints, each one setting different limits:
 
 - A `/happy-hour` endpoint with unlimited usage as it sets `max_rate = 0`
-- A `/happy-hour-2` endpoint is equivalent to the previous, as it has no rate limit configuration.
+- A `/happy-hour-2` endpoint is equivalent to the previous one, as it has no rate limit configuration.
 - A `/limited-endpoint` combines `client_max_rate` and `max_rate` together. It is capped at 50 reqs/s for all users, AND their users can make up to 5 reqs/s (where a user is a different IP)
 - A `/user-limited-endpoint` is not limited globally, but every user (identified with `X-Auth-Token` can make up to 10 reqs/sec).
 
@@ -142,7 +168,7 @@ Configuration:
 ### Examples of per-minute or per-hour rate limiting
 The rate limit component measures the router activity using the seconds unit. Nevertheless, you can set rate limits on larger time units, like minutes or hours, and you only need to divide the desired unit to express into seconds.
 
-You could go even to daily or monthly rate-limiting, but taking into account that the counters reset every time you deploy the configuration, using large units is not convenient if you deploy often (unless you use the persisted [Redis rate limit {{< badge color="denim" >}}Enterprise{{< /badge >}}
+You could go even to daily or monthly rate-limiting, but taking into account that the counters reset every time you deploy the configuration, using large units is not convenient if you often deploy (unless you use the persisted [Redis rate limit {{< badge color="denim" >}}Enterprise{{< /badge >}}
 ](/docs/enterprise/throttling/global-rate-limit/))
 
 For example, let's say you want the endpoint to cut the access at `30 reqs/minute`. It means that within a minute, whether the users exhaust the 30 requests in one second or gradually across the minute, you won't let them do more than `30` every minute on average. So how do we apply this to the configuration?
