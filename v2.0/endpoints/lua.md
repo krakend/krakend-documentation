@@ -139,8 +139,8 @@ Use this type when you need to script the router layer, traffic between end-user
 *   `load()` (_Static_): The constructor to view and manipulate requests. E.g.: `local c = ctx.load()`. **Notice that the rest of the functions rely on this one**.
 *   `method()` (_Dynamic_): Getter that retrieves the method of the request. E.g.: `c:method()` could return a string `GET`.
 *   `method(value)` (_Dynamic_): Setter that changes the method of the request. E.g.: `c:method('POST')`.
-*   `query()` (_Dynamic_): Getter that retrieves the query string of the request, URL encoded. E.g.: `c:query()` could return a string `?foo=var&vaz=42`.
-*   `query(value)` (_Dynamic_): Setter that changes the query of the request. E.g.: `c:query('?foo=var&vaz=42')`.
+*   `query(key)` (_Dynamic_): Getter that retrieves the query string of the request, URL encoded. E.g.: `c:query('foo')` could return a string `var` for `?foo=var&vaz=42`.
+*   `query(key,value)` (_Dynamic_): Setter that changes the query of the request. E.g.: `c:query('foo','var')`.
 *   `url()` (_Dynamic_): Getter that retrieves the full URL string of the request, including the host and path. E.g.: `c:url()` could return a string `http://domain.com/api/test`. The URL might be empty depending on the step where this information is requested, as the URL is a calculated field just before performing the request to the backend.
 *   `url(value)` (_Dynamic_): Setter that changes the url of the request. E.g.: `c:url('http://domain.com/api/test')`. Changing the value before the `url` is calculated will result in KrakenD overwriting its value.
 *   `params(param)` (_Dynamic_): Getter that retrieves the `{params}` of the request as defined in the endpoint. E.g.: For an endpoint `/users/{user}` the function `c:params('User')` could return a string `alice`. **The parameters must have the first letter capitalized**.
