@@ -2,7 +2,7 @@
 lastmod: 2022-06-29
 date: 2018-07-20
 aliases: ["/docs/features/parameter-forwarding/"]
-linktitle:  Query strings and headers
+linktitle:  Parameter forwarding
 title: Forwarding query strings and headers
 weight: 10
 menu:

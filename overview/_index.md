@@ -6,7 +6,8 @@ linktitle: Introduction
 menu:
   community_current:
     parent: "000 Getting Started"
-title: Introduction to KrakenD
+title: Introduction to KrakenD Community Edition
+description: Documentation for KrakenD Community Edition, the high-performance open-source API Gateway.
 notoc: true
 weight: -10000
 images:
