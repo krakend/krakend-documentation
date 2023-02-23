@@ -15,16 +15,15 @@ skip_header_image: true
 
 An important concept to get familiar with is that **by default, KrakenD does not work as a reverse proxy** (unless you use the [`no-op` encoding](/docs/endpoints/no-op/)). When clients consume upstream services content through KrakenD, it is **automatically transformed to the encoding of your choice**, and you have the opportunity to manipulate and aggregate data easily.
 
-KrakenD can send responses back to the client **in a different format** than what your services provide. We call the encoding you provide to the end-user the `output_encoding`, while the content your services (backend) provide KrakenD we call them `encoding`.
+KrakenD can send these responses back to the client **in different formats** to what your services provide. We call the encoding you provide to the end-user the `output_encoding`, while the content your services (backend) provide to KrakenD we call them `encoding`.
 
-**The response flow is**:
+The request/response flow is:
 
-- The `encoding` is how KrakenD expects to find the response data of your backends. It is declared in the [`backend` section](/docs/backends/supported-encodings/)
-- The `output_encoding` is how you would like to process and return the responses to the client. It is declared in the `endpoint` section.
+![content-type-flow.mmd diagram](/images/documentation/diagrams/content-type-flow.mmd.png)
 
-After KrakenD has queried your services, the flow looks like this:
 
-![Encoding flow diagram](/images/documentation/diagrams/encoding-flow.mmd.png)
+- The `encoding` is how KrakenD expects to find the response data of your backends. It is declared in each [`backend` section](/docs/backends/supported-encodings/) (and you can mix types)
+- The `output_encoding` is how you would like to process and return all the responses to the client. It is declared in the `endpoint` section.
 
 ## Example
 For instance, you can have one endpoint `/foo` that consumes content from multiple services in parallel in different formats (`encoding`) like  XML or RSS. But you want to return the aggregated information in JSON (the `output_encoding`). You can mix encodings and return them normalized automatically.
@@ -54,7 +53,7 @@ The following `output_encoding` strategies are available to choose from for ever
   - `text/plain` (outputs in YAML)
 
 ## Output encoding examples
-Each endpoint declaration can define which encoder should be used, as shown in this example. By default, when the `output_encoding` is omitted, KrakenD falls back to JSON:
+Each endpoint declaration can define which encoder should be used, as shown in this example. By default, when the `output_encoding` is omitted, KrakenD falls back to JSON:json-coll
 
 ```json
 {

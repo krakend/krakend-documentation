@@ -43,17 +43,30 @@ Follow this table to determine how to treat your backend content:
 {{< note title="Working with JSON arrays" >}}
 If you want to return to the client a JSON array instead of an object, consider using the following combinations: `output_encoding: json-collection` in your `endpoint`, and `is_collection: true` in your `backend`. See [response content types](/docs/endpoints/content-types/).
 
-When hesitating whether to use `safejson` or `json` and the `is_collection=true`, the `json` encoder is faster and more performant but less resilient: it will fail when the content doesn't have the expected type.
+When hesitating whether to use `safejson` or `json` and the `is_collection=true`, the `json` encoder is faster and more performant but less resilient: it will fail when the content doesn't have the expected type. If you are in control of the output of the service, choose `json`, if you are not, choose `safejson`.
 {{< /note >}}
 
+## Automatic content wrappers (`collection` and `content`)
+When the content returned by your service is wrapped inside an array instead of an object, the gateway will wrap the response inside a `collection` object. This scenario is possible with `is_collection=true` , or when the `safejson` found an array in the response.
 
-The following example demonstrates how an endpoint `/abc` is feeding on three different services and urls  `/a`, `/b`, and `/c` and aggregates their responses:
+When the content returned by your service is a string, a float, integer, etc. but a type that is not an object or a collection, then the response is wrapped inside a `content` object. This scenario is possible with when the `safejson` finds a non-array or non-object type, or when you use a `string` encoding.
+
+For instance, if your backend returns a simple `Hello World!`, the response of KrakenD (`output_encoding=json`) would be `{ "content": "Hello World!" }`.
+
+Similarly, if your backend returns `[{"item": 1},{"item": 2}]` then the response of KrakenD (`output_encoding=json`) would be `{ "collection": [{"item": 1},{"item": 2}] }`.
+
+Some `ouput_encodings` will revert this wrapping before returning the content to the user to match the exact value provided by the backend, but this gives you the oportunity to manipulate the content and work with it at the endpoint level. The `output_encoding` of `string` will remove the `content` wrapping, while the `json-collection` while remove the `collection` wrapping.
+
+# Example of mixed encodings
+
+The following example demonstrates how an endpoint `/abc` is feeding on three different services and urls  `/a`, `/b`, and `/c` and aggregates their responses. All the information is returned in JSON (`output_encoding`) despite it is consuming heterogeneous formats:
 
 ```json
 {
 	"endpoints": [
     {
       "endpoint": "/abc",
+      "output_encoding": "json",
       "backend": [
         {
           "url_pattern": "/a",

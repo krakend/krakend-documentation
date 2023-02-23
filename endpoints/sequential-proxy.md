@@ -61,6 +61,8 @@ Where `0` is the index of the specific `backend` you want to access (`0` is the 
 If you use unsafe methods (not a `GET`), they can only be placed in the last position of the sequence. Sequences are meant to be used in read-only operations except for the last call. A sequence is not meant to be used in distributed transactions.
 {{< /note >}}
 
+If the encoding of your backend is `string`, then you can access its contents using `resp0_content`.
+
 ## Example
 It's easier to understand with the example of the graph:
 
