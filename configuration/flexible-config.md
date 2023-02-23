@@ -296,6 +296,47 @@ And call it in the `krakend.tmpl` like this:
 }
 ```
 
+### Load dynamically all templates in a directory
+Sometimes you want to "drag and drop" a new template into a folder and load it automatically in the configuration without referencing it. To do this, you must preprocess the template directory's contents into the file you will include.
+
+Let's imagine your `krakend.tmpl` looks like this:
+
+```go-text-template
+{
+    "version": 3,
+    "$schema": "https://www.krakend.io/schema/v3.json",
+    "endpoints": [
+        {{ include "endpoints.tmpl" . }}
+    ]
+}
+```
+The `endpoints.tmpl` should contain the list of all the templates we want to include. One of the limitations of the Go `{{ include}}` is that you cannot use a variable to load a template, so we must pre-generated the contents.
+
+There are many ways to generate this, and the following command is to save you time if you want to achieve this:
+
+{{< terminal title="Dynamic file" >}}
+tree -J -P "ep_*.tmpl" -I "endpoints.tmpl" \
+| jq -r ' ( .[0].contents[].name | "{{ template \"\(.)\" . }}," )' \
+| sed '$s/,$//' > endpoints.tmpl
+{{< /terminal >}}
+
+The command above will use `tree` to scan the contents of the template folder, using a theoretical pattern and generate the `endpoints.tmpl` file. The flags are:
+- `-J` generates the tree output in JSON format.
+- `-P` scans only for a particular pattern. In our example, templates beginning with `ep_`.
+- `-I` excludes the file `endpoints.tmpl`
+- The `jq` command prints in raw (`-r`) so quotes are not escaped and surrounds the template with the template syntax
+- The final `sed` removes the last comma
+- The output file `endpoints.tmpl` could look like this:
+
+```bash
+cat endpoints.tmpl
+{{ template "ep_users.tmpl" . }}
+{{ template "ep_checkout.tmpl" . }}
+{{ template "ep_catalogue.tmpl" . }}
+{{ template "ep_starred.tmpl" . }}
+{{ template "ep_auth.tmpl" . }}
+```
+
 ## Practical example
 To demonstrate the usage of the flexible configuration, we will reorganize a configuration file into several pieces. This is a simple example to see the basics of the templates system:
 
