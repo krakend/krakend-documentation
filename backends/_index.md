@@ -35,6 +35,8 @@ Inside the `backend` array, you need to create an object for each upstream servi
 }
 ```
 
+The `url_pattern` accepts `{variables}` from the endpoint definition, and on {{< badge color="denim" >}}Enterprise{{< /badge >}} you can also [inject headers](/docs/enterprise/endpoints/dynamic-routing/) with patterns like `/{input_headers.X-Tenant}/foo`
+
 
 All the options relative to the **backend definition** are:
 

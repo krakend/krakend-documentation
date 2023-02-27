@@ -46,7 +46,8 @@ For instance:
                 "(Pingdom.com_bot_version_).*",
                 "(facebookexternalhit)/.*"
             ],
-            "cache_size": 10000
+            "cache_size": 10000,
+            "empty_user_agent_is_bot": true
         }
     }
 }
