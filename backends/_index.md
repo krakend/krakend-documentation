@@ -100,3 +100,14 @@ By default KrakenD only works with **RESTful URL patterns** to connect to backen
   ]
 }
 {{< /highlight >}}
+
+## Connecting to HTTPS backends with self-signed certificates
+When using **self-signed certificates** in your backends, you must add the certificates to the local CA, or at least add them while developing the `allow_insecure_connections` setting to `true`. Example:
+
+```json
+{
+  "version": 3,
+  "allow_insecure_connections": true,
+  "endpoints": []
+}
+```
