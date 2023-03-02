@@ -25,6 +25,8 @@ The **Circuit Breaker** is a straightforward **state machine** in the middle of 
 
 When KrakenD demands more throughput than your actual API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also helpful for dealing with network and other communication problems by preventing too many requests from dying due to timeouts, etc.
 
+It is important to remark that the number of maximum errors are **consecutive errors**, and not the total of errors in the period. This approach works better when your traffic is variable, as it's based on a probabilistic pattern and it's not affected by the volume you might have.
+
 {{< note title="A must have configuration" type="warning" >}}
 The Circuit Breaker is an **automatic protection measure** for your API stack and **avoids cascade failures**, keeping your API responsive and resilient. It has a small consumption of resources. Try to implement it always.
 {{< /note >}}

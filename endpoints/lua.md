@@ -139,8 +139,8 @@ Use this type when you need to script the router layer, traffic between end-user
 *   `method(value)` (_Dynamic_): Setter that changes the method of the request. E.g.: `c:method('POST')`.
 *   `query(key)` (_Dynamic_): Getter that retrieves the query string of the request, URL encoded. E.g.: `c:query('foo')` could return a string `var` for `?foo=var&vaz=42`.
 *   `query(key,value)` (_Dynamic_): Setter that changes the query of the request. E.g.: `c:query('foo','var')`.
-*   `url()` (_Dynamic_): Getter that retrieves the full URL string of the request, including the host and path. E.g.: `c:url()` could return a string `http://domain.com/api/test`. The URL might be empty depending on the step where this information is requested, as the URL is a calculated field just before performing the request to the backend.
-*   `url(value)` (_Dynamic_): Setter that changes the url of the request. E.g.: `c:url('http://domain.com/api/test')`. Changing the value before the `url` is calculated will result in KrakenD overwriting its value.
+*   `url()` (_Dynamic_): Getter that retrieves the URL string of the request (path and parameters). E.g.: `c:url()` could return a string `/api/test?foo=bar`. The URL might be empty depending on the step where this information is requested, as the URL is a calculated field just before performing the request to the backend.
+*   `url(value)` (_Dynamic_): Setter that changes the url of the request. E.g.: `c:url('/api/test?foo=bar')`. Changing the value before the `url` is calculated will result in KrakenD overwriting its value.
 *   `params(param)` (_Dynamic_): Getter that retrieves the `{params}` of the request as defined in the endpoint. E.g.: For an endpoint `/users/{user}` the function `c:params('User')` could return a string `alice`. **The parameters must have the first letter capitalized**.
 *   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. E.g.: `c:params('User','bob')`. **The parameters must have the first letter capitalized**.
 *   `headers(header)` (_Dynamic_): Getter that retrieves the headers of the request as allowed to pass (by `input_headers`) in the endpoint. E.g.: `c:headers('Accept')` could return a string `*/*`.
@@ -213,7 +213,12 @@ end
 ```
 
 ### Making additional requests (`http_response`)
-The `http_response` helper allows you to make an additional HTTP request and access its response.
+The `http_response` helper allows you to make an additional HTTP request and access its response. Is is available on:
+
+- `"modifier/lua-proxy"` (endpoint level)
+- `"modifier/lua-backend"` (backend level)
+
+Notice that you **cannot** use it in `modifier/lua-endpoint`.
 
 *   `new(url)` (_Static_): Constructor. Sets the URL you want to call and makes the request. E.g.: `local r = http_response.new('http://api.domain.com/test')`. **Notice that the rest of the functions rely on this one**. The constructor accepts 1, 3, or 4 arguments, respectively. See examples below.
 *   `statusCode()` (_Dynamic_): Getter for the status code of the response. E.g.: `r:statusCode()` could return `200`
