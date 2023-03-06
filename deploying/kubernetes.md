@@ -82,4 +82,5 @@ For a more step by step process see [this blog entry](/blog/krakend-on-kubernete
 
 ## Helm Chart
 
-There is no official Helm chart for KrakenD. But you can see as example [Mikescandy's contribution](https://github.com/mikescandy/krakend-helm)
+There is no official Helm chart for KrakenD. However, there is a Helm chart here
+tracking Krakend releases maintained by [Equinix Metal](https://github.com/equinixmetal-helm/krakend).
