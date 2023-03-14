@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-04-12
+lastmod: 2023-03-14
 date: 2019-01-24
 linktitle: "Conditional requests and responses"
 title: Conditional requests and responses with CEL
