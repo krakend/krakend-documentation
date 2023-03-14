@@ -104,7 +104,7 @@ You can use the following variables inside the `check_expr`:
 - `req_path`: The path used to access this endpoint, e.g: : `/foo`
 - `req_params`: An object with all the placeholder `{parameters}` declared in the endpoint . All **parameters capitalize the first letter**. E.g.: An `"endpoint": "/v1/users/{id_user}"` will set a variable `req_params.Id_user` containing the value of the parameter passed in the request. When you use the [sequential proxy](/docs/endpoints/sequential-proxy/#chaining-the-requests) you also have under `req_params.RespX_field` the response of a previous backend call (where X is the sequence number and `field` the object you want to retrieve.
 - `req_headers`: An array with all the headers received. The value of the array is at the same time another array, as you can have a header declared multiple times (e.g., multiple cookies with `Set-Cookie`). You can access headers like this: `req_headers['X-Forwarded-For']`.
-- `req_querystring`: An Object with all the query strings that the user passed to the endpoint (not anything you wrote on the backend `url_pattern`). Remember that no query strings pass unless they are in the `input_query_strings` list. Notice that querystrings, unlike `req_params`, are NOT capitalized. The `req_querystring.foo` will also return an array as a query string can contain multiple values (e.g: `?foo[]=1&foo[]=2`).
+- `req_querystring`: An Object with all the query strings that the user passed to the endpoint (not anything you wrote on the backend `url_pattern`). Remember that no query strings pass unless they are in the `input_query_strings` list. Notice that querystrings, unlike `req_params`, are NOT capitalized. The `req_querystring.foo` will also return an array as a query string can contain multiple values (e.g: `?foo=1&foo=2`).
 - `now`: An object containing the current timestamp, e.g:
   `timestamp(now).getDayOfWeek()`
 
@@ -189,6 +189,41 @@ This example can be copied/pasted into a new configuration. The CEL validation h
 ```
 
 Also, notice how we are accessing a `github` element in the data, a new attribute added by KrakenD thanks to the `group` functionality (it does not exist in the origin API). The takeaway is that the CEL evaluation is applied **after** KrakenD has processed the backend.
+
+### Example: Match a query string parameter with multiple values
+This example validates that an array query string parameter contains a given value. Many APIs describe array query string parameters with a `[]` suffix to denote that it's an array to the backend service. CEL syntax can reference these types of parameters.
+
+In this case, an API operation accepts an array query string parameter named `foo`. The backend service's platform requires this passed to the API as `?foo[]=bar&foo[]=baz` in the query string. 
+
+KrakenD intercepts the parameter as the suffixed `foo[]`, so that's what must be allowed in your `input_query_strings` list. Since the parameter name contains the `[]` characters then it must be referred to as a map key instead of dot-notaion in CEL syntax.
+
+The following config uses CEL validation to block requests that do not have `foo[]` defined in the query string or do not have "bar" in the `foo[]` array:
+
+```json
+{
+    "endpoint": "/example",
+    "input_query_strings": [
+        "foo[]"
+    ],
+    "backend": [
+        {
+            "host": ["api.example.com"],
+            "url_pattern": "/example",
+            "extra_config": {
+                "validation/cel": [
+                    {
+                        "check_expr": "has(req_querystring['foo[]']) && 'bar' in req_querystring['foo[]']"
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+
+Note: this snippet applies CEL validation to a single backend. Apply CEL validation to an endpoint to validate across all backends. 
+
+If your application does not require the `[]` suffix in these parameters (clients pass in `?foo=bar&foo=baz` instead of `?foo[]=bar& foo[]=baz`) then omit the `[]` suffix from the parameter name in your `input_query_strings` list and refer to the parameter as `req_querystring.foo` in your `validation/cel` config.
 
 ### Example: Time-based access
 Let's close the access to the API endpoint during the weekend:
