@@ -5,7 +5,7 @@ linktitle: Traffic shadowing/mirroring
 title: Traffic shadowing or mirroring
 weight: 60
 since: 0.9
-notoc: true
+notoc: false
 menu:
   community_current:
     parent: "050 Backends Configuration"
@@ -63,3 +63,6 @@ The following example shows a backend that is changing from `v1` to `v2`, but we
     ]
 }
 ```
+
+## Canary testing
+Learn how to do canary testing in our [blog post](/blog/krakend-shadow-testing/)
