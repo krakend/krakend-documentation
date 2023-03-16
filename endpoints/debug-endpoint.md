@@ -11,7 +11,7 @@ notoc: true
 ---
 The `/__debug/` endpoint is available when you start the server with the `-d` flag, or when you add the `debug_endpoint=true` in the configuration.
 
-The endpoint can be used as a **fake backend** and is very useful to see the interaction between the gateway and the backends as its activity is printed in the log using the `DEBUG` log level. The endpoint returns this content:
+The endpoint can be used as a **fake backend** if you use as `host` KrakenD itself, and is very useful to see the interaction between the gateway and the backends as its activity is printed in the log using the `DEBUG` log level. The endpoint returns this content:
 
 ```json
 {
@@ -20,9 +20,9 @@ The endpoint can be used as a **fake backend** and is very useful to see the int
 ```
 
 
-When developing, add KrakenD itself as another backend using the `/__debug/` endpoint so you can see exactly what headers and query string parameters your backends are receiving.
+When developing, add an additional `backend` pointing to KrakenD itself (`"host": "http://localhost:8080"`) with the `/__debug/` endpoint in its `url_pattern`, so you can see exactly what headers and query string parameters your backends are receiving.
 
-The debug endpoint might save you much trouble, as your application might not work when specific headers or parameters are not present. Maybe you are relying upon what your client is sending, but this is not what the gateway is sending. Remember: this is not a proxy.
+The debug endpoint might save you much trouble, as your application might not work when specific headers or parameters are not present. Maybe you are relying upon what your client is sending, but this is not what the gateway is forwarding. Remember: this is not a proxy.
 
 For instance, your client might be sending a `Content-Type` or `Accept` header and these are perhaps necessary for the proper functioning of your backend, but unless these are recognized headers by the gateway (they are in `input_headers`), they are not going to reach the backend ever. Seeing the specific headers and parameters in the log clears all the doubts, and you can reproduce the call and conditions easily.
 
@@ -57,6 +57,8 @@ To test it right now, save the content of this file in a `krakend-test.json` and
       "endpoint": "/default-behavior",
       "backend": [
         {
+          "@comment": "IMPORTANT: Notice that the /__debug uses the KrakenD host itself",
+          "host": ["http://127.0.0.1:8080"],
           "url_pattern": "/__debug/default"
         }
       ]
