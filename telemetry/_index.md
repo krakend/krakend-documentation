@@ -27,7 +27,7 @@ The following telemetry third-party systems are supported:
 - [Prometheus](/docs/telemetry/prometheus/)
 - [Google Stackdriver](/docs/telemetry/stackdriver/)
 - [Datadog](/docs/telemetry/datadog/)
-- [Azure Monitor](/docs/telemetry/opencensus/) (OpenCensus Agent)
+- [Azure Monitor](/docs/telemetry/azure/)
 - [Grafana](/docs/telemetry/grafana/)
 
 Plus the Enterprise-only exporters:
