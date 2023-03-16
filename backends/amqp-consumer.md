@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-01-24
+lastmod: 2023-03-16
 date: 2018-04-05
 linktitle: RabbitMQ Consumer
 title: Gateway integration with RabbitMQ consumers
@@ -56,7 +56,6 @@ The needed configuration to run a consumer is:
                 "no_local": false,
                 "routing_key": ["#"],
                 "prefetch_count": 10,
-                "prefetch_size": 1024,
                 "auto_ack": false
             }
         }
