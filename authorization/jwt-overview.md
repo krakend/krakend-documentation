@@ -12,7 +12,7 @@ menu:
 
 The **JSON Web Token** specification is an industry standard to represent claims securely between two parties. The **JWT** is a `base64` encoded JSON object that contains key-value pairs of attributes that are signed by a trusted authority.
 
-When JWT shields a specific set of endpoints, requests to the API gateway must provide a token. Verification of the token takes place in every request, including the check of the signature and optionally the assurance that its issuer, roles, and audience are sufficient to access the endpoint. No external access is needed other than the initial load of the JWK url to validate tokens.
+When JWT shields a specific set of endpoints, requests to the API gateway must provide a token. Verification of the token takes place in every request, including the check of the signature and optionally the assurance that its issuer, roles, and audience are sufficient to access the endpoint. No external access is needed other than the initial load of the JWK URL to validate tokens.
 
 Only in the case that the token is valid and passes all the checks, **the user is authorized to access the endpoint** and continue with the request.
 
