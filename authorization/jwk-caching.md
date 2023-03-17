@@ -16,7 +16,7 @@ meta:
   scope:
   - service
   log_prefix:
-  - "[SERVICE: JWK Client]"
+  - "[SERVICE: JOSE]"
 ---
 The [JWT validation](/docs/authorization/jwt-validation/) and [JWT signing](/docs/authorization/jwt-signing/) components do not apply cache by default.
 
