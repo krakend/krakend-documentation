@@ -12,7 +12,7 @@ meta:
   since: 2.3
   source: https://github.com/krakendio/krakend-jose
   namespace:
-  - auth/jwk-client
+  - auth/jose
   scope:
   - service
   log_prefix:
@@ -36,7 +36,7 @@ An identity server has another function and is not designed to support high pres
 There are **two levels** of cache you can apply designed to support together the most extreme conditions:
 
 - Per-endpoint cache (`cache` on the `auth/validator`)
-- Per-service client cache, shared by all endpoints ( `shared_cache_duration` on the `auth/jwk-client`)
+- Shared JWK cache, shared by all endpoints ( `shared_cache_duration` on the `auth/jose`)
 
 We encourage you to configure at least a per-endpoint caching, but adding a client cache will offer you even more control over the traffic you send to the identity provider(s).
 
@@ -51,15 +51,17 @@ You can configure per-endpoint cache using the following options in the `auth/va
 
 If you want that several endpoints consuming the same `jwk_url` share a unique cache entry, then you must enable a per-service cache as explained below.
 
-### Per-service client cache
-If you have a lot of endpoints, each of them will need to retrieve the JWK URL to cache it. You can add a per-service JWK cache by adding a cache to the client connecting to the origin URL. This option is not configured in the endpoint but at the service level.
+### Shared JWK cache
+If you have a lot of endpoints, each of them will need to retrieve the JWK URL to cache it. You can add a shared JWK cache where one endpoint call will enable the cache for another one using the same origin URL. This option is not configured in the endpoint, but at the service level.
 
-The client cache only requires the following configuration:
+The shared cache requires the following configuration, plus **having `cache` in all desired endpoints**:
 
-{{< schema data="auth/jwk-client.json" >}}
+{{< schema data="auth/jose.json" >}}
+
+**Important**: Setting the flag alone does not work unless you add `cache` in the endpoints.
 
 ### Cache recommendations
-Combining the two levels of cache is usually the ideal scenario. On one side, each endpoint has a scoped local cache entry and is the perfect strategy to handle contention. On the other side, adding the JWK client cache makes that when each endpoint cache expires, can stll rely on a more global level of cache which allows you to control the exact time between requests to your identity server.
+**Combining the two levels of cache is usually the ideal scenario**. On one side, each endpoint has a scoped local cache entry and is the perfect strategy to handle contention. On the other side, adding the JWK client cache makes that when each endpoint cache expires, can stll rely on a more global level of cache which allows you to control the exact time between requests to your identity server.
 
 You might thing that one global cache level would be enough, but having this granularity makes the system way more efficient, performant, and error-free.
 
@@ -69,7 +71,7 @@ In all, you would have a configuration like this:
 {
     "version": 3,
     "extra_config": {
-        "auth/jwk-client": {
+        "auth/jose": {
             "@comment": "Enable a JWK shared cache amongst all endpoints of 15 minutes",
             "shared_cache_duration": 900
         }
