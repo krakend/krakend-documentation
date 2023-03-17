@@ -146,7 +146,7 @@ If you use cryptographic algorithms that require high computation such as `RS512
 {{< /note >}}
 
 ### Caching keys
-A crucial decision when using JWT is [defining a caching strategy](/docs/authorization/jwt-caching/) that works with your **key rotation** policy.
+A crucial decision when using JWT is [defining a caching strategy](/docs/authorization/jwk-caching/) that works with your **key rotation** policy.
 
 If you don't set any caching option, KrakenD will default to the **more pessimistic scenario** where you rotate the keys continuously, and KrakenD needs to download the keys in the JWK URL every single time. In most cases, this option will **add a lot of pressure to your identity server**. Therefore, we encourage you to enable `cache` in each endpoint, and even better if you add the second-level shared cache in the JWK client with `shared_cache_duration`. For instance:
 
@@ -171,12 +171,12 @@ If you don't set any caching option, KrakenD will default to the **more pessimis
     }]
 }
 ```
-[Read more about JWK caching](/docs/authorization/jwt-caching/)
+[Read more about JWK caching](/docs/authorization/jwk-caching/)
 
 ### Validation process
 KrakenD does the following validation to let users hit protected endpoints:
 
-- The `jwk_url` must be accessible by KrakenD at all times ([caching is recommended](/docs/authorization/jwt-caching/))
+- The `jwk_url` must be accessible by KrakenD at all times ([caching is recommended](/docs/authorization/jwk-caching/))
 - The token is [well formed](https://jwt.io/#debugger-io)
 - The `kid` in the header is listed in the `jwk_url` or `jwk_local_path`.
 - The content of the JWK Keys (`k`) is **base64** urlencoded
