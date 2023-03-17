@@ -36,7 +36,7 @@ An identity server has another function and is not designed to support high pres
 There are **two levels** of cache you can apply designed to support together the most extreme conditions:
 
 - Per-endpoint cache (`cache` on the `auth/validator`)
-- Shared JWK cache, shared by all endpoints ( `shared_cache_duration` on the `auth/jose`)
+- Shared JWK cache between all endpoints ( `shared_cache_duration` on the `auth/jose`)
 
 We encourage you to configure at least a per-endpoint caching, but adding a client cache will offer you even more control over the traffic you send to the identity provider(s).
 
@@ -58,7 +58,11 @@ The shared cache requires the following configuration, plus **having `cache` in 
 
 {{< schema data="auth/jose.json" >}}
 
-**Important**: Setting the flag alone does not work unless you add `cache` in the endpoints.
+{{< note title="The `cache` flag is still required" type="info" >}}
+**Important**: Setting the flag alone does not work unless you add at least one endpoint with the `cache` flag set to `true`.
+{{< /note >}}
+
+
 
 ### Cache recommendations
 **Combining the two levels of cache is usually the ideal scenario**. On one side, each endpoint has a scoped local cache entry and is the perfect strategy to handle contention. On the other side, adding the JWK client cache makes that when each endpoint cache expires, can stll rely on a more global level of cache which allows you to control the exact time between requests to your identity server.
