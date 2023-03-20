@@ -39,6 +39,11 @@ Once you have decided what type of plugin to write and started developing it, yo
 ## Plugin Builder
 When using Docker to deploy your gateway, the official KrakenD container uses **[Alpine](https://hub.docker.com/_/alpine)** as the base image. Therefore, to use your custom plugins, they must compile within an Alpine container and use the same Go and Glibc versions as KrakenD. The **Plugin Builder** docker image spares you from this job.
 
+{{< note title="Compiling plugins for on-premise" type="info" >}}
+When you build plugins for **non-Docker targets**, instead of the Alpine image `{{< product image_plugin_builder >}}:{{< product latest_version >}}` you need to use the image `{{< product image_plugin_builder >}}:{{< product latest_version >}}-linux-generic`.
+{{< /note >}}
+
+
 You can get the plugin builder with the following:
 
 {{< terminal title="Download plugin builder" >}}
@@ -94,8 +99,10 @@ go build -buildmode=plugin -o yourplugin.so .
 Now load it in KrakenD, as described in [injecting plugins](/docs/extending/injecting-plugins/)
 
 ## Debugging plugins in an IDE
-If you'd like to debug your plugins with an IDE, you can enable **delve flags** when compiling. Do not use these flags for the `.so` file you will use in production.
+If you'd like to debug your plugins with an IDE, you can enable **delve flags** when compiling. KrakenD must be compiled with these gcflags too. This option is not available on the Enterprise product.
 
 {{< terminal title="Delve flags">}}
 go build -gcflags='all=-N -l' -buildmode=plugin -o yourplugin.so .
 {{< /terminal >}}
+
+Do not use these flags for the `.so` file you will use in production.
