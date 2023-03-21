@@ -5,7 +5,7 @@ old_version: true
 date: 2016-10-28
 linktitle: Run
 title: Running KrakenD server. The `krakend run` command
-description: KrakenD Run Command
+description: Start the high-performance KrakenD API Gateway server with ease using the `krakend run` command. Learn all the commands and options in our docs.
 weight: 1
 notoc: true
 menu:

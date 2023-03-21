@@ -4,7 +4,7 @@ canonical: "/docs/overview/lura-vs-krakend/"
 old_version: true
 date: 2018-06-23
 linktitle: Lura vs. KrakenD
-description: What is the difference between Lura and KrakenD?
+description: Discover the difference between Lura and KrakenD, the open-source API Gateway, and its commercial version KrakenD Enterprise. Learn more in our docs.
 notoc: true
 menu:
   community_v1.3:
