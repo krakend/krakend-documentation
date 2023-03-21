@@ -23,7 +23,7 @@ meta:
 The flatmap middleware allows you to **manipulate collections** (or arrays, or lists, you name it) from the **backend response**, although **it can be used for objects** as well. While the [basic manipulation operations](/docs/v2.1/backends/data-manipulation/) allow you to work directly with objects, the collections require a different approach: the **flatmap component**.
 
 {{< note title="Looking for a Query Language manipulation?" type="info" >}}
-If you are an Enterprise user, you might want to use [Response manipulation with query language ](/docs/v2.1/enterprise/endpoints/jmespath/) instead
+If you are an Enterprise user, you might want to use [Response manipulation with query language ](/docs/enterprise/v2.1/endpoints/jmespath/) instead
 {{< /note >}}
 
 

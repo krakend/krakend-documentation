@@ -238,7 +238,7 @@ For example: *return the name of all the students older than 18*:
 students[?age > `18` ].name
 ```
 
-See [Advanced query language manipulation {{< badge color="denim">}}Enterprise{{< /badge >}}](/docs/v2.1/enterprise/endpoints/jmespath/)
+See [Advanced query language manipulation {{< badge color="denim">}}Enterprise{{< /badge >}}](/docs/enterprise/v2.1/endpoints/jmespath/)
 
 ## Content replacement with regular expressions
 Another Enterprise feature is the Content Replacer plugin, which allows you to search objects in the responses and apply regular expression replacements, or literal replacements.
@@ -256,4 +256,4 @@ For instance:
     }
 ```
 
-See [Content Replacer {{< badge >}}Enterprise{{< /badge >}}](/docs/v2.1/enterprise/endpoints/content-replacer/)
+See [Content Replacer {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/v2.1/endpoints/content-replacer/)
