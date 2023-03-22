@@ -24,7 +24,7 @@ KrakenD can send responses back to the client **in a different format** than wha
 
 After KrakenD has queried your services, the flow looks like this:
 
-![Encoding flow diagram](/images/documentation/diagrams/encoding-flow.mmd.png)
+![content-type-flow.mmd diagram](/images/documentation/diagrams/content-type-flow.mmd.png)
 
 ## Example
 For instance, you can have one endpoint `/foo` that consumes content from multiple services in parallel in different formats (`encoding`) like  XML or RSS. But you want to return the aggregated information in JSON (the `output_encoding`). You can mix encodings and return them normalized automatically.
