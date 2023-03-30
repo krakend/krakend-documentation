@@ -1,7 +1,6 @@
 ---
-lastmod: 2022-06-09
+lastmod: 2023-03-30
 date: 2018-11-11
-toc: true
 linktitle: Lambda functions
 title: Integration with AWS Lambda functions
 weight: 110
@@ -10,7 +9,7 @@ images:
 menu:
   community_current:
     parent: "050 Backends Configuration"
-notoc: true
+notoc: false
 meta:
   since: 1.0
   source: https://github.com/krakendio/krakend-lambda
@@ -89,6 +88,10 @@ docker run --rm -it -p "8080:8080" \
     -v "$PWD:/etc/krakend" {{< product image >}}:{{< product latest_version >}}
 {{< /terminal >}}
 
+### Header forwarding
+**The official library of AWS has a limitation preventing KrakenD to send any headers**, yet it is not possible to forward them even when you add them under `input_headers`.
+
+If you require such a functionality you should create a custom payload ([like this one](https://github.com/awsdocs/aws-lambda-developer-guide/blob/main/sample-apps/nodejs-apig/event.json)) with additional data containing the headers (and anything else than the body itself).
 
 ## Example: Associate a lambda to a backend
 
