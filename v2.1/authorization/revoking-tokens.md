@@ -40,7 +40,7 @@ The communication with the bloom filter is RPC-based. The component exposes a li
 
 **When using the open-source edition**, you have to build your client. Look at the bloom filter library, which includes a [client](https://github.com/krakendio/bloomfilter/tree/master/cmd/client). In addition, the KrakenD Playground project consists of a sample [web page with a form and an RPC client](https://github.com/krakendio/playground-community/tree/master/images/jwt-revoker) that sends commands to the bloom filter and updates it.
 
-**When using the Enterprise edition** the [Revoke Server](/docs/v2.1/enterprise/authentication/revoke-server/) connects to all KrakenD instances as a client, and there's nothing you need to build to make it work.
+**When using the Enterprise edition** the [Revoke Server](/docs/enterprise/v2.1/authentication/revoke-server/) connects to all KrakenD instances as a client, and there's nothing you need to build to make it work.
 
 ### Bloom filter performance
 The Bloom filter is ideal for supporting a massive rejection of tokens with very little memory consumption. For instance, **100 million tokens** of any size consume around 0.5GB RAM (with a rate of false positives of 1 in 999,925,224 tokens), and lookups resolve in constant time (*k*-number of hashes). These numbers are impossible to get with a key value or a relational database.
@@ -73,7 +73,7 @@ All the configuration fields **are mandatory** and are explained below:
 
 {{< schema version="v2.1" data="auth/revoker.json" filter="N,P,hash_name,TTL,port,token_keys">}}
 
-If you use the bloom filter together with the Revoken Server {{< badge >}}Enterprise{{< /badge >}}, see [its configuration](/docs/v2.1/enterprise/authentication/revoke-server/).
+If you use the bloom filter together with the Revoken Server {{< badge >}}Enterprise{{< /badge >}}, see [its configuration](/docs/enterprise/v2.1/authentication/revoke-server/).
 
 
 {{< note title="Hygiene habits" >}}
@@ -119,4 +119,4 @@ If you want to learn bloomfilters by example or additional information on token 
 
 - [Bloomfilter tutorial](https://llimllib.github.io/bloomfilter-tutorial/)
 - [Bloomfilter calculator](https://hur.st/bloomfilter/?n=1000000&p=1.0E-9&m=&k=)
-- [Revoke Server](/docs/v2.1/enterprise/authentication/revoke-server/) {{< badge color="denim">}}Enterprise{{< /badge >}}
+- [Revoke Server](/docs/enterprise/v2.1/authentication/revoke-server/) {{< badge color="denim">}}Enterprise{{< /badge >}}
