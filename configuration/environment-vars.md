@@ -17,7 +17,7 @@ meta:
 When KrakenD runs, all the behavior is loaded from the [configuration file](/docs/configuration/structure/). Through environment variables, you can override some of its values. There are two different ways of injecting environment vars.
 
 - **Replacing existing values** in the configuration
-- **Setting new values** when using the `{{env}` function in [flexible configuration](/docs/configuration/flexible-config/)
+- **Setting new values** when using the `{{env}}` function in [flexible configuration](/docs/configuration/flexible-config/)
 
 ## Value replacement with env vars
 You can **override** configuration values with an environment variable for each configuration value that isn't nested (meaning **first-level properties** of the configuration). However, with this technique, you cannot override parameters that aren't declared in the configuration.
