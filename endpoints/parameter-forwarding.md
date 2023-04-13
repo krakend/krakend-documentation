@@ -9,7 +9,7 @@ menu:
   community_current:
     parent: "040 Endpoint Configuration"
 ---
-KrakenD is an API Gateway with a **zero-trust policy**, and when it comes to forward query strings, cookies, and headers, you need to define what is allowed.
+KrakenD is an API Gateway with a **[zero-trust security policy](/docs/design/zero-trust/)**, and when it comes to forward query strings, cookies, and headers, you need to define what is allowed.
 
 Part of the zero-trust policy implies that KrakenD **does not forward** any unexpected [query string](#query-string-forwarding), [headers](#headers-forwarding), or [cookies](#cookies-forwarding). See below how to set the forwarding rules.
 

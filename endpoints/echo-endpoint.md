@@ -10,7 +10,7 @@ description: The echo endpoint is a simple debugging tool that replies with an o
 weight: 35
 notoc: true
 ---
-The `/__echo/` endpoint is a developer tool to help you debug configurations. It works similarly to the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/), but instead of printing the requests in the log and returning a `{"message": "pong"}`, they are printed in the response. It replies with an object containing all the request details, and you can use it as an endpoint or backend. As KrakenD has a zero-trust approach, you will find out the exact information that passes through in this endpoint.
+The `/__echo/` endpoint is a developer tool to help you debug configurations. It works similarly to the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/), but instead of printing the requests in the log and returning a `{"message": "pong"}`, they are printed in the response. It replies with an object containing all the request details, and you can use it as an endpoint or backend. As KrakenD has a [zero-trust](/docs/design/zero-trust/) approach, you will find out the exact information that passes through in this endpoint.
 
 ## Configuration
 To enable the `/__echo/` endpoint, you should add in the configuration (service level) the flag `echo_endpoint`, and then use it directly by calling `http://krakend:8080/__echo/` or by adding it as a `backend` in any endpoint.
