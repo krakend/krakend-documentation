@@ -12,7 +12,7 @@ meta:
   since: 2.3
   source: https://github.com/krakendio/krakend-jose
   namespace:
-  - auth/jose
+  - auth/validator
   scope:
   - service
   log_prefix:
@@ -35,8 +35,8 @@ An identity server has another function and is not designed to support high pres
 ## Enabling JWK URL caching
 There are **two levels** of cache you can apply designed to support together the most extreme conditions:
 
-- Per-endpoint cache (`cache` on the `auth/validator`)
-- Shared JWK cache between all endpoints ( `shared_cache_duration` on the `auth/jose`)
+- Per-endpoint cache (`cache` on the `auth/validator` in the endpoint)
+- Shared JWK cache between all endpoints ( `shared_cache_duration` on the `auth/validator` at the service level)
 
 We encourage you to configure at least a per-endpoint caching, but adding a client cache will offer you even more control over the traffic you send to the identity provider(s).
 
@@ -75,7 +75,7 @@ In all, you would have a configuration like this:
 {
     "version": 3,
     "extra_config": {
-        "auth/jose": {
+        "auth/validator": {
             "@comment": "Enable a JWK shared cache amongst all endpoints of 15 minutes",
             "shared_cache_duration": 900
         }
