@@ -97,7 +97,7 @@ Propagated headers are available at the endpoint and backend levels, allowing yo
 }
 ```
 
-Notice that the `propagate_claims` in the validator adds the department value into a new header, `x-limit-department`. The header is also added under `input_headers` because otherwise, the endpoint wouldn't see it (zero-trust policy). Finally, the rate limit uses the new header as a strategy and specifies its name under `key`.
+Notice that the `propagate_claims` in the validator adds the department value into a new header, `x-limit-department`. The header is also added under `input_headers` because otherwise, the endpoint wouldn't see it ([zero-trust security](/docs/design/zero-trust/)). Finally, the rate limit uses the new header as a strategy and specifies its name under `key`.
 
 ### Examples of per-second rate limiting
 The following examples demonstrate a configuration with several endpoints, each one setting different limits:

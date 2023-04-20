@@ -1,24 +1,42 @@
 ---
-lastmod: 2023-02-28
+lastmod: 2023-03-30
 date: 2019-02-22
 linktitle: TLS
 title: Enabling TLS for HTTPS and HTTP/2
+description: The TLS settings define the parameters that KrakenD takes into account to handle incoming and outgoing HTTPS traffic.
 weight: 30
 notoc: false
 menu:
   community_current:
     parent: "030 Service Settings"
+skip_header_image: true
+images:
+- /images/documentation/diagrams/tls.mmd.png
 ---
+The TLS settings define the parameters that the gateway takes into account to handle incoming and outgoing HTTPS traffic. We refer to this as:
+
+- `tls`: **TLS Server settings**, or how the gateway handles incoming traffic
+- `tls_client`: **TLS Client settings**, or how the gateway connects to your upstream services
+
+![TLS diagram](/images/documentation/diagrams/tls.mmd.png)
+
+{{< note title="Independent properties" type="tip" >}}
+The properies `tls` and `tls_client` are independent of each other. You can declare one, both, or none.
+{{< /note >}}
+
+
+
+
+## TLS server settings
 There are two different strategies when using TLS over KrakenD:
 
 - Use TLS for HTTPS and HTTP/2 in KrakenD (this document)
-- Use a balancer with TLS termination in front of KrakenD (e.g., ELB, HAproxy)
+- [Use a balancer with TLS termination in front of KrakenD](/docs/throttling/load-balancing/) (e.g., ELB, HAproxy)
 
-If you want to enable TLS, add a `tls` key at the service level (configuration's file root) with at least the public and private keys. When you add TLS, KrakenD listens **only using TLS**, and no traffic to plain HTTP is accepted.
+If you want to listen with TLS, add a `tls` key at the service level (configuration's file root) with at least the public and private keys. When you add TLS, KrakenD listens **only using TLS**, and no traffic to plain HTTP is accepted.
 
 If you want to enable mTLS see [Mutual TLS configuration](/docs/authorization/mutual-authentication/)
 
-## TLS Configuration
 {{< note title="Secure by default" type="info" >}}
 When you don't set any other parameters than stated below, KrakenD defaults to very strong security. **Only TLS 1.3 is accepted** (with its three cipher suites), and attempts to negotiate other versions will fail. Nevertheless, you can change this behavior.
 {{< /note >}}
@@ -35,15 +53,22 @@ To start KrakenD with TLS, you need to provide a certificate for both the public
 }
 ```
 
-All TLS options are described below:
+All TLS options for the server go inside the `tls` object:
 
 {{< schema data="tls.json" >}}
+
+## TLS client settings
+You can also set TLS settings when KrakenD acts as a client, meaning that the gateway takes the role of the requesting user and fetches data with the upstream services.
+
+All TLS options for the client go inside the `tls_client` object, and are similar to the server ones.
+
+{{< schema data="tls_client.json" >}}
 
 ## Supporting older TLS 1.2 and below
 Although we do not recommend downgrading your installation, this is the configuration you will need to support **older protocol versions**.
 
 ### Support old TLS v1.2
-To support TLS v1.2 and 1.3 simultaneously, you need the following configuration. As you are accepting older cipher suites, it is recommended to add the flag `prefer_server_cipher_suites` to block clients from trying to negotiate weaker cipher suites:
+To support TLS v1.2 and 1.3 simultaneously, you need the following configuration:
 
 ```json
 {
@@ -51,17 +76,16 @@ To support TLS v1.2 and 1.3 simultaneously, you need the following configuration
   "tls": {
     "public_key": "/path/to/cert.pem",
     "private_key": "/path/to/key.pem",
-    "min_version": "TLS12",
-    "prefer_server_cipher_suites": true
+    "min_version": "TLS12"
   }
 }
 ```
 
 ### Support archaic TLS versions
-To support versions older than 1.2, specify the list of `cipher_suites` you want to enable and the `prefer_server_cipher_suites` set to `true`.
+To support versions older than 1.2, specify the list of `cipher_suites` you want to enable (see below).
 
 ## Supported cipher suites
-You can select which `cipher_suites` you'd like to support by passing an array of integers. The possible values of the cipher suites are listed below. The recommendation is to stay with TLS 1.3, or downgrade to TLS 1.2 when strongly needed. Down that should be out of the table.
+You can select which `cipher_suites` you'd like to support by passing an array of integers. The possible values of the cipher suites are listed below. The recommendation is to stay with TLS 1.3, or downgrade to TLS 1.2 when strongly needed. Below that should be out of the table.
 
 **Default suites for TLS 1.3** are:
 
@@ -107,6 +131,8 @@ openssl req -newkey rsa:2048 -new -nodes -x509 -days 365 -out cert.pem -keyout k
     -subj "/C=US/ST=California/L=Mountain View/O=Your Organization/OU=Your Unit/CN=localhost"
 {{< /terminal >}}
 
+
+
 ## Common TLS errors
 
 Self-signed certificates will show in the logs:
@@ -131,7 +157,7 @@ When the client offers a limited set of options that the server cannot accept. I
 http: TLS handshake error from 172.17.0.1:33990: EOF
 ```
 
-## SSL scan results for the default settings
+### SSL scan results for the default settings
 The following output is the results of the [sslscan](https://github.com/rbsec/sslscan) command with a KrakenD configuration specifying the private and public keys in the configuration with no other additional `tls` settings:
 
 ```
