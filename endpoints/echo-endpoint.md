@@ -24,9 +24,8 @@ Given a request following the format `[scheme:][//[userinfo@]host][/]path[?query
 
 ```json
 {
-  "req_uri": "http://userinfo@krakend:8080/__echo/foo/bar/vaz?q=foo#fragment",
+  "req_uri": "/__echo/foo/bar/vaz?q=foo#fragment",
   "req_uri_details": {
-    "scheme": "http",
     "user": "userinfo",
     "host": "krakend:8080",
     "path": "/__echo/foo/bar/vaz",
