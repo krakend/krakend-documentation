@@ -37,7 +37,9 @@ The bloom filter component brings the following functionalities:
 ### Bloom filter client
 The communication with the bloom filter is RPC-based. The component exposes a listening port of your choice to receive updates of the bloom filter (single or batch), but **a client is needed to communicate with the component**.
 
-**When using the open-source edition**, you have to build your client. Look at the bloom filter library, which includes a [client](https://github.com/krakendio/bloomfilter/tree/master/cmd/client). In addition, the KrakenD Playground project consists of a sample [web page with a form and an RPC client](https://github.com/krakendio/playground-community/tree/master/images/jwt-revoker) that sends commands to the bloom filter and updates it.
+**When using the open-source edition**, you have to build your client. Look at the bloom filter library, which includes a [client](https://github.com/krakendio/bloomfilter/tree/master/cmd/client). In addition, the KrakenD Playground project consists of a sample [web page with a form and an RPC client](https://github.com/krakendio/playground-community/tree/master/images/jwt-revoker) that sends commands to the bloom filter and updates it. 
+
+Note that this low-level bloom filter client requires elements added to the bloom filter to conform to a special format: a key, representing a field in the token, separated by a hypen (`-`); and the value of that field that will be used to revoke requests. [In the example below](#applied-example), you could expire the token for an individual user by adding `jti-mnb23vcsrt756yuiomnbvcx98ertyuiop` to the bloom filter. This can also be seen in the sample [web page with a form and an RPC client](https://github.com/krakendio/playground-community/tree/master/images/jwt-revoker) in the KrakenD Playground project.
 
 **When using the Enterprise edition** the [Revoke Server](/docs/enterprise/authentication/revoke-server/) connects to all KrakenD instances as a client, and there's nothing you need to build to make it work.
 
