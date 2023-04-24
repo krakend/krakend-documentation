@@ -80,9 +80,10 @@ The effect is that you are seeing them for the first time, but the disconnection
 ## Reserved endpoints
 The following endpoints are reserved, and you cannot use them (unless you disable them or rename them):
 
-- `/__debug` (but it can be disabled)
-- `/__stats`  (but it can be disabled)
-- `/__health` (but it can be renamed or disabled)
+- `/__debug/` (disabled by default)
+- `/__echo/` (disabled by default)
+- `/__stats/`  (disabled by default)
+- `/__health/` (can be renamed or disabled)
 
 ## I have found a vulnerability
 If you think you have found a security problem, please [report us the vulnerability](/security-policy/)
