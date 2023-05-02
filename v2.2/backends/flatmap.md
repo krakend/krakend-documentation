@@ -26,7 +26,7 @@ The flatmap middleware allows you to **manipulate collections** (or arrays, or l
 While the [basic manipulation operations](/docs/v2.2/backends/data-manipulation/) allow you to work directly with objects, the collections require you to use this **flatmap component**. The flatmap also will enable you to **extract or move nested objects** to have a customized object structure.
 
 {{< note title="Looking for a Query Language manipulation?" type="info" >}}
-If you are an Enterprise user, you might want to use [Response manipulation with query language ](/docs/v2.2/enterprise/endpoints/jmespath/) instead
+If you are an Enterprise user, you might want to use [Response manipulation with query language ](/docs/enterprise/endpoints/jmespath/) instead
 {{< /note >}}
 
 When working with lists, KrakenD needs to flatten and expand array structures to objects to operate with them and vice versa. This process is automatically done by the flatmap component, letting you concentrate only on the type of operation you want to execute.

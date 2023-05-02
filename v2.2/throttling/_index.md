@@ -22,7 +22,7 @@ Traffic Management covers:
 
 - [Circuit Breaker](/docs/v2.2/backends/circuit-breaker/): An automatic protection measure for your stack and avoids cascade failures.
 - **Rate-limiting**:
-  - [Service Rate Limiting {{< badge >}}Enterprise{{< /badge >}}](/docs/v2.2/enterprise/service-settings/service-rate-limit/): Sets the maximum throughput users can have to KrakenD.
+  - [Service Rate Limiting {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/service-settings/service-rate-limit/): Sets the maximum throughput users can have to KrakenD.
   - [Endpoint Rate Limiting](/docs/v2.2/endpoints/rate-limit/): Sets the maximum throughput all connected users can have against specific endpoints.
   - [Client Rate Limiting](/docs/v2.2/endpoints/rate-limit/): Sets the maximum throughput each end-user has to specific endpoints.
   - [Proxy Rate Limiting](/docs/v2.2/backends/rate-limit/): Sets the maximum throughput KrakenD can have against your backend services

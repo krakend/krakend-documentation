@@ -427,6 +427,6 @@ See [Manipulating arrays - flatmap](/docs/v2.2/backends/flatmap/)
 ## More advanced manipulations
 If you need more sophisticated manipulation options, there are different approaches you can use:
 
-- Through a [Query Language](/docs/v2.2/enterprise/endpoints/jmespath/) {{< badge >}}Enterprise{{< /badge >}}
+- Through a [Query Language](/docs/enterprise/endpoints/jmespath/) {{< badge >}}Enterprise{{< /badge >}}
 - Through [Response modifier plugins](/docs/v2.2/extending/plugin-modifiers/) - Very performant, requires compilation
 - Through [Lua scripting](/docs/v2.2/endpoints/lua/) - Less performant, does not require compilation
