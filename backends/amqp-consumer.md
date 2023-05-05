@@ -56,7 +56,8 @@ The needed configuration to run a consumer is:
                 "no_local": false,
                 "routing_key": ["#"],
                 "prefetch_count": 10,
-                "auto_ack": false
+                "auto_ack": false,
+                "backoff_strategy": "exponential-jitter"
             }
         }
     }]
@@ -64,3 +65,6 @@ The needed configuration to run a consumer is:
 ```
 
 {{< schema data="backend/amqp/consumer.json" >}}
+
+## Connection retries
+The gateway will try to reconnect to the AMQP server if the connection is lost for any reason. You can set the [back-off strategy](/docs/async/#backoff-strategies) that better fits your needs.

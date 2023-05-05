@@ -45,7 +45,8 @@ what are the implications of a certain parameter, see the **[AMQP Complete Refer
                 "no_local": false,
                 "routing_key": "#",
                 "mandatory": false,
-                "immediate": false
+                "immediate": false,
+                "backoff_strategy": "exponential-jitter"
             }
         }
     }]
@@ -74,3 +75,6 @@ For instance, an `endpoint` URL could be declared as `/produce/{a}/{b}/{id}/{pri
   }
 }
 ```
+
+## Connection retries
+The gateway will try to reconnect to the AMQP server if the connection is lost for any reason. You can set the [back-off strategy](/docs/async/#backoff-strategies) that better fits your needs.
