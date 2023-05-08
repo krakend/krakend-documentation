@@ -3,7 +3,8 @@ lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Google Cloud
-title: Exporting metrics and traces to Google Cloud's operations suite
+title: Google Cloud metrics
+description: The Opencensus exporter allows you to export metrics and traces to Google Cloud. Enabling it only requires you to add the stackdriver exporter.
 weight: 120
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/stackdriver/"]
