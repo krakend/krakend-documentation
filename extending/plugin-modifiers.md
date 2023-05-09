@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-01-12
+lastmod: 2023-01-31
 date: 2021-05-21
 toc: true
 linktitle: Req/resp modifier plugins
@@ -42,7 +42,7 @@ The following table shows what you can do with modifiers:
 | 6. Coordinated rate-limiting and quota management | 6. Coordinated quota control (response size, service consumption, etc.)|
 
 {{< note title="The encoding marks what you can manipulate in responses" type="warning" >}}
-If your endpoint uses an `output_encoding` different than `no-op` you can work with `ResponseWrapper.Data()` and `ResponseWrapper.IsComplete()`. If you use `no-op` you can work with `ResponseWrapper.Io()`, `ResponseWrapper.StatusCode()`, and `ResponseWrapper.Headers()`.
+If your endpoint uses an `output_encoding` other than `no-op` you can work with `ResponseWrapper.Data()` and `ResponseWrapper.IsComplete()`. If you use `no-op` you can work with `ResponseWrapper.Io()`, `ResponseWrapper.StatusCode()`, and `ResponseWrapper.Headers()`.
 
 If you set data in a different place than specified above, **it will be ignored**.
 {{< /note >}}
@@ -124,7 +124,7 @@ type ResponseWrapper interface {
 After this minimal code repetition, implementing the modifier factories is an easy task. The factory must accept a configuration as a map and return the final modifier once it's ready. Depending on your requirements, the factory could access its dedicated configuration and do whatever logic is required by your scenario. This configuration section should use the plugin name as namespace (check the comments below).
 
 ```go
-var unkownTypeErr = errors.New("unknow request type")
+var unknownTypeErr = errors.New("unknown request type")
 
 func (r registerer) requestDump(
     cfg map[string]interface{},
@@ -149,7 +149,7 @@ func (r registerer) requestDump(
     return func(input interface{}) (interface{}, error) {
         req, ok := input.(RequestWrapper)
         if !ok {
-            return nil, unkownTypeErr
+            return nil, unknownTypeErr
         }
 
         fmt.Println("params:", req.Params())
@@ -186,7 +186,7 @@ func (r registerer) responseDump(
     return func(input interface{}) (interface{}, error) {
         resp, ok := input.(ResponseWrapper)
         if !ok {
-            return nil, unkownTypeErr
+            return nil, unknownTypeErr
         }
 
         fmt.Println("data:", resp.Data())
@@ -272,7 +272,7 @@ For the test, we'll build a small gateway with a single endpoint merging the res
 }
 ```
 
-Notice the modifier names which needs to be combination of the modifier name and the string used while registering it in `RegisterModifiers`. Also these needs to be unique for request and response modifier.
+Notice the modifier names which needs to be combination of the modifier name and the string used while registering it in `RegisterModifiers`. These must be unique for the request and response modifier.
 
 If we send a request to the generated endpoint, we'll see the dumps for the three pairs of requests and responses at the console:
 
@@ -331,7 +331,7 @@ func(input interface{}) (interface{}, error) {
 ```
 
 ### Return an error message, status code, and `Content-Type`
-Finally you can also add the `Content-Type` header in the response. The interface to implement is:
+To add the `Content-Type` header in the response, use the following interface:
 
 ```go
 type encodedResponseError interface {
