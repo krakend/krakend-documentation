@@ -62,6 +62,32 @@ The shared cache requires the following configuration, plus **having `cache` in 
 **Important**: Setting the flag alone does not work unless you add at least one endpoint with the `cache` flag set to `true`.
 {{< /note >}}
 
+Example:
+
+```json
+{
+    "version": 3,
+    "extra_config": {
+        "auth/validator": {
+            "@comment": "Enable a JWK shared cache amongst all endpoints of 15 minutes",
+            "shared_cache_duration": 900
+        }
+    },
+    "endpoints": [
+    {
+      "endpoint": "/protected-1",
+      "extra_config": {
+        "auth/validator": {
+            "cache": true,
+            "cache_duration": 3600,
+            "jwk_url": "https://your-id-provider",
+            "@comment": "Rest of the validator options omitted for simplicity"
+        }
+      }
+    }
+    ]
+}
+```
 
 
 ### Cache recommendations
