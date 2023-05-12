@@ -62,7 +62,7 @@ You can also set global TLS settings when KrakenD acts as a client, meaning that
 
 All TLS options for the client go inside the `client_tls` object, and are similar to the server ones. When you set a `client_tls` in the configuration **the settings apply to all HTTP backends of all endpoints**.
 
-If you need to define TLS options for an individual backend see [HTTP Client options](/docs/enterprise/backends/http-client/) {{< badge >}}Enterprise{{< /badge >}}
+If you need to **define TLS options for an individual backend** see [HTTP Client options](/docs/enterprise/backends/http-client/) {{< badge >}}Enterprise{{< /badge >}}
 
 {{< schema data="client_tls.json" >}}
 
