@@ -3,6 +3,7 @@ lastmod: 2021-05-02
 date: 2018-04-05
 linktitle: Auth0 integration
 title: Protecting APIs using the Auth0 integration
+description: Control access to KrakenD endpoints by authenticating users on Auth0 and authorizing them or not on KrakenD.
 weight: 100
 menu:
   community_current:

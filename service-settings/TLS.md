@@ -16,12 +16,12 @@ images:
 The TLS settings define the parameters that the gateway takes into account to handle incoming and outgoing HTTPS traffic. We refer to this as:
 
 - `tls`: **TLS Server settings**, or how the gateway handles incoming traffic
-- `tls_client`: **TLS Client settings**, or how the gateway connects to your upstream services
+- `client_tls`: **TLS Client settings**, or how the gateway connects to your upstream services
 
 ![TLS diagram](/images/documentation/diagrams/tls.mmd.png)
 
 {{< note title="Independent properties" type="tip" >}}
-The properies `tls` and `tls_client` are independent of each other. You can declare one, both, or none.
+The properies `tls` and `client_tls` are independent of each other. You can declare one, both, or none.
 {{< /note >}}
 
 
@@ -60,9 +60,9 @@ All TLS options for the server go inside the `tls` object:
 ## TLS client settings
 You can also set TLS settings when KrakenD acts as a client, meaning that the gateway takes the role of the requesting user and fetches data with the upstream services.
 
-All TLS options for the client go inside the `tls_client` object, and are similar to the server ones.
+All TLS options for the client go inside the `client_tls` object, and are similar to the server ones.
 
-{{< schema data="tls_client.json" >}}
+{{< schema data="client_tls.json" >}}
 
 ## Supporting older TLS 1.2 and below
 Although we do not recommend downgrading your installation, this is the configuration you will need to support **older protocol versions**.

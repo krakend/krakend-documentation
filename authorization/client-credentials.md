@@ -3,6 +3,7 @@ lastmod: 2021-11-23
 date: 2019-03-21
 linktitle: OAuth2 Client credentials
 title: OAuth 2.0 Client Credentials (2-legged flow)
+description: 2-legged OAuth2 flow in which KrakenD negotiates a token with an authorization server to retrieve data from the backend.
 weight: 50
 #notoc: true
 menu:
