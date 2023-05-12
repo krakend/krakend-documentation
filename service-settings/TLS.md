@@ -15,8 +15,8 @@ images:
 ---
 The TLS settings define the parameters that the gateway takes into account to handle incoming and outgoing HTTPS traffic. We refer to this as:
 
-- `tls`: **TLS Server settings**, or how the gateway handles incoming traffic
-- `client_tls`: **TLS Client settings**, or how the gateway connects to your upstream services
+- `tls`: **TLS settings**, or how the gateway handles incoming traffic as a server.
+- `client_tls`: **Client TLS settings**, or how the gateway connects to your upstream services
 
 ![TLS diagram](/images/documentation/diagrams/tls.mmd.png)
 
@@ -57,10 +57,12 @@ All TLS options for the server go inside the `tls` object:
 
 {{< schema data="tls.json" >}}
 
-## TLS client settings
-You can also set TLS settings when KrakenD acts as a client, meaning that the gateway takes the role of the requesting user and fetches data with the upstream services.
+## Client TLS settings
+You can also set global TLS settings when KrakenD acts as a client, meaning that the gateway takes the role of the requesting user and fetches data with the upstream services.
 
-All TLS options for the client go inside the `client_tls` object, and are similar to the server ones.
+All TLS options for the client go inside the `client_tls` object, and are similar to the server ones. When you set a `client_tls` in the configuration **the settings apply to all HTTP backends of all endpoints**.
+
+If you need to define TLS options for an individual backend see [HTTP Client options](/docs/enterprise/backends/http-client/) {{< badge >}}Enterprise{{< /badge >}}
 
 {{< schema data="client_tls.json" >}}
 
