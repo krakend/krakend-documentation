@@ -15,6 +15,11 @@ Create a `Dockerfile` that includes the configuration of the service. Read how t
 
 From here you need to create a `NodePort` and send all the traffic to KrakenD.
 
+{{< note title="Run as user 1000" type="tip" >}}
+Whether you run KrakenD on Kubernetes, OpenShift, or any other platform with the capability to run the container as a specific user UID, make sure you use the **UID 1000**
+{{< /note >}}
+
+
 ## Deployment definition YAML
 The KrakenD `deployment` definition, in a file called `deployment-definition.yaml`:
 
@@ -41,6 +46,16 @@ spec:
         imagePullPolicy: Never
         command: [ "/usr/bin/krakend" ]
         args: [ "run", "-d", "-c", "/etc/krakend/krakend.json", "-p", "8080" ]
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1000
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
+            add:
+              - NET_BIND_SERVICE
         env:
         - name: KRAKEND_PORT
           value: "8080"
