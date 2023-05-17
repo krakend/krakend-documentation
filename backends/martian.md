@@ -41,11 +41,16 @@ Your configuration has to look as follows:
 
 ```json
 {
-    "extra_config": {
+  "backend": [
+    {
+      "url_pattern": "/foo/{var}",
+      "extra_config": {
         "modifier/martian": {
-            // modifier configuration here
+          // modifier configuration here
         }
+      }
     }
+  ]
 }
 ```
 
@@ -66,38 +71,54 @@ The `header.Modifier` injects a header with a specific value. For instance, the 
 
 ```json
 {
-    "extra_config": {
+  "backend": [
+    {
+      "url_pattern": "/foo/{var}",
+      "extra_config": {
         "modifier/martian": {
-            "header.Modifier": {
-              "scope": ["request", "response"],
-              "name": "X-Martian",
-              "value": "true"
-            }
+          "header.Modifier": {
+            "scope": [
+              "request",
+              "response"
+            ],
+            "name": "X-Martian",
+            "value": "true"
+          }
         }
+      }
     }
+  ]
 }
 ```
+Notice that even there is a response modifier, **the client won't see these headers**, as KrakenD's policy is to not return the headers to the client by default. KrakenD will see the new `X-Martian` header at the merge stage, but the client won't. The backend will see the header in its request though.
 
 ## Modify the body
 Through the `body.Modifier`, you can modify the body of the request and the response. You must encode in `base64` the content of the `body`.
 
-The following modifier sets the body of the request and the response to `{"msg":"you rock!"}`. Notice that the `body` field is `base64` encoded.
+The following modifier sets the body of the request and the response to `{"msg":"you rock!"}`. Notice that the `body` field is `base64` encoded (e.g., `echo "content" | base64 -w0`).
 
 ```json
 {
-    "extra_config": {
-        "modifier/martian":
-          {
-              "body.Modifier": {
-                  "scope": ["request","response"],
-                  "body": "eyJtc2ciOiJ5b3Ugcm9jayEifQ=="
-              }
+  "backend": [
+    {
+      "url_pattern": "/foo/{var}",
+      "extra_config": {
+        "modifier/martian": {
+          "body.Modifier": {
+            "scope": [
+              "request",
+              "response"
+            ],
+            "body": "eyJtc2ciOiJ5b3Ugcm9jayEifQ=="
           }
+        }
+      }
     }
+  ]
 }
 ```
 
-The Flexible Configuration has a `b64enc` function that will allow you to have an easier to read configuration. For instance (notice the backticks as delimiters):
+The [Flexible Configuration](/docs/configuration/flexible-config/) has a `b64enc` function that will allow you to have an easier to read configuration. For instance (notice the backticks as delimiters):
 
 ```go-text-template
 "body": "{{- `{"msg":"you rock!"}` | b64enc -}}"
@@ -127,7 +148,7 @@ The `url.Modifier` allows you to change settings in the URL. For instance:
 ```
 
 ## Copying headers
-Although not widely used, the `header.Copy` lets you duplicate a header using another name.
+Although not widely used, the `header.Copy` lets you duplicate a header using another name. Remember that any header you want to access here it must be included in the `input_headers` list.
 
 ```json
 {
@@ -152,29 +173,42 @@ Example of usage (modify the body, and set a header):
 
 ```json
 {
-    "extra_config": {
+  "backend": [
+    {
+      "url_pattern": "/foo/{var}",
+      "extra_config": {
         "modifier/martian": {
-            "fifo.Group": {
-                "scope": ["request", "response"],
-                "aggregateErrors": true,
-                "modifiers": [
-                    {
-                        "body.Modifier": {
-                            "scope": ["request"],
-                            "body": "eyJtc2ciOiJ5b3Ugcm9jayEifQ=="
-                        }
-                    },
-                    {
-                        "header.Modifier": {
-                        "scope": ["request", "response"],
-                        "name": "X-Martian",
-                        "value": "true"
-                      }
-                    }
-                ]
-            }
+          "fifo.Group": {
+            "scope": [
+              "request",
+              "response"
+            ],
+            "aggregateErrors": true,
+            "modifiers": [
+              {
+                "body.Modifier": {
+                  "scope": [
+                    "request"
+                  ],
+                  "body": "eyJtc2ciOiJ5b3Ugcm9jayEifQ=="
+                }
+              },
+              {
+                "header.Modifier": {
+                  "scope": [
+                    "request",
+                    "response"
+                  ],
+                  "name": "X-Martian",
+                  "value": "true"
+                }
+              }
+            ]
+          }
         }
+      }
     }
+  ]
 }
 ```
 
