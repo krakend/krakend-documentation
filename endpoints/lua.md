@@ -102,7 +102,7 @@ The `request` functions are:
 *   `path()` (_Dynamic_): Getter that retrieves the path of the request. E.g.: `r:path()` could return a string `/foo/var`.
 *   `path(value)` (_Dynamic_): Setter that changes the path of the request. E.g.: `r:path('/foo/var')`. It does not have any effect when you use `modifier/lua-backend`.
 *   `query()` (_Dynamic_): Getter that retrieves the query string of the request, URL encoded. E.g.: `r:query()` could return a string `?foo=var&vaz=42`.
-*   `query(value)` (_Dynamic_): Setter that changes the query of the request. E.g.: `r:query('?foo=var&vaz=42')`.
+*   `query(value)` (_Dynamic_): Setter that changes the query of the request. E.g.: `r:query('?foo=var&vaz=42')`. It does not have any effect when you use `modifier/lua-backend`, but you can still set the `url()` without query strings.
 *   `url()` (_Dynamic_): Getter that retrieves the full URL string of the request, including the host and path. E.g.: `r:url()` could return a string `http://domain.com/api/test`. The URL might be empty depending on the step where this information is requested, as the URL is a calculated field just before performing the request to the backend.
 *   `url(value)` (_Dynamic_): Setter that changes the URL of the request. E.g.: `r:url('http://domain.com/api/test')`. Changing the value before the `url` is calculated will result in KrakenD overwriting its value. Although available, it does not have any effect when you use it `modifier/lua-proxy`.
 *   `params(param)` (_Dynamic_): Getter that retrieves the `{params}` of the request as defined in the endpoint. E.g.: For an endpoint `/users/{user}` the function `r:params('User')` could return a string `alice`. **The parameters must have the first letter capitalized**.
