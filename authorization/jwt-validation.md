@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-03-17
+lastmod: 2023-05-23
 date: 2018-11-03
 linktitle: JWT Validation
 title: JSON Web Token Validation
@@ -33,11 +33,10 @@ Before digging any further, here are some answers to frequently asked questions:
 6) **If you are new to JWT validation**, start reading the [JSON Web Tokens overview](/docs/authorization/jwt-overview/)
 
 ## JWT header requirements
-When KrakenD decodes the `base64` token string passed in the `Bearer` or a cookie, it expects to find in its **header** section the following **three fields**:
+When KrakenD decodes the `base64` token string passed in the `Bearer` or a cookie, it expects to find in its **header** section the following **fields**:
 ```json
 {
     "alg": "RS256",
-    "typ": "JWT",
     "kid": "MDNGMjU2M0U3RERFQUEwOUUzQUMwQ0NBN0Y1RUY0OEIxNTRDM0IxMw"
 }
 ```
