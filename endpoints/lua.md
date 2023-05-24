@@ -325,7 +325,7 @@ Another example **setting a cookie from Lua**:
 ```json
 {
     "extra_config": {
-        "modifier/lua-proxy": {
+        "modifier/lua-backend": {
             "post": "local r = response.load(); r:headers('Set-Cookie', 'key1='.. r:data('response'));",
             "allow_open_libs": true
         }
