@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-06-13
+lastmod: 2023-05-29
 date: 2018-09-21
 linktitle: Flexible Configuration
 title: "Flexible Configuration: template-based config"
@@ -277,6 +277,26 @@ A lot of times, you need to iterate content and separate it using a comma. To do
 ```
 ### Remove white spaces and line breaks
 When you use code `{{ blocks }}` on your templates, you can add a left dash `{{- blocks }}` to suppress preceding whitespaces and linebreaks or a right dash `{{ blocks -}}` to remove the following ones, or both `{{- blocks -}}`.
+
+### Iterate all files under settings or all keys in a map
+If for whatever reason you want to iterate all keys in a map, like the settings files, you have to be aware that you need the key names in the first place.
+
+You need to use the `keys` function which returns all the key names in the map, and then you can access its contents using the function `index YourMapName yourKeyName`.
+
+For instance, you can dump all settings files contents like this:
+
+```go-text-template
+{{ range $idx, $setting := keys .}}
+    {{- if $idx}},{{end -}}
+    "{{ $setting }}": {{marshal (index $ $setting)}}
+{{end}}
+```
+
+In the example above the `range` iterates the key names of `.` (not the object itself), which is all the settings in the root template.
+
+Then the `marshal` dumps all the contents provided. The dollar sign `$` inside the index represents all the content you have under `.` outside the range. As you are inside a range (a different scope) the `.` belongs to the range context, so you need to pass the dollar to access the outsider/parent context.
+
+The `index` functions gives you access to an element of map, so `index $ $setting` is the equivalent in other languages to `$[$setting]`.
 
 ### Inserting an external file as base64
 A few fields in KrakenD require you to set their value in base64 format instead of the raw counterpart. For example, sometimes you want to version control the raw file in an external file and reference it as base64. To do so, you could have a template `render_as_base64.tmpl` with the following content:
