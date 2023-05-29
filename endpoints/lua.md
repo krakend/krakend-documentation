@@ -128,6 +128,7 @@ Scripts that need to modify a request that KrakenD that just got from the backen
 *   `body()` (_Dynamic_): Getter that retrieves the body of the response when you use encoding `no-op`. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
 *   `body(value)` (_Dynamic_): Setter that changes the body of the response when you use encoding `no-op`. E.g.: `r:body('{"foo": "bar"}')`.
 
+
 ## Functions for Router
 
 Use this type when you need to script the router layer, traffic between end-users, and KrakenD with the `"modifier/lua-endpoint"` namespace.
@@ -157,6 +158,8 @@ Now you know where to put the Lua code according to what you want to do, and how
 ### Tables helper (`table`)
 To work with associative arrays on Lua you have the following functions:
 
+*   `new()` (_Static_): Returns a new table. E.g.: `local t = luaTable.new()`
+*   `keys()` (_Dynamic_): Returns the sorted key names of a table. E.g.: `local k = t:keys()`
 *   `get(key)` (_Dynamic_): Retrieves the value of a key inside the table. E.g.: `local r = response.load(); local responseData = r:data(); responseData:get('key')`
 *   `set(key,value)` (_Dynamic_): Adds or replaces a key in the table. E.g.: `local r = response.load(); local responseData = r:data(); responseData:set('key',value)`
 *   `len()` (_Dynamic_): Returns the length of the whole table so you can iterate over it. E.g.: `local r = response.load(); local responseData = r:data(); local length = responseData:len()`
@@ -183,6 +186,7 @@ end
 
 ### Collections helper (`list`)
 
+*   `new()` (_Static_): Returns a new list. E.g.: `local t = luaList.new()`
 *   `get(key)` (_Dynamic_): Retrieves the value of a key inside the list. E.g.: `local r = response.load(); local responseData = r:data(); local l = responseData:get('collection'); l:get(1)` gets the item at position 1 from the list.
 *   `set(key,value)` (_Dynamic_): Adds or replaces a key in the list. E.g.: `local r = response.load(); local responseData = r:data(); local l = responseData:get('collection'); l:set(1,value)` sets the value of position `1`.
 *   `len()` (_Dynamic_): Returns the length of the whole list so you can iterate over it. E.g.: `local r = response.load(); local responseData = r:data(); local l = responseData:get('collection'); l:len()`
