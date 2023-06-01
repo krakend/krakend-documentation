@@ -98,6 +98,9 @@ Summarizing in a table:
 | Type=`query` | Query string from user body | Query string from URL {params} |
 | Type=`mutation` | Body from user body | Body from URL {params} |
 
+{{< note title="Automatic content-type setting" type="tip" >}}
+Since KrakenD CE v2.3.3 the content-type header the GraphQL receives is `application/json`, and is not longer needed to pass it from the client.
+{{< /note >}}
 
 
 ## Examples of GraphQL request generation
