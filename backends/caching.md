@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-09-19
+lastmod: 2023-06-01
 date: 2018-10-29
 linktitle: Caching responses
 title: Caching backend responses
@@ -22,7 +22,11 @@ KrakenD's caching approach is to store individual backend responses rather than 
 
 The caching component is practically a flag, requiring you to mark the backends you want to cover by adding the `qos/httpcache` element in the backend section.
 
-When enabled, all responses from the backend are cached in-memory. The cache key is based on the response for the final URL sent to the backend (the `url_pattern` plus any additional parameters). The response is stored for the time the `Cache-Control` has defined.
+When enabled, all responses from safe methods (`GET`, or `HEAD`) are cached in-memory. The cache key is based on the method, the final URL sent to the backend (the `url_pattern`) plus any additional parameters. The response is stored for the time the `Cache-Control` has defined.
+
+If you connect to a backend using `POST`, `DELETE`, `PUT`, or any other **unsafe method**, the cache layer is ignored and nothing is stored.
+
+When there is a `Range` header in the response, the caching layer is ignored too.
 
 {{< note title="Caching increases memory consumption" type="warning">}}
 Caching can significantly increase the load and memory consumption as the returned data is saved in memory **until its expiration period**. The size of the cache depends 100% on your backends. You will need to dimension your instance accordingly, and monitor its consumption!
