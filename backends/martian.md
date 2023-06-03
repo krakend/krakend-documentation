@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-08-29
+lastmod: 2023-06-03
 date: 2019-01-24
 linktitle: Transform requests and responses
 title: Modify requests and responses with Martian
@@ -16,26 +16,40 @@ meta:
   scope:
   - backend
 ---
-The [krakend-martian](https://github.com/krakendio/krakend-martian) component allows you to **transform requests and responses** through a simple DSL definition in the configuration file. Martian works perfectly in combination with [CEL verifications](/docs/endpoints/common-expression-language-cel/).
+The Martian component allows you to **modify requests and responses with static data** through a simple DSL definition in the configuration file.
 
-Use Martian when you want to intercept the end-user's request and make modifications before passing the content to the backends. Also, the other way around, transform the backends response before passing it to the user.
+Martian works perfectly in combination with other components, such as [CEL verifications](/docs/endpoints/common-expression-language-cel/) or [Caching](/docs/backends/caching/), as it acts before other components start processing.
 
-Martian is mighty and gives you endless possibilities to control what is going in and out of the gateway. Some **examples of typical Martian scenarios** are:
+As it acts at HTTP level, it can change requests and responses even using the `no-op` encoding.
+
+Use Martian when you want to make modifications before passing the content to the backends (`request`) or when returning from them (`response`).
+
+## When to use Martian
+{{< note title="Martian is a static component" type="info" >}}
+You can inject data in requests and responses using the Martian component as long as it's static data, **hardcoded in the configuration**. It does not allow you to place `{variables}` inside the modifiers.
+{{< /note >}}
+
+Use Martian whenever you need to alter the request or response based on criteria with static values.
+
+Some **examples of typical Martian scenarios** are:
 
 - Set a new cookie during gateway processing
-- Add, remove or change specific headers
-- Query string additions before making the backend request (e.g., set an API key)
+- Flag requests with query strings or headers when specific criteria is met
+- Add, remove, or change specific headers
+- Do basic authentication between KrakenD and the backend
+- Add query strings before making the backend request (e.g., set an API key)
 
-There are four different types of interactions you can do with Martian:
-
-- **Modifiers**: Change the state of a request or a response. For instance, you want to add a custom header in the request before sending it to a backend.
-- **Filters**: Add a condition to execute a contained Modifier
-- **Groups**: Bundle multiple operations to execute in the order specified in the group
-- **Verifiers**: Track network traffic against expectations
-
-## Transforming requests and responses
+## Martian configuration
 
 Add martian modifiers in your configuration under the `extra_config` of any `backend` using the namespace `modifier/martian`.
+
+Inside the configuration, you must write one or more component keys using the notation `package.Type` using the available ones described in this page.
+
+There are three main **types** of packages you can use in Martian:
+
+- **Modifiers**: Change the state of a request or a response. For instance, you want to add a custom header or a query string in the request before sending it to a backend.
+- **Filters**: Add a condition to execute a contained modifier
+- **Groups**: Bundle multiple operations to execute in the order specified in the group
 
 Your configuration has to look as follows:
 
@@ -46,7 +60,9 @@ Your configuration has to look as follows:
       "url_pattern": "/foo/{var}",
       "extra_config": {
         "modifier/martian": {
-          // modifier configuration here
+          // package.Type here {
+          //    scope: ["request", "response"]
+          // }
         }
       }
     }
@@ -54,54 +70,28 @@ Your configuration has to look as follows:
 }
 ```
 
-See the possibilities and examples below.
+Each package has its configuration, but a commonality is that they all have a `scope` key indicating when to apply the modifier. It can be an array containing `request`, `response`, or both. It depends on the component.
 
-{{< note title="A note on client headers" >}}
-When **client headers** are needed, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) as KrakenD does not forward headers to the backends unless declared in the list.
-{{< /note >}}
+## Martian Modifiers
+All packages with keys like `package.Modifier` or `package.Header` change the state of a request or a response.
 
+For instance, you want to add a custom header in the request before sending it to a backend.
 
-### Modifier configuration
+See the list of available modifiers below.
 
-In the examples below, you'll find that all modifiers have a configuration key named `scope`. The scope indicates when to apply the modifier. It can be an array containing `request`, `response`, or both. The rest of the keys in every modifier depends on the modifier itself.
+### Body modifier
+The `body.Modifier` changes or sets the body of a request or response. The body must be **uncompressed and Base64 encoded**.
 
-
-## Transform headers
-The `header.Modifier` injects a header with a specific value. For instance, the following configuration adds a header `X-Martian` both in the request and the response.
-
-```json
-{
-  "backend": [
-    {
-      "url_pattern": "/foo/{var}",
-      "extra_config": {
-        "modifier/martian": {
-          "header.Modifier": {
-            "scope": [
-              "request",
-              "response"
-            ],
-            "name": "X-Martian",
-            "value": "true"
-          }
-        }
-      }
-    }
-  ]
-}
-```
-Notice that even there is a response modifier, **the client won't see these headers**, as KrakenD's policy is to not return the headers to the client by default. KrakenD will see the new `X-Martian` header at the merge stage, but the client won't. The backend will see the header in its request though.
-
-## Modify the body
-Through the `body.Modifier`, you can modify the body of the request and the response. You must encode in `base64` the content of the `body`.
+Additionally, it will modify the following headers to ensure proper transport: `Content-Type`, `Content-Length`, `Content-Encoding`.
 
 The following modifier sets the body of the request and the response to `{"msg":"you rock!"}`. Notice that the `body` field is `base64` encoded (e.g., `echo "content" | base64 -w0`).
 
 ```json
 {
+  "endpoint": "/test/body.Modifier",
   "backend": [
     {
-      "url_pattern": "/foo/{var}",
+      "url_pattern": "/__debug/body.Modifier",
       "extra_config": {
         "modifier/martian": {
           "body.Modifier": {
@@ -109,6 +99,7 @@ The following modifier sets the body of the request and the response to `{"msg":
               "request",
               "response"
             ],
+            "@comment": "Send a {'msg':'you rock!'}",
             "body": "eyJtc2ciOiJ5b3Ugcm9jayEifQ=="
           }
         }
@@ -118,7 +109,8 @@ The following modifier sets the body of the request and the response to `{"msg":
 }
 ```
 
-The [Flexible Configuration](/docs/configuration/flexible-config/) has a `b64enc` function that will allow you to have an easier to read configuration. For instance (notice the backticks as delimiters):
+#### Facilitating base64 content
+The [Flexible Configuration](/docs/configuration/flexible-config/) has a `b64enc` function that will allow you to have an easier-to-read configuration. For instance (notice the backticks as delimiters):
 
 ```go-text-template
 "body": "{{- `{"msg":"you rock!"}` | b64enc -}}"
@@ -127,55 +119,708 @@ Or from an external file:
 ```go-text-template
 "body": "{{- include "external_file.txt" | b64enc -}}"
 ```
-
-## Transform the URL
-The `url.Modifier` allows you to change settings in the URL. For instance:
-
-```json
-{
-    "extra_config": {
-        "modifier/martian": {
-            "url.Modifier": {
-              "scope": ["request"],
-              "scheme": "https",
-              "host": "www.google.com",
-              "path": "/proxy",
-              "query": "testing=true"
-            }
-        }
-    }
-}
-```
-
-## Copying headers
-Although not widely used, the `header.Copy` lets you duplicate a header using another name. Remember that any header you want to access here it must be included in the `input_headers` list.
+### Cookie Modifier
+The `cookie.Modifier` adds a cookie to a request or a response. If you set cookies in a response, the cookies are only set to the client when you use `no-op` encoding. Notice that `expires` is a date in RFC 3339 format and is absolute, not relative to the current time.
 
 ```json
 {
-    "extra_config": {
-        "modifier/martian": {
-            "header.Copy": {
-                "scope": ["request", "response"],
-                "from": "Original-Header",
-                "to": "Copy-Header"
-            }
-        }
-    }
-}
-```
-
-
-## Apply multiple modifiers consecutively
-All the examples above perform a single modification in the request or the response. However, the `fifo.Group` allows you to create a list of modifiers that execute consecutively. The group is needed when using more than one modifier and encapsulates all the following actions to perform in the `modifiers` array. You can use the FIFO group even when there is only one modifier in the list.
-
-
-Example of usage (modify the body, and set a header):
-
-```json
-{
+  "endpoint": "/test/cookie.Modifier",
+  "input_headers": [
+    "X-Some"
+  ],
+  "output_encoding": "no-op",
   "backend": [
     {
-      "url_pattern": "/foo/{var}",
+      "url_pattern": "/__echo/cookie.Modifier",
+      "encoding": "no-op",
+      "extra_config": {
+        "modifier/martian": {
+          "cookie.Modifier": {
+            "scope": [
+              "request",
+              "response"
+            ],
+            "name": "AcceptCookies",
+            "value": "yes",
+            "path": "/some/path",
+            "domain": "example.com",
+            "expires": "2025-04-12T23:20:50.52Z",
+            "secure": true,
+            "httpOnly": false,
+            "maxAge": 86400
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+### URL Modifier
+The `url.Modifier` allows you to change the URL despite what is set in the `host` and `url_pattern` combination. For instance, the following example calls a host and pattern that does not exist `https://does-not-exist/neither` but it ends up calling `http://localhost:8080/__echo/hello?flag=true`. It might be useful when used in combination with a Filter.
+
+Except for `scope`, all the fields are optional. Set the ones you need.
+
+Notice that if you set a `query`, if the user passes other query string parameters listed under `input_query_strings`, they will be lost, and only the values passed in the modifier will be sent. For such uses, see the `querystring.Modifier` below.
+
+```json
+{
+  "endpoint": "/test/url.Modifier",
+  "backend": [
+    {
+      "host": ["https://does-not-exist"],
+      "url_pattern": "/neither",
+      "extra_config": {
+        "modifier/martian": {
+          "url.Modifier": {
+            "scope": ["request"],
+            "scheme": "http",
+            "host": "localhost:8080",
+            "path": "/__echo/hello",
+            "query": "flag=true"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+Notice that the example above changes the URL used to query the backend, but the `Host` header remains `does-not-exist`.
+
+### Query String modifier
+The `querystring.Modifier` adds a new query string or modifies existing ones in the request.
+
+The example below sets an `?amount=75` independently of the value the user passed. Any other input query strings declared under `input_query_strings` are preserved and reach the backend as passed.
+```json
+{
+  "endpoint": "/test/querystring.Modifier",
+  "input_query_strings": ["currency","amount"],
+  "backend": [
+    {
+      "host": ["http://localhost:8080"],
+      "url_pattern": "/__echo/querystring.Modifier",
+      "extra_config": {
+        "modifier/martian": {
+          "querystring.Modifier": {
+            "scope": ["request"],
+            "name": "amount",
+            "value": "1000"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+In the example above, when the user calls `http://localhost:8080/test/url.Modifier\?currency=EUR&amount=55` the backend receives a querystring `?currency=EUR&amount=1000`. The currency is preserved, and the amount modified.
+
+
+### Copy a header
+Although not widely used, the `header.Copy` lets you duplicate a header using another name. Remember that any header from the user you want to access here it must be included in the `input_headers` list.
+
+If you want to return headers to the client, remember to use `no-op` encoding. Notice also that even though the modifier supports request and response, rarely the same headers are used in both directions.
+
+```json
+{
+  "endpoint": "/test/header.Copy",
+  "input_headers": ["X-Some"],
+  "output_encoding": "no-op",
+  "backend": [
+    {
+      "host": ["http://localhost:8080"],
+      "url_pattern": "/__echo/header.Copy",
+      "extra_config": {
+        "modifier/martian": {
+          "header.Copy": {
+            "scope": ["request","response"],
+            "from": "User-Agent",
+            "to": "X-Browser"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+### Stash modifier
+The `stash.Modifier` creates a new header (or replaces an existing one with a matching name) containing the value of the original URL and all its query string parameters.
+
+If you want to set the header in the response, you must use `no-op` encoding.
+
+```json
+{
+  "endpoint": "/test/stash.Modifier",
+  "input_headers": ["X-Some"],
+  "output_encoding": "no-op",
+  "backend": [
+    {
+      "host": ["http://localhost:8080"],
+      "url_pattern": "/__echo/stash.Modifier",
+      "extra_config": {
+        "modifier/martian": {
+          "stash.Modifier": {
+            "scope": ["request","response"],
+            "headerName": "X-Stash"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+The example above adds a header `X-Stash: http://localhost:8080/__echo/stash.Modifier?amount=1` both in the request and the response when the user calls `http://localhost:8080/test/stash.Modifier?amount=1`
+
+### Header modifier
+The `header.Modifier` adds a new header or changes the value of an existing one.
+
+To change headers sent by the client, remember to add `input_headers` in the endpoint. Also, if the client needs to see the headers in the `response`, you must set the `output_encoding` to `no-op`.
+
+For instance, the following configuration changes the `User-Agent` (set internally by KrakenD) to `Late-Night-Commander v2.3` both in the request and the response.
+
+```json
+{
+  "endpoint": "/test/header.Modifier",
+  "output_encoding": "no-op",
+  "backend": [
+    {
+      "host": ["http://localhost:8080"],
+      "url_pattern": "/__echo/header.Modifier",
+      "extra_config": {
+        "modifier/martian": {
+          "header.Modifier": {
+            "scope": ["request","response"],
+            "name": "User-Agent",
+            "value": "Late-Night-Commander v2.3"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+#### Connecting to Basic Auth (user/pass) backends
+An application of this modifier is when you need KrakenD to provide a fixed user and password to connect to the backend, and the client does not need to know about it. The basic authentication requires you to provide a header with the form `Authorization: Basic <credentials>`. The credentials are the concatenation of the username and password using a colon `:` in base64.
+
+For instance, if your username is `user` and your password `pa55w0rd`, you should generate the base64 as follows:
+
+{{< terminal title="Term" >}}
+echo -n "user:pa55w0rd" | base64
+dXNlcjpwYTU1dzByZA==
+{{< /terminal >}}
+
+When using `echo`, make sure to add the `-n` option to avoid the final line break from being encoded. You can test if the connection succeeds now with:
+
+{{< terminal title="Term" >}}
+curl -i https://yourapi --header 'Authorization: Basic dXNlcjpwYTU1dzByZA=='
+{{< /terminal >}}
+
+
+If the connection works, it means that your credentials are correct, and you can add the resulting base64 string `dXNlcjpwYTU1dzByZA==` to the Martian modifier right before connecting to your `backend`:
+
+```json
+{
+    "url_pattern": "/protected",
+    "extra_config": {
+        "modifier/martian": {
+            "header.Modifier": {
+              "scope": ["request"],
+              "name": "Authorization",
+              "value": "Basic dXNlcjpwYTU1dzByZA=="
+            }
+        }
+    }
+}
+```
+
+With the configuration above, whenever a request is made to the backend, the `Authorization` header is added automatically.
+
+### Header ID
+The `header.Id` is a modifier that sets a header `X-Krakend-Id` with a **unique identifier (UUID)** for the request. If for whatever reason, the header already exists, the header is not altered.
+
+The `scope` only accepts `request`.
+
+```json
+{
+  "version": 3,
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "host": ["http://localhost:8080"],
+  "echo_endpoint": true,
+  "endpoints": [
+    {
+      "endpoint": "/test",
+      "backend": [
+        {
+          "url_pattern": "/__echo/header.Id",
+          "extra_config": {
+            "modifier/martian": {
+              "header.Id": {
+                "scope": [
+                  "request"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Append a header
+The `header.Append` adds a new header in the request or the response. Pass the header in the `input_headers` list to append more values to an existing header. In addition, to see the header in the response, you must use `no-op`.
+
+There are some headers that accept only one value, so you won't be able to set multiple entries in one header, like `Accept-Encoding`, `User-Agent`, `X-Forwarded-For`, or `X-Forwarded-Host`.
+
+```json
+{
+  "endpoint": "/test/header.Append",
+  "input_headers": ["X-Some"],
+  "output_encoding": "no-op",
+  "backend": [
+    {
+      "url_pattern": "/__echo/header.Append",
+      "encoding": "no-op",
+      "extra_config": {
+        "modifier/martian": {
+          "header.Append": {
+            "scope": [
+              "request", "response"
+            ],
+            "name": "X-Some",
+            "value": "I am"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+
+
+
+### Header Blacklist
+The `header.Blacklist` removes the listed headers under `names` in the request and response of the backend.
+
+Remember that if you want to see the headers in the client, you must use the `output_encoding: no-op`, and if you want the client headers to propagate to the backend, you need to use `input_headers` too.
+
+The following example removes several headers from the request and the response.
+
+```json
+{
+  "endpoint": "/test/header.Blacklist",
+  "output_encoding": "no-op",
+  "input_headers": ["X-Some"],
+  "backend": [
+    {
+      "host": ["http://localhost:8080"],
+      "url_pattern": "/__echo/header.Blacklist",
+      "extra_config": {
+        "modifier/martian": {
+          "header.Blacklist": {
+            "scope": ["request","response"],
+            "names": ["X-Some", "User-Agent", "X-Forwarded-Host", "X-Forwarded-For"]
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+### Port modifier
+The `port.Modifier` alters the `request` URL and `Host` header to use the provided port.
+
+It accepts three different settings, but only one is accepted:
+
+- `port` (integer): Defines which port will be used.
+- `defaultForScheme` (boolean): Uses the default port of the schema. `80` for `http://` or `443` for `https://`. Other schemas are ignored.
+- `remove` (boolean): Removes the port from the host string when `true`.
+
+The example below connects to a backend to port 1234, but it's switched back to 8080 by Martian.
+
+```json
+{
+  "endpoint": "/test/port.Modifier",
+  "output_encoding": "no-op",
+  "input_headers": ["X-Some"],
+  "backend": [
+    {
+      "host": ["http://localhost:1234"],
+      "url_pattern": "/__echo/port.Modifier",
+      "extra_config": {
+        "modifier/martian": {
+          "port.Modifier": {
+            "scope": ["request"],
+            "port": 8080
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+## Martian Filters
+All packages with keys like `package.Filter` are modifiers, but **add a condition to execute them**. They allow you to do a check before modifying anything.
+
+All filters have in their settings a key `modifier` which executes the declared one when the condition is met, and **optionally** an `else` key to execute another modifier when the condition is not met. Not all filters support an `else`.
+
+
+### Cookie Filter
+The `cookie.Filter` executes the contained `modifier` when a cookie is provided under the `name`.
+
+If there is also a `value` in the configuration, it ensures a literal match.
+
+When the condition(s) fail(s), it executes the modifier in the `else` clause when set.
+
+This filter only works in the `request`.
+
+Notice that the `input_headers` must declare the `Cookie` header if you want to check cookies from the client.
+
+The example below inspects the Cookies in the request and looks for the one named `marketingCookies`. As there is a `value` set, too, it will make sure that it's set to `yes`. Then it executes a `header.Modifier` that sets a new header `Accepts-Marketing-Cookies` to true or false depending on the value.
+
+{{< terminal title="Test the cookie.Filter endpoint" >}}
+curl -H 'Cookie: marketingCookies=no;' http://localhost:8080/test/cookie.Filter
+{"req_headers":{"Accepts-Marketing-Cookies":["false"]}}
+{{< /terminal >}}
+
+
+```json
+{
+  "endpoint": "/test/cookie.Filter",
+  "input_headers": ["Cookie"],
+  "backend": [
+    {
+      "url_pattern": "/__echo/cookie.Filter",
+      "allow": ["req_headers.Accepts-Marketing-Cookies"],
+      "extra_config": {
+        "modifier/martian": {
+          "cookie.Filter": {
+            "scope": [
+              "request"
+            ],
+            "name": "marketingCookies",
+            "value": "yes",
+            "modifier": {
+              "header.Modifier": {
+                "scope": [
+                  "request"
+                ],
+                "name": "Accepts-Marketing-Cookies",
+                "value": "true"
+              }
+            },
+            "else": {
+              "header.Modifier": {
+                "scope": [
+                  "request"
+                ],
+                "name": "Accepts-Marketing-Cookies",
+                "value": "false"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+
+### URL filter
+The `url.Filter` executes its contained modifier if the `request` URL matches all of the provided parameters. Missing parameters are ignored. You can use the following:
+
+The parameters are
+- `scheme`: The literal scheme it must match
+- `host`: The hostname passed, including the port (e.g., `localhost:8080`)
+- `path`: the `/path` of the URL, without query strings.
+- `query`: The query strings you want to check. Use `"query": "key1=value1&key2=value2"` to check that the request has exactly these keys and values (order is irrelevant, but content not). Suppose the request has more query strings than declared in the `query` parameter because the `input_query_strings` allowed them to pass. In that case, the evaluation will be `false`, and the `else` modifier will be executed.
+
+Since the `host` and the `url_pattern` of the backend are set in the configuration, the `scheme`, `host`, and `path` parameters might provide little value. Yet, they make sense when you are copy/pasting the same modifiers across all endpoints or when you use multiple environments, and you want to mark those hosts somehow.
+
+The following example allows the user to pass a `?legacy=1` query string parameter. Then it adds a new header, `X-Legacy`, with the evaluation result.
+
+```json
+{
+      "endpoint": "/test/url.Filter",
+      "input_query_strings": ["legacy"],
+      "backend": [
+        {
+          "url_pattern": "/__echo/url.Filter",
+          "allow": ["req_headers"],
+          "extra_config": {
+            "modifier/martian": {
+              "url.Filter": {
+                "scope": [
+                  "request", "response"
+                ],
+                "query": "legacy=1",
+                "modifier": {
+                  "header.Modifier": {
+                    "scope": [
+                      "request"
+                    ],
+                    "name": "X-Legacy",
+                    "value": "true"
+                  }
+                },
+                "else": {
+                  "header.Modifier": {
+                    "scope": [
+                      "request"
+                    ],
+                    "name": "X-Legacy",
+                    "value": "false"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+```
+
+### Regex filter
+The `url.RegexFilter` evaluates a regular expression ([RE2 syntax](https://golang.org/s/re2syntax)) and executes the `modifier` desired when it matches, and the modifier declared under `else` when it does not.
+
+The URL evaluation does not take into account query strings.
+
+In the example below, we check that the URL matches with the regexp `.*localhost.*` and set the header `Is-Localhost` accordingly.
+
+```json
+{
+  "endpoint": "/test/url.RegexFilter",
+  "output_encoding": "no-op",
+  "backend": [
+    {
+      "url_pattern": "/__echo/url.RegexFilter",
+      "encoding": "no-op",
+      "extra_config": {
+        "modifier/martian": {
+          "url.RegexFilter": {
+            "scope": [
+              "request"
+            ],
+            "regex": ".*localhost.*",
+            "modifier": {
+              "header.Modifier": {
+                "scope": [
+                  "request"
+                ],
+                "name": "Is-Localhost",
+                "value": "true"
+              }
+            },
+            "else": {
+              "header.Modifier": {
+                "scope": [
+                  "request"
+                ],
+                "name": "Is-Localhost",
+                "value": "false"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+### QueryString filter
+The `querystring.Filter` executes the `modifier` if the `request` or `response` contains a query string parameter that matches the defined name and value in the filter. You must set the `name` declared in the filter in the `input_query_strings`.
+
+```json
+{
+  "endpoint": "/test/querystring.Filter",
+  "input_query_strings": [
+    "param"
+  ],
+  "backend": [
+    {
+      "url_pattern": "/__echo/querystring.Filter",
+      "allow": ["req_headers"],
+      "extra_config": {
+        "modifier/martian": {
+          "querystring.Filter": {
+            "scope": [
+              "request"
+            ],
+            "name": "param",
+            "value": "true",
+            "modifier": {
+              "header.Modifier": {
+                "scope": [
+                  "request"
+                ],
+                "name": "X-Passed-Param",
+                "value": "true"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+### Header Filter
+The `header.Filter` executes its contained `modifier` if the `request` or `response` contains a header that matches the defined name and value. The `value` is optional, and only the header's existence evaluates when undefined.
+
+You must add under `input_headers` the `name` included in the filter.
+
+Example configuration that adds the query string parameter `?legacy=1` when there is a header `X-Tenant: v1`.
+
+```json
+{
+  "endpoint": "/test/header.Filter",
+  "input_headers": [
+    "X-Tenant"
+  ],
+  "backend": [
+    {
+      "url_pattern": "/__echo/header.Filter",
+      "allow": ["req_uri"],
+      "extra_config": {
+        "modifier/martian": {
+          "header.Filter": {
+            "scope": [
+              "request"
+            ],
+            "name": "X-Tenant",
+            "value": "v1",
+            "modifier": {
+              "querystring.Modifier": {
+                "scope": [
+                  "request"
+                ],
+                "name": "legacy",
+                "value": "1"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+The endpoint above produces the following output.
+{{< terminal title="Example of header filter" >}}
+curl -H 'X-Tenant: v1' http://localhost:8080/test/header.Filter
+{"req_uri":"/__echo/header.Filter?legacy=1"}
+{{< /terminal >}}
+
+
+
+### Header Regexp filter
+The `header.RegexFilter` checks that a regular expression ([RE2 syntax](https://golang.org/s/re2syntax)) passes on the target header and, if it does, executes the `modifier`.
+
+You must add under `input_headers` the `header` included in the filter.
+
+The example below checks a header `X-App-Version` and if it contains the terminations `-alpha`, `-beta`, or `-preview`, adds to the backend request a query string `?testing=1`.
+
+```json
+{
+  "endpoint": "/test/header.RegexFilter",
+  "input_headers": [
+    "X-App-Version"
+  ],
+  "backend": [
+    {
+      "url_pattern": "/__echo/header.RegexFilter",
+      "allow": ["req_uri"],
+      "extra_config": {
+        "modifier/martian": {
+          "header.RegexFilter": {
+            "scope": [
+              "request"
+            ],
+            "header": "X-App-Version",
+            "regex": ".*-(alpha|beta|preview)$",
+            "modifier": {
+              "querystring.Modifier": {
+                "scope": [
+                  "request"
+                ],
+                "name": "testing",
+                "value": "1"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+{{< terminal title="Example of output" >}}
+curl -H 'X-App-Version: v1.2.3-alpha' http://localhost:8080/test/header.RegexFilter
+{"req_uri":"/__echo/header.RegexFilter?testing=1"}
+{{< /terminal >}}
+
+
+### Port filter
+The `port.Filter` executes its `modifier` only when the port matches the one used in the request. It does not support `else`.
+
+The following example defines a backend using port `1234`, but the modifier changes it back to `8080` when this happens.
+
+```json
+{
+  "endpoint": "/test/port.Filter",
+  "backend": [
+    {
+      "host": [
+        "http://localhost:1234"
+      ],
+      "url_pattern": "/__echo/port.Filter",
+      "extra_config": {
+        "modifier/martian": {
+          "port.Filter": {
+            "scope": [
+              "request"
+            ],
+            "port": 1234,
+            "modifier": {
+              "port.Modifier": {
+                "scope": [
+                  "request"
+                ],
+                "port": 8080
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+## Groups (Apply multiple modifiers)
+All the modifiers perform a single modification in the request or the response. However, the `fifo.Group` and the `priority.Group` allow you to create a list of modifiers executed sequentailly or in a specific order. The group is needed when using more than one modifier and encapsulates all the following actions to perform in the `modifiers` array.
+
+### FIFO group
+The `fifo.Group` holds a list of modifiers executed in first-in, first-out order. Example of usage (modify the body, and set a header):
+
+
+```json
+{
+  "endpoint": "/test/fifo.Group",
+  "output_encoding": "no-op",
+  "backend": [
+    {
+      "url_pattern": "/__echo/fifo.Group",
       "extra_config": {
         "modifier/martian": {
           "fifo.Group": {
@@ -212,63 +857,53 @@ Example of usage (modify the body, and set a header):
 }
 ```
 
-## Connecting to Basic Auth (user/pass) backends
-Sometimes your backends are protected, and you need KrakenD to provide a user and password to connect. The basic authentication requires you to provide a header with the form `Authorization: Basic <credentials>`. The credentials are the concatenation of the username and password using a colon `:` in base64.
 
-For instance, if your username is `user` and your password `pa55w0rd`, you should generate the base64 as follows:
+### Priority Group
+The `priority.Group` contains the modifiers you want to execute, but the order in which they are declared is unimportant. Instead, each modifier adds a `priority` attribute that defines the order in which they are run.
 
-{{< terminal title="Term" >}}
-echo -n "user:pa55w0rd" | base64
-dXNlcjpwYTU1dzByZA==
-{{< /terminal >}}
+Example configuration that adds the query string `first` and later `last` of foo=bar and deletes any X-Martian headers on requests:
 
-When using `echo`, make sure to add the `-n` option to avoid the final line break from being encoded. You can test if the connection succeeds now with:
-
-{{< terminal title="Term" >}}
-curl -i https://yourapi --header 'Authorization: Basic dXNlcjpwYTU1dzByZA=='
-{{< /terminal >}}
-
-
-If the connection works, it means that your credentials are correct, and you can add the resulting base64 string `dXNlcjpwYTU1dzByZA==` to the Martian modifier right before connecting to your `backend`:
-
+It is useful when you want to reorder them in the future, but instead of moving the whole block, you just change the priority number.
 ```json
 {
-    "url_pattern": "/protected",
-    "extra_config": {
+  "endpoint": "/test/priority.Group",
+  "output_encoding": "no-op",
+  "backend": [
+    {
+      "url_pattern": "/__echo/priority.Group",
+      "extra_config": {
         "modifier/martian": {
-            "header.Modifier": {
-              "scope": ["request"],
-              "name": "Authorization",
-              "value": "Basic dXNlcjpwYTU1dzByZA=="
-            }
+          "priority.Group": {
+            "scope": [
+              "request",
+              "response"
+            ],
+            "modifiers": [
+              {
+                "priority": 0,
+                "modifier" : {
+                  "querystring.Modifier": {
+                    "scope": ["request"],
+                    "name": "first",
+                    "value": "0"
+                  }
+                }
+              },
+              {
+                "priority" : 100,
+                "modifier" : {
+                  "querystring.Modifier": {
+                    "scope": ["request"],
+                    "name": "last",
+                    "value": "100"
+                  }
+                }
+              }
+            ]
+          }
         }
+      }
     }
+  ]
 }
 ```
-
-With the configuration above, whenever a request is made to the backend, the `Authorization` header is added automatically.
-
-For more complex examples of authentication using Martian, see the example [Adding automatic API authentication](/blog/website-development-as-a-sysadmin/)
-
-## All Martian modifiers, verifiers, and filters
-The Martian library comes with [+25 modifiers](https://github.com/google/martian) you can use. We are not listing all the options in the documentation. Instead, we provided the modifiers that are key when using Martian.
-
-For the complete list of modifiers and usage, see [Google's Martian repository](https://github.com/google/martian). These are the packages included in KrakenD-CE:
-
-- [github.com/google/martian/body](https://github.com/google/martian/tree/master/body)
-- [github.com/google/martian/cookie](https://github.com/google/martian/tree/master/cookie)
-- [github.com/google/martian/fifo](https://github.com/google/martian/tree/master/fifo)
-- [github.com/google/martian/header](https://github.com/google/martian/tree/master/header)
-- [github.com/google/martian/martianurl](https://github.com/google/martian/tree/master/martianurl)
-- [github.com/google/martian/port](https://github.com/google/martian/tree/master/port)
-- [github.com/google/martian/priority](https://github.com/google/martian/tree/master/priority)
-- [github.com/google/martian/querystring](https://github.com/google/martian/tree/master/querystring)
-- [github.com/google/martian/stash](https://github.com/google/martian/tree/master/stash)
-- [github.com/google/martian/status](https://github.com/google/martian/tree/master/status)
-
-## Building new modifiers
-Sometimes you want to create a new modifier that covers your specific use case and does some other dynamic operations. Creating more modifiers is a straightforward process and only requires `make` the gateway once you have it coded.
-
-Nothing better than an example to demonstrate how to create a new modifier. Our SRE Director (who wasn't familiar with Go) went through the process of creating a new Modifier that would authenticate automatically against the Marvel API, adding an API Key, a timestamp, and a calculated hash.
-
-Read it here (contains the source code): [Martian example: Adding automatic API authentication](/blog/website-development-as-a-sysadmin/)
