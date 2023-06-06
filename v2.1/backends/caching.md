@@ -77,7 +77,7 @@ The [Martian module](/docs/v2.1/backends/martian/) is the component that can tra
 ```json
 {
     "version": 3,
-    "$schema": "https://www.krakend.io/schema/krakend.json",
+    "$schema": "https://www.krakend.io/schema/v2.1/krakend.json",
     "endpoints": [
         {
             "endpoint": "/cached",
