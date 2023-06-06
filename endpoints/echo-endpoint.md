@@ -19,7 +19,7 @@ Notice that the `/__echo/` endpoint has two slashes in its definition.
 ## Configuration
 To enable the `/__echo/` endpoint, you should add in the configuration (service level) the flag `echo_endpoint`, and then use it directly by calling `http://krakend:8080/__echo/` or by adding it as a `backend` in any endpoint.
 
-{{< schema data="v3.json" filter="echo_endpoint">}}
+{{< schema data="krakend.json" filter="echo_endpoint">}}
 
 When used as a backend, you have a **fake backend** that is very useful for seeing the interaction between the gateway and the backends and testing all sorts of KrakenD components.
 

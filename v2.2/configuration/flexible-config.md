@@ -166,7 +166,7 @@ For instance, you could get a string from an environment variable `COMMIT_SHA`, 
 
 ```go-text-template
 {
-    "$schema": "https://www.krakend.io/schema/v3.json",
+    "$schema": "https://www.krakend.io/schema/krakend.json",
     "version": 3,
     "name": "Configuration commit {{ env "COMMIT_SHA" | trunc 8}}"
 }
@@ -305,7 +305,7 @@ Let's imagine your `krakend.tmpl` looks like this:
 ```go-text-template
 {
     "version": 3,
-    "$schema": "https://www.krakend.io/schema/v3.json",
+    "$schema": "https://www.krakend.io/schema/krakend.json",
     "endpoints": [
         {{ include "endpoints.tmpl" . }}
     ]

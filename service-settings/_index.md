@@ -35,7 +35,7 @@ All service settings are written directly in the root of the configuration file 
 
 The service accepts **numerous configuration options** that you'll find explained through the rest of the documentation, but here is a preview of the most important ones:
 
-{{< schema data="v3.json" filter="version,extra_config,port,endpoints">}}
+{{< schema data="krakend.json" filter="version,extra_config,port,endpoints">}}
 
 Other service-level settings you can add:
 

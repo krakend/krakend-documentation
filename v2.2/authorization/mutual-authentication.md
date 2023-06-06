@@ -70,7 +70,7 @@ The KrakenD configuration needed is as follows (no endpoints used for this demo)
 ```json
 {
     "version": 3,
-    "$schema": "https://www.krakend.io/schema/v3.json",
+    "$schema": "https://www.krakend.io/schema/krakend.json",
     "port": 443,
     "tls": {
         "public_key": "./server.crt",
