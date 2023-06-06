@@ -35,3 +35,5 @@ KrakenD has published an updated JSON-schema definition ([source](https://github
 ```
 
 There is nothing else you need to do!
+
+Part of the URL is the KrakenD version you want to validate, notice that it does not contain the patch number (e.g.: `vA.B` instead of `vA.B.C`).
