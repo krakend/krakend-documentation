@@ -14,7 +14,7 @@ When KrakenD communicates using http, it implements a concurrent-safe round trip
 
 If you want to customize any of the settings below, they must be written at the top level of the configuration.
 
-{{< schema data="v3.json" filter="allow_insecure_connections,disable_rest,dialer_timeout,dialer_keep_alive,dialer_fallback_delay,disable_compression,disable_keep_alives,max_idle_connections,max_idle_connections_per_host,idle_connection_timeout,response_header_timeout,expect_continue_timeout,client_tls">}}
+{{< schema data="krakend.json" filter="allow_insecure_connections,disable_rest,dialer_timeout,dialer_keep_alive,dialer_fallback_delay,disable_compression,disable_keep_alives,max_idle_connections,max_idle_connections_per_host,idle_connection_timeout,response_header_timeout,expect_continue_timeout,client_tls">}}
 
 Finally, the **TLS Handshake Timeout** is hardcoded to 10 seconds and cannot be changed.
 

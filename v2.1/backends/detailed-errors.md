@@ -118,7 +118,7 @@ Place the following configuration in the configuration:
 ```json
 {
   "version": 3,
-  "$schema": "http://www.krakend.io/schema/v3.json",
+  "$schema": "http://www.krakend.io/schema/krakend.json",
   "extra_config": {
     "router": {
       "return_error_msg": true
@@ -154,7 +154,7 @@ When you want to show the interpretation of the error but not the error of the b
 ```json
 {
   "version": 3,
-  "$schema": "http://www.krakend.io/schema/v3.json",
+  "$schema": "http://www.krakend.io/schema/krakend.json",
   "extra_config": {
     "router": {
       "return_error_msg": true
