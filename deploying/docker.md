@@ -13,7 +13,7 @@ If you use containers, the recommended approach is to write your own `Dockerfile
 
 In its simplified form would be:
 ```Dockerfile
-FROM {{< product image >}}:{{< product latest_version >}}
+FROM {{< product image >}}:{{< product minor_version >}}
 COPY krakend.json /etc/krakend/krakend.json
 # Uncomment with Enterprise image:
 # COPY LICENSE /etc/krakend/LICENSE
@@ -26,7 +26,7 @@ Even though you can use the official container directly and attach the configura
 A more real-life example illustrates below a combination of the `check` command with a multi-stage build to compile a [flexible configuration](/docs/configuration/flexible-config/) in a `Dockerfile`:
 
 ```docker
-FROM {{< product image >}}:{{< product latest_version >}} as builder
+FROM {{< product image >}}:{{< product minor_version >}} as builder
 ARG ENV=prod
 
 COPY krakend.tmpl .
@@ -43,7 +43,7 @@ RUN FC_ENABLE=1 \
 # The linting needs the final krakend.json file
 RUN krakend check -c /tmp/krakend.json --lint
 
-FROM {{< product image >}}:{{< product latest_version >}}
+FROM {{< product image >}}:{{< product minor_version >}}
 COPY --from=builder --chown=krakend:nogroup /tmp/krakend.json .
 # Uncomment with Enterprise image:
 # COPY LICENSE /etc/krakend/LICENSE
