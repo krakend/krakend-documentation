@@ -128,7 +128,7 @@ It is also important adding the [audit command](/docs/configuration/audit/), exc
 Creating an immutable Docker image with your desired configuration takes a few seconds in your CI/CD pipeline on Docker deployments. Create a `Dockerfile` with at least the following code and deploy the resulting image in production:
 
 ```Dockerfile
-FROM {{< product image >}}:{{< product latest_version >}}
+FROM {{< product image >}}:{{< product minor_version >}}
 COPY krakend.json /etc/krakend/krakend.json
 ```
 
