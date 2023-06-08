@@ -4,6 +4,7 @@ date: 2016-10-26
 lastmod: 2023-02-06
 linktitle: KrakenD F.A.Q
 title: Frequently Asked Questions
+weight: -1
 description: Get quick answers to frequently asked questions about how KrakenD works and the reason behind different responses.
 menu:
   community_current:
