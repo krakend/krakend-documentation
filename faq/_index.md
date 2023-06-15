@@ -18,7 +18,7 @@ E.g:
 
 ### Explanation
 
-The gateway will default sending an HTTP status 200 if the backend returns a 200 or a 201. You can [change this strategy](/docs/backends/detailed-errors/)
+The gateway will default sending an HTTP status 200 if the backend returns a 200 or a 201. If you want to return the original `201` you must use [`no-op` encoding](/docs/endpoints/no-op/).
 
 ## I am getting a `500` status when the backend returns anything but `200`, `201` or redirects
 E.g:
