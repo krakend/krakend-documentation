@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-03-30
+lastmod: 2023-06-20
 date: 2018-11-11
 linktitle: Lambda functions
 title: Integration with AWS Lambda functions
@@ -26,39 +26,42 @@ The **payload** that is sent to the Lambda function comes from the request and d
 *   Method `GET`: The payload contains all the request parameters.
 *   Non-`GET` methods: The payload is defined by the content of the **body** in the request.
 
-You don't need to set an Amazon API Gateway in the middle as KrakenD does this job for you.
+You don't need to set an Amazon API Gateway in the middle, as KrakenD does this job for you.
 
 
 ## Lambda configuration
 
 {{< note title="Dummy hosts and url_pattern" type="info" >}}
-Notice in the examples that the `host` and `url_pattern` are needed as per the [backend definition](/docs/backends/), but KrakenD will never use them. Feel free to add any value in there, but they must be present.
+Notice in the examples that the `host` and `url_pattern` are needed as per the [backend definition](/docs/backends/), but KrakenD will never use them when connecting to a Lambda. Feel free to add any value in there, but the entry must be present.
 {{< /note >}}
 
-The inclusion requires you to add the code in the `extra_config` of your `backend` section, using the `backend/lambda` namespace.
+The inclusion requires you to add the code in the `extra_config` of your `backend` section using the `backend/lambda` namespace.
 
 The supported parameters are:
 
-*   `function_name`: Name of the lambda function as saved in the AWS service.
-*   `function_param_name`: The endpoint `{placeholder}` that sets the function name. You have to choose between `function_name` and `function_param_name` but not both.
-*   `region`: The AWS identifier region (e.g.: `us-east-1`, `eu-west-2`, etc. )
-*   `max_retries`: Maximum times you want to execute the function until you have a successful response.
-*   `endpoint`: An optional parameter to customize the Lambda endpoint to call. Useful when Localstack is used for testing.
+
+
+
+{{< schema data="backend/lambda.json" >}}
 
 {{< note title="Parameters' first character uppercased" >}}
 Notice the capitalization of the first letter of the parameter names at the configuration in the examples below. For instance, when an endpoint parameter is defined as `{route}`, define it in the config as `Route`.
 {{< /note >}}
 
+When passing the lambda function name, you can use any of the following formats:
 
-{{< schema data="backend/lambda.json" >}}
+- Name only: `my-function`
+- Name and version: `my-function:v1`
+- Function ARN: `arn:aws:lambda:us-west-2:123456789012:function:my-function`
+- Partial ARN: `123456789012:function:my-function`
 
 ### Authentication and connectivity
 
-The KrakenD machine needs to have connectivity with your AWS account and have the credentials to do so. There are several ways you can achieve this:
+The KrakenD machine needs connectivity with your AWS account and the credentials to do so. There are several ways you can achieve this:
 
-- By copying your AWS credentials in the default file, `~/.aws/credentials` (and maybe an additional `~/.aws/config` and the env var `AWS_PROFILE` if you have several profiles)
-- By passing the environment variables with at least `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` (and maybe `AWS_REGION`) when starting KrakenD.
-- By having an IAM user with a policy and execution role that let you invoke the function from the machine
+- Copying your AWS credentials in the default file, `~/.aws/credentials` (and maybe an additional `~/.aws/config` and the env var `AWS_PROFILE` if you have several profiles)
+- Passing the environment variables with at least `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` (and maybe `AWS_REGION`) when starting KrakenD.
+- Having an IAM user with a policy and execution role that lets you invoke the function from the machine
 
 When setting the credentials, ensure the Lambda is callable within the KrakenD box with the selected method.
 
@@ -89,9 +92,55 @@ docker run --rm -it -p "8080:8080" \
 {{< /terminal >}}
 
 ### Header forwarding
-**The official library of AWS has a limitation preventing KrakenD to send any headers**, yet it is not possible to forward them even when you add them under `input_headers`.
+**The official library of AWS has a limitation preventing KrakenD from sending any headers**, yet it is impossible to forward them even when you add them under `input_headers`.
 
-If you require such a functionality you should create a custom payload ([like this one](https://github.com/awsdocs/aws-lambda-developer-guide/blob/main/sample-apps/nodejs-apig/event.json)) with additional data containing the headers (and anything else than the body itself).
+If you require such functionality, you should create a custom payload ([like this one](https://github.com/awsdocs/aws-lambda-developer-guide/blob/main/sample-apps/nodejs-apig/event.json)) with additional data containing the headers (and anything else than the body itself).
+
+### Canary testing of Lambda functions
+You can easily do **Canary** or **A/B testing** with Lambda functions in combination with a Lua script like the one provided below.
+
+For example, the following configuration takes the function name from a parameter that is not defined anywhere. Instead, a Lua script will set it as per our AB test or canary rules.
+
+The configuration would be:
+
+```json
+{
+  "endpoint": "/call-a-lambda",
+  "backend": [
+    {
+      "host": ["ignore"],
+      "url_pattern": "/ignore",
+      "extra_config": {
+        "backend/lambda": {
+          "function_param_name": "Function_name",
+          "region": "eu-west-1",
+          "max_retries": 1
+        },
+        "modifier/lua-backend": {
+            "sources": ["canary.lua"],
+            "pre": "canaryLambda(request.load())",
+            "allow_open_libs": true
+        }
+      }
+    }
+  ]
+}
+```
+And the content of the `canary.lua` file would be:
+
+```lua
+function canaryLambda( req )
+  local rand = math.random(0, 100)
+  if rand < 20
+  then
+    req:params("Function_name", "my-function:3")
+  else
+    req:params("Function_name", "my-function:2")
+  end
+end
+```
+
+As you can read from the code, 20% of the requests will invoke `my-function:3`, while the 80% remaining will fall into the older `my-function:2`.
 
 ## Example: Associate a lambda to a backend
 

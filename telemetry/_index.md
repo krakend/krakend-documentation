@@ -29,9 +29,4 @@ The following telemetry third-party systems are supported:
 - [Datadog](/docs/telemetry/datadog/)
 - [Azure Monitor](/docs/telemetry/azure/)
 - [Grafana](/docs/telemetry/grafana/)
-
-Plus the Enterprise-only exporters:
-
-- [Newrelic](/docs/enterprise/telemetry/newrelic/)
-- [Instana](/docs/enterprise/telemetry/instana/)
-- [Google Analytics](/docs/enterprise/telemetry/google-analytics/)
+- [Newrelic](/docs/enterprise/telemetry/newrelic/) {{< badge color="denim" >}}Enterprise{{< /badge >}}
