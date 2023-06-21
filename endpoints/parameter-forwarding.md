@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-06-29
+lastmod: 2023-06-21
 date: 2018-07-20
 aliases: ["/docs/features/parameter-forwarding/"]
 linktitle:  Parameter forwarding
@@ -18,17 +18,26 @@ Part of the zero-trust policy implies that KrakenD **does not forward** any unex
 ## Configuration to enable parameter forwarding
 You can change the default behavior according to your needs and define which elements can pass from the client to your backends. To do that, add the following configuration options under your `endpoint` definition:
 
-- `input_query_strings` (*array*): Defines the exact list of query strings that are allowed to reach the backend when passed
-- `input_headers` (*array*): Defines the list of all headers allowed to reach the backend when passed
-- A single *star* element (`["*"]`) as the value of the options above, forwards **everything** to the backend (it's safer avoiding this option)
+- `input_query_strings` (*array*): Defines the exact list of query strings that are allowed to reach the backend when passed. This list is case-sensitive.
+- `input_headers` (*array*): Defines the list of all headers allowed to reach the backend when passed. This list is case-insensitive. You can declare headers in lowercase, uppercase, or mixed.
+- A single *star* element (`["*"]`) as the value of the options above forwards **everything** to the backend (it's safer avoiding this option)
 
-{{< note title="Case sensitive parameters" type="info" >}}
-The `input_query_strings` and `input_headers` lists are **case sensitive**. For instance, a request `?Page=1` wont pass to the backend when `"input_query_strings": ["page"]`
+### Case-sensitive and case-insensitive parameters
+
+- The `input_query_strings` list is **case sensitive**, as per the RFC specification. For instance, a request `?Page=1` and `?page=1` are considered different parameters, and only the latter will pass when setting `"input_query_strings": ["page"]`. If you expect multiple cases, add them all.
+- The `input_headers` is **case-insensitive**, as per its RFC specification. It allows the passing of user headers in uppercase, lowercase, or mixed. Nevertheless, when the header is forwarded to the backend or used in other components, they receive it normalized in the **canonical format of the MIME header**, so you can have users mixing capitalization and yet receive a consistent format.
+
+{{< note title="Canonical Headers" type="info" >}}
+When accessing or checking a header name through any component in KrakenD, you must write its canonical form regardless of what's being provided by the user.
+
+The canonicalization **converts the first letter and any letter following a hyphen to upper case**; the rest are converted to lowercase. For example, the canonical key for `accept-encoding`, `ACCEPT-ENCODING`, or `ACCept-enCODING` is `Accept-Encoding`. MIME header keys are assumed to be ASCII only. If the header contains a space or invalid header field bytes, it is returned without modifications.
+
 {{< /note >}}
+
 
 **Example**:
 
-*Send the query strings `items` and `page` to the backend, and also `User-Agent` and `Accept` headers:*
+Send the query strings `items` and `page` to the backend, and also `User-Agent` and `Accept` headers:
 
 {{< highlight json "hl_lines=6-13">}}
 {
@@ -100,7 +109,7 @@ Also, if a request like `http://krakend:8080/v1/foo?items=10` does not include `
 By definition, query string parameters are always optional, and the user can pass a subset of them, all or none. Suppose you want to enforce that the user provides a query string parameter. In that case, you must validate it with the [Common Expression Language](/docs/endpoints/common-expression-language-cel/) (faster) or with a [Lua script](/docs/endpoints/lua/) (slower).
 
 ### Sending all query string parameters
-While the default policy prevents from sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
+While the default policy prevents sending unrecognized query string parameters, setting an asterisk `*` as the parameter name makes the gateway to **forward any query string to the backends**:
 
 ```json
 {
@@ -111,7 +120,7 @@ While the default policy prevents from sending unrecognized query string paramet
 }
 ```
 
-**Enabling the wildcard pollutes your backends**, as any query string sent by end-users or malicious attackers gets through the gateway and impacts the backends behind. Our recommendation is to let the gateway know which query strings are in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
+**Enabling the wildcard pollutes your backends**, as any query string sent by end-users or malicious attackers gets through the gateway and impacts the backends behind. We recommend letting the gateway know which query strings are in the API contract and specify them in the list, even when the list is long, and not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle client abuse attempts.
 
 ### Mandatory query string parameters
 When your backend requires mandatory **query string** parameters and you want to make them **mandatory** in KrakenD, the only way to enforce this (without scripting) is using the `{variable}` placeholders in the endpoints definition. Mandatory means that the endpoint won't exist unless the parameter is passed. For instance:
@@ -134,7 +143,7 @@ With the configuration above a request to the KrakenD endpoint such as `http://k
 
     /foo?channel=iOS
 
-Nevertheless, the `input_query_strings` could also be added in this configuration, creating a special case of optional and mandatory parameters! You would be passing query strings both hardcoded in the `url_pattern` and generated from the user input. In this strange case, if the user passes a single optional query string parameter that is declared in `input_query_strings`, then the mandatory value is lost. The mandatory value is used if the request does not contain any known optional parameter. For instance:
+Nevertheless, the `input_query_strings` could also be added in this configuration, creating a special case of optional and mandatory parameters! You would pass query strings hardcoded in the `url_pattern` and generated from the user input. In this strange case, the mandatory value is lost if the user passes a single optional query string parameter that is declared in `input_query_strings`. The mandatory value is used if the request does not contain any known optional parameter. For instance:
 
 ```json
 {
@@ -170,12 +179,12 @@ No optional parameter has been passed, so the mandatory one is used.
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test query string parameters.
 
 ## Headers forwarding
-KrakenD **does not send client headers to the backend**, unless they are under the `input_headers` list. The list of headers sent by the client that you want to let pass to the backend must be written as an entry of the `input_headers` array (or there is an `"*"` entry).
+KrakenD **does not send client headers to the backend**unless they are under the `input_headers` list. The list of headers sent by the client that you want to let pass to the backend must be written as an entry of the `input_headers` array (or there is an `"*"` entry).
 
 **A client request from a browser or a mobile client contains a lot of headers**, including cookies. Typical examples of the variety of headers that clients send are `Host`, `Connection`, `Content-Type`,`Accept`, `Cache-Control`, `Cookie`... and a long, long, etcetera. Remember that unless explicitly defined, KrakenD won't let them pass. This security policy will save you from a lot of trouble.
 
 ### Default headers sent from KrakenD to Backends
-KrakenD will act as an independent client connecting to your backends and will send this headers with its own values:
+KrakenD will act as an independent client connecting to your backends and will send these headers with its own values:
 
 - `Accept-Encoding`
 - `Host`
@@ -226,7 +235,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (
 X-Forwarded-For: ::1
 ```
 
-The `User-Agent` is no longer a KrakenD user-agent but a Mozilla one.
+The `User-Agent` is no longer a KrakenD user agent but a Mozilla one.
 
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test headers.
 
@@ -242,7 +251,7 @@ While the default policy prevents forwarding unrecognized headers, setting an as
 }
 ```
 
-Enabling the wildcard **pollutes your backends**, as any header sent by end-users or malicious attackers gets through the gateway and impacts the backends behind (a famous exploit is the Log4J vulnerability). We recommend letting the gateway know which headers are in the API contract and specify them in the list, even when the list is long try to not use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle abuse attempts from clients.
+Enabling the wildcard **pollutes your backends**, as any header sent by end-users or malicious attackers gets through the gateway and impacts the backends behind (a famous exploit is the Log4J vulnerability). We recommend letting the gateway know which headers are in the API contract and specify them in the list. Even when the list is long, try not to use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle client abuse attempts.
 
 ## Cookies forwarding
 A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `input_headers`, just as you would do with any other header.
