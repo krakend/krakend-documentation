@@ -182,9 +182,10 @@ KrakenD does the following validation to let users hit protected endpoints:
 - The algorithm `alg` is supported by KrakenD and matches exactly the one used in the endpoint definition.
 - The token hasn't expired
 - The signature is valid.
-- The given `issuer` matches (if present in the configuration)
-- The given `audience` matches (if present in the configuration)
+- The given `issuer` matches (if present in the configuration), and is a *string*
+- The given `audience` matches (if present in the configuration), and is a *string*
 - The given claims are within the endpoint accepted `roles` (if present in the configuration))
+- All numeric claims checking is represented as a float64 (decimal).
 
 The configuration allows you to define the set of required roles. For example, a user who passes a token with roles `A` and `B`, can access an endpoint requiring `"roles": ["A","C"]` as it has one of the required options (`A`).
 
