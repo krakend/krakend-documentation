@@ -338,6 +338,7 @@ When working in this mode, all you need to do is to configure the GraphQL endpoi
 ```json
 {
     "endpoint": "/graphql",
+    "method": "POST",
     "input_query_strings":[
         "query",
         "operationName",
@@ -357,6 +358,10 @@ The previous example uses a set of recognized query strings to pass to the Graph
 
 As the configuration above is not using `no-op`, you can take the opportunity to connect to more servers in the same endpoint by adding additional backend objects in the configuration.
 
+In addition, if you'd like to use your GraphQL from a browser, like **Apollo Studio** you will need to add two additional components in your configuration:
+
+- Accept the `OPTIONS` method adding the [flag `auto_options`](/docs/service-settings/router-options/#auto_options)
+- Add [CORS](/docs/service-settings/cors/)
 
 ## GraphQL Federation
 KrakenD's principles are working with simultaneous aggregation of data. In that sense, consuming multiple subgraphs (or back-end services) comes naturally. However, using the REST to GraphQL capabilities, you can federate data using a simple strategy: define the subgraphs in the configuration instead of moving this responsibility to the consumer.
