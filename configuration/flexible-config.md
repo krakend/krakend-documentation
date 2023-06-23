@@ -154,7 +154,7 @@ While the `include` is only meant to paste the content of a plain text file, the
 {{ template "template_name.tmpl" context }}
 ```
 
-The template `template_name.tmpl` is executed and processed. The value of `context` is passed in the template as the context, meaning that the sub-template can access it using the dot `{{ . }}`. This context variable could be an object, such as `{{ template "environment.tmpl" .urls }}`, but it can also be another type, like a string: ``{{ template "environment.tmpl" "production" }}`.
+The template `template_name.tmpl` is executed and processed. The value of `context` is passed in the template as the context, meaning that the sub-template can access it using the dot `{{ . }}`. This context variable could be an object, such as `{{ template "environment.tmpl" .urls }}`, but it can also be another type, like a string: `{{ template "environment.tmpl" "production" }}`.
 
 Go templates allow you to introduce handy stuff like conditionals or loops and allow you to create powerful configurations.
 
