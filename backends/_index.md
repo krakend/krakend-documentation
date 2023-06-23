@@ -82,7 +82,7 @@ By default KrakenD only works with **RESTful URL patterns** to connect to backen
 
 {{< highlight json "hl_lines=4 13">}}
 {
-  "$schema": "https://www.krakend.io/schema/v2.3/krakend.json",
+  "$schema": "https://www.krakend.io/schema/v2.4/krakend.json",
   "version": 3,
   "disable_rest": true,
   "endpoints": [
@@ -107,7 +107,9 @@ When using **self-signed certificates** in your backends, you must add the certi
 ```json
 {
   "version": 3,
-  "allow_insecure_connections": true,
+  "client_tls": {
+        "allow_insecure_connections": true
+  },
   "endpoints": []
 }
 ```
