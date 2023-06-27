@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-07-10
+lastmod: 2023-06-27
 date: 2020-07-10
 linktitle: CORS
 title: Enabling Cross Origin Resource Sharing (CORS)
@@ -19,12 +19,12 @@ menu:
   community_current:
     parent: "030 Service Settings"
 ---
-When KrakenD endpoints are consumed from a browser, you might need to enable the **Cross-Origin Resource Sharing (CORS)** module as browsers restrict cross-origin HTTP requests initiated from scripts.
+When KrakenD endpoints are consumed from a browser, you should enable the **Cross-Origin Resource Sharing (CORS)** module, as browsers restrict cross-origin HTTP requests initiated from scripts.
 
 When the Cross-Origin Resource Sharing (CORS) configuration is enabled, KrakenD uses additional HTTP headers to tell browsers that they can **use resources from a different origin** (domain, protocol, or port). For instance, you will need this configuration if your web page is hosted at https://www.domain.com and the Javascript references the KrakenD API at https://api.domain.com.
 
 ## Configuration
-CORS configuration lives in the root of the file, as it's a service component. Add the namespace `security/cors` under the global `extra_config`, as follows:
+CORS configuration lives in the root of the file, as it's a service component. Add the namespace `security/cors` under the global `extra_config` as follows:
 
 ```json
 {
@@ -60,7 +60,7 @@ The configuration options of this component are as follows:
 According to the CORS specification, you are not allowed to use wildcards and credentials at the same time. If you need to do this, [check this workaround](https://github.com/krakendio/krakend-cors/issues/9){{< /note >}}
 
 ## Debugging configuration
-The following configuration might help you debugging your CORS configuration. Check the inline `@comments`:
+The following configuration might help you debug your CORS configuration. Check the inline `@comments`:
 
 ```json
 {
@@ -127,3 +127,22 @@ The following configuration might help you debugging your CORS configuration. Ch
         }
 ]}
 ```
+
+## Adding the OPTIONS method
+When working in a SPA, you will usually receive `OPTIONS` calls to KrakenD; although this configuration is not related to CORS, it usually goes in hand.
+
+To support `OPTIONS` in your endpoints, you only need to add the [flag `auto_options`](/docs/service-settings/router-options/#auto_options) as follows:
+
+```json
+{
+  "version": 3,
+  "extra_config": {
+    "router": {
+       "auto_options": true
+    },
+    "security/cors": {
+      "@comment": "...CORS configuration inside this block..."
+    }
+  }
+```
+{{< schema data="router.json" filter="auto_options" >}}
