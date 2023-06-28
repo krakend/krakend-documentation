@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-11-09
+lastmod: 2023-06-28
 date: 2016-09-30
 aliases: ["/service-discovery/dns-srv/", "/docs/service-discovery/overview/"]
 linktitle: Service Discovery
@@ -20,12 +20,11 @@ The chosen **service discovery strategy** determines how to retrieve (statically
 
 KrakenD must be in a network that can reach any declared hosts. With more than one host, KrakenD [load balances](/docs/throttling/load-balancing/) the connections to the hosts in the list.
 
-The **possible values** for `sd` are:
+## Service discovery configuration
+The possible configurations and values for `sd` are:
 
-- `static`: For static resolution
-- `dns`: For DNS SRV resolution
+{{< schema data="backend.json" filter="sd,sd_scheme" >}}
 
-See below.
 
 ## Static resolution
 The `static` resolution is the default service discovery strategy. It implies that you write directly in the configuration the protocol plus the service name, hosts or IPs you want to connect to.
@@ -71,6 +70,7 @@ The DNS-based service discovery caches entries for 30 seconds.
 To integrate **Consul, Kubernetes, or any other `DNS SRV` compatible system** as the Service Discovery, you only need to set two keys:
 
 - `"sd": "dns"`: To use dynamic host resolution using the service discovery strategy
+- `"sd_scheme": "https"`: When the list of hosts provided by the service discovery is offered under https instead of plain http
 - `"host": []`: And entry with the service name providing the resolution (e.g.: Consul address)
 
 Add these keys in the `backend` section of your configuration. If there is another `host` key in the root level of the configuration, you don't need to declare it here if the value is the same.
@@ -83,6 +83,7 @@ For instance:
         {
             "url_pattern": "/foo",
             "sd": "dns",
+            "sd_scheme": "https",
             "host": [
                 "api-catalog.service.consul.srv"
             ],
