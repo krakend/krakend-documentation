@@ -346,7 +346,7 @@ The `scope` only accepts `request`.
 ```json
 {
   "version": 3,
-  "$schema": "https://www.krakend.io/schema/v2.3/krakend.json",
+  "$schema": "https://www.krakend.io/schema/v2.4/krakend.json",
   "host": ["http://localhost:8080"],
   "echo_endpoint": true,
   "endpoints": [

@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2023-06-23
 date: 2018-10-29
 linktitle: Proxy rate limit
 title: Rate-limiting backends
@@ -17,9 +17,12 @@ meta:
   - backend
 ---
 
-No matter what is the amount of activity the users are generating at the router level, you might want to restrict the connections KrakenD makes to your backends. Configuration is similar to the router's one, but it's declared directly in the `backend` section instead of the `endpoint`.
+No matter what amount of activity the users generate at the router level, you can limit KrakenD's connections to your backends. The configuration is similar to the [router's rate limit](/docs/endpoints/rate-limit/), but it's declared directly in the `backend` section instead of the `endpoint`.
 
-This parameter is defined at the `krakend.json` configuration file as follows:
+The limit applies **per defined backend entry** and does not consider the activity other backends generate. Each `backend` entry handles its counters and does not share them with different backends or endpoints.
+
+The proxy rate limit is defined in the `krakend.json` configuration file as follows:
+
 {{< highlight json "hl_lines=8-13">}}
     {
       "endpoint": "/products/{cat_id}",
@@ -31,19 +34,21 @@ This parameter is defined at the `krakend.json` configuration file as follows:
           "extra_config": {
               "qos/ratelimit/proxy": {
                   "max_rate": 0.5,
+                  "every": "1s",
                   "capacity": 1
               }
           }
       }
 {{< /highlight >}}
 
-These are two parameters you can set:
+These are the parameters you can set:
 
 {{< schema data="qos/ratelimit/proxy.json" >}}
 
-## Comparison of `max_rate` vs `client_max_rate`
-The `max_rate` (available both in router and proxy layers) is an absolute number where you have the exact control over how much traffic you are allowing to hit the backend or endpoint. In an eventual DDoS, the `max_rate` can help in a way since it won't accept more traffic than allowed. But on the other hand a single host could abuse the system taking a big percentage of that quota.
+## Comparison with router rate limit
+In a nutshell:
 
-The `client_max_rate` is a limit per client and it won't help you if you just want to control the total traffic, as the total traffic supported by the backend or endpoint depends on the number of different requesting clients. A DDoS will then happily pass through, but on the other hand, you can keep any particular abuser limited to its quota.
+- The [router rate limit](/docs/endpoints/rate-limit/) controls the requests users do to KrakenD.
+- The proxy rate limit controls KrakenD's requests to your services.
 
-Depending on your use case you will need to decide if you use one, the other, the two, or none of them.
+You don't have to choose one or the other; you can mix the different types as they cover additional use cases.

@@ -1,7 +1,6 @@
 ---
 lastmod: 2022-10-24
 date: 2019-09-15
-notoc: true
 linktitle: AWS X-Ray
 title: Exporting traces to AWS X-Ray
 weight: 110

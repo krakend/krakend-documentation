@@ -18,21 +18,61 @@ meta:
   - endpoint
 ---
 
-The router rate limit feature allows you to set the **maximum requests per second** (convertible from minutes or hours, too) a KrakenD endpoint will accept. There are two different strategies to set limits that you can use separately or together:
+The router rate limit feature allows you to set the **maximum requests** a KrakenD endpoint will accept in a **given time window**. There are two different strategies to set limits that you can use separately or together:
 
 - **Endpoint rate-limiting**: applies simultaneously to all your customers using the endpoint, sharing the same counter.
 - **User rate-limiting**: applies to an individual user.
 
-Both types keep **in-memory** an updated counter with the number of requests processed per second in that endpoint.
+Both types keep **in-memory** an updated counter with the number of requests processed during the controlled time window in that endpoint.
 
 For additional types of rate-limiting, see the [Traffic management overview](/docs/throttling/).
+
+## Configuration
+The configuration allows you to use both types of rate limits (`max_rate` and `client_max_rate`) at the same time. For instance, let's set a limit of `50` requests `every` 10 minutes (`1m`), but every single user (by IP) can do `5` every `10m`:
+
+```json
+{
+    "endpoint": "/limited-endpoint",
+    "extra_config": {
+      "qos/ratelimit/router": {
+          "max_rate": 50,
+          "client_max_rate": 5,
+          "every": "10m",
+          "strategy": "ip"
+        }
+    }
+}
+```
+
+The following options are available to configure:
+
+{{< schema data="qos/ratelimit/router.json" >}}
+
+The rate limiting it's based internally in the [Token Bucket algorithm](/docs/throttling/token-bucket/), read the explanation to understand better how it works.
+
+The `capacity` (or `client_capacity`) of the bucket is, by default, equal to its maximum rate, but you might want to set a different value.
 
 ## Endpoint rate-limiting (`max_rate`)
 The endpoint rate limit acts on the number of simultaneous transactions an endpoint can process. This type of limit protects the service for all customers. In addition, these limits mitigate abusive actions such as rapidly writing content, aggressive polling, or excessive API calls.
 
 It consumes a low amount of memory as it only needs one counter per endpoint.
 
-When the users connected to an endpoint together exceed the `max_rate`, KrakenD starts to reject connections with a status code `503 Service Unavailable` and enables a [Spike Arrest](/docs/throttling/spike-arrest/) policy
+When the users connected to an endpoint together exceed the `max_rate`, KrakenD starts to reject connections with a status code `503 Service Unavailable` and enables a [Spike Arrest](/docs/throttling/spike-arrest/) policy.
+
+Example:
+
+```json
+{
+    "endpoint": "/endpoint",
+    "extra_config": {
+      "qos/ratelimit/router": {
+          "@comment":"A thousand requests every hour",
+          "max_rate": 1000,
+          "every": "1h"
+        }
+    }
+}
+```
 
 ## Client rate-limiting (`client_max_rate`)
 The client or user rate limit applies to an individual user and endpoint. Each endpoint can have different limit rates, but all users are subject to the same rate.
@@ -40,10 +80,32 @@ The client or user rate limit applies to an individual user and endpoint. Each e
 {{< note title="A note on performance" >}}
 Limiting endpoints per user makes KrakenD keep in-memory counters for the two dimensions: *endpoints x clients*.
 
-The `client_max_rate` is heavier than the `max_rate` as every incoming client needs individual tracking. Even though counters are efficient and very small in data, it's easy to end up with several millions of counters on big platforms. So make sure to do your math.
+The `client_max_rate` is more resource consuming than the `max_rate` as every incoming client needs individual tracking. Even though counters are space-efficient and very small in data, it's easy to end up with several millions of counters on big platforms.
 {{< /note >}}
 
-When a single user connected to an endpoint exceeds their `client_max_rate`, KrakenD starts to reject connections with a status code `429 Too Many Requests` and enables a [Spike Arrest](/docs/throttling/spike-arrest/) policy
+When a single user connected to an endpoint exceeds their `client_max_rate`, KrakenD starts to reject connections with a status code `429 Too Many Requests` and enables a [Spike Arrest](/docs/throttling/spike-arrest/) policy.
+
+Example:
+
+```json
+{
+    "endpoint": "/endpoint",
+    "extra_config": {
+      "qos/ratelimit/router": {
+          "@comment":"20 requests every 5 minutes",
+          "client_max_rate": 20,
+          "every": "5m"
+        }
+    }
+}
+```
+
+## Comparison of `max_rate` vs `client_max_rate`
+The `max_rate` (also available as [proxy rate-limit](/docs/backends/rate-limit/)) is an absolute number where you have exact control over how much traffic you are allowing to hit the backend or endpoint. In an eventual DDoS, the `max_rate` can help in a way since it won't accept more traffic than allowed. But on the other hand, a single host could abuse the system taking a significant percentage of that quota.
+
+The `client_max_rate` is a limit per client, and it won't help you if you just want to control the total traffic, as the total traffic supported by the backend or endpoint depends on the number of different requesting clients. A DDoS will then happily pass through, but on the other hand, you can keep any particular abuser limited to its quota.
+
+Depending on your use case, you must decide if you use one, the other, the two, or none of them.
 
 ## Playing together
 You can set the two limiting strategies individually or together. Have in mind the following considerations:
@@ -53,30 +115,13 @@ You can set the two limiting strategies individually or together. Have in mind t
 
 So, in most cases, it is better to play them together.
 
-## Configuration
-The configuration allows you to use both types of rate limits at the same time:
-
-```json
-{
-    "endpoint": "/limited-endpoint",
-    "extra_config": {
-      "qos/ratelimit/router": {
-          "max_rate": 50,
-          "client_max_rate": 5,
-          "strategy": "ip"
-        }
-    }
-}
-```
-
-The following options are available to configure. You can use `max_rate` and `client_max_rate` together or separately. The rate limiting uses the [Token Bucket algorithm](/docs/throttling/token-bucket/). The `capacity` (or `client_capacity`) of the bucket is, by default, equal to the maximum rate, but you might want to set a different value when not using seconds as a measurement unit or when you want a separate buffer.
-
-{{< schema data="qos/ratelimit/router.json" >}}
-
 ### Rate-limiting by token claim
 When you use rate-limiting with a `strategy` of `header`, you can set an arbitrary header name that will be used as the counter identifier. Then, when played in combination with JWT validation, you can extract values from the token and propagate them as new headers.
 
-Propagated headers are available at the endpoint and backend levels, allowing you to set limits based on JWT criteria. For instance, let's say you want to rate-limit a specific department, and your JWT token contains a claim `department`. You could have a configuration like this:
+Propagated headers are available at the endpoint and backend levels, allowing you to set limits based on JWT criteria.
+
+For instance, let's say you want to **rate-limit a specific department**, and your JWT token contains a claim `department`. You could have a configuration like this:
+
 ```json
 {
     "endpoint": "/token-ratelimited",
@@ -88,8 +133,8 @@ Propagated headers are available at the endpoint and backend levels, allowing yo
             ]
         },
         "qos/ratelimit/router": {
-            "max_rate": 50,
-            "client_max_rate": 5,
+            "client_max_rate": 100,
+            "every": "1h",
             "strategy": "header",
             "key": "x-limit-department"
         }
@@ -97,10 +142,12 @@ Propagated headers are available at the endpoint and backend levels, allowing yo
 }
 ```
 
-Notice that the `propagate_claims` in the validator adds the department value into a new header, `x-limit-department`. The header is also added under `input_headers` because otherwise, the endpoint wouldn't see it ([zero-trust security](/docs/design/zero-trust/)). Finally, the rate limit uses the new header as a strategy and specifies its name under `key`.
+Notice that the `propagate_claims` in the validator adds the value of the claim `department` into a new header `x-limit-department`. The header is also added under `input_headers` because otherwise, the endpoint wouldn't see it ([zero-trust security](/docs/design/zero-trust/)). Finally, the rate limit uses the new header as a strategy and specifies its name under `key`.
+
+The department is now allowed to do `100` requests every `hour`.
 
 ### Examples of per-second rate limiting
-The following examples demonstrate a configuration with several endpoints, each one setting different limits:
+The following examples demonstrate a configuration with several endpoints, each one setting different limits. As they don't set an `every` section, they will use the default of one second (`1s`):
 
 - A `/happy-hour` endpoint with unlimited usage as it sets `max_rate = 0`
 - A `/happy-hour-2` endpoint is equivalent to the previous one, as it has no rate limit configuration.
@@ -166,43 +213,39 @@ Configuration:
 {{< /highlight >}}
 
 ### Examples of per-minute or per-hour rate limiting
-The rate limit component measures the router activity using the seconds unit. Nevertheless, you can set rate limits on larger time units, like minutes or hours, and you only need to divide the desired unit to express into seconds.
+The rate limit component measures the router activity using the time window selected under `every`. You can use hours or minutes instead of seconds or you could even set daily or monthly rate-limiting, but taking into account that the counters reset every time you deploy the configuration.
 
-You could go even to daily or monthly rate-limiting, but taking into account that the counters reset every time you deploy the configuration, using large units is not convenient if you often deploy (unless you use the persisted [Redis rate limit {{< badge color="denim" >}}Enterprise{{< /badge >}}
+To use units larger than an hour, just express the days by hours. Using large units is not convenient if you often deploy (unless you use the persisted [Redis rate limit {{< badge color="denim" >}}Enterprise{{< /badge >}}
 ](/docs/enterprise/throttling/global-rate-limit/))
 
-For example, let's say you want the endpoint to cut the access at `30 reqs/minute`. It means that within a minute, whether the users exhaust the 30 requests in one second or gradually across the minute, you won't let them do more than `30` every minute on average. So how do we apply this to the configuration?
-
-Depending on the type of rate limit you want to apply (endpoint rate limit or client rate limit), you will need to set a `capacity` (or a `client_capacity`) first.
-
-Whether the end-user has a sustained activity across the minute or it quickly uses all the credit in the early seconds of the minute, you don't want to go over an average of `30 reqs` every minute. The `capacity` settings let you specify the maximum number of requests you can instantly consume. In this case, the capacity could be `30`, although you can set it differently.
-
-Then as the user drains the credits, the rate limit will add more credits into the system at a rate of `30req / 60 seconds = 0.5 req/sec`.
+For example, let's say you want the endpoint to cut the access at `30 reqs/day`. It means that within a day, whether the users exhaust the 30 requests in one second or gradually across the day, you won't let them do more than `30` every day. So how do we apply this to the configuration?
 
 The configuration would be:
 
 ```json
 {
   "qos/ratelimit/router": {
-    "@comment": "Client rate limit of 30 reqs/minute",
-    "client_max_rate": 0.05,
-    "client_capacity": 30
+    "@comment": "Client rate limit of 30 reqs/day",
+    "client_max_rate": 30,
+    "client_capacity": 30,
+    "every": "24h"
   }
 }
 ```
 
-Similarly, `30 reqs/hour` for an endpoint rate limit, instead of a client rate limit, would be the operation `30reqs / 60minutes / 60secs = 0.008333333`
+Similarly, 30 requests every 5 minutes, could be set like this.
 
 ```json
 {
   "qos/ratelimit/router": {
     "@comment": "Endpoint rate limit of 30 reqs/hour",
-    "max_rate": 0.008333333,
+    "max_rate": 30,
+    "every": "5m",
     "capacity": 30
   }
 }
 ```
 
-In summary, the `client_max_rate` and the `max_rate` set the speed at which you refill new usage tokens to the user. On the other hand, the `capacity` and `client_capacity` let you play with the buffer you give to the users and let them spend 30 requests in a single second (within the minute) or not.
+In summary, the `client_max_rate` and the `max_rate` set the speed at which you refill new usage tokens to the user. On the other hand, the `capacity` and `client_capacity` let you play with the buffer you give to the users and let them spend 30 requests in a single second (within the 5 minutes) or not.
 
 For more information, see the [Token Bucket algorithm](/docs/enterprise/throttling/token-bucket/).
