@@ -2,9 +2,9 @@
 lastmod: 2022-10-11
 old_version: true
 date: 2020-02-26
-description: Endpoints are the API URLs you expose through KrakenD. Learn how to create KrakenD endpoints and build your API programmatically.
 linktitle:  The endpoint object
-title: Creating API endpoints
+title: Endpoint Configuration in KrakenD API Gateway
+description: Learn how to configure and manage endpoints effectively in KrakenD API Gateway, enabling seamless integration and orchestration of microservices.
 weight: -10
 menu:
   community_v2.1:

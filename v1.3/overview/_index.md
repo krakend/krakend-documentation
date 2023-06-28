@@ -7,7 +7,8 @@ linktitle: Introduction
 menu:
   community_v1.3:
     parent: "000 Getting Started"
-title: Introduction to KrakenD
+title: KrakenD Community Edition Documentation
+description: Explore the comprehensive documentation for KrakenD API Gateway, including an overview, guides, and best practices
 notoc: true
 weight: -10000
 images:

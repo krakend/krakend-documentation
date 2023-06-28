@@ -3,7 +3,8 @@ lastmod: 2020-07-10
 old_version: true
 date: 2020-07-10
 linktitle: CORS
-title: Enabling Cross Origin Resource Sharing (CORS)
+title: Cross-Origin Resource Sharing (CORS) Configuration
+description: Configure Cross-Origin Resource Sharing (CORS) in KrakenD API Gateway to enable secure communication between different domains and APIs.
 weight: 20
 notoc: true
 meta:
