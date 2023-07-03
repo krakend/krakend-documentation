@@ -142,6 +142,8 @@ end
 
 As you can read from the code, 20% of the requests will invoke `my-function:3`, while the 80% remaining will fall into the older `my-function:2`.
 
+For more Canary Release examples (not only Lambda) see this [blog post](/blog/canary-releases/)
+
 ## Example: Associate a lambda to a backend
 
 When you associate a KrakenD endpoint to a unique lambda function, use this configuration:
