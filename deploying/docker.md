@@ -69,7 +69,7 @@ The example `Dockerfile` above assumes that you have a file structure like this:
     ├── Dockerfile
     └── krakend.tmpl
 
-If you want to try this code, you can either download a [working Flexible Config example](https://github.com/krakendio/examples/tree/main/3.flexible-configuration), or generate an **empty skeleton** like this:
+If you want to try this code, you can either download a [working Flexible Config example](https://github.com/krakend/examples/tree/main/3.flexible-configuration), or generate an **empty skeleton** like this:
 ```bash
 mkdir -p config/{partials,settings,templates}
 mkdir -p config/settings/{prod,test}

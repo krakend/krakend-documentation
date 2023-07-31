@@ -34,7 +34,7 @@ Lura focuses on providing the core functionality that a pure API gateway needs. 
 {{< /button-group >}}
 
 ### KrakenD API gateway
-`KrakenD` ([repo](https://github.com/krakendio/krakend-ce)) is our ready-to-use API gateway, assembled the way we think it delivers more value to the general audience. KrakenD uses the Lura Project in its core and extends its functionality by adding in the final binary multiple middlewares [contributions](https://github.com/krakendio/krakend-contrib) we thought an API Gateway should have.
+`KrakenD` ([repo](https://github.com/krakend/krakend-ce)) is our ready-to-use API gateway, assembled the way we think it delivers more value to the general audience. KrakenD uses the Lura Project in its core and extends its functionality by adding in the final binary multiple middlewares [contributions](https://github.com/krakend/krakend-contrib) we thought an API Gateway should have.
 
 KrakenD adds to Lura more functionality like logging, service discovery, developer tools, metrics, circuit breaker, rate limiting, OAuth, security, and other exciting stuff.
 
@@ -43,7 +43,7 @@ KrakenD adds to Lura more functionality like logging, service discovery, develop
 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
 </svg>{{< /button >}}
-{{< button url="https://github.com/krakendio/krakend-ce" type="inversed" >}}Source code{{< /button >}}
+{{< button url="https://github.com/krakend/krakend-ce" type="inversed" >}}Source code{{< /button >}}
 {{< /button-group >}}
 
 ### KrakenD Enterprise

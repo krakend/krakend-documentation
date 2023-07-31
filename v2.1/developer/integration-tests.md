@@ -77,11 +77,11 @@ The three parameters of the binary are:
 
 
 {{< button-group >}}
-{{< button url="https://github.com/krakendio/krakend-ce/tree/master/tests" text="Integration tests" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+{{< button url="https://github.com/krakend/krakend-ce/tree/master/tests" text="Integration tests" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
 </svg>
 {{< /button >}}
-{{< button url="https://github.com/krakendio/krakend-ce/tree/master/tests/fixtures" text="Fixtures" type="inversed" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+{{< button url="https://github.com/krakend/krakend-ce/tree/master/tests/fixtures" text="Fixtures" type="inversed" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
 </svg>{{< /button >}}
 {{< /button-group >}}

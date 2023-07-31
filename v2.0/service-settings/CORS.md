@@ -9,7 +9,7 @@ weight: 20
 notoc: true
 meta:
   since: 0.6
-  source: https://github.com/krakendio/krakend-cors
+  source: https://github.com/krakend/krakend-cors
   namespace:
   - security/cors
   log_prefix:
@@ -65,7 +65,7 @@ The configuration options of this component are as follows:
 - `debug`: *(boolean)*: Show debugging information in the logger, **to be used only during development** (defaults to `false`)
 
 {{< note title="Allow credentials and wildcards" >}}
-According to the CORS specification, you are not allowed to use wildcards and credentials at the same time. If you need to do this, [check this workaround](https://github.com/krakendio/krakend-cors/issues/9){{< /note >}}
+According to the CORS specification, you are not allowed to use wildcards and credentials at the same time. If you need to do this, [check this workaround](https://github.com/krakend/krakend-cors/issues/9){{< /note >}}
 
 ## Debugging configuration
 The following configuration might help you debugging your CORS configuration. Check the inline `@comments`:

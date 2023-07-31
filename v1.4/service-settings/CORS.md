@@ -9,7 +9,7 @@ weight: 20
 notoc: true
 meta:
   since: 0.6
-  source: https://github.com/krakendio/krakend-cors
+  source: https://github.com/krakend/krakend-cors
   namespace:
   - github_com/devopsfaith/krakend-cors
   scope:

@@ -25,6 +25,6 @@ The documentation in this site covers all the functionality of KrakenD API Gatew
 
 If you have written a tutorial, guide or any other material worth sharing with the community, let us know:
 
-<a class="btn btn-secondary" href="https://github.com/krakendio/krakend-documentation/edit/master/overview/guides.md">
+<a class="btn btn-secondary" href="https://github.com/krakend/krakend-documentation/edit/master/overview/guides.md">
     Add your link
 </a>

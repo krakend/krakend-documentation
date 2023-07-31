@@ -8,7 +8,7 @@ menu:
     parent: "010 Configuration file(s)"
 title: "Designer: The UI configuration editor"
 meta:
-  source: https://github.com/krakendio/krakendesigner
+  source: https://github.com/krakend/krakendesigner
   since: 0.2
 notoc: false
 weight: 5

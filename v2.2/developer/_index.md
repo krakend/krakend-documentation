@@ -20,7 +20,7 @@ You can use the Docker image `docker pull devopsfaith/krakend:watch`
 [More information in our blog post](/blog/reloading-the-krakend-configuration/)
 
 ## Generating an image with the configuration
-The [config2dot](https://github.com/krakendio/krakend-config2dot) is a tool to create graphs automatically after reading your configuration file `krakend.json`. For instance:
+The [config2dot](https://github.com/krakend/krakend-config2dot) is a tool to create graphs automatically after reading your configuration file `krakend.json`. For instance:
 
 ![config2dot example](/images/documentation/config2dot.png)
 

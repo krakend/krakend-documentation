@@ -11,7 +11,7 @@ menu:
     parent: "080 Telemetry and Analytics"
 meta:
   since: 0.5
-  source: https://github.com/krakendio/krakend-influx
+  source: https://github.com/krakend/krakend-influx
   namespace:
   - telemetry/opencensus
   - telemetry/influx
@@ -101,7 +101,7 @@ Then, the `exporters` key must contain an `influxdb` entry with the following pr
 
 
 ## Setting up Influx
-For **InfluxDB v2.x**, we have included in our [Telemetry Dashboards](https://github.com/krakendio/telemetry-dashboards/) the files that create the authorization part.
+For **InfluxDB v2.x**, we have included in our [Telemetry Dashboards](https://github.com/krakend/telemetry-dashboards/) the files that create the authorization part.
 
 For **InfluxDB v1.x** (older) the process is straightforward and requires you nothing else than start an Influx instance with the desired configuration.
 
@@ -135,7 +135,7 @@ services:
 
 In the fields `db`, `username`, and `password` of the component configuration reflect the same values as in `DOCKER_INFLUXDB_INIT_BUCKET`, `DOCKER_INFLUXDB_INIT_USERNAME`, and `DOCKER_INFLUXDB_INIT_PASSWORD` accordingly.
 
-The Influx **volume** below must have the contents of the [influx initdb script](https://github.com/krakendio/telemetry-dashboards/tree/main/influx), that it will create the authorization needed to let KrakenD push the metrics.
+The Influx **volume** below must have the contents of the [influx initdb script](https://github.com/krakend/telemetry-dashboards/tree/main/influx), that it will create the authorization needed to let KrakenD push the metrics.
 
 #### Manual configuration
 If you don't want to use the automated docker-compose above, the manual steps to create the auth are:

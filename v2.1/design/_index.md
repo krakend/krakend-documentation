@@ -59,7 +59,7 @@ The most important packages are:
 
 The rest of the framework packages contain some helpers and adapters for additional tasks, like encoding, logging, or service discovery.
 
-Additionally, KrakenD bundles a lot of middleware and components that are in its scope and package. These packages and others are listed in our [KrakenD Contrib](https://github.com/krakendio/krakend-contrib) repository.
+Additionally, KrakenD bundles a lot of middleware and components that are in its scope and package. These packages and others are listed in our [KrakenD Contrib](https://github.com/krakend/krakend-contrib) repository.
 
 
 ### The `config` package

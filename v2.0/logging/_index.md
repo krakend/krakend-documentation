@@ -6,7 +6,7 @@ toc: true
 linktitle: Improved logging
 title: Improved Logging - Syslog, stdout
 weight: 10
-source: https://github.com/krakendio/krakend-gologging
+source: https://github.com/krakend/krakend-gologging
 menu:
   community_v2.0:
     parent: "090 Logging"

@@ -10,7 +10,7 @@ menu:
     parent: "050 Backends Configuration"
 meta:
   since: 0.7
-  source: https://github.com/krakendio/krakend-martian
+  source: https://github.com/krakend/krakend-martian
   namespace:
   - modifier/martian
   scope:

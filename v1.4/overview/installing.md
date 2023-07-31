@@ -19,7 +19,7 @@ and
 
 **Just exploring?**
 
-Use the [KrakenD Playground](https://github.com/krakendio/playground-community) if you want to play with KrakenD without configuring it. The Playground comes with several flavors of KrakenD and a mock API. Everything is ready to start playing, just do a `docker-compose up`!
+Use the [KrakenD Playground](https://github.com/krakend/playground-community) if you want to play with KrakenD without configuring it. The Playground comes with several flavors of KrakenD and a mock API. Everything is ready to start playing, just do a `docker-compose up`!
 
 ## Docker
 If you are already familiar with Docker, the easiest way to get started is by pulling and running the [KrakenD image](https://hub.docker.com/r/devopsfaith/krakend/) from the Docker Hub.
@@ -87,4 +87,4 @@ You can also [download](/download/) the `tar.gz` and decompress it anywhere. Ins
 
 
 ## Build KrakenD yourself
-As KrakenD is open source you can opt for [building the binary](https://github.com/krakendio/krakend-ce). The binary you will produce is the same you can get in our download page, only that compiling it yourself always feels good!
+As KrakenD is open source you can opt for [building the binary](https://github.com/krakend/krakend-ce). The binary you will produce is the same you can get in our download page, only that compiling it yourself always feels good!

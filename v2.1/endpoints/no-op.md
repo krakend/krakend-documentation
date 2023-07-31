@@ -11,7 +11,7 @@ menu:
     parent: "040 Endpoint Configuration"
 meta:
   since: 1.2
-  source: https://github.com/krakendio/krakend-ce
+  source: https://github.com/krakend/krakend-ce
   namespace: false
   scope:
   - endpoint

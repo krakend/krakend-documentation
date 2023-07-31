@@ -6,7 +6,7 @@ linktitle: Revoking tokens
 title: Revoking valid tokens with a Bloom filter
 description: How to invalidate JWT tokens using the Bloom filter
 weight: 40
-source: https://github.com/krakendio/bloomfilter
+source: https://github.com/krakend/bloomfilter
 menu:
   community_v1.3:
     parent: "060 Authentication & Authorization"
@@ -19,7 +19,7 @@ As an administrator, I want to kick out someone from the platform.
 As a software releaser, my new backend version requires new fields in the tokens, and I want all my sessions renegotiated again, or all users of a specific app (Android, iOS, Web app, etc.) has to be invalidated.
 
 ## Storing blocked tokens using the bloom filter
-KrakenD integrates the [bloom filter](https://github.com/krakendio/bloomfilter) component that allows you to store in an optimized way tokens to revoke on the subsequent requests.
+KrakenD integrates the [bloom filter](https://github.com/krakend/bloomfilter) component that allows you to store in an optimized way tokens to revoke on the subsequent requests.
 
 When you enable the bloom filter, it inspects the payload of incoming JWT tokens to check if any of the configured fields in `TokenKeys` contains a blocked value. And if a blocked is found, access is not permitted.
 
@@ -32,7 +32,7 @@ The bloom filter component brings the following functionalities:
 ### Bloom filter client
 The communication with the bloom filter is RPC based. The component exposes a listening port of your choice to receive updates of the bloom filter (single or batch), but a client is needed to communicate with the component.
 
-The bloom filter library includes a [client](https://github.com/krakendio/bloomfilter/tree/master/cmd/client) so you can send the updates. In addition, the KrakenD Playground project includes a sample [web page with a form and an RPC client](https://github.com/krakendio/playground-community/tree/master/jwt-revoker) that sends commands to the bloom filter and updates it.
+The bloom filter library includes a [client](https://github.com/krakend/bloomfilter/tree/master/cmd/client) so you can send the updates. In addition, the KrakenD Playground project includes a sample [web page with a form and an RPC client](https://github.com/krakend/playground-community/tree/master/jwt-revoker) that sends commands to the bloom filter and updates it.
 
 ### Bloom filter performance
 The Bloom filter is ideal for supporting a massive rejection of tokens with very little memory consumption. For instance, **100 million tokens** of any size consume around 0.5GB RAM (with a rate of false positives of 1 in 999,925,224 tokens), and lookups complete in constant time (*k* number of hashes). These numbers are impossible to get with a key-value or a relational database.

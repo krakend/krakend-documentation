@@ -11,7 +11,7 @@ menu:
     parent: "040 Endpoint Configuration"
 meta:
   since: 0.8
-  source: https://github.com/krakendio/krakend-cel
+  source: https://github.com/krakend/krakend-cel
   namespace:
   - validation/cel
   scope:
@@ -194,7 +194,7 @@ Also, notice how we are accessing a `github` element in the data, a new attribut
 ### Example: Match a query string parameter with multiple values
 This example validates that an array query string parameter contains a given value. Many APIs describe array query string parameters with a `[]` suffix to denote that it's an array to the backend service. CEL syntax can reference these types of parameters.
 
-In this case, an API operation accepts an array query string parameter named `foo`. The backend service's platform requires this passed to the API as `?foo[]=bar&foo[]=baz` in the query string. 
+In this case, an API operation accepts an array query string parameter named `foo`. The backend service's platform requires this passed to the API as `?foo[]=bar&foo[]=baz` in the query string.
 
 KrakenD intercepts the parameter as the suffixed `foo[]`, so that's what must be allowed in your `input_query_strings` list. Since the parameter name contains the `[]` characters then it must be referred to as a map key instead of dot-notaion in CEL syntax.
 
@@ -222,7 +222,7 @@ The following config uses CEL validation to block requests that do not have `foo
 }
 ```
 
-Note: this snippet applies CEL validation to a single backend. Apply CEL validation to an endpoint to validate across all backends. 
+Note: this snippet applies CEL validation to a single backend. Apply CEL validation to an endpoint to validate across all backends.
 
 If your application does not require the `[]` suffix in these parameters (clients pass in `?foo=bar&foo=baz` instead of `?foo[]=bar& foo[]=baz`) then omit the `[]` suffix from the parameter name in your `input_query_strings` list and refer to the parameter as `req_querystring.foo` in your `validation/cel` config.
 

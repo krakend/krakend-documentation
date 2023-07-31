@@ -50,11 +50,11 @@ In a nutshell, **the sequence of a request-response** depicted in the graph of t
 When you have chosen the type of plugin that fits best your scenario, it's time to [write your plugin](/docs/v2.0/extending/writing-plugins/).
 
 ## Custom middleware
-The recommended way to customize KrakenD is through plugins. But as all open-source code, you can modify KrakenD and its middlewares and do your own version. When writing your custom code, fork the [KrakenD-CE](https://github.com/krakendio/krakend-ce) repository, and read "[Understanding the big picture](/docs/v2.0/extending/the-big-picture/#the-important-packages)" to identify the important packages.
+The recommended way to customize KrakenD is through plugins. But as all open-source code, you can modify KrakenD and its middlewares and do your own version. When writing your custom code, fork the [KrakenD-CE](https://github.com/krakend/krakend-ce) repository, and read "[Understanding the big picture](/docs/v2.0/extending/the-big-picture/#the-important-packages)" to identify the important packages.
 
 
 The **krakend-ce** repository is the one assembling all the middlewares and manages the dependencies (including [Lura](https://github.com/luraproject/lura)). It lets you effortlessly include your company customizations, as the project itself is mostly a wrapper for all components. Be aware that when you fork KrakenD you will need to maintain your custom version, which differs from the official binaries.
 
-There are many examples of different modules (included in KrakenD-CE and not) on our [contributions list](https://github.com/krakendio/krakend-contrib). If you create new middlewares, feel free to open a pull request and let us know.
+There are many examples of different modules (included in KrakenD-CE and not) on our [contributions list](https://github.com/krakend/krakend-contrib). If you create new middlewares, feel free to open a pull request and let us know.
 
 A relaxed start to build a custom component for KrakenD is our article "[Website development as a sysadmin"](/blog/website-development-as-a-sysadmin/) where you can find custom code to add automatic API authentication against a backend. This functionality can be achieved without forking the code, but still, it is an illustrative example.

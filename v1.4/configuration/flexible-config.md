@@ -3,7 +3,7 @@ lastmod: 2020-06-13
 old_version: true
 date: 2018-09-21
 linktitle: Multiple configuration files
-source: https://github.com/krakendio/krakend-flexibleconfig
+source: https://github.com/krakend/krakend-flexibleconfig
 since: 0.5
 menu:
   community_v1.4:

@@ -12,7 +12,7 @@ menu:
     parent: "070 Traffic Management"
 meta:
   since: 1.0
-  source: https://github.com/krakendio/krakend-botdetector
+  source: https://github.com/krakend/krakend-botdetector
   namespace:
   - security/bot-detector
   scope:

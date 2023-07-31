@@ -5,7 +5,7 @@ date: 2018-11-03
 linktitle: JWT Signing
 title: JWT Signing
 weight: 30
-source: https://github.com/krakendio/krakend-jose
+source: https://github.com/krakend/krakend-jose
 images: ["/images/krakend-signer-flow.png"]
 menu:
   community_v1.4:
@@ -147,7 +147,7 @@ The token is no more than a JSON output adhering to the [JWT standard](https://t
 
 There are a lot of **open source libraries to generate JWT tokens** in all major languages. Use them or write the JSON output directly with a simple template.
 
-Here is a [dummy token](https://github.com/krakendio/playground-community/blob/master/data/token.json) for you to check how it looks like.
+Here is a [dummy token](https://github.com/krakend/playground-community/blob/master/data/token.json) for you to check how it looks like.
 
 ## Live running example
-The [KrakenD Playground](/docs/v1.4/overview/playground/) demonstrates how to sign tokens in the `/token` endpoint and includes an example ready to use. To try it, [clone the playground](https://github.com/krakendio/playground-community) and follow the README.
+The [KrakenD Playground](/docs/v1.4/overview/playground/) demonstrates how to sign tokens in the `/token` endpoint and includes an example ready to use. To try it, [clone the playground](https://github.com/krakend/playground-community) and follow the README.

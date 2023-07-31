@@ -41,21 +41,21 @@ These are the different Grafana data sources you can use for our dashboards:
 
 | Datasource | Description | Cloud ID | Source |
 |----------|-----------|----------|----------|
-| InfluxDB v2.x | Latest. Uses Flux queries | `17074` | [for-influxdb-v2.json](https://github.com/krakendio/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v2.json)|
-| InfluxDB v1.x | Uses InfluxQL queries | `15029` | [for-influxdb-v1.json](https://github.com/krakendio/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v1.json)|
+| InfluxDB v2.x | Latest. Uses Flux queries | `17074` | [for-influxdb-v2.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v2.json)|
+| InfluxDB v1.x | Uses InfluxQL queries | `15029` | [for-influxdb-v1.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v1.json)|
 
 To import them, there are several options, being the most common:
 
 - From your Grafana UI, click the `+` icon in the side menu, and then click *Import*. Choose import via Grafana.com and use the IDs above.
 - From the same UI, import the JSON source files instead
-- Copy or mount in your Grafana container the dashboards when starting ([Volume content here](https://github.com/krakendio/telemetry-dashboards)):
+- Copy or mount in your Grafana container the dashboards when starting ([Volume content here](https://github.com/krakend/telemetry-dashboards)):
 ```yml
 volumes:
   - "./grafana/datasources/all.yml:/etc/grafana/provisioning/datasources/all.yml"
   - "./grafana/dashboards/all.yml:/etc/grafana/provisioning/dashboards/all.yml"
   - "./grafana/krakend:/var/lib/grafana/dashboards/krakend"
 ```
- You can see an example integrated on [KrakenD Playground](https://github.com/krakendio/playground-community)'s Docker compose file.
+ You can see an example integrated on [KrakenD Playground](https://github.com/krakend/playground-community)'s Docker compose file.
 
 ## Getting the metrics on Grafana
 Grafana does not require any specific configuration on KrakenD, but its data source does.

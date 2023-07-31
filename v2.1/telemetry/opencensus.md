@@ -11,7 +11,7 @@ menu:
     parent: "080 Telemetry and Analytics"
 meta:
   since: 0.5
-  source: https://github.com/krakendio/krakend-opencensus
+  source: https://github.com/krakend/krakend-opencensus
   namespace:
   - telemetry/opencensus
   scope:
@@ -70,4 +70,3 @@ By default, **all exporters use a sample_rate=0**, meaning that they won't repor
 ```
 
 {{< schema version="v2.1" data="telemetry/opencensus.json" norecurse="exporters">}}
-

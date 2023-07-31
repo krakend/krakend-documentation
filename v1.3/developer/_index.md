@@ -18,9 +18,9 @@ A Docker image using Reflex watches the configuration directory and reloads Krak
 [More information in our blog post](https://www.krakend.io/blog/reloading-the-krakend-configuration/)
 
 ## Generate graphs from configuration
-The [config2dot](https://github.com/krakendio/krakend-config2dot) is a tool to create graphs automatically after reading your configuration file `krakend.json`.
+The [config2dot](https://github.com/krakend/krakend-config2dot) is a tool to create graphs automatically after reading your configuration file `krakend.json`.
 
-![Config2Dot example](https://github.com/krakendio/krakend-config2dot/blob/master/docs/config_1.png?raw=true)
+![Config2Dot example](https://github.com/krakend/krakend-config2dot/blob/master/docs/config_1.png?raw=true)
 
 ## Debugging the activity
 ### krakend-memviz

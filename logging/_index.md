@@ -10,7 +10,7 @@ menu:
   community_current:
     parent: "090 Logging"
 meta:
-  source: https://github.com/krakendio/krakend-gologging
+  source: https://github.com/krakend/krakend-gologging
   namespace:
   - telemetry/logging
   scope:

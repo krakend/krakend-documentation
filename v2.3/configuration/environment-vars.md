@@ -80,7 +80,7 @@ When KrakenD starts, it sends a request to our stats server with anonymous non-s
 - The operating system /`linux`/ `darwin`)
 - A random unique ID
 
-That's all we collect ([source code here](https://github.com/krakendio/krakend-usage)). We are well aware of the importance of privacy. However, we are not in the data-mining business, so we selected a set of minimal details to share from your KrakenD instances that would give us enough insights into the matter without being invasive. We decided that we'd rather lose some accuracy than collect (maybe) sensible information, so we went for this **anonymous approach**.
+That's all we collect ([source code here](https://github.com/krakend/krakend-usage)). We are well aware of the importance of privacy. However, we are not in the data-mining business, so we selected a set of minimal details to share from your KrakenD instances that would give us enough insights into the matter without being invasive. We decided that we'd rather lose some accuracy than collect (maybe) sensible information, so we went for this **anonymous approach**.
 
 We don't collect typical system metrics like the number of CPU/cores, CPU usage, available and consumed ram, network throughput, etc. That’s something more related to system monitoring than KrakenD, and we felt that collecting these metrics generates friction with the acceptance of a telemetry system.
 

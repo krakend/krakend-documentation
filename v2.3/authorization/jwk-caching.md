@@ -11,7 +11,7 @@ menu:
     parent: "060 Authentication & Authorization"
 meta:
   since: 2.3
-  source: https://github.com/krakendio/krakend-jose
+  source: https://github.com/krakend/krakend-jose
   namespace:
   - auth/validator
   scope:

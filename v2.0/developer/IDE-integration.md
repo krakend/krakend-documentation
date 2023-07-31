@@ -14,7 +14,7 @@ menu:
     parent: "140 Developer Tools"
 meta:
   since: 2.0
-  source: https://github.com/krakendio/krakend-schema
+  source: https://github.com/krakend/krakend-schema
 
 ---
 Automatic validation as you type, showing documentation while hovering an attribute, explanation of errors, and autocompletion of properties, are features that you get automatically while working with KrakenD.
@@ -26,7 +26,7 @@ This is how it could look like:
 ![Visual Code integration](/images/documentation/krakend-ide-integration.png)
 
 ## Editor integration for KrakenD files
-KrakenD has published an updated JSON-schema definition ([source](https://github.com/krakendio/krakend-schema)) to validate configuration files from your IDE automatically. The editors with built-in json-schema validation will offer this feature **without installing any additional plugin**. All you need to do, is add in the beginning of your `krakend.json` configuration file a line specifing the schema:
+KrakenD has published an updated JSON-schema definition ([source](https://github.com/krakend/krakend-schema)) to validate configuration files from your IDE automatically. The editors with built-in json-schema validation will offer this feature **without installing any additional plugin**. All you need to do, is add in the beginning of your `krakend.json` configuration file a line specifing the schema:
 
 
 {{< highlight json >}}

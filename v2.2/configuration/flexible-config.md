@@ -5,7 +5,7 @@ date: 2018-09-21
 linktitle: Flexible Configuration
 title: "Flexible Configuration: template-based config"
 description: The Flexible Configuration allows you to declare the configuration using a templates system, multiple files, and variable injection.
-source: https://github.com/krakendio/krakend-flexibleconfig
+source: https://github.com/krakend/krakend-flexibleconfig
 since: 0.5
 menu:
   community_v2.2:

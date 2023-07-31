@@ -21,7 +21,7 @@ This migration allows you to:
 - Migrate from KrakenD `1.4` to `2.x`
 
 {{< button-group >}}
-{{< button url="https://github.com/krakendio/krakend-config-migrator" text="Download migration tool" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+{{< button url="https://github.com/krakend/krakend-config-migrator" text="Download migration tool" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
 {{< /button >}}
 {{< /button-group >}}
 
@@ -29,7 +29,7 @@ This migration allows you to:
 ## Migrating to KrakenD 2.0 and above
 
 - Use `git` or similar DVCS to track the changes. Compare the differences at the end.
-- Download the configuration [migration tool](https://github.com/krakendio/krakend-config-migrator) and execute it passing the path to your KrakenD project
+- Download the configuration [migration tool](https://github.com/krakend/krakend-config-migrator) and execute it passing the path to your KrakenD project
 - Review the changes the migration tool did to your config and start the config with the new version
 
 **If you have custom go plugins**, recompile them. KrakenD has now a command [`krakend check-plugin`](/docs/v2.1/extending/check-plugin/) to test them.

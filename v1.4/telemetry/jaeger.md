@@ -12,7 +12,7 @@ menu:
     parent: "080 Telemetry"
 meta:
   since: 0.5
-  source: https://github.com/krakendio/krakend-opencensus
+  source: https://github.com/krakend/krakend-opencensus
   namespace:
   - github_com/devopsfaith/krakend-opencensus
   scope:

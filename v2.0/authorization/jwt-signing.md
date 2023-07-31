@@ -10,7 +10,7 @@ menu:
   community_v2.0:
     parent: "060 Authentication & Authorization"
 meta:
-  source: https://github.com/krakendio/krakend-jose
+  source: https://github.com/krakend/krakend-jose
   namespace:
   - auth/signer
   scope:
@@ -162,7 +162,7 @@ The token is no more than a JSON output adhering to the [JWT standard](https://t
 
 There are a lot of **open source libraries to generate JWT tokens** in all major languages. Use them or write the JSON output directly with a simple template.
 
-Here is a [dummy token](https://github.com/krakendio/krakend-playground/blob/master/data/token.json) for you to check how it looks like.
+Here is a [dummy token](https://github.com/krakend/krakend-playground/blob/master/data/token.json) for you to check how it looks like.
 
 ## Live running example
-The [KrakenD Playground](/docs/v2.0/overview/playground/) demonstrates how to sign tokens in the `/token` endpoint and includes an example ready to use. To try it, [clone the playground](https://github.com/krakendio/krakend-playground) and follow the README.
+The [KrakenD Playground](/docs/v2.0/overview/playground/) demonstrates how to sign tokens in the `/token` endpoint and includes an example ready to use. To try it, [clone the playground](https://github.com/krakend/krakend-playground) and follow the README.

@@ -6,7 +6,7 @@ notoc: true
 linktitle: Logstash
 title: Logstash
 weight: 50
-source: https://github.com/krakendio/krakend-logstash
+source: https://github.com/krakend/krakend-logstash
 menu:
   community_v2.0:
     parent: "090 Logging"

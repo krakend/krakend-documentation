@@ -7,7 +7,7 @@ linktitle: Logging overview
 title: Logging - Syslog, stdout and GELF
 aliases: ["/docs/v1.3/logging/extended-logging/"]
 weight: 10
-source: https://github.com/krakendio/krakend-gologging
+source: https://github.com/krakend/krakend-gologging
 menu:
   community_v1.3:
     parent: "090 Logging"

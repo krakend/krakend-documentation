@@ -27,7 +27,7 @@ The configuration file can be written from scratch or reuse another existing fil
 
 The KrakenDesigner is a simple javascript application that helps you understand the capabilities of the API Gateway and helps you set the different values for all the different options. Using this option you don't need to learn and write from scratch all the attribute names. The configuration file can be downloaded at any time and loaded again to resume the edition.
 
-The Kraken Designer is a **pure static** page that **does not send any of your configuration elsewhere**, and as it happens with all our software, is also open sourced and you can download it and run it in your own web server. See the [Krakendesigner](https://github.com/krakendio/krakendesigner) repository.
+The Kraken Designer is a **pure static** page that **does not send any of your configuration elsewhere**, and as it happens with all our software, is also open sourced and you can download it and run it in your own web server. See the [Krakendesigner](https://github.com/krakend/krakendesigner) repository.
 
 <a class="btn btn-secondary btn-circle" href="https://designer.krakend.io/">Generate configuration now</a>
 

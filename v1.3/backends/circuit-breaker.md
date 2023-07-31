@@ -14,7 +14,7 @@ images:
 notoc: true
 meta:
   since: false
-  source: https://github.com/krakendio/krakend-circuitbreaker
+  source: https://github.com/krakend/krakend-circuitbreaker
   namespace:
   - github.com/krakendio/krakend-circuitbreaker/gobreaker
   scope:
@@ -29,7 +29,7 @@ The Circuit Breaker is a protection measure for your stack and avoids cascading 
 
 ## Circuit breaker configuration
 
-The Circuit Breaker is available by default in KrakenD thanks to the [circuit breaker middleware](https://github.com/krakendio/krakend-circuitbreaker). As with all additional middlewares, you need to set its values in its own namespace `github.com/krakendio/krakend-circuitbreaker/gobreaker` inside the `extra_config` key.
+The Circuit Breaker is available by default in KrakenD thanks to the [circuit breaker middleware](https://github.com/krakend/krakend-circuitbreaker). As with all additional middlewares, you need to set its values in its own namespace `github.com/krakendio/krakend-circuitbreaker/gobreaker` inside the `extra_config` key.
 
 The following configuration is an example of how to add circuit breaker capabilities to a backend:
 {{< highlight json >}}

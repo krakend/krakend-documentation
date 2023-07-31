@@ -10,14 +10,14 @@ menu:
     parent: "030 Service Settings"
 meta:
   since: 0.4
-  source: https://github.com/krakendio/krakend-httpsecure
+  source: https://github.com/krakend/krakend-httpsecure
   namespace:
   - github_com/devopsfaith/krakend-httpsecure
   scope:
   - service
 ---
 
-KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://github.com/krakendio/krakend-httpsecure). To enable them you only need to add the `extra_config` at service (root) level.
+KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://github.com/krakend/krakend-httpsecure). To enable them you only need to add the `extra_config` at service (root) level.
 
 The following example describes the options explained later in this article:
 

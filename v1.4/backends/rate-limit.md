@@ -11,7 +11,7 @@ menu:
 notoc: true
 meta:
   since: false
-  source: https://github.com/krakendio/krakend-ratelimit
+  source: https://github.com/krakend/krakend-ratelimit
   namespace:
   - github.com/devopsfaith/krakend-ratelimit/juju/proxy
   scope:

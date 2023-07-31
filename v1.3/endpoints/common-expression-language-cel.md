@@ -11,7 +11,7 @@ menu:
     parent: "040 Endpoint Configuration"
 meta:
   since: 0.8
-  source: https://github.com/krakendio/krakend-cel
+  source: https://github.com/krakend/krakend-cel
   namespace:
   - github.com/devopsfaith/krakend-cel
   scope:
@@ -20,7 +20,7 @@ meta:
 ---
 There are times when you might want to include **additional logic** in the gateway to decide if a request has to be fulfilled or not.
 
-The [Common Expression Language (CEL)](https://github.com/krakendio/krakend-cel)
+The [Common Expression Language (CEL)](https://github.com/krakend/krakend-cel)
 middleware enables Google's [CEL spec](https://github.com/google/cel-spec)
 which implements common semantics for expression evaluation, and is a very
 simple and powerful option to have full control during requests and responses.

@@ -10,7 +10,7 @@ menu:
   community_v2.0:
     parent: "060 Authentication & Authorization"
 meta:
-  source: https://github.com/krakendio/krakend-jose
+  source: https://github.com/krakend/krakend-jose
   namespace:
   - auth/validator
   scope:
@@ -211,7 +211,7 @@ The URL host must be base64 encoded and must decode to exactly 32 bytes. Here is
 
 This config will use the key `smGbjm71Nxd1Ig5FS0wj9SlbzAIrnolCz9bQQ6uAhl4=` for decrypting de `cypher_key` and then decrypting the content of the file `./jwt.txt`.
 
-See this test to [understand how to generate and encrypt payloads](https://github.com/krakendio/krakend-jose/blob/master/jwk_test.go).
+See this test to [understand how to generate and encrypt payloads](https://github.com/krakend/krakend-jose/blob/master/jwk_test.go).
 
 #### Amazon KMS
 ```
@@ -309,7 +309,7 @@ The [KrakenD Playground](/docs/v2.0/overview/playground/) demonstrates how to pr
 - Integration with an external third party using a [Single Page Application from Auth0](https://auth0.com/docs/applications/spa/)
 - Integration with an internal identity provider service (mocked) using a symmetric key algorithm and a signer middleware.
 
-To try it, [clone the playground](https://github.com/krakendio/krakend-playground) and follow the README.
+To try it, [clone the playground](https://github.com/krakend/krakend-playground) and follow the README.
 
 ## Supported hashing algorithms and cipher suites
 

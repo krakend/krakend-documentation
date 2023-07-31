@@ -12,7 +12,7 @@ menu:
 notoc: true
 meta:
   since: 0.4
-  source: https://github.com/krakendio/krakend-metrics
+  source: https://github.com/krakend/krakend-metrics
   namespace:
   - github_com/devopsfaith/krakend-metrics
   scope:

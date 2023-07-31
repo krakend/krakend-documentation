@@ -10,7 +10,7 @@ menu:
   community_v2.1:
     parent: "060 Authentication & Authorization"
 meta:
-  source: https://github.com/krakendio/krakend-jose
+  source: https://github.com/krakend/krakend-jose
   namespace:
   - auth/signer
   scope:
@@ -149,7 +149,7 @@ For instance, from the plain token above we want to sign the keys `"access_token
 }
 ```
 
-The content of `jwk_private_key.json` used in this example [is here](https://github.com/krakendio/playground-community/blob/master/data/jwk/symmetric.json).
+The content of `jwk_private_key.json` used in this example [is here](https://github.com/krakend/playground-community/blob/master/data/jwk/symmetric.json).
 
 
 Notice that we have added a file under `jwk_local_path` which is a [JSON Web key](https://tools.ietf.org/html/rfc7517#appendix-C.1) (could also be hosted via `jwk_url`).
@@ -174,7 +174,7 @@ The token is no more than a JSON output adhering to the [JWT standard](https://t
 
 There are a lot of **open source libraries to generate JWT tokens** in all major languages. Use them or write the JSON output directly with a simple template.
 
-Here is a [dummy token](https://github.com/krakendio/playground-community/blob/master/data/token.json) for you to check how it looks like.
+Here is a [dummy token](https://github.com/krakend/playground-community/blob/master/data/token.json) for you to check how it looks like.
 
 ## Live running example
-The [KrakenD Playground](/docs/v2.1/overview/playground/) demonstrates how to sign tokens in the `/token` endpoint and includes an example ready to use. To try it, [clone the playground](https://github.com/krakendio/playground-community) and follow the README.
+The [KrakenD Playground](/docs/v2.1/overview/playground/) demonstrates how to sign tokens in the `/token` endpoint and includes an example ready to use. To try it, [clone the playground](https://github.com/krakend/playground-community) and follow the README.

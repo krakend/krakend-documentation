@@ -6,7 +6,7 @@ linktitle: Revoking tokens
 title: Revoking valid tokens with a Bloom filter
 description: Invalidate valid JWT tokens individually or in groups according to your criteria with the bloom filter component
 weight: 40
-source: https://github.com/krakendio/bloomfilter
+source: https://github.com/krakend/bloomfilter
 menu:
   community_v2.1:
     parent: "060 Authentication & Authorization"
@@ -25,7 +25,7 @@ When are you going to need this? Examples of situations where you might need to 
 - A software release needs all sessions renegotiated again, or users of a specific app (Android, iOS, Web app, etc.) have to be invalidated.
 
 ## Storing blocked tokens using the bloom filter
-KrakenD integrates the [bloom filter](https://github.com/krakendio/bloomfilter) component that allows you to store in an optimized way tokens to revoke on subsequent requests.
+KrakenD integrates the [bloom filter](https://github.com/krakend/bloomfilter) component that allows you to store in an optimized way tokens to revoke on subsequent requests.
 
 When you enable the bloom filter, it inspects the payload of incoming JWT tokens to check if any configured fields in `token_keys` contain a blocked value. And if a block is found, access is not permitted.
 
@@ -38,7 +38,7 @@ The bloom filter component brings the following functionalities:
 ### Bloom filter client
 The communication with the bloom filter is RPC-based. The component exposes a listening port of your choice to receive updates of the bloom filter (single or batch), but **a client is needed to communicate with the component**.
 
-**When using the open-source edition**, you have to build your client. Look at the bloom filter library, which includes a [client](https://github.com/krakendio/bloomfilter/tree/master/cmd/client). In addition, the KrakenD Playground project consists of a sample [web page with a form and an RPC client](https://github.com/krakendio/playground-community/tree/master/images/jwt-revoker) that sends commands to the bloom filter and updates it.
+**When using the open-source edition**, you have to build your client. Look at the bloom filter library, which includes a [client](https://github.com/krakend/bloomfilter/tree/master/cmd/client). In addition, the KrakenD Playground project consists of a sample [web page with a form and an RPC client](https://github.com/krakend/playground-community/tree/master/images/jwt-revoker) that sends commands to the bloom filter and updates it.
 
 **When using the Enterprise edition** the [Revoke Server](/docs/enterprise/v2.1/authentication/revoke-server/) connects to all KrakenD instances as a client, and there's nothing you need to build to make it work.
 

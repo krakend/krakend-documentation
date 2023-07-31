@@ -5,7 +5,7 @@ date: 2018-09-13
 linktitle: The Playground
 description: Start playing with KrakenD through a ready-to-use complete environment -  gateway, backend, client and several use cases.
 notoc: true
-source: https://github.com/krakendio/playground-community
+source: https://github.com/krakend/playground-community
 menu:
   community_v2.2:
     parent: "000 Getting Started"
@@ -14,7 +14,7 @@ weight: 110
 images: ["https://raw.githubusercontent.com/krakendio/playground-community/master/assets/composer-env.png"]
 
 ---
-If you are new to KrakenD, a quick way to get started is to make use of the [KrakenD Playground](https://github.com/krakendio/playground-community).
+If you are new to KrakenD, a quick way to get started is to make use of the [KrakenD Playground](https://github.com/krakend/playground-community).
 
 The KrakenD Playground is a **Docker Compose** environment that puts together the necessary pieces to let you play with KrakenD in a working environment.
 
@@ -32,4 +32,4 @@ When starting the Docker compose you will have:
 
 Have a look at the `docker-compose.yml` file to understand how these services interact together, and also at the `krakend.json` file to find out what endpoints are exposed.
 
-If you'd like to see more examples, please let us know or open an [issue](https://github.com/krakendio/playground-community/issues)!
+If you'd like to see more examples, please let us know or open an [issue](https://github.com/krakend/playground-community/issues)!

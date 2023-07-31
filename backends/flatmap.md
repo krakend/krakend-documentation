@@ -12,7 +12,7 @@ menu:
 meta:
   noop_incompatible: true
   since: 0.9
-  source: https://github.com/krakendio/flatmap
+  source: https://github.com/krakend/flatmap
   namespace:
   - proxy
   scope:
@@ -302,7 +302,7 @@ There is a sequence of three operations:
 - Rename all `title` attributes of `schools` to `name`.
 - Append all the `kindergarten` content to `schools`.
 
-For more examples, [see this test file](https://github.com/krakendio/flatmap/blob/master/tree/tree_example_test.go).
+For more examples, [see this test file](https://github.com/krakend/flatmap/blob/master/tree/tree_example_test.go).
 
 
 ## Mixing flatmap with other manipulation operations

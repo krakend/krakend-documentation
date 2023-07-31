@@ -10,7 +10,7 @@ menu:
 notoc: true
 meta:
   since: 1.2
-  source: https://github.com/krakendio/krakend-jsonschema
+  source: https://github.com/krakend/krakend-jsonschema
   namespace:
   - validation/json-schema
   scope:

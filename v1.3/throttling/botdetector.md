@@ -5,7 +5,7 @@ date: 2019-09-15
 linktitle: Bot detector
 title: Control of bot traffic
 weight: 10
-source: https://github.com/krakendio/krakend-botdetector
+source: https://github.com/krakend/krakend-botdetector
 images:
 - /images/krakend-botdetector.png
 menu:
@@ -13,7 +13,7 @@ menu:
     parent: "070 Traffic Management"
 meta:
   since: 1.0
-  source: https://github.com/krakendio/krakend-botdetector
+  source: https://github.com/krakend/krakend-botdetector
   namespace:
   - github_com/devopsfaith/krakend-botdetector
   scope:

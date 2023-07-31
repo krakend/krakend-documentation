@@ -10,7 +10,7 @@ menu:
     parent: "050 Backends Configuration"
 meta:
   since: 0.9
-  source: https://github.com/krakendio/krakend-amqp
+  source: https://github.com/krakend/krakend-amqp
   namespace:
   - backend/amqp/consumer
   scope:

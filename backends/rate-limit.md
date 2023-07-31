@@ -10,7 +10,7 @@ menu:
 notoc: true
 meta:
   since: false
-  source: https://github.com/krakendio/krakend-ratelimit
+  source: https://github.com/krakend/krakend-ratelimit
   namespace:
   - qos/ratelimit/proxy
   scope:

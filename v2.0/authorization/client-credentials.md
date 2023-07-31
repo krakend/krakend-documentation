@@ -13,7 +13,7 @@ images:
 -   /images/documentation/krakend-oauth2-2-legged.png
 meta:
   #since:
-  source: https://github.com/krakendio/krakend-oauth2-clientcredentials
+  source: https://github.com/krakend/krakend-oauth2-clientcredentials
   namespace:
   - auth/validator
   scope:

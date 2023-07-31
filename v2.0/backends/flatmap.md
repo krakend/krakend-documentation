@@ -11,7 +11,7 @@ menu:
     parent: "050 Backends Configuration"
 meta:
   since: 0.9
-  source: https://github.com/krakendio/flatmap
+  source: https://github.com/krakend/flatmap
   namespace:
   - proxy
   scope:
@@ -213,7 +213,7 @@ There is a sequence of 4 operations to:
 *   Delete all items with a property `password` inside the array
 *   Rename all items with a property `PK_ID` to `id`
 
-For more examples, [see the test file](https://github.com/krakendio/flatmap/blob/master/tree/tree_example_test.go).
+For more examples, [see the test file](https://github.com/krakend/flatmap/blob/master/tree/tree_example_test.go).
 
 
 ## Mixing flatmap with other manipulation operations
