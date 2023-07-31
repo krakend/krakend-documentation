@@ -278,7 +278,7 @@ Notice the modifier names which needs to be combination of the modifier name and
 If we send a request to the generated endpoint, we'll see the dumps for the three pairs of requests and responses at the console:
 
 {{< terminal title="Test the code">}}
-curl -i http://localhost:8080/github/orgs/krakendio
+curl -i http://localhost:8080/github/orgs/krakend
 {{< /terminal >}}
 
 ## Returning errors
