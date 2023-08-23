@@ -8,7 +8,7 @@ menu:
   community_current:
     parent: "010 Configuration file(s)"
 notoc: true
-weight: 30
+weight: 35
 ---
 
 The expected configuration file format by default is `json`, but KrakenD can parse any of these file formats:
