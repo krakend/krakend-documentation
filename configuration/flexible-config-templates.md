@@ -167,20 +167,28 @@ There is a lot of theory so far. To demonstrate the usage of the flexible config
 .
 ├── krakend.tmpl
 ├── partials
-│   └── rate_limit_backend.tmpl
+│   └── all_backends_extra_config.json
 └── settings
     ├── endpoint.json
     └── service.json
 ```
 
-**partials/rate_limit_backend.tmpl**
+**partials/all_backends_extra_config.json**
 
-In this file, we have written the content of the rate limit configuration for a backend. This file is inserted when included "as is", because it is a partial:
+In this file, we have written the content of the rate limit configuration and circuit breaker we want for any backend. This file is inserted when included "as is", because it is a partial:
 
-```go
-"qos/ratelimit/proxy": {
-    "max_rate": "100",
-    "capacity": "100"
+```json
+{
+    "$schema": "https://www.krakend.io/schema/v2.4/backend_extra_config.json",
+    "qos/ratelimit/proxy": {
+        "max_rate": 100,
+        "capacity": 100
+    },
+    "qos/circuit-breaker": {
+        "interval": 10,
+        "max_errors": 5,
+        "timeout": 5
+    }
 }
 ```
 
@@ -250,9 +258,7 @@ Have a look at the highlighted lines:
             "backend": [
                 {
                     "url_pattern": "{{ $endpoint.backend }}",
-                    "extra_config": {
-                        {{ include "rate_limit_backend.tmpl" }}
-                    }
+                    "extra_config": {{ include "all_backends_extra_config.json" }}
                 }
             ]}
             {{ end }}
@@ -353,11 +359,11 @@ Let's imagine your `krakend.tmpl` looks like this:
     "version": 3,
     "$schema": "https://www.krakend.io/schema/v2.4/krakend.json",
     "endpoints": [
-        {{ include "endpoints.tmpl" . }}
+        {{ template "endpoints.tmpl" . }}
     ]
 }
 ```
-The `endpoints.tmpl` should contain the list of all the templates we want to include. One of the limitations of the Go `{{ include}}` is that you cannot use a variable to load a template, so we must pre-generate the contents.
+The `endpoints.tmpl` should contain the list of all the templates we want to include. One of the limitations of the Go `{{ template }}` is that you cannot use a variable to load a template (this is unsuported `{{ template $var }}`), so we must pre-generate the contents.
 
 There are many ways to generate this, and the following command is to save you time if you want to achieve this:
 
