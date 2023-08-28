@@ -253,6 +253,44 @@ While the default policy prevents forwarding unrecognized headers, setting an as
 
 Enabling the wildcard **pollutes your backends**, as any header sent by end-users or malicious attackers gets through the gateway and impacts the backends behind (a famous exploit is the Log4J vulnerability). We recommend letting the gateway know which headers are in the API contract and specify them in the list. Even when the list is long, try not to use the wildcard. If the decision is to go with the wildcard, make sure your backends can handle client abuse attempts.
 
+### Granular header filtering
+All headers listed in the `input_headers` parameter hit every single backend of the `endpoint`. If you want to add a second level of filtering, you can configure the `input_headers` list in the `backend` section too. By doing this you can have backends that receive less headers than other backends in the same endpoint.
+
+For instance, the following endpoint allows passing two headers to its backends, but the second backend allows a single header to pass:
+
+```json
+{
+  "version": 3,
+  "host": [
+    "http://some.api.com:9000"
+  ],
+  "endpoints": [
+    {
+      "endpoint": "/v1/foo",
+      "input_query_strings": [
+        "items",
+        "page"
+      ],
+      "input_headers": [
+        "User-Agent",
+        "Accept"
+      ],
+      "backend": [
+        {
+          "url_pattern": "/receive-defined-headers",
+        },
+        {
+          "url_pattern": "/receive-one-header-only",
+          "input_headers": [
+            "User-Agent"
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
 ## Cookies forwarding
 A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `input_headers`, just as you would do with any other header.
 
