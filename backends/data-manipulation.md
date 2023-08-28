@@ -2,8 +2,8 @@
 lastmod: 2020-07-24
 date: 2016-09-30
 toc: true
-linktitle: Data manipulation
-title: Data manipulation
+linktitle: Response manipulation
+title: Response manipulation
 weight: 5
 menu:
   community_current:
@@ -427,5 +427,6 @@ See [Manipulating arrays - flatmap](/docs/backends/flatmap/)
 If you need more sophisticated manipulation options, there are different approaches you can use:
 
 - Through a [Query Language](/docs/enterprise/endpoints/jmespath/) {{< badge >}}Enterprise{{< /badge >}}
+- Through a [template](/docs/enterprise/backends/response-body-generator/) {{< badge >}}Enterprise{{< /badge >}}
 - Through [Response modifier plugins](/docs/extending/plugin-modifiers/) - Very performant, requires compilation
 - Through [Lua scripting](/docs/endpoints/lua/) - Less performant, does not require compilation

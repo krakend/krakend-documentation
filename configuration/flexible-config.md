@@ -111,7 +111,7 @@ The configuration file passed with the `-c` flag is treated as a **Go template**
 
 The data evaluations or control structures are easily recognized as they are surrounded by `{{` and `}}`. Any other text outside these delimiters is unprocessed text copied to the output as it is.
 
-Read the [Flexible Config Templates](/docs/configuration/flexible-config-templates/) documentation to start playing with templates.
+Read the [Flexible Config Templates](/docs/configuration/templates/) documentation to start playing with templates.
 
 ## Testing the configuration
 We recommend using a Docker compose file to work faster with flexible configuration.
