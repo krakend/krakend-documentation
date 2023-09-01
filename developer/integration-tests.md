@@ -20,6 +20,7 @@ The way this library works is quite simple. You create a folder with all the dif
 	- `method`: The request method
 	- `url`: The full URL to the endpoint you want to test
 	- `header`: An optional map of header to include in the request
+ 	- `body`: An optional payload you can send in the request as data
 - `out`: The expected response from the gateway
 	- `status_code` (*integer*): The expected status code
 	- `body`: The returned body by the response as a string, or as JSON object.
