@@ -2,8 +2,8 @@
 lastmod: 2020-07-24
 date: 2016-09-30
 toc: true
-linktitle: Response manipulation
-title: Response manipulation
+linktitle: Data manipulation
+title: Backend data manipulation
 weight: 5
 menu:
   community_current:
