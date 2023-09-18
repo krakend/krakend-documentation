@@ -7,7 +7,7 @@ linktitle: Telemetry integrations
 title: Telemetry
 weight: 30
 images:
-- /images/documentation/exporters.png
+- /images/documentation/available-exporters-old.png
 menu:
   community_v1.4:
     parent: "080 Telemetry"

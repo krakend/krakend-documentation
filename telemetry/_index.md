@@ -6,7 +6,7 @@ linktitle: Telemetry integrations
 title: Telemetry
 weight: 1
 images:
-- /images/documentation/exporters.png
+- /images/documentation/available-exporters.png
 aliases: ["/docs/logging-metrics-tracing/tracing/", "/docs/telemetry/overview/"]
 menu:
   community_current:
