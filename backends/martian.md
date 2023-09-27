@@ -84,6 +84,9 @@ The `body.Modifier` changes or sets the body of a request or response. The body 
 
 Additionally, it will modify the following headers to ensure proper transport: `Content-Type`, `Content-Length`, `Content-Encoding`.
 
+{{< schema data="modifier/martian.json" property="body.Modifier" >}}
+
+
 The following modifier sets the body of the request and the response to `{"msg":"you rock!"}`. Notice that the `body` field is `base64` encoded (e.g., `echo "content" | base64 -w0`).
 
 ```json
@@ -120,7 +123,9 @@ Or from an external file:
 "body": "{{- include "external_file.txt" | b64enc -}}"
 ```
 ### Cookie Modifier
-The `cookie.Modifier` adds a cookie to a request or a response. If you set cookies in a response, the cookies are only set to the client when you use `no-op` encoding. Notice that `expires` is a date in RFC 3339 format and is absolute, not relative to the current time.
+The `cookie.Modifier` adds a cookie to a request or a response. If you set cookies in a response, the cookies are only set to the client when you use `no-op` encoding.
+
+{{< schema data="modifier/martian.json" property="cookie.Modifier" >}}
 
 ```json
 {
@@ -161,7 +166,7 @@ The `url.Modifier` allows you to change the URL despite what is set in the `host
 
 Except for `scope`, all the fields are optional. Set the ones you need.
 
-Notice that if you set a `query`, if the user passes other query string parameters listed under `input_query_strings`, they will be lost, and only the values passed in the modifier will be sent. For such uses, see the `querystring.Modifier` below.
+{{< schema data="modifier/martian.json" property="url.Modifier" >}}
 
 ```json
 {
@@ -191,6 +196,8 @@ Notice that the example above changes the URL used to query the backend, but the
 ### Query String modifier
 The `querystring.Modifier` adds a new query string or modifies existing ones in the request.
 
+{{< schema data="modifier/martian.json" property="querystring.Modifier" >}}
+
 The example below sets an `?amount=75` independently of the value the user passed. Any other input query strings declared under `input_query_strings` are preserved and reach the backend as passed.
 ```json
 {
@@ -200,6 +207,7 @@ The example below sets an `?amount=75` independently of the value the user passe
     {
       "host": ["http://localhost:8080"],
       "url_pattern": "/__echo/querystring.Modifier",
+      "allow": ["req_uri"],
       "extra_config": {
         "modifier/martian": {
           "querystring.Modifier": {
@@ -213,13 +221,26 @@ The example below sets an `?amount=75` independently of the value the user passe
   ]
 }
 ```
-In the example above, when the user calls `http://localhost:8080/test/url.Modifier\?currency=EUR&amount=55` the backend receives a querystring `?currency=EUR&amount=1000`. The currency is preserved, and the amount modified.
+
+{{< terminal title="Example of querystring.Modifier output" >}}
+curl -i http://localhost:8080/test/querystring.Modifier\?currency\=EUR\&amount\=55
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+X-Krakend: Version 2.3.3
+X-Krakend-Completed: true
+Date: Sat, 03 Jun 2023 20:57:43 GMT
+Content-Length: 70
+
+{"req_uri":"/__echo/querystring.Modifier?amount=75\u0026currency=EUR"}
+{{< /terminal >}}
+
 
 
 ### Copy a header
-Although not widely used, the `header.Copy` lets you duplicate a header using another name. Remember that any header from the user you want to access here it must be included in the `input_headers` list.
+Although not widely used, the `header.Copy` lets you duplicate a header using another name.  If you want to return headers to the client, remember to use `no-op` encoding. Notice also that even though the modifier supports request and response, rarely the same headers are used in both directions.
 
-If you want to return headers to the client, remember to use `no-op` encoding. Notice also that even though the modifier supports request and response, rarely the same headers are used in both directions.
+{{< schema data="modifier/martian.json" property="header.Copy" >}}
+
 
 ```json
 {
@@ -247,7 +268,10 @@ If you want to return headers to the client, remember to use `no-op` encoding. N
 ### Stash modifier
 The `stash.Modifier` creates a new header (or replaces an existing one with a matching name) containing the value of the original URL and all its query string parameters.
 
-If you want to set the header in the response, you must use `no-op` encoding.
+{{< schema data="modifier/martian.json" property="stash.Modifier" >}}
+
+The example below adds a header `X-Stash: http://localhost:8080/__echo/stash.Modifier?amount=1` both in the request and the response when the user calls `http://localhost:8080/test/stash.Modifier?amount=1`
+
 
 ```json
 {
@@ -271,12 +295,12 @@ If you want to set the header in the response, you must use `no-op` encoding.
 }
 ```
 
-The example above adds a header `X-Stash: http://localhost:8080/__echo/stash.Modifier?amount=1` both in the request and the response when the user calls `http://localhost:8080/test/stash.Modifier?amount=1`
-
 ### Header modifier
 The `header.Modifier` adds a new header or changes the value of an existing one.
 
 To change headers sent by the client, remember to add `input_headers` in the endpoint. Also, if the client needs to see the headers in the `response`, you must set the `output_encoding` to `no-op`.
+
+{{< schema data="modifier/martian.json" property="header.Modifier" >}}
 
 For instance, the following configuration changes the `User-Agent` (set internally by KrakenD) to `Late-Night-Commander v2.3` both in the request and the response.
 
@@ -341,7 +365,7 @@ With the configuration above, whenever a request is made to the backend, the `Au
 ### Header ID
 The `header.Id` is a modifier that sets a header `X-Krakend-Id` with a **unique identifier (UUID)** for the request. If for whatever reason, the header already exists, the header is not altered.
 
-The `scope` only accepts `request`.
+{{< schema data="modifier/martian.json" property="header.Id" >}}
 
 ```json
 {
@@ -372,9 +396,11 @@ The `scope` only accepts `request`.
 ```
 
 ### Append a header
-The `header.Append` adds a new header in the request or the response. Pass the header in the `input_headers` list to append more values to an existing header. In addition, to see the header in the response, you must use `no-op`.
+The `header.Append` adds a new header in the request or the response, or appends a new value to an existing one.
 
 There are some headers that accept only one value, so you won't be able to set multiple entries in one header, like `Accept-Encoding`, `User-Agent`, `X-Forwarded-For`, or `X-Forwarded-Host`.
+
+{{< schema data="modifier/martian.json" property="header.Append" >}}
 
 ```json
 {
@@ -407,7 +433,7 @@ There are some headers that accept only one value, so you won't be able to set m
 ### Header Blacklist
 The `header.Blacklist` removes the listed headers under `names` in the request and response of the backend.
 
-Remember that if you want to see the headers in the client, you must use the `output_encoding: no-op`, and if you want the client headers to propagate to the backend, you need to use `input_headers` too.
+{{< schema data="modifier/martian.json" property="header.Blacklist" >}}
 
 The following example removes several headers from the request and the response.
 
@@ -434,13 +460,9 @@ The following example removes several headers from the request and the response.
 ```
 
 ### Port modifier
-The `port.Modifier` alters the `request` URL and `Host` header to use the provided port.
+The `port.Modifier` alters the `request` URL and `Host` header to use the provided port. It accepts three different settings, but only one is accepted.
 
-It accepts three different settings, but only one is accepted:
-
-- `port` (integer): Defines which port will be used.
-- `defaultForScheme` (boolean): Uses the default port of the schema. `80` for `http://` or `443` for `https://`. Other schemas are ignored.
-- `remove` (boolean): Removes the port from the host string when `true`.
+{{< schema data="modifier/martian.json" property="port.Modifier" >}}
 
 The example below connects to a backend to port 1234, but it's switched back to 8080 by Martian.
 
@@ -473,15 +495,9 @@ All filters have in their settings a key `modifier` which executes the declared 
 
 
 ### Cookie Filter
-The `cookie.Filter` executes the contained `modifier` when a cookie is provided under the `name`.
+The `cookie.Filter` executes the contained `modifier` when a cookie with a `name` is found. Optionally it can check also if it has a specific `value`. When the condition(s) fail(s), it executes the modifier in the `else` clause when set.
 
-If there is also a `value` in the configuration, it ensures a literal match.
-
-When the condition(s) fail(s), it executes the modifier in the `else` clause when set.
-
-This filter only works in the `request`.
-
-Notice that the `input_headers` must declare the `Cookie` header if you want to check cookies from the client.
+{{< schema data="modifier/martian.json" property="cookie.Filter" >}}
 
 The example below inspects the Cookies in the request and looks for the one named `marketingCookies`. As there is a `value` set, too, it will make sure that it's set to `yes`. Then it executes a `header.Modifier` that sets a new header `Accepts-Marketing-Cookies` to true or false depending on the value.
 
@@ -535,13 +551,9 @@ curl -H 'Cookie: marketingCookies=no;' http://localhost:8080/test/cookie.Filter
 
 
 ### URL filter
-The `url.Filter` executes its contained modifier if the `request` URL matches all of the provided parameters. Missing parameters are ignored. You can use the following:
+The `url.Filter` executes its contained modifier if the `request` URL matches all of the provided parameters. Missing parameters are ignored.
 
-The parameters are
-- `scheme`: The literal scheme it must match
-- `host`: The hostname passed, including the port (e.g., `localhost:8080`)
-- `path`: the `/path` of the URL, without query strings.
-- `query`: The query strings you want to check. Use `"query": "key1=value1&key2=value2"` to check that the request has exactly these keys and values (order is irrelevant, but content not). Suppose the request has more query strings than declared in the `query` parameter because the `input_query_strings` allowed them to pass. In that case, the evaluation will be `false`, and the `else` modifier will be executed.
+{{< schema data="modifier/martian.json" property="url.Filter" >}}
 
 Since the `host` and the `url_pattern` of the backend are set in the configuration, the `scheme`, `host`, and `path` parameters might provide little value. Yet, they make sense when you are copy/pasting the same modifiers across all endpoints or when you use multiple environments, and you want to mark those hosts somehow.
 
@@ -593,6 +605,8 @@ The `url.RegexFilter` evaluates a regular expression ([RE2 syntax](https://golan
 
 The URL evaluation does not take into account query strings.
 
+{{< schema data="modifier/martian.json" property="url.RegexFilter" >}}
+
 In the example below, we check that the URL matches with the regexp `.*localhost.*` and set the header `Is-Localhost` accordingly.
 
 ```json
@@ -637,7 +651,9 @@ In the example below, we check that the URL matches with the regexp `.*localhost
 ```
 
 ### QueryString filter
-The `querystring.Filter` executes the `modifier` if the `request` or `response` contains a query string parameter that matches the defined name and value in the filter. You must set the `name` declared in the filter in the `input_query_strings`.
+The `querystring.Filter` executes the `modifier` if the `request` contains a query string parameter that matches the defined name and value in the filter. You must set the `name` declared in the filter in the `input_query_strings`.
+
+{{< schema data="modifier/martian.json" property="querystring.Filter" >}}
 
 ```json
 {
@@ -675,9 +691,9 @@ The `querystring.Filter` executes the `modifier` if the `request` or `response` 
 ```
 
 ### Header Filter
-The `header.Filter` executes its contained `modifier` if the `request` or `response` contains a header that matches the defined name and value. The `value` is optional, and only the header's existence evaluates when undefined.
+The `header.Filter` executes its contained `modifier` if the `request` or `response` contain a header that matches the defined name and value. The `value` is optional, and only the header's existence evaluates when undefined.
 
-You must add under `input_headers` the `name` included in the filter.
+{{< schema data="modifier/martian.json" property="header.Filter" >}}
 
 Example configuration that adds the query string parameter `?legacy=1` when there is a header `X-Tenant: v1`.
 
@@ -726,7 +742,7 @@ curl -H 'X-Tenant: v1' http://localhost:8080/test/header.Filter
 ### Header Regexp filter
 The `header.RegexFilter` checks that a regular expression ([RE2 syntax](https://golang.org/s/re2syntax)) passes on the target header and, if it does, executes the `modifier`.
 
-You must add under `input_headers` the `header` included in the filter.
+{{< schema data="modifier/martian.json" property="header.RegexFilter" >}}
 
 The example below checks a header `X-App-Version` and if it contains the terminations `-alpha`, `-beta`, or `-preview`, adds to the backend request a query string `?testing=1`.
 
@@ -773,6 +789,8 @@ curl -H 'X-App-Version: v1.2.3-alpha' http://localhost:8080/test/header.RegexFil
 ### Port filter
 The `port.Filter` executes its `modifier` only when the port matches the one used in the request. It does not support `else`.
 
+{{< schema data="modifier/martian.json" property="port.Filter" >}}
+
 The following example defines a backend using port `1234`, but the modifier changes it back to `8080` when this happens.
 
 ```json
@@ -811,7 +829,11 @@ The following example defines a backend using port `1234`, but the modifier chan
 All the modifiers perform a single modification in the request or the response. However, the `fifo.Group` and the `priority.Group` allow you to create a list of modifiers executed sequentailly or in a specific order. The group is needed when using more than one modifier and encapsulates all the following actions to perform in the `modifiers` array.
 
 ### FIFO group
-The `fifo.Group` holds a list of modifiers executed in first-in, first-out order. Example of usage (modify the body, and set a header):
+The `fifo.Group` holds a list of modifiers executed in first-in, first-out order.
+
+{{< schema data="modifier/martian.json" property="fifo.Group" >}}
+
+Example of usage (modify the body, and set a header):
 
 
 ```json
@@ -860,6 +882,8 @@ The `fifo.Group` holds a list of modifiers executed in first-in, first-out order
 
 ### Priority Group
 The `priority.Group` contains the modifiers you want to execute, but the order in which they are declared is unimportant. Instead, each modifier adds a `priority` attribute that defines the order in which they are run.
+
+{{< schema data="modifier/martian.json" property="priority.Group" >}}
 
 Example configuration that adds the query string `first` and later `last` of foo=bar and deletes any X-Martian headers on requests:
 
