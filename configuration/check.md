@@ -74,7 +74,7 @@ The command `krakend run` will run any syntax-valid file, **ignoring unknown con
 {{< /note >}}
 
 ## Debugging your configuration
-You can use three different verbosity levels with the `--debug` (or `-d') flag. The levels are `-d`, `-dd`, and `-ddd`. When used a single time, you get the most relevant information after parsing the configuration, when you add more, you get more and more details. The following example shows the debug of a configuration with one endpoint:
+You can use three different verbosity levels with the `--debug` (or `-d`) flag. The levels are `-d`, `-dd`, and `-ddd`. When used a single time, you get the most relevant information after parsing the configuration, when you add more, you get more and more details. The following example shows the debug of a configuration with one endpoint:
 
 {{< terminal title="Checking the configuration with the debug flag" >}}
 krakend check -t --lint -d -c krakend.json
