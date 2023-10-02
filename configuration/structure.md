@@ -16,7 +16,7 @@ The correctness of a configuration file is determined by the [check](/docs/confi
 There are a large number of options you can put in this file. Let's focus now only on the main structure:
 ```json
 {
-    "$schema": "https://www.krakend.io/schema/v2.4/krakend.json",
+    "$schema": "https://www.krakend.io/schema/v2.5/krakend.json",
     "version": 3,
     "endpoints": [],
     "extra_config": {}
