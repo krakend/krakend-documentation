@@ -1,11 +1,10 @@
 ---
-lastmod: 2022-11-24
+lastmod: 2023-10-15
 date: 2018-11-11
-toc: true
 linktitle: Sequential Proxy (chain reqs.)
 title: Sequential Proxy
 since: 0.7
-notoc: true
+notoc: false
 weight: 60
 images:
 - /images/documentation/krakend-sequential-call.png
@@ -24,18 +23,25 @@ meta:
   log_prefix:
   - "[SERVICE: Gin]"
 ---
-The best experience consumers can have with KrakenD API is by letting the system fetch all the data from the different backends concurrently at the same time. However, there are times when you need to **delay a backend call** until you can inject as input the result of a previous call.
+The best experience consumers can have with KrakenD API is by letting the system fetch all the data from the different backends simultaneously. However, sometimes you need to **delay a backend call** until you have called a previous service. Although this is not ideal, the sequential proxy allows you to **chain backend requests**.
 
-The sequential proxy allows you to **chain backend requests**.
+## Do you really need a sequential proxy?
+{{< note title="Chained calls are considered an anti-pattern" type="warning" >}}{{< /note >}}
 
-{{< note title="Chained calls are considered an anti-pattern" type="info" >}}
-Making use of sequential calls is considered an anti-pattern. This is because when you make a service dependent on the other, you are increasing the latency of the service, decreasing its performance, and augmenting its error rate.
+Using sequential calls is considered an anti-pattern because when you make a network service dependent on the other, you are **increasing the latency, decreasing the performance, and augmenting the error rate**.
 
-For instance, if you have three backends with an error rate of 10% each when calling them in series, it produces an error rate of 27%.
-{{< /note >}}
+It is much worse than using [aggregation](/docs/endpoints/response-manipulation/#aggregation-and-merging). In aggregation, parallel requests execute simultaneously, whereas, in sequential aggregation, requests are executed one at a time, with each one waiting for the previous request to finish before moving on to the next. If a backend in a sequence fails, the process aborts, and the next backend is never reached, so there are many more chances that your users are left without data.
 
-## Chaining the requests
-All you need to enable the sequential proxy is add in the endpoint definition the following configuration:
+From an error rate perspective, the nature of sequential proxy performs more deficient: Suppose you have three backends with an error rate of 10% each, then the probability of success separately in each is 90%. But when executing the three of them sequentially, the success rate drops to 73% (because `0.9 * 0.9 * 0.9 = 0.729`).
+
+In an aggregation scenario, the probability of having at least one working call is the opposite of the likelihood of having all calls result in errors. So, the chance of all three calls resulting in errors is 0.1% (because `0.1 * 0.1 * 0.1 = 0.001`).
+
+The contrast between a 99.9% chance of some data availability and a 73% probability is quite substantial. Isn't it? That being said, from an architectural point of view, the sequential proxy should be your last resort.
+
+In addition, since KrakenD 2.5, you can add to a sequence **multiple unsafe methods** (methods different than `GET`). When you chain several write requests in multiple nodes, you execute a **distributed transaction** in a flowery disguise, as in a database. But a gateway is not a database, and you don't have any rollback mechanism if one of your write methods fails, so you can only *hope for the best*.
+
+## Sequential proxy configuration
+To enable the sequential proxy, you need to add in the endpoint definition the following configuration:
 
 ```json
 {
@@ -48,6 +54,7 @@ All you need to enable the sequential proxy is add in the endpoint definition th
 }
 ```
 
+After doing this, the list of `backend` is executed one by one, and the next call has access to the data returned by the previous in the `url_pattern` and not anywhere else. **The body of the last request is not sent to the next** (but you can still access the original body).
 
 When the sequential proxy is enabled, the `url_pattern` of every backend can use a new variable that references the **resp**onse of a previous API call. The variable has the following construction:
 
@@ -55,13 +62,25 @@ When the sequential proxy is enabled, the `url_pattern` of every backend can use
 {resp0_XXXX}
 ```
 
-Where `0` is the index of the specific `backend` you want to access (`0` is the first backend), and where `XXXX` is the attribute name you want to inject from the response of the previous call. You can access **nested objects** of the response using the dot notation, for example `{resp0_user.hash}` will retrieve the value `abcdef` from the response `{"user": { "hash": "abcdef }}`. **You cannot access nested objects inside arrays or collections, they must be objects**.
-
-{{< note title="Unsafe operations" >}}
-If you use unsafe methods (not a `GET`), they can only be placed in the last position of the sequence. Sequences are meant to be used in read-only operations except for the last call. A sequence is not meant to be used in distributed transactions.
-{{< /note >}}
+Where `0` is the index of the specific `backend` you want to access (`0` is the first backend), and where `XXXX` is the attribute name you want to inject from the response of the previous call. You can access **nested objects** of the response using the dot notation. For example, given a response `{"user": { "hash": "abcdef }}`, the variable`{resp0_user.hash}` will contain the value `abcdef`. **You cannot access nested objects inside arrays or collections**: responses must be objects.
 
 If the encoding of your backend is `string`, then you can access its contents using `resp0_content`.
+
+It does not matter if the `{resp0_XXXX}` variable is part of the URL or if it is passed as a query string. For instance, the following examples would work:
+
+```json
+{
+    "url_pattern": "/user/{resp0_user.hash}"
+}
+```
+
+And also:
+
+```json
+{
+    "url_pattern": "/user?hash={resp0_user.hash}"
+}
+```
 
 ## Example
 It's easier to understand with the example of the graph:
