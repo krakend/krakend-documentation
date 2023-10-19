@@ -23,22 +23,22 @@ The limit applies **per defined backend entry** and does not consider the activi
 
 The proxy rate limit is defined in the `krakend.json` configuration file as follows:
 
-{{< highlight json "hl_lines=8-13">}}
-    {
-      "endpoint": "/products/{cat_id}",
-      "backend": [
-      {
-          "host": ["http://some.api.com/"],
-          "url_pattern": "/catalog/category/{cat_id}.rss",
-          "encoding": "rss",
-          "extra_config": {
-              "qos/ratelimit/proxy": {
-                  "max_rate": 0.5,
-                  "every": "1s",
-                  "capacity": 1
-              }
-          }
-      }
+{{< highlight json "hl_lines=7-12">}}
+{
+    "endpoint": "/products/{cat_id}",
+    "backend": [{
+        "host": ["http://some.api.com/"],
+        "url_pattern": "/catalog/category/{cat_id}.rss",
+        "encoding": "rss",
+        "extra_config": {
+            "qos/ratelimit/proxy": {
+                "max_rate": 0.5,
+                "every": "1s",
+                "capacity": 1
+            }
+        }
+    }]
+}
 {{< /highlight >}}
 
 These are the parameters you can set:
