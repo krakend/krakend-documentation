@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-04-10
+lastmod: 2023-10-23
 date: 2020-04-10
 linktitle: Mutual TLS Authentication (mTLS)
 title: Securing B2B communication with mTLS
@@ -13,10 +13,19 @@ menu:
 
 **Mutual TLS authentication** (mTLS) is an authentication mechanism used traditionally in business-to-business (B2B) applications where clients provide a certificate that allows to connect to the KrakenD server.
 
-The certificates must be recognized by your system's Certification Authority (CA) or be added under the `ca_certs` list.
+There are two types of mTLS supported on KrakenD, that can work together or separately:
 
-## Configuring mutual authentication
-From the configuration file perspective, Mutual TLS Authentication is no more than flag at the root level of the configuration.
+1. **Service mTLS**: When you require end-users to provide a certificate to connect to KrakenD
+2. **Client mTLS** ({{< badge color="denim" >}}Enterprise{{< /badge >}}
+): When you require KrakenD to provide a certificate to connect to a specific service (individually per `backend`).
+
+![mtls.mmd diagram](/images/documentation/diagrams/mtls.mmd.png)
+
+
+In both cases, the certificates must be recognized by your system's Certification Authority (CA) or be added under the `ca_certs` list.
+
+## Service mTLS Configuration (End-user to gateway)
+From the configuration file perspective, Mutual TLS Authentication is no more than flag under `tls`.
 
 When mTLS is enabled, **all KrakenD endpoints** require clients to provide a known client-side X.509 authentication certificate. KrakenD relies on the system's CA to validate certificates.
 
@@ -40,6 +49,12 @@ To enable it you need to add `enable_mtls` to your `tls` configuration:
 
 
 Connections not having a recognized certificate in KrakenD's system CA, will be rejected. For further documentation on TLS, see the [`TLS` documentation](/docs/service-settings/tls/)
+
+## Client mTLS Configuration (Gateway to service)
+On the {{< badge color="denim" >}}Enterprise{{< /badge >}} edition you can also enable mTLS between the gateway and a service.
+
+To do that, enable mTLS under each `backend` needing mTLS using the [HTTP Client settings](/docs/enterprise/backends/http-client/).
+
 
 ## mTLS example
 To use mTLS you need to generate the client and server certificates. The following script example creates the needed files to enable mTLS. Notice that in the `CN` of the certificates we are adding `localhost` as we want to connect to KrakenD from and to localhost.
