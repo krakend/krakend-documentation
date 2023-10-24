@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-10-20
+lastmod: 2023-10-24
 date: 2022-06-07
 linktitle:  Service Settings
 description: Service settings are optional flags that allow you to change how KrakenD behaves globally for all endpoints across configuration.
@@ -22,6 +22,7 @@ All service settings are written directly in the root of the configuration file 
 {
     "version": 3,
     "port": 8080,
+    "listen_ip": "192.168.1.3",
     "endpoints": [],
     "extra_config": {
       "telemetry/logging": {
@@ -35,7 +36,7 @@ All service settings are written directly in the root of the configuration file 
 
 The service accepts **numerous configuration options** that you'll find explained through the rest of the documentation, but here is a preview of the most important ones:
 
-{{< schema data="krakend.json" filter="version,extra_config,port,endpoints">}}
+{{< schema data="krakend.json" filter="version,extra_config,port,listen_ip,endpoints">}}
 
 Other service-level settings you can add:
 
