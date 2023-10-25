@@ -24,7 +24,6 @@ When you declare in the configuration file any of the HTTP server or transport s
 
 All the environment variables have the same name as the settings above in uppercase and with the `KRAKEND_` prefix. The following env vars are available:
 
-- `KRAKEND_ALLOW_INSECURE_CONNECTIONS`
 - `KRAKEND_DIALER_TIMEOUT`
 - `KRAKEND_DIALER_KEEP_ALIVE`
 - `KRAKEND_DIALER_FALLBACK_DELAY`
@@ -42,13 +41,6 @@ You can start KrakenD with the desired variables to override what you have in th
 {{< terminal title="Term" >}}
 KRAKEND_MAX_IDLE_CONNECTIONS_PER_HOST=200 krakend run -c krakend.json
 {{< /terminal >}}
-
-Or
-
-{{< terminal title="Connect using self-signed certificates" >}}
-KRAKEND_ALLOW_INSECURE_CONNECTIONS=true krakend run -c krakend.json
-{{< /terminal >}}
-
 
 ## Max IDLE connections
 Having a high number of IDLE connections to every backend affects directly to the performance of the proxy layer. This is why you can control the number using the `max_idle_connections` setting. For instance:
