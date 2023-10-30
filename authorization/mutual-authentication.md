@@ -2,34 +2,33 @@
 lastmod: 2023-10-23
 date: 2020-04-10
 linktitle: Mutual TLS Authentication (mTLS)
-title: Securing B2B communication with mTLS
+title: Mutual TLS Authentication (mTLS)
 description: The mutual TLS authentication is used in business-to-business (B2B) applications where clients must provide a certificate to connect to KrakenD
 weight: 50
-notoc: true
+notoc: false
 menu:
   community_current:
     parent: "060 Authentication & Authorization"
 ---
 
-**Mutual TLS authentication** (mTLS) is an authentication mechanism used traditionally in business-to-business (B2B) applications where clients provide a certificate that allows to connect to the KrakenD server.
+**mTLS** is an authentication mechanism used traditionally in business-to-business (B2B) applications where clients provide a certificate that allows to connect to the KrakenD server.
 
-There are two types of mTLS supported on KrakenD, that can work together or separately:
-
-1. **Service mTLS**: When you require end-users to provide a certificate to connect to KrakenD
-2. **Client mTLS** ({{< badge color="denim" >}}Enterprise{{< /badge >}}
-): When you require KrakenD to provide a certificate to connect to a specific service (individually per `backend`).
+As KrakenD is a piece of software in the middle of two parts, there are different types of mTLS supported, that can work together or separately.
 
 ![mtls.mmd diagram](/images/documentation/diagrams/mtls.mmd.png)
 
 
+1. **Service mTLS**: When you require end-users to provide a certificate to connect to KrakenD.
+2. **Client mTLS**: When you require KrakenD to provide a certificate to connect to your services.
+
 In both cases, the certificates must be recognized by your system's Certification Authority (CA) or be added under the `ca_certs` list.
 
 ## Service mTLS Configuration (End-user to gateway)
-From the configuration file perspective, Mutual TLS Authentication is no more than flag under `tls`.
+From the configuration file perspective, Mutual TLS Authentication is no more than a flag `enable_mtls` under the `tls` section.
 
 When mTLS is enabled, **all KrakenD endpoints** require clients to provide a known client-side X.509 authentication certificate. KrakenD relies on the system's CA to validate certificates.
 
-To enable it you need to add `enable_mtls` to your `tls` configuration:
+To enable it you need a configuration like this:
 
 ```json
 {
@@ -45,15 +44,61 @@ To enable it you need to add `enable_mtls` to your `tls` configuration:
 }
 ```
 
+And these are the options you can include under `tls`:
 {{< schema data="tls.json" >}}
 
 
-Connections not having a recognized certificate in KrakenD's system CA, will be rejected. For further documentation on TLS, see the [`TLS` documentation](/docs/service-settings/tls/)
+**Important**: Connections not having a recognized certificate in KrakenD's system CA, will be rejected. For further documentation on TLS, see the [TLS documentation](/docs/service-settings/tls/)
 
 ## Client mTLS Configuration (Gateway to service)
-On the {{< badge color="denim" >}}Enterprise{{< /badge >}} edition you can also enable mTLS between the gateway and a service.
+If you want that **all connections to backends** use mTLS, add the following configuration:
 
-To do that, enable mTLS under each `backend` needing mTLS using the [HTTP Client settings](/docs/enterprise/backends/http-client/).
+```json
+{
+    "version": 3,
+    "client_tls": {
+        "client_certs": [
+            {
+                "certificate": "cert.pem",
+                "private_key": "cert.key"
+            }
+        ]
+    }
+}
+```
+
+{{< schema data="client_tls.json" filter="client_certs" >}}
+
+### Per-backend mTLS
+If instead of enabling mTLS against all backends, you can enable mTLS in  a specific backend only. This option is available only in the {{< badge color="denim" >}}Enterprise Edition{{< /badge >}}
+
+To do that, you can use the [HTTP Client settings](/docs/enterprise/backends/http-client/).
+
+An example configuration would be:
+
+```json
+{
+    "endpoint": "/foo",
+    "output_encoding": "no-op",
+    "backend": [
+        {
+            "host": ["https://api"],
+            "url_pattern": "/foo",
+            "encoding": "no-op",
+            "extra_config": {
+                "backend/http/client": {
+                    "client_certs": [
+                        {
+                            "certificate": "cert.pem",
+                            "private_key": "cert.key"
+                        }
+                ]
+                }
+            }
+        }
+    ]
+}
+```
 
 
 ## mTLS example
