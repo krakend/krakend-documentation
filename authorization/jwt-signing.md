@@ -166,6 +166,14 @@ What happens here is that the user requests a `/token` to the gateway and the is
 }
 ```
 
+## How to convert PEM to JWKS ?
+Krakend uses `jose` library, so if you use your own PEM keys for signing you need to use the following steps to [convert your PEM file to JWKS](https://web3auth.io/docs/auth-provider-setup/byo-jwt-providers#how-to-convert-pem-to-jwks)
+
+Notice: if you are using [asymmetric algorithms](https://auth0.com/blog/navigating-rs256-and-jwks) and want to use gateway singing and verification simultaneously, you need to use the following keys with the same `kid`:
+-  **private key jwks for signing** 
+-  **public key jwks for verification**
+
+
 ## How to generate a JWT token
 Essentially, what you need to adopt JWT in your backend is to adapt your existing `/login` function (maybe passing an additional `?token=true` flag), so when a user logs in, instead of setting the session in a cookie, you return the JSON Web Token for KrakenD to sign.
 
