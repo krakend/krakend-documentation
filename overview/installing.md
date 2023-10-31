@@ -82,6 +82,7 @@ The installation process requires following these steps:
 
 Bottom line:
 {{< terminal title="DEB based" >}}
+apt install -y ca-certificates gnupg
 apt-key adv --keyserver keyserver.ubuntu.com --recv {{< param pgp_key >}}
 echo "deb {{< product download_repo >}}/apt stable main" | tee /etc/apt/sources.list.d/krakend.list
 apt-get update

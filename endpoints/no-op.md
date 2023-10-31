@@ -37,6 +37,8 @@ The **key concepts** of `no-op` are:
 - Backend response and headers remain unchanged (including status codes)
 - The body cannot be changed and is set solely by the backend
 - `1:1` relationship between endpoint-backend (one backend per endpoint).
+- `X-Krakend-Completed` will be false and `X-Krakend` with current version will be added in response headers
+
 
 ## When to use `no-op`
 Use `no-op` when you need to **couple the client with a specific backend without any KrakenD manipulation**.

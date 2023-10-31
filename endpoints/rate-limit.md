@@ -20,15 +20,15 @@ meta:
 
 The router rate limit feature allows you to set the **maximum requests** a KrakenD endpoint will accept in a **given time window**. There are two different strategies to set limits that you can use separately or together:
 
-- **Endpoint rate-limiting**: applies simultaneously to all your customers using the endpoint, sharing the same counter.
-- **User rate-limiting**: applies to an individual user.
+- **Endpoint rate-limiting** (`max_rate`): applies simultaneously to all your customers using the endpoint, sharing the same counter.
+- **User rate-limiting** (`client_max_rate`): applies to an individual user.
 
 Both types keep **in-memory** an updated counter with the number of requests processed during the controlled time window in that endpoint.
 
 For additional types of rate-limiting, see the [Traffic management overview](/docs/throttling/).
 
 ## Configuration
-The configuration allows you to use both types of rate limits (`max_rate` and `client_max_rate`) at the same time. For instance, let's set a limit of `50` requests `every` 10 minutes (`1m`), but every single user (by IP) can do `5` every `10m`:
+The configuration allows you to use both types of rate limits (`max_rate` and `client_max_rate`) at the same time. For instance, let's set a limit of `50` requests `every` 10 minutes (`10m`), but every single user can do `5` every `10m`. A different IP equals a different user with this `strategy`:
 
 ```json
 {
@@ -36,21 +36,25 @@ The configuration allows you to use both types of rate limits (`max_rate` and `c
     "extra_config": {
       "qos/ratelimit/router": {
           "max_rate": 50,
+          "capacity": 50,
           "client_max_rate": 5,
+          "client_capacity": 5,
           "every": "10m",
           "strategy": "ip"
         }
     }
 }
 ```
+{{< note title="Token Bucket" type="info" >}}
+The rate limiting is based internally in the [Token Bucket algorithm](/docs/throttling/token-bucket/). If you are unfamiliar, read the link to understand how it works.
+{{< /note >}}
+
+
 
 The following options are available to configure:
 
 {{< schema data="qos/ratelimit/router.json" >}}
 
-The rate limiting it's based internally in the [Token Bucket algorithm](/docs/throttling/token-bucket/), read the explanation to understand better how it works.
-
-The `capacity` (or `client_capacity`) of the bucket is, by default, equal to its maximum rate, but you might want to set a different value.
 
 ## Endpoint rate-limiting (`max_rate`)
 The endpoint rate limit acts on the number of simultaneous transactions an endpoint can process. This type of limit protects the service for all customers. In addition, these limits mitigate abusive actions such as rapidly writing content, aggressive polling, or excessive API calls.

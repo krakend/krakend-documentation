@@ -22,10 +22,11 @@ Traffic Management covers:
 
 - [Circuit Breaker](/docs/backends/circuit-breaker/): An automatic protection measure for your stack and avoids cascade failures.
 - **Rate-limiting**:
-  - [Service Rate Limiting {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/service-settings/service-rate-limit/): Sets the maximum throughput users can have to KrakenD.
-  - [Endpoint Rate Limiting](/docs/endpoints/rate-limit/): Sets the maximum throughput all connected users can have against specific endpoints.
-  - [Client Rate Limiting](/docs/endpoints/rate-limit/): Sets the maximum throughput each end-user has to specific endpoints.
-  - [Proxy Rate Limiting](/docs/backends/rate-limit/): Sets the maximum throughput KrakenD can have against your backend services
+  - [Service Rate Limiting (stateless) {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/service-settings/service-rate-limit/): Sets the maximum throughput users can have to a KrakenD instance.
+  - [Redis-based global rate limit (stateful) {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/throttling/global-rate-limit/): Sets the maximum throughput users can have on a KrakenD cluster, backed on Redis.
+  - [Endpoint Rate Limiting](/docs/endpoints/rate-limit/): Sets the maximum throughput all connected users can have against specific endpoints (stateless).
+  - [Client Rate Limiting](/docs/endpoints/rate-limit/): Sets the maximum throughput each end-user has to specific endpoints (stateless).
+  - [Proxy Rate Limiting](/docs/backends/rate-limit/): Sets the maximum throughput KrakenD can have between an endpoint and your backend services (stateless).
 - [Spike Arrest](/docs/throttling/spike-arrest/): Ensures a minimum time between different requests goes by
 - [Service Discovery](/docs/backends/service-discovery/): To detect and locate services automatically on your enterprise network.
 - [Bot detection](/docs/throttling/botdetector/): Reject bots carrying out scraping, content theft, and other forms of spam.
