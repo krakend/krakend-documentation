@@ -1,8 +1,8 @@
 ---
 lastmod: 2023-02-02
 date: 2019-01-14
-linktitle: Writing custom plugins
-title: Writing custom plugins
+linktitle: Building custom plugins
+title: Building custom plugins
 weight: 1
 skip_header_image: true
 menu:
