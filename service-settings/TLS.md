@@ -2,8 +2,8 @@
 lastmod: 2023-03-30
 date: 2019-02-22
 linktitle: TLS
-title: Enabling TLS for HTTPS and HTTP/2
-description: The TLS settings define the parameters that KrakenD takes into account to handle incoming and outgoing HTTPS traffic.
+title: TLS Configuration in KrakenD API Gateway
+description: Learn how to configure Transport Layer Security (TLS) in KrakenD API Gateway to ensure secure HTTP and HTTP/2 communication between clients and your APIs
 weight: 30
 notoc: false
 menu:

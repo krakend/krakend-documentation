@@ -1,8 +1,9 @@
 ---
 lastmod: 2023-10-19
 date: 2016-07-01
-linktitle: Token Bucket
-title: Understanding the Token Bucket algorithm
+linktitle: Understanding the Token Bucket
+title: "How API Traffic Throttling with Token Bucket algorithm works"
+description: Implement token bucket-based throttling mechanism in KrakenD API Gateway to control API access rates and prevent abuse
 weight: 10
 notoc: true
 images:

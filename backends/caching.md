@@ -2,7 +2,8 @@
 lastmod: 2023-06-01
 date: 2018-10-29
 linktitle: Caching responses
-title: Caching backend responses
+title: Caching Strategies in KrakenD API Gateway
+description: Learn how to implement effective caching strategies in KrakenD API Gateway to improve API performance and reduce backend load
 weight: 50
 menu:
   community_current:

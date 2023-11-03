@@ -2,11 +2,12 @@
 lastmod: 2022-11-11
 date: 2017-01-21
 linktitle: Best practices
+title: Deploying KrakenD API Gateway - Best Practices and Guidelines
+description: Explore the best practices and guidelines for deploying KrakenD API Gateway in various environments, ensuring a smooth and efficient deployment process
 aliases: ["/docs/deploying/best-practices/"]
 menu:
   community_current:
     parent: "110 Deployment and Go-Live"
-title: Production best practices
 weight: 1
 ---
 Setting up KrakenD is a straightforward process, but here are some not-so-obvious recommendations to get a good start when going live. This section has generalistic advice, even though every KrakenD installation is different. So let's dip our toe into the deployment waters!

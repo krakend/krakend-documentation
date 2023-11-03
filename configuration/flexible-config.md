@@ -2,8 +2,8 @@
 lastmod: 2023-08-22
 date: 2018-09-21
 linktitle: Flexible Configuration
-title: "Flexible Configuration"
-description: The Flexible Configuration allows you to declare the configuration using a templates system, multiple files, and variable injection.
+title: "Flexible Configuration: A template-based config for API Gateway"
+description: Discover the flexible configuration options offered by KrakenD API Gateway, allowing you to customize and fine-tune your API gateway setup
 source: https://github.com/krakend/krakend-flexibleconfig
 since: 0.5
 menu:

@@ -1,14 +1,14 @@
 ---
 lastmod: 2018-09-27
 date: 2018-09-13
-linktitle: The Playground
+linktitle: Playground - Try it now!
+title: KrakenD API Gateway Playground - Try it Now!
 description: Start playing with KrakenD through a ready-to-use complete environment -  gateway, backend, client and several use cases.
 notoc: true
 source: https://github.com/krakend/playground-community
 menu:
   community_current:
     parent: "000 Getting Started"
-title: The KrakenD Playground
 weight: 110
 images: ["https://raw.githubusercontent.com/krakend/playground-community/master/assets/composer-env.png"]
 

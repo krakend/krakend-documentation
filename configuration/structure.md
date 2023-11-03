@@ -2,10 +2,11 @@
 lastmod: 2023-01-31
 date: 2018-09-21
 linktitle: The configuration file
+title: Configuration Structure in KrakenD API Gateway
+description: Learn about the configuration structure and organization in KrakenD API Gateway to effectively define the behavior of your API gateway
 menu:
   community_current:
     parent: "010 Configuration file(s)"
-title: Understanding the configuration file
 weight: 10
 ---
 All KrakenD behavior depends on its configuration file(s). You'll find it referenced through all this documentation and for simplicity as the `krakend.json`, although the configuration [supports formats other than JSON](/docs/configuration/supported-formats/) and it can be described [using multiple files and templates](/docs/configuration/flexible-config/). Being familiar with its structure it's essential.

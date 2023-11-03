@@ -2,7 +2,8 @@
 lastmod: 2023-06-03
 date: 2019-01-24
 linktitle: Transform requests and responses
-title: Modify requests and responses with Martian
+title: Static modification of requests and responses with Martian
+description: Learn how to integrate the Martian component into KrakenD API Gateway, enabling static request and response transformations for your APIs
 weight: 85
 aliases: ["/docs/endpoints/martian"]
 menu:

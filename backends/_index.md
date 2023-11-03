@@ -4,7 +4,8 @@ date: 2016-09-30
 toc: true
 aliases: ["/docs/backends/overview/"]
 linktitle: The backend object
-title: Declaring and connecting to backends
+title: Backend Configuration in KrakenD API Gateway
+description: Explore the backend configuration options in KrakenD API Gateway, allowing you to connect and integrate with your microservices efficiently
 weight: -1000
 notoc: true
 menu:

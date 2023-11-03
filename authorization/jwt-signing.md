@@ -2,7 +2,8 @@
 lastmod: 2022-10-24
 date: 2018-11-03
 linktitle: JWT Signing
-title: Generate signed JWT tokens
+title: JWT Signing with KrakenD API Gateway
+description: Implement JWT signing with KrakenD API Gateway to sign token payloads and secure your APIs
 weight: 30
 images: ["/images/krakend-signer-flow.png"]
 menu:
@@ -170,7 +171,7 @@ What happens here is that the user requests a `/token` to the gateway and the is
 Krakend uses `jose` library, so if you use your own PEM keys for signing you need to use the following steps to [convert your PEM file to JWKS](https://web3auth.io/docs/auth-provider-setup/byo-jwt-providers#how-to-convert-pem-to-jwks)
 
 Notice: if you are using [asymmetric algorithms](https://auth0.com/blog/navigating-rs256-and-jwks) and want to use gateway singing and verification simultaneously, you need to use the following keys with the same `kid`:
--  **private key jwks for signing** 
+-  **private key jwks for signing**
 -  **public key jwks for verification**
 
 

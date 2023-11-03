@@ -3,7 +3,8 @@ lastmod: 2022-10-25
 date: 2018-10-30
 toc: true
 linktitle: Standard Logging
-title: Logging to Syslog and Stdout
+title: Logging in KrakenD API Gateway
+description: Learn how to implement Syslog and Stdout logging in KrakenD API Gateway, enabling effective monitoring and troubleshooting of your API gateway and microservices
 weight: 10
 aliases: ["/docs/logging-metrics-tracing/logging/", "/docs/logging/extended-logging/"]
 menu:

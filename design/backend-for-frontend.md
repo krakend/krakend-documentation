@@ -1,9 +1,9 @@
 ---
 lastmod: 2023-03-13
 date: 2023-03-13
-description: The Backend For Frontend pattern allows you to create an API consumption layer that provides aggregated "views" of several services.
+title: Backend-for-Frontend (BFF) Design Pattern with KrakenD API Gateway
+description: Discover how to leverage the Backend-for-Frontend (BFF) design pattern with KrakenD API Gateway to optimize frontend-backend communication
 linktitle: Backend For Frontend
-title: The Backend For Frontend pattern
 weight: 10
 menu:
   community_current:
