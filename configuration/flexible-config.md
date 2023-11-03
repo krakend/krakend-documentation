@@ -50,7 +50,7 @@ The **environment variables** of the flexible configuration are:
 - `FC_TEMPLATES=path/to/templates`: The path to the `templates` directory. These are evaluated using the Go templating system.
 - `FC_SETTINGS=path/to/settings`: The path to the `settings` directory. Settings are JSON files that you can use to fill values in the templates, much similar to **env files** in other applications, but richer as you can use multiple files, structures, and nesting.
 - `FC_PARTIALS=path/to/partials`: The path to the `partials` directory. Partial files are pieces of text that DON'T EVALUATE, and they are inserted in the placeholder "as is".
-- `FC_OUT=file.json`: Saves the resulting configuration after rendering the template. It's required when you don't use JSON content (e.g., `FC_OUT=krakend.yml`), or when you need to pass the output to another program (like [`check --lint`](/docs/configuration/check/)).
+- `FC_OUT=file.json`: Saves the resulting configuration after rendering the template, useful for debugging, not required for runtime.
 
 
 For instance, let's write a simple template `simple.tmpl` (go template emulating a json format):

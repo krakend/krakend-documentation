@@ -30,14 +30,20 @@ docker run --rm -v "$PWD:/etc/krakend" {{< product image >}}:watch
 
 When you use [flexible configuration](/docs/configuration/flexible-config/), you can pass the environmental vars when starting the container. For instance:
 
-{{< terminal title="Hot reload with Flexible Configuration" >}}
+{{< terminal title="Hot reload with Flexible Configuration on Community" >}}
 docker run --rm -it -v "$PWD:/etc/krakend" \
     -e "FC_ENABLE=1" \
     -e "FC_OUT=compiled.json" \
     -e "FC_PARTIALS=/etc/krakend/partials" \
     -e "FC_SETTINGS=/etc/krakend/settings" \
     -e "FC_TEMPLATES=/etc/krakend/templates" \
-    {{< product image >}}:watch run -c krakend.tmpl
+    devopsfait/krakend:watch run -c krakend.tmpl
+{{< /terminal >}}
+
+{{< terminal title="Hot reload with Flexible Configuration on Enterprise" >}}
+docker run --rm -it -v "$PWD:/etc/krakend" \
+    -e "FC_CONFIG=/etc/krakend/flexible_config.json" \
+    krakend/krakend-ee:watch run -c krakend.tmpl
 {{< /terminal >}}
 
 You can also integrate inside your IDE a watch to continuously check the configuration with the `check` command instead of `run`.
