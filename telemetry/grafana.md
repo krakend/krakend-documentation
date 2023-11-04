@@ -2,7 +2,8 @@
 lastmod: 2022-09-28
 date: 2020-11-17
 linktitle: Grafana Dashboard
-title: Preconfigured Grafana dashboard
+title: Telemetry and Monitoring with Grafana in KrakenD API Gateway
+description: Discover how to set up telemetry and monitoring for KrakenD API Gateway using Grafana, gaining insights into performance and usage metrics
 weight: 30
 aliases: ["/docs/extended-metrics/grafana/"]
 menu:

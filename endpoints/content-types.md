@@ -3,7 +3,8 @@ aliases: ["/features/other/", "/docs/features/content-types/"]
 lastmod: 2023-10-16
 date: 2016-04-14
 linktitle: Output encoding
-title: Output encoding
+title: Encoding Handling in KrakenD API Gateway
+description: Discover how KrakenD API Gateway handles various content types, ensuring proper parsing and transformation for seamless data exchange
 weight: 10
 menu:
   community_current:

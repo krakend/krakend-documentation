@@ -3,7 +3,8 @@ lastmod: 2022-10-10
 date: 2021-05-21
 toc: true
 linktitle: HTTP server plugins
-title: HTTP handler plugins
+title: HTTP Server Plugins for KrakenD API Gateway
+description: Discover how to write HTTP server plugins for KrakenD API Gateway, enabling you to customize server behaviors and implement custom logic.
 weight: 10
 notoc: true
 menu:

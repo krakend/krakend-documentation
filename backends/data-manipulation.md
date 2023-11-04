@@ -3,7 +3,8 @@ lastmod: 2020-07-24
 date: 2016-09-30
 toc: true
 linktitle: Data manipulation
-title: Backend data manipulation
+title: Data Manipulation in KrakenD API Gateway
+description: Explore data manipulation capabilities in KrakenD API Gateway, enabling transformation and manipulation of response data
 weight: 5
 menu:
   community_current:
@@ -11,7 +12,7 @@ menu:
 meta:
   noop_incompatible: true
 ---
-This page describes the most basic options to manipulate the content you receive from the backend before delivering it to the client.
+This page describes the most basic options to manipulate the content you receive from the `backend` before delivering it to the endpoint to [aggregate data from all backends](/docs/endpoints/response-manipulation/#aggregation-and-merging).
 
 <!--more-->
 {{< note title="Before you begin..." type="tip" >}}

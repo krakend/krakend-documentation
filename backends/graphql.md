@@ -2,7 +2,8 @@
 lastmod: 2023-05-24
 date: 2021-11-03
 linktitle: GraphQL
-title: GraphQL gateway
+title: GraphQL Backend Integration in KrakenD API Gateway
+description: Integrate GraphQL backends into KrakenD API Gateway to leverage the power of GraphQL in your microservices architecture
 weight: 150
 images:
 - /images/documentation/graphql/krakend-graphql.png

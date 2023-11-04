@@ -2,7 +2,8 @@
 lastmod: 2019-01-15
 date: 2019-01-14
 linktitle: Injecting plugins
-title: Loading and injecting plugins
+title: Injecting Plugins into KrakenD API Gateway - Extensibility Guide
+description: Discover the extensibility of KrakenD API Gateway by learning how to inject custom plugins for adding new functionality and integration
 weight: 2
 skip_header_image: true
 menu:

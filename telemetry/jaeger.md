@@ -3,8 +3,8 @@ lastmod: 2023-02-03
 date: 2019-10-11
 notoc: true
 linktitle: Jaeger
-title: Exporting traces to Jaeger
-description: The KrakenD exporter to Jaeger allows you to submit spans to a Jaeger Collector (HTTP) or Jaeger Agent (UDP) automatically.
+title: Jaeger Telemetry Integration - KrakenD API Gateway
+description: Integrate Jaeger telemetry with KrakenD API Gateway for distributed tracing and monitoring of your microservices architecture
 weight: 100
 notoc: false
 aliases: ["/docs/logging-metrics-tracing/jaeger/"]

@@ -3,7 +3,8 @@ lastmod: 2023-06-28
 date: 2016-09-30
 aliases: ["/service-discovery/dns-srv/", "/docs/service-discovery/overview/"]
 linktitle: Service Discovery
-title: Service Discovery
+title: Service Discovery Integration in KrakenD API Gateway
+description: Integrate service discovery mechanisms into KrakenD API Gateway to dynamically discover and route requests to available backend services
 weight: 10
 menu:
   community_current:

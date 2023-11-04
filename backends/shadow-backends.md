@@ -2,7 +2,8 @@
 lastmod: 2018-10-29
 date: 2018-10-29
 linktitle: Traffic shadowing/mirroring
-title: Traffic shadowing or mirroring
+title: Traffic shadowing and mirroring in KrakenD API Gateway
+description: Implement shadow backends in KrakenD API Gateway for non-intrusive testing and monitoring of new backend services or API versions
 weight: 60
 since: 0.9
 notoc: false

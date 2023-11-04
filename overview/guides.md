@@ -4,6 +4,7 @@ date: 2020-04-17
 menu:
   community_current:
     parent: "000 Getting Started"
+linktitle: Tutorials and Guides
 title: Comprehensive Guides for KrakenD API Gateway
 description: Access a collection of comprehensive guides for KrakenD API Gateway, providing step-by-step instructions and best practices for various use cases
 notoc: true

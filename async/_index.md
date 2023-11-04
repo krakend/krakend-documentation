@@ -2,7 +2,8 @@
 lastmod: 2022-01-21
 date: 2022-01-21
 linktitle:  Async Agents
-title: Async agents
+title: Asynchronous Agents with KrakenD API Gateway
+description: Learn how to leverage asynchronous processing in KrakenD API Gateway to implement an event based pattern
 weight: 10
 aliases: ["/docs/async/agent/"]
 images:

@@ -2,8 +2,8 @@
 lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: Benchmarks Overview
-title: Benchmarks Overview
-description: Experience the speed and scalability of KrakenD for yourself with our transparent benchmark results and instructions to reproduce.
+title: API Gateway Performance Benchmarks with KrakenD
+description: Explore the performance benchmarks conducted with KrakenD API Gateway to ensure optimal performance and scalability for your APIs.
 aliases: ["/docs/benchmarks/overview/"]
 weight: 1
 menu:

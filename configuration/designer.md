@@ -2,11 +2,11 @@
 lastmod: 2023-04-12
 date: 2023-04-12
 linktitle: "Designer: Graphical Interface"
-description: Edit configuration files with a UI that allows you to apply changes on KrakenD after every save. The Designer is intended to speed up the development phase.
+description: Discover the API Configuration Designer in KrakenD API Gateway, enabling intuitive and visual configuration management for your APIs
 menu:
   community_current:
     parent: "010 Configuration file(s)"
-title: "Designer: The UI configuration editor"
+title: "API Configuration Designer in KrakenD API Gateway"
 meta:
   source: https://github.com/krakend/krakendesigner
   since: 0.2

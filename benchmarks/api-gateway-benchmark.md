@@ -2,8 +2,8 @@
 lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: KrakenD vs others
-title: Comparison of KrakenD vs others
-description: Benchmark of KrakenD API gateway compared to other products in the market that coexist in the API gateway segment
+title: API Gateway Benchmarking with KrakenD
+description: Explore the API gateway benchmarking capabilities of KrakenD, measure performance, and optimize your API gateway for high throughput and low latency
 weight: 10
 menu:
   community_current:

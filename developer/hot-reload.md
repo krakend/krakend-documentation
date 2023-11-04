@@ -2,7 +2,8 @@
 lastmod: 2018-11-02
 date: 2017-01-21
 linktitle: Watch and hot reload
-title: Hot reloading the configuration
+title: Hot Reload Feature in KrakenD API Gateway
+description: Explore the hot reload feature in KrakenD API Gateway, allowing dynamic configuration updates without service interruption for enhanced agility on development
 weight: 80
 #notoc: true
 menu:

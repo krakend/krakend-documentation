@@ -3,7 +3,8 @@ lastmod: 2022-09-21
 date: 2022-09-21
 notoc: true
 linktitle: ELK dashboard
-title: ELK Stack dashboard
+title: ELK Integration for Logging in KrakenD API Gateway
+description: Learn how to integrate the ELK (Elasticsearch, Logstash, Kibana) stack for centralized logging and log analysis in KrakenD API Gateway
 weight: 100
 source: https://github.com/krakend/telemetry-dashboards
 menu:

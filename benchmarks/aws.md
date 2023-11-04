@@ -2,8 +2,8 @@
 lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: On Amazon Web Services
-title: KrakenD Benchmarks on AWS
-description: Performance tests of KrakenD running on different Amazon Web Services instance types and final conclusions to choose the right one.
+title: Benchmarking KrakenD API Gateway on AWS
+description: Explore the benchmarking results of KrakenD API Gateway running on Amazon Web Services (AWS), showcasing its performance and scalability
 weight: 10
 menu:
   community_current:

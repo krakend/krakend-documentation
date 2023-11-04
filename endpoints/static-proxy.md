@@ -2,7 +2,8 @@
 lastmod: 2019-02-22
 date: 2019-02-22
 linktitle: Static responses (stubs)
-title: Static Proxy - Adding static/stub data
+title: Static Proxy Endpoints in KrakenD API Gateway
+description: Learn how to configure static proxy endpoints in KrakenD API Gateway to return stubs and static data on certain events
 weight: 70
 menu:
   community_current:

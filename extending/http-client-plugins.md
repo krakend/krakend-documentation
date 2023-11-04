@@ -3,7 +3,7 @@ lastmod: 2022-06-14
 date: 2021-05-21
 toc: true
 linktitle: HTTP client plugins
-title: HTTP Client plugins (proxy layer)
+title: Learn how to extend the functionality of KrakenD API Gateway by utilizing HTTP client plugins, enabling customized communication with external services
 weight: 20
 menu:
   community_current:

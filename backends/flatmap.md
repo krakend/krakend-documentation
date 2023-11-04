@@ -3,8 +3,8 @@ lastmod: 2023-02-07
 date: 2019-04-05
 toc: true
 linktitle: Array manipulations, object flattening
-title: "Flatmap: Array manipulation, object flattening"
-description: The flatmap middleware allows you to manipulate collections (or arrays, or lists, you name it) or to flatten objects from the response.
+title: Array manipulation in KrakenD API Gateway
+description: Integrate the FlatMap backend into KrakenD API Gateway for array data transformation and mapping operations in your API ecosystem
 weight: 6
 menu:
   community_current:

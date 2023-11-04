@@ -2,7 +2,8 @@
 lastmod: 2022-01-31
 date: 2016-09-30
 linktitle: HTTP Security
-title: HTTP Security
+title: HTTP Security Considerations in KrakenD API Gateway
+description: Learn about the security considerations and best practices in configuring and securing KrakenD API Gateway for protecting your APIs
 weight: 40
 menu:
   community_current:

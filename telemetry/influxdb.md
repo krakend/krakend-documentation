@@ -2,7 +2,8 @@
 lastmod: 2022-10-24
 date: 2019-09-15
 linktitle: InfluxDB
-title: Exporting metrics and events to InfluxDB
+title: InfluxDB Telemetry Integration with KrakenD API Gateway
+description: Integrate InfluxDB telemetry with KrakenD API Gateway for efficient data collection, storage, and visualization of API performance metrics
 weight: 10
 #notoc: true
 aliases: ["/docs/extended-metrics/influxdb/","/docs/logging-metrics-tracing/influxdb/","/docs/telemetry/influxdb-native/"]

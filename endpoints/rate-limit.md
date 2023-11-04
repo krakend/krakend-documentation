@@ -2,7 +2,8 @@
 lastmod: 2023-02-16
 date: 2016-07-01
 linktitle: Rate Limits
-title: Router Rate-limiting
+title: Rate Limiting in KrakenD API Gateway
+description: Implement rate limiting strategies in KrakenD API Gateway to control the number of requests and prevent API abuse or overloading
 weight: 10
 scope:
 - endpoint

@@ -2,7 +2,8 @@
 lastmod: 2023-06-23
 date: 2018-10-29
 linktitle: Proxy rate limit
-title: Rate-limiting backends
+title: Rate Limiting in KrakenD API Gateway Backends
+description: Implement rate limiting in KrakenD API Gateway backends to control and manage API usage, preventing abuse and ensuring fair resource allocation
 weight: 10
 menu:
   community_current:

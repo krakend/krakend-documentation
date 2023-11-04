@@ -2,10 +2,11 @@
 lastmod: 2020-03-27
 date: 2017-01-21
 linktitle: Server requirements
+title: Server Dimensioning for KrakenD API Gateway Deployment
+description: Learn how to dimension and scale servers for deploying KrakenD API Gateway, ensuring optimal performance and resource allocation
 menu:
   community_current:
     parent: "110 Deployment and Go-Live"
-title: KrakenD servers requirements
 weight: 10
 ---
 When comparing KrakenD with other solutions, a key difference is that its **Total Cost of Ownership** is actually **lower**, and you can save a lot of money in infrastructure.

@@ -3,7 +3,8 @@ lastmod: 2020-10-19
 date: 2020-10-19
 notoc: true
 linktitle: Status Codes
-title: KrakenD Status Codes
+title: Status Codes in KrakenD API Gateway
+description: Learn how to interpret HTTP status codes in KrakenD API Gateway, ensuring accurate and meaningful responses to API consumers
 weight: 25
 menu:
   community_current:

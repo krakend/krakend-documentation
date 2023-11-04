@@ -2,8 +2,8 @@
 lastmod: 2023-10-23
 date: 2020-04-10
 linktitle: Mutual TLS Authentication (mTLS)
-title: Mutual TLS Authentication (mTLS)
-description: The mutual TLS authentication is used in business-to-business (B2B) applications where clients must provide a certificate to connect to KrakenD
+title: Mutual Authentication in KrakenD API Gateway
+description: Implement mutual authentication in KrakenD API Gateway to establish a secure and trusted communication channel between clients and APIs
 weight: 50
 notoc: false
 menu:

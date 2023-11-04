@@ -3,7 +3,8 @@ lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Prometheus
-title: Exporting metrics to Prometheus
+title: KrakenD API Gateway - Prometheus Telemetry Integration
+description: Learn how to integrate Prometheus telemetry with KrakenD API Gateway for efficient monitoring and performance analysis of your APIs
 weight: 70
 aliases: ["/docs/logging-metrics-tracing/prometheus/"]
 menu:

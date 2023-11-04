@@ -5,6 +5,7 @@ date: 2016-07-01
 menu:
   community_current:
     parent: "000 Getting Started"
+linktitle: Installation
 title: KrakenD API Gateway Installation Guide
 description: Follow our step-by-step installation guide to set up and configure KrakenD API Gateway, enabling efficient and scalable API management.
 weight: 20

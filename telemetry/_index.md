@@ -3,7 +3,8 @@ lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Telemetry integrations
-title: Telemetry
+title: Telemetry and Monitoring in KrakenD API Gateway
+description: Learn about the telemetry and monitoring capabilities of KrakenD API Gateway, enabling real-time visibility and analysis of API performance
 weight: 1
 images:
 - /images/documentation/available-exporters.png

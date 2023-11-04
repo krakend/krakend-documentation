@@ -2,7 +2,8 @@
 lastmod: 2020-03-01
 date: 2019-09-15
 linktitle: Publisher/subscribe
-title: Using publisher/subscribe as backends
+title: Pub-Sub Backend Integration in KrakenD API Gateway
+description: Integrate Pub-Sub backend into KrakenD API Gateway to enable event-driven communication and real-time data updates in your API ecosystem
 weight: 100
 images:
 - /images/features-event-driven.png

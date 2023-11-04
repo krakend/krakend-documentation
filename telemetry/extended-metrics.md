@@ -2,7 +2,8 @@
 lastmod: 2021-05-02
 date: 2018-11-05
 linktitle: Extended metrics
-title: Extended metrics
+title: Extended Metrics in KrakenD API Gateway Telemetry
+description: Explore the extended metrics available in KrakenD API Gateway telemetry for detailed insights into API performance and usage
 aliases: ["/docs/extended-metrics/metrics/"]
 weight: 1000
 menu:

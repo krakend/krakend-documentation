@@ -2,7 +2,8 @@
 lastmod: 2023-11-02
 date: 2021-10-29
 linktitle: Router options
-title: Customizing router behavior
+title: Router Options in KrakenD API Gateway
+description: Explore the router options available in KrakenD API Gateway to customize the routing behavior and optimize API request handling
 weight: 10
 notoc: false
 meta:

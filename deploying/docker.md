@@ -2,7 +2,8 @@
 lastmod: 2021-12-07
 date: 2021-12-07
 linktitle: Docker artifact
-title: Generating a Docker artifact
+title: Deploying KrakenD API Gateway with Docker
+description: Learn how to deploy KrakenD API Gateway using Docker, enabling containerized deployments for efficient scaling and management
 notoc: true
 menu:
   community_current:

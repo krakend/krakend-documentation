@@ -2,7 +2,8 @@
 lastmod: 2023-06-20
 date: 2018-11-11
 linktitle: Lambda functions
-title: Integration with AWS Lambda functions
+title: AWS Lambda Integration in KrakenD API Gateway
+description: Integrate AWS Lambda functions into KrakenD API Gateway to leverage serverless computing for scalable and event-driven API processing
 weight: 110
 images:
     - /images/krakend-lambda.png

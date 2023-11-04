@@ -3,6 +3,7 @@ lastmod: 2023-03-14
 date: 2019-01-24
 linktitle: "Conditional requests and responses"
 title: Conditional requests and responses with CEL
+description: Learn how to utilize the Common Expression Language (CEL) in KrakenD API Gateway for dynamic routing and advanced request handling
 weight: 80
 images: ["/images/documentation/krakend-cel.png"]
 menu:

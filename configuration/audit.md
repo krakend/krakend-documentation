@@ -2,8 +2,8 @@
 lastmod: 2023-01-31
 date: 2023-01-18
 linktitle: Configuration audit
-title: Security audit of your configuration
-description: The krakend audit command evaluates a configuration file's integrity and prints security recommendations and statistical information.
+title: Auditing KrakenD API Gateway Configurations
+description: Learn how to configure configuration auditing in KrakenD API Gateway to ensure file integrity and print security recommendations and statistical information
 weight: 21
 notoc: false
 images:

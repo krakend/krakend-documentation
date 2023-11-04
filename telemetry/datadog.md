@@ -3,7 +3,8 @@ lastmod: 2023-02-28
 date: 2020-07-24
 notoc: true
 linktitle: Datadog
-title: Exporting traces to Datadog
+title: Datadog Telemetry Integration with KrakenD API Gateway
+description: Integrate Datadog telemetry with KrakenD API Gateway for advanced monitoring, visualization, and analysis of your API ecosystem
 weight: 90
 since: 1.2
 source: https://github.com/krakend/krakend-opencensus

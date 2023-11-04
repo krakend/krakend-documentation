@@ -2,8 +2,8 @@
 lastmod: 2022-10-10
 date: 2021-11-25
 linktitle: Introduction to plugins
-title: Introduction to custom plugins and middlewares
-description: Understand the differences between side load your plugins versus forking the project and compiling your own middlewares, and how to start coding plugins
+title: Extending KrakenD API Gateway - Plugin Development
+description: Learn how to extend KrakenD API Gateway by developing custom plugins to add new functionalities and integrate with external systems
 aliases: ["/docs/extending/introduction/"]
 weight: -100
 skip_header_image: true
