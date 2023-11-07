@@ -2,8 +2,8 @@
 lastmod: 2023-01-31
 date: 2016-07-01
 linktitle: Supported file formats
-title: KrakenD file supported formats
-description: What configuration file format should I choose? KrakenD supports many formats but the json format will work best.
+title: Supported Configuration Formats
+description: Explore the supported formats for KrakenD configuration. Find the best fit for your API Gateway setup
 menu:
   community_current:
     parent: "010 Configuration file(s)"

@@ -3,7 +3,8 @@ lastmod: 2022-06-15
 date: 2019-09-15
 notoc: true
 linktitle: Logstash
-title: Logstash
+title: "Logstash Integration in the API Gateway"
+description: Streamline log management and analysis by integrating Logstash with KrakenD. Follow our documentation to set up seamless integration and gain valuable insights from your API logs.
 weight: 50
 source: https://github.com/krakend/krakend-logstash
 aliases: ["/docs/logging-metrics-tracing/logstash/"]
@@ -14,7 +15,7 @@ menu:
 The [Logstash](https://www.elastic.co/es/logstash/) integration prints **KrakenD application logs in JSON format** (not access logs) to ingest them and process them later. If you want to log using the Logstash standard via stdout, you need to add the `telemetry/logging` integration as a dependency.
 
 ## Configuration
-The configuration you need to enable logstash is:
+The configuration you need to enable Logstash is very simple:
 
 ```json
 {

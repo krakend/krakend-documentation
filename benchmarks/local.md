@@ -2,7 +2,7 @@
 lastmod: 2016-10-28
 date: 2016-10-28
 linktitle: Local machine
-title: Local Benchmarks
+title: Benchmarking KrakenD API Gateway on a local machine
 description: Performance tests of KrakenD running on a local machine (laptop) with measurements of different concurrency levels.
 weight: 15
 menu:

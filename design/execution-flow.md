@@ -2,8 +2,8 @@
 date: 2022-09-06
 lastmod: 2022-09-06
 linktitle: The execution flow
-title: KrakenD Execution Flow
-description: Is the configuration X executed before the configuration Y? How KrakenD components are loaded and executed and in which order.
+title: KrakenD Execution Flow Design
+description: Understand the execution flow design of KrakenD API Gateway. Is the configuration X executed before the configuration Y?
 menu:
   community_current:
     parent: "170 Design principles"

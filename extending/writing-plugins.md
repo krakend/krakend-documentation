@@ -4,7 +4,7 @@ date: 2019-01-14
 linktitle: Building custom plugins
 title: Building custom plugins for KrakenD API Gateway
 description: Learn how to extend the functionality of KrakenD API Gateway by writing and building custom plugins, enabling custom business logic and workflows
-weight: 1
+weight: 10
 skip_header_image: true
 menu:
   community_current:

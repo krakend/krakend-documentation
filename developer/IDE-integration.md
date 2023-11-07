@@ -2,7 +2,8 @@
 lastmod: 2018-11-02
 date: 2017-01-21
 linktitle: IDE integration
-title: IDE integration
+title: IDE Integration Guide for Developers
+description: Enhance your development workflow by integrating KrakenD with your favorite IDE. Follow our comprehensive guide to seamlessly integrate KrakenD into your development environment.
 weight: 20
 notoc: true
 images:
@@ -34,6 +35,21 @@ KrakenD has published an updated JSON-schema definition ([source](https://github
 }
 ```
 
+If you want to point to the latest version of KrakenD, and not to a specific version, you can add:
+
+
+```json
+{
+    "$schema": "https://www.krakend.io/schema/krakend.json"
+}
+```
+
+
 There is nothing else you need to do!
 
 Part of the URL is the KrakenD version you want to validate, notice that it does not contain the patch number (e.g.: `vA.B` instead of `vA.B.C`).
+
+## Highlighting on Flexible Configuration templates
+If you are working with flexible configuration, look in your favourite's editor marketplace extensions to deal with go `text/template` files (not html/template) that support code highlighting.
+
+Some editors also allow you the combination of templating + JSON format, so you can work with both.

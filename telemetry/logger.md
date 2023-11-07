@@ -4,6 +4,7 @@ date: 2019-09-15
 notoc: true
 linktitle: Logging through OpenCensus
 title: Exporting to the logger with OpenCensus
+description: Utilize an alternative Logger telemetry integration based on OpenCensus to monitor and analyze the API Gateway in KrakenD.
 weight: 150
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/logger/"]
@@ -20,9 +21,13 @@ meta:
   log_prefix:
   - "[SERVICE: Opencensus]"
 ---
-Opencensus can export data to the system logger as another exporter. This **is not** the [standard KrakenD Logging](/docs/logging/), and you should not enable both.
+{{< note title="Use standard logging instead" type="info" >}}
+Unless you have a compelling reason to use this logger based on OpenCensus, you should use the [standard KrakenD Logging](/docs/logging/) and not this component. This component will be deprecated in the future.
+{{< /note >}}
 
-Enabling it only requires you to add the `logger` exporter in the [opencensus module](/docs/telemetry/opencensus/).
+Opencensus can also export data to the system logger as other exporters. If you use this component, **do not not enable standard logging**.
+
+To enable OpenCensus logging, it only requires you to add the `logger` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
 The following configuration snippet enables the logger:
 ```json

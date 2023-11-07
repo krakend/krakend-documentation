@@ -2,11 +2,11 @@
 lastmod: 2023-03-21
 date: 2018-11-27
 linktitle: Echo endpoint
+title: Echo Endpoint Configuration
+description: Learn how to configure the Echo endpoint in KrakenD. A straightforward way to test your API Gateway setup containing the details of a request.
 menu:
   community_current:
     parent: "040 Endpoint Configuration"
-title: The `/__echo/` endpoint
-description: The echo endpoint is a simple debugging tool that replies with an object containing the details of a request. Use it to debug configurations and test components
 weight: 35
 notoc: true
 ---

@@ -2,17 +2,21 @@
 lastmod: 2021-12-02
 date: 2017-01-21
 linktitle: Running in a cluster
+title: Clustering Deployment Guide
+description: Discover the best practices for deploying KrakenD in a clustered environment. Scale your API infrastructure effectively using our comprehensive clustering deployment guide.
 notoc: true
 aliases: ["/docs/cluster/configuration/","/docs/cluster/cluster-overview/"]
 menu:
   community_current:
     parent: "110 Deployment and Go-Live"
-title: High-availability cluster
+
 weight: 1
 ---
 KrakenD nodes **are stateless** and they don't store data or application state to a persistent storage. Instead, any configuration data and application state exist within the configuration file. Nodes are expendable and replaceable at any time, as they do not hold anything.
 
-A KrakenD cluster consists of multiple KrakenD instances running simultaneously and working together to provide increased reliability, higher throughput, scalability, and fail-over. There is no special software that you need to run a cluster other than KrakenD.
+A KrakenD cluster consists of multiple KrakenD instances running simultaneously and working together to provide increased reliability, higher throughput, scalability, and fail-over. There is no special software that you need to run a cluster other than KrakenD and the hardware or software that will balance the connections.
+
+![Load balancing KrakenD](/images/documentation/diagrams/load-balancing-to-krakend.mmd.png)
 
 ## KrakenD cluster benefits
 Having a KrakenD cluster provides these immediate **benefits**:

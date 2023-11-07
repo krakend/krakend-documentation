@@ -3,6 +3,7 @@ lastmod: 2022-01-28
 date: 2022-01-28
 linktitle: Spike Arrest
 title: Spike Arrest and Burst
+description: Spike Arrest throttling in KrakenD to regulate API traffic and prevent overload situations effectively
 weight: 20
 notoc: true
 images:

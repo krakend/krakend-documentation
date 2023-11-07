@@ -3,7 +3,8 @@ lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Opencensus
-title: Sending out logs, metrics, and traces
+title: OpenCensus Telemetry Integration
+description: Learn how to integrate OpenCensus telemetry with KrakenD and monitor your API performance efficiently. Follow our comprehensive documentation for easy implementation.
 weight: 20
 aliases: ["/docs/logging-metrics-tracing/opencensus/"]
 menu:

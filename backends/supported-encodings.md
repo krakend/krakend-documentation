@@ -3,7 +3,8 @@ lastmod: 2020-07-12
 date: 2016-04-14
 toc: true
 linktitle: Supported encodings
-title: Supported backend encodings
+title: Supported Encodings for Backend Integration
+description: Explore the supported encodings for seamless integration with backend systems in KrakenD. Learn how to optimize data exchange and ensure compatibility between KrakenD and your backend services.
 weight: 40
 notoc: true
 menu:

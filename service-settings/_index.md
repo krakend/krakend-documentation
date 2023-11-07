@@ -2,8 +2,8 @@
 lastmod: 2023-10-24
 date: 2022-06-07
 linktitle:  Service Settings
+title: Service Settings Configuration
 description: Service settings are optional flags that allow you to change how KrakenD behaves globally for all endpoints across configuration.
-title: Service Settings
 weight: -1000
 notoc: true
 menu:

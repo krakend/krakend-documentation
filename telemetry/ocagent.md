@@ -3,7 +3,7 @@ lastmod: 2022-10-24
 date: 2020-11-16
 notoc: true
 linktitle: OpenCensus Agent
-title: OpenCensus Agent (Azure Monitor)
+title: OpenCensus Agent Telemetry Integration
 description: The ocagent exporter sends OpenCensus Stats and Traces to the OpenCensus Agent, instead of pushing data to backends’ exporters
 weight: 140
 notoc: true

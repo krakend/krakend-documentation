@@ -2,8 +2,8 @@
 lastmod: 2023-03-17
 date: 2023-03-17
 linktitle: JWK key caching
-title: Shared JWK caching
-description: A good JWK URL caching strategy reduces the impact KrakenD does on your identity provider while you guarantee that key rotation is taken into account.
+title: Shared JWK Caching for Authorization
+description: Implement shared JWK caching for efficient authorization in KrakenD. Learn how to cache and manage JSON Web Key (JWK) sets to optimize authorization's performance.
 weight: 21
 menu:
   community_current:

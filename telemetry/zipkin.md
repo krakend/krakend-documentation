@@ -3,7 +3,8 @@ lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Zipkin
-title: Exporting traces to Zipkin
+title: Zipkin Telemetry Integration
+description: Integrate Zipkin telemetry to monitor and trace KrakenD API Gateway requests efficiently for enhanced performance
 weight: 90
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/zipkin/"]

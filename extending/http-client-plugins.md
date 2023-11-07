@@ -3,8 +3,9 @@ lastmod: 2022-06-14
 date: 2021-05-21
 toc: true
 linktitle: HTTP client plugins
-title: Learn how to extend the functionality of KrakenD API Gateway by utilizing HTTP client plugins, enabling customized communication with external services
-weight: 20
+title: HTTP Client Plugins for KrakenD API Gateway
+description: Learn how to extend the functionality of KrakenD API Gateway by utilizing HTTP client plugins, enabling customized communication with external services
+weight: 110
 menu:
   community_current:
     parent: "150 Custom Plugins and Middleware"

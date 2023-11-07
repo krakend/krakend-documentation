@@ -5,7 +5,7 @@ toc: true
 linktitle: Req/resp modifier plugins
 title: Extending KrakenD API Gateway with Request and Response Plugin Modifiers
 description: Learn how to extend the functionality of KrakenD API Gateway by utilizing plugin modifiers, enabling customized request and response processing
-weight: 30
+weight: 120
 menu:
   community_current:
     parent: "150 Custom Plugins and Middleware"

@@ -3,8 +3,8 @@ lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
 linktitle: Google Cloud
-title: Google Cloud metrics
-description: The Opencensus exporter allows you to export metrics and traces to Google Cloud. Enabling it only requires you to add the stackdriver exporter.
+title: Google Cloud and Stackdriver Integration
+description: Monitor KrakenD API Gateway using Google Cloud (formerly Stackdriver) for comprehensive insights and effective troubleshooting
 weight: 120
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/stackdriver/"]

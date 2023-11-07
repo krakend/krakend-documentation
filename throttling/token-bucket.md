@@ -24,7 +24,7 @@ No matter how much money you have, you can carry a fixed maximum number of token
 
 Extrapolating to KrakenD, the rides are the API requests. Each token is a remaining gateway request you can do, and the bucket represents how many requests you are allowed to do before acquiring more tokens.
 
-## How the Token Bucket algorithm works
+## Understanding the Token Bucket algorithm
 The Token Bucket algorithm ([Wikipedia definition](https://en.wikipedia.org/wiki/Token_bucket)) is based on an analogy similar to the one described above.
 
 KrakenD uses the bucket capacity to determine the number of requests it can serve. At the same time, it **fills the bucket with new tokens at a constant rate** while there is free space in it. Then, **users spend one token for each request**, and a token is removed from the bucket.

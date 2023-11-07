@@ -4,7 +4,7 @@ date: 2020-02-26
 aliases: ["/docs/endpoints/creating-endpoints/"]
 linktitle:  The endpoint object
 title: Endpoint Configuration in KrakenD API Gateway
-description: Learn how to configure and manage endpoints effectively in KrakenD API Gateway, enabling seamless integration and orchestration of microservices.
+description: Configure and manage API endpoints effectively with KrakenD Enterprise. Explore our documentation to learn how to define and optimize your API endpoints for better performance.
 weight: -10
 menu:
   community_current:

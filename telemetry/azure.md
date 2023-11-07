@@ -2,7 +2,8 @@
 lastmod: 2022-12-07
 date: 2020-11-16
 linktitle: Azure Monitor
-title: Exporting traces to Azure Monitor
+title: Azure Monitor Telemetry Integration
+description: Integrate Azure Telemetry with KrakenD for effective monitoring and performance analysis of your APIs. Follow our documentation to set up seamless integration with your Azure services.
 weight: 130
 menu:
   community_current:
