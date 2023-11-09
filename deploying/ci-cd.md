@@ -23,7 +23,7 @@ There are several ways to automate KrakenD deployments, but **you must always te
 For the first step, the `check` command is a must in any **CI/CD pipeline** or pre-deploy process to ensure you don't put a broken setup in production that results in downtime. The `check` command lets you find broken configurations before going live. Add a line like the following in your release process:
 
 {{< terminal title="Recommended file check for CI/CD" >}}
-krakend check -t -d -c /path/to/krakend.json
+krakend check --lint -t -d -c /path/to/krakend.json
 {{< /terminal >}}
 
 The command above will stop the pipeline (`exit 1`) if it fails or continue if the configuration is correct. Make sure to always place it in your build/deploy process.
