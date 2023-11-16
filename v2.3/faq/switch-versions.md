@@ -31,7 +31,7 @@ If you have any of the components above, remove them from the configuration.
 The other [Enterprise-only features](/features/) are ignored and not loaded into the server, so whatever you leave or remove them from the configuration makes no difference to the server. Still, you should delete them to avoid confusion when reviewing the configuration later, as none of these actually work.
 
 {{< note title="Enterprise features are disabled" type="warning" >}}
-The Community Edition **ignores unrecognized features from the Enterprise Edition** and does not load any of its behavior. If you used critical components like [Security Policies](/docs/enterprise/security-policies/), [API Keys](/docs/enterprise/authentication/api-keys/), [OpenAPI](docs/enterprise/endpoints/openapi), [WebSockets](/docs/enterprise/websockets/), [gRPC](/docs/enterprise/backends/grpc/#how-grpc-works), etc. you must know all these are gone even if they are in the configuration, and that you are substantially changing how the API used to operate.
+The Community Edition **ignores unrecognized features from the Enterprise Edition** and does not load any of its behavior. If you used critical components like [Security Policies](/docs/enterprise/security-policies/), [API Keys](/docs/enterprise/authentication/api-keys/), [OpenAPI](/docs/enterprise/endpoints/openapi), [WebSockets](/docs/enterprise/websockets/), [gRPC](/docs/enterprise/backends/grpc/#how-grpc-works), etc. you must know all these are gone even if they are in the configuration, and that you are substantially changing how the API used to operate.
 {{< /note >}}
 
 ## Upgrade to Enterprise
