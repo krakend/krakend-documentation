@@ -70,35 +70,38 @@ If you want that **all connections to backends** use mTLS, add the following con
 {{< schema data="client_tls.json" filter="client_certs" >}}
 
 ### Per-backend mTLS
-If instead of enabling mTLS against all backends, you can enable mTLS in  a specific backend only. This option is available only in the {{< badge color="denim" >}}Enterprise Edition{{< /badge >}}
-
-To do that, you can use the [HTTP Client settings](/docs/enterprise/backends/http-client/).
+If instead of enabling mTLS against all backends, you can enable mTLS in a specific backend only. This option is available only in the {{< badge color="denim" >}}Enterprise Edition{{< /badge >}}
 
 An example configuration would be:
 
 ```json
 {
-    "endpoint": "/foo",
-    "output_encoding": "no-op",
-    "backend": [
-        {
-            "host": ["https://api"],
-            "url_pattern": "/foo",
-            "encoding": "no-op",
-            "extra_config": {
-                "backend/http/client": {
-                    "client_certs": [
-                        {
-                            "certificate": "cert.pem",
-                            "private_key": "cert.key"
-                        }
-                ]
-                }
-            }
+  "endpoint": "/foo",
+  "backend": [
+    {
+      "host": ["https://api-needing-mtls"],
+      "url_pattern": "/foo",
+      "extra_config": {
+        "backend/http/client": {
+          "client_tls": {
+            "client_certs": [
+              {
+                "certificate": "cert.pem",
+                "private_key": "cert.key"
+              }
+            ]
+          }
         }
-    ]
+      }
+    }
+  ]
 }
 ```
+Configuration needed ({{< badge color="denim" >}}Enterprise Edition{{< /badge >}} only):
+
+{{< schema data="client_tls.json" filter="client_certs" >}}
+
+This is the schema needed for client mTLS, but the [HTTP Client settings](/docs/enterprise/backends/http-client/) have many other options not related to mTLS.
 
 
 ## mTLS example

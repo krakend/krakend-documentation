@@ -2,7 +2,7 @@
 lastmod: 2023-08-28
 date: 2018-09-21
 linktitle: Templates
-title: "Templates"
+title: "Introduction to Templates"
 description: Understanding how to work with templates in the flexible configuration and other components.
 since: 0.5
 menu:
@@ -53,7 +53,7 @@ A few basics to get started:
 
 - Comments look like `{{/* a comment */}}` and can be multiline
 - Variables set by KrakenD are under `{{ .variable_name }}`. Notice the starting dot `.`.
-- Variables you assign can use the syntax `{{ $myvariable := "hello" }}`, and when already assigned with `{{ $myvariable = "hello2" }}`
+- Variables you assign can use the syntax `{{ $myvariable := "hello" }}`, and when a variable already exists with `{{ $myvariable = "hello2" }}`
 - Conditionals use the syntax `{{ if CONDITION }}yes{{else}}no{{end}}`. You can also use `{{else if}}`. Empty values evaluate to `false`.
 - Loops, or iterations use the syntax `{{ range .ELEMENT}}...{{end}}` or `{{ range .ELEMENT}}...{{else}}...{{end}}`. The `else` is used when the element you want to iterate is empty. Additionally you can use `{{break}}` and `{{continue}}` in loops.
 - You can loop with assigned indexes and variables as `{{ range $key, $value := .ELEMENT}}...{{end}}`
@@ -87,6 +87,9 @@ When calling templates from templates (flexible config), make sure to add the fi
 - `{{ template "hello.tmpl" . }}`: The hello template receives all setting files and works as its calling template.
 - `{{ template "hello.tmpl" .urls.users_api }}`: receives only the string value of the user API.
 - `{{ template "hello.tmpl" "hello world" }}`: receives only a constant string
+
+Only in the {{< badge color="denim" >}}Enterprise{{< /badge >}} edition you have an additional variable `.meta` holding directory metadata under the settings tree (maybe you want to traverse directory contents in a template).
+
 
 ### Using the `$` notation to access outsider context
 As we have seen, when making a loop with a `range` or accessing a `with`, the variables inside are relative to its context. Still, you can access outsider variables with the `$` notation.
