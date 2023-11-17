@@ -1,10 +1,9 @@
 ---
 lastmod: 2023-08-28
 date: 2018-09-21
-linktitle: Templates
+linktitle: Configuration with templates
 title: "Introduction to Templates"
 description: Understanding how to work with templates in the flexible configuration and other components.
-since: 0.5
 menu:
   community_current:
     parent: "010 Configuration file(s)"

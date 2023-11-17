@@ -200,22 +200,22 @@ The plugin is ready to use! You can now load your plugin in the configuration. A
 
 Start the server with `krakend run -dc krakend.json`. When you run the server, the expected output (with `DEBUG` log level) is:
 
-    2022/06/14 16:46:02 KRAKEND ERROR: [SERVICE: Logging] Unable to create the logger: getting the extra config for the krakend-gologging module
-    2022/06/14 16:46:02 KRAKEND DEBUG: [SERVICE: Plugin Loader] Starting loading process
-    2022/06/14 16:46:02 KRAKEND DEBUG: [SERVICE: Executor Plugin] plugin #0 (krakend-server-example/krakend-server-example.so): plugin: symbol ClientRegisterer not found in plugin krakend-server-example
-    2022/06/14 16:46:02 KRAKEND DEBUG: [PLUGIN: krakend-server-example] Logger loaded
-    2022/06/14 16:46:02 KRAKEND INFO: [SERVICE: Handler Plugin] Total plugins loaded: 1
-    2022/06/14 16:46:02 KRAKEND DEBUG: [SERVICE: Modifier Plugin] plugin #0 (krakend-server-example/krakend-server-example.so): plugin: symbol ModifierRegisterer not found in plugin krakend-server-example
-    2022/06/14 16:46:02 KRAKEND DEBUG: [SERVICE: Plugin Loader] Loading process completed
-    2022/06/14 16:46:02 KRAKEND INFO: Starting the KrakenD instance
-    2022/06/14 16:46:02 KRAKEND DEBUG: [ENDPOINT: /test/:id] Building the proxy pipe
-    2022/06/14 16:46:02 KRAKEND DEBUG: [BACKEND: /__health] Building the backend pipe
-    2022/06/14 16:46:02 KRAKEND DEBUG: [ENDPOINT: /test/:id] Building the http handler
-    2022/06/14 16:46:02 KRAKEND DEBUG: [ENDPOINT: /test/:id][JWTSigner] Signer disabled
-    2022/06/14 16:46:02 KRAKEND INFO: [ENDPOINT: /test/:id][JWTValidator] Validator disabled for this endpoint
-    2022/06/14 16:46:02 KRAKEND INFO: [SERVICE: Gin] Listening on port: 8080
-    2022/06/14 16:46:02 KRAKEND DEBUG: The plugin is now hijacking the path /hijack-me
-    2022/06/14 16:46:02 KRAKEND DEBUG: [PLUGIN: Server] Injecting plugin krakend-server-example
+    yyyy/mm/dd hh:mm:ss KRAKEND ERROR: [SERVICE: Logging] Unable to create the logger: getting the extra config for the krakend-gologging module
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: Plugin Loader] Starting loading process
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: Executor Plugin] plugin #0 (krakend-server-example/krakend-server-example.so): plugin: symbol ClientRegisterer not found in plugin krakend-server-example
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [PLUGIN: krakend-server-example] Logger loaded
+    yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: Handler Plugin] Total plugins loaded: 1
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: Modifier Plugin] plugin #0 (krakend-server-example/krakend-server-example.so): plugin: symbol ModifierRegisterer not found in plugin krakend-server-example
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: Plugin Loader] Loading process completed
+    yyyy/mm/dd hh:mm:ss KRAKEND INFO: Starting the KrakenD instance
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [ENDPOINT: /test/:id] Building the proxy pipe
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [BACKEND: /__health] Building the backend pipe
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [ENDPOINT: /test/:id] Building the http handler
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [ENDPOINT: /test/:id][JWTSigner] Signer disabled
+    yyyy/mm/dd hh:mm:ss KRAKEND INFO: [ENDPOINT: /test/:id][JWTValidator] Validator disabled for this endpoint
+    yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: Gin] Listening on port: 8080
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: The plugin is now hijacking the path /hijack-me
+    yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [PLUGIN: Server] Injecting plugin krakend-server-example
 
     ...
 

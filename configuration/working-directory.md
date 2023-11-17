@@ -29,8 +29,8 @@ In other installations, although we aim to default to `/etc/krakend`, you can st
 ## How to get the working directory
 The short answer is to start the gateway and look for the following line early in the logs:
 
-```
-2023/11/17 15:46:12 KRAKEND INFO: Working directory is /etc/krakend
+```log
+yyyy/mm/dd hh:mm:ss KRAKEND INFO: Working directory is /etc/krakend
 ```
 
 This informative line was introduced in KrakenD 2.5
