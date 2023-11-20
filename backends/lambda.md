@@ -174,9 +174,7 @@ Here is an example of Lambda code that could run a Hello World (NodeJS):
 exports.handler = async (event) => {
     // TODO implement
     const response = {
-        statusCode: 200,
-        body: {"message": "Hello World"},
-
+        "message": "Hello World",
     };
     return response;
 };
