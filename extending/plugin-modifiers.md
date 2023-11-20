@@ -288,6 +288,12 @@ Your custom plugin can set errors using two different approaches:
 - Return an error message and a status code
 - Return an error message, status code, and `Content-Type`.
 
+{{< note title="Client should see the error?" type="info" >}}
+As gateway errors are not propagated to the end-user, if you want them to see the defined error you must enable [`return_error_message`](/docs/service-settings/router-options/#returning-the-gateway-error-message) as [router options](/docs/service-settings/router-options/).
+
+{{< /note >}}
+
+
 ### Plugin returning an error message only
 The simple example could be something like (as seen in the code above):
 
