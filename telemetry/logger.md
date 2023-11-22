@@ -5,7 +5,7 @@ notoc: true
 linktitle: Logging through OpenCensus
 title: Exporting to the logger with OpenCensus
 description: Utilize an alternative Logger telemetry integration based on OpenCensus to monitor and analyze the API Gateway in KrakenD.
-weight: 150
+weight: 320
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/logger/"]
 menu:

@@ -5,7 +5,7 @@ notoc: true
 linktitle: Zipkin
 title: Zipkin Telemetry Integration
 description: Integrate Zipkin telemetry to monitor and trace KrakenD API Gateway requests efficiently for enhanced performance
-weight: 90
+weight: 100
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/zipkin/"]
 menu:

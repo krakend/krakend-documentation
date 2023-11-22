@@ -1,9 +1,9 @@
 ---
 lastmod: 2022-01-19
 date: 2019-10-07
-linktitle:  Health check
+linktitle: Health check endpoint
 title: API Health Check
-weight: 1
+weight: 25
 aliases: ["/docs/endpoints/health/"]
 menu:
   community_current:

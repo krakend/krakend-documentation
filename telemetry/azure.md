@@ -4,7 +4,7 @@ date: 2020-11-16
 linktitle: Azure Monitor
 title: Azure Monitor Telemetry Integration
 description: Integrate Azure Telemetry with KrakenD for effective monitoring and performance analysis of your APIs. Follow our documentation to set up seamless integration with your Azure services.
-weight: 130
+weight: 140
 menu:
   community_current:
     parent: "160 Monitoring, Logs, and Analytics"

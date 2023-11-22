@@ -5,7 +5,7 @@ notoc: true
 linktitle: Jaeger
 title: Jaeger Telemetry Integration - KrakenD API Gateway
 description: Integrate Jaeger telemetry with KrakenD API Gateway for distributed tracing and monitoring of your microservices architecture
-weight: 100
+weight: 110
 notoc: false
 aliases: ["/docs/logging-metrics-tracing/jaeger/"]
 menu:
