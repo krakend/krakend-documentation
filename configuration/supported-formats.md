@@ -6,7 +6,7 @@ title: Supported Configuration Formats
 description: Explore the supported formats for KrakenD configuration. Find the best fit for your API Gateway setup
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 notoc: true
 weight: 35
 ---

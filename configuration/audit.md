@@ -10,7 +10,7 @@ images:
 - /images/documentation/screenshots/krakend_audit.png
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 ---
 
 The `krakend audit` command is a rule evaluation tool that checks configuration files written in any of its [supported formats](/docs/configuration/supported-formats/) and returns practical **security recommendations**. It is designed to raise basic red flags and provide essential advice on your configuration. The output of the configuration and classification is inspired by the [CIS Benchmarks](https://www.cisecurity.org/communities/benchmarks).

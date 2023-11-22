@@ -9,7 +9,7 @@ weight: 20
 notoc: true
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 ---
 
 The `krakend check` command **validates KrakenD configuration files** written in any of its [supported formats](/docs/configuration/supported-formats/).

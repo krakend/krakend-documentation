@@ -8,7 +8,7 @@ source: https://github.com/krakend/krakend-flexibleconfig
 since: 0.5
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 images:
 - /images/krakend-flexible-config.png
 weight: 30

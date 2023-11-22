@@ -7,7 +7,7 @@ description: Understanding where the relative directory in KrakenD configuration
 notoc: true
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 meta:
     since: 2.5
 images:

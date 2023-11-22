@@ -6,7 +6,7 @@ title: "Introduction to Templates"
 description: Understanding how to work with templates in the flexible configuration and other components.
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 images:
 #- /images/documentation/diagrams/flexible-config.mmd.png
 
