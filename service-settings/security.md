@@ -7,7 +7,7 @@ description: Learn about the security considerations and best practices in confi
 weight: 40
 menu:
   community_current:
-    parent: "030 Service Settings"
+    parent: "070 Security"
 meta:
   since: 0.4
   source: https://github.com/krakend/krakend-httpsecure

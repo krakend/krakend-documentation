@@ -9,7 +9,7 @@ weight: 140
 notoc: true
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 1.1
   source: https://github.com/krakend/krakend-opencensus

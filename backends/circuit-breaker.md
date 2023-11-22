@@ -7,7 +7,7 @@ description: Implement the circuit breaker pattern in KrakenD API Gateway to enh
 weight: 20
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "090 Traffic Management"
 images:
 - /images/documentation/circuit-breaker.png
 - /images/documentation/circuit-breaker-states.png

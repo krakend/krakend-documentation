@@ -8,7 +8,7 @@ description: Integrate the FlatMap backend into KrakenD API Gateway for array da
 weight: 6
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "060 Request and Response Manipulation"
 meta:
   noop_incompatible: true
   since: 0.9

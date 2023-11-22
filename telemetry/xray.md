@@ -9,7 +9,7 @@ notoc: true
 aliases: ["/docs/logging-metrics-tracing/xray/"]
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   source: https://github.com/krakend/krakend-opencensus
   namespace:

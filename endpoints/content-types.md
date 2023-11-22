@@ -8,7 +8,7 @@ description: Discover how KrakenD API Gateway handles various content types, ens
 weight: 10
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "060 Request and Response Manipulation"
 images:
 - /images/documentation/diagrams/content-types.mmd.png
 skip_header_image: true

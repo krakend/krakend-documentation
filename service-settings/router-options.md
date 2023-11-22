@@ -4,7 +4,7 @@ date: 2021-10-29
 linktitle: Router options
 title: Router Options in KrakenD API Gateway
 description: Explore the router options available in KrakenD API Gateway to customize the routing behavior and optimize API request handling
-weight: 10
+weight: 120
 notoc: false
 meta:
   since: 2.0
@@ -18,7 +18,7 @@ meta:
 
 menu:
   community_current:
-    parent: "030 Service Settings"
+    parent: "040 Routing and Forwarding"
 ---
 
 The **optional router configuration** allows you to set global flags that change how KrakenD processes the requests globally at the router layer.

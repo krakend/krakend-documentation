@@ -4,12 +4,12 @@ date: 2016-07-01
 linktitle: Rate Limits
 title: Rate Limiting in KrakenD API Gateway
 description: Implement rate limiting strategies in KrakenD API Gateway to control the number of requests and prevent API abuse or overloading
-weight: 10
+weight: 130
 scope:
 - endpoint
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "090 Traffic Management"
 meta:
   since: 0.4
   source: https://github.com/krakend/krakend-ratelimit

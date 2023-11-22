@@ -9,7 +9,7 @@ images:
 - /images/features-event-driven.png
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "040 Routing and Forwarding"
 meta:
   since: 1.0
   source: https://github.com/krakend/krakend-pubsub

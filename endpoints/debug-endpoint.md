@@ -4,7 +4,7 @@ date: 2018-11-27
 linktitle: Debug endpoint
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "170 API Documentation and Dev Tools"
 title: Debug Endpoint in KrakenD API Gateway
 description: Learn how to utilize the debug endpoint in KrakenD API Gateway for troubleshooting and debugging purposes during API development and testing
 weight: 35

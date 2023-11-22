@@ -7,7 +7,7 @@ description: Integrate Azure Telemetry with KrakenD for effective monitoring and
 weight: 130
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 1.1
   source: https://github.com/krakend/krakend-opencensus

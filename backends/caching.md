@@ -7,7 +7,7 @@ description: Learn how to implement effective caching strategies in KrakenD API 
 weight: 50
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "060 Request and Response Manipulation"
 notoc: true
 meta:
   since: 0.4

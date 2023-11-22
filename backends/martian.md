@@ -8,7 +8,7 @@ weight: 85
 aliases: ["/docs/endpoints/martian"]
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "060 Request and Response Manipulation"
 meta:
   since: 0.7
   source: https://github.com/krakend/krakend-martian

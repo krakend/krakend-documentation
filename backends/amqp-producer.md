@@ -7,7 +7,7 @@ description: Integrate AMQP producers with KrakenD for seamless communication wi
 weight: 91
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "050 Non-REST Connectivity"
 meta:
   since: 0.9
   source: https://github.com/krakend/krakend-amqp

@@ -8,7 +8,7 @@ weight: 30
 aliases: ["/docs/extended-metrics/grafana/"]
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 skip_header_image: true
 images:
 - /images/documentation/grafana-screenshot.png

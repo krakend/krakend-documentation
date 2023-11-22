@@ -8,7 +8,7 @@ description: Learn how to interpret HTTP status codes in KrakenD API Gateway, en
 weight: 25
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "060 Request and Response Manipulation"
 ---
 
 When consuming content through KrakenD, the status code returned to the client depends on the chosen configuration. Three different approaches impact status codes:

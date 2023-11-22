@@ -5,10 +5,10 @@ aliases: ["/docs/endpoints/creating-endpoints/"]
 linktitle:  The endpoint object
 title: Endpoint Configuration in KrakenD API Gateway
 description: Configure and manage API endpoints effectively with KrakenD Enterprise. Explore our documentation to learn how to define and optimize your API endpoints for better performance.
-weight: -10
+weight: 10
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "040 Routing and Forwarding"
 ---
 KrakenD `endpoints` are the most critical configuration part of KrakenD, as they are what your end users consume. Adding endpoint objects creates the API contract your users will consume.
 

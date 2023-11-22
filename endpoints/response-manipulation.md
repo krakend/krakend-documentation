@@ -2,13 +2,13 @@
 lastmod: 2022-09-30
 date: 2016-09-30
 toc: true
-linktitle: Response manipulation
-title: Response Manipulation in KrakenD API Gateway
+linktitle: API Composition and aggregation
+title: API Composition and aggregation in KrakenD API Gateway
 description: Explore the response manipulation capabilities in KrakenD API Gateway, allowing you to modify and enhance API responses for a better user experience
 weight: 10
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "060 Request and Response Manipulation"
 images:
 - /images/documentation/krakend-merge.png
 meta:

@@ -13,7 +13,7 @@ images: ["/images/documentation/datadog-screenshot.png"]
 aliases: ["/docs/logging-metrics-tracing/datadog/"]
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 1.2
   source: https://github.com/krakend/krakend-opencensus

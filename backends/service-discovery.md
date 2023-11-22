@@ -5,10 +5,10 @@ aliases: ["/service-discovery/dns-srv/", "/docs/service-discovery/overview/"]
 linktitle: Service Discovery
 title: Service Discovery Integration in KrakenD API Gateway
 description: Integrate service discovery mechanisms into KrakenD API Gateway to dynamically discover and route requests to available backend services
-weight: 10
+weight: 160
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "040 Routing and Forwarding"
 ---
 The service discovery (`sd`) is an optional attribute of the `backend` section that enables KrakenD to detect and locate services automatically on your enterprise network.
 

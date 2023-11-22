@@ -7,7 +7,7 @@ weight: 1
 aliases: ["/docs/endpoints/health/"]
 menu:
   community_current:
-    parent: "030 Service Settings"
+    parent: "160 Monitoring, Logs, and Analytics"
 ---
 The health endpoint (or the **ping endpoint**) allows you to query KrakenD to find out if it is ready to accept connections or not.
 

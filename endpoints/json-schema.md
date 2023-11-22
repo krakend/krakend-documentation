@@ -7,7 +7,7 @@ description: Implement JSON Schema validation in KrakenD API Gateway to ensure d
 weight: 130
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "060 Request and Response Manipulation"
 notoc: true
 meta:
   since: 1.2

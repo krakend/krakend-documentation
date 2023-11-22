@@ -10,7 +10,7 @@ images:
 skip_header_image: true
 menu:
   community_current:
-    parent: "060 Event Driven Gateway"
+    parent: "050 Non-REST Connectivity"
 meta:
   since: 2.0
   source: https://github.com/luraproject/lura

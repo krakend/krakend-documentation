@@ -6,12 +6,12 @@ title: Sequential Proxying in KrakenD API Gateway
 description: Explore the sequential proxying capability in KrakenD API Gateway, allowing you to chain multiple requests and orchestrate complex API workflows
 since: 0.7
 notoc: false
-weight: 60
+weight: 80
 images:
 - /images/documentation/krakend-sequential-call.png
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "060 Request and Response Manipulation"
 meta:
   noop_incompatible: true
   since: 0.7

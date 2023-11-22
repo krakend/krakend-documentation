@@ -7,7 +7,7 @@ description: Learn how to configure static proxy endpoints in KrakenD API Gatewa
 weight: 70
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "060 Request and Response Manipulation"
 meta:
   noop_incompatible: true
   since: 0.5

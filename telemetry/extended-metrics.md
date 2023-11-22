@@ -8,7 +8,7 @@ aliases: ["/docs/extended-metrics/metrics/"]
 weight: 1000
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 notoc: true
 meta:
   since: 0.4

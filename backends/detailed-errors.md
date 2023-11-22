@@ -4,10 +4,10 @@ date: 2019-10-02
 linktitle: Backend headers and errors
 title: Returning the backend headers and errors
 description: Implement returning of backend headers and errors to provide informative and customized error messages to API consumers
-weight: 4
+weight: 140
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "060 Request and Response Manipulation"
 meta:
   #noop_incompatible: true
   since: 0.8
