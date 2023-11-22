@@ -4,12 +4,12 @@ date: 2019-09-15
 linktitle: Bot detector
 title: "Bot Detection and Throttling Guide: Prevent API Abuse"
 description: Implement bot detection and throttling mechanisms to prevent API abuse and ensure fair usage. Follow our comprehensive guide to protect your APIs from malicious bot traffic.
-weight: 30
+weight: 990
 images:
 - /images/krakend-botdetector.png
 menu:
   community_current:
-    parent: "070 Traffic Management"
+    parent: "090 Traffic Management"
 meta:
   since: 1.0
   source: https://github.com/krakend/krakend-botdetector

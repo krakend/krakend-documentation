@@ -6,10 +6,10 @@ linktitle: Throttling overview
 title: "API Throttling Guide: Control Traffic & Prevent Abuse"
 description: Implement efficient API throttling techniques to control traffic and prevent abuse. Follow our comprehensive guide to ensure fair usage of your API resources with KrakenD.
 notoc: true
-weight: -10
+weight: 910
 menu:
   community_current:
-    parent: "070 Traffic Management"
+    parent: "090 Traffic Management"
 ---
 KrakenD offers several ways to protect the usage of your infrastructure that might act at very different levels.
 

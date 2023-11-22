@@ -4,14 +4,14 @@ date: 2016-07-01
 linktitle: Understanding the Token Bucket
 title: "How API Traffic Throttling with Token Bucket algorithm works"
 description: Implement token bucket-based throttling mechanism in KrakenD API Gateway to control API access rates and prevent abuse
-weight: 10
+weight: 9200
 notoc: true
 images:
 - /images/documentation/krakend-token-bucket.png
 skip_header_image: true
 menu:
   community_current:
-    parent: "070 Traffic Management"
+    parent: "090 Traffic Management"
 ---
 
 The Token Bucket algorithm helps you to allow or deny requests depending on the levels of traffic you are having. The algorithm is used to offer functionalities like the **Spike Arrest** and the several **Rate Limiting** options.

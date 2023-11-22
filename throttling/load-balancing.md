@@ -5,10 +5,10 @@ toc: true
 linktitle: Load balancing
 title: Load Balancing and Throttling in KrakenD API Gateway
 description: Explore load balancing and throttling strategies in KrakenD API Gateway to ensure optimal performance and resource utilization
-weight: 1
+weight: 920
 menu:
   community_current:
-    parent: "070 Traffic Management"
+    parent: "090 Traffic Management"
 meta:
   since: 0.1
   source: https://github.com/luraproject/lura
