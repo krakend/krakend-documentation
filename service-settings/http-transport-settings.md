@@ -1,16 +1,18 @@
 ---
 lastmod: 2022-01-18
 date: 2022-01-18
-linktitle: HTTP Transport settings
-title: Advanced HTTP Transport settings
-weight: 60
+linktitle: HTTP Global Client settings
+title: HTTP Global Client settings
+weight: 140
 notoc: true
 aliases: ["/docs/throttling/max-idle-connections/"]
 menu:
   community_current:
     parent: "040 Routing and Forwarding"
 ---
-When KrakenD communicates using http, it implements a concurrent-safe round tripper that supports HTTP, HTTPS, and HTTP proxies, and it caches connections for future re-use. This may leave many open connections when accessing many hosts. You can change the behavior of the transport layer using several settings presented below.
+When KrakenD communicates using HTTP **with all your upstream services**, it implements a concurrent-safe round tripper that supports HTTP, HTTPS, and HTTP proxies, and it caches connections for future re-use. This may leave many open connections when accessing many hosts. You can change the behavior of the transport layer using several settings presented below.
+
+The following settings affect **all connections from KrakenD to your services**.
 
 If you want to customize any of the settings below, they must be written at the top level of the configuration.
 
