@@ -8,7 +8,7 @@ notoc: true
 aliases: ["/docs/throttling/max-idle-connections/"]
 menu:
   community_current:
-    parent: "030 Service Settings"
+    parent: "040 Routing and Forwarding"
 ---
 When KrakenD communicates using http, it implements a concurrent-safe round tripper that supports HTTP, HTTPS, and HTTP proxies, and it caches connections for future re-use. This may leave many open connections when accessing many hosts. You can change the behavior of the transport layer using several settings presented below.
 
