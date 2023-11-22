@@ -6,7 +6,7 @@ title: KrakenD Execution Flow Design
 description: Understand the execution flow design of KrakenD API Gateway. Is the configuration X executed before the configuration Y?
 menu:
   community_current:
-    parent: "170 Design principles"
+    parent: "310 Design principles"
 images:
 - /images/documentation/diagrams/components-sequence-simple.mmd.png
 skip_header_image: true

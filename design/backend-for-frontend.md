@@ -7,7 +7,7 @@ linktitle: Backend For Frontend
 weight: 10
 menu:
   community_current:
-    parent: "170 Design principles"
+    parent: "310 Design principles"
 ---
 One of the main differences between KrakenD and any other API gateway in the market is that all your endpoints can offer a ready-to-use Backend For Frontend experience by simply declaring the backend sources and the fields your client needs. But why and when do you need to use a BFF?
 

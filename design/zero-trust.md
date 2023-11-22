@@ -7,7 +7,7 @@ title: "Zero Trust Design: Secure API Architecture"
 weight: 10
 menu:
   community_current:
-    parent: "170 Design principles"
+    parent: "310 Design principles"
 ---
 Real-world API deployments suffer daily attacks, even if you don't notice them. It doesn't matter if you have your infrastructure behind a delimited perimeter. Where there is a point of access, there is malicious activity.
 
