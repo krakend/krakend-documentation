@@ -2,14 +2,14 @@
 lastmod: 2022-10-24
 date: 2019-09-15
 notoc: true
-linktitle: Opencensus
+linktitle: Opencensus integrations
 title: OpenCensus Telemetry Integration
 description: Learn how to integrate OpenCensus telemetry with KrakenD and monitor your API performance efficiently. Follow our comprehensive documentation for easy implementation.
-weight: 20
+weight: 60
 aliases: ["/docs/logging-metrics-tracing/opencensus/"]
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 0.5
   source: https://github.com/krakend/krakend-opencensus
@@ -46,7 +46,7 @@ The Opencensus needs at least an exporter to work, although multiple exporters c
 
 Every exporter has its own configuration and it's described in its section.
 
-By default, **all exporters use a sample_rate=0**, meaning that they won't report anything, but this can be changed by specifying the de configuration:
+By default, all exporters use a `sample_rate=0`, meaning that **they won't report anything**, but this can be changed by specifying the configuration another percentage, like 100% of the activity:
 
 ```json
 {

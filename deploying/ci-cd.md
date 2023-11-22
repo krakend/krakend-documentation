@@ -7,7 +7,7 @@ description: Streamline your API deployments with KrakenD using continuous integ
 notoc: true
 menu:
   community_current:
-    parent: "110 Deployment and Go-Live"
+    parent: "190 Deployment and Go-Live"
 weight: 20
 ---
 KrakenD operates with its single binary and your associated configuration. Therefore, your build process or CI/CD pipeline only needs to ensure that the configuration file is correct. These are a few recommendations to a safer KrakenD deployment:

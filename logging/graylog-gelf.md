@@ -2,15 +2,15 @@
 lastmod: 2022-10-25
 date: 2019-09-15
 notoc: true
-linktitle: Graylog - GELF
+linktitle: Logging to Graylog - GELF
 title: Graylog GELF Logging Integration with KrakenD API Gateway
 description: Integrate Graylog GELF logging with KrakenD API Gateway for centralized log management and analysis of API logs
-weight: 40
+weight: 300
 aliases: ["/docs/logging-metrics-tracing/graylog-gelf/"]
 notoc: true
 menu:
   community_current:
-    parent: "090 Logging"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 0.7
   source: https://github.com/krakend/krakend-gelf

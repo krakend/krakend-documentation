@@ -4,11 +4,11 @@ date: 2018-04-05
 linktitle: RabbitMQ Consumer
 title: AMQP Consumer Integration in the API Gateway (RabbitMQ)
 description: Integrate AMQP consumers into KrakenD API Gateway for seamless communication with message queue systems like RabbitMQ
-weight: 90
+weight: 100
 aliases: ["/docs/backends/amqp/"]
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "050 Non-REST Connectivity"
 meta:
   since: 0.9
   source: https://github.com/krakend/krakend-amqp

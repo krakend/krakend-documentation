@@ -4,11 +4,11 @@ date: 2022-01-28
 linktitle: Cluster rate-limit
 title: "Stateless Cluster Throttling: Optimize API Performance"
 description: Employ cluster throttling to optimize API performance and prevent overload scenarios through KrakenD
-weight: 100
+weight: 970
 notoc: true
 menu:
   community_current:
-    parent: "070 Traffic Management"
+    parent: "090 Traffic Management"
 ---
 The stateless rate-limiting ([service {{< badge color="denim" >}}Enterprise{{< /badge >}}
 ](/docs/enterprise/service-settings/service-rate-limit/) or [endpoint](/docs/endpoints/rate-limit/) types) is the recommended approach for almost all scenarios. As the API Gateway does not have any centralization, **the limits apply individually to each running instance of KrakenD**.

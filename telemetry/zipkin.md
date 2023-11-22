@@ -5,12 +5,12 @@ notoc: true
 linktitle: Zipkin
 title: Zipkin Telemetry Integration
 description: Integrate Zipkin telemetry to monitor and trace KrakenD API Gateway requests efficiently for enhanced performance
-weight: 90
+weight: 100
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/zipkin/"]
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 0.5
   source: https://github.com/krakend/krakend-opencensus

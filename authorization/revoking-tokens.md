@@ -8,7 +8,7 @@ weight: 40
 source: https://github.com/krakend/bloomfilter
 menu:
   community_current:
-    parent: "060 Authentication & Authorization"
+    parent: "080 Authentication & Authorization"
 meta:
   namespace:
   - auth/revoker

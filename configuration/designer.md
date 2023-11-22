@@ -5,23 +5,25 @@ linktitle: "Designer: Graphical Interface"
 description: Discover the API Configuration Designer in KrakenD API Gateway, enabling intuitive and visual configuration management for your APIs
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "000 Getting Started"
 title: "API Configuration Designer in KrakenD API Gateway"
 meta:
   source: https://github.com/krakend/krakendesigner
   since: 0.2
 notoc: false
-weight: 5
+weight: 40
 images:
 - /images/builder_screenshot.png
 skip_header_image: true
 ---
-The [Designer](https://designer.krakend.io) is a UI that allows you to create KrakenD configurations from scratch or resume editing an existing one. It is a tool very useful in your early contact with KrakenD, as it helps you try functionalities without having to learn the different attributes of the configuration.
+The [Designer](https://designer.krakend.io) is a UI that allows you to create KrakenD configurations from scratch or resume editing an existing one. It is a tool very useful in your **early contact with KrakenD**, as it helps you try functionalities without having to learn the different attributes of the configuration.
 
-Combined with a [`:watch` container](/docs/developer/hot-reload/), you can **administer and apply configuration changes automatically** in a development environment.
+**The designer is a learning tool** more than an administration one. KrakenD configuration and administration is designed with **GitOps** in mind (under the version control system and released through CI/CD).
+
+Combined with a [`:watch` container](/docs/developer/hot-reload/), you can **apply configuration changes automatically** in a development environment.
 
 {{< button-group >}}
-{{< button url="https://designer.krakend.io" text="Start a configuration now" >}}<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+{{< button url="https://designer.krakend.io" text="Open designer" >}}<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
 </svg>
 {{< /button >}}
@@ -82,8 +84,8 @@ Once KrakenD runs, the watcher follows changes happening in this folder. If you 
 ## Supported features
 As KrakenD supports hundreds of features, it might be overwhelming to review all the documentation. Therefore, a tool that allows you to play in the browser is beneficial.
 
-**The Designer supports *almost all* the functionality**, although there might be a few corner-case attributes or very advanced functionalities that aren't in the interface. In any case, when this happens, even if you don't see them in the interface, they are kept in the final save if you loaded them.
+**The Designer supports *almost all* the functionality**, although advanced functionalities aren't in the interface. In any case, when this happens, even if you don't see them in the interface, they are kept in the final save if you loaded them.
 
-The Designer does not support [flexible configuration](/docs/enterprise/configuration/flexible-config/), as the browser cannot render Go templates of a complex directory structure.
+The Designer does not support [flexible configuration](/docs/configuration/flexible-config/), as the browser cannot render Go templates of a complex directory structure.
 
 The Designer supports editing Enterprise and Community features simultaneously. When you enable a single Enterprise feature, you will see a badge informing you about it.

@@ -7,7 +7,7 @@ description: Learn how to integrate Keycloak authorization with KrakenD API Gate
 weight: 110
 menu:
   community_current:
-    parent: "060 Authentication & Authorization"
+    parent: "080 Authentication & Authorization"
 meta:
   #since:
   source: https://github.com/krakend/krakend-jose

@@ -6,7 +6,7 @@ title: Configuration Guide for KrakenD API Gateway
 description: Get a comprehensive guide on configuring KrakenD API Gateway to optimize and streamline your API management processes
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 weight: -1000
 aliases: ["/docs/overview/configuration/","/docs/configuration/overview/"]
 ---

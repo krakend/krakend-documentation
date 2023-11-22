@@ -2,14 +2,14 @@
 lastmod: 2020-07-12
 date: 2016-04-14
 toc: true
-linktitle: Supported encodings
+linktitle: Origin response formats
 title: Supported Encodings for Backend Integration
 description: Explore the supported encodings for seamless integration with backend systems in KrakenD. Learn how to optimize data exchange and ensure compatibility between KrakenD and your backend services.
-weight: 40
+weight: 400
 notoc: true
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "060 Request and Response Manipulation"
 ---
 Setting the `encoding` is an important part of the backend definition, as it informs KrakenD how to parse the responses of your services.
 

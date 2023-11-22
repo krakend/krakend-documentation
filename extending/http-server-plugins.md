@@ -9,7 +9,7 @@ weight: 100
 notoc: true
 menu:
   community_current:
-    parent: "150 Custom Plugins and Middleware"
+    parent: "180 Extending with custom code"
 meta:
   since: 2.0
   namespace:

@@ -9,7 +9,7 @@ source: https://github.com/krakend/playground-community
 menu:
   community_current:
     parent: "000 Getting Started"
-weight: 110
+weight: 50
 images: ["https://raw.githubusercontent.com/krakend/playground-community/master/assets/composer-env.png"]
 
 ---

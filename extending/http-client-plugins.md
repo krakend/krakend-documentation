@@ -8,7 +8,7 @@ description: Learn how to extend the functionality of KrakenD API Gateway by uti
 weight: 110
 menu:
   community_current:
-    parent: "150 Custom Plugins and Middleware"
+    parent: "180 Extending with custom code"
 meta:
   since: 2.0
   namespace:

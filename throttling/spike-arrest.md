@@ -1,17 +1,17 @@
 ---
 lastmod: 2022-01-28
 date: 2022-01-28
-linktitle: Spike Arrest
-title: Spike Arrest and Burst
+linktitle: Understanding Spike Arrest and Burst
+title: Understanding Spike Arrest and Burst
 description: Spike Arrest throttling in KrakenD to regulate API traffic and prevent overload situations effectively
-weight: 20
+weight: 9300
 notoc: true
 images:
 - /images/documentation/krakend-token-bucket.png
 skip_header_image: true
 menu:
   community_current:
-    parent: "070 Traffic Management"
+    parent: "090 Traffic Management"
 ---
 The **Spike Arrest** policy ensures a minimum time between different requests. KrakenD will enable Spike Arrest **after exhausting the burst capacity** of the rate-limiting features.
 

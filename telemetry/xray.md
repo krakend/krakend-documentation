@@ -4,12 +4,12 @@ date: 2019-09-15
 linktitle: AWS X-Ray
 title: AWS X-Ray Telemetry Integration
 description: Integrate XRay Telemetry to monitor and analyze KrakenD API Gateway performance effectively
-weight: 110
+weight: 120
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/xray/"]
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   source: https://github.com/krakend/krakend-opencensus
   namespace:

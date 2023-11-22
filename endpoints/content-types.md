@@ -2,13 +2,13 @@
 aliases: ["/features/other/", "/docs/features/content-types/"]
 lastmod: 2023-10-16
 date: 2016-04-14
-linktitle: Output encoding
-title: Encoding Handling in KrakenD API Gateway
+linktitle: Returned response formats
+title: Returned encodings in KrakenD API Gateway
 description: Discover how KrakenD API Gateway handles various content types, ensuring proper parsing and transformation for seamless data exchange
-weight: 10
+weight: 410
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "060 Request and Response Manipulation"
 images:
 - /images/documentation/diagrams/content-types.mmd.png
 skip_header_image: true

@@ -4,10 +4,10 @@ date: 2018-04-05
 linktitle: RabbitMQ Producer
 title: AMQP Producer Integration in the API Gateway (RabbitMQ)
 description: Integrate AMQP producers with KrakenD for seamless communication with backend systems. Follow our documentation to set up reliable and scalable messaging with Advanced Message Queuing Protocol (AMQP).
-weight: 91
+weight: 110
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "050 Non-REST Connectivity"
 meta:
   since: 0.9
   source: https://github.com/krakend/krakend-amqp

@@ -4,12 +4,12 @@ date: 2019-09-15
 linktitle: InfluxDB
 title: InfluxDB Telemetry Integration with KrakenD API Gateway
 description: Integrate InfluxDB telemetry with KrakenD API Gateway for efficient data collection, storage, and visualization of API performance metrics
-weight: 10
+weight: 50
 #notoc: true
 aliases: ["/docs/extended-metrics/influxdb/","/docs/logging-metrics-tracing/influxdb/","/docs/telemetry/influxdb-native/"]
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 0.5
   source: https://github.com/krakend/krakend-influx

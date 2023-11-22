@@ -7,7 +7,7 @@ description: Performance tests of KrakenD running on a local machine (laptop) wi
 weight: 15
 menu:
   community_current:
-    parent: "160 Benchmarks"
+    parent: "300 Benchmarks"
 ---
 
 ## Hardware

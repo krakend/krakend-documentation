@@ -4,12 +4,12 @@ date: 2019-09-15
 linktitle: Publisher/subscribe
 title: Pub-Sub Backend Integration in KrakenD API Gateway
 description: Integrate Pub-Sub backend into KrakenD API Gateway to enable event-driven communication and real-time data updates in your API ecosystem
-weight: 100
+weight: 130
 images:
 - /images/features-event-driven.png
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "040 Routing and Forwarding"
 meta:
   since: 1.0
   source: https://github.com/krakend/krakend-pubsub

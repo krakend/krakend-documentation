@@ -8,7 +8,7 @@ weight: 50
 #notoc: true
 menu:
   community_current:
-    parent: "060 Authentication & Authorization"
+    parent: "080 Authentication & Authorization"
 images:
 -   /images/documentation/krakend-oauth2-2-legged.png
 meta:

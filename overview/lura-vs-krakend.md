@@ -7,7 +7,7 @@ description: The Lura Project is the code libraries we donated to the Linux Foun
 notoc: true
 menu:
   community_current:
-    parent: "000 Getting Started"
+    parent: "310 Design principles"
 title: Lura vs. KrakenD
 weight: 100
 ---

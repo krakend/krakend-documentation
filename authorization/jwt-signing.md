@@ -8,7 +8,7 @@ weight: 30
 images: ["/images/krakend-signer-flow.png"]
 menu:
   community_current:
-    parent: "060 Authentication & Authorization"
+    parent: "080 Authentication & Authorization"
 meta:
   source: https://github.com/krakend/krakend-jose
   namespace:

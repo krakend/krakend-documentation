@@ -5,10 +5,10 @@ aliases: ["/docs/features/parameter-forwarding/"]
 title: Parameter Forwarding in KrakenD API Gateway
 linktitle: Forwarding query strings and headers
 description: Learn how to forward and manipulate parameters effectively using KrakenD API Gateway, ensuring seamless communication between clients and microservices
-weight: 10
+weight: 30
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "040 Routing and Forwarding"
 ---
 KrakenD is an API Gateway with a **[zero-trust security policy](/docs/design/zero-trust/)**, and when it comes to forward query strings, cookies, and headers, you need to define what is allowed.
 

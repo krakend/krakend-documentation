@@ -1,13 +1,13 @@
 ---
 lastmod: 2022-10-11
 date: 2018-01-04
-linktitle: Request timeouts
+linktitle: Timeouts
 title: API Throttling and Timeout Management
 description: Learn how to effectively manage API throttling and timeouts with KrakenD API Gateway to ensure optimal performance and prevent abuse
-weight: 40
+weight: 200
 menu:
   community_current:
-    parent: "070 Traffic Management"
+    parent: "040 Routing and Forwarding"
 ---
 
 Being KrakenD, an API Gateway that talks to other services, controlling the waiting times for different aspects is crucial. KrakenD will allow you to fine-tune these settings.

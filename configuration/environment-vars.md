@@ -4,7 +4,7 @@ date: 2020-07-10
 linktitle: Environment vars
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 title: Environment Variables in KrakenD API Gateway Configuration
 description: Learn how to leverage environment variables in KrakenD API Gateway configuration for flexible and dynamic configuration management
 weight: 40

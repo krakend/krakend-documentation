@@ -5,12 +5,12 @@ toc: true
 linktitle: Concurrent Requests
 title: Handling Concurrent Requests in KrakenD API Gateway
 description: Learn how KrakenD API Gateway efficiently handles concurrent requests to ensure scalability, performance, and optimal resource utilization
-weight: 30
+weight: 150
 aliases: ["/docs/backends/concurrent-requests/"]
 skip_header_image: true
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "040 Routing and Forwarding"
 images:
 - /images/documentation/concurrency/CDF_happy_vs_sad.png
 - /images/documentation/concurrency/PDF_happy_vs_sad.png

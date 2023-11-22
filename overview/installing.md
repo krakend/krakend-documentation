@@ -8,7 +8,7 @@ menu:
 linktitle: Installation
 title: KrakenD API Gateway Installation Guide
 description: Follow our step-by-step installation guide to set up and configure KrakenD API Gateway, enabling efficient and scalable API management.
-weight: 20
+weight: 10
 ---
 KrakenD is a **single binary file** that does not require any external libraries to work. To install KrakenD choose your operative system in the downloads section or use the Docker image.
 

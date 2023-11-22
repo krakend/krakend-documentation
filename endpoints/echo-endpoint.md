@@ -6,8 +6,8 @@ title: Echo Endpoint Configuration
 description: Learn how to configure the Echo endpoint in KrakenD. A straightforward way to test your API Gateway setup containing the details of a request.
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
-weight: 35
+    parent: "170 API Documentation and Dev Tools"
+weight: 30
 notoc: true
 ---
 The `/__echo/` endpoint is a developer tool to help you debug configurations. It works similarly to the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/), but instead of printing the requests in the log and returning a `{"message": "pong"}`, they are printed in the response. It replies with an object containing all the request details, and you can use it as an endpoint or backend. As KrakenD has a [zero-trust](/docs/design/zero-trust/) approach, you will find out the exact information that passes through in this endpoint.

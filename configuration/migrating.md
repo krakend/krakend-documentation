@@ -6,7 +6,7 @@ title: Migrating KrakenD Configuration from v1.x or v0.x
 description: Seamlessly migrate your KrakenD configuration to a new environment. Hassle-free transition for your API Gateway
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 weight: 1000
 ---
 

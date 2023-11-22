@@ -7,7 +7,7 @@ description: Explore the benchmarking results of KrakenD API Gateway running on 
 weight: 10
 menu:
   community_current:
-    parent: "160 Benchmarks"
+    parent: "300 Benchmarks"
 ---
 
 The following numbers show the execution results for the KrakenD benchmarks on [Amazon EC2](https://aws.amazon.com/ec2/) machines.

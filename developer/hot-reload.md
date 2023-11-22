@@ -8,7 +8,7 @@ weight: 80
 #notoc: true
 menu:
   community_current:
-    parent: "010 Configuration file(s)"
+    parent: "010 Configuration files"
 ---
 When you want to **restart KrakenD automatically after saving** or changing files inside the configuration folder, the Docker image with the tag `:watch` can do this automatically for you.
 

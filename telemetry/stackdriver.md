@@ -5,12 +5,12 @@ notoc: true
 linktitle: Google Cloud
 title: Google Cloud and Stackdriver Integration
 description: Monitor KrakenD API Gateway using Google Cloud (formerly Stackdriver) for comprehensive insights and effective troubleshooting
-weight: 120
+weight: 130
 notoc: true
 aliases: ["/docs/logging-metrics-tracing/stackdriver/"]
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 0.7
   source: https://github.com/krakend/krakend-opencensus

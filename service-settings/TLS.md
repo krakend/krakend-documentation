@@ -8,7 +8,7 @@ weight: 30
 notoc: false
 menu:
   community_current:
-    parent: "030 Service Settings"
+    parent: "070 Security"
 skip_header_image: true
 images:
 - /images/documentation/diagrams/tls.mmd.png

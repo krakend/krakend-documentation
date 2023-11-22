@@ -8,7 +8,7 @@ weight: 10
 skip_header_image: true
 menu:
   community_current:
-    parent: "150 Custom Plugins and Middleware"
+    parent: "180 Extending with custom code"
 images:
 - /images/documentation/krakend-plugins.png
 ---

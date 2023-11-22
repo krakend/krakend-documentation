@@ -6,11 +6,11 @@ aliases: ["/docs/backends/overview/"]
 linktitle: The backend object
 title: Backend Configuration in KrakenD API Gateway
 description: Explore the backend configuration options in KrakenD API Gateway, allowing you to connect and integrate with your microservices efficiently
-weight: -1000
+weight: 20
 notoc: true
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "040 Routing and Forwarding"
 ---
 The concept of `backend` refers to the origin servers providing the necessary data to populate your endpoints. A backend can be something like your HTTP-based API, a Lambda function, or a Kafka queue, for example.
 

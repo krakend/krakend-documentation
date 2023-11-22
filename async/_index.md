@@ -1,16 +1,16 @@
 ---
 lastmod: 2022-01-21
 date: 2022-01-21
-linktitle:  Async Agents
-title: Asynchronous Agents with KrakenD API Gateway
+linktitle: Event-Driven Async Agents
+title: "Event-Driven API Gateway: Async Agents"
 description: Learn how to leverage asynchronous processing in KrakenD API Gateway to implement an event based pattern
-weight: 10
+weight: 500
 aliases: ["/docs/async/agent/"]
 images:
   - /images/documentation/async-agents.png
 menu:
   community_current:
-    parent: "060 Event Driven Gateway"
+    parent: "050 Non-REST Connectivity"
 meta:
   since: 2.0
   source: https://github.com/luraproject/lura

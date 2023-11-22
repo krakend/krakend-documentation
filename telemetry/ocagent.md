@@ -5,11 +5,11 @@ notoc: true
 linktitle: OpenCensus Agent
 title: OpenCensus Agent Telemetry Integration
 description: The ocagent exporter sends OpenCensus Stats and Traces to the OpenCensus Agent, instead of pushing data to backends’ exporters
-weight: 140
+weight: 70
 notoc: true
 menu:
   community_current:
-    parent: "080 Telemetry and Analytics"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 1.1
   source: https://github.com/krakend/krakend-opencensus

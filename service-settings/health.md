@@ -1,13 +1,13 @@
 ---
 lastmod: 2022-01-19
 date: 2019-10-07
-linktitle:  Health check
+linktitle: Health check endpoint
 title: API Health Check
-weight: 1
+weight: 25
 aliases: ["/docs/endpoints/health/"]
 menu:
   community_current:
-    parent: "030 Service Settings"
+    parent: "160 Monitoring, Logs, and Analytics"
 ---
 The health endpoint (or the **ping endpoint**) allows you to query KrakenD to find out if it is ready to accept connections or not.
 

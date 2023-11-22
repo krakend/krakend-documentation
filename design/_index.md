@@ -9,7 +9,7 @@ description: Discover the KrakenD API architecture and its design principles, as
 weight: 10000
 menu:
   community_current:
-    parent: "170 Design principles"
+    parent: "310 Design principles"
 images:
 - /images/documentation/config-router-proxy-packages.png
 skip_header_image: true

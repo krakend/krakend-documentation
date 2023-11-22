@@ -1,13 +1,13 @@
 ---
 lastmod: 2022-10-21
 date: 2019-09-15
-linktitle:  Lua scripting
+linktitle:  Lua scripts
 title: Lua Scripting in KrakenD API Gateway
 description: Explore the power of Lua scripting in KrakenD API Gateway, allowing you to customize and extend the behavior of your API gateway
-weight: 90
+weight: 200
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "180 Extending with custom code"
 meta:
   since: 1.0
   source: https://github.com/krakend/krakend-lua

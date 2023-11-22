@@ -9,7 +9,7 @@ images:
     - /images/krakend-lambda.png
 menu:
   community_current:
-    parent: "050 Backends Configuration"
+    parent: "050 Non-REST Connectivity"
 notoc: false
 meta:
   since: 1.0

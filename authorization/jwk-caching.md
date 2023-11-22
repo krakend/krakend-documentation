@@ -7,7 +7,7 @@ description: Implement shared JWK caching for efficient authorization in KrakenD
 weight: 21
 menu:
   community_current:
-    parent: "060 Authentication & Authorization"
+    parent: "080 Authentication & Authorization"
 meta:
   since: 2.3
   source: https://github.com/krakend/krakend-jose

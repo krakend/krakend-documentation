@@ -4,10 +4,10 @@ date: 2019-02-22
 toc: true
 linktitle: No-op (proxy only)
 title: Proxying directly to the backends with `no-op`
-weight: 60
+weight: 40
 menu:
   community_current:
-    parent: "040 Endpoint Configuration"
+    parent: "040 Routing and Forwarding"
 meta:
   since: 1.2
   source: https://github.com/krakend/krakend-ce

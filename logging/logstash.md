@@ -2,15 +2,15 @@
 lastmod: 2022-06-15
 date: 2019-09-15
 notoc: true
-linktitle: Logstash
+linktitle: Logging in JSON (Logstash)
 title: "Logstash Integration in the API Gateway"
 description: Streamline log management and analysis by integrating Logstash with KrakenD. Follow our documentation to set up seamless integration and gain valuable insights from your API logs.
-weight: 50
+weight: 310
 source: https://github.com/krakend/krakend-logstash
 aliases: ["/docs/logging-metrics-tracing/logstash/"]
 menu:
   community_current:
-    parent: "090 Logging"
+    parent: "160 Monitoring, Logs, and Analytics"
 ---
 The [Logstash](https://www.elastic.co/es/logstash/) integration prints **KrakenD application logs in JSON format** (not access logs) to ingest them and process them later. If you want to log using the Logstash standard via stdout, you need to add the `telemetry/logging` integration as a dependency.
 

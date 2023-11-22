@@ -11,7 +11,7 @@ meta:
     since: 2.0
 menu:
   community_current:
-    parent: "150 Custom Plugins and Middleware"
+    parent: "180 Extending with custom code"
 ---
 The `krakend check-plugin` command helps you validate the **compatibility of your custom plugins** that will run in conjunction with KrakenD.
 
