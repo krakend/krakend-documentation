@@ -1,10 +1,10 @@
 ---
 lastmod: 2023-06-01
 date: 2018-10-29
-linktitle: Caching responses
+linktitle: Response caching
 title: Caching Strategies in KrakenD API Gateway
 description: Learn how to implement effective caching strategies in KrakenD API Gateway to improve API performance and reduce backend load
-weight: 50
+weight: 100
 menu:
   community_current:
     parent: "060 Request and Response Manipulation"

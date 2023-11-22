@@ -1,7 +1,7 @@
 ---
 lastmod: 2022-12-13
 date: 2019-10-02
-linktitle: Backend headers and errors
+linktitle: Strategies to return headers and errors
 title: Returning the backend headers and errors
 description: Implement returning of backend headers and errors to provide informative and customized error messages to API consumers
 weight: 140

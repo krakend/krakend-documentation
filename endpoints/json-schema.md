@@ -4,7 +4,7 @@ date: 2020-07-10
 linktitle: JSON Schema request validation
 title: JSON Schema Validation in KrakenD API Gateway
 description: Implement JSON Schema validation in KrakenD API Gateway to ensure data integrity and adherence to defined data structures for API requests
-weight: 130
+weight: 450
 menu:
   community_current:
     parent: "060 Request and Response Manipulation"

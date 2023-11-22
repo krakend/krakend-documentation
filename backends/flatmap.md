@@ -2,10 +2,10 @@
 lastmod: 2023-02-07
 date: 2019-04-05
 toc: true
-linktitle: Array manipulations, object flattening
+linktitle: Response manipulation on arrays
 title: Array manipulation in KrakenD API Gateway
 description: Integrate the FlatMap backend into KrakenD API Gateway for array data transformation and mapping operations in your API ecosystem
-weight: 6
+weight: 110
 menu:
   community_current:
     parent: "060 Request and Response Manipulation"

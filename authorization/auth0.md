@@ -7,7 +7,7 @@ description: Integrate Auth0 authentication and authorization services with Krak
 weight: 100
 menu:
   community_current:
-    parent: "060 Authentication & Authorization"
+    parent: "080 Authentication & Authorization"
 meta:
   #since:
   source: https://github.com/krakend/krakend-jose
