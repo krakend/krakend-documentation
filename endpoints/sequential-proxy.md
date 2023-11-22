@@ -11,7 +11,7 @@ images:
 - /images/documentation/krakend-sequential-call.png
 menu:
   community_current:
-    parent: "060 Request and Response Manipulation"
+    parent: "040 Routing and Forwarding"
 meta:
   noop_incompatible: true
   since: 0.7
