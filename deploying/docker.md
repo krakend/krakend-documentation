@@ -7,7 +7,7 @@ description: Learn how to deploy KrakenD API Gateway using Docker, enabling cont
 notoc: true
 menu:
   community_current:
-    parent: "110 Deployment and Go-Live"
+    parent: "190 Deployment and Go-Live"
 weight: 20
 ---
 If you use containers, the recommended approach is to write your own `Dockerfile` and deploy an **immutable artifact** (embedding the config).

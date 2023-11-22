@@ -10,7 +10,7 @@ aliases: ["/docs/logging-metrics-tracing/graylog-gelf/"]
 notoc: true
 menu:
   community_current:
-    parent: "090 Logging"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 0.7
   source: https://github.com/krakend/krakend-gelf

@@ -9,7 +9,7 @@ weight: 10
 aliases: ["/docs/logging-metrics-tracing/logging/", "/docs/logging/extended-logging/"]
 menu:
   community_current:
-    parent: "090 Logging"
+    parent: "160 Monitoring, Logs, and Analytics"
 meta:
   source: https://github.com/krakend/krakend-gologging
   namespace:

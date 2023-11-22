@@ -6,7 +6,7 @@ title: Deploying KrakenD API Gateway on Kubernetes
 description: Discover the best practices and guidelines for deploying KrakenD API Gateway on Kubernetes, enabling scalable and efficient API management
 menu:
   community_current:
-    parent: "110 Deployment and Go-Live"
+    parent: "190 Deployment and Go-Live"
 weight: 30
 ---
 

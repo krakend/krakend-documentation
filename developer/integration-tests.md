@@ -7,7 +7,7 @@ title: Automated integration tests
 notoc: true
 menu:
   community_current:
-    parent: "140 Developer Tools"
+    parent: "170 API Documentation and Dev Tools"
 weight: 30
 ---
 In addition to checking the syntax of your KrakenD configuration and make sure that the gateway can start, you can run **integration tests** to make sure that the gateway returns the expected content from the consumed backends. to make sure all endpoints are properly connected and that they reply with the expected content. To do that, you can use the library that KrakenD is relying on to run its **integration tests**, and complement the unit testing battery.

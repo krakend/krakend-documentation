@@ -8,7 +8,7 @@ aliases: ["/docs/benchmarks/overview/"]
 weight: 1
 menu:
   community_current:
-    parent: "160 Benchmarks"
+    parent: "300 Benchmarks"
 ---
 ## KrakenD, the **ultra performer** API Gateway
 An API Gateway is a component that needs to deliver really fast, as it is an added layer in the infrastructure. KrakenD

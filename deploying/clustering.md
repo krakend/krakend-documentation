@@ -8,7 +8,7 @@ notoc: true
 aliases: ["/docs/cluster/configuration/","/docs/cluster/cluster-overview/"]
 menu:
   community_current:
-    parent: "110 Deployment and Go-Live"
+    parent: "190 Deployment and Go-Live"
 
 weight: 1
 ---

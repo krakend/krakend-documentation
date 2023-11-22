@@ -9,7 +9,7 @@ weight: 100
 source: https://github.com/krakend/telemetry-dashboards
 menu:
   community_current:
-    parent: "090 Logging"
+    parent: "160 Monitoring, Logs, and Analytics"
 images:
 - /images/documentation/screenshots/kibana-krakend-dashboard.png
 ---

@@ -5,7 +5,7 @@ linktitle: Developer Tools
 aliases: ["/docs/developer/overview/"]
 menu:
   community_current:
-    parent: "140 Developer Tools"
+    parent: "170 API Documentation and Dev Tools"
 title: Custom developer tools
 weight: 10
 ---

@@ -7,7 +7,7 @@ description: Explore the API gateway benchmarking capabilities of KrakenD, measu
 weight: 10
 menu:
   community_current:
-    parent: "160 Benchmarks"
+    parent: "300 Benchmarks"
 ---
 We wanted to compare our own product with other similar products in the market. In order to do so we used the same
 environment and conditions and tested the following products:

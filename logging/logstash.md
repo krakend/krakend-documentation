@@ -10,7 +10,7 @@ source: https://github.com/krakend/krakend-logstash
 aliases: ["/docs/logging-metrics-tracing/logstash/"]
 menu:
   community_current:
-    parent: "090 Logging"
+    parent: "160 Monitoring, Logs, and Analytics"
 ---
 The [Logstash](https://www.elastic.co/es/logstash/) integration prints **KrakenD application logs in JSON format** (not access logs) to ingest them and process them later. If you want to log using the Logstash standard via stdout, you need to add the `telemetry/logging` integration as a dependency.
 

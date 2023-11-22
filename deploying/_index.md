@@ -7,7 +7,7 @@ description: Explore the best practices and guidelines for deploying KrakenD API
 aliases: ["/docs/deploying/best-practices/"]
 menu:
   community_current:
-    parent: "110 Deployment and Go-Live"
+    parent: "190 Deployment and Go-Live"
 weight: 1
 ---
 Setting up KrakenD is a straightforward process, but here are some not-so-obvious recommendations to get a good start when going live. This section has generalistic advice, even though every KrakenD installation is different. So let's dip our toe into the deployment waters!
