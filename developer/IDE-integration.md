@@ -4,7 +4,7 @@ date: 2017-01-21
 linktitle: IDE integration
 title: IDE Integration Guide for Developers
 description: Enhance your development workflow by integrating KrakenD with your favorite IDE. Follow our comprehensive guide to seamlessly integrate KrakenD into your development environment.
-weight: 20
+weight: 300
 notoc: true
 images:
   - /images/documentation/krakend-ide-integration.png

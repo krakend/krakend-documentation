@@ -7,7 +7,7 @@ menu:
     parent: "170 API Documentation and Dev Tools"
 title: Debug Endpoint in KrakenD API Gateway
 description: Learn how to utilize the debug endpoint in KrakenD API Gateway for troubleshooting and debugging purposes during API development and testing
-weight: 35
+weight: 20
 notoc: true
 ---
 The `/__debug/` endpoint is available when you start the server with the `-d` flag, or when you add the `debug_endpoint=true` in the configuration.
