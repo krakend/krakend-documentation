@@ -4,7 +4,7 @@ date: 2022-01-21
 linktitle:  AMQP driver for Async Agent
 title: AMQP driver for the Asynchronous Agent
 description: Leverage Asynchronous AMQP Agents in KrakenD for high-performance messaging and event-driven architectures
-weight: 20
+weight: 510
 images:
   - /images/documentation/async-agents.png
 skip_header_image: true
