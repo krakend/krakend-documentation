@@ -8,7 +8,7 @@ weight: -1000
 notoc: true
 menu:
   community_current:
-    parent: "040 Routing and Forwarding"
+    parent: "030 Service Settings"
 ---
 We call **service settings** (or the service layer) those parameters that allow you to change how KrakenD behaves **globally** (and not to a specific call). They determine how you start the HTTP server, enforce security parameters, or define behavioral options like which reporting activities occur, to name a few examples.
 

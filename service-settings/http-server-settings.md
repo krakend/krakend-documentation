@@ -4,11 +4,11 @@ date: 2022-01-18
 linktitle: HTTP Server settings
 title: HTTP Server Settings in KrakenD API Gateway
 description: Configure HTTP server settings in KrakenD API Gateway for optimal performance, security, and compatibility with your infrastructure
-weight: 145
+weight: 50
 notoc: true
 menu:
   community_current:
-    parent: "040 Routing and Forwarding"
+    parent: "030 Service Settings"
 meta:
   source: https://github.com/luraproject/lura
   scope:
