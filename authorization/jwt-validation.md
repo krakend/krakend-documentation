@@ -203,10 +203,10 @@ When using a `jwk_local_path`, the `secret_url` scheme accepts different provide
 The local secrets require an URL with the following scheme:
 
 ```
-base64key://base64content
+base64key://base64UrlEncondedContent
 ```
 
-The URL host must be base64 encoded and must decode to exactly 32 bytes. Here is an example of the `extra_config`:
+The URL host must be `base64 url encoded` and must decode to exactly 32 bytes. Here is an example of the `extra_config`:
 
 ```json
 {
