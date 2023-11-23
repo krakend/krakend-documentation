@@ -203,10 +203,10 @@ When using a `jwk_local_path`, the `secret_url` scheme accepts different provide
 The local secrets require an URL with the following scheme:
 
 ```
-base64key://base64content
+base64key://base64UrlEncondedContent
 ```
 
-The URL host must be base64 encoded and must decode to exactly 32 bytes. Here is an example of the `extra_config`:
+The URL host must be `base64 url encoded` and must decode to exactly 32 bytes. Here is an example of the `extra_config`:
 
 ```json
 {
@@ -216,7 +216,7 @@ The URL host must be base64 encoded and must decode to exactly 32 bytes. Here is
 }
 ```
 
-This config will use the key `smGbjm71Nxd1Ig5FS0wj9SlbzAIrnolCz9bQQ6uAhl4=` for decrypting de `cypher_key` and then decrypting the content of the file `./jwt.txt`.
+This config will use the key `smGbjm71Nxd1Ig5FS0wj9SlbzAIrnolCz9bQQ6uAhl4=` for decrypting de `cypher_key` (base64 standard enconded) and then decrypting the content of the file `./jwt.txt`.
 
 See this test to [understand how to generate and encrypt payloads](https://github.com/krakend/krakend-jose/blob/master/jwk_test.go).
 
