@@ -15,18 +15,26 @@ meta:
   scope:
   - service
 ---
-When KrakenD runs, all the behavior is loaded from the [configuration file](/docs/configuration/structure/). Through environment variables, you can override some of its values. There are two different ways of injecting environment vars.
+When KrakenD runs (whether with `run` or `check`), all the behavior is loaded from the [configuration file](/docs/configuration/structure/). Through environment variables, you can also set values. There are two different ways of injecting environment vars:
 
-- **Replacing existing values** in the configuration
-- **Setting new values** when using the `{{env}}` function in [flexible configuration](/docs/configuration/flexible-config/)
+- **Use a `KRAKEND_`-like reserved environment variable**: To override values set in the configuration.
+- **Set your own environment variables** when using the `{{env}}` function in [flexible configuration](/docs/configuration/flexible-config/) templates.
 
-## Value replacement with env vars
-You can **override** configuration values with an environment variable for each configuration value that isn't nested (meaning **first-level properties** of the configuration). However, with this technique, you cannot override parameters that aren't declared in the configuration.
+## Use a reserved environment variable
+There are a group of reserved environment variables that are automatically recognized by KrakenD when set.
 
-Examples of values you can replace are the `port`, `timeout`, or the configuration `name` to name a few.
+Examples are when you want to replace the `port`, the default `timeout`, or the configuration `name` (sent to your telemetry) that already exists inthe configuration.
 
-To replace configuration parameters during runtime, capitalize them and add a prefix `KRAKEND_`. The configuration file is not changed. Only the values hold in memory.
+In essence, you can replace any value in the configuration that lives in the root level, and is a string, an integer, or a boolean. To do it you only need to capitalize the property name and add a prefix `KRAKEND_`.
 
+{{< note title="Reserved variables are ignored unless the key exists in the configuration" type="warning" >}}
+The following list of variables only set the desired values when you have its associated value in the configuration. They are meant to **override** settings **already present** in the configuration, but if you set one of them and there is no value in the configuration, it won't have any effect.
+{{< /note >}}
+
+
+{{< top_level_envvars >}}
+
+### Reserved variable example
 For instance, take the following `krakend.json` configuration as an example:
 
 ```json
@@ -38,7 +46,7 @@ For instance, take the following `krakend.json` configuration as an example:
 }
 ```
 
-To replace values using env vars, you could start krakend with the following command:
+You could start the server with the following command wich would allow you to override the values in the configuration:
 
 {{< terminal title="Example: Override configuration with env vars" >}}
 KRAKEND_NAME="Build ABC0123" \
@@ -56,14 +64,14 @@ The resulting configuration will be:
     "name": "Build ABC0123"
 }
 ```
+**Important**: Notice that the `port` attribute is not present in the configuration, despite passing a `KRAKEND_PORT` parameter. This is because the `port` didn't exist previously in the configuration file, and the environment variables can only **override** values.
 
 
-Notice that the `port` attribute is not present in the configuration, despite passing a `KRAKEND_PORT` parameter. This is because the `port` didn't exist previously in the configuration file, and the environment variables can only override values.
+## Setting your environment variables
+If you need to set content using environment variables at any level, you have can either use the [flexible configuration](/docs/configuration/flexible-config/), which includes a series of [advanced functions](/docs/configuration/templates/#sprig-functions) including an `env` function, or you can not use KrakenD at all and rely on the operating system `envsubst` command. Obviously you can also write your custom replacement process.
 
-## Setting new values
-If you need to set content using environment variables at any level, you have to use the [flexible configuration](/docs/configuration/flexible-config/). It includes a series of [advanced functions](/docs/configuration/flexible-config/#advanced-functions) including an `env` function that can write in the config any value.
-
-Here is an example:
+### Environment variables with Flexible Configuration
+Here is an example with Flexible Configuration:
 
 ```go-text-template
 {
@@ -71,17 +79,25 @@ Here is an example:
     "name": "Configuration for {{ env "MY_POD_NAMESPACE" }}"
 }
 ```
+When you use the flexible configuration, you can start KrakenD from the template that uses them.
 
-## Usage reporting env var
-When KrakenD starts, it sends a request to our stats server with anonymous non-sensitive information. Our Telemetry system sends **1 request every 12 hours** and contains the following data:
+### Environment variables with envsubst
+Another example is not to use any of the built-in features of KrakenD and rely on your operating system via the command `envusbst`.
 
-- The KrakenD Version you are running
-- The architecture (e.g: `amd64`)
-- The operating system /`linux`/ `darwin`)
-- A random unique ID
+For instance, you have a configuration file `krakend.template.json` like the following:
 
-That's all we collect ([source code here](https://github.com/krakend/krakend-usage)). We are well aware of the importance of privacy. However, we are not in the data-mining business, so we selected a set of minimal details to share from your KrakenD instances that would give us enough insights into the matter without being invasive. We decided that we'd rather lose some accuracy than collect (maybe) sensible information, so we went for this **anonymous approach**.
+```json
+{
+    "version": 3,
+    "name": "Configuration for $MY_POD_NAMESPACE"
+}
+```
+Then you can generate the final configuration `krakend.json` like this:
 
-We don't collect typical system metrics like the number of CPU/cores, CPU usage, available and consumed ram, network throughput, etc. That’s something more related to system monitoring than KrakenD, and we felt that collecting these metrics generates friction with the acceptance of a telemetry system.
+{{< terminal title="Environment variable substitution" >}}
+export MY_POD_NAMESPACE="my-namespace" && envsubst < krakend.template.json > krakend.json
+{{< /terminal >}}
 
-If you are not comfortable sharing your KrakenD version, you can disable it in the open-source version by passing an environment variable `USAGE_DISABLE=1`. If you want to know how it's built, [read this blog post](/blog/building-a-telemetry-service/).
+The command, which is generally available in Linux distributions, takes a template file as input and outputs the same file with the environment variables replaced (you cannot override the same file). You have to be aware that missing variables are simply replaced by an empty string.
+
+Note: on Alpine-based containers, like the KrakenD image, you need to do an `apk add envsubst` to use this command.
