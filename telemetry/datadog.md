@@ -78,7 +78,7 @@ Here's an example of how to run the Datadog agent together with KrakenD in a doc
 
 ```yml
 krakend:
-  image:
+  image: {{< product image >}}:{{< product latest_version >}}
 ddagent:
   image: gcr.io/datadoghq/agent:latest
   volumes:
