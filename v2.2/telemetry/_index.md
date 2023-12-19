@@ -33,5 +33,5 @@ The following telemetry third-party systems are supported:
 Plus the Enterprise-only exporters:
 
 - [Newrelic](/docs/enterprise/telemetry/newrelic/)
-- [Instana](/docs/enterprise/telemetry/instana/)
-- [Google Analytics](/docs/enterprise/telemetry/google-analytics/)
+- [Instana](/docs/enterprise/v2.3/telemetry/instana/)
+- [Google Analytics](/docs/enterprise/v2.3/telemetry/google-analytics/ )
