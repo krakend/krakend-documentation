@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-06-28
+lastmod: 2023-12-20
 date: 2016-09-30
 aliases: ["/service-discovery/dns-srv/", "/docs/service-discovery/overview/"]
 linktitle: Service Discovery
@@ -28,7 +28,7 @@ The possible configurations and values for `sd` are:
 
 
 ## Static resolution
-The `static` resolution is the default service discovery strategy. It implies that you write directly in the configuration the protocol plus the service name, hosts or IPs you want to connect to.
+The `static` resolution is the default service discovery strategy. It implies that you write directly in the configuration the protocol plus the service name, hosts, or IPs you want to connect to.
 
 The `static` resolution uses a **list** of hosts to **load balance** (in a Round Robin fashion) all servers in the list, and you should expect more or less an equivalent number of hits on each backend. However, if you use a **Kubernetes service**, then it load-balances itself so that you only need one entry.
 
@@ -58,7 +58,7 @@ The `DNS SRV`([see RFC](https://datatracker.ietf.org/doc/html/rfc2782)) is a mar
 
 The format of the `SRV` record is as follows:
 
-    _service._proto.name. ttl IN SRV priority weight port target
+    _service._proto.name. TTL IN SRV priority weight port target
 
 **Example**. A service running on port `8000` with maximum priority (`0`) and a weight `5` ):
 
@@ -71,8 +71,8 @@ The DNS-based service discovery caches entries for 30 seconds.
 To integrate **Consul, Kubernetes, or any other `DNS SRV` compatible system** as the Service Discovery, you only need to set two keys:
 
 - `"sd": "dns"`: To use dynamic host resolution using the service discovery strategy
-- `"sd_scheme": "https"`: When the list of hosts provided by the service discovery is offered under https instead of plain http
-- `"host": []`: And entry with the service name providing the resolution (e.g.: Consul address)
+- `"sd_scheme": "https"`: When the list of hosts provided by the service discovery is offered under HTTPS instead of plain HTTP
+- `"host": []`: And entry with the service name providing the resolution (e.g., Consul address)
 
 Add these keys in the `backend` section of your configuration. If there is another `host` key in the root level of the configuration, you don't need to declare it here if the value is the same.
 
@@ -94,3 +94,19 @@ For instance:
 }
 ```
 With the configuration above, KrakenD will query every 30 seconds the `api-catalog.service.consul.srv` DNS and will apply to the internal balancer any weights and priorities returned by the DNS record.
+
+## How priority and weight affect balancing
+When the Service Discovery answers with the list of hosts, **only the lower priority is taken**. For instance, if you have a response like this one:
+
+{{< terminal title="SRV response example" >}}
+dig _service._tcp.domain.com SRV +short
+10 1 8000 service-1.domain.com.
+10 2 8000 service-2.domain.com.
+20 1 8000 service-3.domain.com.
+{{< /terminal >}}
+
+Which can be read as two services with priority `10` and one with `20`, all using port `8000`.
+
+With this configuration, KrakenD removes `service-3` (prio `20`) from the balancing since two entries have lower priority (prio `10`).
+
+In addition, the weight of `service-1` is `1`, and `service-2` is `2`, so the final list where KrakenD will load-balance is: `["service-1:8000", "service-2:8000", "service-2:8000"]`

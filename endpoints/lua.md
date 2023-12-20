@@ -273,6 +273,16 @@ Or even changing the HTTP status code (`418 I'm a teapot`)
 ```lua
 custom_error("I refuse to make any coffee, I'm a teapot!", 418)
 ```
+## Language limitations
+Because Lua runs sandboxed in a **virtual machine**, there is certain stuff you cannot do. When you include files, you should limit your logic to creating functions and referencing them in different places.
+
+In addition to that, the usage of modules would require KrakenD to push them in advance to the virtual machine, so user-created modules are not possible. **Package managers like LuaRocks are not supported** either, because they inject modules in a context where is not possible.
+
+{{< note title="Modules not supported" type="error" >}}
+You **cannot create your modules** neither use `require` to import them.
+{{< /note >}}
+
+Finally, if you need to use the standard library, you will need to add in the configuration the flag `allow_open_libs`.
 
 ## Lua examples in different pipes
 The following snippets show how to add Lua code in different sections.
