@@ -12,7 +12,7 @@ menu:
   community_current:
     parent: "160 Monitoring, Logs, and Analytics"
 ---
-The [Logstash](https://www.elastic.co/en/logstash/) integration prints **KrakenD application logs in JSON format** (not access logs) to ingest them and process them later. If you want to log using the Logstash standard via stdout, you need to add the `telemetry/logging` integration as a dependency.
+The [Logstash](https://www.elastic.co/logstash/) integration prints **KrakenD application logs in JSON format** (not access logs) to ingest them and process them later. If you want to log using the Logstash standard via stdout, you need to add the `telemetry/logging` integration as a dependency.
 
 ## Configuration
 The configuration you need to enable Logstash is very simple:
