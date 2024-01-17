@@ -58,7 +58,7 @@ Similarly, if your backend returns `[{"item": 1},{"item": 2}]` then the response
 
 Some `ouput_encodings` will revert this wrapping before returning the content to the user to match the exact value provided by the backend, but this gives you the oportunity to manipulate the content and work with it at the endpoint level. The `output_encoding` of `string` will remove the `content` wrapping, while the `json-collection` while remove the `collection` wrapping.
 
-# Example of mixed encodings
+## Example of mixed encodings
 
 The following example demonstrates how an endpoint `/abc` is feeding on three different services and urls  `/a`, `/b`, and `/c` and aggregates their responses. All the information is returned in JSON (`output_encoding`) despite it is consuming heterogeneous formats:
 
