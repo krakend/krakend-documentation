@@ -96,14 +96,6 @@ In all, the following combinations are possible:
 - `method=POST` + `type=query`: Generates a body using any `{variables}` in the endpoint, but it does not use the user's body to form the new body.
 - `method=POST` + `type=mutation`: Generates a body including any variables in the REST body plus the ones in the configuration, but you cannot have `{variables}` from the URL
 
-
-Summarizing in a table:
-
-|  | method=`POST` | method=`GET` |
-|---|---|---|
-| Type=`query` | Query string from user body | Query string from URL {params} |
-| Type=`mutation` | Body from user body | Body from URL {params} |
-
 {{< note title="Automatic content-type setting" type="tip" >}}
 Since KrakenD CE v2.3.3 the content-type header the GraphQL receives is `application/json`, and is not longer needed to pass it from the client.
 {{< /note >}}
