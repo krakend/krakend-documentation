@@ -10,7 +10,7 @@ images:
 - /images/features-event-driven.png
 menu:
   community_v2.5:
-    parent: "040 Routing and Forwarding"
+    parent: "050 Non-REST Connectivity"
 meta:
   since: 1.0
   source: https://github.com/krakend/krakend-pubsub
