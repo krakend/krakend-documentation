@@ -20,7 +20,7 @@ meta:
   scope:
   - service
 ---
-[Prometheus](https://prometheus.io/) is an open-source systems monitoring and alerting toolkit.
+[Prometheus](https://prometheus.io/) is an open-source system monitoring and alerting toolkit.
 
 The Opencensus exporter allows you to expose data to Prometheus, and publishes a `/metrics` endpoint in the selected port.
 

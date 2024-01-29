@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-01-22
+lastmod: 2024-01-29
 date: 2024-01-22
 notoc: false
 linktitle: OpenTelemetry
@@ -18,41 +18,45 @@ OpenTelemetry captures detailed, contextual information about the operation of y
 
 It supports auto-instrumentation and can be integrated seamlessly into cloud-native deployments, making it easier to monitor these dynamic environments.
 
-## Collecting metrics and traces
-The `telemetry/opentelemetry` component in KrakenD collects the activity generated for the enabled layers, and pushes or exposes the data. There are two different ways of publishing metrics: With the OpenTelemetry protocol (exporter = `otlp`), or with Prometheus (exporter = `prometheus`).
+## OTLP or Prometheus
+The `telemetry/opentelemetry` component in KrakenD collects the activity generated for the enabled layers and pushes or exposes the data. There are two ways of publishing metrics: With the OpenTelemetry protocol (exporter = `otlp`) or with Prometheus (exporter = `prometheus`).
+
+Choose the Prometheus exporter when you want KrakenD to **expose a new port offering a `/metrics` endpoint**. So, an external Prometheus job can connect to a URL like `http://krakendhost:9090/metrics` and retrieve all the data.
+
+![Prometheus connecting to KrakenD and fetching metrics](/images/documentation/diagrams/opentelemetry-prometheus.mmd.png)
 
 Choose OTLP when you want to **push the metrics to a local or remote collector**. The following diagram represents this idea:
 
 ![KrakenD to collector, collector to backend](/images/documentation/diagrams/opentelemetry-otlp.mmd.png)
 
-You can also have an external load balancer between KrakenD and multiple collectors if needed.
+If needed, you can also have an external load balancer between KrakenD and multiple collectors.
 
-Choose the Prometheus exporter when you want KrakenD to **expose a new port offering a `/metrics` endpoint**. So an external Prometheus job can connect to an URL like `http://krakendhost:9090/metrics` and retrieve all the data.
-
-![Prometheus connecting to KrakenD and fetching metrics](/images/documentation/diagrams/opentelemetry-prometheus.mmd.png)
+![KrakenD to load balanced collectors, collectors to backend](/images/documentation/diagrams/opentelemetry-otlp-lb.mmd.png)
 
 When using OTLP, you can push data to a [large number of providers](/docs/telemetry/#opentelemetry-integrations).
 
-## OTEL Configuration
-To enable OpenTelemetry, you will need a Prometheus or an OTEL Collector (or both) and add the `telemetry/opentelemetry` namespace at the top level of your configuration.
+## OpenTelemetry Layers
+You can add several OpenTelemetry `exporters` to your configuration (the more, the hungrier the gateway will be), and KrakenD will send data to all the declared exporters and layers by default.
 
-Inside the namespace, you will need to add all the `exporters` that you are willing to use. KrakenD will send data to all the declared exporters and layers by default. Exporters define **where** you will have the metrics.
-
-In addition, you can set the `layers` of metrics you want to have. The layers contain the traces and metrics for a subset of the execution flow. These are the layers you can use:
+While `exporters` define **where** you will have the metrics, the `layers` define **which** metrics you want to have. The layers contain the traces and metrics for a subset of the execution flow. These are the layers you can use:
 
 ![Diagram showing global, proxy, and backend sequence](/images/documentation/diagrams/opentelemetry-layers.mmd.png)
 
-- `global`: The global layer contains everything that KrakenD saw in and out.
-- `proxy`: When the API Gateway deals with an internal request after havin applied  one of the exposed endpoints and includes spawning the required requests to the backends, as well as the manipulation and aggregation at the endpoint level before and after the requests are performed.
-- `backend`: the part monitoring a single backend request and response with any additional components in its level. This contains mostly the timings between KrakenD and your service.
+- `global`: The global layer contains everything that KrakenD saw in and out. It includes the total timings for a request hitting the service until it is delivered to the client.
+- `proxy`: The proxy layer starts acting after processing the HTTP request and comprehends the internal work of dealing with the endpoint, including spawning multiple requests to the backends, aggregating their results, and manipulating the final response.
+- `backend`: The backend layer monitors the activity of a single backend request and response with any additional components in its level. It contains mainly the timings between KrakenD and your service. It is the richest layer of all.
 
-Is important to notice that `backend` is a subset of `proxy`, and `proxy` a subset of `global`.
+**It is vital to see that `backend` is a subset of `proxy`, and `proxy` is a subset of `global.`**. Do not generate metrics for the layers you will not use.
 
 {{< note title="CPU and memory consumption" type="warning" >}}
-The more layers and detail you add, the more resources KrakenD will consume, and more storage you will need to save the metrics and traces. Choose carefully a good balance between observability power and resource consumption.
+The more layers and details you add, the more resources KrakenD will consume and the more storage you need to save the metrics and traces. Choose carefully a balance between observability power and resource consumption to save money!
 {{< /note >}}
 
-The configuration of the `telemetry/opentelemetry` namespace accepts the following fields:
+## OpenTelemetry Configuration
+To enable OpenTelemetry, you will need a Prometheus or an OTEL Collector (or both) and add the `telemetry/opentelemetry` namespace at the top level of your configuration.
+
+
+The configuration of the `telemetry/opentelemetry` namespace accepts the following attributes:
 
 {{< schema data="telemetry/opentelemetry.json" >}}
 
@@ -128,9 +132,107 @@ The configuration of the `telemetry/opentelemetry` namespace accepts the followi
                 }
             },
             "skip_paths": [
-                ""
+                "/foo/{bar}"
             ]
         }
     }
 }
 ```
+## Exposed metrics and traces
+Once the OpenTelemetry component is properly configured, KrakenD will start reporting metrics when there is activity. This section describes the different metrics you have in each layer with a short explanation of their meaning.
+
+### Metrics of the `global` layer
+
+- `global-response-latency`: histogram of the time it takes to produce the response. Attributes:
+    - `http.response.status_code`: status code of the produced response
+    - `url.path`: the matched endpoint path
+    - `krakend.stage`: always with value `global`
+- `global-response-size`: histogram of the size of the body produced for the response. Attributes:
+    - `http.response.status_code`: status code of the produced response
+    - `url.path`: the matched endpoint path
+    - `krakend.stage`: always with value `global`
+
+
+### Metrics of the `proxy` layer
+
+- `stage-duration`: histogram of the time it takes to produce the response.
+    Attributes:
+    - `url.path`: the matched endpoint path that **krakend is serving** (is different
+        than in `backend`, krakend stage, when this property is the path
+        for the backend we are targetting).
+    - `krakend.stage`: always with value `proxy`
+
+### Traces of the `proxy` layer
+Attributes:
+
+- `krakend.stage`: always with value `proxy`
+- `complete`: a `true` / `false` value to know when a response is complete (all
+    backends returned a successful response).
+- `canceled`: if it appears, it will always be `true` and indicates a request
+    that has been canceled (usually when parallel requests are used).
+- `error`: in case an error happens, the error description.
+
+### Metrics of the `backend` layer
+
+- `stage-duration`: histogram of the time it takes to produce the response controlled by the `disable_stage` flag (if set to `true`, this metric will not appear).
+    Attributes:
+    - `url.path`: the matched endpoint path that **krakend is serving** (is different
+        than in `backend`, krakend stage, when this property is the path
+        for the backend we are targetting).
+    - `krakend.stage`: always with value `backend`
+    - `krakend.endpoint`: this attribute is set to the KrakenD exposed endpoint that is the "parent" of the backend request.
+    - `server.address`: the target host (in case more than one is provided, those are joined with `_`).
+
+#### Round Trip metrics
+In addition, if you enable the `round_trip` in the `backend` layer, you also get the following:
+
+- `http.request.method_original`: the method used for the request to the backend (GET, POST,...)
+- `url.path`: the requested path
+- `server.address`: the target host (the first in the list of provided hosts).
+- `krakend.stage`: always with value `backend-request`
+
+- `requests-started-count`: number of requests started.
+- `requests-failed-count`: number of requests failed.
+- `requests-canceled-count`: number of canceled requests.
+- `requests-timedout-count`: number of timed-out requests.
+- `requests-content-length`: counter with the sum of `Content-Length` header for the
+    sent payload for the request.
+
+- `response-latency`: histogram with the time taken until receiving the first byte of the response
+- `response-content-length`: histogram with the size of response bodies as reported in the
+    `Content-Lenght` header.
+
+
+#### Read Payload metrics
+The `read_payload` on the `backend` layer enables the following metrics:
+
+- `read-size`: counted with the read bytes
+- `read-size-hist`: histogram with the read bytes
+- `read-time`: counter with seconds spent reading the body payload of the response.
+- `read-time-hist`: histogram with the seconds spent reading the body.
+- `read-errors`: a counter of the number of errors that happened reading the response body.
+
+#### Detailed connection metrics
+The `detailed_connection` flag on the `backend` layer enables the following metrics:
+
+- `http.request.method_original`: the method used for the request to the backend
+    (GET, POST,...)
+- `url.path`: the requested path
+- `server.address`: the target host (the first in the list of provided hosts).
+- `krakend.stage`: always with value `backend-request`
+
+- `request-get-conn-latency`: time to get a connection from the connection pool
+- `request-dns-latency`: time spen5 resolving a DNS name
+- `request-tls-latency`: time spent on TLS Handshake
+
+### Traces of the `backend` layer
+**Stage Span** attributes (controlled by the `disable_stage` flag: will not appear if set to `true`):
+
+- `krakend.stage`: always with value `proxy`
+- `complete`: a `true` / `false` value to know when a response is complete (all
+    backends returned a successful response).
+- `canceled`: if it appears, it will always be `true` and indicates a request
+    that has been canceled (usually when parallel requests are used).
+- `error`: in case an error happens, the error description.
+
+**read-tracer** span with when `read_payload` option is set to true.
