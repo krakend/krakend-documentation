@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-12-07
+lastmod: 2024-02-01
 date: 2021-12-07
 linktitle: CI/CD integration
 title: "CI/CD Deployment on the API Gateway"
@@ -48,20 +48,11 @@ stages:
 # This step is only needed in Enterprise
 check-license:
   stage: license
-  image: ubuntu
+  image: {{< product image >}}:{{< product latest_version >}}
   script:
-    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssl bc
-    - WARN_IN_DAYS=30
-    - LICENSE_FILE_PATH="./LICENSE"
-    - NOW=$(date +%s)
-    - EXPIRATION=$(openssl x509 -in $LICENSE_FILE_PATH -text -noout -dates | grep notAfter | sed -e 's#notAfter=##')
-    - EXPIRATION_TIMESTAMP=$(date -d "$EXPIRATION" +%s)
-    - EXPIRATION_IN_DAYS=$(echo "($EXPIRATION_TIMESTAMP - $NOW)/(3600*24)" | bc)
-    - HAS_EXPIRED=$(echo "$NOW > $EXPIRATION_TIMESTAMP" | bc)
-    - ABOUT_TO_EXPIRE=$(echo "$EXPIRATION_IN_DAYS < $WARN_IN_DAYS" | bc )
-    - echo "License expiration $EXPIRATION (in $EXPIRATION_IN_DAYS days)"
-    - if [ "1" = "$HAS_EXPIRED" ]; then echo "Your LICENSE expired and KrakenD Enterprise cannot start!"; exit 1; fi
-    - if [ "1" = "$ABOUT_TO_EXPIRE" ]; then echo "Your LICENSE will expire really soon, lower the threeshold of this warning to continue"; exit 1; fi
+    # Checks if the LICENSE file (must exist in the path) is valid for the next 90 days.
+    # If it isn't, the deployment will fail, just to draw your atention. Lower the value afterwards.
+    - krakend license valid-for 90d
 
 # Example to check the configuration using flexible configuration
 check_config:
