@@ -32,6 +32,7 @@ The documentation in this site covers all the functionality of KrakenD API Gatew
 - [Using a proxy and API gateway to optimize Compass for performance](https://blog.hcltechsw.com/compass/using-a-proxy-and-api-gateway-to-optimize-compass-for-performance/) by Michael Hudson (Technology Director @HCL Software)
 - [Configuring Grafana and InfluxDB](https://skalena.github.io/api-methodology/public/cont/krakend-grafana-influxdb/) by Skalena (KrakenD partner, Brazil)
 - [API Gateway na prática com KrakenD - Video in portuguese](https://www.youtube.com/watch?v=ni-rti5DgYY) by Wesley Willians (Full Cycle)
+- [Publish Messages to Google PubSub Topic with KrakenD APIGateway as REST API and Subscribe using SpringBoot](https://medium.com/@velmuruganmp1210/publish-messages-to-google-pubsub-topic-with-krakend-apigateway-as-rest-api-and-subscribe-using-75fb875f2f2f) by Velmurugan M. (Solutions Architect)
 
 
 If you have written a tutorial, guide, video or any other material worth sharing with the community, let us know.
