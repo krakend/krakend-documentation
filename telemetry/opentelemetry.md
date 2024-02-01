@@ -166,8 +166,7 @@ Once the OpenTelemetry component is properly configured, KrakenD will start repo
 Attributes:
 
 - `krakend.stage`: always with value `proxy`
-- `complete`: a `true` / `false` value to know when a response is complete (all
-    backends returned a successful response).
+- `complete`: a `true` / `false` value to know when a response is complete (all backends returned a successful response).
 - `canceled`: if it appears, it will always be `true` and indicates a request
     that has been canceled (usually when parallel requests are used).
 - `error`: in case an error happens, the error description.
