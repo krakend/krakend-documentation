@@ -26,7 +26,7 @@ The request/response flow is:
 
 
 - The `encoding` is how KrakenD expects to find the response data of your backends. It is declared in each [`backend` section](/docs/backends/supported-encodings/) (and you can mix types)
-- The `output_encoding` is how you would like to process and return all the responses to the client. It is declared in the `endpoint` section.
+- The `output_encoding` is how you would like to process and return all the responses to the client. It is declared in the `endpoint` section, or globally as a default for all endpoints when you add in the root level.
 
 **Example**: You can have an endpoint `/foo` that fetches content from multiple services in parallel in different formats (JSON, XML, RSS, etc.), and you define for each service the corresponding `encoding`. But you want to return the aggregated information in JSON (the `output_encoding`). You can mix encodings and return them normalized automatically.
 
@@ -56,10 +56,12 @@ The following `output_encoding` strategies are available to choose from for ever
   - `text/plain` (outputs in YAML)
 
 ## Output encoding examples
-Each endpoint declaration can define which encoder should be used, as shown in this example. By default, when the `output_encoding` is omitted, KrakenD falls back to JSON:json-coll
+Each endpoint declaration can define which encoder should be used, as shown in this example. By default, when the `output_encoding` is omitted, KrakenD falls back to the `output_encoding` in the root, or to JSON when none is declared.
 
 ```json
 {
+  "version": 3,
+  "output_encoding": "json",
   "endpoints": [
     {
       "endpoint": "/foo",
@@ -90,4 +92,4 @@ Each endpoint declaration can define which encoder should be used, as shown in t
   ]
 }
 ```
-The endpoint `/baz` will use the default encoding `json` as no encoding has been defined.
+The endpoint `/baz` will use the default encoding `json` as no encoding has been defined in its definition.
