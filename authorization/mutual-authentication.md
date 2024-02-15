@@ -15,7 +15,7 @@ menu:
 
 As KrakenD is a piece of software in the middle of two parts, there are different types of mTLS supported, that can work together or separately.
 
-![mtls.mmd diagram](/images/documentation/diagrams/mtls.mmd.png)
+![mtls.mmd diagram](/images/documentation/diagrams/mtls.mmd.svg)
 
 
 1. **Service mTLS**: When you require end-users to provide a certificate to connect to KrakenD.

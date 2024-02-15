@@ -23,15 +23,23 @@ The `telemetry/opentelemetry` component in KrakenD collects the activity generat
 
 Choose the Prometheus exporter when you want KrakenD to **expose a new port offering a `/metrics` endpoint**. So, an external Prometheus job can connect to a URL like `http://krakendhost:9090/metrics` and retrieve all the data.
 
-![Prometheus connecting to KrakenD and fetching metrics](/images/documentation/diagrams/opentelemetry-prometheus.mmd.png)
+![Prometheus connecting to KrakenD and fetching metrics](/images/documentation/diagrams/opentelemetry-prometheus.mmd.svg)
 
-Choose OTLP when you want to **push the metrics to a local or remote collector**. The following diagram represents this idea:
+Choose OTLP when you want to **push the metrics to a local or remote collector**, or directly to a SaaS or storage system that understands OTLP. The following diagram represents this idea:
 
-![KrakenD to collector, collector to backend](/images/documentation/diagrams/opentelemetry-otlp.mmd.png)
+![KrakenD to collector, collector to backend](/images/documentation/diagrams/opentelemetry-otlp.mmd.svg)
 
 If needed, you can also have an external load balancer between KrakenD and multiple collectors.
+![KrakenD to load balanced collectors, collectors to backend](/images/documentation/diagrams/opentelemetry-otlp-lb.mmd.svg)
 
-![KrakenD to load balanced collectors, collectors to backend](/images/documentation/diagrams/opentelemetry-otlp-lb.mmd.png)
+![opentelemetry-otlp-auth.mmd diagram](/images/documentation/diagrams/opentelemetry-otlp-auth.mmd.svg)
+
+
+<!--
+{{< badge color="denim" >}}Enterprise{{< /badge >}} users can push directly to an external storage passing auth credentials using the [`telemetry/opentelemetry-auth` component](/docs/telemetry/opentelemetry-auth/), so the collector is not needed:
+
+![opentelemetry-otlp-auth.mmd diagram](/images/documentation/diagrams/opentelemetry-otlp-auth.mmd.svg)
+-->
 
 When using OTLP, you can push data to a [large number of providers](/docs/telemetry/#opentelemetry-integrations).
 
@@ -40,7 +48,7 @@ You can add several OpenTelemetry `exporters` to your configuration (the more, t
 
 While `exporters` define **where** you will have the metrics, the `layers` define **which** metrics you want to have. The layers contain the traces and metrics for a subset of the execution flow. These are the layers you can use:
 
-![Diagram showing global, proxy, and backend sequence](/images/documentation/diagrams/opentelemetry-layers.mmd.png)
+![Diagram showing global, proxy, and backend sequence](/images/documentation/diagrams/opentelemetry-layers.mmd.svg)
 
 - `global`: The global layer contains everything that KrakenD saw in and out. It includes the total timings for a request hitting the service until it is delivered to the client.
 - `proxy`: The proxy layer starts acting after processing the HTTP request and comprehends the internal work of dealing with the endpoint, including spawning multiple requests to the backends, aggregating their results, and manipulating the final response.

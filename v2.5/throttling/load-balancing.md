@@ -20,7 +20,7 @@ meta:
   #log_prefix:
   #-
 images:
-  - /images/documentation/diagrams/load-balancing.mmd.png
+  - /images/documentation/diagrams/load-balancing.mmd.svg
 ---
 The natural placement of an API gateway is between API consumers and your services. When we talk about load balancing, we can refer to both sides of the gateway: **ingress traffic** (user to gateway) or **egress traffic** (gateway to services).
 
@@ -30,7 +30,7 @@ The different load balancer placements you can have are illustrated in the image
 ## Balancing ingress traffic (to KrakenD)
 We recommend having a few containers or servers in production to have high availability. In addition, you should place an **external balancer** to serve as the single point of contact for clients to distribute incoming traffic to all KrakenD nodes.
 
-![load-balancing-to-krakend.mmd diagram](/images/documentation/diagrams/load-balancing-to-krakend.mmd.png)
+![load-balancing-to-krakend.mmd diagram](/images/documentation/diagrams/load-balancing-to-krakend.mmd.svg)
 
 Cloud providers (and on-prem solutions) offer a variety of products for balancing, like Network balancers, Application balancers, CDN balancers, software balancers, etc. The choice will depend on your needs.
 
@@ -57,7 +57,7 @@ When you don't want the gateway to do any balancing for you because either:
 - You are connecting to a Kubernetes service
 - Your infrastructure provides a balancer to your services
 
-![load-balancing-egress-delegated.mmd diagram](/images/documentation/diagrams/load-balancing-egress-delegated.mmd.png)
+![load-balancing-egress-delegated.mmd diagram](/images/documentation/diagrams/load-balancing-egress-delegated.mmd.svg)
 
 
 In these cases, you only need to add a single element in the `host` array with the desired service/networking address:
@@ -74,7 +74,7 @@ The `sd` entry uses its default value, which can be omitted in the configuration
 ### Egress load balancer using Round Robin
 When you want the gateway to do the balancing to connect to one or more servers inside or outside your network. The internal load balancer sends requests to the backends in a **Round Robin fashion**, and you should expect more or less an equivalent weight and number of hits on each backend in the list.
 
-![load-balancing-egress-internal.mmd diagram](/images/documentation/diagrams/load-balancing-egress-internal.mmd.png)
+![load-balancing-egress-internal.mmd diagram](/images/documentation/diagrams/load-balancing-egress-internal.mmd.svg)
 
 ```json
 {

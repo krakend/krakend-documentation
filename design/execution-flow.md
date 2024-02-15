@@ -8,7 +8,7 @@ menu:
   community_current:
     parent: "310 Design principles"
 images:
-- /images/documentation/diagrams/components-sequence-simple.mmd.png
+- /images/documentation/diagrams/components-sequence-simple.mmd.svg
 skip_header_image: true
 ---
 To truly master KrakenD, you should get familiar with **the concept of "pipes"** and how these pipes define the execution flow of KrakenD from request to response.
@@ -22,7 +22,7 @@ Each pipe loads the different factories of the components of KrakenD, what you c
 
 ## Execution flow (pipes)
 There are six differentiated parts on KrakenD pipes, as depicted in the following diagram:
-![Execution flow](/images/documentation/diagrams/components-sequence-simple.mmd.png)
+![Execution flow](/images/documentation/diagrams/components-sequence-simple.mmd.svg)
 
 - `HTTP Adapter` or also known as `RunServer` is the entry conduit that receives the request from the user. In this phase, you can add your custom HTTP Server plugins and execute other components like Analytics or CORS.
 - `Router` is the pipe part that identifies to which endpoint a request goes and allows to perform security checks before this happens. Both the `HTTP Adapter` and the `Router`are shared across all pipes.
@@ -36,4 +36,4 @@ Once the request reaches the upstream services, the response follows the same pa
 ## Components flow
 The following diagram is the same as the one shown above but includes the **primary components** (not all) involved in the different pipes. We understand this graph it is not for the faint-hearted, but it will help you answer the specific question of what is loaded before and after:
 
-![Sequence of KrakenD components](/images/documentation/diagrams/components-sequence-master.mmd.png)
+![Sequence of KrakenD components](/images/documentation/diagrams/components-sequence-master.mmd.svg)

@@ -16,7 +16,7 @@ KrakenD nodes **are stateless** and they don't store data or application state t
 
 A KrakenD cluster consists of multiple KrakenD instances running simultaneously and working together to provide increased reliability, higher throughput, scalability, and fail-over. There is no special software that you need to run a cluster other than KrakenD and the hardware or software that will balance the connections.
 
-![Load balancing KrakenD](/images/documentation/diagrams/load-balancing-to-krakend.mmd.png)
+![Load balancing KrakenD](/images/documentation/diagrams/load-balancing-to-krakend.mmd.svg)
 
 ## KrakenD cluster benefits
 Having a KrakenD cluster provides these immediate **benefits**:

@@ -10,7 +10,7 @@ menu:
   community_current:
     parent: "060 Request and Response Manipulation"
 images:
-- /images/documentation/diagrams/content-types.mmd.png
+- /images/documentation/diagrams/content-types.mmd.svg
 skip_header_image: true
 ---
 
@@ -22,7 +22,7 @@ KrakenD can send these responses back to the client **in different formats** tha
 
 The request/response flow is:
 
-![content-type-flow.mmd diagram](/images/documentation/diagrams/content-type-flow.mmd.png)
+![content-type-flow.mmd diagram](/images/documentation/diagrams/content-type-flow.mmd.svg)
 
 
 - The `encoding` is how KrakenD expects to find the response data of your backends. It is declared in each [`backend` section](/docs/backends/supported-encodings/) (and you can mix types)
@@ -30,7 +30,7 @@ The request/response flow is:
 
 **Example**: You can have an endpoint `/foo` that fetches content from multiple services in parallel in different formats (JSON, XML, RSS, etc.), and you define for each service the corresponding `encoding`. But you want to return the aggregated information in JSON (the `output_encoding`). You can mix encodings and return them normalized automatically.
 
-![Output encoding diagram](/images/documentation/diagrams/content-types.mmd.png)
+![Output encoding diagram](/images/documentation/diagrams/content-types.mmd.svg)
 
 The diagram above illustrates a gateway returning JSON content after merging multiple sources in heterogeneous formats.
 

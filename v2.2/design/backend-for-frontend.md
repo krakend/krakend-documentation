@@ -17,14 +17,14 @@ When developers of APIs create new endpoints, whether in a microservices pattern
 
 For instance, as a backend developer, if you create a `/user` endpoint, it should return **all the user data for the different consumers** of the API. Of course, some consumers will use more significant portions of the data than others, but generally speaking, most clients will be parsing unnecessary data and wasting bandwidth:
 
-![Problem 1 of API usage](/images/documentation/diagrams/backend-for-frontend-problem.mmd.png)
+![Problem 1 of API usage](/images/documentation/diagrams/backend-for-frontend-problem.mmd.svg)
 
 Another problem is that the clients consuming this data, like a desktop web UI, a mobile app, a TV app, etc., have very different capabilities and needs. Even data consumption between Android and iOS native apps is different!
 
 In addition to the problems above, each client needs to rely on **multiple domains** to complete a single use case. For instance, on the front page screen of an e-commerce application (whether it's a mobile app or web page), you might need to simultaneously consume data from the `user`, `catalog`, `cart`, `pricing`, and `promotions` services.
 
 
-![Problem with multiple API usage](/images/documentation/diagrams/backend-for-frontend-problem-2.mmd.png)
+![Problem with multiple API usage](/images/documentation/diagrams/backend-for-frontend-problem-2.mmd.svg)
 
 As you can see in the diagram above, the client must deal with four different HTTP connections, wait for the fat responses coming back by a slow channel (network), parse all the data, and pick only the attributes needed to render the page. So why wouldn't you give what the client needs in the first place, omitting unnecessary data?
 
@@ -35,7 +35,7 @@ Desktop and mobile interfaces usually compete in requirements, and the backends 
 ## How the BFF works
 KrakenD implements the BFF pattern with aggregation, allowing your frontend teams to define precisely the information you want to retrieve from the different services and how to deal with the errors.
 
-![BFF example](/images/documentation/diagrams/backend-for-frontend.mmd.png)
+![BFF example](/images/documentation/diagrams/backend-for-frontend.mmd.svg)
 
 The client receives:
 

@@ -12,14 +12,14 @@ menu:
     parent: "070 Security"
 skip_header_image: true
 images:
-- /images/documentation/diagrams/tls.mmd.png
+- /images/documentation/diagrams/tls.mmd.svg
 ---
 The TLS settings define the parameters that the gateway takes into account to handle incoming and outgoing HTTPS traffic. We refer to this as:
 
 - `tls`: **TLS settings**, or how the gateway handles incoming traffic as a server.
 - `client_tls`: **Client TLS settings**, or how the gateway connects to your upstream services
 
-![TLS diagram](/images/documentation/diagrams/tls.mmd.png)
+![TLS diagram](/images/documentation/diagrams/tls.mmd.svg)
 
 {{< note title="Independent properties" type="tip" >}}
 The properies `tls` and `client_tls` are independent of each other. You can declare one, both, or none.

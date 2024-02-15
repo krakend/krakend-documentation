@@ -14,7 +14,7 @@ KrakenD is an API Gateway with a **[zero-trust security policy](/docs/design/zer
 
 Part of the zero-trust policy implies that KrakenD **does not forward** any unexpected [query string](#query-string-forwarding), [headers](#headers-forwarding), or [cookies](#cookies-forwarding). See below how to set the forwarding rules.
 
-![alt text](/images/documentation/diagrams/parameter-forwarding-1.mmd.png)
+![alt text](/images/documentation/diagrams/parameter-forwarding-1.mmd.svg)
 
 ## Configuration to enable parameter forwarding
 You can change the default behavior according to your needs and define which elements can pass from the client to your backends. To do that, add the following configuration options under your `endpoint` definition:
