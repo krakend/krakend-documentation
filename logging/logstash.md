@@ -24,9 +24,13 @@ The configuration you need to enable Logstash is very simple:
         "telemetry/logging": {
             "level": "INFO",
             "prefix": "[KRAKEND]",
-            "syslog": false,
             "stdout": true,
-            "format": "logstash"
+            "syslog": false,
+            "format":"custom",
+            "custom_format": "%{message}"
+        },
+        "telemetry/logstash":{
+            "enabled": true
         }
     }
 }
