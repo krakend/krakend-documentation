@@ -15,7 +15,7 @@ menu:
 ---
 KrakenD's **no lock-in philosophy** emphasizes flexibility and interoperability, ensuring technology-specific dependencies don't constrain you. Giving you choices for observability and networking tools is key to success in a distributed microservices architecture.
 
-Our [OpenTelemetry](/docs/telemetry/opentelemetry/) integration (and its previous predecessor [OpenCensus](/docs/telemetry/opencensus/) are part of this effort. Our components provide:
+Our [OpenTelemetry](/docs/telemetry/opentelemetry/) integration and its previous predecessor [OpenCensus](/docs/telemetry/opencensus/) are part of this effort. Our components provide:
 
 - Ways to export data to detect problems' root causes.
 - Monitoring and details of the different distributed transactions.
@@ -26,11 +26,11 @@ Our [OpenTelemetry](/docs/telemetry/opentelemetry/) integration (and its previou
 **OpenCensus** is the previous component which has provided reliable service for over six years, and now is deprecated in favour of OpenTelemetry. You can still add [legacy telemetry](/docs/telemetry/opencensus/) through OpenCensus, although we recommend you to adopt OpenTelemetry right away.
 
 ## OpenTelemetry integrations
-As OpenTelemetry is **an open standard**, any provider adopting it using the wire protocol will make it automatically compatible with KrakenD.
+As OpenTelemetry is **an open standard**, any provider adopting it using the wire protocol will make it automatically compatible with KrakenD. OpenTelemetry is natively supported in +50 vendors.
 
 So the question of *does KrakenD support provider X?* can be answered with another question: *Does your provider offer an OpenTelemetry integration?*.
 
-As providers and software makers make an ongoing effort to adopt OpenTelemetry, you can find an extensive list of systems, SaaS or on-premise, that are on this path, and more are coming. When writing this documentation, these were the leading systems working with OpenTelemetry (but there are more!).
+As providers and software makers make an ongoing effort to adopt OpenTelemetry, you can find an extensive list of systems, SaaS or on-premise, that are on this path, and more are coming (see [vendors who natively support OpenTelemetry](https://opentelemetry.io/ecosystem/vendors/)).
 
 If you work with KrakenD and a piece of software that is not in the list below, please add it!
 
