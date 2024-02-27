@@ -1,11 +1,11 @@
 ---
-lastmod: 2022-08-22
+lastmod: 2024-02-27
 date: 2022-01-28
 aliases: ["/docs/extending/plugin-tools/"]
-linktitle: Checking your plugins
-title: "Guide to check custom KrakenD plugins"
-description: Learn how to check your custom KrakenD plugins with the check-plugin command and make sure that your developments are compatible and loadable by KrakenD during runtime.
-weight: 20
+linktitle: Check plugin dependencies
+title: "Check dependencies of plugins"
+description: Learn how to check your custom KrakenD plugins with the check-plugin command and ensure that your developments are compatible and loadable by KrakenD during runtime.
+weight: 30
 notoc: true
 meta:
     since: 2.0
@@ -13,18 +13,22 @@ menu:
   community_current:
     parent: "180 Extending with custom code"
 ---
-The `krakend check-plugin` command helps you validate the **compatibility of your custom plugins** that will run in conjunction with KrakenD.
+Plugins rely on specific versions of Go, libraries, or system architecture and can face compatibility issues following updates or modifications.
 
-The command compares your plugin's `go.sum` file with the libraries initially used to compile the running binary. If there are any incompatibilities between your plugin and KrakenD, it will show a detailed list.
+The `krakend check-plugin` command helps you validate the **dependencies used by your plugins**, which will determine whether the plugin is compatible, and because of this, you can use the command without providing access to the source code other than the `go.sum` file.
 
-If you integrate this command as part of your CI/CD pipeline, it will exit with a status code `0` when the libraries of your plugin are compatible with KrakenD and with a status code `1` when they are not.
 
-Notice that the `check-plugin` command does not check the plugin's validity itself nor need its source code other than the `go.sum` file.
-
-To get started writing your plugins see:
+To get started writing your plugins, see:
 
 - [Introduction to custom plugins](/docs/extending/)
 - [Writing custom plugins](/docs/extending/writing-plugins/)
+
+## Usage of check-plugin
+The command compares your plugin's `go.sum` file with the libraries initially used to compile the running binary. If there are any incompatibilities between your plugin and KrakenD, a detailed list will be shown.
+
+If you integrate this command as part of your CI/CD pipeline or `Dockerfile` build, it will exit with a status code `0` when the libraries of your plugin are compatible with KrakenD and with a status code `1` when they are not.
+
+If you want to test that a compiled plugin works (it loads), you can use the [`test-plugin` command](/docs/extending/test-plugin/) once you have it compiled.
 
 The `krakend check-plugin` command accepts the following options:
 
@@ -58,7 +62,7 @@ Use `krakend check-plugin` in combination with the following flags:
 - `-f` or `--format` to let KrakenD suggest you about the `go get` commands you should launch.
 - `-s` or `--sum` to specify the path to the `go.sum` file of your plugin.
 - `-g` or `--go` to specify the Go version you are using to compile the plugin.
-- `-l` or `--libc` to specify the libc version installed in the system. The libc version must have the preffix `MUSL-`, `GLIBC-`, `DARWIN-`. For instance, a plugin in Mac Monterrey might use `DARWIN-12.2.1`, an Alpine container will need something like `MUSL-1.2.2`, and a Linux box will have `GLIBC-2.32`. To know your glibc version execute the [Find GLIBC script](https://github.com/krakend/krakend-ce/blob/master/find_glibc.sh)
+- `-l` or `--libc` to specify the libc version installed in the system. The libc version must have the prefix `MUSL-`, `GLIBC-`, and `DARWIN-`. For instance, a plugin in Mac Monterrey might use `DARWIN-12.2.1`, an Alpine container will need something like `MUSL-1.2.2`, and a Linux box will have `GLIBC-2.32`. To know your glibc version execute the [Find GLIBC script](https://github.com/krakend/krakend-ce/blob/master/find_glibc.sh)
 
 
 {{< terminal title="Checking a failing plugin example" >}}
@@ -131,6 +135,6 @@ go get google.golang.org/genproto@v0.0.0-20220502173005-c8bf987b8c21
 go get google.golang.org/grpc@v1.46.0
 {{< /terminal >}}
 
-Copy and paste the `go get` commands in your terminal to update the dependencies. The commands are in alphabetical order.
+Copy and paste your terminal's `go get` commands to update the dependencies. The commands are in alphabetical order.
 
 You might need to use the `-f` several times and use `go mod tidy` as well.

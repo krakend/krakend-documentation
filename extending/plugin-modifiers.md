@@ -14,6 +14,7 @@ meta:
   namespace:
   - plugin/req-resp-modifier
 images:
+- /images/documentation/diagrams/plugin-type-req-resp.mmd.svg
 - /images/documentation/krakend-plugins.png
 - /images/documentation/request-response-plugin.png
 

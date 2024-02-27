@@ -14,6 +14,7 @@ meta:
   namespace:
   - plugin/http-client
 images:
+- /images/documentation/diagrams/plugin-type-client.mmd.svg
 - /images/documentation/krakend-plugins.png
 - /images/documentation/http-client-plugin.png
 ---

@@ -15,8 +15,10 @@ meta:
   namespace:
   - plugin/http-server
 images:
+- /images/documentation/diagrams/plugin-type-server.mmd.svg
 - /images/documentation/krakend-plugins.png
 - /images/documentation/http-handler-plugin.png
+
 ---
 The HTTP server plugins (codenamed as *handler plugins*) belong to the **router layer** and let you modify the requests before KrakenD starts processing them or modify the final response back to the user. The HTTP handler plugin lets you write your servers and HTTP middlewares right in KrakenD and enables you to implement anything you can imagine. This plugin type is so powerful that you can use it to implement custom monetization, tracking, tenant control, protocol conversion, and heavy modifications, for example.
 
