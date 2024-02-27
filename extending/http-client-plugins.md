@@ -81,7 +81,7 @@ func (r registerer) RegisterClients(f func(
 	name string,
 	handler func(context.Context, map[string]interface{}) (http.Handler, error),
 )) {
-	f(string(r), r.registerClients)
+    f(string(r), r.registerClients)
 }
 
 func (r registerer) registerClients(_ context.Context, extra map[string]interface{}) (http.Handler, error) {
@@ -150,7 +150,7 @@ func (r registerer) registerClients(_ context.Context, extra map[string]interfac
 		io.Copy(w, resp.Body)
 		resp.Body.Close()
 
-	}), nil
+    }), nil
 }
 
 func main() {}

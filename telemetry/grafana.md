@@ -2,14 +2,14 @@
 lastmod: 2022-09-28
 date: 2020-11-17
 linktitle: Grafana Dashboard
-title: Telemetry and Monitoring with Grafana in KrakenD API Gateway
+title: Telemetry and Monitoring with Grafana
 description: Discover how to set up telemetry and monitoring for KrakenD API Gateway using Grafana, gaining insights into performance and usage metrics
 weight: 30
 aliases: ["/docs/extended-metrics/grafana/"]
 menu:
   community_current:
     parent: "160 Monitoring, Logs, and Analytics"
-skip_header_image: true
+skip_header_image: false
 images:
 - /images/documentation/grafana-screenshot.png
 meta:
@@ -38,12 +38,13 @@ The dashboard is extensive and offers you metrics like:
 {{< youtube Ik18Zlwyap8 >}}
 
 ## Importing a Grafana dashboard
-These are the different Grafana data sources you can use for our dashboards:
+These are the different Grafana dashboards you can use depending on your data sources:
 
 | Datasource | Description | Cloud ID | Source |
 |----------|-----------|----------|----------|
-| InfluxDB v2.x | Latest. Uses Flux queries | `17074` | [for-influxdb-v2.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v2.json)|
-| InfluxDB v1.x | Uses InfluxQL queries | `15029` | [for-influxdb-v1.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v1.json)|
+| Prometheus<br>(**recommended**) | Latest dashboard to display metrics when you add an [OpenTelemetry Prometheus exporter](/docs/telemetry/prometheus/) | `xxx` | [for-prometheus.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/xxx.json)|
+| InfluxDB v2.x<br>(*legacy*) | Legacy dashboard for InfluxDB v2 and KrakenD under v2.6. Uses Flux queries | `17074` | [for-influxdb-v2.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v2.json)|
+| InfluxDB v1.x<br>(*legacy*)| Legacy dashboard for InfluxDB v1 and KrakenD under v2.6. Uses InfluxQL queries | `15029` | [for-influxdb-v1.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v1.json)|
 
 To import them, there are several options, being the most common:
 
@@ -59,30 +60,7 @@ volumes:
  You can see an example integrated on [KrakenD Playground](https://github.com/krakend/playground-community)'s Docker compose file.
 
 ## Getting the metrics on Grafana
-Grafana does not require any specific configuration on KrakenD, but its data source does.
+Grafana does not require any specific configuration on KrakenD, but it feeds from a data source, so you will need to push data to one of the following:
 
-For the data sources listed above, you will need to add the [InfluxDb exporter](/docs/telemetry/influxdb/)into your `krakend.json`, which is a configuration like this:
-
-```json
-{
-  "version": 3,
-  "extra_config": {
-    "telemetry/influx": {
-      "address": "http://localhost:8086",
-      "ttl": "25s",
-      "buffer_size": 100,
-      "db": "krakend_db",
-      "username": "user",
-      "password": "password"
-    },
-    "telemetry/metrics": {
-      "collection_time": "30s",
-      "listen_address": "127.0.0.1:8090"
-    }
-  }
-}
-```
-
-For more in-depth explanation, see the [InfluxDB exporter configuration](/docs/telemetry/influxdb/)
-
-![Grafana KrakenD Dashboard](/images/documentation/grafana-screenshot.png)
+1. [Prometheus exporter](/docs/telemetry/prometheus/) (**recommended**)
+2. [Legacy integration for InfluxDb](/docs/telemetry/influxdb/#legacy-integration), for older versions of KrakenD

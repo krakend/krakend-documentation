@@ -14,8 +14,8 @@ menu:
 ---
 Plugins are essential extensions to the KrakenD gateway, enhancing functionality without modifying the core codebase. Due to their reliance on specific versions of KrakenD, libraries, or system architecture, plugins can face compatibility issues following updates or modifications. So, when you have written a new plugin, and compiled it you still need to see that is loadable into KrakenD.
 
-{{< note title="Do not compile plugins in one platform and use in another" type="warning" >}}
-A common mistake is to compile a plugin in your laptop (e.g., a Macintosh) and load it in a container. [Use the builder to compile your plugins](/docs/extending/writing-plugins/#plugin-builder).
+{{< note title="Recompile plugins when you upgrade KrakenD" type="warning" >}}
+When you upgrade KrakenD to another version you must recompile your plugins using the [builder matching the version](/docs/extending/writing-plugins/#plugin-builder).
 {{< /note >}}
 
 Even if a plugin compiles and passes initial tests on its own, it might fail when loaded into KrakenD. This could be due to various reasons such as compilation on a different architecture, mismatches in Go version, or discrepancies in library versions used by both the plugin and KrakenD.

@@ -1,10 +1,11 @@
 ---
 lastmod: 2022-10-24
 old_version: true
+aliases: ["/docs/telemetry/ocagent/"]
 date: 2020-11-16
 notoc: true
 linktitle: OpenCensus Agent
-title: OpenCensus Agent Telemetry Integration
+title: OpenCensus Agent
 description: The ocagent exporter sends OpenCensus Stats and Traces to the OpenCensus Agent, instead of pushing data to backends’ exporters
 weight: 70
 notoc: true
@@ -21,6 +22,11 @@ meta:
   log_prefix:
   - "[SERVICE: Opencensus]"
 ---
+{{< note title="OpenCensus is no longer mantained" type="error" >}}
+KrakenD has traditionally offered its telemetry integration through this **OpenCensus** component, which has provided reliable service for over six years, but  now has transitioned to the more modern and robust [OpenTelemetry](/docs/telemetry/opentelemetry/) framework.
+
+As a result of a change in the industry, the OpenCensus integration is no longer mantained, we recommend you to migrate to [OpenTelemetry](/docs/telemetry/opentelemetry/).
+{{< /note >}}
 
 The `ocagent` exporter sends OpenCensus Stats and Traces to the OpenCensus Agent, instead of pushing data to backends’ exporters.
 
