@@ -27,15 +27,17 @@ The `telemetry/opentelemetry` component in KrakenD collects the activity generat
 
 You can use both simultaneously if needed, and even multiple instances of each.
 
-When you add OpenTelemetry in the configuration you will have [different metrics available](/docs/telemetry/opentelemetry-layers-metrics/).
+When you add OpenTelemetry in the configuration, you will have [different metrics available](/docs/telemetry/opentelemetry-layers-metrics/).
 
 ## Prometheus exporter (pull)
 Choose the `prometheus` exporter when you want KrakenD to **expose a new port offering a `/metrics` endpoint**. So, an external Prometheus job can connect to a URL like `http://krakend:9090/metrics` and retrieve all the data.
 
 ![Prometheus connecting to KrakenD and fetching metrics](/images/documentation/diagrams/opentelemetry-prometheus.mmd.svg)
 
+[See how to configure Prometheus](/docs/telemetry/prometheus/)
+
 ## OTLP exporter (push)
-Choose the `otlp` exporter when you want to **push the metrics to a local or remote collector**, or directly to a SaaS or storage system that supports native OTLP (there is a [large number of supported providers](/docs/telemetry/#opentelemetry-integrations)). The following diagram represents this idea:
+Choose the `otlp` exporter when you want to **push the metrics to a local or remote collector** or directly to a SaaS or storage system that supports native OTLP (there is a [large number of supported providers](/docs/telemetry/#opentelemetry-integrations)). The following diagram represents this idea:
 
 ![KrakenD to collector, collector to backend](/images/documentation/diagrams/opentelemetry-otlp.mmd.svg)
 
@@ -43,7 +45,7 @@ The `host` where your collector lives can also point to an external load balance
 ![KrakenD to load balanced collectors, collectors to backend](/images/documentation/diagrams/opentelemetry-otlp-lb.mmd.svg)
 
 <!--
-{{< badge color="denim" >}}Enterprise{{< /badge >}} users can push directly to an external storage passing auth credentials using the [`telemetry/opentelemetry-auth` component](/docs/telemetry/opentelemetry-auth/), so the collector is not needed anymore:
+{{< badge color="denim" >}}Enterprise{{< /badge >}} users can push directly to external storage passing auth credentials using the [`telemetry/opentelemetry-auth` component](/docs/telemetry/opentelemetry-auth/), so the collector is not needed anymore:
 
 ![opentelemetry-otlp-auth.mmd diagram](/images/documentation/diagrams/opentelemetry-otlp-auth.mmd.svg)
 
@@ -54,7 +56,12 @@ This strategy saves a lot of time during the setup of KrakenD.
 To enable OpenTelemetry, you will need a Prometheus or an OTEL Collector (or both) and add the `telemetry/opentelemetry` namespace at the top level of your configuration.
 
 
-The configuration of the `telemetry/opentelemetry` namespace accepts the following attributes:
+The configuration of the `telemetry/opentelemetry` namespace is very extensive, but the two key entries are:
+
+- `exporters`, defining the different technologies you will use
+- `layers`, the amount of data you want to report
+
+The entire configuration is as follows:
 
 {{< schema data="telemetry/opentelemetry.json" >}}
 
