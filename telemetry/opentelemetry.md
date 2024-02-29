@@ -9,6 +9,15 @@ weight: 20
 images:
 - /images/documentation/diagrams/opentelemetry-otlp.mmd.svg
 skip_header_image: true
+meta:
+  since: 2.6
+  source: https://github.com/krakend/krakend-otel
+  namespace:
+  - telemetry/opentelemetry
+  scope:
+  - service
+  log_prefix:
+  - "[SERVICE: OpenTelemetry]"
 menu:
   community_current:
     parent: "160 Monitoring, Logs, and Analytics"
@@ -18,6 +27,13 @@ OpenTelemetry (for short **OTEL**) offers a comprehensive, unified, and **vendor
 OpenTelemetry captures detailed, contextual information about the operation of your applications. This includes not only **metrics** but also **tracing data** that shows the full lifecycle of requests as they flow through your systems, providing insights into performance bottlenecks, latency issues, and error diagnostics.
 
 It supports auto-instrumentation and can be integrated seamlessly into cloud-native deployments, making it easier to monitor these dynamic environments.
+
+{{< note title="Stability note on OpenTelemetry" type="note" >}}
+KrakenD has traditionally offered part of its telemetry integration through the [OpenCensus integration](/docs/telemetry/opencensus/), which has provided a reliable service for over six years. We are transitioning to the more modern and robust OpenTelemetry framework, and the OpenCensus integration does not receive further updates.
+
+While the underlying protocol specification of OpenTelemetry is stable, you'll find [mixed stability statuses](https://opentelemetry.io/docs/specs/status/) in the components lifecycle. While we cannot predict what changes there will be as the technology evolves, KrakenD will always do its best to maintain compatibility between versions. More information about the underlying exporter can be found [here](https://opentelemetry.io/docs/languages/go/exporters/).
+{{< /note >}}
+
 
 ## Collecting metrics and traces
 The `telemetry/opentelemetry` component in KrakenD collects the activity generated for the enabled layers and pushes or exposes the data for pulling. There are two ways of publishing metrics:

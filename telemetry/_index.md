@@ -23,7 +23,7 @@ Our [OpenTelemetry](/docs/telemetry/opentelemetry/) integration and its previous
 
 **OpenTelemetry** presents a unified, open-source framework for collecting and managing telemetry data across distributed systems, such as traces and metrics. It offers **vendor neutrality**, simplifying instrumentation, and avoiding lock-in with specific monitoring platforms. You can choose between over twenty different providers. [Add OTEL to your configuration](/docs/telemetry/opentelemetry/).
 
-**OpenCensus** is the previous component which has provided reliable service for over six years, and now is deprecated in favour of OpenTelemetry. You can still add [legacy telemetry](/docs/telemetry/opencensus/) through OpenCensus, although we recommend you to adopt OpenTelemetry right away.
+**OpenCensus** is the previous component which has provided reliable service for over six years, and now its development is frozen in favour of OpenTelemetry. You can still use [OpenCensus telemetry](/docs/telemetry/opencensus/), although we recommend you to plan a transition to OpenTelemetry.
 
 ## OpenTelemetry integrations
 As OpenTelemetry is **an open standard**, any provider adopting it using the wire protocol will make it automatically compatible with KrakenD. OpenTelemetry is natively supported in +50 vendors.

@@ -34,7 +34,13 @@ Before digging any further, here are some answers to frequently asked questions:
 6) **If you are new to JWT validation**, start reading the [JSON Web Tokens overview](/docs/authorization/jwt-overview/)
 
 ## JWT header requirements
-When KrakenD decodes the `base64` token string passed in the `Bearer` or a cookie, it expects to find in its **header** section the following **fields**:
+{{< note title="Make sure the token header has `kid` and `alg`" type="warning" >}}
+When KrakenD decodes the `base64` token string passed in the `Bearer` or a cookie, it expects to find in its **header section** (NOT THE PAYLOAD!) the `alg` and `kid`. You can paste your token into the [JWT debugger](https://jwt.io/#debugger-io) and make sure these fields are under "header".
+
+The value provided in the `kid` must match with the `kid` declared at the `jwk_url` or `jwk_local_path`.
+{{< /note >}}
+
+Here's an example of the **header section** of a decoded token:
 ```json
 {
     "alg": "RS256",
@@ -43,13 +49,6 @@ When KrakenD decodes the `base64` token string passed in the `Bearer` or a cooki
 ```
 
 The `alg` and `kid` values depend on your implementation, but they must be present.
-
-
-{{< note title="Important!" >}}
-Make sure you are declaring the right `kid` in your JWT. Paste a token in a [debugger](https://jwt.io/#debugger-io) to find out.
-
-The value provided in the `kid` must match with the `kid` declared at the `jwk_url` or `jwk_local_path`.
-{{< /note >}}
 
 The example above used [this public key](https://albert-test.auth0.com/.well-known/jwks.json). Notice how the `kid` matches the single key present in the JWK document and the token header.
 
@@ -178,7 +177,7 @@ KrakenD does the following validation to let users hit protected endpoints:
 
 - The `jwk_url` must be accessible by KrakenD at all times ([caching is recommended](/docs/authorization/jwk-caching/))
 - The token is [well formed](https://jwt.io/#debugger-io)
-- The `kid` in the header is listed in the `jwk_url` or `jwk_local_path`.
+- The `kid` in the **token header** (not payload) is listed in the `jwk_url` or `jwk_local_path` under `keys`.
 - The content of the JWK Keys (`k`) is **base64** urlencoded
 - The algorithm `alg` is supported by KrakenD and matches exactly the one used in the endpoint definition.
 - The token hasn't expired

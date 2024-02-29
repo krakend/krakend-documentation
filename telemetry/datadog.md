@@ -1,9 +1,9 @@
 ---
-lastmod: 2023-02-28
+lastmod: 2024-02-27
 date: 2020-07-24
 notoc: true
 linktitle: Datadog
-title: Datadog Telemetry Integration with KrakenD API Gateway
+title: Datadog Telemetry Integration
 description: Integrate Datadog telemetry with KrakenD API Gateway for advanced monitoring, visualization, and analysis of your API ecosystem
 weight: 90
 since: 1.2
@@ -26,10 +26,42 @@ meta:
 ---
 [Datadog](https://www.datadoghq.com/) is a cloud monitoring and security platform for developers, IT operations teams, and businesses.
 
+The [OpenTelemetry integration](/docs/telemetry/opentelemetry/) allows you to send **metrics and traces** to Datadog using a Collector.
 ## Datadog configuration
-The Opencensus exporter allows you to export data to Datadog. Enabling it only requires adding the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/).
+Datadog uses the standard OTLP exporter, here is a configuration example:
 
-The following configuration snippet sends data to your Datadog:
+```json
+{
+  "version": 3,
+  "extra_config": {
+        "telemetry/opentelemetry": {
+            "service_name": "krakend_service",
+            "metric_reporting_period": 1,
+            "@comment": "Report 20% of traces",
+            "trace_sample_rate": 0.2,
+            "exporters": {
+                "otlp": [
+                    {
+                        "name": "my_datadog_agent",
+                        "host": "ddagent",
+                        "port": 8126,
+                        "use_http": false
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+
+The important part of the configuration is the `otlp` exporter, which accepts the following fields:
+
+{{< schema data="telemetry/opentelemetry.json" property="exporters" filter="otlp">}}
+
+In addition, you can configure how the `layers` behave ([see all options](/docs/telemetry/opentelemetry/#layers)).
+
+## Migrating from OpenCensus legacy configuration
+Prior to v2.6, telemetry sent to Datadog used the Opencensus exporter. Enabling required adding the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/), and the configurations looked like this:
 ```json
 {
       "version": 3,
@@ -56,20 +88,15 @@ The following configuration snippet sends data to your Datadog:
       }
 }
 ```
-As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
+You can migrate to OpenTelemetry doing the following changes:
 
-{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
+- Rename `telemetry/opencensus` to `telemetry/opentelemetry`.
+- `sample_rate` -> Delete this field
+- `reporting_period` -> Rename to `metric_reporting_period`
+- `datadog` -> Rename to `otlp`, and add an array surrounding the object, so it becomes `"otlp": [{...}]`
+- `namespace` -> Rename to `name`
+- `tag_host`, `tag_path`,`tag_method`,`tag_statuscode` -> Delete them
 
-Then, the `exporters` key must contain an `datadog` entry with the following properties:
-
-{{< schema data="telemetry/opencensus.json" property="exporters" filter="datadog" >}}
-
-## B3 propagation
-The Opencensus module uses B3-style propagation headers, while the rest of your services might be using Datadog-specific propagation headers. If this difference is actual, krakend traces will show up in Datadog, but they won't be connected to the frontend and backend traces.
-
-The `ddtrace-run` adds an option to support B3 style propagation using the environment variables `DD_TRACE_PROPAGATION_STYLE_EXTRACT` and `DD_TRACE_PROPAGATION_STYLE_INJECT`. Use these variables to have your traces perfectly aligned.
-
-For more information, see [its configuration](https://ddtrace.readthedocs.io/en/stable/configuration.html).
 
 ## Datadog agent
 You must set your Datadog API key in the agent. The exporter communicates with the agent and is the agent the one reporting to Datadog.
@@ -89,8 +116,10 @@ ddagent:
     - 8126:8126/tcp
     - 8125:8125/udp
   environment:
+    # Replace with your API key:
     - DD_API_KEY=<API-KEY>
     - DD_APM_ENABLED=true
+    # Replace with your site: https://docs.datadoghq.com/getting_started/site/
     - DD_SITE=<DATADOG-SITE>
     - DD_APM_NON_LOCAL_TRAFFIC=true
 ```

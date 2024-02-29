@@ -1,5 +1,6 @@
 ---
 lastmod: 2022-10-24
+aliases: ["/docs/telemetry/logger/"]
 old_version: true
 date: 2019-09-15
 notoc: true
@@ -21,8 +22,8 @@ meta:
   log_prefix:
   - "[SERVICE: Opencensus]"
 ---
-{{< note title="Use standard logging instead" type="info" >}}
-Unless you have a compelling reason to use this logger based on OpenCensus, you should use the [standard KrakenD Logging](/docs/v2.5/logging/) and not this component. This component will be deprecated in the future.
+{{< note title="Use standard logging instead" type="error" >}}
+Unless you have a compelling reason to use this logger based on OpenCensus, you should use the [standard KrakenD Logging](/docs/v2.5/logging/) and not this component. This component is deprecated and will be removed in the future.
 {{< /note >}}
 
 Opencensus can also export data to the system logger as other exporters. If you use this component, **do not not enable standard logging**.

@@ -2,9 +2,9 @@
 lastmod: 2024-01-22
 date: 2019-09-15
 notoc: true
-linktitle: OpenCensus (legacy)
-title: OpenCensus Telemetry Integration (legacy)
-description: The OpenCensus telemetry integration has been deprecated. Migrate to OpenTelemetry now.
+linktitle: OpenCensus (frozen)
+title: OpenCensus Telemetry Integration
+description: The OpenCensus telemetry integration is now development-frozen. All efforts are now put into OpenTelemetry.
 weight: 60
 aliases: ["/docs/logging-metrics-tracing/opencensus/"]
 menu:
@@ -21,9 +21,9 @@ meta:
   - "[SERVICE: Opencensus]"
 ---
 {{< note title="OpenCensus is no longer mantained" type="error" >}}
-KrakenD has traditionally offered its telemetry integration through this **OpenCensus** component, which has provided reliable service for over six years, but now has transitioned to the more modern and robust [OpenTelemetry](/docs/telemetry/opentelemetry/) framework.
+KrakenD has traditionally offered its telemetry integration through this **OpenCensus** component, which has provided reliable service for over six years, but now is transitioning to the more modern and robust [OpenTelemetry](/docs/telemetry/opentelemetry/) framework.
 
-As a result of a change in the industry, the OpenCensus integration is no longer mantained, we recommend you to migrate to [OpenTelemetry](/docs/telemetry/opentelemetry/).
+As a result of a change in the industry, the OpenCensus integration is no longer mantained, and all efforts are focused on [OpenTelemetry](/docs/telemetry/opentelemetry/).
 {{< /note >}}
 
 The Opencensus exporter is a single component that allows you to **export data to multiple providers**, both open source and privative.
