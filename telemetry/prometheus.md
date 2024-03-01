@@ -128,6 +128,7 @@ When the Prometheus configuration is added into KrakenD, and your Prometheus is 
 Our Grafana dashboard contains a lot of options, and **not all are enabled by default**. Because generating low-detail metrics is an expensive operation, some options in the `layers` are disabled by default. Enable the options that matter to you, knowing that the more detail you add, the more resources the gateway will need to run.
 {{< /note >}}
 
+![Screenshot of a grafana dashboard with KrakenD metrics](/images/documentation/grafana-screenshot.png)
 
 ## Migrating from an old OpenCensus configuration (legacy)
 Prior to KrakenD v2.6, you had to configure the Prometheus endpoint using the opencensus component. The OpenTelemetry integration is much more powerful and delivers more data while simultaneously giving you more configuration options.

@@ -63,4 +63,4 @@ volumes:
 Grafana does not require any specific configuration on KrakenD, but it feeds from a data source, so you will need to push data to one of the following:
 
 1. [Prometheus exporter](/docs/telemetry/prometheus/) (**recommended**)
-2. [Legacy integration for InfluxDb](/docs/telemetry/influxdb/#legacy-integration), for older versions of KrakenD
+2. [Legacy integration for InfluxDb](/docs/telemetry/extended-metrics/), for older versions of KrakenD

@@ -60,44 +60,6 @@ The important part of the configuration is the `otlp` exporter, which accepts th
 
 In addition, you can configure how the `layers` behave ([see all options](/docs/telemetry/opentelemetry/#layers)).
 
-## Migrating from OpenCensus legacy configuration
-Prior to v2.6, telemetry sent to Datadog used the Opencensus exporter. Enabling required adding the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/), and the configurations looked like this:
-```json
-{
-      "version": 3,
-      "extra_config": {
-        "telemetry/opencensus": {
-          "sample_rate": 100,
-          "reporting_period": 0,
-          "exporters": {
-            "datadog": {
-              "tags": [
-                "gw"
-              ],
-              "global_tags": {
-                "env": "prod"
-              },
-              "disable_count_per_buckets": true,
-              "trace_address": "localhost:8126",
-              "stats_address": "localhost:8125",
-              "namespace": "krakend",
-              "service": "gateway"
-            }
-          }
-        }
-      }
-}
-```
-You can migrate to OpenTelemetry doing the following changes:
-
-- Rename `telemetry/opencensus` to `telemetry/opentelemetry`.
-- `sample_rate` -> Delete this field
-- `reporting_period` -> Rename to `metric_reporting_period`
-- `datadog` -> Rename to `otlp`, and add an array surrounding the object, so it becomes `"otlp": [{...}]`
-- `namespace` -> Rename to `name`
-- `tag_host`, `tag_path`,`tag_method`,`tag_statuscode` -> Delete them
-
-
 ## Datadog agent
 You must set your Datadog API key in the agent. The exporter communicates with the agent and is the agent the one reporting to Datadog.
 
@@ -137,3 +99,40 @@ And the configuration would contain:
 ```
 
 Notice that we are naming the service `ddagent` in Docker compose, and this is what we have added in the address.
+
+## Migrating from OpenCensus
+Prior to v2.6, telemetry sent to Datadog used the OpenCensus exporter. Enabling required adding the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/), and the configurations looked like this:
+```json
+{
+      "version": 3,
+      "extra_config": {
+        "telemetry/opencensus": {
+          "sample_rate": 100,
+          "reporting_period": 0,
+          "exporters": {
+            "datadog": {
+              "tags": [
+                "gw"
+              ],
+              "global_tags": {
+                "env": "prod"
+              },
+              "disable_count_per_buckets": true,
+              "trace_address": "localhost:8126",
+              "stats_address": "localhost:8125",
+              "namespace": "krakend",
+              "service": "gateway"
+            }
+          }
+        }
+      }
+}
+```
+You can migrate to OpenTelemetry doing the following changes:
+
+- Rename `telemetry/opencensus` to `telemetry/opentelemetry`.
+- `sample_rate` -> Delete this field
+- `reporting_period` -> Rename to `metric_reporting_period`
+- `datadog` -> Rename to `otlp`, and add an array surrounding the object, so it becomes `"otlp": [{...}]`
+- `namespace` -> Rename to `name`
+- `tag_host`, `tag_path`,`tag_method`,`tag_statuscode` -> Delete them

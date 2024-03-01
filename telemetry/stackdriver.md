@@ -23,8 +23,7 @@ meta:
   log_prefix:
   - "[SERVICE: Opencensus]"
 ---
-
-[Google Cloud's operation suite](https://cloud.google.com/products/operations) (formerly [Stackdriver](https://cloud.google.com/stackdriver/)) aggregates metrics, logs, and events from infrastructure, giving developers and operators a rich set of observable signals that speed root-cause analysis and reduce mean time to resolution (MTTR).
+[Google Cloud's Operation Suite](https://cloud.google.com/products/operations) (formerly [Stackdriver](https://cloud.google.com/stackdriver/)) aggregates metrics, logs, and events from infrastructure, giving developers and operators a rich set of observable signals that speed root-cause analysis and reduce mean time to resolution (MTTR).
 
 The Opencensus exporter allows you to export **metrics and traces** to Google Cloud. Enabling it only requires you to add the `stackdriver` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
