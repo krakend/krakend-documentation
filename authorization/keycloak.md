@@ -55,7 +55,7 @@ Paste the following configuration into a `krakend.json` file.
     "extra_config": {
         "auth/validator": {
             "alg": "RS256",
-            "jwk_url": "http://KEYCLOAK:8080/auth/realms/master/protocol/openid-connect/certs",
+            "jwk_url": "http://KEYCLOAK:8080/realms/master/protocol/openid-connect/certs",
             "disable_jwk_security": true
         }
     },
