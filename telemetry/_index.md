@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-01-22
+lastmod: 2024-03-08
 date: 2019-09-15
 notoc: false
 linktitle: Metrics and Traces overview
@@ -15,18 +15,23 @@ menu:
 ---
 KrakenD's **no lock-in philosophy** emphasizes flexibility and interoperability, ensuring technology-specific dependencies don't constrain you. Giving you choices for observability and networking tools is key to success in a distributed microservices architecture.
 
-Our [OpenTelemetry](/docs/telemetry/opentelemetry/) integration and its previous predecessor [OpenCensus](/docs/telemetry/opencensus/) are part of this effort. Our components provide:
+Our [OpenTelemetry](/docs/telemetry/opentelemetry/) integration and its previous predecessors [OpenCensus](/docs/telemetry/opencensus/), and the [Metrics API](/docs/telemetry/extended-metrics/), are part of this effort. Our components provide:
 
-- Ways to export data to detect problems' root causes.
+- Ways to export data to detect root causes of problems.
 - Monitoring and details of the different distributed transactions.
 - Performance and latency optimization in the systems of your choice.
+- The flexibility to use the monitoring system that you have chosen, and not one that you are locked-in
 
-**OpenTelemetry** presents a unified, open-source framework for collecting and managing telemetry data across distributed systems, such as traces and metrics. It offers **vendor neutrality**, simplifying instrumentation, and avoiding lock-in with specific monitoring platforms. You can choose between over twenty different providers. [Add OTEL to your configuration](/docs/telemetry/opentelemetry/).
+**OpenTelemetry** presents a unified, open-source framework for collecting and managing telemetry data across distributed systems, such as traces and metrics. It offers **vendor neutrality**,  **simplifies instrumentation**, and **avoids lock-in** with specific monitoring platforms. You can choose between **over twenty different providers**. [Add OTEL to your configuration](/docs/telemetry/opentelemetry/).
 
-**OpenCensus** is the previous component which has provided reliable service for over six years, and now its development is frozen in favour of OpenTelemetry. You can still use [OpenCensus telemetry](/docs/telemetry/opencensus/), although we recommend you to plan a transition to OpenTelemetry.
+**OpenCensus** is the previous component which has provided reliable service for over six years for traces and metrics, and now its development is frozen in favour of OpenTelemetry. You can still use [OpenCensus telemetry](/docs/telemetry/opencensus/), although we recommend you to plan a transition to OpenTelemetry.
+
+The **Metrics API** and its native exporter to InfluxDB are in a similar situation. It was our richest exporter of metrics data until the OpenTelemetry release, and while it still works, its development has also frozen. [See the Metrics API](/docs/telemetry/extended-metrics/)
+
+If starting with a new project, choose an OpenTelemetry integration for metrics and traces.
 
 ## OpenTelemetry integrations
-As OpenTelemetry is **an open standard**, any provider adopting it using the wire protocol will make it automatically compatible with KrakenD. OpenTelemetry is natively supported in +50 vendors.
+As OpenTelemetry is **an open standard**, any provider adopting it using the wire protocol will automatically be compatible with KrakenD. More than 50 vendors natively support it.
 
 So the question of *does KrakenD support provider X?* can be answered with another question: *Does your provider offer an OpenTelemetry integration?*.
 
@@ -60,7 +65,7 @@ If you want to use a third-party SaaS, here is a list of a few APM systems that 
 - **Honeycomb.io**: Emphasizes understanding production systems and supports OpenTelemetry.
 - **Sumo Logic**: Offers cloud-native solutions with OpenTelemetry integration.
 - **SolarWinds AppOptics**: Combines APM features with cloud monitoring, supporting OpenTelemetry.
-- **LogicMonitor**: Known for its automated monitoring solutions compatible with OpenTelemetry.
+- **LogicMonitor**: Known for its automated monitoring solutions that are compatible with OpenTelemetry.
 - **Scout APM**: A developer-centric monitoring tool that supports OpenTelemetry.
 - **Rollbar**: Focuses on real-time error tracking and debugging with OpenTelemetry support.
 - **Wavefront by VMware**: A streaming analytics platform integrating with OpenTelemetry.

@@ -1,17 +1,17 @@
 ---
-lastmod: 2022-10-24
+lastmod: 2024-03-08
 date: 2019-09-15
 notoc: true
 linktitle: Prometheus
 title: Prometheus' metrics endpoint
 description: Learn how to integrate Prometheus telemetry with KrakenD API Gateway for efficient monitoring and performance analysis of your APIs
-weight: 80
+weight: 30
 aliases: ["/docs/logging-metrics-tracing/prometheus/"]
 menu:
   community_current:
     parent: "160 Monitoring, Logs, and Analytics"
 images:
-  - /images/documentation/diagrams/opentelemetry-prometheus.mmd.svg
+  - /images/documentation/screenshots/grafana-prometheus-otel.png
 meta:
   since: 0.5
   source: https://github.com/krakend/krakend-otel
@@ -24,9 +24,14 @@ meta:
 ---
 [Prometheus](https://prometheus.io/) is an open-source system monitoring and alerting toolkit that you can use to scrap a `/metrics` endpoint on KrakenD in the selected port. For instance, you could have an endpoint like `http://localhost:9091/metrics`.
 
+When using Prometheus with OpenTelemetry, you can use a [ready-to-use Grafana dashboard](/docs/telemetry/grafana/) to visualize metrics, as shown in the image above.
+
+The mechanics are simple: you add the `telemetry/opentelemetry` integration with a `prometheus` exporter, and then you add a Prometheus job to scrap from your KrakenD instances the metrics.
+
+![Prometheus scrapping from KrakenD image](/images/documentation/diagrams/opentelemetry-prometheus.mmd.svg)
 
 ## Prometheus Configuration
-To enable a Prometheus endpoint on Krakend, add the [OpenTelemetry integration](/docs/telemetry/opentelemetry/) with a `prometheus` exporter. The following configuration is an example of how to do it:
+To enable scrapable Prometheus metrics on Krakend, add the [OpenTelemetry integration](/docs/telemetry/opentelemetry/) with a `prometheus` exporter. The following configuration is an example of how to do it:
 
 ```json
 {
@@ -49,11 +54,11 @@ To enable a Prometheus endpoint on Krakend, add the [OpenTelemetry integration](
     }
 }
 ```
-The Prometheus exporter settings are as follows:
+The full list of the Prometheus exporter settings are as follows:
 
 {{< schema data="telemetry/opentelemetry.json" property="exporters" filter="prometheus" >}}
 
-In addition, you can configure the metrics using the `layers` attribute: [see all options](/docs/telemetry/opentelemetry/#layers).
+In addition, you can do a **granular configuration** of the metrics you want to expose using the `layers` attribute and other [OpenTelemetry options](/docs/telemetry/opentelemetry/#layers).
 
 ### Demonstration setup
 The following configuration allows you to test a complete metrics experience, from generation and collection to visualization. The first code snippet is a `docker-compose.yaml` that declares three different services:
@@ -61,7 +66,7 @@ The following configuration allows you to test a complete metrics experience, fr
 
 - The `krakend` service exposing port 8080
 - The `prometheus` service that will scrap the metrics from KrakenD
-- A `grafana` dashboard to dislay them (it uses our [Grafana dashboard](/docs/telemetry/grafana/))
+- A `grafana` dashboard to display them (it uses our [Grafana dashboard](/docs/telemetry/grafana/))
 
 Notice that the three services declare volumes to pick the configuration.
 
@@ -128,7 +133,7 @@ When the Prometheus configuration is added into KrakenD, and your Prometheus is 
 Our Grafana dashboard contains a lot of options, and **not all are enabled by default**. Because generating low-detail metrics is an expensive operation, some options in the `layers` are disabled by default. Enable the options that matter to you, knowing that the more detail you add, the more resources the gateway will need to run.
 {{< /note >}}
 
-![Screenshot of a grafana dashboard with KrakenD metrics](/images/documentation/grafana-screenshot.png)
+![Screenshot of a grafana dashboard with KrakenD metrics](/images/documentation/screenshots/grafana-prometheus-otel.png)
 
 ## Migrating from an old OpenCensus configuration (legacy)
 Prior to KrakenD v2.6, you had to configure the Prometheus endpoint using the opencensus component. The OpenTelemetry integration is much more powerful and delivers more data while simultaneously giving you more configuration options.
