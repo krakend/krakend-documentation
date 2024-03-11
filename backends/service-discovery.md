@@ -17,7 +17,7 @@ You might also want to read the [Load Balancer](/docs/throttling/load-balancing/
 {{< /note >}}
 
 
-The chosen **service discovery strategy** determines how to retrieve (statically or dynamically) the final list of IPs, hostnames, or services pointing to your backends. If your host list is dynamic, you can use an external service discovery provider and let KrakenD interact with it to get the hosts. If your host list is static (it doesn't change) or you use a service name or an external balancer, you can use `static` resolution and directly use the values provided under `host[]`.
+The chosen **service discovery strategy** determines how to retrieve (statically or dynamically) the final list of IPs, hostnames, or services pointing to your backends. If your host list is dynamic, you can use an external service discovery provider and let KrakenD interact with it to get the hosts. If your host list is static (it doesn't change) or you use a service name or an external load balancer, you can use `static` resolution and directly use the values provided under `host[]`.
 
 KrakenD must be in a network that can reach any declared hosts. With more than one host, KrakenD [load balances](/docs/throttling/load-balancing/) the connections to the hosts in the list.
 
@@ -86,14 +86,14 @@ For instance:
             "sd": "dns",
             "sd_scheme": "https",
             "host": [
-                "api-catalog.service.consul.srv"
+                "_https._tcp.my-application.default.svc.cluster.local"
             ],
             "disable_host_sanitize": true
         }
     ]
 }
 ```
-With the configuration above, KrakenD will query every 30 seconds the `api-catalog.service.consul.srv` DNS and will apply to the internal balancer any weights and priorities returned by the DNS record.
+With the configuration above, KrakenD will query every 30 seconds the `_https._tcp.my-application.default.svc.cluster.local` DNS and will apply to the internal balancer any weights and priorities returned by the DNS record.
 
 ## How priority and weight affect balancing
 When the Service Discovery answers with the list of hosts, **only the lower priority is taken**. For instance, if you have a response like this one:

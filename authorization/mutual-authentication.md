@@ -15,7 +15,7 @@ menu:
 
 As KrakenD is a piece of software in the middle of two parts, there are different types of mTLS supported, that can work together or separately.
 
-![mtls.mmd diagram](/images/documentation/diagrams/mtls.mmd.png)
+![mtls.mmd diagram](/images/documentation/diagrams/mtls.mmd.svg)
 
 
 1. **Service mTLS**: When you require end-users to provide a certificate to connect to KrakenD.
@@ -133,7 +133,7 @@ The KrakenD configuration needed is as follows (no endpoints used for this demo)
 ```json
 {
     "version": 3,
-    "$schema": "https://www.krakend.io/schema/v2.5/krakend.json",
+    "$schema": "https://www.krakend.io/schema/v2.6/krakend.json",
     "port": 443,
     "tls": {
         "public_key": "./server.crt",

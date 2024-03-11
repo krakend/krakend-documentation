@@ -90,7 +90,7 @@ The `async_agent` entry is **an array** with all the different agents you want t
 ```
 The configuration accepts the following parameters:
 
-{{< schema data="async_agent.json" property="items">}}
+{{< schema data="async_agent.json" property="items" title="Properties of an Async Agent object" >}}
 
 When agents are defined, their activity is shown in the health endpoint with the name of the agent you have chosen.  The health endpoint will show for each agent, when was the last time the agent reported itself as alive. The frequency of this checking is as defined in the `health_interval`.
 

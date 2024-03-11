@@ -11,7 +11,7 @@ menu:
 meta:
     since: 2.5
 images:
-#- /images/documentation/diagrams/flexible-config.mmd.png
+#- /images/documentation/diagrams/flexible-config.mmd.svg
 
 weight: 100
 

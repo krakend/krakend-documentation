@@ -9,7 +9,7 @@ menu:
   community_v2.3:
     parent: "040 Endpoint Configuration"
 images:
-- /images/documentation/diagrams/content-types.mmd.png
+- /images/documentation/diagrams/content-types.mmd.svg
 skip_header_image: true
 ---
 
@@ -19,7 +19,7 @@ KrakenD can send these responses back to the client **in different formats** to 
 
 The request/response flow is:
 
-![content-type-flow.mmd diagram](/images/documentation/diagrams/content-type-flow.mmd.png)
+![content-type-flow.mmd diagram](/images/documentation/diagrams/content-type-flow.mmd.svg)
 
 
 - The `encoding` is how KrakenD expects to find the response data of your backends. It is declared in each [`backend` section](/docs/v2.3/backends/supported-encodings/) (and you can mix types)
@@ -28,7 +28,7 @@ The request/response flow is:
 ## Example
 For instance, you can have one endpoint `/foo` that consumes content from multiple services in parallel in different formats (`encoding`) like  XML or RSS. But you want to return the aggregated information in JSON (the `output_encoding`). You can mix encodings and return them normalized automatically.
 
-![Output encoding diagram](/images/documentation/diagrams/content-types.mmd.png)
+![Output encoding diagram](/images/documentation/diagrams/content-types.mmd.svg)
 
 
 ## Configuration of `output_encoding`

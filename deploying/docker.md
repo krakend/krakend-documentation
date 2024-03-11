@@ -42,6 +42,9 @@ RUN FC_ENABLE=1 \
     krakend check -d -t -c krakend.tmpl --lint
 
 FROM {{< product image >}}:{{< product minor_version >}}
+# Keep operating system updated with security fixes between releases
+RUN apk upgrade --no-cache --no-interactive
+
 COPY --from=builder --chown=krakend:nogroup /tmp/krakend.json .
 # Uncomment with Enterprise image:
 # COPY LICENSE /etc/krakend/LICENSE

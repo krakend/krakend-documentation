@@ -8,7 +8,7 @@ menu:
   community_current:
     parent: "010 Configuration files"
 images:
-#- /images/documentation/diagrams/flexible-config.mmd.png
+#- /images/documentation/diagrams/flexible-config.mmd.svg
 
 weight: 31
 ---

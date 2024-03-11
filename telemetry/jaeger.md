@@ -13,83 +13,94 @@ menu:
     parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 0.5
-  source: https://github.com/krakend/krakend-opencensus
+  source: https://github.com/krakend/krakend-otel
   namespace:
-  - telemetry/opencensus
+  - telemetry/opentelemetry
   scope:
   - service
   log_prefix:
-  - "[SERVICE: Opencensus]"
+  - "[SERVICE: OpenTelemetry]"
 ---
-The KrakenD exporter to [Jaeger](https://www.jaegertracing.io/) allows you to submit spans to a Jaeger Collector (HTTP) or Jaeger Agent (UDP) automatically.
+The KrakenD exporter to [Jaeger](https://www.jaegertracing.io/) allows you to submit spans to an OpenTelemtry Collector (HTTP or gRPC) automatically.
 
 Jaeger is an open-source, end-to-end distributed tracing system that allows you to monitor and troubleshoot transactions in complex distributed systems. Use Jaeger when you want to see the complete flow of a user request through KrakenD and its connected services.
 
-The Opencensus Jaeger exporter allows you to export spans to Jaeger. Enabling it only requires you to add the `jaeger` exporter in the [opencensus module](/docs/telemetry/opencensus/). You can post spans using two different approaches:
-
-- **Submit spans to an Agent** ([Thrift over UDP](https://www.jaegertracing.io/docs/1.23/apis/#thrift-over-udp-stable)) - using `agent_endpoint`
-- **Submit spans to a Collector** ([Thrift over HTTP](https://www.jaegertracing.io/docs/1.23/apis/#thrift-over-http-stable)) - using `endpoint`
-
-You can test this setup by running the **All in One** official Jaeger image and opening the necessary ports. For instance, to run a Jaeger container for UDP and HTTP support do:
-
-{{< terminal title="Term" >}}
-docker run -d --name jaeger -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
--p 5775:5775/udp -p 6831:6831/udp -p 6832:6832/udp \
--p 5778:5778 -p 16686:16686 -p 14268:14268 -p 9411:9411 \
-jaegertracing/all-in-one:latest
-{{< /terminal >}}
-
-Then use `agent_endpoint` pointing to `jaeger:6831` for the Jaeger Agent (UDP) or `endpoint` pointing to `http://jaeger:14268` for the Jaeger Collector (HTTP).
-
-## Collector - Thrift over HTTP
-When you don't have a Jaeger Agent deployed next to the application, you can submit all spans to a **Jaeger Collector** over HTTP/HTTPS somewhere else. To do that, use the `endpoint` configuration option inside `jaeger`, as follows:
+## Jaeger configuration
+To add Jaeger, configure a new exporter to the [OpenTelemetry settings](/docs/telemetry/opentelemetry/). For instance:
 
 ```json
 {
-  "extra_config":{
-    "telemetry/opencensus": {
-      "sample_rate": 100,
-      "reporting_period": 0,
-      "exporters": {
-        "jaeger": {
-          "endpoint": "http://jaeger:14268/api/traces",
-          "service_name":"krakend",
-          "buffer_max_count": 1000
+    "version": 3,
+    "extra_config": {
+        "telemetry/opentelemetry": {
+            "service_name": "my_krakend_service",
+            "metric_reporting_period": 1,
+            "trace_sample_rate": 0.15,
+            "layers": {
+                "global": {
+                    "report_headers": true
+                },
+                "proxy": {
+                    "report_headers": true
+                },
+                "backend": {
+                    "metrics": {
+                        "disable_stage": true
+                    },
+                    "traces": {
+                        "disable_stage": false,
+                        "round_trip": true,
+                        "read_payload": true,
+                        "detailed_connection": true,
+                        "report_headers": true
+                    }
+                }
+            },
+            "exporters": {
+                "otlp": [
+                    {
+                        "name": "local_jaeger",
+                        "host": "jaeger",
+                        "port": 4317,
+                        "use_http": false,
+                        "disable_metrics": true
+                    }
+                ]
+            }
         }
-      }
     }
-  }
 }
 ```
+The fields relative to the exporter are:
 
-You can find a running demo with Jaeger using docker-compose on [KrakenD Playground](/docs/overview/playground/).
+{{< schema data="telemetry/opentelemetry.json" property="exporters" filter="otlp">}}
 
-## Agent - Thrift over UDP
-When you want to send spans to a **Jaeger Agent** locally over UDP in Thrift format, you need to use the `agent_endpoint` configuration. To configure the gateway to work with an agent, you will need the following:
+But as you can see there is a `layers` attribute in the example configuration that defines settings for all exporters (not only Jaeger). See the [layers options](/docs/telemetry/opentelemetry/#layers).
 
-```json
-{
-  "extra_config":{
-    "telemetry/opencensus": {
-      "sample_rate": 100,
-      "reporting_period": 0,
-      "exporters": {
-        "jaeger": {
-          "agent_endpoint": "jaeger:6831",
-          "service_name":"krakend",
-          "buffer_max_count": 1000
-        }
-      }
-    }
-  }
-}
+Also notice that port `4317` and `"use_http": false` are set, meaning that gRPC communication is used. Change to `4318` and the flag to `true` for HTTP communication.
+
+## Jaeger demo environment
+You can test this setup by running the **All in One** official Jaeger image and opening the necessary ports. For instance:
+```yaml
+version: "3"
+services:
+  krakend:
+    image: {{< product image >}}:{{< product latest_version >}}
+    volumes:
+      - "./:/etc/krakend"
+    ports:
+      - "8080:8080"
+  jaeger:
+    image: jaegertracing/all-in-one:1.54
+    environment:
+      COLLECTOR_ZIPKIN_HOST_PORT: ":9411"
+    ports:
+      - "5778:5778" # serve configs
+      - "16686:16686" # serve frontend UI
+      - "4317:4317"   # otlp grpc: we remap this to be able to run other envs
+      - "4318:4318"   # otlp http: we reamp this to be able to run other envs
+    deploy:
+      resources:
+        limits:
+          memory: 4096M # Adjust according to your setup
 ```
-
-## Jaeger configuration options
-As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
-
-{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
-
-Then, the `exporters` key must contain the `jaeger` entry with the following properties:
-
-{{< schema data="telemetry/opencensus.json" property="exporters" filter="jaeger" >}}

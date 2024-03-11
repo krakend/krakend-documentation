@@ -22,7 +22,7 @@ images:
 - /images/documentation/screenshots/azure-app-insights-1.png
 - /images/documentation/screenshots/azure-app-insights-2.png
 - /images/documentation/screenshots/azure-app-insights-3.png
-- /images/documentation/diagrams/azure-collector.mmd.png
+- /images/documentation/diagrams/azure-collector.mmd.svg
 - /images/documentation/screenshots/azure-application-insights-instrumentation-key.png
 ---
 
@@ -58,7 +58,7 @@ images:
 
 The gateway sends all the traces to a local **OpenTelemetry Collector** ([see repository](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/azuremonitorexporter)), allowing the gateway to offload data quickly and the collector can take care of additional handling like retries, batching, encryption or even sensitive data filtering. Finally, the Otel Collector pushes all the data to your **Application Insights** on Azure Monitor.
 
-![Otel collector](/images/documentation/diagrams/azure-collector.mmd.png)
+![Otel collector](/images/documentation/diagrams/azure-collector.mmd.svg)
 
 ## Application Insights configuration
 The [OpenCensus exporter](/docs/v2.2/telemetry/opencensus/) is the (stable) component that allows you to export telemetry data, Azure included. Nevertheless, the official **OpenTelemetry Collector** is flagged as **beta** and still **does not support pushing metrics** for Azure. So without further development on the OpenTelemetry side, the integration is limited to traces.

@@ -14,13 +14,19 @@ meta:
   namespace:
   - plugin/http-client
 images:
+- /images/documentation/diagrams/plugin-type-client.mmd.svg
 - /images/documentation/krakend-plugins.png
 - /images/documentation/http-client-plugin.png
 ---
-The **HTTP client** plugins execute in the proxy layer, this is when KrakenD tries to reach your backends for content. They allow you to intercept, transform, and manipulate the requests **before they hit your backend services**, and its way back. It is the perfect time to modify the request before it reaches the backend.
+The **HTTP client** plugins execute in the proxy layer when KrakenD tries to reach your backends for content. They allow you to intercept, transform, and manipulate the requests **before they hit your backend services**, and their way back. It is the perfect time to modify the request before it reaches the backend.
 
-HTTP client plugins cannot be chained. You can use up to one plugin per backend connection.
+You cannot chain HTTP client plugins, limiting them to one plugin per backend connection, and replace the default KrakenD's HTTP client.
 
+{{< note title="HTTP client components will stop working" type="info" >}}
+An HTTP client is a terminator. It means that it is the last executor in the KrakenD pipe. When you add an HTTP client plugin, **you replace KrakenD's default client** with your own. It means some built-in functionality in the default HTTP client won't exist unless you code it.
+
+More specifically, if you inject your plugin, you don't have [Client Credentials](/docs/authorization/client-credentials/) or [Backend Cache](/docs/backends/caching/), and you won't have telemetry at the HTTP backend level.
+{{< /note >}}
 
 ![http handler plugin](/images/documentation/http-client-plugin.png)
 
@@ -29,10 +35,10 @@ HTTP client plugins cannot be chained. You can use up to one plugin per backend 
 Read the introduction to [writing plugins](/docs/extending/writing-plugins/) for compilation and configuration options if you haven't done it yet.
 {{< /note >}}
 
-To start with a *hello world* for your first plugin you have to implement the plugin client interface by copying the example provided in the [Go documentation](https://godoc.org/github.com/luraproject/lura/transport/http/client/plugin)
+To start with a *hello world* for your first plugin, you have to implement the plugin client interface by copying the example provided in the [Go documentation](https://godoc.org/github.com/luraproject/lura/transport/http/client/plugin)
 
 ### Example: Building your first client plugin
-The easiest way to demonstrate how HTTP client plugins work is with a hello world plugin. So let's start by creating a new Go project named `krakend-client-example`:
+The easiest way to demonstrate how HTTP client plugins work is with a Hello World plugin. So let's start by creating a new Go project named `krakend-client-example`:
 
     mkdir krakend-client-example
     cd krakend-client-example
@@ -75,7 +81,7 @@ func (r registerer) RegisterClients(f func(
 	name string,
 	handler func(context.Context, map[string]interface{}) (http.Handler, error),
 )) {
-	f(string(r), r.registerClients)
+    f(string(r), r.registerClients)
 }
 
 func (r registerer) registerClients(_ context.Context, extra map[string]interface{}) (http.Handler, error) {
@@ -144,7 +150,7 @@ func (r registerer) registerClients(_ context.Context, extra map[string]interfac
 		io.Copy(w, resp.Body)
 		resp.Body.Close()
 
-	}), nil
+    }), nil
 }
 
 func main() {}
@@ -159,11 +165,11 @@ type Logger interface {
 }
 ```
 
-The plugin above aborts the request and replies itself printing a `Hello, %q` without actually passing the request to the backend. It is a simple example, but it shows the necessary structure to start working with plugins.
+The plugin above aborts the request and replies by printing a `Hello, %q` without passing the request to the backend. It is a simple example, but it shows the necessary structure to start working with plugins.
 
 If you look now closely at the plugin code, notice that the loader looks for the symbol `ClientRegisterer` and, if found, the loader checks if the symbol implements the `plugin.Registerer` interface. Once the plugin is validated, the loader registers handlers from the plugin by calling the exposed `RegisterClients` method.
 
-With the `main.go` file saved, it's time to build and test the plugin. If you added more code and external dependencies, you must run a `go mod tidy` before the compilation, but it is unnecessary for this example.
+With the `main.go` file saved, it's time to build and test the plugin. If you added more code and external dependencies, you must run a `go mod tidy` before the compilation, which is unnecessary for this example.
 
 For compiling Go plugins, the flag `-buildmode=plugin` is required. The command is:
 
@@ -171,7 +177,7 @@ For compiling Go plugins, the flag `-buildmode=plugin` is required. The command 
 go build -buildmode=plugin -o krakend-client-example.so .
 {{< /terminal >}}
 
-If you are using Docker and wanting to load your plugin on Docker, compile it in the [Plugin Builder](/docs/extending/writing-plugins/#plugin-builder) for an easier integration.
+If you are using Docker and want to load your plugin on Docker, compile it in the [Plugin Builder](/docs/extending/writing-plugins/#plugin-builder) for easier integration.
 
 {{< terminal title="Build your plugin" >}}
 docker run -it -v "$PWD:/app" -w /app \
@@ -179,7 +185,7 @@ docker run -it -v "$PWD:/app" -w /app \
 go build -buildmode=plugin -o krakend-client-example.so .
 {{< /terminal >}}
 
-There is no output for this command. Now you have a file `krakend-client-example.so`, the binary that KrakenD has to side load. Remember that you cannot use this binary in a different architecture (e.g., compiling the binary in Mac and loading it in a Docker container).
+There is no output for this command. Now you have a file `krakend-client-example.so`, the KrakenD binary has to side load. Remember that you cannot use this binary in a different architecture (e.g., compiling the binary in Mac and loading it in a Docker container).
 
 The plugin is ready to use! You can now load your plugin in the configuration. Add the `plugin` and `extra_config` entries in your configuration. Here's an example of `krakend.json`:
 
@@ -246,7 +252,7 @@ The essential lines are:
 
 If you see these lines, you did great! Your plugin is working.
 
-To test the plugin, request the test endpoint `/test/{id}`. If you request a path not declared in the configuration like `/test/normal` the plugin will execute the request. If you request to `/test/hijack-me` then the plugin will respond itself with the content `Hello, /hijack-me`.
+To test the plugin, request the test endpoint `/test/{id}`. If you request a path not declared in the configuration, like `/test/normal,` the plugin will execute the request. If you request to `/test/hijack-me,`, then the plugin will respond with the content `Hello, /hijack-me.`
 
 {{< terminal title="Delegate the request" >}}
 curl http://localhost:8080/test/normal

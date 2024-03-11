@@ -77,7 +77,7 @@ When **client headers** or **query strings** are needed in a script, remember to
 ## Configuration placement and sequence of execution
 When running Lua scripts, you can place them at the `proxy` level, or the `router` level:
 
-![lua namespaces](/images/documentation/diagrams/lua.mmd.png)
+![lua namespaces](/images/documentation/diagrams/lua.mmd.svg)
 
 These two places have the following considerations:
 
@@ -89,7 +89,7 @@ These two places have the following considerations:
 
 In a request/response execution, this is how the different namespaces for Lua placement work:
 
-![Lua - Sequence of execution](/images/documentation/diagrams/lua-2.mmd.png)
+![Lua - Sequence of execution](/images/documentation/diagrams/lua-2.mmd.svg)
 
 ## Functions for Proxy
 

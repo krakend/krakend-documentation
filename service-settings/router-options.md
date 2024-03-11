@@ -144,7 +144,9 @@ You can also define generic responses for 404 and 405 errors by defining the res
 The secure choice of KrakenD is that all errors generated at the gateway **are not returned to the client in the body**. By setting `return_error_msg` (*boolean*) to `true`, when there is an error in the gateway (such as a timeout, a non-200 status code, etc.), it returns the client the reason for the failure. The error is **written in the body as is**.
 
 {{< note title="Gateway errors != backend errors" >}}
-This option does not relate to the body of your backend errors. If you are looking for this option, see [return detailed errors](/docs/backends/detailed-errors/#showing-backend-errors) instead.
+This option will return the gateway interpretation of the error (such as there was an *invalid status code*). Nevertheless, when this option is mixed with a backend flag [`return_error_code`](/docs/backends/detailed-errors/#showing-backend-errors) set to `true`, the backend error is returned, but its encoding is lost.
+
+Consider using [`return_error_details`](/docs/backends/detailed-errors/#return-backend-errors-in-a-new-key) to create a key with the error and support aggregation, or just use `no-op` encoding if you need errors as returned by the backend.
 {{< /note >}}
 
 ```json

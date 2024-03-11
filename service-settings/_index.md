@@ -22,6 +22,10 @@ All service settings are written directly in the root of the configuration file 
 {
     "version": 3,
     "port": 8080,
+    "output_encoding": "json",
+    "host": ["http://myapi"],
+    "timeout": "3s",
+    "cache_ttl": "60s",
     "listen_ip": "192.168.1.3",
     "endpoints": [],
     "extra_config": {
@@ -36,7 +40,7 @@ All service settings are written directly in the root of the configuration file 
 
 The service accepts **numerous configuration options** that you'll find explained through the rest of the documentation, but here is a preview of the most important ones:
 
-{{< schema data="krakend.json" filter="version,extra_config,port,listen_ip,endpoints">}}
+{{< schema data="krakend.json" filter="version,extra_config,port,listen_ip,endpoints,output_encoding,timeout,host,cache_ttl">}}
 
 Other service-level settings you can add:
 

@@ -3,7 +3,7 @@ lastmod: 2022-09-21
 date: 2022-09-21
 notoc: true
 linktitle: Logging Dashboard (ELK)
-title: ELK Integration for Logging in KrakenD API Gateway
+title: ELK Integration for Logging
 description: Learn how to integrate the ELK (Elasticsearch, Logstash, Kibana) stack for centralized logging and log analysis in KrakenD API Gateway
 weight: 390
 source: https://github.com/krakend/telemetry-dashboards
@@ -22,7 +22,7 @@ The configuration you need on your `krakend.json` to enable ELK integration is:
 
 ```json
 {
-  "$schema": "https://www.krakend.io/schema/v2.5/krakend.json",
+  "$schema": "https://www.krakend.io/schema/v2.6/krakend.json",
   "version": 3,
   "extra_config": {
     "telemetry/logging": {

@@ -3,7 +3,7 @@ lastmod: 2022-06-15
 date: 2019-09-15
 notoc: true
 linktitle: Logging in JSON (Logstash)
-title: "Logstash Integration in the API Gateway"
+title: "Logstash Integration (JSON logs)"
 description: Streamline log management and analysis by integrating Logstash with KrakenD. Follow our documentation to set up seamless integration and gain valuable insights from your API logs.
 weight: 310
 source: https://github.com/krakend/krakend-logstash
@@ -24,9 +24,13 @@ The configuration you need to enable Logstash is very simple:
         "telemetry/logging": {
             "level": "INFO",
             "prefix": "[KRAKEND]",
-            "syslog": false,
             "stdout": true,
-            "format": "logstash"
+            "syslog": false,
+            "format":"custom",
+            "custom_format": "%{message}"
+        },
+        "telemetry/logstash":{
+            "enabled": true
         }
     }
 }

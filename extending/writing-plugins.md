@@ -36,50 +36,72 @@ Once you have decided what type of plugin to write and started developing it, yo
 - The command `krakend version` gives you information about the Go and Glibc versions used during compilation.
 - The [command `check-plugin`](/docs/extending/check-plugin/) analyzes your `go.sum` file and warns you about incompatibilities.
 - The **Plugin Builder** is an environment with the versions you need (see below)
+- The [command `test-plugin`](/docs/extending/test-plugin/) loads a compiled a plugin and tells you if it is loadable or not.
 
 ## Plugin Builder
-When using Docker to deploy your gateway, the official KrakenD container uses **[Alpine](https://hub.docker.com/_/alpine)** as the base image. Therefore, to use your custom plugins, they must compile within an Alpine container and use the same Go and Glibc versions as KrakenD. The **Plugin Builder** docker image spares you from this job.
+{{< note title="Do not compile locally, use the builder" type="warning" >}}
+Regardless where you want to use your plugin, compiling your plugins using the right builder is the way to go. The builder makes sure that the **system architecture and Go version** match the destination, making the plugin loadable.
 
-{{< note title="Compiling plugins for on-premise" type="info" >}}
-When you build plugins for **non-Docker targets**, instead of the Alpine image `{{< product image_plugin_builder >}}:{{< product latest_version >}}` you need to use the image `{{< product image_plugin_builder >}}:{{< product latest_version >}}-linux-generic`.
+If you choose to compile locally without the builder, you use a different architecture and underlying libc libraries that will make your plugin unusable.
 {{< /note >}}
 
+There are two builders you should use, depending on where you want to run the plugin:
 
-You can get the plugin builder with the following:
+| Architecture | Alpine (Docker) | Non-Docker (on-premises) |
+|--------------|---------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| [AMD64](/docs/extending/writing-plugins/#compile-plugins-for-amd64)        | `{{< product image_plugin_builder >}}:{{< product latest_version >}}` | `{{< product image_plugin_builder >}}:{{< product latest_version >}}-linux-generic` |
+| [ARM64](/docs/extending/writing-plugins/#compile-plugins-for-arm64)        | `{{< product image_plugin_builder >}}:{{< product latest_version >}}` with cross-compile instructions | `{{< product image_plugin_builder >}}:{{< product latest_version >}}-linux-generic` with cross-compile instructions |
 
-{{< terminal title="Download plugin builder" >}}
-docker pull {{< product image_plugin_builder >}}:{{< product latest_version >}}
-{{< /terminal >}}
+When using Docker to deploy your gateway, our official KrakenD container uses **[Alpine](https://hub.docker.com/_/alpine)** as the base image. Therefore, to use your custom plugins, they must compile using the Alpine builder.
 
-Then to build your plugin, you only need to execute the following command inside the folder where your plugin is:
+## Compile plugins for AMD64
+To build your plugin for **Docker targets**, you only need to execute the following command inside the folder where your plugin is:
 
-{{< terminal title="Build your plugin" >}}
+{{< terminal title="Build your plugin for Alpine" >}}
 docker run -it -v "$PWD:/app" -w /app {{< product image_plugin_builder >}}:{{< product latest_version >}} go build -buildmode=plugin -o yourplugin.so .
 {{< /terminal >}}
 
 The command will generate a `yourplugin.so` file (name it as you please) that you can now copy into a `{{< product image >}}:{{< product latest_version >}}` Docker image (but not to tag mismatching the builder), and load it as described in [injecting plugins](/docs/extending/injecting-plugins/).
 
-{{< note title="Builds are for AMD64" type="warning" >}}
-The builder will compile the plugin for `AMD64` by default. If you'd like to load the plugin on `ARM64` (e.g., Docker on Mac) see cross-compiling below.
-{{< /note >}}
+To build the plugin for **on-premises installations** use the following command instead:
+
+{{< terminal title="Build your plugin for Non-Docker" >}}
+docker run -it -v "$PWD:/app" -w /app {{< product image_plugin_builder >}}:{{< product latest_version >}}-linux-generic go build -buildmode=plugin -o yourplugin.so .
+{{< /terminal >}}
+
+## Compile plugins for ARM64
+Regardless of the host architecture you use when running the Docker builder, the **default plugin architecture target is AMD64**. Therefore, if you want to test the plugin on **ARM64** (e.g., a Macintosh, Raspberry, etc.), you must cross-compile it. This is because the plugin builder is available for AMD64 only, as emulation does not work well on Go compilation.
+
+To cross-compile a plugin for **Docker ARM64**, you need to add extra flags when compiling the plugin:
 
 
-### Cross-compiling plugins (ARM64)
-Regardless of the host architecture you use when running the Docker builder, the **plugin architecture target is AMD64**. Therefore, if you want to test the plugin on **ARM64** (e.g., a Macintosh, Raspberry, etc.), you must cross-compile it. This is because the plugin builder is available for AMD64 only, as emulation does not work well on Go compilation.
+{{< terminal title="Build your plugin for Alpine ARM64" >}}
+docker run -it -v "$PWD:/app" -w /app \
+-e "CGO_ENABLED=1" \
+-e "CC=aarch64-linux-musl-gcc" \
+-e "GOARCH=arm64" \
+-e "GOHOSTARCH=amd64" \
+{{< product image_plugin_builder >}}:{{< product latest_version >}} \
+go build -ldflags='-extldflags=-fuse-ld=bfd -extld=aarch64-linux-musl-gcc' \
+-buildmode=plugin -o yourplugin.so .
+{{< /terminal >}}
 
-To cross-compile a plugin for ARM64, you need to add extra flags when compiling the plugin:
+And the same command, changing the builder, when you need **on-premises** plugins for ARM64:
 
-```bash
-export CGO_ENABLED=1
-export CC=aarch64-linux-musl-gcc
-export GOARCH=arm64
-export GOHOSTARCH=amd64
-export EXTRA_LDFLAGS='-extldflags=-fuse-ld=bfd -extld=aarch64-linux-musl-gcc'
-go build -ldflags="${EXTRA_LDFLAGS}" -buildmode=plugin -o yourplugin.so .
-```
+{{< terminal title="Build your plugin for Alpine ARM64" >}}
+docker run -it -v "$PWD:/app" -w /app \
+-e "CGO_ENABLED=1" \
+-e "CC=aarch64-linux-musl-gcc" \
+-e "GOARCH=arm64" \
+-e "GOHOSTARCH=amd64" \
+{{< product image_plugin_builder >}}:{{< product latest_version >}}-linux-generic \
+go build -ldflags='-extldflags=-fuse-ld=bfd -extld=aarch64-linux-musl-gcc' \
+-buildmode=plugin -o yourplugin.so .
+{{< /terminal >}}
+
 Remember that the resulting plugin will only work on **ARM64** and that you cannot reuse plugins from one platform into another.
 
-## Compiling plugins without Docker
+## Check your dependencies
 As your custom plugins need to match the Go and libraries versions used to build KrakenD, you have to guarantee your plugin is compatible by checking the `go.sum` file with the command `check-plugin` ([read the documentation](/docs/extending/check-plugin/))
 
 {{< terminal title="Checking plugins" >}}
@@ -97,4 +119,4 @@ go mod init myplugin
 go build -buildmode=plugin -o yourplugin.so .
 {{< /terminal >}}
 
-Now load it in KrakenD, as described in [injecting plugins](/docs/extending/injecting-plugins/)
+Now [test it](/docs/extending/test-plugin/), or [load it](/docs/extending/injecting-plugins/) in KrakenD

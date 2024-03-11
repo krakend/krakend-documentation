@@ -23,6 +23,11 @@ meta:
 
 The Opencensus exporter allows you export data to AWS X-Ray. Enabling it only requires you to add the `xray` exporter in the [opencensus module](/docs/telemetry/opencensus/).
 
+{{< note title="Consider switching to OpenTelemetry" type="info" >}}
+The [AWS Distro for OpenTelemetry](https://aws-otel.github.io/) Collector (ADOT Collector) is an AWS supported version of the upstream OpenTelemetry Collector and is distributed by Amazon. It enables users to send telemetry data to AWS CloudWatch Metrics, Traces, and Logs backends as well as the other supported backends. See how to [configure OpenTelemetry](/docs/telemetry/opentelemetry/)
+{{< /note >}}
+
+
 The following configuration snippet sends data to your X-Ray:
 
 ```json

@@ -1,32 +1,144 @@
 ---
-lastmod: 2022-10-24
+lastmod: 2024-03-08
 date: 2019-09-15
 notoc: true
 linktitle: Prometheus
-title: KrakenD API Gateway - Prometheus Telemetry Integration
+title: Prometheus' metrics endpoint
 description: Learn how to integrate Prometheus telemetry with KrakenD API Gateway for efficient monitoring and performance analysis of your APIs
-weight: 80
+weight: 30
 aliases: ["/docs/logging-metrics-tracing/prometheus/"]
 menu:
   community_current:
     parent: "160 Monitoring, Logs, and Analytics"
+images:
+  - /images/documentation/screenshots/grafana-prometheus-otel.png
 meta:
   since: 0.5
-  source: https://github.com/krakend/krakend-opencensus
+  source: https://github.com/krakend/krakend-otel
   namespace:
-  - telemetry/opencensus
+  - telemetry/opentelemetry
   log_prefix:
-  - "[SERVICE: Opencensus]"
+  - "[SERVICE: OpenTelemetry]"
   scope:
   - service
 ---
-[Prometheus](https://prometheus.io/) is an open-source systems monitoring and alerting toolkit.
+[Prometheus](https://prometheus.io/) is an open-source system monitoring and alerting toolkit that you can use to scrap a `/metrics` endpoint on KrakenD in the selected port. For instance, you could have an endpoint like `http://localhost:9091/metrics`.
 
-The Opencensus exporter allows you to expose data to Prometheus, and publishes a `/metrics` endpoint in the selected port.
+When using Prometheus with OpenTelemetry, you can use a [ready-to-use Grafana dashboard](/docs/telemetry/grafana/) to visualize metrics, as shown in the image above.
 
-Example: `http://localhost:9091/metrics`
+The mechanics are simple: you add the `telemetry/opentelemetry` integration with a `prometheus` exporter, and then you add a Prometheus job to scrap from your KrakenD instances the metrics.
 
-Enabling it only requires you to include in the root level of your configuration the Opencensus middleware with the `prometheus` exporter. Specify the `port` which Prometheus should hit, the `namespace` (optional), and Prometheus now can pull the data.
+![Prometheus scrapping from KrakenD image](/images/documentation/diagrams/opentelemetry-prometheus.mmd.svg)
+
+## Prometheus Configuration
+To enable scrapable Prometheus metrics on Krakend, add the [OpenTelemetry integration](/docs/telemetry/opentelemetry/) with a `prometheus` exporter. The following configuration is an example of how to do it:
+
+```json
+{
+    "version": 3,
+    "extra_config": {
+        "telemetry/opentelemetry": {
+            "service_name": "krakend_prometheus_service",
+            "metric_reporting_period": 1,
+            "exporters": {
+                "prometheus": [
+                    {
+                        "name": "local_prometheus",
+                        "port": 9090,
+                        "process_metrics": true,
+                        "go_metrics": true
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+The full list of the Prometheus exporter settings are as follows:
+
+{{< schema data="telemetry/opentelemetry.json" property="exporters" filter="prometheus" >}}
+
+In addition, you can do a **granular configuration** of the metrics you want to expose using the `layers` attribute and other [OpenTelemetry options](/docs/telemetry/opentelemetry/#layers).
+
+### Demonstration setup
+The following configuration allows you to test a complete metrics experience, from generation and collection to visualization. The first code snippet is a `docker-compose.yaml` that declares three different services:
+
+
+- The `krakend` service exposing port 8080
+- The `prometheus` service that will scrap the metrics from KrakenD
+- A `grafana` dashboard to display them (it uses our [Grafana dashboard](/docs/telemetry/grafana/))
+
+Notice that the three services declare volumes to pick the configuration.
+
+```yaml
+version: "3"
+services:
+  krakend:
+    image: {{< product image >}}:{{< product latest_version >}}"
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./krakend:/etc/krakend/"
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: krakend
+      GF_SECURITY_ADMIN_PASSWORD: krakend
+      GF_AUT_ANONYMOUS_ENABLED: "true"
+    volumes:
+      - "./conf/provisioning/datasources:/etc/grafana/provisioning/datasources"
+      - "./conf/provisioning/dashboards:/etc/grafana/provisioning/dashboards"
+      - "./conf/data/dashboards:/var/lib/grafana/dashboards"
+```
+
+The following YAML configuration is a simple example of pulling data from the `/metrics` endpoint in KrakenD integration from three different instances:
+
+{{< note title="Make sure ports are accessible" type="warning" >}}
+To let the scrapper access the metrics endpoint, make sure that the path and the port are the ones you configured, that the listen address allows you to access the data, and that if you use containers, the port is exposed in KrakenD. Also, remember that you cannot use `localhost` as a target because the Prometheus container does not run inside the KrakenD container; use the service name instead.
+{{< /note >}}
+
+
+```yaml
+global:
+  scrape_interval:     15s
+
+rule_files:
+  # - "first.rules"
+  # - "second.rules"
+
+scrape_configs:
+  - job_name: krakend_otel
+    scrape_interval: 5s
+    metrics_path: '/metrics'
+    static_configs:
+      - targets:
+        - 'krakend1:9091'
+        - 'krakend2:9091'
+        - 'krakend3:9091'
+        labels:
+          app: kotel_example
+```
+## Visualizing metrics in a dashboard
+When the Prometheus configuration is added into KrakenD, and your Prometheus is scrapping it, you can visualize the data using our [Grafana dashboard](/docs/telemetry/grafana/) or make your own.
+
+{{< note title="Which layers do you need?" type="tip" >}}
+Our Grafana dashboard contains a lot of options, and **not all are enabled by default**. Because generating low-detail metrics is an expensive operation, some options in the `layers` are disabled by default. Enable the options that matter to you, knowing that the more detail you add, the more resources the gateway will need to run.
+{{< /note >}}
+
+![Screenshot of a grafana dashboard with KrakenD metrics](/images/documentation/screenshots/grafana-prometheus-otel.png)
+
+## Migrating from an old OpenCensus configuration (legacy)
+Prior to KrakenD v2.6, you had to configure the Prometheus endpoint using the opencensus component. The OpenTelemetry integration is much more powerful and delivers more data while simultaneously giving you more configuration options.
+
+If you had an OpenCensus configuration with a `prometheus` exporter like the following:
 ```json
 {
   "version": 3,
@@ -49,302 +161,13 @@ Enabling it only requires you to include in the root level of your configuration
 }
 ```
 
-As with all [OpenCensus exporters](/docs/telemetry/opencensus/), you can add optional settings in the `telemetry/opencensus` level:
+Then you should make the following changes to upgrade:
 
-{{< schema data="telemetry/opencensus.json" filter="sample_rate,reporting_period,enabled_layers">}}
+- `telemetry/opencensus` -> Rename to `telemetry/opentelemetry`
+- `sample_rate` -> Delete this field
+- `reporting_period` -> Rename to `metric_reporting_period`
+- `prometheus: {...}` -> Add an array surrounding the object, so it becomes `prometheus: [{...}]`
+- `namespace` -> Rename to `name`
+- `tag_host`, `tag_path`,`tag_method`,`tag_statuscode` -> Delete them
 
-Then, the `exporters` key must contain an `prometheus` entry with the following properties:
-
-{{< schema data="telemetry/opencensus.json" property="exporters" filter="prometheus" >}}
-
-## Example of `prometheus.yml`
-This is a simple example to pull data from the Prometheus integration every minute:
-
-```yaml
-global:
-  scrape_interval:     60s
-  evaluation_interval: 60s
-
-rule_files:
-  # - "first.rules"
-  # - "second.rules"
-
-scrape_configs:
-  - job_name: 'prometheus'
-    static_configs:
-      - targets: ['localhost:9090']
-  - job_name: 'krakend'
-    static_configs:
-      - targets: ['krakend:9091']
-```
-
-## Prometheus output example
-```bash
-# HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
-# TYPE go_gc_duration_seconds summary
-go_gc_duration_seconds{quantile="0"} 8.0701e-05
-go_gc_duration_seconds{quantile="0.25"} 0.000180217
-go_gc_duration_seconds{quantile="0.5"} 0.000238727
-go_gc_duration_seconds{quantile="0.75"} 0.000340108
-go_gc_duration_seconds{quantile="1"} 0.003425704
-go_gc_duration_seconds_sum 0.162472194
-go_gc_duration_seconds_count 426
-# HELP go_goroutines Number of goroutines that currently exist.
-# TYPE go_goroutines gauge
-go_goroutines 18
-# HELP go_info Information about the Go environment.
-# TYPE go_info gauge
-go_info{version="go1.17.9"} 1
-# HELP go_memstats_alloc_bytes Number of bytes allocated and still in use.
-# TYPE go_memstats_alloc_bytes gauge
-go_memstats_alloc_bytes 1.290344e+07
-# HELP go_memstats_alloc_bytes_total Total number of bytes allocated, even if freed.
-# TYPE go_memstats_alloc_bytes_total counter
-go_memstats_alloc_bytes_total 4.436000928e+09
-# HELP go_memstats_buck_hash_sys_bytes Number of bytes used by the profiling bucket hash table.
-# TYPE go_memstats_buck_hash_sys_bytes gauge
-go_memstats_buck_hash_sys_bytes 1.513357e+06
-# HELP go_memstats_frees_total Total number of frees.
-# TYPE go_memstats_frees_total counter
-go_memstats_frees_total 7.4315998e+07
-# HELP go_memstats_gc_cpu_fraction The fraction of this program's available CPU time used by the GC since the program started.
-# TYPE go_memstats_gc_cpu_fraction gauge
-go_memstats_gc_cpu_fraction 0.01233588465264479
-# HELP go_memstats_gc_sys_bytes Number of bytes used for garbage collection system metadata.
-# TYPE go_memstats_gc_sys_bytes gauge
-go_memstats_gc_sys_bytes 6.125576e+06
-# HELP go_memstats_heap_alloc_bytes Number of heap bytes allocated and still in use.
-# TYPE go_memstats_heap_alloc_bytes gauge
-go_memstats_heap_alloc_bytes 1.290344e+07
-# HELP go_memstats_heap_idle_bytes Number of heap bytes waiting to be used.
-# TYPE go_memstats_heap_idle_bytes gauge
-go_memstats_heap_idle_bytes 1.929216e+07
-# HELP go_memstats_heap_inuse_bytes Number of heap bytes that are in use.
-# TYPE go_memstats_heap_inuse_bytes gauge
-go_memstats_heap_inuse_bytes 2.3437312e+07
-# HELP go_memstats_heap_objects Number of allocated objects.
-# TYPE go_memstats_heap_objects gauge
-go_memstats_heap_objects 81569
-# HELP go_memstats_heap_released_bytes Number of heap bytes released to OS.
-# TYPE go_memstats_heap_released_bytes gauge
-go_memstats_heap_released_bytes 1.3262848e+07
-# HELP go_memstats_heap_sys_bytes Number of heap bytes obtained from system.
-# TYPE go_memstats_heap_sys_bytes gauge
-go_memstats_heap_sys_bytes 4.2729472e+07
-# HELP go_memstats_last_gc_time_seconds Number of seconds since 1970 of last garbage collection.
-# TYPE go_memstats_last_gc_time_seconds gauge
-go_memstats_last_gc_time_seconds 1.6535700877830684e+09
-# HELP go_memstats_lookups_total Total number of pointer lookups.
-# TYPE go_memstats_lookups_total counter
-go_memstats_lookups_total 0
-# HELP go_memstats_mallocs_total Total number of mallocs.
-# TYPE go_memstats_mallocs_total counter
-go_memstats_mallocs_total 7.4397567e+07
-# HELP go_memstats_mcache_inuse_bytes Number of bytes in use by mcache structures.
-# TYPE go_memstats_mcache_inuse_bytes gauge
-go_memstats_mcache_inuse_bytes 28800
-# HELP go_memstats_mcache_sys_bytes Number of bytes used for mcache structures obtained from system.
-# TYPE go_memstats_mcache_sys_bytes gauge
-go_memstats_mcache_sys_bytes 32768
-# HELP go_memstats_mspan_inuse_bytes Number of bytes in use by mspan structures.
-# TYPE go_memstats_mspan_inuse_bytes gauge
-go_memstats_mspan_inuse_bytes 621248
-# HELP go_memstats_mspan_sys_bytes Number of bytes used for mspan structures obtained from system.
-# TYPE go_memstats_mspan_sys_bytes gauge
-go_memstats_mspan_sys_bytes 737280
-# HELP go_memstats_next_gc_bytes Number of heap bytes when next garbage collection will take place.
-# TYPE go_memstats_next_gc_bytes gauge
-go_memstats_next_gc_bytes 2.3062192e+07
-# HELP go_memstats_other_sys_bytes Number of bytes used for other system allocations.
-# TYPE go_memstats_other_sys_bytes gauge
-go_memstats_other_sys_bytes 6.026355e+06
-# HELP go_memstats_stack_inuse_bytes Number of bytes in use by the stack allocator.
-# TYPE go_memstats_stack_inuse_bytes gauge
-go_memstats_stack_inuse_bytes 3.407872e+06
-# HELP go_memstats_stack_sys_bytes Number of bytes obtained from system for stack allocator.
-# TYPE go_memstats_stack_sys_bytes gauge
-go_memstats_stack_sys_bytes 3.407872e+06
-# HELP go_memstats_sys_bytes Number of bytes obtained from system.
-# TYPE go_memstats_sys_bytes gauge
-go_memstats_sys_bytes 6.057268e+07
-# HELP go_threads Number of OS threads created.
-# TYPE go_threads gauge
-go_threads 31
-# HELP krakend_opencensus_io_http_server_latency Latency distribution of HTTP requests
-# TYPE krakend_opencensus_io_http_server_latency histogram
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1"} 78792
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="2"} 83989
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="3"} 93954
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="4"} 114961
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="5"} 144535
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="6"} 168742
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="8"} 189585
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="10"} 194593
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="13"} 198487
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="16"} 199460
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="20"} 199757
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="25"} 199796
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="30"} 199799
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="40"} 199799
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="50"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="65"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="80"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="100"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="130"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="160"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="200"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="250"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="300"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="400"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="500"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="650"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="800"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="2000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="5000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="10000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="20000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="50000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="100000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="+Inf"} 199800
-krakend_opencensus_io_http_server_latency_sum{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500"} 628394.4669860053
-krakend_opencensus_io_http_server_latency_count{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1"} 91160
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="2"} 97163
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="3"} 104034
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="4"} 113157
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="5"} 124866
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="6"} 138026
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="8"} 165065
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="10"} 181831
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="13"} 192938
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="16"} 197200
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="20"} 199193
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="25"} 199685
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="30"} 199775
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="40"} 199799
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="50"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="65"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="80"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="100"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="130"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="160"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="200"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="250"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="300"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="400"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="500"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="650"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="800"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="2000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="5000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="10000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="20000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="50000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="100000"} 199800
-krakend_opencensus_io_http_server_latency_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="+Inf"} 199800
-krakend_opencensus_io_http_server_latency_sum{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200"} 763343.1322959992
-krakend_opencensus_io_http_server_latency_count{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200"} 199800
-# HELP krakend_opencensus_io_http_server_request_bytes Size distribution of HTTP request body
-# TYPE krakend_opencensus_io_http_server_request_bytes histogram
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1024"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="2048"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="4096"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="16384"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="65536"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="262144"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1.048576e+06"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="4.194304e+06"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1.6777216e+07"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="6.7108864e+07"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="2.68435456e+08"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1.073741824e+09"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="4.294967296e+09"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="+Inf"} 199800
-krakend_opencensus_io_http_server_request_bytes_sum{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500"} 0
-krakend_opencensus_io_http_server_request_bytes_count{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1024"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="2048"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="4096"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="16384"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="65536"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="262144"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1.048576e+06"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="4.194304e+06"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1.6777216e+07"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="6.7108864e+07"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="2.68435456e+08"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1.073741824e+09"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="4.294967296e+09"} 199800
-krakend_opencensus_io_http_server_request_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="+Inf"} 199800
-krakend_opencensus_io_http_server_request_bytes_sum{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200"} 0
-krakend_opencensus_io_http_server_request_bytes_count{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200"} 199800
-# HELP krakend_opencensus_io_http_server_request_count Count of HTTP requests started
-# TYPE krakend_opencensus_io_http_server_request_count counter
-krakend_opencensus_io_http_server_request_count{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status=""} 199800
-krakend_opencensus_io_http_server_request_count{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status=""} 199800
-# HELP krakend_opencensus_io_http_server_request_count_by_method Server request count by HTTP method
-# TYPE krakend_opencensus_io_http_server_request_count_by_method counter
-krakend_opencensus_io_http_server_request_count_by_method{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status=""} 199800
-krakend_opencensus_io_http_server_request_count_by_method{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status=""} 199800
-# HELP krakend_opencensus_io_http_server_response_bytes Size distribution of HTTP response body
-# TYPE krakend_opencensus_io_http_server_response_bytes histogram
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1024"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="2048"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="4096"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="16384"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="65536"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="262144"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1.048576e+06"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="4.194304e+06"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1.6777216e+07"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="6.7108864e+07"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="2.68435456e+08"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="1.073741824e+09"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="4.294967296e+09"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500",le="+Inf"} 199800
-krakend_opencensus_io_http_server_response_bytes_sum{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500"} -199800
-krakend_opencensus_io_http_server_response_bytes_count{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1024"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="2048"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="4096"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="16384"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="65536"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="262144"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1.048576e+06"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="4.194304e+06"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1.6777216e+07"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="6.7108864e+07"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="2.68435456e+08"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="1.073741824e+09"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="4.294967296e+09"} 199800
-krakend_opencensus_io_http_server_response_bytes_bucket{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200",le="+Inf"} 199800
-krakend_opencensus_io_http_server_response_bytes_sum{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200"} 1.000998e+08
-krakend_opencensus_io_http_server_response_bytes_count{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200"} 199800
-# HELP krakend_opencensus_io_http_server_response_count_by_status_code Server response count by status code
-# TYPE krakend_opencensus_io_http_server_response_count_by_status_code counter
-krakend_opencensus_io_http_server_response_count_by_status_code{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/billing",http_status="500"} 199800
-krakend_opencensus_io_http_server_response_count_by_status_code{http_host="localhost:8080",http_method="GET",http_path="/v1/soap-to-json/account/info",http_status="200"} 199800
-# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
-# TYPE process_cpu_seconds_total counter
-process_cpu_seconds_total 48.24
-# HELP process_max_fds Maximum number of open file descriptors.
-# TYPE process_max_fds gauge
-process_max_fds 1.048576e+06
-# HELP process_open_fds Number of open file descriptors.
-# TYPE process_open_fds gauge
-process_open_fds 11
-# HELP process_resident_memory_bytes Resident memory size in bytes.
-# TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 7.286784e+07
-# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
-# TYPE process_start_time_seconds gauge
-process_start_time_seconds 1.65357005173e+09
-# HELP process_virtual_memory_bytes Virtual memory size in bytes.
-# TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 7.93280512e+08
-# HELP process_virtual_memory_max_bytes Maximum amount of virtual memory available in bytes.
-# TYPE process_virtual_memory_max_bytes gauge
-process_virtual_memory_max_bytes -1
-```
+From here, add any of the additional properties you can add.
