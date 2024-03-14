@@ -13,7 +13,7 @@ weight: 20
 KrakenD operates with its single binary and your associated configuration. Therefore, your build process or CI/CD pipeline only needs to ensure that the configuration file is correct. These are a few recommendations to a safer KrakenD deployment:
 
 1. Make sure the configuration file is valid. When using Flexible Configuration, generate the final `krakend.json` using `FC_OUT` as the final artifact
-2. Optional - Ensure ther are no severe security problems using the [`audit` command](/docs/configuration/audit/).
+2. Optional - Ensure there are no severe security problems using the [`audit` command](/docs/configuration/audit/).
 3. Optional - [Generate an immutable docker image](/docs/deploying/docker/)
 4. Optional - [Run integration tests](/docs/developer/integration-tests/)
 5. Deploy the new configuration
