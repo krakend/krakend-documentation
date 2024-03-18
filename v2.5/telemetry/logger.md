@@ -3,6 +3,7 @@ lastmod: 2022-10-24
 aliases: ["/docs/telemetry/logger/"]
 old_version: true
 date: 2019-09-15
+canonical: /docs/v2.5/telemetry/logger/
 notoc: true
 linktitle: Logging through OpenCensus
 title: Exporting to the logger with OpenCensus

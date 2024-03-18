@@ -2,6 +2,7 @@
 lastmod: 2019-09-15
 old_version: true
 date: 2019-09-15
+canonical: /docs/v2.5/telemetry/logger/
 notoc: true
 linktitle: Logger
 title: Exporting to the logger
