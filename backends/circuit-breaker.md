@@ -2,7 +2,7 @@
 lastmod: 2022-12-05
 date: 2016-07-01
 linktitle: Circuit Breaker
-title: Circuit Breaker Pattern in KrakenD API Gateway
+title: Circuit Breaker Pattern
 description: Implement the circuit breaker pattern in KrakenD API Gateway to enhance the resilience and stability of your API ecosystem
 weight: 930
 menu:

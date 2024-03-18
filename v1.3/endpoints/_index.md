@@ -3,14 +3,14 @@ lastmod: 2021-01-28
 old_version: true
 date: 2020-02-26
 linktitle:  Creating endpoints
-title: Endpoint Configuration in KrakenD API Gateway
+title: Endpoint Configuration
 description: Learn how to configure and manage endpoints effectively in KrakenD API Gateway, enabling seamless integration and orchestration of microservices.
 weight: -10
 menu:
   community_v1.3:
     parent: "040 Endpoint Configuration"
 ---
-KrakenD endpoints are the essential part of KrakenD as they are what your end users consume. 
+KrakenD endpoints are the essential part of KrakenD as they are what your end users consume.
 
 See [Understanding the configuration file](/docs/v1.3/configuration/structure/) if you haven't read it yet.
 
@@ -34,14 +34,14 @@ The endpoints section looks like this:
     }
     ]
 
-The previous example exposes to the clients a `GET /v1/foo` and takes the data from your existing backend `https://api.mybackend.com"/bar`. As there is no other additional configuration, the data won't be manipulated. 
+The previous example exposes to the clients a `GET /v1/foo` and takes the data from your existing backend `https://api.mybackend.com"/bar`. As there is no other additional configuration, the data won't be manipulated.
 
 ## Attributes
 The **endpoint object** accepts the following attributes:
 
 - `endpoint`: The resource URL you want to expose
 - `method`: Must be **written in uppercase** `GET`, `POST`, `PUT`, `PATCH`, `DELETE`.
-- `backend`: List of all the **backend objects** queried for this endpoint. 
+- `backend`: List of all the **backend objects** queried for this endpoint.
 - `extra_config`: Configuration of components and middlewares that are executed with this endpoint.
 - `querystring_params`: Recognized GET parameters. See [parameter forwarding](/docs/v1.3/endpoints/parameter-forwarding/).
 - `headers_to_pass`: Forwarded headers. See [headers forwarding](/docs/v1.3/endpoints/parameter-forwarding/#headers-forwarding).
@@ -53,7 +53,7 @@ The **endpoint object** accepts the following attributes:
 The `method` key defines the HTTP verb you can use with the endpoint. You need to declare **one endpoint object for each method**. So if you want the same endpoint to listen to `GET` and `POST` requests you need the following configuration:
 
     "endpoints": [
-    
+
     {
       "endpoint": "/v1/foo",
       "backend": [
@@ -82,11 +82,11 @@ The `method` key defines the HTTP verb you can use with the endpoint. You need t
 
     ]
 
-Notice that the `method` is declared both in the endpoint and in the backend (as they could be different). 
+Notice that the `method` is declared both in the endpoint and in the backend (as they could be different).
 
 ### Endpoint variables
 
-Endpoints can define variables in its endpoint definition. To do so, encapsulate the variable name with curly braces, like `{var}`. 
+Endpoints can define variables in its endpoint definition. To do so, encapsulate the variable name with curly braces, like `{var}`.
 
     {
       "endpoint": "/user/{id}",

@@ -4,7 +4,7 @@ old_version: true
 date: 2016-09-30
 toc: true
 linktitle: The backend object
-title: Backend Configuration in KrakenD API Gateway
+title: Backend Configuration
 description: Explore the backend configuration options in KrakenD API Gateway, allowing you to connect and integrate with your microservices efficiently
 weight: 20
 notoc: true

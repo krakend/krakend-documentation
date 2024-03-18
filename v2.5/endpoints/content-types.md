@@ -3,7 +3,7 @@ lastmod: 2023-10-16
 old_version: true
 date: 2016-04-14
 linktitle: Returned response formats
-title: Returned encodings in KrakenD API Gateway
+title: Returned encodings
 description: Discover how KrakenD API Gateway handles various content types, ensuring proper parsing and transformation for seamless data exchange
 weight: 410
 menu:

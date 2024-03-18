@@ -4,7 +4,7 @@ old_version: true
 date: 2016-09-30
 toc: true
 linktitle: "Basic data manipulation: Group, Filter, Map"
-title: Data Manipulation in KrakenD API Gateway
+title: Data Manipulation
 description: Explore data manipulation capabilities in KrakenD API Gateway, enabling transformation and manipulation of response data
 weight: 20
 menu:

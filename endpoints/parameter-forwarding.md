@@ -2,7 +2,7 @@
 lastmod: 2023-11-20
 date: 2018-07-20
 aliases: ["/docs/features/parameter-forwarding/"]
-title: Parameter Forwarding in KrakenD API Gateway
+title: Parameter Forwarding
 linktitle: Forwarding query strings and headers
 description: Learn how to forward and manipulate parameters effectively using KrakenD API Gateway, ensuring seamless communication between clients and microservices
 weight: 30

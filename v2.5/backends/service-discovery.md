@@ -3,7 +3,7 @@ lastmod: 2023-12-20
 old_version: true
 date: 2016-09-30
 linktitle: Service Discovery
-title: Service Discovery Integration in KrakenD API Gateway
+title: Service Discovery Integration
 description: Integrate service discovery mechanisms into KrakenD API Gateway to dynamically discover and route requests to available backend services
 weight: 160
 menu:

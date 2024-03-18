@@ -3,7 +3,7 @@ lastmod: 2023-03-13
 old_version: true
 date: 2020-02-26
 linktitle:  The endpoint object
-title: Endpoint Configuration in KrakenD API Gateway
+title: Endpoint Configuration
 description: Learn how to configure and manage endpoints effectively in KrakenD API Gateway, enabling seamless integration and orchestration of microservices.
 weight: -10
 menu:

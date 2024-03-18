@@ -4,7 +4,7 @@ old_version: true
 date: 2019-09-15
 notoc: true
 linktitle: Metrics and Traces overview
-title: Telemetry and Monitoring in KrakenD API Gateway
+title: Telemetry and Monitoring
 description: Learn about the telemetry and monitoring capabilities of KrakenD API Gateway, enabling real-time visibility and analysis of API performance
 weight: 10
 images:

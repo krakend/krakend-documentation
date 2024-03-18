@@ -2,7 +2,7 @@
 lastmod: 2022-02-16
 date: 2022-01-18
 linktitle: HTTP Server settings
-title: HTTP Server Settings in KrakenD API Gateway
+title: HTTP Server Settings
 description: Configure HTTP server settings in KrakenD API Gateway for optimal performance, security, and compatibility with your infrastructure
 weight: 50
 notoc: true

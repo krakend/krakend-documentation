@@ -3,7 +3,7 @@ lastmod: 2023-03-30
 old_version: true
 date: 2019-02-22
 linktitle: TLS
-title: TLS Configuration in KrakenD API Gateway
+title: TLS Configuration
 description: Learn how to configure Transport Layer Security (TLS) in KrakenD API Gateway to ensure secure HTTP and HTTP/2 communication between clients and your APIs
 weight: 30
 notoc: false

@@ -4,7 +4,7 @@ old_version: true
 date: 2018-10-30
 toc: true
 linktitle: Logging overview
-title: Logging in KrakenD API Gateway
+title: Logging
 description: Learn how to implement Syslog and Stdout logging in KrakenD API Gateway, enabling effective monitoring and troubleshooting of your API gateway and microservices
 weight: 20
 menu:

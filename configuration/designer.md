@@ -6,7 +6,7 @@ description: Discover the API Configuration Designer in KrakenD API Gateway, ena
 menu:
   community_current:
     parent: "000 Getting Started"
-title: "API Configuration Designer in KrakenD API Gateway"
+title: "API Configuration Designer"
 meta:
   source: https://github.com/krakend/krakendesigner
   since: 0.2

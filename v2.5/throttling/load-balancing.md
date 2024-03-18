@@ -4,7 +4,7 @@ old_version: true
 date: 2022-11-08
 toc: true
 linktitle: Load balancing
-title: Load Balancing and Throttling in KrakenD API Gateway
+title: Load Balancing and Throttling
 description: Explore load balancing and throttling strategies in KrakenD API Gateway to ensure optimal performance and resource utilization
 weight: 920
 menu:

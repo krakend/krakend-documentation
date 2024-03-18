@@ -3,7 +3,7 @@ lastmod: 2023-11-02
 old_version: true
 date: 2021-10-29
 linktitle: Router options
-title: Router Options in KrakenD API Gateway
+title: Router Options
 description: Explore the router options available in KrakenD API Gateway to customize the routing behavior and optimize API request handling
 weight: 120
 notoc: false

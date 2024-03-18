@@ -3,7 +3,7 @@ lastmod: 2022-10-21
 old_version: true
 date: 2019-09-15
 linktitle:  Lua scripts
-title: Lua Scripting in KrakenD API Gateway
+title: Lua Scripting
 description: Explore the power of Lua scripting in KrakenD API Gateway, allowing you to customize and extend the behavior of your API gateway
 weight: 200
 menu:

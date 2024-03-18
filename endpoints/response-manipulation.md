@@ -3,7 +3,7 @@ lastmod: 2022-09-30
 date: 2016-09-30
 toc: true
 linktitle: API Composition and aggregation
-title: API Composition and aggregation in KrakenD API Gateway
+title: API Composition and aggregation
 description: Explore the response manipulation capabilities in KrakenD API Gateway, allowing you to modify and enhance API responses for a better user experience
 weight: 10
 menu:

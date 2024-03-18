@@ -2,7 +2,7 @@
 lastmod: 2023-01-31
 date: 2018-09-21
 linktitle: The configuration file
-title: Configuration Structure in KrakenD API Gateway
+title: Configuration Structure
 description: Learn about the configuration structure and organization in KrakenD API Gateway to effectively define the behavior of your API gateway
 menu:
   community_current:

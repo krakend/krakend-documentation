@@ -3,7 +3,7 @@ lastmod: 2023-10-23
 old_version: true
 date: 2020-04-10
 linktitle: Mutual TLS Authentication (mTLS)
-title: Mutual Authentication in KrakenD API Gateway
+title: Mutual Authentication
 description: Implement mutual authentication in KrakenD API Gateway to establish a secure and trusted communication channel between clients and APIs
 weight: 50
 notoc: false

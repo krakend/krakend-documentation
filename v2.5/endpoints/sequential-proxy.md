@@ -3,7 +3,7 @@ lastmod: 2023-10-15
 old_version: true
 date: 2018-11-11
 linktitle: Sequential Proxy (chain reqs.)
-title: Sequential Proxying in KrakenD API Gateway
+title: Sequential Proxying
 description: Explore the sequential proxying capability in KrakenD API Gateway, allowing you to chain multiple requests and orchestrate complex API workflows
 since: 0.7
 notoc: false
