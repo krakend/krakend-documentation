@@ -1,6 +1,7 @@
 ---
 lastmod: 2022-10-24
 old_version: true
+canonical: "/docs/v2.5/telemetry/ocagent/"
 date: 2020-11-16
 notoc: true
 linktitle: OpenCensus Agent

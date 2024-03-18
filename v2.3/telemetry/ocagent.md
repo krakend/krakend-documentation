@@ -2,6 +2,7 @@
 lastmod: 2022-10-24
 old_version: true
 date: 2020-11-16
+canonical: "/docs/v2.5/telemetry/ocagent/"
 notoc: true
 linktitle: OpenCensus Agent
 title: OpenCensus Agent (Azure Monitor)
