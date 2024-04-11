@@ -74,7 +74,7 @@ Notice that the three services declare volumes to pick the configuration.
 version: "3"
 services:
   krakend:
-    image: {{< product image >}}:{{< product latest_version >}}"
+    image: "{{< product image >}}:{{< product latest_version >}}"
     ports:
       - "8080:8080"
     volumes:
