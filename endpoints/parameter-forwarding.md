@@ -27,10 +27,11 @@ You can change the default behavior according to your needs and define which ele
 - The `input_headers` is **case-insensitive**, as per its RFC specification. It allows the passing of user headers in uppercase, lowercase, or mixed. Nevertheless, when the header is forwarded to the backend or used in other components, they receive it normalized in the **canonical format of the MIME header**, so users can mix capitalization and yet receive a consistent format.
 
 {{< note title="Canonical Headers" type="info" >}}
-When accessing or checking a header name through any component in KrakenD, you must write its canonical form regardless of what's being provided by the user.
+While the `input_headers` declaration does not care about how you write the header (upper/lowercase), and KrakenD will access either way, when accessing or checking a header name through any components in KrakenD, you must write its canonical form regardless of what's being provided by the user.
 
 The canonicalization **converts the first letter and any letter following a hyphen to upper case**; the rest are converted to lowercase. For example, the canonical key for `accept-encoding`, `ACCEPT-ENCODING`, or `ACCept-enCODING` is `Accept-Encoding`. MIME header keys are assumed to be ASCII only. If the header contains a space or invalid header field bytes, it is returned without modifications.
 
+If you get used to writing headers in canonical format, you will save yourself from a lot of trouble.
 {{< /note >}}
 
 

@@ -3,7 +3,7 @@ lastmod: 2023-01-31
 date: 2021-05-21
 toc: true
 linktitle: Req/resp modifier plugins
-title: Extending KrakenD API Gateway with Request and Response Plugin Modifiers
+title: Extending KrakenD with Request and Response Plugin Modifiers
 description: Learn how to extend the functionality of KrakenD API Gateway by utilizing plugin modifiers, enabling customized request and response processing
 weight: 120
 menu:

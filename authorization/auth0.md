@@ -2,7 +2,7 @@
 lastmod: 2021-05-02
 date: 2018-04-05
 linktitle: Auth0 integration
-title: Auth0 Integration with KrakenD API Gateway
+title: Auth0 Integration
 description: Integrate Auth0 authentication and authorization services with KrakenD API Gateway for secure and seamless access control to your APIs
 weight: 100
 menu:

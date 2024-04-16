@@ -3,7 +3,7 @@ lastmod: 2021-11-23
 old_version: true
 date: 2019-03-21
 linktitle: OAuth2 Client credentials
-title: Client Credentials Authorization with KrakenD API Gateway
+title: Client Credentials Authorization
 description: Learn how to implement OAuth 2.0 Client Credentials (2-legged flow) with KrakenD API Gateway to secure your APIs for machine-to-machine communication
 weight: 50
 #notoc: true

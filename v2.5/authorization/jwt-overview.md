@@ -3,7 +3,7 @@ lastmod: 2018-11-03
 old_version: true
 date: 2018-11-03
 linktitle: JWT overview
-title: JWT Overview - Authorization with KrakenD API Gateway
+title: JWT Overview - Authorization
 description: Gain an overview of JSON Web Tokens (JWT) and learn how to implement JWT-based authorization with KrakenD API Gateway for secure API access
 weight: 10
 notoc: true

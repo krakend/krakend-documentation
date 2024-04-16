@@ -3,7 +3,7 @@ lastmod: 2021-02-21
 old_version: true
 date: 2018-11-03
 linktitle: JWT Validation
-title: JWT Validation with KrakenD API Gateway
+title: JWT Validation
 description: Implement JWT validation with KrakenD API Gateway to secure your APIs and prevent unauthorized access.
 weight: 20
 source: https://github.com/krakend/krakend-jose

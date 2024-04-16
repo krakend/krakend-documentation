@@ -2,7 +2,7 @@
 lastmod: 2023-03-13
 old_version: true
 date: 2023-03-13
-title: Backend-for-Frontend (BFF) Design Pattern with KrakenD API Gateway
+title: Backend-for-Frontend (BFF) Design Pattern
 description: Discover how to leverage the Backend-for-Frontend (BFF) design pattern with KrakenD API Gateway to optimize frontend-backend communication
 linktitle: Backend For Frontend
 weight: 10

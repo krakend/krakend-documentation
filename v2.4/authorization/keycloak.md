@@ -3,7 +3,7 @@ lastmod: 2021-05-02
 old_version: true
 date: 2018-04-05
 linktitle: Keycloak integration
-title: Keycloak Authorization with KrakenD API Gateway
+title: Keycloak Authorization
 description: Learn how to integrate Keycloak authorization with KrakenD API Gateway for secure and controlled access to your APIs.
 weight: 110
 menu:

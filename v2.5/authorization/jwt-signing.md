@@ -3,7 +3,7 @@ lastmod: 2022-10-24
 old_version: true
 date: 2018-11-03
 linktitle: JWT Signing
-title: JWT Signing with KrakenD API Gateway
+title: JWT Signing
 description: Implement JWT signing with KrakenD API Gateway to sign token payloads and secure your APIs
 weight: 30
 images: ["/images/krakend-signer-flow.png"]
