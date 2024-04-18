@@ -60,13 +60,13 @@ Choose the `otlp` exporter when you want to **push the metrics to a local or rem
 The `host` where your collector lives can also point to an external load balancer between KrakenD and multiple collectors if needed:
 ![KrakenD to load balanced collectors, collectors to backend](/images/documentation/diagrams/opentelemetry-otlp-lb.mmd.svg)
 
-<!--
-{{< badge color="denim" >}}Enterprise{{< /badge >}} users can push directly to external storage passing auth credentials using the [`telemetry/opentelemetry-auth` component](/docs/telemetry/opentelemetry-auth/), so the collector is not needed anymore:
+
+{{< badge color="denim" >}}Enterprise{{< /badge >}} users can push directly to external storage passing auth credentials using the [`telemetry/opentelemetry-security` component](/docs/enterprise/telemetry/opentelemetry-security/), so the collector is not needed anymore:
 
 ![opentelemetry-otlp-auth.mmd diagram](/images/documentation/diagrams/opentelemetry-otlp-auth.mmd.svg)
 
 This strategy saves a lot of time during the setup of KrakenD.
--->
+
 
 ## OpenTelemetry Configuration
 To enable OpenTelemetry, you will need a Prometheus or an OTEL Collector (or both) and add the `telemetry/opentelemetry` namespace at the top level of your configuration.
