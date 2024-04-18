@@ -90,6 +90,7 @@ Here's an example with a Grafana Tempo and a Prometheus.
     "extra_config": {
         "telemetry/opentelemetry": {
             "service_name": "krakend_middle_service",
+            "service_version": "commit-sha-ACBDE1234",
             "exporters": {
                 "prometheus": [
                     {
