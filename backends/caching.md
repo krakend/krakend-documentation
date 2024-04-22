@@ -87,6 +87,22 @@ If a response includes both an `Expires` header and a `max-age` directive, the `
 
 The `Cache-Control` header honors the time settings and the properties `no-store`, `only-if-cached` , `no-cache`.
 
+## Custom directives (Stale cache, freshness)
+You can allow your API consumers to pass **custom directives (instructions)** in their `Cache-Control` header when they make the request.
+
+KrakenD can honor the directives `max-stale`, `max-age`, `stale-if-error`, and `min-fresh` present in the request when you add the `Cache-Control` in the `input_headers` endpoint configuration:
+
+```json
+{
+ "endpoint": "/cached-or-not",
+ "input_headers": ["Cache-Control"]
+}
+```
+
+If you don't allow the input headers to pass, KrakenD ignores the consumer's request and returns the cached content according to the backend response.
+
+But if you do, if clients are willing to accept **stale cache** and pass the directive `max-stale` (or similarly `stale-if-error`) in the request, then a response that has exceeded its expiration time by no more than the specified number of seconds in the directive receives a stale cache.
+
 ### Overriding the expiration time
 As you have seen, the caching module does not accept any parameters to control the cache expiration because it relies on the input headers it finds when the response returns. But as KrakenD can transform data in many ways, you can modify the `Cache-Control` header right before the cache module picks it.
 
