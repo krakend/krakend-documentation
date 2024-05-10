@@ -83,7 +83,7 @@ By default KrakenD only works with **RESTful URL patterns** to connect to backen
 
 {{< highlight json "hl_lines=4 13">}}
 {
-  "$schema": "https://www.krakend.io/schema/v2.6/krakend.json",
+  "$schema": "https://www.krakend.io/schema/v2.7/krakend.json",
   "version": 3,
   "disable_rest": true,
   "endpoints": [
