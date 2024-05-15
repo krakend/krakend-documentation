@@ -30,7 +30,7 @@ Adds a [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) fil
 
 
 ### krakend-spew
-Dumps every entity seen in the pipe: requests and responses passing through thew whole stack. Do not use this in production as it will kill your performance.
+Dumps every entity seen in the pipe: requests and responses passing through the whole stack. Do not use this in production as it will kill your performance.
 
 Dumps are stored in files like `<pipe>_<base64_endpoint/backend_name>_<timestamp>.txt`. E.g:
 
