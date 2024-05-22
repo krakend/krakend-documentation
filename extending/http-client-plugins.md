@@ -121,7 +121,7 @@ func (r registerer) registerClients(_ context.Context, extra map[string]interfac
 		// The path is the the call to the backend, not the original request by the user.
 		if req.URL.Path == path {
 			w.Header().Add("Content-Type", "application/json")
-      			// Return a custom JSON object:
+			// Return a custom JSON object:
 			res := map[string]string{"message": html.EscapeString(req.URL.Path)}
 			b, _ := json.Marshal(res)
 			w.Write(b)
