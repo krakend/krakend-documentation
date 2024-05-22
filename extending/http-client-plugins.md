@@ -81,7 +81,7 @@ func (r registerer) RegisterClients(f func(
 	name string,
 	handler func(context.Context, map[string]interface{}) (http.Handler, error),
 )) {
-    f(string(r), r.registerClients)
+	f(string(r), r.registerClients)
 }
 
 func (r registerer) registerClients(_ context.Context, extra map[string]interface{}) (http.Handler, error) {
@@ -121,7 +121,7 @@ func (r registerer) registerClients(_ context.Context, extra map[string]interfac
 		// The path is the the call to the backend, not the original request by the user.
 		if req.URL.Path == path {
 			w.Header().Add("Content-Type", "application/json")
-      // Return a custom JSON object:
+			// Return a custom JSON object:
 			res := map[string]string{"message": html.EscapeString(req.URL.Path)}
 			b, _ := json.Marshal(res)
 			w.Write(b)
@@ -150,7 +150,7 @@ func (r registerer) registerClients(_ context.Context, extra map[string]interfac
 		io.Copy(w, resp.Body)
 		resp.Body.Close()
 
-    }), nil
+	}), nil
 }
 
 func main() {}
