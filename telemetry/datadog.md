@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-02-27
+lastmod: 2024-05-15
 date: 2020-07-24
 notoc: true
 linktitle: Datadog
@@ -16,9 +16,9 @@ menu:
     parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 1.2
-  source: https://github.com/krakend/krakend-opencensus
+  source: https://github.com/krakend/krakend-otel
   namespace:
-  - telemetry/opencensus
+  - telemetry/opentelemetry
   scope:
   - service
   log_prefix:
@@ -26,29 +26,37 @@ meta:
 ---
 [Datadog](https://www.datadoghq.com/) is a cloud monitoring and security platform for developers, IT operations teams, and businesses.
 
-The [OpenTelemetry integration](/docs/telemetry/opentelemetry/) allows you to send **metrics and traces** to Datadog using a Collector.
+The [OpenTelemetry integration](/docs/telemetry/opentelemetry/) allows you to send **metrics and traces** to Datadog using their collector.
+
 ## Datadog configuration
 Datadog uses the standard OTLP exporter, here is a configuration example:
 
 ```json
 {
-  "version": 3,
-  "extra_config": {
+    "version": 3,
+    "$schema": "https://www.krakend.io/schema/krakend.json",
+    "host": [
+        "http://localhost:8080"
+    ],
+    "debug_endpoint": true,
+    "echo_endpoint": true,
+    "extra_config": {
         "telemetry/opentelemetry": {
-            "service_name": "krakend_service",
-            "metric_reporting_period": 1,
-            "@comment": "Report 20% of traces",
-            "trace_sample_rate": 0.2,
             "exporters": {
                 "otlp": [
                     {
-                        "name": "my_datadog_agent",
+                        "use_http": false,
+                        "port": 4317,
                         "host": "ddagent",
-                        "port": 8126,
-                        "use_http": false
+                        "name": "my_dd_exporter",
+                        "disable_metrics": false,
+                        "disable_traces": false
                     }
                 ]
-            }
+            },
+            "trace_sample_rate": 1,
+            "service_name": "krakend_dd_telemetry",
+            "metric_reporting_period": 1
         }
     }
 }
@@ -60,45 +68,37 @@ The important part of the configuration is the `otlp` exporter, which accepts th
 
 In addition, you can configure how the `layers` behave ([see all options](/docs/telemetry/opentelemetry/#layers)).
 
+
 ## Datadog agent
 You must set your Datadog API key in the agent. The exporter communicates with the agent and is the agent the one reporting to Datadog.
 
 Here's an example of how to run the Datadog agent together with KrakenD in a docker-compose file:
 
 ```yml
-krakend:
-  image: {{< product image >}}:{{< product latest_version >}}
-ddagent:
-  image: gcr.io/datadoghq/agent:latest
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock:ro
-    - /proc/:/host/proc/:ro
-    - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-  ports:
-    - 8126:8126/tcp
-    - 8125:8125/udp
-  environment:
-    # Replace with your API key:
-    - DD_API_KEY=<API-KEY>
-    - DD_APM_ENABLED=true
-    # Replace with your site: https://docs.datadoghq.com/getting_started/site/
-    - DD_SITE=<DATADOG-SITE>
-    - DD_APM_NON_LOCAL_TRAFFIC=true
+version: '3'
+services:
+  krakend:
+    image: {{< product image >}}:{{< product latest_version >}}
+    volumes:
+      - "./:/etc/krakend"
+    command: ["run", "-c", "krakend.json"]
+    ports:
+      - "8080:8080"
+  datadog:
+    image: gcr.io/datadoghq/agent:7
+    pid: host
+    environment:
+     - DD_API_KEY=XXXXXXXXXXXXXXX
+     - DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_GRPC_ENDPOINT=0.0.0.0:4317
+     - DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_HTTP_ENDPOINT=0.0.0.0:4318
+     - DD_SITE=datadoghq.com
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+     - /proc/:/host/proc/:ro
+     - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
 ```
 
-And the configuration would contain:
-
-```json
-{ "datadog":
-  {
-    "@comment": "Rest of the necessary fields intentionally omitted",
-    "trace_address": "ddagent:8126",
-    "stats_address": "ddagent:8125"
-  }
-}
-```
-
-Notice that we are naming the service `ddagent` in Docker compose, and this is what we have added in the address.
+Notice that we are naming the service `ddagent` in Docker compose, and this matches our `host` field in the configuraton.
 
 ## Migrating from OpenCensus
 Prior to v2.6, telemetry sent to Datadog used the OpenCensus exporter. Enabling required adding the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/), and the configurations looked like this:

@@ -31,6 +31,7 @@ Unless the `no-op` encoding is set, the following status codes are the default b
 | `429 Too Many Requests`     | The client reached the rate limit for the endpoint |
 | `503 Service Unavailable`   | All clients together reached the configured global rate limit for the endpoint |
 | `500 Internal Server Error` | Default error code, and in general, when backends return any status above `400` |
+| `502 Bad Gateway`           | Error returned to the user when a WebSockets connection to the backend is gone after exhausting all retries |
 
 ### Why does KrakenD treat errors like a `500 Internal Server Error` by default?
 
