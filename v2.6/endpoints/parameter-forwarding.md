@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-11-20
+lastmod: 2024-06-04
 old_version: true
 date: 2018-07-20
 title: Parameter Forwarding
@@ -196,11 +196,7 @@ KrakenD will act as an independent client connecting to your backends and will s
 
 Except for the `X-Forwarded`-like headers that are controlled by [`forwarded_by_client_ip`](/docs/v2.6/service-settings/router-options/#forwarded_by_client_ip), you can override the rest when present in the `input_headers`.
 
-In addition, when you use **tracing**, you might also see arrive **B3 propagation headers** in your backends, e.g.:
-
-- `X-B3-Sampled`
-- `X-B3-Spanid`
-- `X-B3-Traceid`
+There are a few KrakenD components that support **setting attributes in headers**, like for instance [`propagate_claims` in JWT](/docs/v2.6/authorization/jwt-validation/#propagate_claims). These components will send the additional headers you configure to the backend automatically.
 
 ### Overriding headers sent from KrakenD to Backends
 When you use the `input_headers`, consider that any headers listed above are replaced with the ones you declare.
