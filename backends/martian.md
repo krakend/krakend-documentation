@@ -44,7 +44,7 @@ Some **examples of typical Martian scenarios** are:
 
 Add martian modifiers in your configuration under the `extra_config` of any `backend` using the namespace `modifier/martian`.
 
-Inside the configuration, you must write one or more component keys using the notation `package.Type` using the available ones described in this page.
+Inside the configuration, you must write one or more component keys using the notation `package.Type` using the available ones described in this page. You cannot write `@comment`-like attributes directly under the `modifier/martian` namespace, but you can add them inside each modifier.
 
 There are three main **types** of packages you can use in Martian:
 
@@ -61,9 +61,9 @@ Your configuration has to look as follows:
       "url_pattern": "/foo/{var}",
       "extra_config": {
         "modifier/martian": {
-          // package.Type here {
-          //    scope: ["request", "response"]
-          // }
+          "the package type key goes here" {
+             "scope": ["request", "response"]
+          }
         }
       }
     }
