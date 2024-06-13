@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-10-19
+lastmod: 2024-06-13
 date: 2020-10-19
 notoc: true
 linktitle: Status Codes
@@ -18,18 +18,19 @@ When consuming content through KrakenD, the status code returned to the client d
 - Use custom logic to set specific status codes
 
 ## Default status codes of KrakenD endpoints
-
-Unless the `no-op` encoding is set, the following status codes are the default behavior of any KrakenD endpoint.
+The following status codes are the ones returned by the gateway. When you use `no-op` in the `output_encoding`, the user can receive any status code from your backend. These are the status codes that KrakenD can use to reply. **If you see a different one in the list, then the status code is not generated on KrakenD** :
 
 | Status Code                 | When                               |
 |-----------------------------|-------------------------------------------|
-| `200 OK`                    | **At least** one backend returned a 200 or 201 status code on time. Completeness information provided by the `X-Krakend-Completed` header |
-| `404 Not Found`             | The requested endpoint is not configured on KrakenD           |
-| `400 Bad Request`           | Client made a malformed request, i.e. [json-schema](/docs/endpoints/json-schema/) validation failed         |
-| `401 Unauthorized`          | Client sent an invalid JWT token or its claims |
-| `403 Forbidden`             | The user is allowed to use the API, but not the resource, e.g.: Insufficient JWT [role](/docs/authorization/jwt-validation/), or [bot detector](/docs/throttling/botdetector/) banned it |
-| `429 Too Many Requests`     | The client reached the rate limit for the endpoint |
-| `503 Service Unavailable`   | All clients together reached the configured global rate limit for the endpoint |
+| `200 OK` | **At least** one backend returned a 200 or 201 status code on time. Completeness information provided by the `X-Krakend-Completed` header |
+| `301 Redirect` | When the router [adds a missing slash](/docs/service-settings/router-options/) to the endpoint and similar cases. |
+| `400 Bad Request` | Client made a malformed request, i.e. [json-schema](/docs/endpoints/json-schema/) validation failed, or problems when [signing a token](/docs/authorization/jwt-signing/) |
+| `401 Unauthorized` | Client sent an invalid JWT token or its claims |
+| `403 Forbidden` | The user is allowed to use the API, but not the resource, e.g.: Insufficient JWT [role](/docs/authorization/jwt-validation/), or [bot detector](/docs/throttling/botdetector/) banned it |
+| `404 Not Found` | The requested endpoint is not configured on KrakenD |
+| `405 Method Not Allowed` | You have requested an endpoint that exists but not for the requested method (e.g.: you declared a GET but the request had a POST) |
+| `429 Too Many Requests` | The client reached the rate limit for the endpoint |
+| `503 Service Unavailable` | All clients together reached the configured global rate limit for the endpoint |
 | `500 Internal Server Error` | Default error code, and in general, when backends return any status above `400` |
 
 ### Why does KrakenD treat errors like a `500 Internal Server Error` by default?
@@ -40,15 +41,15 @@ To offer a gracefully degraded service when some backends fail, we leave the dec
 
 ## Returning the status codes of the backend
 
-If what you need is returning the content of a backend service *as is*, then the [no-op encoding](/docs/endpoints/no-op/) will proxy the client call to the backend service without any manipulation. When the backend produces the response, it's passed back to the client, preserving its form: body, headers, status codes, and such.
+If you need to return the content of a backend service *as is*, then the [no-op encoding](/docs/endpoints/no-op/) will proxy the client call to the backend service without any manipulation. When the backend produces the response, it's passed back to the client, preserving its form: body, headers, status codes, and such.
 
-An exception to this behavior is `30x` responses, which will be followed by the gateway even with `no-op` encoding. If your backend returns a `301` the client won't follow it, but the gateway.
+An exception to this behavior is `30x` responses, which will be followed by the gateway even with `no-op` encoding. If your backend returns a `301` the client won't follow it, but the gateway will ({{< badge color="denim" >}}Enterprise{{< /badge >}} [can change this](/docs/enterprise/backends/client-redirect/))
+
 
 ## Returning other status codes
 
-Default status codes can be overridden per endpoint, following different implementations.
+Default status codes can be overridden per endpoint following different implementations.
 
 - **[Using no-operation](/docs/endpoints/no-op/)**: When your call is not idempotent (i.e., a write operation), and you want the client to receive whatever the backend is responding.
 - **[Using a Lua script](/docs/endpoints/lua/)**: To write in the configuration any logic, you need to evaluate and return a `custom_error`, with any status code of your choice.
 - As `custom_error` will end the pipe execution. If you just want to alter the status code, you can (in a no-op pipe) use the `statusCode` dynamic helper on the response.
-- **Injecting your own [HTTPStatusHandler](https://github.com/luraproject/lura/issues/102#issuecomment-373657911)**
