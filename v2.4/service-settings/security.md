@@ -17,7 +17,7 @@ meta:
   - service
 ---
 
-KrakenD has implemented several security strategies, controlled via [krakend-httpsecure](https://sec/http). To enable them you only need to add its namespace `security/http` at the `extra_config` in the root level of the configuration.
+KrakenD has implemented several security strategies, controlled via the `security/http` component. To enable them you only need to add its namespace `security/http` at the `extra_config` in the root level of the configuration.
 
 The following configuration describes all possible options:
 
