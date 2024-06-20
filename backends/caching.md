@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-12-20
+lastmod: 2024-06-20
 date: 2018-10-29
 linktitle: Response caching
 title: Caching Strategies
@@ -33,6 +33,12 @@ You can only cache the `GET` method. If you connect to a backend using `POST`, `
 The cache key is based on the method, the final URL sent to the backend (the `url_pattern`), plus any additional parameters. The response is stored for the time the `Cache-Control` has defined.
 
 The server sets no limit to the amount of content you will cache, and it is the developer's responsibility to calculate whether the dataset will fit in memory. Memory is filled as cacheable entries are requested. Stale content is replaced by fresh content when needed, but no algorithm allows using a dataset larger than the memory available.
+
+{{< note title="Connections not elegible for caching" type="info" >}}
+The caching component is internally an HTTP client that reads responses and stores content in memory. Nevertheless, there are components that use a custom HTTP client with extended functionality, and do not use the one with caching capabilities. Generally speaking, connections with upstream services that need authentication or custom HTTP clients are not elegible to cache their responses.
+
+When you add in a backend [Client Credentials](/docs/authorization/client-credentials/), [Lambda functions](/docs/backends/lambda/), [AMQP Consumers or Producers](/docs/backends/amqp-consumer/), [Publish/Subscribe](/docs/backends/pubsub/), or custom [HTTP Client plugins](/docs/extending/http-client-plugins/), they overwrite the standard HTTP client and caching is disabled.
+{{< /note >}}
 
 ## Cache configuration
 Enable the caching of the backend services in the `backend` section of your `krakend.json` with the middleware:
