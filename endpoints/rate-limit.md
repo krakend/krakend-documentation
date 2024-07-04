@@ -64,8 +64,8 @@ For instance, let's start with a simple and mixed example that sets two limits:
           "max_rate": 50,
           "every": "10m",
           "client_max_rate": 5
- }
- }
+      }
+    }
 }
 ```
 
@@ -83,8 +83,8 @@ An expanded and **more explicit configuration** that represents the same idea wo
           "strategy": "ip",
           "capacity": 50,
           "client_capacity": 5
- }
- }
+      }
+    }
 }
 ```
 In this configuration, we have set the IP `strategy`, which considers that every IP accessing the gateway is a different client. However, a client could be a JWT token, a header, or even a parameter.
@@ -108,8 +108,8 @@ Example:
           "@comment":"A thousand requests every hour",
           "max_rate": 1000,
           "every": "1h"
- }
- }
+      }
+    }
 }
 ```
 
@@ -126,6 +126,8 @@ The `client_max_rate` is more resource-consuming than the `max_rate` as every in
 
 When a single user connected to an endpoint exceeds their `client_max_rate,` KrakenD starts rejecting connections with a status code `429 Too Many Requests` and enables a [Spike Arrest](/docs/throttling/spike-arrest/) policy.
 
+Each client's counter is stored in memory only for the time needed to deliver the traffic restriction properly. The needed time is calculated automatically based on your configuration, and we call this time the **TTL**. A specific routine (or more) deletes outdated counters during runtime. See micro-optimizations below for more details.
+
 Example:
 
 ```json
@@ -136,8 +138,8 @@ Example:
           "@comment":"20 requests every 5 minutes",
           "client_max_rate": 20,
           "every": "5m"
- }
- }
+    }
+  }
 }
 ```
 The following configuration options are specific to the client rate limiting:
@@ -221,6 +223,27 @@ In that case, you can rate limit the parameter of the endpoint as follows:
 The configuration above would allow 5 requests to `/api/1234/invoices` every minute and another 5 to `/api/5678/invoices`. In a scenario like this, it would be advisable that you add a [security policy](/docs/enterprise/security-policies/) {{< badge color="denim" >}}Enterprise{{< /badge >}}
  that makes sure clients cannot abuse the rate limits of others.
 
+### Micro-optimizations of the client_rate_limit
+There are a few advanced values that you can add to the rate limit if you want to fine-tune CPU and Memory consumption. These values are not needed in most of the cases, but the door is open to tune how the rate limit works internally.
+
+{{< schema data="qos/ratelimit/router.json" filter="num_shards,cleanup_period,cleanup_threads" title="Micro-optimization of rate limiting" >}}
+
+Example:
+
+```json
+{
+  "endpoint": "/api/invoices",
+  "extra_config": {
+    "qos/ratelimit/router": {
+      "client_max_rate": 5,
+      "every": "1m",
+      "num_shards": 2048,
+      "cleanup_period": "60s",
+      "cleanup_threads": 1
+    }
+  }
+}
+```
 
 ### Examples of per-second rate limiting
 The following examples demonstrate a configuration with several endpoints, each one setting different limits. As they don't set an `every` section, they will use the default of one second (`1s`):
