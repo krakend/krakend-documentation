@@ -52,6 +52,7 @@ CORS configuration lives in the root of the file, as it's a service component. A
       "debug": false
     }
   }
+}
 ```
 The configuration options of this component are as follows:
 
@@ -145,5 +146,6 @@ To support `OPTIONS` in your endpoints, you only need to add the [flag `auto_opt
       "@comment": "...CORS configuration inside this block..."
     }
   }
+}
 ```
 {{< schema data="router.json" filter="auto_options" >}}
