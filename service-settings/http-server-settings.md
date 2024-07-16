@@ -20,7 +20,7 @@ KrakenD starts an HTTP server to offer the API Gateway server. You can personali
 
 If you want to customize any of the settings below, they must be written at the top level of the configuration.
 
-{{< schema data="krakend.json" filter="port,cache_ttl,sequential_start,read_timeout,read_header_timeout,write_timeout,idle_timeout,use_h2c,listen_ip">}}
+{{< schema data="krakend.json" filter="port,cache_ttl,sequential_start,read_timeout,read_header_timeout,write_timeout,idle_timeout,use_h2c,listen_ip,max_header_bytes">}}
 
 ## Override settings using environment vars
 When you declare in the configuration file any of the HTTP server settings declared above, you can [override its value through environment variables](/docs/configuration/environment-vars/) when starting the server.
