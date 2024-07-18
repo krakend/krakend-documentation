@@ -95,6 +95,28 @@ For instance:
 ```
 With the configuration above, KrakenD will query every 30 seconds the `_https._tcp.my-application.default.svc.cluster.local` DNS and will apply to the internal balancer any weights and priorities returned by the DNS record.
 
+## DNS Cache
+The results returned by your Service Discovery are cached in memory for 30 seconds, so KrakenD does not constantly hammer on each request for the list of hosts. Nevertheless, you can change this time as per your needs, and you must place the following attribute in the root of the configuration for all services in the configuration to do so.
+
+Even though this setting is global, each backend keeps a copy of the list returned by the SD and renews it actively in the background every TTL (even if there are no requests).
+
+If, for whatever reason, any renewal of the TTL fails (e.g., the SD is down), the last successful list of hosts is used.
+
+For unsafe values under one second, the default is used instead.
+
+{{< schema data="_root.json" filter="dns_cache_ttl" title="Override DNS cache" >}}
+
+For instance:
+
+```json
+{
+    "version": 3,
+    "$schema": "https://www.krakend.io/schema/krakend.json",
+    "dns_cache_ttl": "10s"
+}
+```
+
+
 ## How priority and weight affect balancing
 When the Service Discovery answers with the list of hosts, **only the lower priority is taken**. For instance, if you have a response like this one:
 

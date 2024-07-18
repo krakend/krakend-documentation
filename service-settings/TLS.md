@@ -24,16 +24,13 @@ The TLS settings define the parameters that the gateway takes into account to ha
 The properies `tls` and `client_tls` are independent of each other. You can declare one, both, or none.
 {{< /note >}}
 
-
-
-
 ## TLS server settings
 There are two different strategies when using TLS over KrakenD:
 
 - Use TLS for HTTPS and HTTP/2 in KrakenD (this document)
 - [Use a balancer with TLS termination in front of KrakenD](/docs/throttling/load-balancing/) (e.g., ELB, HAproxy)
 
-If you want to listen with TLS, add a `tls` key at the service level (configuration's file root) with at least the public and private keys. When you add TLS, KrakenD listens **only using TLS**, and no traffic to plain HTTP is accepted.
+If you want to listen with TLS, add a `tls` key at the service level (configuration's file root) with at least the public and private keys. When you add TLS, KrakenD listens **only using TLS**, and no traffic to plain HTTP is accepted (no redirection).
 
 If you want to enable mTLS see [Mutual TLS configuration](/docs/authorization/mutual-authentication/)
 
@@ -47,8 +44,12 @@ To start KrakenD with TLS, you need to provide a certificate for both the public
 {
   "version": 3,
   "tls": {
-    "public_key": "/path/to/cert.pem",
-    "private_key": "/path/to/key.pem"
+    "keys": [
+      {
+        "public_key": "/path/to/cert.pem",
+        "private_key": "/path/to/key.pem"
+      }
+    ]
   }
 }
 ```
@@ -56,6 +57,32 @@ To start KrakenD with TLS, you need to provide a certificate for both the public
 All TLS options for the server go inside the `tls` object:
 
 {{< schema data="tls.json" >}}
+
+### Upgrade from legacy key declaration
+The version v2.7 of KrakenD introduces declaring multiple TLS keys in the configuration. **Prior to KrakenD v2.7** the public and private keys were unique, and you had to declare them directly under `tls`, like this:
+```json
+{
+  "version": 3,
+  "tls": {
+      "public_key": "/path/to/cert.pem",
+      "private_key": "/path/to/key.pem"
+    }
+}
+```
+When using **KrakenD v2.7 and above**, make sure to place key pairs inside the `keys` array:
+```json
+{
+  "version": 3,
+  "tls": {
+    "keys": [
+      {
+        "public_key": "/path/to/cert.pem",
+        "private_key": "/path/to/key.pem"
+      }
+    ]
+  }
+}
+```
 
 ## Client TLS settings
 You can also set global TLS settings when KrakenD acts as a client, meaning that the gateway takes the role of the requesting user and fetches data with the upstream services.
@@ -90,8 +117,12 @@ To support TLS v1.2 and 1.3 simultaneously, you need the following configuration
 {
   "version": 3,
   "tls": {
-    "public_key": "/path/to/cert.pem",
-    "private_key": "/path/to/key.pem",
+    "keys": [
+      {
+        "public_key": "/path/to/cert.pem",
+        "private_key": "/path/to/key.pem"
+      }
+    ],
     "min_version": "TLS12"
   }
 }

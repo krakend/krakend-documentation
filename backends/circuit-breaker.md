@@ -91,11 +91,16 @@ This is the way the states change:
 - `OPEN`: When a consecutive number of supported errors from the backend (`max_errors`) is exceeded, the system changes to `OPEN`, and no further connections are sent to the backend. The system will stay in `OPEN` state for N seconds ( the `timeout`).
 - `HALF-OPEN`: After the timeout, it changes to this state and allows one connection to pass. If the connection succeeds, the state changes to `CLOSED`, and the backend is considered to be healthy again. But if it fails, it switches back to `OPEN` for another timeout.
 
-### Definition of failure
+### Definition of error
 
-A failure that counts for the circuit breaker could be anything that prevents having a successful connection with the service. There is a small difference in behavior when you use the circuit breaker with `no-op` encoding vs. the rest of the encodings.
+When the circuit breaker counts the number of consecutive `max_errors`, an error could be anything that prevents having a successful connection with the service and completing the work.
 
-Regardless of the encoding, the Circuit Breaker will react to:
+{{< note title="`no-op` endpoints do not check HTTP status codes" type="warning" >}}
+Because a `no-op` does not evaluate the response status code, the circuit breaker does not see the reponse status code of the backend and the errors are limited to the following list below.
+{{< /note >}}
+
+
+An error could be any of the following:
 
 - Network or connectivity problems
 - Security policies
@@ -107,7 +112,8 @@ Regardless of the encoding, the Circuit Breaker will react to:
     - Lambda (`backend/lambda`)
     - AMQP or PubSub issues
 
-In addition, when you work with `json`, or **any other encoding different than `no-op`**, the gateway also checks the HTTP responses back from the backend and marks as failures:
+#### For endpoints that DO NOT use `no-op`
+In addition, only when you work with `json`, or **any other encoding different than `no-op`**, the gateway also takes into account the HTTP responses back from the backend and marks as errors:
 
 - Status codes different than `200` or `201` (including client credentials)
 - Decoding issues

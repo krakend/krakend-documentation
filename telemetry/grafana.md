@@ -46,7 +46,8 @@ The Grafana dashboard has evolved over time, and these are the different version
 
 | Datasource | Description | Grafana Cloud ID | Source |
 |----------|-----------|----------|----------|
-| Prometheus<br>(**recommended**) | Latest dashboard to display metrics when you add an [OpenTelemetry Prometheus exporter](/docs/telemetry/prometheus/). It also includes a Traces section if you use Grafana Tempo. | [`20651`](https://grafana.com/grafana/dashboards/20651) | [for-prometheus.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-prometheus.json)|
+| Prometheus<br>(**recommended**) | Latest dashboard to display metrics when you add an [OpenTelemetry Prometheus exporter](/docs/telemetry/prometheus/). | [`20651`](https://grafana.com/grafana/dashboards/20651) | [for-prometheus.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-prometheus.json)|
+| Prometheus<br>(Websockets) | Latest dashboard to display WebSocket metrics [OpenTelemetry Prometheus exporter](/docs/telemetry/prometheus/). | [`repo only`](https://grafana.com/grafana/dashboards/20651) | [for-prometheus-ws.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-prometheus-websockets.json)|
 | InfluxDB v2.x<br>(*legacy*) | Legacy dashboard for InfluxDB v2 and KrakenD under v2.6. Uses Flux queries | [`17074`](https://grafana.com/grafana/dashboards/17074) | [for-influxdb-v2.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v2.json)|
 | InfluxDB v1.x<br>(*legacy*)| Legacy dashboard for InfluxDB v1 and KrakenD under v2.6. Uses InfluxQL queries | [`15029`](https://grafana.com/grafana/dashboards/15029) | [for-influxdb-v1.json](https://github.com/krakend/telemetry-dashboards/blob/main/grafana/krakend/for-influxdb-v1.json)|
 

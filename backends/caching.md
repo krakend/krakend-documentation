@@ -117,7 +117,7 @@ The [Martian module](/docs/backends/martian/) is the component that can transfor
 ```json
 {
     "version": 3,
-    "$schema": "https://www.krakend.io/schema/v2.6/krakend.json",
+    "$schema": "https://www.krakend.io/schema/v2.7/krakend.json",
     "endpoints": [
         {
             "endpoint": "/cached",
