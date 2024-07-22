@@ -104,9 +104,9 @@ You can accomplish it with the following snippet.
 ```
 The properties of the `telemetry/influx` are as follows:
 
-{{< schema version="v2.5" data="telemetry/influx.json" >}}
+{{< schema version="v2.6" data="telemetry/influx.json" >}}
 
-See below how to configure InfluxDB, and you are ready to [publish a Grafana dashboard](/docs/v2.6/v2.5/telemetry/grafana/).
+See below how to configure InfluxDB, and you are ready to [publish a Grafana dashboard](/docs/v2.6/telemetry/grafana/).
 
 ## Setting up Influx
 For **InfluxDB v2.x**, we have included in our [Telemetry Dashboards](https://github.com/krakend/telemetry-dashboards/) the files that create the authorization part.
