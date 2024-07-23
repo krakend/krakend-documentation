@@ -104,9 +104,9 @@ You can accomplish it with the following snippet.
 ```
 The properties of the `telemetry/influx` are as follows:
 
-{{< schema version="v2.5" data="telemetry/influx.json" >}}
+{{< schema data="telemetry/influx.json" >}}
 
-See below how to configure InfluxDB, and you are ready to [publish a Grafana dashboard](/docs/v2.5/telemetry/grafana/).
+See below how to configure InfluxDB, and you are ready to [publish a Grafana dashboard](/docs/telemetry/grafana/).
 
 ## Setting up Influx
 For **InfluxDB v2.x**, we have included in our [Telemetry Dashboards](https://github.com/krakend/telemetry-dashboards/) the files that create the authorization part.
@@ -134,7 +134,7 @@ services:
     volumes:
       - "./config/telemetry/influx:/docker-entrypoint-initdb.d"
   krakend:
-    image: {{< product image >}}:2.5
+    image: {{< product image >}}:{{< product minor_version >}}
     volumes:
       - ./krakend:/etc/krakend
     ports:
@@ -226,7 +226,7 @@ services:
     ports:
       - "8086:8086"
   krakend:
-    image: {{< product image >}}:2.5
+    image: {{< product image >}}:{{< product minor_version >}}
     volumes:
       - ./krakend:/etc/krakend
     ports:

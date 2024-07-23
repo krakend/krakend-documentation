@@ -134,7 +134,7 @@ services:
     volumes:
       - "./config/telemetry/influx:/docker-entrypoint-initdb.d"
   krakend:
-    image: {{< product image >}}:2.5
+    image: {{< product image >}}:2.6
     volumes:
       - ./krakend:/etc/krakend
     ports:
@@ -226,7 +226,7 @@ services:
     ports:
       - "8086:8086"
   krakend:
-    image: {{< product image >}}:2.5
+    image: {{< product image >}}:2.6
     volumes:
       - ./krakend:/etc/krakend
     ports:
