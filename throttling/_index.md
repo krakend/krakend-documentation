@@ -23,6 +23,7 @@ In addition to rate-limiting, which is the most obvious functionality, when we t
 
 - [Circuit Breaker](/docs/backends/circuit-breaker/): An automatic protection measure for your stack and avoids cascade failures.
 - **Rate-limiting**, which has many variants:
+  - [Tiered Rate Limiting (stateless) {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/service-settings/tiered-rate-limit/): Sets the maximum throughtput users can send depending on their tier/plan.
   - [Service Rate Limiting (stateless) {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/service-settings/service-rate-limit/): Sets the maximum throughput users can have to a KrakenD instance.
   - [Redis-based global rate limit (stateful) {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/throttling/global-rate-limit/): Sets the maximum throughput users can have on a KrakenD cluster, backed on Redis.
   - [Endpoint Rate Limiting](/docs/endpoints/rate-limit/): Sets the maximum throughput all connected users can have against specific endpoints (stateless).
