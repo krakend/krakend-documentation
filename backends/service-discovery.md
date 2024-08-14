@@ -65,7 +65,7 @@ The format of the `SRV` record is as follows:
     _api._tcp.example.com. 86400 IN SRV 0 5 8000 foo.example.com.
 
 {{< note title="Caching" type="info" >}}
-The DNS-based service discovery caches entries for 30 seconds.
+The DNS-based service discovery caches entries for 30 seconds by default, use `dns_cache_ttl`to change it.
 {{< /note >}}
 
 To integrate **Consul, Kubernetes, or any other `DNS SRV` compatible system** as the Service Discovery, you only need to set two keys:
@@ -93,10 +93,10 @@ For instance:
     ]
 }
 ```
-With the configuration above, KrakenD will query every 30 seconds the `_https._tcp.my-application.default.svc.cluster.local` DNS and will apply to the internal balancer any weights and priorities returned by the DNS record.
+With the configuration above, KrakenD will query every 30 seconds (default behavior) the `_https._tcp.my-application.default.svc.cluster.local` DNS and will apply to the internal balancer any weights and priorities returned by the DNS record.
 
 ## DNS Cache
-The results returned by your Service Discovery are cached in memory for 30 seconds, so KrakenD does not constantly hammer on each request for the list of hosts. Nevertheless, you can change this time as per your needs, and you must place the following attribute in the root of the configuration for all services in the configuration to do so.
+The results returned by your Service Discovery are cached in memory, so KrakenD does not constantly hammer on each request for the list of hosts. Nevertheless, you can change this time as per your needs, and you must place the following attribute in the root of the configuration for all services in the configuration to do so.
 
 Even though this setting is global, each backend keeps a copy of the list returned by the SD and renews it actively in the background every TTL (even if there are no requests).
 
