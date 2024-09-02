@@ -38,7 +38,7 @@ docker run --rm -it -v "$PWD:/etc/krakend" \
     -e "FC_PARTIALS=/etc/krakend/partials" \
     -e "FC_SETTINGS=/etc/krakend/settings" \
     -e "FC_TEMPLATES=/etc/krakend/templates" \
-    devopsfait/krakend:watch run -c krakend.tmpl
+    devopsfaith/krakend:watch run -c krakend.tmpl
 {{< /terminal >}}
 
 {{< terminal title="Hot reload with Flexible Configuration on Enterprise" >}}
