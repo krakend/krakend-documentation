@@ -214,7 +214,7 @@ The example below sets an `?amount=75` independently of the value the user passe
           "querystring.Modifier": {
             "scope": ["request"],
             "name": "amount",
-            "value": "1000"
+            "value": "75"
           }
         }
       }
