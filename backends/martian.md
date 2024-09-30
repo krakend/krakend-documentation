@@ -104,7 +104,8 @@ The following modifier sets the body of the request and the response to `{"msg":
               "response"
             ],
             "@comment": "Send a {'msg':'you rock!'}",
-            "body": "eyJtc2ciOiJ5b3Ugcm9jayEifQ=="
+            "body": "eyJtc2ciOiJ5b3Ugcm9jayEifQ==",
+            "contentType": "application/json"
           }
         }
       }
