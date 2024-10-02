@@ -82,7 +82,7 @@ These two places have the following considerations:
 
 In a request/response execution, this is how the different namespaces for Lua placement work:
 
-![Lua - Sequence of execution](/images/documentation/diagrams/lua-2.mmd.svg)
+![Lua - Sequence of execution](/images/documentation/diagrams/lua-2.seq.mmd.svg)
 
 ## Functions for Proxy
 

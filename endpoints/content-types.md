@@ -22,7 +22,7 @@ KrakenD can send these responses back to the client **in different formats** tha
 
 The request/response flow is:
 
-![content-type-flow.mmd diagram](/images/documentation/diagrams/content-type-flow.mmd.svg)
+![content-type-flow.seq.mmd diagram](/images/documentation/diagrams/content-type-flow.seq.mmd.svg)
 
 
 - The `encoding` is how KrakenD expects to find the response data of your backends. It is declared in each [`backend` section](/docs/backends/supported-encodings/) (and you can mix types)
