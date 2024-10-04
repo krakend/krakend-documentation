@@ -5,7 +5,7 @@ notoc: true
 linktitle: Logging in JSON (Logstash)
 title: "Logstash Integration (JSON logs)"
 description: Streamline log management and analysis by integrating Logstash with KrakenD. Follow our documentation to set up seamless integration and gain valuable insights from your API logs.
-weight: 310
+weight: 360
 source: https://github.com/krakend/krakend-logstash
 aliases: ["/docs/logging-metrics-tracing/logstash/"]
 menu:

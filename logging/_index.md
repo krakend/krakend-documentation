@@ -5,7 +5,7 @@ toc: true
 linktitle: Logging overview
 title: Logging
 description: Learn how to implement Syslog and Stdout logging in KrakenD API Gateway, enabling effective monitoring and troubleshooting of your API gateway and microservices
-weight: 20
+weight: 300
 aliases: ["/docs/logging-metrics-tracing/logging/", "/docs/logging/extended-logging/"]
 menu:
   community_current:
