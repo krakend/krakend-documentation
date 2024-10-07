@@ -372,7 +372,7 @@ The `header.Id` is a modifier that sets a header `X-Krakend-Id` with a **unique 
 ```json
 {
   "version": 3,
-  "$schema": "https://www.krakend.io/schema/v2.7/krakend.json",
+  "$schema": "https://www.krakend.io/schema/v2.8/krakend.json",
   "host": ["http://localhost:8080"],
   "echo_endpoint": true,
   "endpoints": [
