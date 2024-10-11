@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-03-01
+lastmod: 2024-10-11
 date: 2019-09-15
 linktitle: Publisher/subscribe
 title: Pub-Sub Backend Integration
@@ -36,13 +36,14 @@ For instance, a frontend client can push events to a queue using a REST interfac
 ## Configuration
 To add pub/sub functionality to your backends include the namespaces `backend/pubsub/subscriber` and `backend/pubsub/publisher` under the `extra_config` of your `backend` section.
 
-The `host` key defines the desired driver, and the actual host is usually set in an **environment variable** outside of KrakenD:
+The `host` key defines the desired driver, and the actual host is usually set in an **environment variable** outside of KrakenD. The `url_pattern` is a mandatory field according to its Schema, but it is not used and you can type any value in it:
 
 For a **subscriber**:
 
 ```json
 {
 	"host": ["schema://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -60,6 +61,7 @@ For a **publisher**:
 ```json
 {
 	"host": ["schema://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/publisher": {
@@ -80,6 +82,7 @@ Set the envvar `RABBIT_SERVER_URL='guest:guest@localhost:5672'` and add in the c
 ```json
 {
 	"host": ["amqp://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -106,6 +109,7 @@ Example:
 ```json
 {
 	"host": ["gcppubsub://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -132,6 +136,7 @@ Example:
 ```json
 {
 	"host": ["nats://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -150,6 +155,7 @@ AWS SNS sets the `url` without any `host` or environment variables, e.g:
 ```json
 {
 	"host": ["awssns:///arn:aws:sns:us-east-2:123456789012:mytopic"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -170,6 +176,7 @@ Url: `awssqs://sqs-queue-url`
 ```json
 {
 	"host": ["awssqs://sqs.us-east-2.amazonaws.com/123456789012"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -196,6 +203,7 @@ Example:
 ```json
 {
 	"host": ["azuresb://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -224,6 +232,7 @@ Example:
 ```json
 {
 	"host": ["rabbit://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -246,6 +255,7 @@ Kafka connection requires KrakenD >= `1.1`.
 ```json
 {
 	"host": ["kafka://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -259,6 +269,7 @@ Kafka connection requires KrakenD >= `1.1`.
 ```json
 {
 	"host": ["kafka://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/publisher": {
