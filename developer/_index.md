@@ -7,6 +7,7 @@ menu:
   community_current:
     parent: "170 API Documentation and Dev Tools"
 title: Custom developer tools
+description: Discover what are the development tools you can compile additionally to work with KrakenD Open Source edition. These tools are not bundled by default with KrakenD.
 weight: 10
 ---
 
