@@ -3,7 +3,7 @@ lastmod: 2022-10-24
 date: 2018-11-03
 linktitle: JWT Signing
 title: JWT Signing
-description: Implement JWT signing with KrakenD API Gateway to sign token payloads and secure your APIs
+description: KrakenD's JWT signing wraps your login endpoint, signing payloads with your secret key. Perfect for monolith migrations or setups without an OAuth server.
 weight: 30
 images: ["/images/krakend-signer-flow.png"]
 menu:

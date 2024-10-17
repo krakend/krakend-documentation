@@ -3,7 +3,7 @@ date: 2023-06-08
 lastmod: 2023-06-08
 linktitle: Switch to Community or Enterprise
 title: Switching to Community or Enterprise
-description: What are the necessary steps to move from Community to Enterprise and vice-versa?
+description: Learn how to upgrade or downgrade KrakenD from Enterprise Edition (EE) to Community Edition (CE) to keep your existing installation working correctly.
 weight: 20
 menu:
   community_current:

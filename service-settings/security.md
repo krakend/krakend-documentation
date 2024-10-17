@@ -3,7 +3,7 @@ lastmod: 2022-01-31
 date: 2016-09-30
 linktitle: HTTP Security
 title: HTTP Security Considerations
-description: Learn about the security considerations and best practices in configuring and securing KrakenD API Gateway for protecting your APIs
+description: KrakenD's HTTP Security component enhances API protection by enabling features like Clickjacking protection, MIME-Sniffing prevention, and XSS protection, and more
 weight: 40
 menu:
   community_current:

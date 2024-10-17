@@ -3,7 +3,7 @@ lastmod: 2024-10-09
 date: 2024-10-09
 linktitle:  Security Overview
 title: Security Overview
-description: Security features, principles, and design philosophy behind KrakenD API Gateway
+description: KrakenD is built with a security-first approach in mind. Read about the security features bundled by KrakenD and the principles and design philosophy behind it
 weight: -1000
 notoc: false
 menu:

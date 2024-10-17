@@ -3,7 +3,7 @@ lastmod: 2023-11-17
 date: 2023-11-17
 linktitle: Working Directory
 title: "Working Directory: Specifying paths"
-description: Understanding where the relative directory in KrakenD configuration points to.
+description: KrakenD supports absolute and relative paths in configurations. Absolute paths provide clarity, while relative paths use the working directory, making them flexible for varied environments.
 notoc: true
 menu:
   community_current:
