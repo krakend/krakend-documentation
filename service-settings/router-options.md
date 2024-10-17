@@ -74,7 +74,7 @@ The following example shows a configuration that takes the user IP from an `X-Fo
 
 ```json
 {
-  "$schema": "https://www.krakend.io/schema/v2.3/krakend.json",
+  "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
   "version": 3,
   "echo_endpoint": true,
   "extra_config": {
