@@ -94,14 +94,14 @@ The following configuration declares two endpoints that will fail that you can t
             "backend": [
                 {
                     "host": [
-                        "http://your.backend"
+                        "http://example.com"
                     ],
                     "url_pattern": "/foo",
                     "group": "foo"
                 },
                 {
                     "host": [
-                        "http://your.backend"
+                        "http://example.com"
                     ],
                     "url_pattern": "/bar",
                     "group": "bar"
@@ -126,7 +126,7 @@ The following configuration declares two endpoints that will fail that you can t
             "backend": [
                 {
                     "host": [
-                        "http://your.backend"
+                        "http://example.com"
                     ],
                     "url_pattern": "/foo",
                     "group": "foo"

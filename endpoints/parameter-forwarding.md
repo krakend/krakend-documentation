@@ -57,7 +57,7 @@ Send the query strings `items` and `page` to the backend, as well as `User-Agent
         {
           "url_pattern": "/catalog",
           "host": [
-            "http://some.api.com:9000"
+            "http://some.example.com:9000"
           ]
         }
       ]
@@ -87,7 +87,7 @@ Add the **list** `input_query_strings` in your `endpoint` definition to enable t
         {
           "url_pattern": "/catalog",
           "host": [
-            "http://some.api.com:9000"
+            "http://some.example.com:9000"
           ]
         }
       ]
@@ -130,7 +130,7 @@ When your backend requires mandatory **query string** parameters and you want to
   "endpoint": "/v3/{channel}/foo",
   "backend": [
     {
-            "host": ["http://backend"],
+            "host": ["http://example.com"],
             "url_pattern": "/foo?channel={channel}"
     }
   ]
@@ -155,7 +155,7 @@ Nevertheless, the `input_query_strings` could also be added in this configuratio
     "backend": [
         {
             "host": [
-                "http://backend"
+                "http://example.com"
             ],
             "url_pattern": "/foo?channel={channel}"
         }
@@ -216,7 +216,7 @@ An example of passing the `User-Agent` to the backend:
         {
           "url_pattern": "/catalog",
           "host": [
-            "http://some.api.com:9000"
+            "http://some.example.com:9000"
           ]
         }
       ]
@@ -268,7 +268,7 @@ For instance, the following endpoint allows passing two headers to its backends,
 {
   "version": 3,
   "host": [
-    "http://some.api.com:9000"
+    "http://some.example.com:9000"
   ],
   "endpoints": [
     {
@@ -317,7 +317,7 @@ Example:
         {
           "url_pattern": "/catalog",
           "host": [
-            "http://some.api.com:9000"
+            "http://some.example.com:9000"
           ]
         }
       ]

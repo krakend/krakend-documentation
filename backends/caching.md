@@ -46,7 +46,7 @@ Enable the caching of the backend services in the `backend` section of your `kra
 {
     "backend": [{
       "url_pattern": "/url-to-cache",
-      "host": ["http://host-to-cache"],
+      "host": ["http://host-to-cache.example.com"],
       "extra_config": {
         "qos/http-cache": {}
       }
