@@ -185,6 +185,46 @@ function post_proxy_decorator( resp )
 end
 ```
 
+
+Another example that iterates all fields in the response and filters out everything but a specific field would be:
+
+```lua
+-- This function filters out all keys in the response data except the 'keyToPreserve'.
+function filter(req, resp)
+    -- Get the data from the response object
+    local responseData = resp:data()
+
+    -- Define the key that should not be removed
+    local keyToPreserve = 'KeepThisField'
+
+    -- Get all keys from the response data
+    local allKeys = responseData:keys()
+
+    -- Loop through all the keys
+    for i = 0, allKeys:len() - 1 do
+        local currentKey = allKeys:get(i)
+        print("Found key:", currentKey)
+
+        -- If the current key is not the one to preserve, remove it
+        if currentKey ~= keyToPreserve then
+            responseData:del(currentKey)
+            print("Removing key:", currentKey)
+        end
+    end
+end
+```
+The `filter` function would be called as follows in the configuration:
+
+```json
+{
+    "modifier/lua-backend": {
+      "allow_open_libs": true,
+      "sources": ["./filter.lua"],
+      "post": "filter(request.load(), response.load())"
+    }
+}
+```
+
 ### Collections helper (`list`)
 
 *   `new()` (_Static_): Returns a new list. E.g.: `local t = luaList.new()`
