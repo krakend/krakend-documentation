@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-06-28
+lastmod: 2024-10-24
 date: 2016-09-30
 toc: true
 aliases: ["/docs/backends/overview/"]
@@ -74,33 +74,6 @@ In the example below, KrakenD offers an endpoint `/v1/products` that merges the 
     ]
 }
 ```
-
-
-
-
-### Disable RESTful checking
-By default KrakenD only works with **RESTful URL patterns** to connect to backends. Enable the option `disable_rest` in the root of your configuration if you have backends that aren't RESTful, e.g.: `/url.{some_variable}.json`
-
-{{< highlight json "hl_lines=4 13">}}
-{
-  "$schema": "https://www.krakend.io/schema/v2.8/krakend.json",
-  "version": 3,
-  "disable_rest": true,
-  "endpoints": [
-    {
-      "endpoint": "/foo",
-      "backend": [
-        {
-          "host": [
-            "http://mybackend"
-          ],
-          "url_pattern": "/url.{some_variable}.json"
-        }
-      ]
-    }
-  ]
-}
-{{< /highlight >}}
 
 ## Connecting to HTTPS backends with self-signed certificates
 When using **self-signed certificates** in your backends, you must add the certificates to the local CA, or at least add them while developing the `allow_insecure_connections` setting to `true`. Example:

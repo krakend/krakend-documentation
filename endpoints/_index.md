@@ -36,7 +36,7 @@ An `endpoints` section might look like this:
           "url_pattern": "/users/summary/{user}",
           "method": "GET",
           "host": [
-            "https://api.mybackend.com"
+            "https://api.example.com"
           ]
         }
       ]
@@ -46,7 +46,7 @@ An `endpoints` section might look like this:
 ```
 
 
-The previous example exposes a `GET /v1/users/{user}` endpoint to the clients and takes the data from your existing backend `GET https://api.mybackend.com/users/summary/{user}`.
+The previous example exposes a `GET /v1/users/{user}` endpoint to the clients and takes the data from your existing backend `GET https://api.example.com/users/summary/{user}`.
 
 Inside this object, you can add manipulation options and transform the response before it returns to the end user.
 
@@ -78,7 +78,7 @@ The `method` attribute defines the HTTP verb you can use with the endpoint. If y
           "url_pattern": "/users/summary/{user}",
           "method": "GET",
           "host": [
-            "https://api.mybackend.com"
+            "https://api.example.com"
           ]
         }
       ]
@@ -91,7 +91,7 @@ The `method` attribute defines the HTTP verb you can use with the endpoint. If y
           "url_pattern": "/users/summary/{user}",
           "method": "POST",
           "host": [
-            "https://api.mybackend.com"
+            "https://api.example.com"
           ]
         }
       ]
@@ -114,6 +114,33 @@ As you can see in the examples above, endpoints can define variables in their en
 
 
 The previous endpoint will accept requests like `/user/123` or `/user/A-B-C`. But **it won't take** a request like `/user/1/2`, as there is an extra slash than the definition, and KrakenD considers this to be a different endpoint.
+
+
+
+
+### Disable RESTful checking
+By default KrakenD only works with **RESTful URL patterns** in its endpoint definition. Enable the option [`disable_rest`](/docs/service-settings/http-server-settings/#disable_rest) in the root of your configuration if need unrestful endpoints, e.g.: `/file.{extension}`
+
+{{< highlight json "hl_lines=4 13">}}
+{
+  "$schema": "https://www.krakend.io/schema/v2.8/krakend.json",
+  "version": 3,
+  "disable_rest": true,
+  "endpoints": [
+    {
+      "endpoint": "/foo/{var}/file.{extension}",
+      "backend": [
+        {
+          "host": [
+            "http://example.com"
+          ],
+          "url_pattern": "/{var}.{extension}"
+        }
+      ]
+    }
+  ]
+}
+{{< /highlight >}}
 
 ## Automatic protocol and encoding translation
 The endpoints return HTTP content to the end-user in any of the [supported encodings](/docs/endpoints/content-types/), regardless of the type of backend you are connecting to.
