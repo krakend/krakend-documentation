@@ -161,6 +161,7 @@ To work with associative arrays on Lua you have the following functions:
 
 *   `new()` (_Static_): Returns a new table. E.g.: `local t = luaTable.new()`
 *   `keys()` (_Dynamic_): Returns the sorted key names of a table. E.g.: `local k = t:keys()`
+*   `keyExists(key)`(_Dynamic_): Returns a boolean. True when `key` is a member of the table or false otherwise. E.g.: `local r = response.load(); local responseData = r:data(); responseData:keyExists('some_key')`
 *   `get(key)` (_Dynamic_): Retrieves the value of a key inside the table. E.g.: `local r = response.load(); local responseData = r:data(); responseData:get('key')`
 *   `set(key,value)` (_Dynamic_): Adds or replaces a key in the table. E.g.: `local r = response.load(); local responseData = r:data(); responseData:set('key',value)`
 *   `len()` (_Dynamic_): Returns the length of the whole table so you can iterate over it. E.g.: `local r = response.load(); local responseData = r:data(); local length = responseData:len()`
