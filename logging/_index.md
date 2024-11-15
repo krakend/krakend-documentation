@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-10-25
+lastmod: 2024-11-15
 date: 2018-10-30
 toc: true
 linktitle: Logging overview
@@ -86,7 +86,7 @@ To add ample logging capabilities, you need to add the component at the service 
 ```
 These are the different supported configuration options:
 
-{{< schema data="telemetry/logging.json" >}}
+{{< schema data="telemetry/logging.json" filter="format,custom_format,level,prefix,stdout,syslog,syslog_facility">}}
 
 When setting a predefined `format` the output is:
 
