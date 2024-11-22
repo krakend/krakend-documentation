@@ -8,15 +8,15 @@ weight: -100
 menu:
   community_current:
     parent: "080 Authentication & Authorization"
-meta:
-  #since:
-  #source: https://github.com/krakend/krakend-jose
-  #namespace:
-  #- auth/validator
-  #scope:
-  #- endpoint
-  #log_prefix:
-  #- "[ENDPOINT: /foo][JWTValidator]"
+images:
+- /images/documentation/diagrams/auth-overview-all.mmd.svg
+- /images/documentation/diagrams/auth-overview-architecture.mmd.svg
+- /images/documentation/diagrams/auth-overview-backend.mmd.svg
+- /images/documentation/diagrams/auth-overview-client.mmd.svg
+- /images/documentation/diagrams/auth-overview-forward.mmd.svg
+- /images/documentation/diagrams/auth-overview.mmd.svg
+- /images/documentation/diagrams/auth-overview-no-auth.mmd.svg
+
 ---
 Authorization and authentication are fundamental to managing access to your APIs. While authentication verifies the identity of a user or service (e.g., *is this a valid user/pass?*), the authorization checks their access rights (e.g., *Should John see this resource?*).
 
@@ -105,4 +105,4 @@ If you have a self-hosted IdP, you can expose it to the Internet, but you can al
 
 ![auth-overview-architecture.mmd diagram](/images/documentation/diagrams/auth-overview-architecture.mmd.svg)
 
-In this scenario, the `/login` endpoint passes through KrakenD, allowing you to set rate limiting or any other protection mechanism you consider to secure even more your IdP. The client stores locally the token for the next interactions, and send the bearer to access resources through KrakenD. The IdP is not contacted again until the token is expired (when the client will refresh it).
+In this scenario, the `/token` endpoint passes through KrakenD, allowing you to set rate limiting or any other protection mechanism you consider to secure even more your IdP. The client stores locally the token for the next interactions, and send the bearer to access resources through KrakenD. The IdP is not contacted again until the token is expired (when the client will refresh it).
