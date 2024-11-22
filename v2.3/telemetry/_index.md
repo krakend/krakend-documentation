@@ -29,4 +29,4 @@ The following telemetry third-party systems are supported:
 - [Datadog](/docs/v2.3/telemetry/datadog/)
 - [Azure Monitor](/docs/v2.3/telemetry/azure/)
 - [Grafana](/docs/v2.3/telemetry/grafana/)
-- [Newrelic](/docs/enterprise/telemetry/newrelic/) {{< badge color="denim" >}}Enterprise{{< /badge >}}
+- [Newrelic](/docs/enterprise/telemetry/newrelic/) {{< badge >}}Enterprise{{< /badge >}}

@@ -39,7 +39,7 @@ Our *Security Program Policy and Incident Response Plan* have the following prin
 Below are the categories in which security is more obvious. Although this is not a complete list, it provides you with a place to start exploring our documentation.
 
 ## Authentication and Authorization
-API authentication and authorization are key to any secured API. KrakenD has mechanisms such as [JWT validation](/docs/authorization/jwt-validation/), [JWT signing](/docs/authorization/jwt-signing/), [OAuth2 Client Credentials](/docs/authorization/client-credentials/) or [API keys](/docs/enterprise/authentication/api-keys/) {{< badge color="denim" >}}Enterprise{{< /badge >}} to name a few examples.
+API authentication and authorization are key to any secured API. KrakenD has mechanisms such as [JWT validation](/docs/authorization/jwt-validation/), [JWT signing](/docs/authorization/jwt-signing/), [OAuth2 Client Credentials](/docs/authorization/client-credentials/) or [API keys](/docs/enterprise/authentication/api-keys/) {{< badge >}}Enterprise{{< /badge >}} to name a few examples.
 
 Authorization allows you to implement Role-based (RBAC) and attribute-based access control (ABAC) policies.
 
@@ -50,23 +50,23 @@ The gateway supports [TLS](/docs/service-settings/tls/) for traffic comming from
 
 For business-to-business authentication, [Mutual TLS (mTLS)](/docs/authorization/mutual-authentication/) creates a secure and exclusive channel based on trusted certificates.
 
-Governments can also get a Docker container with [FIPS 140-2 validated cryptography](/docs/enterprise/security/fips-140/) {{< badge color="denim" >}}Enterprise{{< /badge >}} for compliance with their regulations.
+Governments can also get a Docker container with [FIPS 140-2 validated cryptography](/docs/enterprise/security/fips-140/) {{< badge >}}Enterprise{{< /badge >}} for compliance with their regulations.
 
 ## Data protection
-Showing the right data or allowing limited access is key on any API. In addition to blocking users without enough privileges to consume data, you can apply [data filtering and manipulation](/docs/enterprise/backends/data-manipulation/) or even [masking of data](/docs/enterprise/endpoints/content-replacer/) {{< badge color="denim" >}}Enterprise{{< /badge >}}
+Showing the right data or allowing limited access is key on any API. In addition to blocking users without enough privileges to consume data, you can apply [data filtering and manipulation](/docs/enterprise/backends/data-manipulation/) or even [masking of data](/docs/enterprise/endpoints/content-replacer/) {{< badge >}}Enterprise{{< /badge >}}
 
-In addition, to prevent malicious or malformed requests, KrakenD allows you to [validate the payload](/docs/endpoints/JSON-schema/) of requests against a JSON schema before it reaches your service. But it also works the other way around: you can also [validate responses](/docs/enterprise/endpoints/response-schema-validator/) {{< badge color="denim" >}}Enterprise{{< /badge >}} of your services against a schema and decide whether is worth or not returning it to the end user.
+In addition, to prevent malicious or malformed requests, KrakenD allows you to [validate the payload](/docs/endpoints/JSON-schema/) of requests against a JSON schema before it reaches your service. But it also works the other way around: you can also [validate responses](/docs/enterprise/endpoints/response-schema-validator/) {{< badge >}}Enterprise{{< /badge >}} of your services against a schema and decide whether is worth or not returning it to the end user.
 
 Finally, the [Security policy engine](/docs/enterprise/security-policies/) is designed to enforce complex business logic based on real-time evaluation of requests, responses, and tokens.
 
 ## Traffic Control
-**[API Throttling](/docs/enterprise/throttling/)** is a dragon of many heads. You might want to limit the throughput your users do against your API with one of the many rate-limiting strategies: [per-service](/docs/enterprise/service-settings/service-rate-limit/), [per-tier](/docs/enterprise/service-settings/tiered-rate-limit/) (both {{< badge color="denim" >}}Enterprise{{< /badge >}})
+**[API Throttling](/docs/enterprise/throttling/)** is a dragon of many heads. You might want to limit the throughput your users do against your API with one of the many rate-limiting strategies: [per-service](/docs/enterprise/service-settings/service-rate-limit/), [per-tier](/docs/enterprise/service-settings/tiered-rate-limit/) (both {{< badge >}}Enterprise{{< /badge >}})
 , [per-endpoint](/docs/endpoints/rate-limit/), [per-user](/docs/endpoints/rate-limit/#client-rate-limiting-client_max_rate), or [per-proxy](/docs/backends/rate-limit/).
 
 Another key security component is the [Circuit Breaker](/docs/backends/circuit-breaker/), which automatically blocks calls to failing backends, **preventing cascading failures** and reducing the load on a suffering system.
 
-Then, depending on your environment you might want to enable [IP Filtering](/docs/enterprise/throttling/ipfilter/) or [GeoIP filtering](/docs/enterprise/endpoints/geoip/) to restrict API traffic based on IP addresses, CIDR ranges, or geography (both are {{< badge color="denim" >}}Enterprise{{< /badge >}}
-), [Bot detection](/docs/throttling/botdetector/),or enable conditional requests with [Conditional Expression Language](/docs/endpoints/common-expression-language-cel/) (CEL) or Security Policies (also {{< badge color="denim" >}}Enterprise{{< /badge >}}
+Then, depending on your environment you might want to enable [IP Filtering](/docs/enterprise/throttling/ipfilter/) or [GeoIP filtering](/docs/enterprise/endpoints/geoip/) to restrict API traffic based on IP addresses, CIDR ranges, or geography (both are {{< badge >}}Enterprise{{< /badge >}}
+), [Bot detection](/docs/throttling/botdetector/),or enable conditional requests with [Conditional Expression Language](/docs/endpoints/common-expression-language-cel/) (CEL) or Security Policies (also {{< badge >}}Enterprise{{< /badge >}}
 ).
 
 ## HTTPS Security and OWASP Recommendations

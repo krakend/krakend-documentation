@@ -221,7 +221,7 @@ Configuration:
 ### Examples of per-minute or per-hour rate limiting
 The rate limit component measures the router activity using the time window selected under `every`. You can use hours or minutes instead of seconds or you could even set daily or monthly rate-limiting, but taking into account that the counters reset every time you deploy the configuration.
 
-To use units larger than an hour, just express the days by hours. Using large units is not convenient if you often deploy (unless you use the persisted [Redis rate limit {{< badge color="denim" >}}Enterprise{{< /badge >}}
+To use units larger than an hour, just express the days by hours. Using large units is not convenient if you often deploy (unless you use the persisted [Redis rate limit {{< badge >}}Enterprise{{< /badge >}}
 ](/docs/enterprise/throttling/global-rate-limit/))
 
 For example, let's say you want the endpoint to cut the access at `30 reqs/day`. It means that within a day, whether the users exhaust the 30 requests in one second or gradually across the day, you won't let them do more than `30` every day. So how do we apply this to the configuration?

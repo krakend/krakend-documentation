@@ -30,7 +30,7 @@ There are six differentiated parts on KrakenD pipes, as depicted in the followin
 - `Proxy` is the phase that splits the request into many connections (when necessary) and the other way around, merging the data from multiple places. Inside this pipe you can work with the data before it's sent to all your backends, or after it comes back from them.
 - `Async agent` more than a pipe is a trigger that, without any request intervention, will execute a `Proxy` pipe without having an associated endpoint.
 - `Backend` is when KrakenD connects to your services. It's the stage where you can do more operations as it manages the connections, drivers, limits, etc., going in and out of your upstream services.
-- `Workflow` is when a backend triggers a nested proxy inside its execution. A way to see it is as if you had an internal endpoint without needing to publish it as an HTTP route. {{< badge color="denim" >}}Enterprise{{< /badge >}}
+- `Workflow` is when a backend triggers a nested proxy inside its execution. A way to see it is as if you had an internal endpoint without needing to publish it as an HTTP route. {{< badge >}}Enterprise{{< /badge >}}
 
 
 Once the request reaches the upstream services, the response follows the same path back of the pipe until it gets to the user. The same parts of the pipe defined above will let you modify, validate, discard, etc., responses through each stage's components.

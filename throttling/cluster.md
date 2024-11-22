@@ -10,7 +10,7 @@ menu:
   community_current:
     parent: "090 Traffic Management"
 ---
-The stateless rate-limiting ([service {{< badge color="denim" >}}Enterprise{{< /badge >}}
+The stateless rate-limiting ([service {{< badge >}}Enterprise{{< /badge >}}
 ](/docs/enterprise/service-settings/service-rate-limit/) or [endpoint](/docs/endpoints/rate-limit/) types) is the recommended approach for almost all scenarios. As the API Gateway does not have any centralization, **the limits apply individually to each running instance of KrakenD**.
 
 {{< note title="Global rate limit" type="info" >}}
