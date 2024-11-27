@@ -1,8 +1,8 @@
 ---
-lastmod: 2023-02-02
+lastmod: 2024-11-27
 date: 2019-01-14
-linktitle: Building custom plugins
-title: Building custom plugins for KrakenD API Gateway
+linktitle: Writing plugins
+title: Writing and building custom plugins
 description: Learn how to extend the functionality of KrakenD API Gateway by writing and building custom plugins, enabling custom business logic and workflows
 weight: 10
 skip_header_image: true
@@ -12,19 +12,43 @@ menu:
 images:
 - /images/documentation/krakend-plugins.png
 ---
-All different types of plugins let you freely implement your logic without restrictions. However, make sure to write them implementing the correct interface and compile them respecting the requirements. In this document, we will see how to do it right.
+**Plugins are soft-linked libraries**, thus a separated `.so` file that, when running in conjunction with KrakenD, can participate in the processing. When we talk about plugins, we refer to **[Go plugins](https://golang.org/pkg/plugin/)**. You can create custom code, inject it into different parts of KrakenD processing, and still use the official KrakenD software without forking the code.
 
-{{< note title="Introduction to plugins" type="info" >}}
-Before getting your hands dirty, read the [introduction to plugins](/docs/extending/) to understand **the different plugins** you can use and choose the one that best adapts to your needs.
+{{< note title="Do I need a plugin?" type="question">}}
+In most cases, you don't need a custom plugin. The combination of different functionalities offered by the built-in functionality might help you solve a myriad of scenarios, with special mention to [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or even [Lua scripting](/docs/endpoints/lua/). If you'd like to introduce custom business logic, a plugin does not limit what you can do. Also, if you need a lot of performance, a Go plugin is much faster than a Lua script (generally speaking, at least x10).
 {{< /note >}}
 
+Plugins are **an independent binary** of your own and are not part of KrakenD itself. Plugins allow you to "*drag and drop*" (so to speak) custom functionality that interacts with KrakenD while still using the official binaries without needing to fork the code.
+
+Let's get you started building custom code!
+
+## Types of plugins
+There are different types of plugins you can write, and most of the job is understanding what kind of plugin you are going to need. Look at the following diagram, the most striking colors are where you can inject plugins:
+
+![Diagram of plugin placement](/images/documentation/diagrams/plugin-types.mmd.svg)
+
+The types of plugins depicted are:
+
+1.  {{< badge color="#6f00f0">}}server{{< /badge >}} **[HTTP server plugins](/docs/extending/http-server-plugins/)** (or handler plugins) belong to the **router layer** and let you do **anything** as soon as the request hits KrakenD and before the routing. For example, you can modify the request before KrakenD starts processing it, block traffic, make validations, change the final response, connect to third-party services, databases, or anything else you imagine, scary or not. You can also **stack several plugins at once**.
+2.  {{< badge color="#0000ff" >}}req/resp{{< /badge >}} **[Request/Response Modifier plugins](/docs/extending/plugin-modifiers/)** are strictly **data modifiers** and let you change the request or response data to and from your backends. These are lighter than the rest.
+3. {{< badge color="#e900b7" >}}client{{< /badge >}} **[HTTP client plugins](/docs/extending/http-client-plugins/)** (or proxy client plugins) belong to the **proxy layer** and let you change how KrakenD interacts (as a client) with a specific backend service. They are as powerful as server plugins, but their working influence is smaller. You can have **one plugin for the connecting backend call**, because client plugins are terminators. When you set a client plugin you are replacing the internal KrakenD client, which means that you can lose instrumentation and other features in it.
+
+In a nutshell, **the sequence of a request-response** depicted in the graph of the plugins above is as follows:
+
+1. The end-user/server sends an HTTP request to KrakenD that is processed by the `router pipe`. One or more [HTTP server plugins](/docs/extending/http-server-plugins/) (a.k.a **http handlers**) can be injected in this stage.
+2. The `router pipe` **transforms** the HTTP request into one or several `proxy` requests -HTTP or not- through a handler function. The [request modifier plugin](/docs/extending/plugin-modifiers/) can intercept this stage and make modifications, before or after the split/aggregation.
+3. The `proxy pipe` fetches the data for all the requests through the selected transport layer. The [HTTP client plugin](/docs/extending/http-client-plugins/) modifies any interaction with the backend.
+4. The `proxy pipe` manipulates, aggregates, applies components... and returns the context to the `router pipe`. The [response modifier plugin](/docs/extending/plugin-modifiers/)) can manipulate the data per backend or when everything is aggregated.
+5. The `router pipe` finally converts back the proxy response into an HTTP response.
+
+All different types of plugins let you freely implement your logic without restrictions. However, make sure to write them implementing the correct interface and compile them respecting the requirements. 
 
 ## Plugin requirements
-Writing plugins isn't complicated per se, but Go is very strict with the environment where you compile and load them. Therefore, the following principles are essential:
+Writing plugins isn't complicated per se, but **Go is very strict** with the environment where you compile and load them. Therefore, the following principles are essential:
 
 - **Right interface**: Your plugin must implement the proper interface (see each plugin type).
-- **Same Go version**: Your plugin and KrakenD are compiled with the same Go version. E.g., you cannot build a plugin on Go 1.19 and load it on a KrakenD assembled with Go 1.18.
-- **Same architecture/platform**: KrakenD and your plugin have been compiled in the same architecture. E.g., you cannot compile a plugin in a Mac and use it in a Docker container.
+- **Same Go version**: Your plugin and KrakenD are compiled with the same Go version. E.g., you cannot build a plugin on Go 1.19 and load it on a KrakenD assembled with Go 1.22.
+- **Same architecture/platform**: KrakenD and your plugin must have been compiled in the same architecture. E.g., you cannot compile a plugin in a Mac and use it in a Docker container (use the builder, see below)
 - **Same shared library versions**: When using external libraries if for any reason KrakenD also uses them, they must include identical versions.
 - **Injection in the configuration**: Besides coding and compiling your plugin, you must add it to the `krakend.json` configuration.
 
@@ -61,7 +85,7 @@ To build your plugin for **Docker targets**, you only need to execute the follow
 docker run -it -v "$PWD:/app" -w /app {{< product image_plugin_builder >}}:{{< product latest_version >}} go build -buildmode=plugin -o yourplugin.so .
 {{< /terminal >}}
 
-The command will generate a `yourplugin.so` file (name it as you please) that you can now copy into a `{{< product image >}}:{{< product latest_version >}}` Docker image (but not to tag mismatching the builder), and load it as described in [injecting plugins](/docs/extending/injecting-plugins/).
+The command will generate a `yourplugin.so` file (name it as you please) that you can now copy into a `{{< product image >}}:{{< product latest_version >}}` Docker image, and load it as described in [injecting plugins](/docs/extending/injecting-plugins/). **Never use a tag mismatching the builder and KrakenD**. If you want to load the plugin in a KrakenD version `x.y.x` make sure to build it on a builder `x.y.z`. Using `.so` files that were compiled in a builder with a different version, will mostly fail.
 
 To build the plugin for **on-premises installations** use the following command instead:
 
