@@ -1,10 +1,10 @@
 ---
-lastmod: 2022-10-10
+lastmod: 2024-11-27
 old_version: true
 date: 2021-11-25
-linktitle: Introduction to plugins
-title: Extending KrakenD API Gateway - Plugin Development
-description: Learn how to extend KrakenD API Gateway by developing custom plugins to add new functionalities and integrate with external systems
+linktitle: Extending KrakenD
+title: Extending KrakenD with your code
+description: Learn how to extend KrakenD API Gateway by developing custom plugins or scripts to add new functionalities and integrate with external systems
 weight: -1
 skip_header_image: true
 menu:
@@ -14,45 +14,69 @@ images:
 - /images/documentation/krakend-plugins.png
 ---
 
-**Plugins are soft-linked libraries**, thus a separated `.so` file that, when running in conjunction with KrakenD, can participate in the processing. When we talk about plugins, we refer to **[Go plugins](https://golang.org/pkg/plugin/)**. You can create custom code, inject it into different parts of KrakenD processing, and still use the official KrakenD software without forking the code.
+KrakenD is **highly extensible and flexible** and allows developers to extend its functionality through custom code when the built-in features are not enough. Whether you need to add custom logic, integrate specific business rules, or enhance features, KrakenD lets you add extensions coded by you. 
 
-**Middlewares**, on the other hand, are the components that form the KrakenD binary when glued together along with the core engine. Suppose you want to change its behavior or add new ones, then you must recompile KrakenD. However, the architecture is designed in a way you will not need to change middleware, and coding middleware becomes unnecessary because the plugin system relieves you from that.
+## Extending with Lua
+[Lua](/docs/v2.7/endpoints/lua/) is an embedded scripting language designed for simplicity and speed. It's perfect for **quick customizations**, such as:
 
-{{< note title="Do I need a plugin?" type="question">}}
-In most cases, you don't need a custom plugin. The combination of different functionalities offered by the middlewares might help you solve a myriad of scenarios, with special mention to [CEL](/docs/v2.7/endpoints/common-expression-language-cel/), [Martian](/docs/v2.7/backends/martian/), or even [Lua scripting](/docs/v2.7/endpoints/lua/). If you'd like to introduce custom business logic, a plugin does not limit what you can do. Also, if you need a lot of performance, a Go plugin is much faster than a Lua script (generally speaking, at least x10).
-{{< /note >}}
+- Request and response manipulation
+- Custom validations and rules
+- Dynamic transformations
 
-Unlike KrakenD middlewares, plugins are **an independent binary** of your own and are not part of KrakenD itself. Plugins allow you to "*drag and drop*" custom functionality that interacts with KrakenD while still using the official binaries without needing to fork the code.
+### Lua advantages
+- Simplicity: Lua is easy to learn and try.
+- No Compilation: Changes are applied by editing the Lua script, making it faster to iterate and test.
+- Runtime Flexibility: Scripts can be dynamically loaded and modified without restarting KrakenD.
+- Ideal for Small Tasks: like header manipulation, simple data, transformations, or basic validation rules
+- Portability: Lua scripts do not need modifications on KrakenD upgrades.
 
-Let's get you started building custom code!
+### Lua limitations
+- Limited performance: Lua is interpreted, making it slower for CPU-intensive tasks.
+- Lack of strong typing: Type safety and error handling are minimal, which could lead to runtime errors.
+- No user-contributed libraries: You cannot import external libraries.
+- Testing: Testing Lua scripts requires custom tooling or integration tests, as Lua doesn't have built-in testing frameworks akin to Go's tools.
 
-## Types of plugins
-There are different types of plugins you can write, and most of the job is understanding what kind of plugin you are going to need. They are:
+## Extending with Go plugins
+For more **advanced and performance-critical** requirements, KrakenD supports [plugins written in Go](/docs/v2.7/extending/writing-plugins/). Using Go plugins ensures optimal performance for your extensions, and if you are fluent in Go, they are the best option for extensibility.
 
-1.  **[HTTP server plugins](/docs/v2.7/extending/http-server-plugins/)** (or handler plugins): They belong to the **router layer** and let you do **anything** as soon as the request hits KrakenD. For example, you can modify the request before KrakenD starts processing it, block traffic, make validations, change the final response, connect to third-party services, databases, or anything else you imagine, scary or not. You can also **stack several plugins at once**.
-2.  **[Request/Response Modifier plugins](/docs/v2.7/extending/plugin-modifiers/)**: They are strictly modifiers and let you change the request or response data to and from your backends. These are lighter than the rest.
-3.  **[HTTP client plugins](/docs/v2.7/extending/http-client-plugins/)** (or proxy client plugins): They belong to the **proxy layer** and let you change how KrakenD interacts (as a client) with a specific backend service. They are as powerful as server plugins, but their working influence is smaller. You can have **one plugin for the connecting backend call**, because client plugins are terminators.
-
-All types of plugins are marked with colored pills in the following diagram.
-
-![Diagram of plugin placement](/images/documentation/diagrams/plugin-types.mmd.svg)
-
-In a nutshell, **the sequence of a request-response** depicted in the graph of the plugins above is as follows:
-
-1. The end-user/server sends an HTTP request to KrakenD that is processed by the `router pipe`. One or more [HTTP server plugins](/docs/v2.7/extending/http-server-plugins/) (a.k.a **http handlers**) can be injected in this stage.
-2. The `router pipe` **transforms** the HTTP request into one or several `proxy` requests -HTTP or not- through a handler function. The [request modifier plugin](/docs/v2.7/extending/plugin-modifiers/) can intercept this stage and make modifications, before or after the split/aggregation.
-3. The `proxy pipe` fetches the data for all the requests through the selected transport layer. The [HTTP client plugin](/docs/v2.7/extending/http-client-plugins/) modifies any interaction with the backend.
-4. The `proxy pipe` manipulates, aggregates, applies components... and returns the context to the `router pipe`. The [response modifier plugin](/docs/v2.7/extending/plugin-modifiers/)) can manipulate the data per backend or when everything is aggregated.
-5. The `router pipe` finally converts back the proxy response into an HTTP response.
-
-When you have chosen the type of plugin that best fits your scenario, it's time to [write your plugin](/docs/v2.7/extending/writing-plugins/).
-
-## Custom middleware
-The recommended way to customize KrakenD is through plugins. But as with all open-source code, you can modify KrakenD and its middleware and do your version. When writing your custom code, fork the [KrakenD-CE](https://github.com/krakend/krakend-ce) repository, and read "[Understanding the big picture](/docs/v2.7/design/#the-important-packages)" to identify the essential packages.
+With Go plugins, you can pretty much do anything you want, including integrating with external services, using databases, and anything you can code. 
 
 
-The **krakend-ce** repository is the one assembling all the middlewares and manages the dependencies (including [Lura](https://github.com/luraproject/lura)). It lets you effortlessly include your company customizations, as the project is mainly a wrapper for all components. Be aware that when you fork KrakenD, you must maintain your custom version, which differs from the official binaries.
+### Go plugins advantages
+- High performance: Compiled Go plugins execute at native speed, suitable for heavy processing tasks.
+- Extensive libraries: A world of Go libraries and an ecosystem for integrating with APIs, databases, and more.
+- Strong typing: Compile-time checks reduce runtime errors, ensuring predictable behavior.
+- Testable:
+  - Write unit tests for your plugin logic using Go's testing framework.
+  - Use CI/CD pipelines for automated testing and validation.
+- Advanced capabilities with external system integration
+- **Very** complex data manipulation
 
-There are many examples of different modules (included in KrakenD-CE and not) on our [contributions list](https://github.com/krakend/krakend-contrib). If you create a new middleware, feel free to open a pull request and let us know.
+### Go plugins limitations
+- Compilation Overhead: Each change requires recompilation, which is not suitable for "quick hacking"
+- Deployment Complexity: Plugins are platform-specific (.so files), requiring recompilation for different OS/architecture setups. When you upgrade the KrakenD version, you need to recompile using the builder.
+- KrakenD Restarts: Reloading the plugin requires restarting KrakenD.
+- Higher Barrier to Entry: Requires Go expertise and familiarity with KrakenD's plugin contract.
 
-A relaxed start to build a custom component for KrakenD is our article "[Website development as a sysadmin"](/blog/website-development-as-a-sysadmin/), where you can find custom code to add automatic API authentication against a backend. Of course, you can achieve this functionality **without forking the code**, but still, it is an illustrative example.
+
+## Lua or Go?
+Both Lua and Go plugins allow you to extend KrakenD's capabilities, but their suitability depends on your use case, **team expertise** (this is key), and performance requirements. Summarizing:
+
+- Lua is best for quick, simple, runtime modifications
+- Go is best for complex, performance-critical, or testable extensions
+
+
+{{< button-group >}}
+{{< button url="/docs/v2.7/endpoints/lua/" text="Get started with Lua" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+</svg>
+
+{{< /button >}}
+{{< button url="/docs/v2.7/extending/writing-plugins/" type="inversed" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+</svg> Get started with Go Plugins{{< /button >}}
+{{< /button-group >}}
+
+
+## What about forking?
+Open-source users might be tempted to fork the source code to add modifications. Our recommended way to customize KrakenD is always through plugins or scripts, but you **should avoid forking the code** if you want to keep up to date with the product's progress and security vulnerabilities. We have seen over and over forked projects that are left behind because they don't have the resources to keep up.

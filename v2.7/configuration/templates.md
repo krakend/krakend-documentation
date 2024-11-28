@@ -4,7 +4,7 @@ old_version: true
 date: 2018-09-21
 linktitle: Configuration with templates
 title: "Introduction to Templates"
-description: Understanding how to work with templates in the flexible configuration and other components.
+description: Understanding how to work with Go templates in the flexible configuration and other components. Template syntax and practical snippets to resolve common situations.
 menu:
   community_v2.7:
     parent: "010 Configuration files"

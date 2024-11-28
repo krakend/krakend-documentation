@@ -108,7 +108,7 @@ The `request` functions are:
 *   `url()` (_Dynamic_): Getter that retrieves the full URL string of the request, including the host and path. E.g.: `r:url()` could return a string `http://domain.com/api/test`. The URL might be empty depending on the step where this information is requested, as the URL is a calculated field just before performing the request to the backend.
 *   `url(value)` (_Dynamic_): Setter that changes the URL of the request. E.g.: `r:url('http://domain.com/api/test')`. Changing the value before the `url` is calculated will result in KrakenD overwriting its value. Although available, it does not have any effect when you use it `modifier/lua-proxy`.
 *   `params(param)` (_Dynamic_): Getter that retrieves the `{params}` of the request as defined in the endpoint. E.g.: For an endpoint `/users/{user}` the function `r:params('User')` could return a string `alice`. **The parameters must have the first letter capitalized**.
-*   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. E.g.: `r:params('User','bob')`. **The parameters must have the first letter capitalized**.
+*   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. It does not have any effect when you use `modifier/lua-backend`. E.g.: `r:params('User','bob')`. **The parameters must have the first letter capitalized**.
 *   `headers(header)` (_Dynamic_): Getter that retrieves the headers of the request as allowed to pass (by `input_headers`) in the endpoint. E.g.: `r:headers('Accept')` could return a string `*/*`.
 *   `headers(header,value)` (_Dynamic_): Setter that changes the headers of the request. E.g.: `r:headers('Accept','*/*')`.
 *   `body()` (_Dynamic_): Getter that retrieves the body of the request sent by the user. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
@@ -162,6 +162,7 @@ To work with associative arrays on Lua you have the following functions:
 
 *   `new()` (_Static_): Returns a new table. E.g.: `local t = luaTable.new()`
 *   `keys()` (_Dynamic_): Returns the sorted key names of a table. E.g.: `local k = t:keys()`
+*   `keyExists(key)`(_Dynamic_): Returns a boolean. True when `key` is a member of the table or false otherwise. E.g.: `local r = response.load(); local responseData = r:data(); responseData:keyExists('some_key')`
 *   `get(key)` (_Dynamic_): Retrieves the value of a key inside the table. E.g.: `local r = response.load(); local responseData = r:data(); responseData:get('key')`
 *   `set(key,value)` (_Dynamic_): Adds or replaces a key in the table. E.g.: `local r = response.load(); local responseData = r:data(); responseData:set('key',value)`
 *   `len()` (_Dynamic_): Returns the length of the whole table so you can iterate over it. E.g.: `local r = response.load(); local responseData = r:data(); local length = responseData:len()`
@@ -184,6 +185,46 @@ function post_proxy_decorator( resp )
     responseData:set("result", "failed")
   end
 end
+```
+
+
+Another example that iterates all fields in the response and filters out everything but a specific field would be:
+
+```lua
+-- This function filters out all keys in the response data except the 'keyToPreserve'.
+function filter(req, resp)
+    -- Get the data from the response object
+    local responseData = resp:data()
+
+    -- Define the key that should not be removed
+    local keyToPreserve = 'KeepThisField'
+
+    -- Get all keys from the response data
+    local allKeys = responseData:keys()
+
+    -- Loop through all the keys
+    for i = 0, allKeys:len() - 1 do
+        local currentKey = allKeys:get(i)
+        print("Found key:", currentKey)
+
+        -- If the current key is not the one to preserve, remove it
+        if currentKey ~= keyToPreserve then
+            responseData:del(currentKey)
+            print("Removing key:", currentKey)
+        end
+    end
+end
+```
+The `filter` function would be called as follows in the configuration:
+
+```json
+{
+    "modifier/lua-backend": {
+      "allow_open_libs": true,
+      "sources": ["./filter.lua"],
+      "post": "filter(request.load(), response.load())"
+    }
+}
 ```
 
 ### Collections helper (`list`)

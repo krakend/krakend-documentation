@@ -2,8 +2,8 @@
 lastmod: 2020-03-01
 old_version: true
 date: 2019-09-15
-linktitle: Publisher/subscribe
-title: Pub-Sub Backend Integration
+linktitle: Publisher/subscribe (Kafka,NATS and cloud)
+title: Publisher/Subscribe with Kafka, NATS and cloud systems
 description: Integrate Pub-Sub backend into KrakenD API Gateway to enable event-driven communication and real-time data updates in your API ecosystem
 weight: 130
 images:
@@ -27,23 +27,28 @@ You can connect an endpoint to multiple publish/subscribe backends, helping you 
 <!--more-->
 For instance, a frontend client can push events to a queue using a REST interface. Or a client could consume a REST endpoint that is plugged to the last events pushed in a backend. You can even **validate messages and formats** as all the KrakenD available middleware can be used. The list of supported backend technologies is:
 
-- AWS SNS (Simple Notification Service) and SQS (Simple Queueing Service)
-- Azure Service Bus Topic and Subscription
-- GCP PubSub
 - NATS.io
 - RabbitMQ
 - Apache Kafka
 
+Cloud-specific:
+
+- AWS SNS (Simple Notification Service)
+- AWS SQS (Simple Queueing Service)
+- Azure Service Bus Topics and Subscriptions
+- GCP PubSub
+
 ## Configuration
 To add pub/sub functionality to your backends include the namespaces `backend/pubsub/subscriber` and `backend/pubsub/publisher` under the `extra_config` of your `backend` section.
 
-The `host` key defines the desired driver, and the actual host is usually set in an **environment variable** outside of KrakenD:
+The `host` key defines the desired driver, and the actual host is usually set in an **environment variable** outside of KrakenD. The `url_pattern` is a mandatory field according to its Schema, but it is not used and you can type any value in it:
 
 For a **subscriber**:
 
 ```json
 {
 	"host": ["schema://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -61,6 +66,7 @@ For a **publisher**:
 ```json
 {
 	"host": ["schema://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/publisher": {
@@ -81,6 +87,7 @@ Set the envvar `RABBIT_SERVER_URL='guest:guest@localhost:5672'` and add in the c
 ```json
 {
 	"host": ["amqp://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -107,6 +114,7 @@ Example:
 ```json
 {
 	"host": ["gcppubsub://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -133,6 +141,7 @@ Example:
 ```json
 {
 	"host": ["nats://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -151,6 +160,7 @@ AWS SNS sets the `url` without any `host` or environment variables, e.g:
 ```json
 {
 	"host": ["awssns:///arn:aws:sns:us-east-2:123456789012:mytopic"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -171,6 +181,7 @@ Url: `awssqs://sqs-queue-url`
 ```json
 {
 	"host": ["awssqs://sqs.us-east-2.amazonaws.com/123456789012"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -197,6 +208,7 @@ Example:
 ```json
 {
 	"host": ["azuresb://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -225,6 +237,7 @@ Example:
 ```json
 {
 	"host": ["rabbit://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -247,6 +260,7 @@ Kafka connection requires KrakenD >= `1.1`.
 ```json
 {
 	"host": ["kafka://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/subscriber": {
@@ -260,6 +274,7 @@ Kafka connection requires KrakenD >= `1.1`.
 ```json
 {
 	"host": ["kafka://"],
+	"url_pattern": "/ignored",
 	"disable_host_sanitize": true,
 	"extra_config": {
 		"backend/pubsub/publisher": {

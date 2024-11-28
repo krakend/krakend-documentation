@@ -11,7 +11,7 @@ menu:
   community_v2.7:
     parent: "060 Request and Response Manipulation"
 images:
-- /images/documentation/krakend-merge.png
+- /images/krakend-merge.png
 meta:
   noop_incompatible: true
 ---
@@ -27,7 +27,7 @@ When you have more than one `backend` connected to an `endpoint` that **is not**
 
 For instance, imagine you have three different API services exposing the resources `/a`,`/b`, and `/c`, and you want to disclose them all together in the KrakenD endpoint `/abc`. This is what you would get:
 
-![Merge](/images/documentation/krakend-merge.png)
+![Merge](/images/krakend-merge.png)
 
 The merge operation chooses user experience and responsiveness first. It makes its *best effort* to get all the necessary parts from the involved backends and return the composed object as soon as possible.
 

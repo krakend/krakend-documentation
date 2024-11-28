@@ -6,7 +6,7 @@ toc: true
 linktitle: The big picture
 title: Design principles. The big picture.
 description: Discover the KrakenD API architecture and its design principles, as well its most important internal packages.
-weight: 10000
+weight: -1
 menu:
   community_v2.7:
     parent: "310 Design principles"
