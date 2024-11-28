@@ -62,7 +62,7 @@ The `host` where your collector lives can also point to an external load balance
 ![KrakenD to load balanced collectors, collectors to backend](/images/documentation/diagrams/opentelemetry-otlp-lb.mmd.svg)
 
 
-{{< badge color="denim" >}}Enterprise{{< /badge >}} users can push directly to external storage passing auth credentials using the [`telemetry/opentelemetry-security` component](/docs/enterprise/telemetry/opentelemetry-security/), so the collector is not needed anymore:
+{{< badge >}}Enterprise{{< /badge >}} users can push directly to external storage passing auth credentials using the [`telemetry/opentelemetry-security` component](/docs/enterprise/telemetry/opentelemetry-security/), so the collector is not needed anymore:
 
 ![opentelemetry-otlp-auth.mmd diagram](/images/documentation/diagrams/opentelemetry-otlp-auth.mmd.svg)
 

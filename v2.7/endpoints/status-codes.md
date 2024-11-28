@@ -45,7 +45,7 @@ To offer a gracefully degraded service when some backends fail, we leave the dec
 
 If you need to return the content of a backend service *as is*, then the [no-op encoding](/docs/v2.7/endpoints/no-op/) will proxy the client call to the backend service without any manipulation. When the backend produces the response, it's passed back to the client, preserving its form: body, headers, status codes, and such.
 
-An exception to this behavior is `30x` responses, which will be followed by the gateway even with `no-op` encoding. If your backend returns a `301` the client won't follow it, but the gateway will ({{< badge color="denim" >}}Enterprise{{< /badge >}} [can change this](/docs/enterprise/backends/client-redirect/))
+An exception to this behavior is `30x` responses, which will be followed by the gateway even with `no-op` encoding. If your backend returns a `301` the client won't follow it, but the gateway will ({{< badge >}}Enterprise{{< /badge >}} [can change this](/docs/enterprise/backends/client-redirect/))
 
 
 ## Returning other status codes

@@ -71,7 +71,7 @@ If you want that **all connections to backends** use mTLS, add the following con
 {{< schema version="v2.7" data="client_tls.json" filter="client_certs" >}}
 
 ### Per-backend mTLS
-If instead of enabling mTLS against all backends, you can enable mTLS in a specific backend only. This option is available only in the {{< badge color="denim" >}}Enterprise Edition{{< /badge >}}
+If instead of enabling mTLS against all backends, you can enable mTLS in a specific backend only. This option is available only in the {{< badge >}}Enterprise Edition{{< /badge >}}
 
 An example configuration would be:
 
@@ -98,7 +98,7 @@ An example configuration would be:
   ]
 }
 ```
-Configuration needed ({{< badge color="denim" >}}Enterprise Edition{{< /badge >}} only):
+Configuration needed ({{< badge >}}Enterprise Edition{{< /badge >}} only):
 
 {{< schema version="v2.7" data="client_tls.json" filter="client_certs" >}}
 
