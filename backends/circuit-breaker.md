@@ -1,17 +1,17 @@
 ---
-lastmod: 2022-12-05
+lastmod: 2024-11-27
 date: 2016-07-01
 linktitle: Circuit Breaker
-title: Circuit Breaker Pattern
+title: Circuit Breaker
 description: Implement the circuit breaker pattern in KrakenD API Gateway to enhance the resilience and stability of your API ecosystem
 weight: 930
 menu:
   community_current:
     parent: "090 Traffic Management"
 images:
+- /images/documentation/diagrams/circuit-breaker-overview.mmd.svg
 - /images/documentation/circuit-breaker.png
 - /images/documentation/circuit-breaker-states.png
-skip_header_image: true
 meta:
   since: false
   source: https://github.com/krakend/krakend-circuitbreaker
@@ -22,20 +22,20 @@ meta:
   log_prefix:
   - "[BACKEND: /foo][CB]"
 ---
-The **Circuit Breaker** is a straightforward **state machine** in the middle of the request and response that monitors all your backend failures. When they reach a configured threshold, the circuit breaker will prevent sending more traffic to a failing backend alleviating its pressure under challenging conditions.
+The **Circuit Breaker** is a straightforward **state machine** in the middle of the request and response that monitors all your backend failures. In the image above you can see a simplified version of its behavior. When backends fail to succeed for a number of consecutive times, the circuit breaker will prevent sending more traffic to a failing backend alleviating its pressure under challenging conditions.
 
-When KrakenD demands more throughput than your actual API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also helpful for dealing with network and other communication problems by preventing too many requests from dying due to timeouts, etc.
+When KrakenD demands more throughput than your API stack can deliver properly, the Circuit Breaker mechanism will detect the failures and prevent stressing your servers by not sending requests that are likely to fail. It is also helpful for dealing with network and other communication problems by preventing too many requests from dying due to timeouts, etc.
 
-It is important to remark that the number of maximum errors are **consecutive errors**, and not the total of errors in the period. This approach works better when your traffic is variable, as it's based on a probabilistic pattern and it's not affected by the volume you might have.
+It is important to remark that the number of maximum errors are **consecutive errors**, and **not the total** of errors in the period. This approach works better when your traffic is variable, as it's based on a **probabilistic pattern** and it's not affected by the volume of traffic you might have.
 
-{{< note title="A must have configuration" type="warning" >}}
-The Circuit Breaker is an **automatic protection measure** for your API stack and **avoids cascade failures**, keeping your API responsive and resilient. It has a small consumption of resources. Try to implement it always.
+{{< note title="A must have" type="tip" >}}
+The Circuit Breaker is an **automatic protection measure** for your API stack and **avoids cascade failures**, keeping your API responsive and resilient. It has a small consumption of resources. Try to implement it always. You might start with a big number of errors if you hesitate.
 {{< /note >}}
 
 
 ## Circuit breaker configuration
 
-The Circuit Breaker is available in the namespace `qos/circuit-breaker` inside the `extra_config` key. The following configuration is an example of how to add circuit breaker capabilities to a backend:
+The Circuit Breaker is available in the namespace `qos/circuit-breaker` inside the `extra_config` key of every `backend`. The following configuration is an example of how to add circuit breaker capabilities to a backend:
 ```json
 {
     "endpoints": [
@@ -83,13 +83,11 @@ After waiting for this time window, the state changes to `HALF-OPEN` and allows 
 
 This is the way the states change:
 
-| Circuit Breaker transitions |
-|-----|
-| ![Krakend logo](/images/documentation/circuit-breaker-states.png) |
+![circuit-breaker-transitions.mmd diagram](/images/documentation/diagrams/circuit-breaker-transitions.mmd.svg)
 
 - `CLOSED`: In the initial state, the system is healthy and sending connections to the backend.
-- `OPEN`: When a consecutive number of supported errors from the backend (`max_errors`) is exceeded, the system changes to `OPEN`, and no further connections are sent to the backend. The system will stay in `OPEN` state for N seconds ( the `timeout`).
-- `HALF-OPEN`: After the timeout, it changes to this state and allows one connection to pass. If the connection succeeds, the state changes to `CLOSED`, and the backend is considered to be healthy again. But if it fails, it switches back to `OPEN` for another timeout.
+- `OPEN`: When the consecutive number of errors from the backend (`max_errors`) is **exceeded**, the system changes to `OPEN`, and no further connections are sent to the backend. The system will stay in this state for N seconds ( where N = `timeout`).
+- `HALF-OPEN`: After the timeout, it changes to this state and allows **one connection** to pass (the test). If the connection succeeds, the state changes to `CLOSED`, and the backend is considered to be healthy again. But if it fails, it switches back to `OPEN` for another timeout.
 
 ### Definition of error
 

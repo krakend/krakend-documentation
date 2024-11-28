@@ -87,7 +87,7 @@ When calling templates from templates (flexible config), make sure to add the fi
 - `{{ template "hello.tmpl" .urls.users_api }}`: receives only the string value of the user API.
 - `{{ template "hello.tmpl" "hello world" }}`: receives only a constant string
 
-Only in the {{< badge color="denim" >}}Enterprise{{< /badge >}} edition you have an additional variable `.meta` holding directory metadata under the settings tree (maybe you want to traverse directory contents in a template).
+Only in the {{< badge >}}Enterprise{{< /badge >}} edition you have an additional variable `.meta` holding directory metadata under the settings tree (maybe you want to traverse directory contents in a template).
 
 
 ### Using the `$` notation to access outsider context

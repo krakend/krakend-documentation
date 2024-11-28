@@ -119,4 +119,4 @@ If you want to learn bloomfilters by example or additional information on token 
 
 - [Bloomfilter tutorial](https://llimllib.github.io/bloomfilter-tutorial/)
 - [Bloomfilter calculator](https://hur.st/bloomfilter/?n=1000000&p=1.0E-9&m=&k=)
-- [Revoke Server](/docs/enterprise/v2.1/authentication/revoke-server/) {{< badge color="denim">}}Enterprise{{< /badge >}}
+- [Revoke Server](/docs/enterprise/v2.1/authentication/revoke-server/) {{< badge>}}Enterprise{{< /badge >}}
