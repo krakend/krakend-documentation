@@ -6,7 +6,7 @@ title: Authorization and Authentication (authZ + authN)
 description: Overview of the options available to integrate authentication and authorization services with KrakenD API Gateway for secure access control to your APIs
 weight: -100
 menu:
-  community_current:
+  community_v2.7:
     parent: "080 Authentication & Authorization"
 images:
 - /images/documentation/diagrams/auth-overview-all.mmd.svg

@@ -8,7 +8,7 @@ description: Learn how to extend the functionality of KrakenD API Gateway by wri
 weight: 10
 skip_header_image: true
 menu:
-  community_current:
+  community_v2.7:
     parent: "180 Extending with custom code"
 images:
 - /images/documentation/krakend-plugins.png
