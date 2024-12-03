@@ -314,6 +314,15 @@ Or even changing the HTTP status code (`418 I'm a teapot`)
 ```lua
 custom_error("I refuse to make any coffee, I'm a teapot!", 418)
 ```
+## Debugging scripts
+Because Lua scripts evaluate during the request execution, you won't see any problems until a request triggers the scripts you have configured. While developing, the errors will be decorated so you can find easily which file and line number are the responsible ones for an error. For instance, have a look at the following log:
+
+```log
+attempt to index a non-table object(function) with key 'really_bad' (bad-code.lua:5)
+```
+
+The ending `(bad-code.lua:5)` tells you that this error was initated at the script `bad-code.lua` on **line number** `5`. To understand the errors, check the Lua language as these come from the Lua engine directly.
+
 ## Language limitations
 Because Lua runs sandboxed in a **virtual machine**, there is certain stuff you cannot do. When you include files, you should limit your logic to creating functions and referencing them in different places.
 
