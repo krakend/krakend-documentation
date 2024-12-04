@@ -49,6 +49,7 @@ The following `output_encoding` strategies are available to choose from for ever
 ### Working with non-JSON
 
 - `xml`: When the endpoint returns an XML object no matter the encoding of your backend.
+- `yaml`: When the endpoint returns the data in YAML format.
 - `string`: Treat the whole response as a simple string
 - `negotiate`: Allows the client to choose by parsing its `Accept` header. KrakenD accepts:
   - `application/json`
