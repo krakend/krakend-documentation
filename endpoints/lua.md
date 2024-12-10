@@ -301,7 +301,15 @@ r:close()
 
 A generic helper in pre and post-scripts that allows you to set **custom HTTP status codes**. For instance, when you want to send an immediate response to the client from within a Lua script without further querying the backend, or after evaluating the response of the backend.
 
-It stops the script and the pipe execution.
+It stops the script and the pipe execution. Its signature is as follows:
+
+```lua
+custom_error(message, status_code, content_type)
+```
+The parameters of the function are:
+- `message` (*string*): The message you want to send
+- `status_code` (*integer*): Optional. The HTTP status code
+- `content_type` (*string*): Optional. The `Content-Type` to return
 
 Example of throwing a generic error (`500` status code ) with a message:
 
@@ -314,6 +322,8 @@ Or even changing the HTTP status code (`418 I'm a teapot`)
 ```lua
 custom_error("I refuse to make any coffee, I'm a teapot!", 418)
 ```
+
+
 ## Debugging scripts
 Because Lua scripts evaluate during the request execution, you won't see any problems until a request triggers the scripts you have configured. While developing, the errors will be decorated so you can find easily which file and line number are the responsible ones for an error. For instance, have a look at the following log:
 
