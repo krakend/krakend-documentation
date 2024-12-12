@@ -258,6 +258,17 @@ function post_proxy( resp )
 end
 ```
 
+### Advanced helpers
+The [Lua advanced helpers](/docs/enterprise/endpoints/lua-advanced-helpers/) ({{< badge >}}Enterprise{{< /badge >}}) provide a powerful way to extend the capabilities of your Lua scripts, enabling advanced functionality with optimal performance. These helpers, which run natively in Go, significantly enhance Lua's efficiency by offloading heavy-lifting operations to Go and passing the results back to Lua. This architecture ensures both speed and reliability while empowering developers with advanced tools.
+
+The helpers cover a wide range of functionalities, from **debugging** to encoding and decoding JSON, YAML, XML, and CSV formats. Advanced features such as base64 encoding/decoding, hashing (e.g., SHA, MD5, FNV), and time manipulation expand the scope of Lua scripting, making it easier to handle complex scenarios. By leveraging these native helpers, you can process data, transform backend responses, and implement custom logic with minimal overhead and maximum performance.
+
+
+{{< button-group >}}
+{{< button url="/docs/enterprise/endpoints/lua-advanced-helpers/" type="inversed" >}}Enterprise Lua Helpers{{< /button >}}
+{{< /button-group >}}
+
+
 ### Making additional requests (`http_response`)
 The `http_response` helper allows you to make an additional HTTP request and access its response. Is is available on:
 
