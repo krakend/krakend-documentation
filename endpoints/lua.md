@@ -109,7 +109,7 @@ The `request` functions are:
 *   `params(param)` (_Dynamic_): Getter that retrieves the `{params}` of the request as defined in the endpoint. E.g.: For an endpoint `/users/{user}` the function `r:params('User')` could return a string `alice`. **The parameters must have the first letter capitalized**.
 *   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. It does not have any effect when you use `modifier/lua-backend`. E.g.: `r:params('User','bob')`. **The parameters must have the first letter capitalized**.
 *   `headers(header)` (_Dynamic_): Getter that retrieves the headers of the request as allowed to pass (by `input_headers`) in the endpoint. E.g.: `r:headers('Accept')` could return a string `*/*`.
-*   `headers(header,value)` (_Dynamic_): Setter that changes the headers of the request. E.g.: `r:headers('Accept','*/*')`.
+*   `headers(header,value)` (_Dynamic_): Setter that changes the headers of the request. E.g.: `r:headers('Accept','*/*')`. If the value is `nil`, the header is removed from the request.
 *   `body()` (_Dynamic_): Getter that retrieves the body of the request sent by the user. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
 *   `body(value)` (_Dynamic_): Setter that changes the body of the request. E.g.: `r:body('{"foo": "bar"}')`.
 
@@ -125,7 +125,7 @@ Scripts that need to modify a request that KrakenD that just got from the backen
 *   `data()` (_Dynamic_): Getter that returns a Lua table with all the parsed data from the response. It only works if you don't use `no-op` encoding.
 *   `data(table)` (_Dynamic_): Setter that lets you assign the whole Lua table with all the parsed data from the response. It will make more sense to do a `local responseData = r:data()` first, and then set individual items with `responseData:set("key", value)` instead. It only works if you don't use `no-op` encoding.
 *   `headers(header)` (_Dynamic_): Getter that retrieves one header from the response when you use `no-op` encoding. In the rest of the responses, you will always get an empty string `''`. E.g.: `r:headers('Content-Type')` returns an integer `application/json`.
-*   `headers(header,value)` (_Dynamic_): Setter that allows you to replace or set a new header for the response when you use `no-op` encoding. E.g.: `r:headers('Content-Type', 'application/json')`.
+*   `headers(header,value)` (_Dynamic_): Setter that allows you to replace or set a new header for the response when you use `no-op` encoding. E.g.: `r:headers('Content-Type', 'application/json')`. If the value is `nil`, the header is removed from the response.
 *   `body()` (_Dynamic_): Getter that retrieves the body of the response when you use encoding `no-op`. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
 *   `body(value)` (_Dynamic_): Setter that changes the body of the response when you use encoding `no-op`. E.g.: `r:body('{"foo": "bar"}')`.
 
