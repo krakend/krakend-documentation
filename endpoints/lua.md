@@ -156,6 +156,11 @@ Use this type when you need to script the router layer, traffic between end-user
 ## Lua helpers
 Now you know where to put the Lua code according to what you want to do, and how to access and modify the requests and responses. In addition, the following helper functions are brought by KrakenD to extend the possibilities of your scripts without using third parties:
 
+### Nil helper
+The `nil` in Lua is destructive in tables, because it is used to **remove elements**. For instance, if you have a table with an index `foo`, and you set it to `nil`, the element from the table is destroyed. When you want to preserve this `foo` index but emptying it's value you must use the Go `nil` value instead. 
+
+*   `luaNil.new()`: Returns a native Go `nil` value. This is useful if you want to write `nil` values in a `luaTable` or a `luaList`.
+
 ### Tables helper (`table`)
 To work with associative arrays on Lua you have the following functions:
 
@@ -257,6 +262,8 @@ function post_proxy( resp )
   responseData:del("collection")
 end
 ```
+
+
 
 ### Advanced helpers
 The [Lua advanced helpers](/docs/enterprise/endpoints/lua-advanced-helpers/) ({{< badge >}}Enterprise{{< /badge >}}) provide a powerful way to extend the capabilities of your Lua scripts, enabling advanced functionality with optimal performance. These helpers, which run natively in Go, significantly enhance Lua's efficiency by offloading heavy-lifting operations to Go and passing the results back to Lua. This architecture ensures both speed and reliability while empowering developers with advanced tools.
