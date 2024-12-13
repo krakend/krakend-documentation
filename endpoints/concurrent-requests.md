@@ -66,7 +66,7 @@ Concurrent calls works better with encodings different than `no-op`. Endpoints r
 {{< /note >}}
 
 ## How does `concurrent_calls` work?
-KrakenD sends up to N `concurrent_calls` to your backends for the **same request to an endpoint. When the first successful response is received, KrakenD cancels the remaining requests and ignores any previous failures. Only in the case that all `concurrent_calls` fail, the endpoint receives the failure as well.
+KrakenD sends up to N `concurrent_calls` to your backends for the **same request** to an endpoint. When the first successful response is received, KrakenD cancels the remaining requests and ignores any previous failures. Only in the case that all `concurrent_calls` fail, the endpoint receives the failure as well.
 
 The apparent trade-off of this strategy is the increment of the load in the backend services, so make sure your infrastructure is ready for it. However, your users love it: Fewer errors and faster responses!
 
