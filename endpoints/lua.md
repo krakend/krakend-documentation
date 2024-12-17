@@ -109,7 +109,7 @@ The `request` functions are:
 *   `params(param)` (_Dynamic_): Getter that retrieves the `{params}` of the request as defined in the endpoint. E.g.: For an endpoint `/users/{user}` the function `r:params('User')` could return a string `alice`. **The parameters must have the first letter capitalized**.
 *   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. It does not have any effect when you use `modifier/lua-backend`. E.g.: `r:params('User','bob')`. **The parameters must have the first letter capitalized**.
 *   `headers(header)` (_Dynamic_): Getter that retrieves the headers of the request as allowed to pass (by `input_headers`) in the endpoint. E.g.: `r:headers('Accept')` could return a string `*/*`.
-*   `headers(header,value)` (_Dynamic_): Setter that changes the headers of the request. E.g.: `r:headers('Accept','*/*')`.
+*   `headers(header,value)` (_Dynamic_): Setter that changes the headers of the request. E.g.: `r:headers('Accept','*/*')`. If the value is `nil`, the header is removed from the request.
 *   `body()` (_Dynamic_): Getter that retrieves the body of the request sent by the user. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
 *   `body(value)` (_Dynamic_): Setter that changes the body of the request. E.g.: `r:body('{"foo": "bar"}')`.
 
@@ -123,9 +123,9 @@ Scripts that need to modify a request that KrakenD that just got from the backen
 *   `statusCode()` (_Dynamic_): Getter that retrieves the response status code when you use `no-op` encoding. You will always get a `0` in the other cases. E.g.: `r:statusCode()` returns an integer `200`.
 *   `statusCode(integer)` (_Dynamic_): Setter that allows you to set a new status for the response. E.g.: `r:statusCode(301)`. It only works in `no-op` endpoints.
 *   `data()` (_Dynamic_): Getter that returns a Lua table with all the parsed data from the response. It only works if you don't use `no-op` encoding.
-*   `data(table)` (_Dynamic_): Setter that lets you assign the whole Lua table with all the parsed data from the response. It will make more sense to do a `local responseData = r:data()` first, and then set individual items with `responseData:set("key", value)` instead. It only works if you don't use `no-op` encoding.
+*   `data(table)` (_Dynamic_): While **there is no setter for the `data` function** you can set individual items of the data. For instance, do a `local responseData = r:data()` first, and then set individual items with `responseData:set("key", value)` instead. It only works if you don't use `no-op` encoding.
 *   `headers(header)` (_Dynamic_): Getter that retrieves one header from the response when you use `no-op` encoding. In the rest of the responses, you will always get an empty string `''`. E.g.: `r:headers('Content-Type')` returns an integer `application/json`.
-*   `headers(header,value)` (_Dynamic_): Setter that allows you to replace or set a new header for the response when you use `no-op` encoding. E.g.: `r:headers('Content-Type', 'application/json')`.
+*   `headers(header,value)` (_Dynamic_): Setter that allows you to replace or set a new header for the response when you use `no-op` encoding. E.g.: `r:headers('Content-Type', 'application/json')`. If the value is `nil`, the header is removed from the response.
 *   `body()` (_Dynamic_): Getter that retrieves the body of the response when you use encoding `no-op`. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
 *   `body(value)` (_Dynamic_): Setter that changes the body of the response when you use encoding `no-op`. E.g.: `r:body('{"foo": "bar"}')`.
 
@@ -155,6 +155,11 @@ Use this type when you need to script the router layer, traffic between end-user
 
 ## Lua helpers
 Now you know where to put the Lua code according to what you want to do, and how to access and modify the requests and responses. In addition, the following helper functions are brought by KrakenD to extend the possibilities of your scripts without using third parties:
+
+### Nil helper
+The `nil` in Lua is destructive in tables, because it is used to **remove elements**. For instance, if you have a table with an index `foo`, and you set it to `nil`, the element from the table is destroyed. When you want to preserve this `foo` index but emptying it's value you must use the Go `nil` value instead. 
+
+*   `luaNil.new()`: Returns a native Go `nil` value. This is useful if you want to write `nil` values in a `luaTable` or a `luaList`.
 
 ### Tables helper (`table`)
 To work with associative arrays on Lua you have the following functions:
@@ -257,6 +262,19 @@ function post_proxy( resp )
   responseData:del("collection")
 end
 ```
+
+
+
+### Advanced helpers
+The [Lua advanced helpers](/docs/enterprise/endpoints/lua-advanced-helpers/) ({{< badge >}}Enterprise{{< /badge >}}) provide a powerful way to extend the capabilities of your Lua scripts, enabling advanced functionality with optimal performance. These helpers, which run natively in Go, significantly enhance Lua's efficiency by offloading heavy-lifting operations to Go and passing the results back to Lua. This architecture ensures both speed and reliability while empowering developers with advanced tools.
+
+The helpers cover a wide range of functionalities, from **debugging** to encoding and decoding JSON, YAML, XML, and CSV formats. Advanced features such as base64 encoding/decoding, hashing (e.g., SHA, MD5, FNV), and time manipulation expand the scope of Lua scripting, making it easier to handle complex scenarios. By leveraging these native helpers, you can process data, transform backend responses, and implement custom logic with minimal overhead and maximum performance.
+
+
+{{< button-group >}}
+{{< button url="/docs/enterprise/endpoints/lua-advanced-helpers/" type="inversed" >}}Enterprise Lua Helpers{{< /button >}}
+{{< /button-group >}}
+
 
 ### Making additional requests (`http_response`)
 The `http_response` helper allows you to make an additional HTTP request and access its response. Is is available on:

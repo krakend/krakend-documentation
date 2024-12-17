@@ -32,22 +32,28 @@ The `telemetry/logging` has the following logging capabilities:
 ## Types of log messages
 The content that KrakenD writes in its log represents two types of logging:
 
-- **Access logs**
-- **Application logs**
+- **Access log**
+- **Application log**
 
-### Access logs
-The access log shows users' activity and prints: which endpoints are requested, when, the status code, the duration, the requesting IP, and the method. An example of the format is:
+The access log and the application log can have different formats. For instance, you can have one in text plain and the other in JSON if needed. When you do this, you must parse them accordingly in your log ingestion.
+
+### Access log
+The access log shows **users' activity** and prints: which endpoints are requested, when, the status code, the duration, the requesting IP, and the method. The default format of the access log is as follows:
 
 ```log
 [GIN] yyyy/mm/dd - hh:mm:ss | 200 |       4.529µs |      172.17.0.1 | GET      "/user/foo"
 [GIN] yyyy/mm/dd - hh:mm:ss | 200 |       3.647µs |      172.17.0.1 | GET      "/category/bar"
 ```
 
-The access log content is not customizable. It can be disabled using `disable_access_log` (see how to [remove requests from logs options](/docs/service-settings/router-options/#remove-requests-from-logs)).
-
 **Access logs are never written in the syslog**, regardless of their configuration, and they show only in **stdout**.
 
-### Application logs
+While the access log is not customizable in the Open Source edition, {{< badge >}}Enterprise{{< /badge >}} allows you to write the format you want to output using the attribute `access_log_format` (see below).
+
+#### Disabling the access log
+You can also disable the access log setting the flag `disable_access_log`, or you can [remove specific requests from logs ](/docs/service-settings/router-options/#remove-requests-from-logs), like when you don't want to see the health checks.
+
+
+### Application log
 The application log messages are the errors, warnings, debugging information, and other messages shown by the gateway while it operates.
 
 The application logs are customizable as you can extend the functionality, such as sending the events to the **syslog**, using JSON format, choosing the verbosity level, or using the [Graylog Extended Log Format](/docs/logging/graylog-gelf/) (GELF).
@@ -56,7 +62,7 @@ In addition to this, a lot of **exporters** are available to send your logs out 
 
 Application logs might look different on each application, but this is an example:
 
-```log
+```
 yyyy/mm/dd hh:mm:ss KRAKEND DEBUG: [SERVICE: Gin] Debug enabled
 yyyy/mm/dd hh:mm:ss KRAKEND INFO: Starting the KrakenD instance
 yyyy/mm/dd hh:mm:ss KRAKEND INFO: [SERVICE: Gin] Building the router
@@ -86,14 +92,105 @@ To add ample logging capabilities, you need to add the component at the service 
 ```
 These are the different supported configuration options:
 
-{{< schema data="telemetry/logging.json" filter="format,custom_format,level,prefix,stdout,syslog,syslog_facility">}}
+{{< schema data="telemetry/logging.json" >}}
 
-When setting a predefined `format` the output is:
+### Customizing the application log
+The attribute `format` allows you to set a formatter for the application log. The following values are available:
 
 - `default`: Uses the pattern `%{time:2006/01/02 - 15:04:05.000} %{color}▶ %{level:.6s}%{color:reset} %{message}`
 - `logstash`: **Logs in JSON format** using the logstash format. See [Logstash](/docs/logging/logstash/) for more information. E.g.: `{"@timestamp":"%{time:2006-01-02T15:04:05.000+00:00}", "@version": 1, "level": "%{level}", "message": "%{message}", "module": "%{module}"}`.
-- `custom`: You set the format using `custom_format`. To know more about the possible **patterns** see the [go-logging library](https://github.com/op/go-logging/blob/master/format.go#L156)
+- `custom`: Write the pattern from scratch, as defined in the `custom_format` attribute.
 
+#### Variables available under custom_format
+You can use these variables when defining the `custom_format`:
+
+- `%{id}`: Prints the sequence number for log message (uint64).
+- `%{pid}`: Prints the process id (int)
+- `%{time}`: Prints the time when log occurred. It uses the [Go time format](https://pkg.go.dev/time). For instance `%{time:2006/01/02 - 15:04:05.000}`
+- `%{level}`: Prints the log level
+- `%{program}`: Prints the command running
+- `%{message}`: Prints the application log message
+- `%{module}`: Prints the module
+- `%{color}`: Prints the ANSI color based on log level, the output can be adjusted to either use bold colors, e.g, `%{color:bold}` or to reset the ANSI attributes `%{color:reset}`.
+
+For example, you can customize your pattern like this:
+
+```json
+{
+  "version": 3,
+  "extra_config": {
+    "telemetry/logging": {
+      "level": "INFO",
+      "prefix": "[KRAKEND]",
+      "syslog": false,
+      "stdout": true,
+      "format": "custom",
+      "custom_format": "[MY APP LOG] %{time:2006/01/02 - 15:04:05.000} %{color}▶ %{level:.6s}%{color:reset} %{message}"
+    }
+  }
+}
+```
+### Customizing the access log
+Similarly, only on {{< badge >}}Enterprise{{< /badge >}} you can customize how the access log prints. The following `access_log_format` values are available:
+
+- `default`: Uses `%{prefix} %{time} [AccessLog] |%{statusCode}| %{latencyMs} | %{clientIP} | %{method} %{path}\n` as pattern.
+- `httpdCommon`: Uses `%{clientIP} - - [%{time}] \"%{method} %{path} %{proto}\" %{statusCode} -\n` as in the Apache HTTPd log format
+- `httpdCombined`: The Apache HTTPd Combined log format `%{clientIP} - - [%{time}] \"%{method} %{path} %{proto}\" %{statusCode} - \"%{header.Referer}\" \"%{header.User-Agent}\"\n`
+- `json`: Uses `{\"prefix\":\"%{prefix}\", \"time\":\"%{time}\", \"status_code\":%{statusCode}, \"latency\":\"%{latency}\", \"client_ip\":\"%{clientIP}\", \"method\":\"%{method}\", \"path\":\"%{path}\"}\n`
+- `custom`: Write your own pattern, as defined in the `access_log_custom_format` attribute.
+
+
+#### Variables available to `access_log_custom_format`
+When the `access_log_format` is set to `custom`, you can use these variables under `access_log_custom_format` to specify your format:
+
+- `%{prefix}`: The value you have set under the `prefix` attribute.
+- `%{time}`: The time when the the access finished. The layout prints a format like 2006/01/02 - 15:04:05.000
+- `%{statusCode}`: The response status code as given to the consumer
+- `%{latencyMs}`: The operation latency in milliseconds with 3 decimals (microsecond resolution). This computes the time of the request from beginning to end.
+- `%{latency}`: The operation latency in seconds with 3 decimals
+- `%{clientIP}`: The real IP of the client
+- `%{method}`: The HTTP verb used
+- `%{path}`: The endpoint path
+- `%{host}`: The host of the URL
+- `%{header.xxx}`: The value of a specific header, where `xxx` is the header name.
+- `%{scheme}`: The scheme used (e.g., http, https, ws)
+- `%{jwt.xxx}`: The value of a specific claim in the token, where `xxx` is the claim name (only first level, non-nested, claims).
+- `%{query}`: The query strings passed in the request
+- `%{proto}`: The protocol used (e.g., HTTP/1.0, HTTP/2, etc)
+
+For instance, you could **print the access log in JSON format** as follows:
+
+```json
+{
+  "version": 3,
+  "extra_config": {
+    "telemetry/logging": {
+      "level": "INFO",
+      "prefix": "[KRAKEND]",
+      "syslog": false,
+      "stdout": true,
+      "acces_log_format": "json"
+    }
+  }
+}
+```
+Or you could have a log that includes the JWT subject, the authorization header and query strings as follows:
+
+```json
+{
+  "version": 3,
+  "extra_config": {
+    "telemetry/logging": {
+      "level": "INFO",
+      "prefix": "[KRAKEND]",
+      "syslog": false,
+      "stdout": true,
+      "acces_log_format": "custom",
+      "access_log_custom_format": "[AccessLog] %{prefix} %{time} | %{statusCode} | %{latencyMs} | %{clientIP} | %{method} %{scheme}://%{host}%{path}?%{query} %{query.bar} %{header.Authorization} %{jwt.sub}\n"
+    }
+  }
+}
+```
 
 ## Writing the log on a file
 Although logging on disk might impact software performance and is discouraged in high-throughput systems, you can still store the logs in a file.

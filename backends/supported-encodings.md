@@ -17,6 +17,7 @@ Each backend can reply with a different encoding and KrakenD does not have any p
 
 - `json`
 - `fast-json` (Enterprise only)
+- `yaml` (Enterprise only)
 - `safejson`
 - `xml`
 - `rss`
@@ -38,6 +39,7 @@ Follow this table to determine how to treat your backend content:
 | JSON with variable types               | `safejson`                          |
 | XML                                    | `xml`                               |
 | RSS Feed (types Atom, RSS or JSON )    | `rss`                               |
+| YAML                                   | `yaml`                              |
 | Not an object, but a string            | `string`                            |
 | Nevermind, just proxy                  | `no-op` ([read how](/docs/endpoints/no-op/)) |
 
@@ -73,21 +75,21 @@ The following example demonstrates how an endpoint `/abc` is feeding on three di
           "url_pattern": "/a",
           "encoding": "json",
           "host": [
-            "http://service-a.company.com"
+            "http://service-a.example.com"
           ]
         },
         {
           "url_pattern": "/b",
           "encoding": "xml",
           "host": [
-            "http://service-b.company.com"
+            "http://service-b.example.com"
           ]
         },
         {
           "url_pattern": "/c",
           "encoding": "rss",
           "host": [
-            "http://service-c.company.com"
+            "http://service-c.example.com"
           ]
         }
       ]

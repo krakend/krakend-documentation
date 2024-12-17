@@ -76,3 +76,8 @@ Make sure that the JWK URL exists, some set ups do not have the `/auth/` part in
 That's the minimum configuration you need to protect your API from being accessed by someone who has not a valid token from Keycloak. Also notice there is a flag `"disable_jwk_security": true`, this is necessary when we are accessing our JWK address with http instead of https.
 
 Now you might want to add **additional checks to your system** and take advantage of all the powerful features of Keycloak. This is possible by [declaring more elements into the configuration](https://www.krakend.io/docs/authorization/jwt-validation/).
+
+## Keycloak demo with KrakenD
+The repository "[Demo Microservices with keycloak and krakend](https://gitlab.com/bensiewert/demo-microservices-with-keycloak-and-krakend)" by Ben Siewert, is a demonstration project integrating microservices with Keycloak for authentication and KrakenD as an API gateway. 
+
+It consists in two Node microservices fronted and protected by KrakenD. The identities and tokens are taken from Keycloak and KrakenD validates the token to accept or deny access to the services behind.

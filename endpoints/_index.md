@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-03-13
+lastmod: 2024-12-12
 date: 2020-02-26
 aliases: ["/docs/endpoints/creating-endpoints/"]
 linktitle:  The endpoint object
@@ -115,7 +115,34 @@ As you can see in the examples above, endpoints can define variables in their en
 
 The previous endpoint will accept requests like `/user/123` or `/user/A-B-C`. But **it won't take** a request like `/user/1/2`, as there is an extra slash than the definition, and KrakenD considers this to be a different endpoint.
 
+### Router rules to avoid collisions
+When you declare multiple endpoints that **share common prefixes**, make sure that you do not declare the same route with different variable names.
 
+For instance, you cannot have the following two endpoints coexisting:
+
+- endpoint: `/user/{userid}`
+- endpoint: `/user/{iduser}/some`
+
+This will cause a `panic` on startup (that you can catch earlier if you run a `krakend check -t -c krakend.json` )
+
+But you can have the same routes declared as:
+
+- endpoint: `/user/{userid}`
+- endpoint: `/user/{userid}/some`
+
+And this will work.
+
+Similarly you can't do this:
+
+- endpoint: `/v1/{domain}/user/{userid}`
+- endpoint: `/v1/{domain}/user/{iduser}/some`
+
+But you can declare the same route as:
+
+- endpoint: `/v1/{domain}/user/{userid}`
+- endpoint: `/v1/{domain}/user/{userid}/some`
+
+Summarizing, on colliding routes, make sure to use the same variable names.
 
 
 ### Disable RESTful checking
