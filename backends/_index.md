@@ -20,13 +20,6 @@ A `backend` object is an array of all the services that an [`endpoint`](/docs/en
 
 When a KrakenD endpoint is hit, the engine requests **all defined backends in parallel** (unless a [sequential proxy](/docs/endpoints/sequential-proxy/) is used) and the content [merged and aggregated](/docs/endpoints/response-manipulation/#aggregation-and-merging) (unless you just proxy using the [`no-op` encoding](/docs/endpoints/no-op/)). The returned content is parsed according to its `encoding` or in some cases its `extra_config` configuration.
 
-{{< note title="Multiple non-safe methods" type="info" >}}
-Even though you can use several backends in one endpoint, KrakenD **does not allow you to define multiple non-safe (write) backends**. This is a (sometimes controversial) design decision to disable the gateway to handle transactions.
-
-If you need to have a write method (POST, PUT, DELETE, PATCH) together with other GET methods, use the [sequential proxy](/docs/endpoints/sequential-proxy/) and place a maximum of 1 write method at the end of the sequence.
-{{< /note >}}
-
-
 ## Backend/Upstream configuration
 Inside the `backend` array, you need to create an object for each upstream service used by its declaring endpoint. The combination of `host` + `url_pattern`set the full URL that KrakenD will use to fetch your upstream services. Most of the backends will require a simple configuration like:
 ```json
