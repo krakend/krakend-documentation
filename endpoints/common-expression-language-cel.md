@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-03-14
+lastmod: 2025-01-10
 date: 2019-01-24
 linktitle: "Conditional requests and responses"
 title: Conditional requests and responses with CEL
@@ -96,7 +96,7 @@ There are three different ways to access the metadata of requests and responses 
 
 - Use a `req_` type variable to access **request** data.
 - Use a `resp_` type variable to access **response** data.
-- Use the `JWT` variable to access the **payload of the JWT**. It works only if you add the `auth/validator` component to the endpoint.
+- Use the `JWT` variable to access the **payload of the JWT**. It only works if you have a configured `auth/validator` and when the CEL expression is at the `endpoint` level. The `JWT` variable is unset when you evaluate expressions in the `backend`. If you want to check JWT claims in a `backend` context, you must [propagate their values as headers](/docs/authorization/jwt-validation/#propagate-jwt-claims-as-request-headers), and then work with headers.
 
 ### Variables for requests
 You can use the following variables inside the `check_expr`:
