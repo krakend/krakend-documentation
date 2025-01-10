@@ -48,7 +48,7 @@ You can use CEL expressions in five different places: during the **request** and
 
 ![The 5 CEL places of action](/images/documentation/krakend-cel.png)
 
-- **JWT** (token) evaluation
+- **JWT** (token) evaluation (**Note:** you must include the `auth/validator`)
 - **Endpoint request** evaluation
 - **Backend request** evaluation (per N backends)
 - **Backend response** evaluation (per N backends)
@@ -96,7 +96,7 @@ There are three different ways to access the metadata of requests and responses 
 
 - Use a `req_` type variable to access **request** data.
 - Use a `resp_` type variable to access **response** data.
-- Use the `JWT` variable to access the **payload of the JWT**.
+- Use the `JWT` variable to access the **payload of the JWT**. It works only if you add the `auth/validator` component to the endpoint.
 
 ### Variables for requests
 You can use the following variables inside the `check_expr`:
@@ -124,7 +124,7 @@ The response metadata is only filled for no-op pipes. In non no-op cases it will
 {{< /note >}}
 
 ### Variables for the JWT rejecter
-You can also use CEL expressions during the JWT token validation. Use the `JWT` variable to access its metadata. For instance:
+You can also use CEL expressions during the JWT token validation when you added an `auth/validator`. Use the `JWT` variable to access its metadata. For instance:
 
 ```js
     has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)
