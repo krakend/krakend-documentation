@@ -96,7 +96,7 @@ There are three different ways to access the metadata of requests and responses 
 
 - Use a `req_` type variable to access **request** data.
 - Use a `resp_` type variable to access **response** data.
-- Use the `JWT` variable to access the **payload of the JWT**. It only works if you have a configured `auth/validator` and when the CEL expression is at the `endpoint` level. The `JWT` variable is unset when you evaluate expressions in the `backend`. If you want to check JWT claims in a `backend` context, you must [propagate their values as headers](/docs/authorization/jwt-validation/#propagate-jwt-claims-as-request-headers), and then work with headers.
+- Use the `JWT` variable to access the **payload of the JWT** (requires `auth/validator` and being in the `endpoint` context, not `backend`)
 
 ### Variables for requests
 You can use the following variables inside the `check_expr`:
@@ -124,14 +124,78 @@ The response metadata is only filled for no-op pipes. In non no-op cases it will
 {{< /note >}}
 
 ### Variables for the JWT rejecter
-You can also use CEL expressions during the JWT token validation when you added an `auth/validator`. Use the `JWT` variable to access its metadata. For instance:
+You can also use CEL expressions during the JWT token validation. It only works if you have a configured `auth/validator` and when the CEL expression is at the `endpoint` level. Use the `JWT` variable to access its metadata.
 
+Here's an example of expression you could use in an `endpoint`:
 ```js
-    has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)
+has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)
 ```
-
 This example checks that the JWT token contains the metadata `user_id` and
 `enabled_days` with the macro `has()`, and then checks that today's weekday is within one of the allowed days to see the endpoint.
+
+And the required configuration would be:
+
+```json
+{
+    "endpoint": "/nick/{nick}",
+    "extra_config": {
+        "validation/cel": [
+            {
+                "check_expr": "has(JWT.user_id) && has(JWT.enabled_days) && (timestamp(now).getDayOfWeek() in JWT.enabled_days)"
+            }
+        ],
+        "auth/validator": {
+            "alg": "RS256",
+            "jwk_url": "https://example.com/.well-known/jwks.json",
+            "cache": true
+        }
+    }
+}
+```
+
+Notice that the `JWT` variable is **unset** when you evaluate expressions in the `backend`. If you want to check JWT claims in a `backend` context, you must [propagate their values as headers](/docs/authorization/jwt-validation/#propagate-jwt-claims-as-request-headers), and then work with headers.
+
+This is an example of accessing claims in a `backend` expression, through propagated claims:
+
+```json
+{
+  "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
+  "version": 3,
+  "endpoints": [
+    {
+      "endpoint": "/example",
+      "input_headers": ["X-User-Id"],
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "jwk_url": "https://example.com/.well-known/jwks.json",
+          "cache": true,
+          "propagate_claims": [
+            [
+              "user_id","X-User-Id"
+            ]
+          ]
+        }
+      },
+      "backend": [
+        {
+          "url_pattern": "/example",
+          "host":["https://example.com"],
+          "extra_config": {
+            "validation/cel": [
+              {
+                "check_expr": "size(req_headers['X-User-Id']) == 1"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+Notice that because we are in the `backend` context, we do not access `JWT` in the expression, but to the propagated header. The target header declared under `propagate_claims` must be also declared under `input_headers` to work properly.
 
 ## CEL Syntax and examples
 See the CEL [language definition](https://github.com/google/cel-spec/blob/master/doc/langdef.md) for the complete list of supported options.
