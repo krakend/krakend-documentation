@@ -169,7 +169,7 @@ For instance, you could **print the access log in JSON format** as follows:
       "prefix": "[KRAKEND]",
       "syslog": false,
       "stdout": true,
-      "acces_log_format": "json"
+      "access_log_format": "json"
     }
   }
 }
@@ -185,7 +185,7 @@ Or you could have a log that includes the JWT subject, the authorization header 
       "prefix": "[KRAKEND]",
       "syslog": false,
       "stdout": true,
-      "acces_log_format": "custom",
+      "access_log_format": "custom",
       "access_log_custom_format": "[AccessLog] %{prefix} %{time} | %{statusCode} | %{latencyMs} | %{clientIP} | %{method} %{scheme}://%{host}%{path}?%{query} %{query.bar} %{header.Authorization} %{jwt.sub}\n"
     }
   }
