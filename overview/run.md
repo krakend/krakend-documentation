@@ -57,7 +57,7 @@ Or to get started right away, you can paste the following content inside a `krak
 
 ```json
 {
-    "$schema": "https://www.krakend.io/schema/v2.8/krakend.json",
+    "$schema": "https://www.krakend.io/schema/v2.9/krakend.json",
     "version": 3
 }
 ```

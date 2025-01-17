@@ -150,7 +150,7 @@ By default KrakenD only works with **RESTful URL patterns** in its endpoint defi
 
 {{< highlight json "hl_lines=4 13">}}
 {
-  "$schema": "https://www.krakend.io/schema/v2.8/krakend.json",
+  "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
   "version": 3,
   "disable_rest": true,
   "endpoints": [
