@@ -110,6 +110,8 @@ The `request` functions are:
 *   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. It does not have any effect when you use `modifier/lua-backend`. E.g.: `r:params('User','bob')`. **The parameters must have the first letter capitalized**.
 *   `headers(header)` (_Dynamic_): Getter that retrieves the headers of the request as allowed to pass (by `input_headers`) in the endpoint. E.g.: `r:headers('Accept')` could return a string `*/*`.
 *   `headers(header,value)` (_Dynamic_): Setter that changes the headers of the request. E.g.: `r:headers('Accept','*/*')`. If the value is `nil`, the header is removed from the request.
+*   `headerList(header)` (_Dynamic_): Getter that returns a `luaList` with the multiple values of a request header. E.g.: `req:headerList("X-Added")`.
+*   `headerList(header,list)` (_Dynamic_): Setter that changes the headers with multiple values of the request. E.g.: `local n = luaList.new();n:set(0, "first"); n:set(1, "second");req:headerList("X-Added", n)`.
 *   `body()` (_Dynamic_): Getter that retrieves the body of the request sent by the user. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
 *   `body(value)` (_Dynamic_): Setter that changes the body of the request. E.g.: `r:body('{"foo": "bar"}')`.
 
@@ -126,6 +128,8 @@ Scripts that need to modify a request that KrakenD that just got from the backen
 *   `data(table)` (_Dynamic_): While **there is no setter for the `data` function** you can set individual items of the data. For instance, do a `local responseData = r:data()` first, and then set individual items with `responseData:set("key", value)` instead. It only works if you don't use `no-op` encoding.
 *   `headers(header)` (_Dynamic_): Getter that retrieves one header from the response when you use `no-op` encoding. In the rest of the responses, you will always get an empty string `''`. E.g.: `r:headers('Content-Type')` returns an integer `application/json`.
 *   `headers(header,value)` (_Dynamic_): Setter that allows you to replace or set a new header for the response when you use `no-op` encoding. E.g.: `r:headers('Content-Type', 'application/json')`. If the value is `nil`, the header is removed from the response.
+*   `headerList(header)` (_Dynamic_): Getter that returns a `luaList` with the multiple values of a response header. E.g.: `r:headerList("X-Added")`.
+*   `headerList(header,list)` (_Dynamic_): Setter that changes the headers with multiple values of the response. E.g.: `local n = luaList.new();n:set(0, "first"); n:set(1, "second");resp:headerList("X-Added", n)`.
 *   `body()` (_Dynamic_): Getter that retrieves the body of the response when you use encoding `no-op`. E.g.: `r:body()` could return a string `{"foo": "bar"}`.
 *   `body(value)` (_Dynamic_): Setter that changes the body of the response when you use encoding `no-op`. E.g.: `r:body('{"foo": "bar"}')`.
 
@@ -147,6 +151,8 @@ Use this type when you need to script the router layer, traffic between end-user
 *   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. E.g.: `c:params('User','bob')`. **The parameters must have the first letter capitalized**.
 *   `headers(header)` (_Dynamic_): Getter that retrieves the headers of the request as allowed to pass (by `input_headers`) in the endpoint. E.g.: `c:headers('Accept')` could return a string `*/*`.
 *   `headers(header,value)` (_Dynamic_): Setter that changes the headers of the request. E.g.: `c:headers('Accept','*/*')`.
+*   `headerList(header)` (_Dynamic_): Getter that returns a `luaList` with the multiple values of a context header. E.g.: `c:headerList("X-Added")`.
+*   `headerList(header,list)` (_Dynamic_): Setter that changes the headers with multiple values of the request. E.g.: `local n = luaList.new();n:set(0, "first"); n:set(1, "second");ctx:headerList("X-Added", n)`.
 *   `body()` (_Dynamic_): Getter that retrieves the body of the request sent by the user. E.g.: `c:body()` could return a string `{"foo": "bar"}`.
 *   `body(value)` (_Dynamic_): Setter that changes the body of the request. E.g.: `c:body('{"foo": "bar"}')`.
 *   `host()` (_Dynamic_): Getter that retrieves the `Host` header of the request sent by the user. E.g.: `c:host()` could return a string `api.domain.com`.
@@ -157,7 +163,7 @@ Use this type when you need to script the router layer, traffic between end-user
 Now you know where to put the Lua code according to what you want to do, and how to access and modify the requests and responses. In addition, the following helper functions are brought by KrakenD to extend the possibilities of your scripts without using third parties:
 
 ### Nil helper
-The `nil` in Lua is destructive in tables, because it is used to **remove elements**. For instance, if you have a table with an index `foo`, and you set it to `nil`, the element from the table is destroyed. When you want to preserve this `foo` index but emptying it's value you must use the Go `nil` value instead. 
+The `nil` in Lua is destructive in tables, because it is used to **remove elements**. For instance, if you have a table with an index `foo`, and you set it to `nil`, the element from the table is destroyed. When you want to preserve this `foo` index but emptying it's value you must use the Go `nil` value instead.
 
 *   `luaNil.new()`: Returns a native Go `nil` value. This is useful if you want to write `nil` values in a `luaTable` or a `luaList`.
 
@@ -286,7 +292,8 @@ Notice that you **cannot** use it in `modifier/lua-endpoint`.
 
 *   `new(url)` (_Static_): Constructor. Sets the URL you want to call and makes the request. E.g.: `local r = http_response.new('http://api.domain.com/test')`. **Notice that the rest of the functions rely on this one**. The constructor accepts 1, 3, or 4 arguments, respectively. See examples below.
 *   `statusCode()` (_Dynamic_): Getter for the status code of the response. E.g.: `r:statusCode()` could return `200`
-*   `headers(header)` (_Dynamic_): : Getter for a specific header of the response. E.g.: `r:headers('Content-Type')` could return `application/json`
+*   `headers(header)` (_Dynamic_) : Getter for a specific header of the response. E.g.: `r:headers('Content-Type')` could return `application/json`
+*   `headerList(header)` (_Dynamic_): Getter that returns a `luaList` with the multiple values of a header. E.g.: `r:headerList("X-Added")`.
 *   `body()` (_Dynamic_): Getter for the full response body.
 *   `close()` (_Dynamic_): Closes the HTTP connection to free resources. Although it will be done automatically later by KrakenD, a better approach is to close the resource as soon as you don't need it anymore.
 

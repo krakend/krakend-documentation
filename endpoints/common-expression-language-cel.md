@@ -33,7 +33,7 @@ When the CEL component is enabled, you can set any number of expressions to chec
 ## How CEL works
 In any `endpoint`, `backend`, or `async_agent`, you can define a sequence of expressions you'd like to check using [Google's CEL spec](https://github.com/google/cel-spec) to write the conditions.
 
-During runtime, when an expression returns `false`, KrakenD aborts the execution of that layer: it does not return the content or it does not perform the request (depending on the type). Otherwise, KrakenD serves the content if all expressions return `true`.
+During runtime, when an expression returns `false`, KrakenD aborts the execution of that layer and **logs an error** like `request aborted by evaluator #0` (the number of CEL expression that failed). When it fails, it does not return the content or it does not perform the request (depending on the type). Otherwise, KrakenD serves the content if all expressions return `true`.
 
 The CEL expressions will sound familiar if you are used to languages like javascript, C, C++, or Java to name a few. The expressions need to represent a boolean condition. For instance:
 

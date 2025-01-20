@@ -13,7 +13,7 @@ menu:
   community_current:
     parent: "040 Routing and Forwarding"
 meta:
-  noop_incompatible: true
+  noop_incompatible: false
   since: 0.7
   source: https://github.com/luraproject/lura
   namespace:
@@ -31,7 +31,7 @@ The best experience consumers can have with KrakenD API is by letting the system
 
 Using sequential calls is considered an anti-pattern because when you make a network service dependent on the other, you are **increasing the latency, decreasing the performance, and augmenting the error rate**.
 
-It is much worse than using [aggregation](/docs/endpoints/response-manipulation/#aggregation-and-merging). In aggregation, parallel requests execute simultaneously, whereas, in sequential aggregation, requests are executed one at a time, with each one waiting for the previous request to finish before moving on to the next. If a backend in a sequence fails, the process aborts, and the next backend is never reached, so there are many more chances that your users are left without data.
+It is much worse than using [aggregation](/docs/endpoints/response-manipulation/#aggregation-and-merging). In aggregation, parallel requests execute simultaneously, whereas, in sequential aggregation, requests are executed one at a time, with each one waiting for the previous request to finish before moving on to the next. If a backend in a sequence fails, the process aborts and the next backend is never reached, so there are many more chances that your users are left without data.
 
 From an error rate perspective, the nature of sequential proxy performs more deficient: Suppose you have three backends with an error rate of 10% each, then the probability of success separately in each is 90%. But when executing the three of them sequentially, the success rate drops to 73% (because `0.9 * 0.9 * 0.9 = 0.729`).
 
@@ -39,7 +39,7 @@ In an aggregation scenario, the probability of having at least one working call 
 
 The contrast between a 99.9% chance of some data availability and a 73% probability is quite substantial. Isn't it? That being said, from an architectural point of view, the sequential proxy should be your last resort.
 
-In addition, since KrakenD 2.5, you can add to a sequence **multiple unsafe methods** (methods different than `GET`). When you chain several write requests in multiple nodes, you execute a **distributed transaction** in a flowery disguise, as in a database. But a gateway is not a database, and you don't have any rollback mechanism if one of your write methods fails, so you can only *hope for the best*.
+In addition, you can add to a sequence **multiple unsafe methods** (methods different than `GET`). When you chain several write requests in multiple nodes, you execute a **distributed transaction** in a flowery disguise, as in a database. But a gateway is not a database, and you don't have any rollback mechanism if one of your write methods fails, so you can only *hope for the best*.
 
 ## Sequential proxy configuration
 To enable the sequential proxy, you need to add in the endpoint definition the following configuration:
@@ -55,19 +55,17 @@ To enable the sequential proxy, you need to add in the endpoint definition the f
 }
 ```
 
-After doing this, the list of `backend` is executed one by one, and the next call has access to the data returned by the previous in the `url_pattern` and not anywhere else. **The body of the last request is not sent to the next** (but you can still access the original body).
+After doing this, the `backend` list is executed one by one, and the next call has the opportunity to access data returned by the previous call in the `url_pattern` and not anywhere else. **The body of the last request is not sent to the next**, but you can save it as a parameter **and inject it later** using the `sequential_propagated_params`.
 
-When the sequential proxy is enabled, the `url_pattern` of every backend can use a new variable that references the **resp**onse of a previous API call. The variable has the following construction:
+When the sequential proxy is enabled, the `url_pattern` of every backend can use a new variable that references the **resp**onse of a previous API call. The sequential proxy variables have the following construction:
 
 ```js
 {resp0_XXXX}
 ```
 
-Where `0` is the index of the specific `backend` you want to access (`0` is the first backend), and where `XXXX` is the attribute name you want to inject from the response of the previous call. You can access **nested objects** of the response using the dot notation. For example, given a response `{"user": { "hash": "abcdef }}`, the variable`{resp0_user.hash}` will contain the value `abcdef`. **You cannot access nested objects inside arrays or collections**: responses must be objects.
+Where `0` is the index of the specific `backend` you want to access (`0` for the first backend, `1` for the second and so on), and where `XXXX` is the attribute name you want to inject from the response of the previous call. You can also access **nested objects** of the response using the dot notation. For example, given a response `{"user": { "hash": "abcdef }}`, the variable`{resp0_user.hash}` will contain the value `abcdef`. **You cannot access nested objects inside arrays or collections**: fields must be objects (although you could manipulate these arrays using flatmap or JMESpath to convert them to objects).
 
-If the encoding of your backend is `string`, then you can access its contents using `resp0_content`.
-
-It does not matter if the `{resp0_XXXX}` variable is part of the URL or if it is passed as a query string. For instance, the following examples would work:
+You can reuse the `{resp0_XXXX}` variable in the `url_pattern` in any form you like, as part of the path or as a query string. For instance, the following examples would work:
 
 ```json
 {
@@ -83,7 +81,7 @@ And also:
 }
 ```
 
-## Example
+### Example of sequential proxy passing values on the `url_pattern`
 It's easier to understand with the example of the graph:
 
 ![Chained call](/images/documentation/krakend-sequential-call.png)
@@ -157,3 +155,56 @@ The configuration needed for this example is:
 ```
 
 The key here is the variable `{resp0_destination_id}` that refers to `destination_id` for the backend with index `0` (first in the list).
+
+### Sequential proxy and special encodings
+The sequential proxy parses the response of the previous backend trying to understand the structure of the returned response so you can access its fields by name. When your backend does not use a parseable encoding, such as `string` or `no-op`, you can still access to the responses but differently.
+
+When the `encoding` of your backend is `string` (meaning it does not decode the contents and everything comes in a single string), then you can access its contents using `resp0_content`.
+
+On the other hand, when your backend is `no-op` you can access the full response using `resp0` (also as a string).
+
+
+## Passing previous values outside the `url_pattern`
+By setting the flag `"sequential": true`, the responses of the backends are available in the following `url_pattern`s. But there will be times when you don't want the value in the `url_pattern`. You can reuse the payload of previous responses elsewhere by propagating the values using the `sequential_propagated_params` attribute. These are the sequential flags you have on the `proxy` configuration:
+
+{{< schema data="endpoint_extra_config.json" property="proxy" filter="sequential,sequential_propagated_params" title="Fields of endpoint's proxy property">}}
+
+
+### Example: Setting a previous response as the payload of the next
+The following example calls a backend and injects its response as the body payload of the next one. To accomplish this behavior, you can see the `sequential_propagated_params`. It saves the parameter `resp0`, which we reuse as `Resp0` in the Lua code of the second backend.
+
+As we are taking **the entire payload** of the first backend (not specific fields), we have set a `no-op` encoding in the first backend so as not to parse the response and pass it as is to the next.
+
+The Lua code in the second backend modifies the request and sets its body to the full response of the first backend (`req:body(req:params(\"Resp0\")`).
+
+You can copy the code of this endpoint and test locally (it requires you to have the [debug endpoint](/docs/endpoints/debug-endpoint/) enabled).
+
+```json
+{
+    "endpoint": "/sequential/propagate-body",
+    "extra_config": {
+      "proxy": {
+          "sequential": true,
+          "sequential_propagated_params": ["resp0"]
+      }
+    },
+    "backend": [
+      {
+          "encoding": "no-op",
+          "url_pattern": "/__debug/",
+          "host": [ "http://localhost:8080" ]
+      },
+      {
+          "encoding": "json",
+          "url_pattern": "/param_forwarding/",
+          "host": [ "http://127.0.0.1:8081" ],
+          "extra_config": {
+            "modifier/lua-backend": {
+                "allow_open_libs": true,
+                "pre": "local req = request.load(); req:body(req:params(\"Resp0\"))"
+            }
+          }
+      }
+    ]
+}
+```

@@ -1,6 +1,6 @@
 ---
 aliases: ["/docs/commands/check/"]
-lastmod: 2023-06-28
+lastmod: 2025-01-17
 date: 2016-10-28
 linktitle: Configuration check
 title: Validating the configuration with `check`
@@ -22,10 +22,16 @@ It's able to perform three things:
 
 **The `check` command can guarantee that a configuration is valid with the three validations**.
 
-**TL;DR**: Add the following line before deploying:
+**TL;DR**: Add the following line before deploying (online validation of the schema):
 
-{{< terminal title="Term" >}}
+{{< terminal title="Online schema validation" >}}
 krakend check -tlc krakend.json
+{{< /terminal >}}
+
+Or for offline validation:
+
+{{< terminal title="Offline schema validation" >}}
+krakend check -tnc krakend.json
 {{< /terminal >}}
 
 See the usage below.
@@ -52,12 +58,14 @@ Examples:
 krakend check -d -c config.json
 
 Flags:
-  -c, --config string     Path to the configuration filename
-  -d, --debug count       Enables the debug
-  -h, --help              help for check
-  -i, --indent string     Indentation of the check dump (default "\t")
-  -l, --lint              Enables the linting against the official KrakenD JSON schema
-  -t, --test-gin-routes   Test the endpoint patterns against a real gin router on selected port
+  -c, --config string        Path to the configuration file
+  -d, --debug count          Information about how KrakenD is interpreting your configuration file
+  -h, --help                 help for check
+  -i, --indent string        Indentation of the check dump (default "\t")
+  -l, --lint                 Enables the linting against the official KrakenD online JSON schema
+  -n, --lint-no-network      Lint against the builtin Krakend JSON schema, no network is required
+  -s, --lint-schema string   Lint against a custom schema path or URL
+  -t, --test-gin-routes      Tests the endpoint patterns against a real gin router on the selected port
 {{< /terminal >}}
 
 ## Flags
@@ -65,9 +73,11 @@ Use `krakend check` in combination with the following flags:
 
 - `-c` or `--config` to specify the path to the configuration file in any of the [supported formats](/docs/configuration/supported-formats/), or to the starting template if used in combination with flexible configuration.
 - `-d` or `--debug` (*optional*) to enable the debug and see information about how KrakenD is interpreting your configuration file. Use from 1 to 3 levels of verbosity using `-d`, `-dd`, or `-ddd`.
-- `-t` or `--test-gin-routes` (*optional*) to test the configuration by trying to start the service for a second. This option is highly recommended as it prevents conflicting routes and other problems unrelated to the linting itself and would end up in a *panic*.
-- `-l` or `--lint` (*optional*) to check that your configuration file is properly linted and does not contain unrecognized options or wrong types. This option requires Internet access as the schema is downloaded from `https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json` (each version uses its schema).
+- `-l` or `--lint` (*optional*) to check that your configuration file is properly linted and does not contain unrecognized options or wrong types. This option downloads the schema from `https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json` every time (each version uses its schema), but use the `-n` flag to use the embedded schema (see below). **This flag is the most important one** and you should always have it in your pipeline.
 - `-i` or `--indent` (*optional*) in combination with `-d`, to change the indentation when the debug information renders (default: `TAB`). E.g.: `-i "#" ` uses a hash instead of a tab for every nesting level.
+- `-n` or `--lint-no-network` (*optional*) will use the embedded schema to validate your configuration, instead of downloading the schema from the Internet. This option produces faster validation. The online schema rarely updates and it's only done when there is a bug in the definition of an attribute.
+- `-s`, `--lint-schema` (*optional*). Lint against a custom schema path or URL you pass to the command. This option is useful if you develop your own plugins and still want to validate your own schema with your extended configuration.
+- `-t` or `--test-gin-routes` (*optional*) to test the configuration by trying to start the service for a second. This option is highly recommended as it prevents conflicting routes and other problems unrelated to the linting itself and would end up in a *panic*.
 
 {{< note title="Use --lint to do strict parsing" >}}
 The command `krakend run` will run any syntax-valid file, **ignoring unknown configuration keys**. Use the `--lint` flag in the check command to find incorrect entries.

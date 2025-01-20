@@ -38,6 +38,11 @@ You can manipulate collections at two different stages:
 
 You can do simultaneous combinations to output the desired result. For instance, declare an endpoint with three backends that apply transformations independently and a final change within the endpoint after merging the three.
 
+{{< note title="The flatmap at the endpoint level requires multiple backends" type="info" >}}
+You can use the flatmap both at the `endpoint` and `backend` level, but when used in the endpoint you must have more than one backend. If you have a single backend then move the flatmap operation to the backend level.
+{{< /note >}}
+
+
 ## When to manipulate objects with flatmap
 The flatmap can be used on objects when the [basic data manipulation](/docs/backends/data-manipulation/) options fall short. For instance, when you need to extract and rename nested objects to the root, append, and other more sophisticated operations.
 
