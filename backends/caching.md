@@ -93,6 +93,19 @@ If a response includes both an `Expires` header and a `max-age` directive, the `
 
 The `Cache-Control` header honors the time settings and the properties `no-store`, `only-if-cached` , `no-cache`.
 
+## Is my content cached?
+KrakenD **does not provide an explicit mechanism for the developer to keep track of hits or misses or actively manage its entries. For users with advanced needs managing caching who do not want automatic management of entries, we recommend using an advanced caching system such as Varnish Cache. One endpoint might result from several cached components, so the final content might be a sum of caches.
+
+Nevertheless, a simple rule exists to identify whether a response is cached: **look at the response time in the access logs**.
+
+When the content is generated fresh, you'll see in the access log that a response takes a few milliseconds or even seconds, depending on your backend load and performance. But when the content is cached, you'll see times that are at least one order of magnitude smaller (like a few microseconds or even milliseconds). You'll have no doubt when comparing a fresh call to a cached one.
+
+In addition, there are other ways to check if backend responses are served from the cache, like:
+
+- Checking the traces to notice missing backend calls
+- Comparing the latency of the requests in your metrics
+- Check your backend logs
+
 ## Custom directives (Stale cache, freshness)
 You can allow your API consumers to pass **custom directives (instructions)** in their `Cache-Control` header when they make the request.
 
