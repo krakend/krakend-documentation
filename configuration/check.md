@@ -22,10 +22,16 @@ It's able to perform three things:
 
 **The `check` command can guarantee that a configuration is valid with the three validations**.
 
-**TL;DR**: Add the following line before deploying:
+**TL;DR**: Add the following line before deploying (online validation of the schema):
 
-{{< terminal title="Term" >}}
-krakend check -tlnc krakend.json
+{{< terminal title="Online schema validation" >}}
+krakend check -tlc krakend.json
+{{< /terminal >}}
+
+Or for offline validation:
+
+{{< terminal title="Offline schema validation" >}}
+krakend check -tnc krakend.json
 {{< /terminal >}}
 
 See the usage below.
