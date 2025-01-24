@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-11-27
+lastmod: 2025-01-23
 date: 2019-01-14
 linktitle: Writing plugins
 title: Writing and building custom plugins
@@ -112,14 +112,14 @@ go build -ldflags='-extldflags=-fuse-ld=bfd -extld=aarch64-linux-musl-gcc' \
 
 And the same command, changing the builder, when you need **on-premises** plugins for ARM64:
 
-{{< terminal title="Build your plugin for Alpine ARM64" >}}
+{{< terminal title="Build your plugin for non-Alpine ARM64" >}}
 docker run -it -v "$PWD:/app" -w /app \
 -e "CGO_ENABLED=1" \
--e "CC=aarch64-linux-musl-gcc" \
+-e "CC=aarch64-linux-gnu-gcc" \
 -e "GOARCH=arm64" \
 -e "GOHOSTARCH=amd64" \
 {{< product image_plugin_builder >}}:{{< product latest_version >}}-linux-generic \
-go build -ldflags='-extldflags=-fuse-ld=bfd -extld=aarch64-linux-musl-gcc' \
+go build -ldflags='-extldflags=-fuse-ld=bfd -extld=aarch64-linux-gnu-gcc' \
 -buildmode=plugin -o yourplugin.so .
 {{< /terminal >}}
 
