@@ -52,7 +52,7 @@ It is important to realize that since Authorization and Authentication are indep
 You can make many possible combinations, and the independence of these two sides gives you a lot of power. KrakenD provides multiple tools to get this job done.
 
 ## Authentication (AuthN)
-Authentication takes care of **recognizing** legitimate users. Generally, you will delegate the authentication to an Identity Provider (for short, **IdP**). The IdP can be your existing monolithic application that checks a user and password or a more fancy IdP using industry standards, whether it's SaaS or self-hosted (e.g., Auth0, Azure AD, Google Firebase, Keycloak...). The IdP takes care of the authentication methods you want to support. E.g., Password-based User Authentication, One-time Password (OTP), Single Sign-On (SSO), Biometric/Passwordless Authentication, etc. The IdP will then generate a signed token that KrakenD can use to authorize the user.
+Authentication takes care of **recognizing** legitimate users. Generally, you will delegate the authentication to an Identity Provider (for short, **IdP**). The IdP can be your existing monolithic application that checks a user and password or a more fancy IdP using industry standards, whether it's SaaS or self-hosted (e.g., Auth0, Azure AD, Descope, Google Firebase, Keycloak...). The IdP takes care of the authentication methods you want to support. E.g., Password-based User Authentication, One-time Password (OTP), Single Sign-On (SSO), Biometric/Passwordless Authentication, etc. The IdP will then generate a signed token that KrakenD can use to authorize the user.
 
 Aside from tokens, you can also use a certificate to authenticate to your gateway or the gateway to connect to a backend service. Both scenarios are supported on [Mutual TLS (mTLS)](/docs/v2.8/authorization/mutual-authentication/).
 
@@ -89,6 +89,7 @@ Because KrakenD adopted security standards, you can use it **with any provider**
 
 That being said, it means that you have native integration to validate tokens, manage user sessions, and enforce rules with SaaS providers and self-hosted tools. Some examples are:
 
+- Descope
 - Keycloak
 - Gluu
 - Auth0
