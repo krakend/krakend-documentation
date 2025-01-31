@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-06-20
+lastmod: 2025-01-31
 date: 2018-10-29
 linktitle: Response caching
 title: Caching Strategies
@@ -8,7 +8,7 @@ weight: 100
 menu:
   community_current:
     parent: "060 Request and Response Manipulation"
-notoc: true
+notoc: false
 meta:
   since: 0.4
   source: https://github.com/krakend/krakend-httpcache
@@ -17,32 +17,28 @@ meta:
   scope:
   - backend
 ---
-Caching allows you to **store backend responses in memory** to reduce the number of calls a user sends to the origin, reducing the network traffic and alleviating the pressure on your services.
+Caching allows you to **store backend responses in memory** to reduce the number of calls a user sends to the origin, **reducing the network traffic and alleviating the pressure on your services**.
 
-KrakenD's caching approach is to store individual backend responses rather than aggregated content. Although it is a minor implementation detail, it is worth noticing that caching applies to traffic between KrakenD and your microservices, not between the end user and KrakenD.
+KrakenD works similarly to the deafult rules of a CDN to cache responses, as it adheres mostly to the [RFC-7234](https://datatracker.ietf.org/doc/html/rfc7234) (HTTP/1.1 Caching) in its implementation, and all the internals follow the decisions based on the RFC.
 
-The caching component adheres to the [RFC-7234](https://datatracker.ietf.org/doc/html/rfc7234) (HTTP/1.1 Caching) in its implementation, and all the internals follow the decisions based on the RFC, requiring you to mark the backends you want to cover by adding the `qos/httpcache` element in the backend section and not much else.
+The caching component is a capability of the default KrakenD HTTP client connecting to your upstream services, and can store content in-memory so the next request that is within a valid expiration window can be returned right away without using the network, alliviating pressure and improving times.
+
+KrakenD does not cache the final content delivered to the end-user (the endpoint output), but the response of the backend (close, but not the same). Its approach is to store individual backend responses rather than aggregated content. In an endpoint with aggregation, you will need to add the cache component to all the backends that need caching individually. If you have manipulations of content after retrieving the content, these are not cached either.
 
 {{< note title="Caching increases memory consumption" type="warning">}}
-Caching can significantly increase the load and memory consumption as the returned data is saved in memory **until its expiration period**. The size of the cache depends 100% on your backends. You will need to dimension your instance accordingly, and monitor its consumption!
+Caching can significantly increase the load and memory consumption as the returned data is saved in memory **until its expiration period**. The size of the cache depends 100% on your backends and configuration. You will need to dimension your instance accordingly, and monitor its consumption!
 {{< /note >}}
 
-## What can you cache and for how long?
-You can only cache the `GET` method. If you connect to a backend using `POST`, `DELETE`, `PUT`, or any other **unsafe method**, the cache layer is ignored, and nothing is stored. The method that counts is the one used to connect to the backend, and not the one used in the endpoint, which might be different.
+## What is cached and for how long?
+You can only cache your backend's `GET` methods. If you connect to a backend using `POST`, `DELETE`, `PUT`, or any other **unsafe method**, the cache is skipped, and nothing stored. The method that counts for caching or not is the one used to connect to the backend, and not the one used in the endpoint, which might be different. For instance, you could still have an endpoint offering a `POST` method to the end-user, but if the backend uses a `GET` you could cache its response.
 
-The cache key is based on the method, the final URL sent to the backend (the `url_pattern`), plus any additional parameters. The response is stored for the time the `Cache-Control` has defined.
+When KrakenD receives the response from the backend, checks its headers. **The `Cache-Control` header sets for how long this content is stored** in the cache. See the different headers and values that affect caching below. The cache is stored in a key that contains the final URL sent to the backend plus the combination of any existing `Vary` headers.
 
-The server sets no limit to the amount of content you will cache, and it is the developer's responsibility to calculate whether the dataset will fit in memory. Memory is filled as cacheable entries are requested. Stale content is replaced by fresh content when needed, but no algorithm allows using a dataset larger than the memory available.
-
-{{< note title="Connections not elegible for caching" type="info" >}}
-The caching component is internally an HTTP client that reads responses and stores content in memory. Nevertheless, there are components that use a custom HTTP client with extended functionality, and do not use the one with caching capabilities. Generally speaking, connections with upstream services that need authentication or custom HTTP clients are not elegible to cache their responses.
-
-When you add in a backend [Client Credentials](/docs/authorization/client-credentials/), [Lambda functions](/docs/backends/lambda/), [AMQP Consumers or Producers](/docs/backends/amqp-consumer/), [Publish/Subscribe](/docs/backends/pubsub/), or custom [HTTP Client plugins](/docs/extending/http-client-plugins/), they overwrite the standard HTTP client and caching is disabled.
-{{< /note >}}
+When responses are returned to users, the memory is filled according to the header directives. Stale content is replaced by fresh content when needed automatically.
 
 ## Cache configuration
-Enable the caching of the backend services in the `backend` section of your `krakend.json` with the middleware:
-{{< highlight json "hl_lines=6">}}
+To enable the caching of the backend services you only need to add in the `backend` section of your `krakend.json` the following:
+```json
 {
     "backend": [{
       "url_pattern": "/url-to-cache",
@@ -52,26 +48,65 @@ Enable the caching of the backend services in the `backend` section of your `kra
       }
     }]
 }
-{{< /highlight >}}
+```
 
-There is no additional configuration besides its simple inclusion, although you can pass the `shared` attribute. See an example with a shared cache:
+When you don't set any additional parameters, you are creating an individual cache bucket for this backend, with uncapped memory.
+
+A safer option that limits the amount of memory you can set to a backend would be:
 
 ```json
 {
-    "endpoint": "/cached",
     "backend": [{
-      "url_pattern": "/",
-      "host": ["http://my-service.tld"],
+      "url_pattern": "/url-to-cache",
+      "host": ["http://host-to-cache.example.com"],
       "extra_config": {
         "qos/http-cache": {
-            "shared": true
+          "@comment": "Allow up to 100 cache entries or ~128MB (bytes not set exactly)",
+          "shared": false,
+          "max_items": 100,
+          "max_size": 128000000
         }
       }
     }]
 }
 ```
 
-The `shared` cache allows different backend definitions with this flag enabled to reuse the store between them when the request is the same. Otherwise, each backend uses a private cache context when the `shared` flag is missing or set to false.
+The configuration options are as follows:
+
+{{< schema data="backend_extra_config.json" filter="qos/http-cache" title="Cache options">}}
+
+Notice that `max_size` and `max_items` must coexist. Either you declare none, or you declare both.
+
+## Cache types, cache size and LRU
+The caching component allows you to declare how the cache buckets work and their relationship with the hardware. There are two important things to have in mind:
+
+- **Capped or Uncapped memory** decides what you can do with the resources of the host
+- **Individual or Shared cache** sets if you want to reuse content in different endpoints
+
+### Capped vs Uncapped memory
+**When the memory is capped** (you set `max_items` and `max_size`) you allow every cache bucket to grow up to a defined point. You stablish limits both to the number of entries and the amount of bytes, and enable the LRU algorithm (*Least Recently Used*). The two parameters are required simultaneously (otherwise it falls back to uncapped memory). In this model, when the maximum capacity is exhausted, new cacheable content replaces the old content that has been least recently used (LRU). **This is the safest option**.
+
+**When the memory is uncapped** (you don't set the attributes `max_items` and `max_size`), the content does not have any restriction to store content and can use and exhaust all the memory of the system. This option requires you, the developer, to plan how the cache is going to be used and make numbers. Surpassing the memory limit might set the system unstable or even crash it.
+
+### Individual vs Shared cache
+**When the cache is individual** (`shared` property is `false` or missing), every backend definition uses its own cache bucket, and the contents are restricted to the associated backend. It means that other backends or endpoints can't fetch their contents.
+
+**When the cache is shared**, instead of creating the cache bucket isolated in the backend, you use a globally available bucket to all endpoints where other backends that need the same cache key can fetch the contents without needing to ask it again.
+
+This idea is represented in the following example:
+
+![Example of shared and individual cache](/images/documentation/diagrams/cache-options.mmd.svg)
+
+In the diagram above there are four `backend` definitions that could be anywhere across different endpoints. Backends `B` and `C` query their upstream services and store the content in a cache bucket that is contrained to their private access.
+
+On the other hand, backends `A` and `D` use a shared cache bucket, so if one of them saves a result the other can fetch the same cache key without needing to go to the origin.
+
+{{< note title="Shared or individual cache?" type="tip" >}}
+Systems with high pressure and concurrency perform better with an individual cache. If the content you are caching is unlikely used often by another endpoint, leave it individual. On the other hand, if several backends are doing the same query repeatedly, you might want to share the cache bucket to improve the performance of your backend systems.
+{{< /note >}}
+
+
+
 
 ## Cache TTL, size, expiration, purge
 When you enable the caching module, your backends control the expiration time of the cache by setting the `Cache-Control` header. If your backends do not set the header or it is set to zero, KrakenD won't store any content in its internal cache.
@@ -94,7 +129,7 @@ If a response includes both an `Expires` header and a `max-age` directive, the `
 The `Cache-Control` header honors the time settings and the properties `no-store`, `only-if-cached` , `no-cache`.
 
 ## Is my content cached?
-KrakenD **does not provide an explicit mechanism for the developer to keep track of hits or misses or actively manage its entries. For users with advanced needs managing caching who do not want automatic management of entries, we recommend using an advanced caching system such as Varnish Cache. One endpoint might result from several cached components, so the final content might be a sum of caches.
+KrakenD **does not provide an explicit mechanism for the developer to keep track of hits or misses** or actively manage its entries. For users with advanced needs managing caching who do not want automatic management of entries, we recommend using an advanced caching system such as Varnish Cache. One endpoint might result from several cached components, so the final content might be a sum of caches.
 
 Nevertheless, a simple rule exists to identify whether a response is cached: **look at the response time in the access logs**.
 
@@ -105,6 +140,11 @@ In addition, there are other ways to check if backend responses are served from 
 - Checking the traces to notice missing backend calls
 - Comparing the latency of the requests in your metrics
 - Check your backend logs
+
+{{< note title="Configurations not elegible for caching" type="warning" >}}
+The components [Client Credentials](/docs/authorization/client-credentials/), [Lambda functions](/docs/backends/lambda/), [AMQP Consumers or Producers](/docs/backends/amqp-consumer/), [Publish/Subscribe](/docs/backends/pubsub/), and [HTTP Client plugins](/docs/extending/http-client-plugins/) **don't support direct caching** because they use a **custom HTTP client** with extended functionality that does not use the one with caching capabilities. Generally speaking, connections with upstream services that need authentication or custom HTTP clients are not elegible to cache their responses.
+{{< /note >}}
+
 
 ## Custom directives (Stale cache, freshness)
 You can allow your API consumers to pass **custom directives (instructions)** in their `Cache-Control` header when they make the request.
