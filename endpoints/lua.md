@@ -287,6 +287,7 @@ The `http_response` helper allows you to make an additional HTTP request and acc
 
 - `"modifier/lua-proxy"` (endpoint level)
 - `"modifier/lua-backend"` (backend level)
+- `"modifier/lua-endpoint"` (endpoint level, **Enterprise only** until CE 2.10)
 
 Notice that you **cannot** use it in `modifier/lua-endpoint`.
 
