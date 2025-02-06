@@ -80,7 +80,7 @@ All different types of plugins let you freely implement your logic without restr
 
 ## Write the Go file
 {{< note title="Enterprise users" type="info" >}}
-In KrakenD Enterprise, you only need to run the command `krakend plugin init` to create all the boilerplate necessary to build a plugin.
+In KrakenD Enterprise, you only need to run the command `krakend plugin init` to create all the boilerplate necessary to build a plugin. [See documentation](/docs/enterprise/extending/generating-plugins/)
 {{< /note >}}
 
 KrakenD open-source users need to create a Go file and implement the interface, as shown in every type of plugin.
