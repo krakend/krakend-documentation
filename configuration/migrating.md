@@ -20,6 +20,7 @@ Our policy focuses on **minimizing disruption by preserving compatibility with p
 1. **Review the [changelog](/changelog/)**. This document provides a chronological list of releases detailing new features, bug fixes, and possible breaking changes between major versions.
 2. **Adjust your configuration and run the linter** as needed. Below, you'll find the changes between versions. Scroll down to your current version and apply all changes above it. Then, run [the linter](/docs/configuration/check/) (`krakend check --lint`), which is designed to scrutinize your configuration rigorously.
 3. **Update the KrakenD binary**. Replace the existing binary file with the latest version. This process varies depending on how KrakenD was installed and whether it is container-based or not.
+4. If you have custom plugins, you need to recompile them with the enterprise builder, and rename in your CI/CD the [test](/docs/extending/test-plugin/) and [check](/docs/extending/check-plugin/) plugin commands.
 
 {{< note title="Jumping several versions" type="info" >}}
 To upgrade when you are more than one version away from the latest, adjust the configuration for all the versions that the upgrade comprehends.

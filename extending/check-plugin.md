@@ -1,39 +1,31 @@
 ---
-lastmod: 2024-10-25
+lastmod: 2025-02-06
 date: 2022-01-28
 aliases: ["/docs/extending/plugin-tools/"]
 linktitle: Check plugin dependencies
-title: "Check dependencies of plugins"
+title: "Checking dependencies of plugins"
 description: Learn how to check your custom KrakenD plugins with the check-plugin command and ensure that your developments are compatible and loadable by KrakenD during runtime.
 weight: 30
-notoc: true
+notoc: false
 meta:
     since: 2.0
 menu:
   community_current:
     parent: "180 Extending with custom code"
 ---
-Plugins rely on specific versions of Go, libraries, or system architecture and can face compatibility issues following updates or modifications.
+The Go plugin system requires you to compile the main application and its plugins using the same ecosystem. This means that KrakenD and your plugins must use the same Go version, the same version of any **imported libraries**, the same system architecture, and the same GLIBC/MUSL libraries. Therefore, knowing in advance that you are using libraries that are incompatible with KrakenD when [writing custom plugins](/docs/extending/writing-plugins/) is key.
 
-The `krakend check-plugin` command helps you validate the **dependencies used by your plugins**, which will determine whether the plugin is compatible, and because of this, you can use the command without providing access to the source code other than the `go.sum` file.
+The `{{< product check_plugin_command >}}` command helps you validate the part of the **dependencies used by your plugins**, which will determine whether the plugin is compatible. Go programs define their dependencies in their `go.sum` file, and this is all you need to check the compatibility.
 
+## Usage of the check command
+The command compares your plugin's `go.sum` file with the libraries initially used to compile the running binary. A detailed list will be shown if there are any incompatibilities between your plugin and KrakenD.
 
-To get started writing your plugins, see:
+If you integrate this command as part of your CI/CD pipeline or `Dockerfile` build, it will exit with a status code `0` when your plugin's libraries are compatible with KrakenD and with a status code `1` when they are not.
 
-- [Introduction to custom plugins](/docs/extending/)
-- [Writing custom plugins](/docs/extending/writing-plugins/)
-
-## Usage of check-plugin
-The command compares your plugin's `go.sum` file with the libraries initially used to compile the running binary. If there are any incompatibilities between your plugin and KrakenD, a detailed list will be shown.
-
-If you integrate this command as part of your CI/CD pipeline or `Dockerfile` build, it will exit with a status code `0` when the libraries of your plugin are compatible with KrakenD and with a status code `1` when they are not.
-
-If you want to test that a compiled plugin works (it loads), you can use the [`test-plugin` command](/docs/extending/test-plugin/) once you have it compiled.
-
-The `krakend check-plugin` command accepts the following options:
+The `{{< product check_plugin_command >}}` command accepts the following options:
 
 {{< terminal title="Usage of KrakenD check" >}}
-krakend check-plugin -h
+{{< product check_plugin_command >}} -h
 
 {{< ascii-logo >}}
 
@@ -43,10 +35,10 @@ Validates that the active configuration file has a valid syntax to run the servi
 Change the configuration file by using the --config flag
 
 Usage:
-  krakend check-plugin [flags]
+ {{< product check_plugin_command >}} [flags]
 
 Examples:
-krakend check-plugin -g 1.17.0 -s ./go.sum
+{{< product check_plugin_command >}} -g 1.17.0 -s ./go.sum
 
 Flags:
   -f, --format        Dump the commands to update
@@ -57,16 +49,17 @@ Flags:
 {{< /terminal >}}
 
 ## Flags
-Use `krakend check-plugin` in combination with the following flags:
+Use `{{< product check_plugin_command >}}` in combination with the following flags:
 
 - `-f` or `--format` to let KrakenD suggest you about the `go get` commands you should launch.
 - `-s` or `--sum` to specify the path to the `go.sum` file of your plugin.
 - `-g` or `--go` to specify the Go version you are using to compile the plugin.
 - `-l` or `--libc` to specify the libc version installed in the system. The libc version must have the prefix `MUSL-`, `GLIBC-`, and `DARWIN-`. For instance, a plugin in Mac Monterrey might use `DARWIN-12.2.1`, an Alpine container will need something like `MUSL-1.2.2`, and a Linux box will have `GLIBC-2.32`. To know your glibc version execute the [Find GLIBC script](https://github.com/krakend/krakend-ce/blob/master/find_glibc.sh). When there are incompatibilites because the operating system is different, but the libraries (glibc or musl) are in the **exact same version**, it is safe to ignore them.
 
+The example below shows an example of a plugin that uses several libraries that are incompatible with KrakenD:
 
 {{< terminal title="Checking a failing plugin example" >}}
-krakend check-plugin --go 1.17.7 --libc MUSL-1.2.2 --sum ../plugin-tools/go.sum
+{{< product check_plugin_command >}} --go 1.17.7 --libc MUSL-1.2.2 --sum ../plugin-tools/go.sum
 15 incompatibility(ies) found...
 go
     have: 1.17.0
@@ -115,11 +108,11 @@ golang.org/x/text
     want: v0.3.7
 {{< /terminal >}}
 
-## Updating plugin dependencies
+## Fixing plugin dependencies
 A quick attempt to fix your dependencies is to run the command with the `-f` flag, which will suggest a series of `go get` commands that you can execute to solve the incompatibilities. For instance:
 
 {{< terminal title="Fixing dependencies" >}}
-krakend check-plugin -s ~/Downloads/go.sum -f
+{{< product check_plugin_command >}} -s ~/Downloads/go.sum -f
 12 incompatibility(ies) found...
 go get cloud.google.com/go/pubsub@v1.19.0
 go get github.com/census-instrumentation/opencensus-proto@v0.3.0

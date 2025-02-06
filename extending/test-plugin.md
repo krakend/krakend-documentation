@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-08-22
+lastmod: 2025-02-06
 date: 2022-01-28
 linktitle: Testing your plugins
 title: "Test plugins after compiling them"
@@ -29,7 +29,7 @@ The `test-plugin` command requires you to pass the type of plugin you would like
 The command accepts the following options:
 
 {{< terminal title="Usage of test-plugin" >}}
-krakend test-plugin -h
+{{< product test_plugin_command >}} -h
 {{< ascii-logo >}}
 
 Version: {{< product latest_version >}}
@@ -37,10 +37,10 @@ Version: {{< product latest_version >}}
 Tests that one or more plugins are loadable into KrakenD.
 
 Usage:
-  krakend test-plugin [flags] [artifacts]
+  {{< product test_plugin_command >}} [flags] [artifacts]
 
 Examples:
-krakend test-plugin -scm ./plugins/my_plugin.so ./plugins/my_other_plugin.so
+{{< product test_plugin_command >}} -scm ./plugins/my_plugin.so ./plugins/my_other_plugin.so
 
 Flags:
   -c, --client     The artifact should contain a Client Plugin.
@@ -49,14 +49,14 @@ Flags:
   -s, --server     The artifact should contain a Server Plugin.
 {{< /terminal >}}
 
-You can pass as many arguments as plugins you want to check at once. For instance, if you want to test that `plugin1.so` and `plugin2.so` are loadable as server plugins, you could execute `krakend test-plugin -s plugin1.so plugin2.so`.
+You can pass as many arguments as plugins you want to check at once. For instance, if you want to test that `plugin1.so` and `plugin2.so` are loadable as server plugins, you could execute `{{< product test_plugin_command >}} -s plugin1.so plugin2.so`.
 
 You should provide at least on of the flags `-c` (client plugins), `-m` (req/resp modifiers), or `-s` (server plugins).
 
 Here's an output example:
 
 {{< terminal title="Checking a failing plugin example" >}}
-krakend test-plugin -smc plugin1.so plugin2.so
+{{< product test_plugin_command >}} -smc plugin1.so plugin2.so
 [KO] SERVER	    plugin1.so: The plugin does not contain a HandlerRegisterer.
 [KO] MODIFIER   plugin1.so: The plugin does not contain a ModifierRegisterer.
 [OK] CLIENT     plugin1.so
