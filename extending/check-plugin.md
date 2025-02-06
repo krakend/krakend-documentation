@@ -31,21 +31,20 @@ The `{{< product check_plugin_command >}}` command accepts the following options
 
 Version: {{< product latest_version >}}
 
-Validates that the active configuration file has a valid syntax to run the service.
-Change the configuration file by using the --config flag
+Checks your plugin dependencies are compatible and proposes commands to update your dependencies.
 
 Usage:
- {{< product check_plugin_command >}} [flags]
+  krakend {{< product latest_version >}} [flags]
 
 Examples:
-{{< product check_plugin_command >}} -g 1.17.0 -s ./go.sum
+ krakend {{< product latest_version >}} -g 1.19.0 -s ./go.sum -f
 
 Flags:
-  -f, --format        Dump the commands to update
-  -g, --go string     The version of the go compiler used for your plugin (default "1.17.11")
+  -f, --format        Shows fix commands to update your dependencies
+  -g, --go string     The version of the go compiler used for your plugin (default "1.22.11")
   -h, --help          help for check-plugin
   -l, --libc string   Version of the libc library used
-  -s, --sum string    Path to the go.sum file to analize (default "./go.sum")
+  -s, --sum string    Path to the go.sum file to analyze (default "./go.sum")
 {{< /terminal >}}
 
 ## Flags
@@ -53,8 +52,8 @@ Use `{{< product check_plugin_command >}}` in combination with the following fla
 
 - `-f` or `--format` to let KrakenD suggest you about the `go get` commands you should launch.
 - `-s` or `--sum` to specify the path to the `go.sum` file of your plugin.
-- `-g` or `--go` to specify the Go version you are using to compile the plugin.
-- `-l` or `--libc` to specify the libc version installed in the system. The libc version must have the prefix `MUSL-`, `GLIBC-`, and `DARWIN-`. For instance, a plugin in Mac Monterrey might use `DARWIN-12.2.1`, an Alpine container will need something like `MUSL-1.2.2`, and a Linux box will have `GLIBC-2.32`. To know your glibc version execute the [Find GLIBC script](https://github.com/krakend/krakend-ce/blob/master/find_glibc.sh). When there are incompatibilites because the operating system is different, but the libraries (glibc or musl) are in the **exact same version**, it is safe to ignore them.
+- `-g` or `--go` to specify the Go version you are using to compile the plugin
+- `-l` or `--libc` to specify the libc version installed in the system. The libc version must have the prefix `MUSL-`, `GLIBC-`, and `DARWIN-`. For instance, a plugin in Mac Monterrey might use `DARWIN-12.2.1`, an Alpine container will need something like `MUSL-1.2.2`, and a Linux box will have `GLIBC-2.32`. To know your glibc version execute the [Find GLIBC script](https://github.com/krakend/krakend-ce/blob/master/find_glibc.sh). When there are incompatibilities because the operating system is different, but the libraries (glibc or musl) are in the **exact same version**, it is safe to ignore them.
 
 The example below shows an example of a plugin that uses several libraries that are incompatible with KrakenD:
 
