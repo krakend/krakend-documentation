@@ -120,7 +120,7 @@ The default template, as shown in the screenshot, applies the following go templ
 ```go-text-template
 {{ range .Recommendations }}{{.Rule}}\t[{{colored .Severity}}]\t{{.Message}}\n{{ end }}
 ```
-As the ouput is processed using a template, you can inject anything you like. For instance, the example below generates a [TOML file](https://toml.io/en/) into `recommendations.toml`.
+As the output is processed using a template, you can inject anything you like. For instance, the example below generates a [TOML file](https://toml.io/en/) into `recommendations.toml`.
 
 {{< terminal title="Custom output" >}}
 krakend audit -f '{{range .Recommendations}}

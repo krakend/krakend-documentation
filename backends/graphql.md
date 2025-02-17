@@ -45,7 +45,7 @@ In this scenario, **the end-user consumes traditional REST content**, without ev
 
 **KrakenD acts as the GraphQL client**, negotiating the content with the GraphQL server and hiding its complexity from the end-user. The end-user consumes REST content and retrieves the data in JSON, XML, RSS, or any other format supported by KrakenD.
 
-The configuration to consume GraphQL content from your GrapQL graphs could look like this:
+The configuration to consume GraphQL content from your GraphQL graphs could look like this:
 
 {{< highlight json "hl_lines=7-16">}}
 {

@@ -19,9 +19,9 @@ meta:
 ---
 Caching allows you to **store backend responses in memory** to reduce the number of calls a user sends to the origin, **reducing the network traffic and alleviating the pressure on your services**.
 
-KrakenD works similarly to the deafult rules of a CDN to cache responses, as it adheres mostly to the [RFC-7234](https://datatracker.ietf.org/doc/html/rfc7234) (HTTP/1.1 Caching) in its implementation, and all the internals follow the decisions based on the RFC.
+KrakenD works similarly to the default rules of a CDN to cache responses, as it adheres mostly to the [RFC-7234](https://datatracker.ietf.org/doc/html/rfc7234) (HTTP/1.1 Caching) in its implementation, and all the internals follow the decisions based on the RFC.
 
-The caching component is a capability of the default KrakenD HTTP client connecting to your upstream services, and can store content in-memory so the next request that is within a valid expiration window can be returned right away without using the network, alliviating pressure and improving times.
+The caching component is a capability of the default KrakenD HTTP client connecting to your upstream services, and can store content in-memory so the next request that is within a valid expiration window can be returned right away without using the network, alleviating pressure and improving times.
 
 KrakenD does not cache the final content delivered to the end-user (the endpoint output), but the response of the backend (close, but not the same). Its approach is to store individual backend responses rather than aggregated content. In an endpoint with aggregation, you will need to add the cache component to all the backends that need caching individually. If you have manipulations of content after retrieving the content, these are not cached either.
 
@@ -97,7 +97,7 @@ This idea is represented in the following example:
 
 ![Example of shared and individual cache](/images/documentation/diagrams/cache-options.mmd.svg)
 
-In the diagram above there are four `backend` definitions that could be anywhere across different endpoints. Backends `B` and `C` query their upstream services and store the content in a cache bucket that is contrained to their private access.
+In the diagram above there are four `backend` definitions that could be anywhere across different endpoints. Backends `B` and `C` query their upstream services and store the content in a cache bucket that is constrained to their private access.
 
 On the other hand, backends `A` and `D` use a shared cache bucket, so if one of them saves a result the other can fetch the same cache key without needing to go to the origin.
 
@@ -141,8 +141,8 @@ In addition, there are other ways to check if backend responses are served from 
 - Comparing the latency of the requests in your metrics
 - Check your backend logs
 
-{{< note title="Configurations not elegible for caching" type="warning" >}}
-The components [Client Credentials](/docs/authorization/client-credentials/), [Lambda functions](/docs/backends/lambda/), [AMQP Consumers or Producers](/docs/backends/amqp-consumer/), [Publish/Subscribe](/docs/backends/pubsub/), and [HTTP Client plugins](/docs/extending/http-client-plugins/) **don't support direct caching** because they use a **custom HTTP client** with extended functionality that does not use the one with caching capabilities. Generally speaking, connections with upstream services that need authentication or custom HTTP clients are not elegible to cache their responses.
+{{< note title="Configurations not eligible for caching" type="warning" >}}
+The components [Client Credentials](/docs/authorization/client-credentials/), [Lambda functions](/docs/backends/lambda/), [AMQP Consumers or Producers](/docs/backends/amqp-consumer/), [Publish/Subscribe](/docs/backends/pubsub/), and [HTTP Client plugins](/docs/extending/http-client-plugins/) **don't support direct caching** because they use a **custom HTTP client** with extended functionality that does not use the one with caching capabilities. Generally speaking, connections with upstream services that need authentication or custom HTTP clients are not eligible to cache their responses.
 {{< /note >}}
 
 

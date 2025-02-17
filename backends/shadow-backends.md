@@ -66,4 +66,4 @@ The following example shows a backend that is changing from `v1` to `v2`, but we
 ```
 
 ## Canary testing and Canary Releases
-Learn how to do [canary testing](/blog/krakend-shadow-testing/), or the different [Canary Relases](/blog/canary-releases/) strategies you can use in our blog post.
+Learn how to do [Canary Testing](/blog/krakend-shadow-testing/), or the different [Canary Releases](/blog/canary-releases/) strategies you can use in our blog post.

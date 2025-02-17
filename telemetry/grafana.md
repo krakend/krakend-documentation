@@ -37,7 +37,7 @@ The dashboard is extensive and offers you metrics like:
 - Throughput
 - Distributions, timers, garbage collection and a long etcetera
 
-The following video makes a quick tour of the information you can find on our Grafana Dashbaord using Prometheus as data source:
+The following video makes a quick tour of the information you can find on our Grafana Dashboard using Prometheus as data source:
 
 {{< youtube a6F0s5aozJU >}}
 

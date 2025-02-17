@@ -46,7 +46,7 @@ Authorization allows you to implement Role-based (RBAC) and attribute-based acce
 In addition, if you need to invalidate legitimate tokens that are still within a valid TTL, KrakenD supports [JWT token revocation using bloom filters](/docs/authorization/revoking-tokens/) and [centralized token revocation servers](/docs/enterprise/authentication/revoke-server/), ensuring revoked tokens are immediately invalidated across all KrakenD nodes.
 
 ## Encryption and Secure Communication
-The gateway supports [TLS](/docs/service-settings/tls/) for traffic comming from consumers (server) and also between KrakenD and your services (client). It defaults to TLS 1.3 unless downgraded by config.
+The gateway supports [TLS](/docs/service-settings/tls/) for traffic coming from consumers (server) and also between KrakenD and your services (client). It defaults to TLS 1.3 unless downgraded by config.
 
 For business-to-business authentication, [Mutual TLS (mTLS)](/docs/authorization/mutual-authentication/) creates a secure and exclusive channel based on trusted certificates.
 

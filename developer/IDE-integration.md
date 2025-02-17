@@ -26,7 +26,7 @@ This is how it could look like:
 ![Visual Code integration](/images/documentation/krakend-ide-integration.png)
 
 ## Editor integration for KrakenD files
-KrakenD has published an updated JSON-schema definition ([source](https://github.com/krakend/krakend-schema)) to validate configuration files from your IDE automatically. The editors with built-in json-schema validation will offer this feature **without installing any additional plugin**. All you need to do, is add in the beginning of your `krakend.json` configuration file a line specifing the schema:
+KrakenD has published an updated JSON-schema definition ([source](https://github.com/krakend/krakend-schema)) to validate configuration files from your IDE automatically. The editors with built-in json-schema validation will offer this feature **without installing any additional plugin**. All you need to do, is add in the beginning of your `krakend.json` configuration file a line specifying the schema:
 
 
 ```json

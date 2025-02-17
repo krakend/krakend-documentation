@@ -21,7 +21,7 @@ The TLS settings define the parameters that the gateway takes into account to ha
 ![TLS diagram](/images/documentation/diagrams/tls.mmd.svg)
 
 {{< note title="Independent properties" type="tip" >}}
-The properies `tls` and `client_tls` are independent of each other. You can declare one, both, or none.
+The properties `tls` and `client_tls` are independent of each other. You can declare one, both, or none.
 {{< /note >}}
 
 ## TLS server settings

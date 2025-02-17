@@ -357,7 +357,7 @@ Because Lua scripts evaluate during the request execution, you won't see any pro
 attempt to index a non-table object(function) with key 'really_bad' (bad-code.lua:5)
 ```
 
-The ending `(bad-code.lua:5)` tells you that this error was initated at the script `bad-code.lua` on **line number** `5`. To understand the errors, check the Lua language as these come from the Lua engine directly.
+The ending `(bad-code.lua:5)` tells you that this error was initiated at the script `bad-code.lua` on **line number** `5`. To understand the errors, check the Lua language as these come from the Lua engine directly.
 
 ## Language limitations
 Because Lua runs sandboxed in a **virtual machine**, there is certain stuff you cannot do. When you include files, you should limit your logic to creating functions and referencing them in different places.

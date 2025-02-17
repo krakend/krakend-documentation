@@ -828,7 +828,7 @@ The following example defines a backend using port `1234`, but the modifier chan
 ```
 
 ## Groups (Apply multiple modifiers)
-All the modifiers perform a single modification in the request or the response. However, the `fifo.Group` and the `priority.Group` allow you to create a list of modifiers executed sequentailly or in a specific order. The group is needed when using more than one modifier and encapsulates all the following actions to perform in the `modifiers` array.
+All the modifiers perform a single modification in the request or the response. However, the `fifo.Group` and the `priority.Group` allow you to create a list of modifiers executed sequentially or in a specific order. The group is needed when using more than one modifier and encapsulates all the following actions to perform in the `modifiers` array.
 
 ### FIFO group
 The `fifo.Group` holds a list of modifiers executed in first-in, first-out order.

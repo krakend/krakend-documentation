@@ -107,7 +107,7 @@ func (r registerer) registerClients(_ context.Context, extra map[string]interfac
 	   }
 	*/
 
-	// The config variable contains all the keys you hace defined in the configuration:
+	// The config variable contains all the keys you have defined in the configuration:
 	config, _ := extra["krakend-client-example"].(map[string]interface{})
 
 	// The plugin will look for this path:

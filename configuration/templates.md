@@ -22,7 +22,7 @@ Our convention for saving templates, is using the `.tmpl` extension, although th
 ## Template syntax
 The templates use internally the Go `text/template` package and **Sprig functions**. For templates loaded in the Flexible Configuration, there are additional custom functions to load external resources.
 
-There are two inital external documentation pages worth reading to get familiar with these, although you'll find practical information below:
+There are two initial external documentation pages worth reading to get familiar with these, although you'll find practical information below:
 
 - The [Go text/template documentation](https://golang.org/pkg/text/template/) sets the rules of templates.
 - [Sprig functions](http://masterminds.github.io/sprig/)
@@ -58,7 +58,7 @@ A few basics to get started:
 - You can loop with assigned indexes and variables as `{{ range $key, $value := .ELEMENT}}...{{end}}`
 - Access to elements using `{{with .ELEMENT}}...{{end}}`, or `{{with .ELEMENT}}yes{{else}}no{{end}}` when the variable is empty
 - The context is represented with a starting dot `.` (see below)
-- You can supress preceding and following spaces from any block adding `-`, for instance: `{{- if true -}}...{{- end -}}`
+- You can suppress preceding and following spaces from any block adding `-`, for instance: `{{- if true -}}...{{- end -}}`
 - You can pipe [functions](https://pkg.go.dev/text/template#hdr-Functions) you can add to this
 
 ### Understanding the context (the dot)
@@ -79,7 +79,7 @@ Variables can be passed as arguments to functions and actions. When you are in a
 {{ .b }}
 {{end}}
 ```
-Prints `hi`. As you can see the context inside the with is different, and we don't access it lile `.a.b`.
+Prints `hi`. As you can see the context inside the with is different, and we don't access it like `.a.b`.
 
 When calling templates from templates (flexible config), make sure to add the final dot `.` to pass all the settings files to the next template or pass those variables that are needed:
 

@@ -73,7 +73,7 @@ It's easy to picture the state of the circuit breaker as an electrical component
 
 ![Krakend logo](/images/documentation/circuit-breaker.png)
 
-The Circuit Breaker starts with the `CLOSED` state, meaning the electricty can flow to the backends as they are considered healthy (*innocent until proven guilty*).
+The Circuit Breaker starts with the `CLOSED` state, meaning the electricity can flow to the backends as they are considered healthy (*innocent until proven guilty*).
 
 Then the component watches the state of the connections with your backend(s), with a tolerance to **consecutive failures** (`max_errors`) during a time interval (`interval`). it stops all the interaction with the backend for the next N seconds (the `timeout`). We call this state `OPEN`.
 
@@ -94,7 +94,7 @@ This is the way the states change:
 When the circuit breaker counts the number of consecutive `max_errors`, an error could be anything that prevents having a successful connection with the service and completing the work.
 
 {{< note title="`no-op` endpoints do not check HTTP status codes" type="warning" >}}
-Because a `no-op` does not evaluate the response status code, the circuit breaker does not see the reponse status code of the backend and the errors are limited to the following list below.
+Because a `no-op` does not evaluate the response status code, the circuit breaker does not see the response status code of the backend and the errors are limited to the following list below.
 {{< /note >}}
 
 

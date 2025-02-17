@@ -38,8 +38,8 @@ In addition, on the {{< badge >}}Enterprise{{< /badge >}} edition there is:
 - [Service Rate Limiting (stateful, Redis)](/docs/enterprise/throttling/global-rate-limit/): Sets the maximum throughput users can have on a KrakenD cluster, backed on Redis. All machines centralize the counters in a database.
 - [Service Rate Limiting (stateless)](/docs/enterprise/service-settings/service-rate-limit/): Sets the maximum throughput users can have to a KrakenD instance, but each machine counts its own traffic and no database.
 - [Endpoint Rate Limiting (stateful)](/docs/enterprise/throttling/endpoint-redis-rate-limit/): Sets the maximum throughput users can have to specific endpoints, backed on Redis.
-- [Tiered Rate Limiting (stateless)](/docs/enterprise/service-settings/tiered-rate-limit/#stateless-tiered-rate-limit): Same but the counters ara managed indepently by each machine and no database.
-- [Tiered Rate Limiting (stateful, Redis)](/docs/enterprise/service-settings/tiered-rate-limit/#stateful-redis-backed-tiered-rate-limit): Sets the maximum throughtput users can send depending on their tier/plan at a cluster level, backed on Redis.
+- [Tiered Rate Limiting (stateless)](/docs/enterprise/service-settings/tiered-rate-limit/#stateless-tiered-rate-limit): Same but the counters ara managed independently by each machine and no database.
+- [Tiered Rate Limiting (stateful, Redis)](/docs/enterprise/service-settings/tiered-rate-limit/#stateful-redis-backed-tiered-rate-limit): Sets the maximum throughput users can send depending on their tier/plan at a cluster level, backed on Redis.
 
 ## Circuit Breaker
 [Circuit Breakers](/docs/backends/circuit-breaker/) are automatic protection mechanisms that help prevent cascading failures in your system by temporarily halting requests to struggling backend services.

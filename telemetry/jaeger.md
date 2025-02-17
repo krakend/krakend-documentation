@@ -21,7 +21,7 @@ meta:
   log_prefix:
   - "[SERVICE: OpenTelemetry]"
 ---
-The KrakenD exporter to [Jaeger](https://www.jaegertracing.io/) allows you to submit spans to an OpenTelemtry Collector (HTTP or gRPC) automatically.
+The KrakenD exporter to [Jaeger](https://www.jaegertracing.io/) allows you to submit spans to an OpenTelemetry Collector (HTTP or gRPC) automatically.
 
 Jaeger is an open-source, end-to-end distributed tracing system that allows you to monitor and troubleshoot transactions in complex distributed systems. Use Jaeger when you want to see the complete flow of a user request through KrakenD and its connected services.
 
@@ -98,7 +98,7 @@ services:
       - "5778:5778" # serve configs
       - "16686:16686" # serve frontend UI
       - "4317:4317"   # otlp grpc: we remap this to be able to run other envs
-      - "4318:4318"   # otlp http: we reamp this to be able to run other envs
+      - "4318:4318"   # otlp http: we remap this to be able to run other envs
     deploy:
       resources:
         limits:

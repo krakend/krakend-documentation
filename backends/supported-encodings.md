@@ -58,7 +58,7 @@ For instance, if your backend returns a simple `Hello World!`, the response of K
 
 Similarly, if your backend returns `[{"item": 1},{"item": 2}]` then the response of KrakenD (`output_encoding=json`) would be `{ "collection": [{"item": 1},{"item": 2}] }`.
 
-Some `ouput_encodings` will revert this wrapping before returning the content to the user to match the exact value provided by the backend, but this gives you the oportunity to manipulate the content and work with it at the endpoint level. The `output_encoding` of `string` will remove the `content` wrapping, while the `json-collection` while remove the `collection` wrapping.
+Some `output_encodings` will revert this wrapping before returning the content to the user to match the exact value provided by the backend, but this gives you the opportunity to manipulate the content and work with it at the endpoint level. The `output_encoding` of `string` will remove the `content` wrapping, while the `json-collection` while remove the `collection` wrapping.
 
 ## Example of mixed encodings
 

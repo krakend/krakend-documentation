@@ -1,7 +1,7 @@
 ---
 lastmod: 2023-04-13
 date: 2023-04-13
-description: The zero-trust security is a deny by default software design choice, where the exposed surface is limited to what it's explictly declared.
+description: The zero-trust security is a deny by default software design choice, where the exposed surface is limited to what it's explicitly declared.
 linktitle: Zero-trust security
 title: "Zero Trust Design: Secure API Architecture"
 weight: 10
