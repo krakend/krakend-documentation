@@ -1,0 +1,18 @@
+on: [push]
+name: Notify doc changes
+permissions:
+  contents: read
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify to Slack
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: webhook-trigger
+          payload: |
+            app: "${{ github.event.repository.name }}"
+            status: "${{ job.status }}"
+            env: "production"
+            msg: "${{ github.event.head_commit.message }} ${{ github.event.head_commit.url }}"
