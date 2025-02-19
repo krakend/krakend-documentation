@@ -31,7 +31,7 @@ The mechanics are simple: you add the `telemetry/opentelemetry` integration with
 ![Prometheus scrapping from KrakenD image](/images/documentation/diagrams/opentelemetry-prometheus.mmd.svg)
 
 ## Prometheus Configuration
-To enable scrapable Prometheus metrics on Krakend, add the [OpenTelemetry integration](/docs/telemetry/opentelemetry/) with a `prometheus` exporter. The following configuration is an example of how to do it:
+To enable scrapeable Prometheus metrics on Krakend, add the [OpenTelemetry integration](/docs/telemetry/opentelemetry/) with a `prometheus` exporter. The following configuration is an example of how to do it:
 
 ```json
 {

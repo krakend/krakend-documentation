@@ -51,7 +51,7 @@ check-license:
   image: {{< product image >}}:{{< product latest_version >}}
   script:
     # Checks if the LICENSE file (must exist in the path) is valid for the next 90 days.
-    # If it isn't, the deployment will fail, just to draw your atention. Lower the value afterwards.
+    # If it isn't, the deployment will fail, just to draw your attention. Lower the value afterwards.
     - krakend license valid-for 90d
 
 # Example to check the configuration using flexible configuration

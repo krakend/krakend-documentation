@@ -91,7 +91,7 @@ Example:
 
 
 ### Cache recommendations
-**Combining the two levels of cache is usually the ideal scenario**. On one side, each endpoint has a scoped local cache entry and is the perfect strategy to handle contention. On the other side, adding the JWK client cache makes that when each endpoint cache expires, can stll rely on a more global level of cache which allows you to control the exact time between requests to your identity server.
+**Combining the two levels of cache is usually the ideal scenario**. On one side, each endpoint has a scoped local cache entry and is the perfect strategy to handle contention. On the other side, adding the JWK client cache makes that when each endpoint cache expires, can still rely on a more global level of cache which allows you to control the exact time between requests to your identity server.
 
 You might thing that one global cache level would be enough, but having this granularity makes the system way more efficient, performant, and error-free.
 

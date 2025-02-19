@@ -23,7 +23,7 @@ When KrakenD runs (whether with `run` or `check`), all the behavior is loaded fr
 ## Use a reserved environment variable
 There are a group of reserved environment variables that are automatically recognized by KrakenD when set.
 
-Examples are when you want to replace the `port`, the default `timeout`, or the configuration `name` (sent to your telemetry) that already exists inthe configuration.
+Examples are when you want to replace the `port`, the default `timeout`, or the configuration `name` (sent to your telemetry) that already exists in the configuration.
 
 In essence, you can replace any value in the configuration that lives in the root level, and is a string, an integer, or a boolean. To do it you only need to capitalize the property name and add a prefix `KRAKEND_`.
 
@@ -46,7 +46,7 @@ For instance, take the following `krakend.json` configuration as an example:
 }
 ```
 
-You could start the server with the following command wich would allow you to override the values in the configuration:
+You could start the server with the following command which would allow you to override the values in the configuration:
 
 {{< terminal title="Example: Override configuration with env vars" >}}
 KRAKEND_NAME="Build ABC0123" \

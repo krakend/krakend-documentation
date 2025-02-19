@@ -260,7 +260,7 @@ This example validates that an array query string parameter contains a given val
 
 In this case, an API operation accepts an array query string parameter named `foo`. The backend service's platform requires this passed to the API as `?foo[]=bar&foo[]=baz` in the query string.
 
-KrakenD intercepts the parameter as the suffixed `foo[]`, so that's what must be allowed in your `input_query_strings` list. Since the parameter name contains the `[]` characters then it must be referred to as a map key instead of dot-notaion in CEL syntax.
+KrakenD intercepts the parameter as the suffixed `foo[]`, so that's what must be allowed in your `input_query_strings` list. Since the parameter name contains the `[]` characters then it must be referred to as a map key instead of dot-notation in CEL syntax.
 
 The following config uses CEL validation to block requests that do not have `foo[]` defined in the query string or do not have "bar" in the `foo[]` array:
 

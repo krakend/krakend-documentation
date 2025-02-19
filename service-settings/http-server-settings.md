@@ -25,7 +25,7 @@ If you want to customize any of the settings below, they must be written at the 
 ## Override settings using environment vars
 When you declare in the configuration file any of the HTTP server settings declared above, you can [override its value through environment variables](/docs/configuration/environment-vars/) when starting the server.
 
-All the environment variables have the same name are the same settings above in uppercase and with the `KRAKEND_` preffix. For instance, looking at the list of settings above, you could override:
+All the environment variables have the same name are the same settings above in uppercase and with the `KRAKEND_` prefix. For instance, looking at the list of settings above, you could override:
 
 - `KRAKEND_PORT`
 - `KRAKEND_READ_TIMEOUT`

@@ -20,10 +20,10 @@ meta:
   log_prefix:
   - "[SERVICE: Opencensus]"
 ---
-{{< note title="OpenCensus is no longer mantained" type="error" >}}
+{{< note title="OpenCensus is no longer maintained" type="error" >}}
 KrakenD has traditionally offered its telemetry integration through this **OpenCensus** component, which has provided reliable service for over six years, but now is transitioning to the more modern and robust [OpenTelemetry](/docs/telemetry/opentelemetry/) framework.
 
-As a result of a change in the industry, the OpenCensus integration is no longer mantained, and all efforts are focused on [OpenTelemetry](/docs/telemetry/opentelemetry/).
+As a result of a change in the industry, the OpenCensus integration is no longer maintained, and all efforts are focused on [OpenTelemetry](/docs/telemetry/opentelemetry/).
 {{< /note >}}
 
 The Opencensus exporter is a single component that allows you to **export data to multiple providers**, both open source and privative.
@@ -85,4 +85,4 @@ If you have been using telemetry on KrakenD for the past six years (before Krake
 
 While OpenCensus has been working very well, it has merged with OpenTracing to form [OpenTelemetry](https://opentelemetry.io/), which serves as the next major version of OpenCensus and OpenTracing.
 
-While our OpenCensus integration will keep functioning on KrakenD for now, it won't receive additional updates (netiher security fixes), so we recommend replacing it with OpenTelemetry.
+While our OpenCensus integration will keep functioning on KrakenD for now, it won't receive additional updates (neither security fixes), so we recommend replacing it with OpenTelemetry.

@@ -64,7 +64,7 @@ Below there is a **recommended configuration** in production for a good performa
 ```
 If you send the logs out to an [ELK](/docs/logging/logstash/) or a [GELF server](/docs/logging/graylog-gelf/), use `"stdout": false` to avoid having double output.
 
-{{< note title="Redirect ouput to /dev/null for maximum performance" type="tip" >}}
+{{< note title="Redirect output to /dev/null for maximum performance" type="tip" >}}
 **When the output of KrakenD stdout is not important to you**, set the logging level to `CRITICAL` and redirect its output to `/dev/null` to have even more performance. To do that, start KrakenD with:
 
     krakend run -c krakend.json >/dev/null 2>&1
