@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ master ]
+#    branches: [ master ]
 
 name: Notify doc changes
 permissions:
@@ -20,3 +20,8 @@ jobs:
             env: "pre-production"
             msg: "${{ github.event.head_commit.message }}"
             link: "${{ github.event.pull_request.url || github.event.head_commit.url }}"
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
