@@ -33,7 +33,7 @@ KrakenD dynamically reshapes, filters, and transforms requests and responses, en
 In addition, the {{< badge >}}Enterprise{{< /badge >}} edition allows you to set complex logic:
 
 - [Response Manipulation with a Query Language](/docs/enterprise/endpoints/jmespath/): Dynamically manipulate complex payloads with advanced query expressions.
-- [Response Manipulation with Regexp](/docs/enterprise/endpoints/content-replacer/): Replace and mask content using regular expressions.
+- [Response Manipulation with Functions](/docs/enterprise/endpoints/content-replacer/): Replace and mask content using pre-defined functions, like regular expressions.
 - [Response Manipulation with Templates](/docs/enterprise/backends/response-body-generator/): Write a template defining the response delivered to the client
 - [Request Manipulation with Templates](/docs/enterprise/backends/body-generator/): Write a template defining the request sent to the backend
 - [Global Response Header modification](/docs/enterprise/service-settings/response-headers-modifier/): Globally alter the headers returned to clients.
@@ -66,7 +66,7 @@ Plus on the {{< badge >}}Enterprise{{< /badge >}}:
 
 - [JSON Schema Response Validation](/docs/enterprise/endpoints/response-schema-validator/): Validate backend responses according to a schema before delivering them to the client.
 - [Setting Maximum Request Size](/docs/enterprise/endpoints/maximum-request-size/): Control the maximum size of the payload received
-    
+
 
 ## Why manipulate requests and responses?
 Modern APIs must often adapt to varying client requirements, integrate with legacy systems, or comply with stringent data security and performance standards. In addition, most of the time, implementors of these APIs do not have control over the origin of the data. Request and response manipulation allows you to:

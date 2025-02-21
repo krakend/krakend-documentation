@@ -240,20 +240,29 @@ students[?age > `18` ].name
 
 See [Advanced query language manipulation {{< badge>}}Enterprise{{< /badge >}}](/docs/enterprise/endpoints/jmespath/)
 
-## Content replacement with regular expressions
-Another Enterprise feature is the Content Replacer plugin, which allows you to search objects in the responses and apply regular expression replacements, or literal replacements.
+## Content replacement with functions
+Another Enterprise feature is the `modifier/response-body`, which allows you to search objects in the responses and apply replacement functions, like regular expression, trimming, lowercase, etc.
 
 For instance:
 
 ```json
-    {
-        "payment.credit_card": {
-            "@comment": "Ridiculous card masking. Take 4 digits and remove the rest. Credit card is nested inside the payment object.",
+{
+  "url_pattern": "/card/{user}",
+  "extra_config": {
+    "modifier/response-body": {
+      "modifiers": [
+        {
+          "regexp": {
+            "@comment": "Ridiculous card masking. Take 4 digits and remove the rest. Credit card is inside a data object.",
+            "field": "data.credit_card",
             "find": "(^\\d{4})(.*)",
-            "replace": "${1}-XXXX",
-            "regexp": true
+            "replace": "${1}-XXXX"
+          }
         }
+      ]
     }
+  }
+}
 ```
 
 See [Content Replacer {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/endpoints/content-replacer/)
