@@ -22,7 +22,7 @@ meta:
 
 Before digging any further, here are some answers to frequently asked questions:
 
-1) **KrakenD does not generate the tokens itself**. Still, you can plug it into any SaaS or self-hosted OpenID Identity Provider (**IdP**) using industry standards (e.g., Auth0, Azure AD, Descope, Google Identity Platorm/Firebase, Keycloak, etc.)
+1) **KrakenD does not generate the tokens itself**. Still, you can plug it into any SaaS or self-hosted OpenID Identity Provider (**IdP**) using industry standards (e.g., Auth0, Azure AD, Google Identity Platorm/Firebase, Keycloak, etc.)
 
 2) **KrakenD does not need to validate all calls using your IdP**. KrakenD validates every incoming call's signature and **it doesn't make token introspection** (asking for the IdP data about the token owner).
 

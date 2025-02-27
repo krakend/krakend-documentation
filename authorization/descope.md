@@ -69,7 +69,9 @@ Create a `krakend.json` file and add the following configuration:
 }
 {{< /highlight >}}
 
-From the configuration above, you have to **replace <your_project_id>** to match your Descope Project Id, found on the [Descope Project Settings Page](https://app.descope.com/settings/project) in the Descope Console. Replace `api.descope.com` with the localized baseURL for projects located outside of the US.
+<Callout>
+Replace `api.descope.com` with your [custom domain](https://docs.descope.com/how-to-deploy-to-production/custom-domain) or your respective localized base url.
+</Callout>
 
 That's all you need for the basic configuration! You can expand the structure now to include checking specific roles, claims, etc.
 
@@ -102,7 +104,7 @@ Content-Length: 0
 
 Since no token is provided, KrakenD correctly denies access. If you check the KrakenD logs, you will also find a line `Error #01: Token not found`.
 
-Let's get a valid M2M token now. Log in to your Descope Console and [create an access key](https://docs.descope.com/access-keys/m2mauth#setting-up-access-keys). Using your Descope Project Id and Access Key, you can then run the followin `cURL` command to exchange the access key for a JWT:
+Let's get a valid M2M token now. Log in to your Descope Console and [create an access key](https://docs.descope.com/m2m-access-keys/m2mauth#setting-up-access-keys). Using your Descope Project Id and Access Key, you can then run the followin `cURL` command to exchange the access key for a JWT:
 
 {{< terminal title="Machine to Machine token request">}}
 curl -X POST "https://api.descope.com/v1/auth/accesskey/exchange" \
@@ -129,9 +131,9 @@ We have completed a basic setup that validates users using access tokens. With t
 Some possibilities are:
 - Create [**Roles** in Descope](https://docs.descope.com/authorization) and add them as a condition to accessing an endpoint in KrakenD.
 - Customize JWTs with [Descope JWT templates](https://docs.descope.com/project-settings/jwt-templates) for Users or Access Keys
-- Propogate user claims to your backend services.
+- Propagate user claims to your backend services.
 
-For more details, see [KrakenD's JWT Validation documentation](https://www.krakend.io/docs/authorization/jwt-validation/).
+For more details, see [KrakenD's JWT Validation documentation](/authorization/jwt-validation/).
 
 ### Conclusion
 Integrating Descope with KrakenD enhances security while maintaining flexibility. You can designate protected and public endpoints, ensuring controlled access to your APIs. Descope’s seamless integration with KrakenD streamlines authentication and improves user experience, making it an excellent choice for secure API management
