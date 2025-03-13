@@ -8,6 +8,7 @@ description: Learn about the telemetry and monitoring capabilities of KrakenD AP
 weight: 10
 images:
 - /images/documentation/available-exporters.png
+dark_header_image: true
 aliases: ["/docs/logging-metrics-tracing/tracing/", "/docs/telemetry/overview/"]
 menu:
   community_current:
