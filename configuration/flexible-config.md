@@ -9,6 +9,7 @@ since: 0.5
 menu:
   community_current:
     parent: "010 Configuration files"
+dark_header_image: true
 images:
 - /images/krakend-flexible-config.png
 weight: 30
