@@ -1,13 +1,13 @@
 ---
-lastmod: 
+lastmod:
 old_version: false
-date: 
+date:
 linktitle: Descope integration
 title: Descope Authorization
 description: Learn how to integrate Descope authorization with KrakenD API Gateway for secure and controlled access to your APIs.
 weight: 110
 menu:
-  community_v2.8:
+  community_current:
     parent: "080 Authentication & Authorization"
 meta:
   #since:
@@ -79,7 +79,7 @@ That's all you need for the basic configuration! You can expand the structure no
 
 From the folder where we create our `krakend.json` file, start the gateway with:
 {{< terminal title="Start the gateway with your configuration">}}
-docker run --rm -v "$PWD:/etc/krakend" -p "8080:8080" {{< product image >}}:2.8
+docker run --rm -v "$PWD:/etc/krakend" -p "8080:8080" {{< product image >}}:{{< product minor_version >}}
 {{< /terminal >}}
 
 Verify the gateway is running by checking the unprotected /__health endpoint:
