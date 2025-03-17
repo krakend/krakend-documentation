@@ -11,7 +11,7 @@ menu:
   community_v2.8:
     parent: "000 Getting Started"
 weight: 50
-images: ["https://raw.githubusercontent.com/krakend/playground-community/master/assets/composer-env.png"]
+images: ["/images/documentation/krakend-playground-diagram.png"]
 
 ---
 If you are new to KrakenD, a quick way to get started is to make use of the [KrakenD Playground](https://github.com/krakend/playground-community).
