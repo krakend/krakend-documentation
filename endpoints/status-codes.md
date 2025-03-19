@@ -26,7 +26,7 @@ The following status codes are the ones returned by the gateway. When you use `n
 | `301 Redirect` | When the router [adds a missing slash](/docs/service-settings/router-options/) to the endpoint and similar cases. |
 | `400 Bad Request` | Client made a malformed request, i.e. [json-schema](/docs/endpoints/json-schema/) validation failed, or problems when [signing a token](/docs/authorization/jwt-signing/) |
 | `401 Unauthorized` | Client sent an invalid JWT token or its claims |
-| `403 Forbidden` | The user is allowed to use the API, but not the resource, e.g.: Insufficient JWT [role](/docs/authorization/jwt-validation/), or [bot detector](/docs/throttling/botdetector/) banned it |
+| `403 Forbidden` | The user is allowed to use the API, but not the resource, e.g.: Insufficient JWT [role](/docs/authorization/jwt-validation/), [bot detector](/docs/throttling/botdetector/) banned it, [IP rejected](/docs/enterprise/throttling/ipfilter/), etc. |
 | `404 Not Found` | The requested endpoint is not configured on KrakenD |
 | `405 Method Not Allowed` | You have requested an endpoint that exists but not for the requested method (e.g.: you declared a GET but the request had a POST) |
 | `429 Too Many Requests` | The client reached the rate limit for the endpoint |
