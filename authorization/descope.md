@@ -133,7 +133,7 @@ Some possibilities are:
 - Customize JWTs with [Descope JWT templates](https://docs.descope.com/project-settings/jwt-templates) for Users or Access Keys
 - Propagate user claims to your backend services.
 
-For more details, see [KrakenD's JWT Validation documentation](/authorization/jwt-validation/).
+For more details, see [KrakenD's JWT Validation documentation](/docs/authorization/jwt-validation/).
 
 ### Conclusion
 Integrating Descope with KrakenD enhances security while maintaining flexibility. You can designate protected and public endpoints, ensuring controlled access to your APIs. Descope’s seamless integration with KrakenD streamlines authentication and improves user experience, making it an excellent choice for secure API management
