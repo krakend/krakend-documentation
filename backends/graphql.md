@@ -40,7 +40,7 @@ KrakenD offers a simple yet powerful way of consuming GraphQL content from your 
 ## REST to GraphQL transformation
 In this scenario, **the end-user consumes traditional REST content**, without even knowing that there is a GraphQL server behind:
 
-![GraphQL](/images/documentation/graphql/krakend-rest-to-graphql-transformation.png)
+<img title="REST to Graphql" src="/images/documentation/graphql/krakend-rest-to-graphql-transformation.png" class="dark-version-available">
 
 **KrakenD can use the variables in the body or in the endpoint URL** to generate the final GraphQL query it will send to the GraphQL server. The query is loaded from an external file or declared inline in the configuration and contains any variables needing replacement with the user input.
 
@@ -332,7 +332,7 @@ In this case, the GraphQL server receives a URL-encoded query with all the varia
 ## GraphQL gateway as a proxy
 In this approach, KrakenD gets in the middle to validate or rate limit requests, but the request is forwarded to the GraphQL servers, who receive the original GraphQL query from the end user.
 
-![Graphql](/images/documentation/graphql/krakend-graphql-proxy.png)
+<img title="Graphql" src="/images/documentation/graphql/krakend-graphql-proxy.png" class="dark-version-available">
 
 When working in this mode, you only need to configure the GraphQL endpoint and add your GraphQL as the backend. An example:
 
