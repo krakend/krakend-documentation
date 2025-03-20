@@ -9,8 +9,9 @@ weight: 10
 menu:
   community_current:
     parent: "060 Request and Response Manipulation"
+dark_header_image: true
 images:
-- /images/krakend-merge.png
+- /images/documentation/krakend-merge.png
 meta:
   noop_incompatible: true
 ---
@@ -26,7 +27,8 @@ When you have more than one `backend` connected to an `endpoint` that **is not**
 
 For instance, imagine you have three different API services exposing the resources `/a`,`/b`, and `/c`, and you want to disclose them all together in the KrakenD endpoint `/abc`. This is what you would get:
 
-![Merge](/images/krakend-merge.png)
+<img title="REST to Graphql" src="/images/documentation/krakend-merge.png" class="dark-version-available">
+
 
 The merge operation chooses user experience and responsiveness first. It makes its *best effort* to get all the necessary parts from the involved backends and return the composed object as soon as possible.
 
