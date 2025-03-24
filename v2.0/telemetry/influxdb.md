@@ -107,7 +107,7 @@ The connection with **InfluxDB v1.x** is straightforward and requires you nothin
 With the **InfluxDB v2.x** there are a few more steps you need to do the first time you run it.
 
 ### Connecting to Influx v1
-When using InfluxDB v1.x, you need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following docker-compose sets the credentials you need to reflect in the KrakenD configuration.
+When using InfluxDB v1.x, you need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following docker compose sets the credentials you need to reflect in the KrakenD configuration.
 
 {{< highlight yaml >}}
 version: "3"

@@ -114,7 +114,7 @@ For **InfluxDB v2.x**, we have included in our [Telemetry Dashboards](https://gi
 For **InfluxDB v1.x** (older) the process is straightforward and requires you nothing else than start an Influx instance with the desired configuration.
 
 ### Influx v2
-If you use Docker, you can start InfluxDB as part of a docker-compose file. You need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following `docker-compose.yml` sets the credentials you need to reflect in the KrakenD configuration.
+If you use Docker, you can start InfluxDB as part of a docker compose file. You need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following `docker-compose.yml` sets the credentials you need to reflect in the KrakenD configuration.
 
 ```yaml
 version: "3"
@@ -146,7 +146,7 @@ In the fields `db`, `username`, and `password` of the component configuration re
 The Influx **volume** below must have the contents of the [influx initdb script](https://github.com/krakend/telemetry-dashboards/tree/main/influx), that it will create the authorization needed to let KrakenD push the metrics.
 
 #### Manual configuration
-If you don't want to use the automated docker-compose above, the manual steps to create the auth are:
+If you don't want to use the automated docker compose above, the manual steps to create the auth are:
 
 Connect to your influx
 {{< terminal title="Term" >}}
@@ -210,7 +210,7 @@ Now your configuration should work and start sending data to InfluxDB:
 Make sure to type in `db` the bucket name you created on InfluxDB and the `username` and `password` as well.
 
 ### Influx v1
-When using InfluxDB v1.x, you need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following docker-compose sets the credentials you need to reflect in the KrakenD configuration.
+When using InfluxDB v1.x, you need to specify in the configuration above the same data you used to run InfluxDB. For instance, the following docker compose sets the credentials you need to reflect in the KrakenD configuration.
 
 ```yaml
 version: "3"

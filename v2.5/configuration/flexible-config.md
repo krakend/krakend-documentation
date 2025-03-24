@@ -103,8 +103,8 @@ krakend run -c "krakend.tmpl"
 
 In the example above, notice that the `FC_SETTINGS` includes the path to the `prod`uction folder. This is how you would set a specific environment. You might inject here an env var if you have multiple environments. **The directory structure is completely up to you**.
 
-{{< note title="Use a docker-compose" type="info">}}
-Consider using a docker-compose in combination with the `:watch` image to speed up your development time.
+{{< note title="Use a docker compose" type="info">}}
+Consider using a docker compose in combination with the `:watch` image to speed up your development time.
 {{< /note >}}
 
 ## Template syntax
@@ -117,7 +117,7 @@ Read the [Flexible Config Templates](/docs/v2.5/configuration/templates/) docume
 ## Testing the configuration
 We recommend using a Docker compose file to work faster with flexible configuration.
 
-Save the following `docker-compose.yml` and do a `docker-compose up`. This setup with the [`:watch` image](/docs/v2.5/developer/hot-reload/) will allow you to work locally with the latest version of KrakenD and apply the changes automatically whenever you change a source file.
+Save the following `docker-compose.yml` and do a `docker compose up`. This setup with the [`:watch` image](/docs/v2.5/developer/hot-reload/) will allow you to work locally with the latest version of KrakenD and apply the changes automatically whenever you change a source file.
 
 ```yml
 version: "3"
@@ -145,7 +145,7 @@ ERROR parsing the configuration file: loading flexible-config settings:
 
 The variable `FC_OUT` writes the content of the final file in a known path, so you can check its contents at any time.
 
-If you don't use `docker-compose`, you can also use flexible configuration as follows:
+If you don't use `docker compose`, you can also use flexible configuration as follows:
 
 {{< terminal title="Checking the configuration" >}}
 FC_ENABLE=1 \

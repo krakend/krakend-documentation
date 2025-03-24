@@ -23,7 +23,7 @@ KrakenD is a **single binary file** that does not require any external libraries
 ## Installation
 You can install (or just run) KrakenD using different options.
 {{< note title="Just exploring?" type="question" >}}
-Use the [KrakenD Playground](https://github.com/krakend/playground-community) if you want to play with KrakenD without configuring it. The Playground comes with several flavors of KrakenD and a mock API. Everything is ready to start playing, just do a `docker-compose up`!
+Use the [KrakenD Playground](https://github.com/krakend/playground-community) if you want to play with KrakenD without configuring it. The Playground comes with several flavors of KrakenD and a mock API. Everything is ready to start playing, just do a `docker compose up`!
 {{< /note >}}
 
 ### Docker
