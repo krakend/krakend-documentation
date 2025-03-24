@@ -20,7 +20,7 @@ The KrakenD Playground is a **Docker Compose** environment that puts together th
 As KrakenD is an API gateway, we have also added to the environment an API (backend) to feed the gateway and a website to make use of the data. With the KrakenD Playground, you can see the different pieces that take place in the API Gateway use cases.
 
 ## An environment ready to use!
-The KrakenD Playground can be started with `docker-compose up` and then fire up your browser, `curl`, Postman, httpie or anything else you use to interact with the services.
+The KrakenD Playground can be started with `docker compose up` and then fire up your browser, `curl`, Postman, httpie or anything else you use to interact with the services.
 
 When starting the Docker compose you will have:
 

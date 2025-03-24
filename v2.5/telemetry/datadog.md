@@ -74,7 +74,7 @@ For more information, see [its configuration](https://ddtrace.readthedocs.io/en/
 ## Datadog agent
 You must set your Datadog API key in the agent. The exporter communicates with the agent and is the agent the one reporting to Datadog.
 
-Here's an example of how to run the Datadog agent together with KrakenD in a docker-compose file:
+Here's an example of how to run the Datadog agent together with KrakenD in a docker compose file:
 
 ```yml
 krakend:

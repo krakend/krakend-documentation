@@ -148,7 +148,7 @@ Lastly, add at the service level of KrakenD the following configuration:
   }
 }
 ```
-The `otel-collector` above is the name of the Docker-compose service running the collector. You might need to replace it if you are not using this example.
+The `otel-collector` above is the name of the docker compose service running the collector. You might need to replace it if you are not using this example.
 
 With these three steps, you can start sending data to KrakenD. You should start seeing the graphs populated on Azure Monitor in a couple of minutes.
 

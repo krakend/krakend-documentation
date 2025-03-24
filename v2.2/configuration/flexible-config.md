@@ -93,8 +93,8 @@ krakend run -c "krakend.tmpl"
 
 In the example above, notice that the `FC_SETTINGS` includes the path to the `prod`uction folder. This is how you would set a specific environment. You might inject here an env var if you have multiple environments. **The directory structure is completely up to you**.
 
-{{< note title="Use a docker-compose" type="info">}}
-Consider using a docker-compose in combination with the `:watch` image to speed up your development time.
+{{< note title="Use a docker compose" type="info">}}
+Consider using a docker compose in combination with the `:watch` image to speed up your development time.
 {{< /note >}}
 
 ### Template syntax
@@ -236,7 +236,7 @@ mkdir -p config/{partials,settings,templates} config/settings/{prod,test}
 {{< /terminal >}}
 
 ### Work faster with a docker-compose
-Save the following `docker-compose.yml` and do a `docker-compose up`. This setup with the [`:watch` image](/docs/v2.2/developer/hot-reload/) will allow you to work locally with the latest version of KrakenD and apply the changes automatically every time you change a source file.
+Save the following `docker-compose.yml` and do a `docker compose up`. This setup with the [`:watch` image](/docs/v2.2/developer/hot-reload/) will allow you to work locally with the latest version of KrakenD and apply the changes automatically every time you change a source file.
 
 ```yml
 version: "3"

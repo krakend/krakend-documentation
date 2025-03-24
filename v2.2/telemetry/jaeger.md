@@ -62,7 +62,7 @@ When you don't have a Jaeger Agent deployed next to the application, you can sub
 }
 ```
 
-You can find a running demo with Jaeger using docker-compose on [KrakenD Playground](/docs/v2.2/overview/playground/).
+You can find a running demo with Jaeger using docker compose on [KrakenD Playground](/docs/v2.2/overview/playground/).
 
 ## Agent - Thrift over UDP
 When you want to send spans to a **Jaeger Agent** locally over UDP in Thrift format, you need to use the `agent_endpoint` configuration. To configure the gateway to work with an agent, you will need the following:
