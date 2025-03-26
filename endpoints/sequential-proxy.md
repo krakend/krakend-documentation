@@ -7,6 +7,7 @@ description: Explore the sequential proxying capability in KrakenD API Gateway, 
 since: 0.7
 notoc: false
 weight: 80
+dark_header_image: true
 images:
 - /images/documentation/krakend-sequential-call.png
 menu:

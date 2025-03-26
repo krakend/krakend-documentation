@@ -6,6 +6,7 @@ title: "Event-Driven API Gateway: Async Agents"
 description: Learn how to leverage asynchronous processing in KrakenD API Gateway to implement an event based pattern
 weight: 500
 aliases: ["/docs/async/agent/"]
+dark_header_image: true
 images:
   - /images/documentation/async-agents.png
 menu:
