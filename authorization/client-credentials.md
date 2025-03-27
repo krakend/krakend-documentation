@@ -11,6 +11,7 @@ menu:
     parent: "080 Authentication & Authorization"
 images:
 -   /images/documentation/krakend-oauth2-2-legged.png
+dark_header_image: true
 meta:
   #since:
   source: https://github.com/krakend/krakend-oauth2-clientcredentials

@@ -17,6 +17,9 @@ meta:
   - endpoint
   log_prefix:
   - "[ENDPOINT: /foo][JWTValidator]"
+images:
+- /images/documentation/auth0/krakend-auth0-integration-workflow.png
+dark_header_image: true
 ---
 Let's start with the elephant in the room: when you face the challenge of creating a modern API that has to be scalable, secure, performant, and resilient, it might look like a daunting task.
 
