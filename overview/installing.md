@@ -27,9 +27,9 @@ Use the [KrakenD Playground](https://github.com/krakend/playground-community) if
 {{< /note >}}
 
 ### Docker
-The easiest way to get started is by pulling and running the [KrakenD image](https://hub.docker.com/r/devopsfaith/krakend/) from the Docker Hub.
+The easiest way to get started is by pulling and running the [KrakenD image](https://hub.docker.com/_/krakend) from the Docker Hub.
 {{< terminal title="Running KrakenD using the Docker container" >}}
-docker run -p 8080:8080 -v $PWD:/etc/krakend/ devopsfaith/krakend run --config /etc/krakend/krakend.json
+docker run -p 8080:8080 -v $PWD:/etc/krakend/ {{< product image >}} run --config /etc/krakend/krakend.json
 {{< /terminal >}}
 
 If you choose not to mount the volume (the `-v`), a default `krakend.json` serving a `/__health` endpoint will be used. The volume expects to find a `krakend.json` in the current directory ([generate your first here](https://designer.krakend.io/)).
