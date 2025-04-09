@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-11-02
+lastmod: 2025-04-09
 date: 2017-01-21
 linktitle: Watch and hot reload
 title: Hot Reload Feature
@@ -10,48 +10,50 @@ menu:
   community_current:
     parent: "010 Configuration files"
 ---
-When you want to **restart KrakenD automatically after saving** or changing files inside the configuration folder, the Docker image with the tag `:watch` can do this automatically for you.
+The Docker tag `:watch` is a **development-phase image** that allows you to **restart KrakenD automatically after saving** or changing files inside the configuration folder, although **is not recommended for production workloads**. It works whether you use [flexible configuration](/docs/configuration/flexible-config/) or a single file (`krakend.json` or any other [supported format](/docs/configuration/supported-formats/)).
 
-It works whether you use [flexible configuration](/docs/configuration/flexible-config/) or a single file (`krakend.json` or any other [supported format](/docs/configuration/supported-formats/)).
+The watch is a regular KrakenD binary wrapped in a [reflex watcher](https://github.com/cespare/reflex). When it detects that any piece inside the configuration has changed, it restarts the service, applying the changes. This behavior is very convenient while developing as it allows you to test new changes without manually restarting KrakenD back and forth
 
-The difference between the `:watch` image and `:latest` is that the KrakenD service wraps in a [reflex watcher](https://github.com/cespare/reflex). When it detects that the configuration has changed, it restarts the service again, applying the changes. This behavior is very convenient while developing as it allows you to test new changes without manually restarting KrakenD back and forth.
-
-{{< note title="Use it in development" type="warning" >}}
-The `:watch` Docker image is a development tool meant to speed up your initial KrakenD onboarding and testing, but it is **not designed as a production tool**. See below the risks of using `:watch` in production.
+{{< note title="You must build the tag `:watch` on the Community Edition" type="info" >}}
+Since KrakenD became an [official Docker image](https://hub.docker.com/_/krakend), the `:watch` tag is no longer available in the Docker registry **for the open source edition**. To use `:watch`, you **must build** the Docker tag as described below, but Enterprise users don't need to build this image and can continue working as always as `:watch` is ready to [`docker pull`](/docs/enterprise/developer/hot-reload/).
 {{< /note >}}
 
-## Watch usage
-The `:watch` tag is a regular KrakenD Docker container and accepts the same options and flags as its `:latest` counterpart. Therefore, you should be able to replace `:watch` with the desired tag (e.g: `:{{< product latest_version >}}`) in production without further changes.
+## Building the watch image
+To use the `:watch` image on the Open Source edition, [clone the `krakend-watch` repository](https://github.com/krakend/krakend-watch/) and do the `docker build` as explained in its README:
 
+```bash
+git clone https://github.com/krakend/krakend-watch.git
+cd krakend-watch
+docker build -t {{< product image >}}:watch
+```
+If you want to pin a specific KrakenD version, replace the `:latest` string on the `Dockerfile` with your desired version before building.
+
+After the build completes, you will be able to use `{{< product image >}}:watch` normally.
+
+## Watch usage
 The container expects you to mount the configuration as a volume mapped to `/etc/krakend`. For instance:
 
 {{< terminal title="Simple KrakenD watch" >}}
 docker run --rm -v "$PWD:/etc/krakend" {{< product image >}}:watch
 {{< /terminal >}}
 
-When you use [flexible configuration](/docs/configuration/flexible-config/), you can pass the environmental vars when starting the container. For instance:
+When you use [flexible configuration](/docs/configuration/flexible-config/), you can pass the environment variables when starting the container. For instance:
 
-{{< terminal title="Hot reload with Flexible Configuration on Community" >}}
+{{< terminal title="Hot reload with Flexible Configuration" >}}
 docker run --rm -it -v "$PWD:/etc/krakend" \
     -e "FC_ENABLE=1" \
     -e "FC_OUT=compiled.json" \
     -e "FC_PARTIALS=/etc/krakend/partials" \
     -e "FC_SETTINGS=/etc/krakend/settings" \
     -e "FC_TEMPLATES=/etc/krakend/templates" \
-    devopsfaith/krakend:watch run -c krakend.tmpl
-{{< /terminal >}}
-
-{{< terminal title="Hot reload with Flexible Configuration on Enterprise" >}}
-docker run --rm -it -v "$PWD:/etc/krakend" \
-    -e "FC_CONFIG=/etc/krakend/flexible_config.json" \
-    krakend/krakend-ee:watch run -c krakend.tmpl
+    {{< product image >}}:watch run -c krakend.tmpl
 {{< /terminal >}}
 
 You can also integrate inside your IDE a watch to continuously check the configuration with the `check` command instead of `run`.
 
 ## Risks of hot-reloading in production
 
-Because you might be tempted to use it in production, we don't recommend it because:
+As we said, in the introduction, this tag is for development. Because you might be tempted to use it in production, we don't recommend it because:
 
 - It kills the server without a graceful option. If a user consumes an endpoint, the connection will be interrupted immediately, no matter if it ended or not.
 - You might break the configuration after a save and leave the server unable to restart.
