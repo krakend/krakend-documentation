@@ -7,6 +7,7 @@ description: Implement bot detection and throttling mechanisms to prevent API ab
 weight: 990
 images:
 - /images/krakend-botdetector.png
+dark_header_image: true
 menu:
   community_current:
     parent: "090 Traffic Management"
