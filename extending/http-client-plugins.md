@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-06-14
+lastmod: 2025-04-10
 date: 2021-05-21
 toc: true
 linktitle: HTTP client plugins
@@ -20,15 +20,17 @@ images:
 ---
 The **HTTP client** plugins execute in the proxy layer when KrakenD tries to reach your backends for content. They allow you to intercept, transform, and manipulate the requests **before they hit your backend services**, and their way back. It is the perfect time to modify the request before it reaches the backend.
 
-You cannot chain HTTP client plugins, limiting them to one plugin per backend connection, and replace the default KrakenD's HTTP client.
+<img src="/images/documentation/http-client-plugin.png" class="dark-version-available" title="HTTP client plugins">
 
-{{< note title="HTTP client components will stop working" type="info" >}}
+You **cannot chain HTTP client plugins**, limiting them to one plugin per backend connection, and **replace the default KrakenD's HTTP client**.
+
+{{< note title="HTTP client components will stop working" type="warning" >}}
 An HTTP client is a terminator. It means that it is the last executor in the KrakenD pipe. When you add an HTTP client plugin, **you replace KrakenD's default client** with your own. It means some built-in functionality in the default HTTP client won't exist unless you code it.
 
-More specifically, if you inject your plugin, you don't have [Client Credentials](/docs/authorization/client-credentials/) or [Backend Cache](/docs/backends/caching/), and you won't have telemetry at the HTTP backend level.
+More specifically, if you inject your plugin, you don't have [Client Credentials](/docs/authorization/client-credentials/), [Backend Cache](/docs/backends/caching/), or [Backend Telemetry](/docs/telemetry/opentelemetry-layers-metrics/#data-exposed-in-the-backend-layer) unless you add this logic to your plugin.
 {{< /note >}}
 
-![http handler plugin](/images/documentation/http-client-plugin.png)
+
 
 ## HTTP client interface
 {{< note title="Writing plugins" type="tip" >}}

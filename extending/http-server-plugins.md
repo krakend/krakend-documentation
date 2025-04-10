@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-10-10
+lastmod: 2025-04-10
 date: 2021-05-21
 toc: true
 linktitle: HTTP server plugins
@@ -27,7 +27,8 @@ The HTTP server plugins (codenamed as *handler plugins*) belong to the **router 
 
 From KrakenD's perspective, **your handler plugins are black boxes** that expose an `http.Handler`, and you can do anything you want inside them. Each plugin is wrapping the next element in the pipe, meaning that for some operations, **it must deal with an HTTP request and response writer**. If you chain several plugins, you will add **two extra cycles** of decoding and encoding the body. From a performance perspective is better having one plugin doing two things, that two plugins doing one thing:
 
-![http handler plugin](/images/documentation/http-handler-plugin.png)
+<img src="/images/documentation/http-handler-plugin.png" class="dark-version-available" title="HTTP handler plugin">
+
 
 ## HTTP handler interface
 {{< note title="Writing plugins" type="tip" >}}

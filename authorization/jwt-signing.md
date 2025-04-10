@@ -6,6 +6,7 @@ title: JWT Signing
 description: KrakenD's JWT signing wraps your login endpoint, signing payloads with your secret key. Perfect for monolith migrations or setups without an OAuth server.
 weight: 30
 images: ["/images/krakend-signer-flow.png"]
+dark_header_image: true
 menu:
   community_current:
     parent: "080 Authentication & Authorization"

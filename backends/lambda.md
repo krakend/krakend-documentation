@@ -7,6 +7,7 @@ description: Integrate AWS Lambda functions into KrakenD API Gateway to leverage
 weight: 150
 images:
     - /images/krakend-lambda.png
+dark_header_image: true
 menu:
   community_current:
     parent: "050 Non-REST Connectivity"
