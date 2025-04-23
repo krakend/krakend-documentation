@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-11-23
+lastmod: 2025-04-23
 date: 2019-03-21
 linktitle: OAuth2 Client credentials
 title: Client Credentials Authorization
@@ -31,7 +31,6 @@ Successfully setting the client credentials for a backend means that KrakenD can
 **No way!** The token will be **automatically refreshed as necessary** (usually when it expires or the server is restarted).
 {{< /note >}}
 
-
 ## Configuring OAuth2 Client Credentials
 To access a protected resource using client-credentials, add under every `backend` the appropriate `extra_config`.
 
@@ -58,6 +57,23 @@ The namespace used is `"auth/client-credentials"`. Sample configuration below:
 The settings of this component are:
 
 {{< schema data="auth/client-credentials.json" >}}
+
+## Token Refresh
+When you add the client credentials component in a backend, when the first request comes in, KrakenD will send a request to the identity server asking for a new token using the `client_id` and `client_secret` provided in the configuration before reaching the backend. You will see the associated error log if the token exchange URL or credentials fail. For instance:
+
+```
+KRAKEND ERROR: [ENDPOINT: /test] Post "http://localhost:8080/test": oauth2: "invalid_client" "Bad client credentials"
+```
+
+If the token exchange succeeds, KrakenD stores the token in memory, which will be reused in future requests. The `expires_in` parameter in the response from an identity provider typically denotes **for how many seconds a token is valid before it expires** (as specified in the [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)).
+
+KrakenD keeps the obtained token in the cache for the remaining time, updating it 10 seconds before its expiration, and won't request a new one during this window. However, the specific scenario of a `0` value is worth mentioning:
+
+{{< note title="Zero value of `expires_in`" type="warning" >}}
+When an identity provider returns an `expires_in=0`, or **does not return the field**, KrakenD treats such a token as a **"never expire"** token: the token is considered valid indefinitely and reused forever (or until the service is restarted).
+{{< /note >}}
+
+While this offers more straightforward handling and reduces token renewal overhead, it is essential to consider the security implications of using non-expirable tokens, and is strongly recommended to always set a positive `expires_in`.
 
 ## Auth0 integration
 The following example demonstrates a complete configuration to fulfill the requirements of [Auth0](https://auth0.com/). It is essentially the same configuration we have shown above, but with some additions, explained after the code:
