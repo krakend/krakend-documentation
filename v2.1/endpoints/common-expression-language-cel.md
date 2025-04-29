@@ -231,6 +231,7 @@ The following example is a bit more complex, as it **combines the sequential pro
 ```json
 {
     "version": 3,
+    "debug_endpoint": true,
     "host": [
         "http://localhost:8080"
     ],
