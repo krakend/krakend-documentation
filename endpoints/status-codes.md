@@ -22,6 +22,7 @@ The following status codes are the ones returned by the gateway. When you use `n
 
 | Status Code                 | When                               |
 |-----------------------------|-------------------------------------------|
+| `100 Continue` | Used when establishing a WebSockets connection |
 | `200 OK` | **At least** one backend returned a 200 or 201 status code on time. Completeness information provided by the `X-Krakend-Completed` header |
 | `301 Redirect` | When the router [adds a missing slash](/docs/service-settings/router-options/) to the endpoint and similar cases. |
 | `400 Bad Request` | Client made a malformed request, i.e. [json-schema](/docs/endpoints/json-schema/) validation failed, or problems when [signing a token](/docs/authorization/jwt-signing/) |
@@ -33,6 +34,19 @@ The following status codes are the ones returned by the gateway. When you use `n
 | `503 Service Unavailable` | All clients together reached the configured global rate limit for the endpoint |
 | `500 Internal Server Error` | Default error code, and in general, when backends return any status above `400` |
 | `502 Bad Gateway`           | Error returned to the user when a WebSockets connection to the backend is gone after exhausting all retries |
+
+## Returning status code from a single backend
+There are two things you can do:
+- Return the original status code of a single backend
+- Log error status code for your tracking
+
+If your endpoints get data from a single backend and you'd like to couple the response between the client and the server (not recommended), you can use the `no-op` encoding, or use an [alternative strategy](/docs/backends/detailed-errors/).
+
+If you use regular endpoints (e.g., `json` encoding), the status code is "calculated" by KrakenD and returns a `200` or a `500` in most cases. Nevertheless, the backend status belonging to an error gets logged. Like this:
+
+```
+WARNING [BACKEND: GET /endpoint/foo -> POST /backend/bar][Client] Status: 403
+```
 
 ### Why does KrakenD treat errors like a `500 Internal Server Error` by default?
 

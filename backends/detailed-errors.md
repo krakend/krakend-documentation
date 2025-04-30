@@ -23,13 +23,15 @@ KrakenD's default policy regarding errors and status codes is to **hide from the
 The philosophy behind this is that **clients have to be decoupled** from their underlying services, as an API Gateway should do. The opposite is a reverse proxy or a simple router.
 
 ## Strategies to return headers and errors
-Yet, you can **override** the default policy of returning backend error details with different **strategies**.
+We do not recommend you to change the default behavior to have a secure and decoupled gateway. Yet, KrakenD provides flexibility so you can **override** the default policy of returning backend error details with different **strategies**.
 
-- **Default strategy: Graceful degradation of the response** (when using a non-`no-op`): Supports multiple backends (aggregation). HTTP status codes returned to the client are essentially 200 or 500, regardless of the backend(s) status codes. The body is built, merged, and manipulated from the working backends.
-- **Headers and errors entirely handled by the backend** (default strategy for `no-op`): Shows the HTTP status codes, headers, and body as returned by the backend (**maximum one**). You cannot manipulate data (except with plugins). This option is mostly a reverse proxy, and its usage is discouraged. Use [`no-op` encoding](/docs/endpoints/no-op/).
-- **Return the HTTP status code of a single backend**. Sets an empty body when there are errors (obfuscation), but preserves the HTTP status codes of the backend. Use `return_error_code` (see below)
+These are the different strategies you can set:
+
+- **Default strategy - Graceful degradation of the response** (when using something different than`no-op`): Supports multiple backends ([aggregation](/docs/endpoints/response-manipulation/)). HTTP status codes returned to the client are essentially `200` or `500`, regardless of the backend(s) status codes. The body is built, merged, and manipulated from the working backends. The status codes of backend errors are logged in the console.
+- **Headers and errors entirely handled by the backend** (default strategy for `no-op`): Shows the HTTP status codes, headers, and body as returned by the backend (**maximum one**). You cannot manipulate data (except with plugins or Lua). This option is mostly a reverse proxy, and its usage is discouraged. Use [`no-op` encoding](/docs/endpoints/no-op/) when you want this.
+- **Return the HTTP status code of a single backend**. Sets an empty body when there are errors (obfuscation), but preserves the HTTP status codes of the backend. Use the `return_error_code` flag in the backend ([see below](/docs/backends/detailed-errors/#return-the-http-status-code-of-a-single-backend)).
 - **Return the HTTP status code and error body of a single backend**. No obfuscation at all. Forwards the error body and the status code of a single backend. Use `return_error_code` and `return_error_msg` together (the latter is [declared as a `router` option](/docs/service-settings/router-options/#return_error_msg) in the service level). The Content-Type from the backend is lost.
-- **Return backend errors in a new key**. Supports multiple backends. Like the graceful degradation option, but it add a new error key in the body when the backend fails -—ideal for debugging multiple backends. Use `return_error_details` (see below).
+- **Return backend errors in a new key**. Supports multiple backends. Like the graceful degradation option, but it adds a new error key in the body when the backend fails -—ideal for debugging multiple backends. Use `return_error_details` (see below).
 - **Show the error interpretation by the gateway but not the actual error body**. Semi-obfuscation. The client sees an interpretation of the gateway like *invalid status code*, or *context deadline exceeded* but does not see the actual error delivered by the backend. The status code is always 200 or 500. Use `return_error_msg` (at the [router level](/docs/service-settings/router-options/#return_error_msg)). The flag is also compatible with `no-op`.
 
 The different combinations are exemplified below.
