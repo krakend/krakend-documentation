@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-10-15
+lastmod: 2025-04-30
 date: 2018-11-11
 linktitle: Sequential Proxy (chain reqs.)
 title: Sequential Proxying
@@ -27,14 +27,18 @@ meta:
 ---
 The best experience consumers can have with KrakenD API is by letting the system fetch all the data from the different backends simultaneously. However, sometimes you need to **delay a backend call** until you have called a previous service. Although this is not ideal, the sequential proxy allows you to **chain backend requests**.
 
+The Sequential Proxy enables chaining multiple backend requests where **the output of one call is used as input for the next**, whether just injecting previous values of the response in the URL or as the body for the next call. This capability is especially powerful for orchestrating **dependent operations** or implementing simple workflows across services. For complex workflows, see the [Workflows documentation](/docs/enterprise/endpoints/workflows/) ({{< badge >}}Enterprise{{< /badge >}})
+
+Although achievable, we do not recommend adopting sequential patterns to perform token exchange or pre-authentication steps and use the dedicated components for such usages.
+
 ## Do you really need a sequential proxy?
-{{< note title="Chained calls are considered an anti-pattern" type="warning" >}}{{< /note >}}
-
+{{< note title="Chained calls are considered an anti-pattern" type="warning" >}}
 Using sequential calls is considered an anti-pattern because when you make a network service dependent on the other, you are **increasing the latency, decreasing the performance, and augmenting the error rate**.
+{{< /note >}}
 
-It is much worse than using [aggregation](/docs/endpoints/response-manipulation/#aggregation-and-merging). In aggregation, parallel requests execute simultaneously, whereas, in sequential aggregation, requests are executed one at a time, with each one waiting for the previous request to finish before moving on to the next. If a backend in a sequence fails, the process aborts and the next backend is never reached, so there are many more chances that your users are left without data.
+In non-sequential [aggregation](/docs/endpoints/response-manipulation/#aggregation-and-merging), parallel requests execute simultaneously, whereas, in sequential aggregation, requests are executed one at a time, with each one waiting for the previous request to finish (or timeout) before moving on to the next. If a backend in a sequence fails, the process aborts and the next backend is never reached, so there are many more chances that your users will be left without data.
 
-From an error rate perspective, the nature of sequential proxy performs more deficient: Suppose you have three backends with an error rate of 10% each, then the probability of success separately in each is 90%. But when executing the three of them sequentially, the success rate drops to 73% (because `0.9 * 0.9 * 0.9 = 0.729`).
+From an error rate perspective, the nature of sequential proxy performs more deficient: Suppose you have three backends with an error rate of 10% each, then the probability of success separately in each is 90%. However, when executing the three of them sequentially, the success rate drops to 73% (because `0.9 * 0.9 * 0.9 = 0.729`).
 
 In an aggregation scenario, the probability of having at least one working call is the opposite of the likelihood of having all calls result in errors. So, the chance of all three calls resulting in errors is 0.1% (because `0.1 * 0.1 * 0.1 = 0.001`).
 
@@ -64,7 +68,7 @@ When the sequential proxy is enabled, the `url_pattern` of every backend can use
 {resp0_XXXX}
 ```
 
-Where `0` is the index of the specific `backend` you want to access (`0` for the first backend, `1` for the second and so on), and where `XXXX` is the attribute name you want to inject from the response of the previous call. You can also access **nested objects** of the response using the dot notation. For example, given a response `{"user": { "hash": "abcdef }}`, the variable`{resp0_user.hash}` will contain the value `abcdef`. **You cannot access nested objects inside arrays or collections**: fields must be objects (although you could manipulate these arrays using flatmap or JMESpath to convert them to objects).
+Where `0` is the index of the specific `backend` you want to access (`0` for the first backend, `1` for the second, and so on), and where `XXXX` is the attribute name you want to inject from the response of the previous call. You can also access **nested objects** of the response using the dot notation. For example, given a response `{"user": { "hash": "abcdef }}`, the variable`{resp0_user.hash}` will contain the value `abcdef`. **You cannot access nested objects inside arrays or collections**: fields must be objects (although you could manipulate these arrays using flatmap or JMESpath to convert them to objects).
 
 You can reuse the `{resp0_XXXX}` variable in the `url_pattern` in any form you like, as part of the path or as a query string. For instance, the following examples would work:
 
@@ -158,7 +162,7 @@ The configuration needed for this example is:
 The key here is the variable `{resp0_destination_id}` that refers to `destination_id` for the backend with index `0` (first in the list).
 
 ### Sequential proxy and special encodings
-The sequential proxy parses the response of the previous backend trying to understand the structure of the returned response so you can access its fields by name. When your backend does not use a parseable encoding, such as `string` or `no-op`, you can still access to the responses but differently.
+The sequential proxy parses the response of the previous backend, trying to understand the structure of the returned response so you can access its fields by name. When your backend does not use a parseable encoding, such as `string` or `no-op`, you can still access the responses but differently.
 
 When the `encoding` of your backend is `string` (meaning it does not decode the contents and everything comes in a single string), then you can access its contents using `resp0_content`.
 
