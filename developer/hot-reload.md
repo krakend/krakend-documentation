@@ -24,7 +24,7 @@ To use the `:watch` image on the Open Source edition, [clone the `krakend-watch`
 ```bash
 git clone https://github.com/krakend/krakend-watch.git
 cd krakend-watch
-docker build -t {{< product image >}}:watch
+docker build -t {{< product image >}}:watch .
 ```
 If you want to pin a specific KrakenD version, replace the `:latest` string on the `Dockerfile` with your desired version before building.
 
