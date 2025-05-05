@@ -85,6 +85,9 @@ And also:
     "url_pattern": "/user?hash={resp0_user.hash}"
 }
 ```
+{{< note title="All values are represented as string" type="warning" >}}
+When using the `{resp0}` and similar variables, the value you get is always a string. This means that if, for instance, KrakenD takes data from an object that contains a `null` value (not an empty value), the variable will be a string containing `<nil>`. For instance, in the examples above, if the response contained `{"user": { "hash": null } }`, the final value of the `url_pattern` would be `/user/<nil>` and `/user?hash=<nil>` respectively.
+{{< /note >}}
 
 ### Example of sequential proxy passing values on the `url_pattern`
 It's easier to understand with the example of the graph:
