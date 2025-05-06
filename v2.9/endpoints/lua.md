@@ -1,12 +1,13 @@
 ---
 lastmod: 2022-10-21
+old_version: true
 date: 2019-09-15
 linktitle:  Lua scripts
 title: Lua Scripting
 description: Explore the power of Lua scripting in KrakenD API Gateway, allowing you to customize and extend the behavior of your API gateway
 weight: 200
 menu:
-  community_current:
+  community_v2.9:
     parent: "180 Extending with custom code"
 meta:
   since: 1.0
@@ -25,12 +26,12 @@ meta:
   - "[BACKEND: /foo][Lua]"
 ---
 
-Scripting with Lua allows you to extend your business logic and make **transformations on requests and responses**. The Lua module is compatible with the rest of components such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or other [Go plugins](/docs/extending/) and middlewares.
+Scripting with Lua allows you to extend your business logic and make **transformations on requests and responses**. The Lua module is compatible with the rest of components such as [CEL](/docs/v2.9/endpoints/common-expression-language-cel/), [Martian](/docs/v2.9/backends/martian/), or other [Go plugins](/docs/v2.9/extending/) and middlewares.
 
 The introduction of Lua scripts in your Gateway does not require recompiling KrakenD, but unlike Go, Lua scripts are interpreted in real-time. If you are new to Lua, see [Lua Documentation](https://www.lua.org/).
 
 {{< note title="Lua vs Go Plugins" type="note" >}}
-A [Go plugin](/docs/extending/) delivers much more speed and power than a Lua script for performance-first seeking users, but requires a little bit more work as you need to compile your plugins and side-load them on KrakenD.
+A [Go plugin](/docs/v2.9/extending/) delivers much more speed and power than a Lua script for performance-first seeking users, but requires a little bit more work as you need to compile your plugins and side-load them on KrakenD.
 {{< /note >}}
 
 ## Configuration
@@ -65,7 +66,7 @@ The configuration options are:
 }
 ```
 
-{{< schema data="modifier/lua.json" >}}
+{{< schema version="v2.9" data="modifier/lua.json" >}}
 
 ## Configuration placement and sequence of execution
 When running Lua scripts, you can place them at the `proxy` level, or the `router` level:
@@ -92,7 +93,7 @@ You can use the following Lua functions to access and manipulate requests and re
 If you have a script that needs access to the request, use the `request` object in Lua. The request is set when KrakenD is about to do a call to the backend services.
 
 {{< note title="Using client headers and querystrings" >}}
-When **client headers** or **query strings** are needed in a script, remember to add them under [`input_headers`](/docs/endpoints/parameter-forwarding/#headers-forwarding) or [`input_query_strings`](/docs/endpoints/parameter-forwarding/#query-string-forwarding) accordingly.
+When **client headers** or **query strings** are needed in a script, remember to add them under [`input_headers`](/docs/v2.9/endpoints/parameter-forwarding/#headers-forwarding) or [`input_query_strings`](/docs/v2.9/endpoints/parameter-forwarding/#query-string-forwarding) accordingly.
 {{< /note >}}
 
 The `request` functions are:
@@ -287,7 +288,7 @@ The `http_response` helper allows you to make an additional HTTP request and acc
 
 - `"modifier/lua-proxy"` (endpoint level)
 - `"modifier/lua-backend"` (backend level)
-- `"modifier/lua-endpoint"` (endpoint level)
+- `"modifier/lua-endpoint"` (endpoint level, **Enterprise only** until CE 2.10)
 
 Notice that you **cannot** use it in `modifier/lua-endpoint`.
 
