@@ -277,31 +277,31 @@ For instance, the following endpoint allows passing two headers to its backends,
   "version": 3,
   "host": [
     "http://some.example.com:9000"
- ],
+  ],
   "endpoints": [
- {
+    {
       "endpoint": "/v1/foo",
       "input_query_strings": [
         "items",
         "page"
- ],
+      ],
       "input_headers": [
         "User-Agent",
         "Accept"
- ],
+      ],
       "backend": [
- {
+        {
           "url_pattern": "/receive-defined-headers",
- },
- {
+        },
+        {
           "url_pattern": "/receive-one-header-only",
           "input_headers": [
             "User-Agent"
- ]
- }
- ]
- }
- ]
+          ]
+        }
+      ]
+    }
+  ]
 }
 ```
 
