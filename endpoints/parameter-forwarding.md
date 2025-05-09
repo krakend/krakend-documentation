@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-06-04
+lastmod: 2025-05-09
 date: 2018-07-20
 aliases: ["/docs/features/parameter-forwarding/"]
 title: Parameter Forwarding
@@ -10,9 +10,7 @@ menu:
   community_current:
     parent: "040 Routing and Forwarding"
 ---
-KrakenD is an API Gateway with a **[zero-trust security policy](/docs/design/zero-trust/)**, and when it comes to forward query strings, cookies, and headers, you need to define what is allowed.
-
-Part of the zero-trust policy implies that KrakenD **does not forward** any unexpected [query string](#query-string-forwarding), [headers](#headers-forwarding), or [cookies](#cookies-forwarding). See below how to set the forwarding rules.
+KrakenD is an API Gateway with a **[zero-trust security policy](/docs/design/zero-trust/)**. You need to define what is allowed because KrakenD **does not forward** any unexpected [query string](#query-string-forwarding), [headers](#headers-forwarding), or [cookies](#cookies-forwarding). See below for instructions on how to set the forwarding rules.
 
 ![Diagram about parameters don't passing to backend](/images/documentation/diagrams/parameter-forwarding-1.mmd.svg)
 
@@ -29,9 +27,9 @@ You can change the default behavior according to your needs and define which ele
 {{< note title="Canonical Headers" type="info" >}}
 While the `input_headers` declaration does not care about how you write the header (upper/lowercase), and KrakenD will access either way, when accessing or checking a header name through any components in KrakenD, you must write its canonical form regardless of what's being provided by the user.
 
-The canonicalization **converts the first letter and any letter following a hyphen to upper case**; the rest are converted to lowercase. For example, the canonical key for `accept-encoding`, `ACCEPT-ENCODING`, or `ACCept-enCODING` is `Accept-Encoding`. MIME header keys are assumed to be ASCII only. If the header contains a space or invalid header field bytes, it is returned without modifications.
+The canonicalization **converts the first letter and any letter following a hyphen to uppercase**; the rest are converted to lowercase. For example, the canonical key for `accept-encoding`, `ACCEPT-ENCODING`, or `ACCept-enCODING` is `Accept-Encoding`. MIME header keys are assumed to be ASCII only. If the header contains a space or invalid header field bytes, it is returned without modifications.
 
-If you get used to writing headers in canonical format, you will save yourself from a lot of trouble.
+If you get used to writing headers in the canonical format, you will save yourself from a lot of trouble.
 {{< /note >}}
 
 
@@ -179,24 +177,34 @@ No optional parameter has been passed, so the mandatory one is used.
 Read the [`/__debug/` endpoint](/docs/endpoints/debug-endpoint/) to understand how to test query string parameters.
 
 ## Headers forwarding
-KrakenD **does not send client headers to the backend** unless they are under the `input_headers` list. The headers sent by the client that you want to let pass to the backend must be written explicitly in the `input_headers`. See below how to forward [all client headers](/docs/endpoints/parameter-forwarding/#sending-all-client-headers-to-the-backends) (and why is it a bad idea).
+KrakenD **does not send client headers to the backend** except for the `Content-Type` unless they are under the `input_headers` list. The headers sent by the client that you want to let pass to the backend must be written explicitly in the `input_headers`. See below how to forward [all client headers](/docs/endpoints/parameter-forwarding/#sending-all-client-headers-to-the-backends) (and why it is a bad idea).
 
-**A client request from a browser or a mobile client contains a lot of headers**, including cookies. Typical examples of the variety of headers clients send are `Host`, `Connection`, `Content-Type`, `Accept`, `Cache-Control`, `Cookie`... and a long etcetera. Remember that unless explicitly defined, KrakenD won't let them pass. This security policy will save you from a lot of trouble.
+**A client request from a browser or a mobile client contains a lot of headers**, including cookies. Typical examples of the variety of headers clients send are `Host`, `Connection`, `Content-Type`, `Accept`, `Cache-Control`, `Cookie`... and a long etcetera. Remember that unless explicitly defined, KrakenD will only allow the `Content-Type`. This security policy will save you from a lot of trouble.
 
 
 ### Default headers sent from KrakenD to Backends
-KrakenD will act as an independent client connecting to your backends and will send these headers setting its own values:
+KrakenD will act as an independent client connecting to your backends and sending headers to them. Some are customizable, and others aren't.
 
-- `Accept-Encoding`
+#### Non-customizable headers
+You cannot override the values of these headers (unless you have a plugin or a Lua script):
+
 - `Host`
-- `User-Agent` (KrakenD Version {{< product latest_version >}})
 - `X-Forwarded-For`
 - `X-Forwarded-Host`
 - `X-Forwarded-Via` (only when `User-Agent` is in the `input_headers`)
 
-Except for the `X-Forwarded`-like headers that are controlled by [`forwarded_by_client_ip`](/docs/service-settings/router-options/#forwarded_by_client_ip), you can override the rest when present in the `input_headers`.
+The `X-Forwarded`-like headers are controlled by [`forwarded_by_client_ip`](/docs/service-settings/router-options/#forwarded_by_client_ip). All these headers **are always sent, regardless of whether you define them or not** under `input_headers`. You can override their values.
 
-There are a few KrakenD components that support **setting attributes in headers**, like for instance [`propagate_claims` in JWT](/docs/authorization/jwt-validation/#propagate_claims). These components will send the additional headers you configure to the backend automatically.
+#### Customizable headers
+The following headers are sent to the backends with default values, but if you add them under `input_headers`, you allow the client to send their own values. If the headers are under `input_headers`, but the client does not send them, KrakenD sets its values. The headers are:
+
+- `Content-Type`, the one passed in the request (if passed)
+- `Accept-Encoding`, set by KrakenD to `gzip`, unless you add it to the `input_headers`
+- `User-Agent` Contains the value `KrakenD Version {{< product latest_version >}}`, unless you add it to the `input_headers`
+
+Needless to say that you can add any other header that is not listed in this page under `input_headers` and KrakenD will forward it to the backend.
+
+In addition, there are a few KrakenD components that support **setting attributes in headers**, like for instance [`propagate_claims` in JWT](/docs/authorization/jwt-validation/#propagate_claims). These components will send the additional headers you configure to the backend automatically.
 
 ### Overriding headers sent from KrakenD to Backends
 When you use the `input_headers`, consider that any headers listed above are replaced with the ones you declare.
@@ -298,7 +306,7 @@ For instance, the following endpoint allows passing two headers to its backends,
 ```
 
 ## Cookies forwarding
-A cookie is just some content passing inside the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `input_headers`, just as you would with any other header.
+A cookie is just some content passing through the `Cookie` header. If you want cookies to reach your backend, add the `Cookie` header under `input_headers`, just as you would with any other header.
 
 **All your cookies** are sent to all backends inside the endpoint when doing this. Use this option wisely!
 
