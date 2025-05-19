@@ -365,7 +365,7 @@ If the connection works, it means that your credentials are correct, and you can
 With the configuration above, whenever a request is made to the backend, the `Authorization` header is added automatically.
 
 ### Header ID
-The `header.Id` is a modifier that sets a header `X-Krakend-Id` with a **unique identifier (UUID)** for the request. If for whatever reason, the header already exists, the header is not altered.
+The `header.Id` is a modifier that sets a header with a **unique identifier (UUID)** for the request. The default name of the header is `X-Krakend-Id` but it can be changed by passing a "header" parameter as per the example below which names the header `X-Request-Id`. If for whatever reason, the header already exists, the header is not altered.
 
 {{< schema data="modifier/martian.json" property="header.Id" >}}
 
@@ -386,7 +386,8 @@ The `header.Id` is a modifier that sets a header `X-Krakend-Id` with a **unique 
               "header.Id": {
                 "scope": [
                   "request"
-                ]
+                ],
+                "header": "X-Request-Id"
               }
             }
           }
