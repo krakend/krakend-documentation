@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-11-15
+lastmod: 2025-05-16
 date: 2018-10-30
 toc: true
 linktitle: Logging overview
@@ -28,6 +28,7 @@ The `telemetry/logging` has the following logging capabilities:
 - Add a prefix to log lines
 - Select the reporting level
 - Option to use a predefined or custom format
+- Use custom layouts and define logged fields ([{{< badge >}}Enterprise{{< /badge >}} version](/docs/enterprise/logging/))
 
 ## Types of log messages
 The content that KrakenD writes in its log represents two types of logging:
