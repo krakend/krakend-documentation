@@ -14,7 +14,7 @@ dark_header_image: true
 images:
   - /images/documentation/hero/ai_gateway.png
 ---
-KrakenD's AI Gateway capabilities extend your existing API infrastructure with controls to securely route, govern, and optimize Artificial Intelligence workloads at scale. The functionality offers a straightforward integration without extra layers, products, or complexity, it brings the speed, flexibility, and clarity.
+KrakenD's AI Gateway capabilities extend your existing API infrastructure with controls to securely route, govern, and optimize Artificial Intelligence workloads at scale. The functionality offers a straightforward integration without extra layers, products, or complexity. It brings the speed, flexibility, and clarity you are already familiar with.
 
 ## What is an AI Gateway?
 An AI Gateway is a specialized API Gateway designed to handle Artificial Intelligence workloads by providing secure, scalable, and manageable access to Large Language Models (LLMs) and other AI services. It acts as a control layer that routes AI-related traffic, enforces security and cost policies, and simplifies integration with multiple AI providers, helping developers manage AI services as part of their existing API ecosystem.

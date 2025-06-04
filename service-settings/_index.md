@@ -9,6 +9,9 @@ notoc: true
 menu:
   community_current:
     parent: "030 Service Settings"
+dark_header_image: true
+images:
+- /images/documentation/hero/service-settings.png
 ---
 We call **service settings** (or the service layer) those parameters that allow you to change how KrakenD behaves **globally** (and not to a specific call). They determine how you start the HTTP server, enforce security parameters, or define behavioral options like which reporting activities occur, to name a few examples.
 

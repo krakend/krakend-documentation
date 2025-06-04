@@ -9,6 +9,9 @@ weight: 10
 menu:
   community_current:
     parent: "040 Routing and Forwarding"
+dark_header_image: true
+images:
+- /images/documentation/hero/endpoints.png
 ---
 KrakenD `endpoints` are the most critical configuration part of KrakenD, as they are what your end users consume. Adding endpoint objects creates the API contract your users will consume.
 

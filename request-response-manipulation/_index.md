@@ -9,8 +9,9 @@ weight: -1
 menu:
   community_current:
     parent: "060 Request and Response Manipulation"
+dark_header_image: true
 images:
-  - /images/documentation/diagrams/req-resp-manipulation-intro.mmd.svg
+- /images/documentation/hero/request-response-manipulation.png
 ---
 
 One of KrakenD's standout features is its powerful capability to manipulate requests and responses, allowing you to shape data flows to meet your application's needs. With KrakenD, you can transform incoming requests and outgoing responses on the fly, ensuring your APIs are efficient and perfectly aligned with your business logic. Whether you need to filter sensitive information, restructure payloads, enrich responses, or enforce specific rules, KrakenD provides a robust toolkit to get the job done.

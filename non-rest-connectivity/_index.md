@@ -8,6 +8,9 @@ weight: -10
 menu:
   community_current:
     parent: "050 Non-REST Connectivity"
+dark_header_image: true
+images:
+- /images/documentation/hero/non-rest-connectivity.png
 ---
 
 KrakenD supports a range of non-REST connectivity options that open the door to integration with message brokers, event-driven systems, and alternative protocols and communication styles. By providing built-in capabilities to interact with services beyond traditional REST APIs, KrakenD enables applications to handle complex, real-time data flows and asynchronous communication patterns.
