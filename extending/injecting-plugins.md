@@ -50,11 +50,12 @@ In most cases, you will create your plugin for a single type, but it doesn't mea
 This logline is not an error (it's a DEBUG message). Instead, it tells you that your plugin cannot register itself as one of the other types of plugins you are not implementing. **It's all good** (unless of course you were trying to register this type).
 {{< /note >}}
 
-For example, let's see how loading three different plugins log into KrakenD:
+For example, let's see how the different plugins log into KrakenD:
 
 - `client-example.so`  (An [HTTP client plugin](/docs/extending/http-client-plugins/))
 - `server-example.so` (An [HTTP server plugin](/docs/extending/http-server-plugins/))
 - `request-modifier.so` (A [request/response modifier plugin](/docs/extending/plugin-modifiers/))
+- `middleware.so` (A [Middleware plugin](/docs/enterprise/extending/middleware-plugins/)) {{< badge >}}Enterprise{{< /badge >}}
 
 In the logs, we will see how each plugin fails to register as the rest of the types they don't implement:
 
@@ -76,6 +77,8 @@ Parsing configuration file: krakend.json
 {{< /highlight >}}
 
 The `INFO` log level tells you what is going on, but notice how the highlighted `DEBUG` messages fail to register for the type they are not. This is expected.
+
+The Enterprise Edition will also print the same line for Middleware plugins.
 
 ## Injecting the plugin
 At this point, KrakenD has registered the plugin and is ready to use. The next step is to inject the plugin somewhere in the configuration. The configuration entry depends entirely on the type of plugin you are using and what you have coded.
@@ -161,6 +164,50 @@ You can place the request/modifier plugins at the `endpoint` or the `backend` le
           "extra_config":{
             "plugin/req-resp-modifier":{
               "name":["your-plugin"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Injecting middleware plugins
+This is an {{< badge >}}Enterprise{{< /badge >}} feature only.
+
+You can place the middleware plugins at the `endpoint` or the `backend` level. In both cases, you can inject several plugins used in the order you declare them.
+
+```json
+{
+  "version": 3,
+  "plugin": {
+    "pattern":".so",
+    "folder": "/path/to/your/plugin/folder/"
+  },
+  "endpoints": [
+    {
+      "endpoint": "/foo",
+      "extra_config":{
+        "plugin/middleware":{
+          "name":["your-plugin-A"],
+          "your-plugin-A": {
+            "your-A-setting": true
+          }
+        }
+      },
+      "backend":[
+        {
+          "url_pattern": "/bar",
+          "extra_config":{
+            "plugin/middleware":{
+              "name":["your-plugin-A","your-plugin-B"],
+              "your-plugin-A": {
+                "your-A-setting": true
+              },
+              "your-plugin-B": {
+                "your-B-setting": true
+              }
             }
           }
         }
