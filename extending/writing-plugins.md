@@ -1,5 +1,5 @@
 ---
-lastmod: 2025-01-23
+lastmod: 2025-05-23
 date: 2019-01-14
 linktitle: Writing plugins
 title: Writing and building custom plugins
@@ -22,22 +22,69 @@ Plugins are **an independent binary** of your own and are not part of KrakenD it
 
 Let's get you started building custom code!
 
+## Types of plugins
+In the journey of a request and response the data passess different stages (we call them *pipes*) and is validated and transformed back and forth. The different types of plugins available determine **WHEN** you want to inject a customization. Depending on the pipe you are in, you can use a specific type of plugin or another to accomplish the job.
+
+A **simplified version** of the [Execution Flow](/docs/design/execution-flow/#execution-flow-pipes) is:
+
+![components-sequence-plugins.mmd diagram](/images/documentation/diagrams/components-sequence-plugins.mmd.svg)
+
+**Request:**
+
+1. A user or machine sends an HTTP request to KrakenD. The initial hit is processed by the `router pipe` that decides what to do with it.
+2. The `router pipe` **transforms** the HTTP request into one or many `proxy` internal requests -HTTP or not- through a handler function.
+3. Each `proxy pipe` fetches the data through the selected `transport` layer.
+
+**Response:**
+
+4. When the backend services return the data, the `proxy pipe` manipulates,merges, applies logic... and returns a single context to the `router pipe`.
+5. The `router pipe` finally converts the internal proxy response into an HTTP response that is returned to the user
+
+
+**TL;DR**: The `Router` deals with HTTP/gRPC and determines how to map the incoming request to an endpoint, the `Proxy` what to do with it, and the `Transport` how to communicate with the involved service(s).
+
+There are **four different types of plugins** you can inject in these pipes, and most of the job is understanding which one is the right kind for the job you want to. Let's see them all:
+
+
+| Plugin Type    | Pipe | Purpose |
+| -------- | ------- | ------- |
+| {{< badge color="#6f00f0">}}server{{< /badge >}}      | Router | [HTTP server plugins](/docs/extending/http-server-plugins/) modify the HTTP request and response between the end-user and KrakenD (the server)    |
+| {{< badge color="#0000ff">}}req/resp{{< /badge >}}    | Proxy | [Request/Response Modifier plugins](/docs/extending/plugin-modifiers/) modify data (such as headers, body, status code...) |
+| {{< badge color="#f07000">}}middleware{{< /badge >}}  | Proxy | [Middleware plugins](/docs/enterprise/extending/middleware-plugins/)  (**Enterprise only**) inject custom code inside the internals of KrakenD. |
+| {{< badge color="#e900b7">}}client{{< /badge >}}      | Transport | [HTTP client plugins](/docs/extending/http-client-plugins/) modify the request and response between KrakenD and the upstream services (internal HTTP client)    |
+
+As you can see, each type of plugin belongs to a specific pipe where it is injected. Let's see now the same execution flow with its possible type of plugins association:
+
+![components-sequence-plugins-injected.mmd diagram](/images/documentation/diagrams/components-sequence-plugins-injected.mmd.svg)
+
+As we described, the flow involves both a request and a response, but the `Proxy` pipe is a complex piece that can make that a single request transforms into **multiple API queries** requiring to split and merge requests. Let's zoom in now the pipes and see **all possible places where you can inject plugins** (you might want to open this image in a new tab):
+
+![Diagram of plugin placement](/images/documentation/diagrams/plugin-types.mmd.svg)
+
+What are the capabilities of each plugin?
+
+- {{< badge color="#6f00f0" >}}server{{< /badge >}}: [HTTP server plugins](/docs/extending/http-server-plugins/) (or **http handlers**) belong to the **router layer** and let you **modify the HTTP request** as soon as it hits KrakenD and before the routing to an endpoint happens. They can also decorate the HTTP response before it is delivered to the consumer. For example, you can modify the request, block traffic, make validations, change the final response, connect to third-party services, databases, or anything else you imagine, scary or not, but it does not allow you to modify the internals of KrakenD. If you need multiple plugins, you can stack them.
+- {{< badge color="#e900b7" >}}client{{< /badge >}}: [HTTP client plugins](/docs/extending/http-client-plugins/) (or proxy client plugins) belong to the **proxy layer** and let you change **how KrakenD interacts (as a client) with a specific backend service**. They are as powerful as server plugins, but their working influence is smaller. You can have only **one plugin for the connecting backend call**, because client plugins are **terminators**. When you set a client plugin, you are replacing the internal HTTP KrakenD client, which means you can lose instrumentation and other features. Despite being called HTTP, the only relationship with HTTP is their interface used to encapsulate the plugin.
+|{{< badge color="#0000ff" >}}reqresp{{< /badge >}}: [Request/Response Modifier plugins](/docs/extending/plugin-modifiers/) are strictly **data modifiers** and let you change headers, paths, body, method, status code both in the request or response to and from your backends. A limitation is that request and response are isolated from each other and don't share context, so you cannot correlate information between the request and the response. These are lighter than the rest but the most frequent ones.
+- {{< badge color="#f07000" >}}middleware{{< /badge >}}: [Middleware plugins](/docs/enterprise/extending/middleware-plugins/) (**Enterprise only**) allow you to inject any behavior in the **proxy layer** at the endpoint or backend levels, alter the native request or response, raise errors, do premature termination, or connect to third parties. This is the most powerful type of plugin and is the equivalent to forking the source code and adding your components.
+
+All different types of plugins let you freely implement your logic without restrictions. However, make sure to write them down, implement the correct interface, and compile them with respect to the requirements.
+
 ## Requirements to write plugins
-If you have gone through the different functionalities of KrakenD and think that a combination of components does not fulfill your needs, writing a plugin can be the solution. This document omits the initial parts of the development lifecycle (plan, analyze, design...) and jumps directly to the implementation part.
+If you have gone through the different functionalities of KrakenD and think that a combination of components does not fulfill your needs, writing a plugin can be the solution. This document omits the initial parts of the development lifecycle (plan, analyze, design...) and jumps directly to the **implementation part**.
 
 ### System requirements
-To build custom plugins, you will need:
+To build custom plugins, you will need **Docker**, and you don't need Go installed. Yep, you read it right:
 
-- **Docker** to run the Plugin builder (even if you don't plan to run on Docker)
-- **You don't need Go in your machine**. Yep, that's right.
-- Any Docker-capable operating system
+- **Docker** to run the Plugin builder and compile the code correctly (even if you don't plan to run the gateway on Docker)
+- **You don't need Go in your machine**, because the Plugin builder takes care of the compilation.
 
 ### Plugin requirements
 Writing plugins isn't complicated per se, but **Go is very strict** with the environment where you compile and load them. When you use the Plugin builder, the complicated parts are taken care of for you. The following principles are essential:
 
 - **Right interface**: Your plugin must implement the proper interface for the type of plugin you are coding.
-- **Same Go version**: Your plugin and KrakenD are compiled with the same Go version. E.g., you cannot build a plugin on Go 1.19 and load it on a KrakenD assembled with Go 1.22. Run `krakend version` to get the required Go and Glibc versions.
-- **Same architecture/platform**: KrakenD and plugins must have been compiled in the same architecture. E.g., you cannot compile a plugin in a Mac and use it in a Docker container
+- **Same Go version**: Your plugin and KrakenD are compiled with the same Go version. E.g., you cannot build a plugin on Go 1.19 and load it on a KrakenD assembled with Go 1.22. The `krakend version` tells you the Go and Glibc versions.
+- **Same architecture/platform**: KrakenD and plugins must have been compiled in the same architecture. E.g., you cannot compile a plugin in a Mac natively and use it in a Docker container
 - **Same shared library versions**: If the KrakenD core also uses external libraries, they must import identical versions.
 - **Injection in the configuration**: Besides coding and compiling your plugin, you must add it to the `krakend.json` configuration.
 
@@ -51,32 +98,11 @@ These are all the steps needed to create a plugin from scratch and successfully 
 1. Choose the [type of plugin](#types-of-plugins) you want to create.
 2. [Write the Go file](#write-the-go-file) with the right interface and custom logic
 3. [Check the dependencies](#check-the-dependencies) are compatible with the binary
-4. [Compile the plugin](#compile-the-plugin) for your architecture
-5. [Test the plugin](#test-the-plugin) is loadable
+4. [Compile the plugin](#compile-the-plugin) for your architecture (not in your machine, but in the builder)
+5. [Test the plugin is loadable](#test-the-plugin)
 6. [Inject your plugin](#inject-your-plugin-and-run-krakend) and run KrakenD
 
 These steps are detailed below.
-
-## Types of plugins
-There are different types of plugins you can write, and most of the job is to understand what kind of plugin you are going to need. Look at the following diagram, the most striking colors are where you can inject plugins:
-
-![Diagram of plugin placement](/images/documentation/diagrams/plugin-types.mmd.svg)
-
-The types of plugins depicted are:
-
-1. {{< badge color="#6f00f0">}}server{{< /badge >}} **[HTTP server plugins](/docs/extending/http-server-plugins/)** (or handler plugins) belong to the **router layer** and let you do **anything** as soon as the request hits KrakenD and before the routing. For example, you can modify the request before KrakenD starts processing it, block traffic, make validations, change the final response, connect to third-party services, databases, or anything else you imagine, scary or not. You can also **stack several plugins at once**.
-2. {{< badge color="#0000ff" >}}req/resp{{< /badge >}} **[Request/Response Modifier plugins](/docs/extending/plugin-modifiers/)** are strictly **data modifiers** and let you change the request or response data to and from your backends. These are lighter than the rest.
-3. {{< badge color="#e900b7" >}}client{{< /badge >}} **[HTTP client plugins](/docs/extending/http-client-plugins/)** (or proxy client plugins) belong to the **proxy layer** and let you change how KrakenD interacts (as a client) with a specific backend service. They are as powerful as server plugins, but their working influence is smaller. You can have **one plugin for the connecting backend call**, because client plugins are terminators. When you set a client plugin, you are replacing the internal KrakenD client, which means you can lose instrumentation and other features.
-
-In a nutshell, **the sequence of a request-response** depicted in the graph of the plugins above is as follows:
-
-1. The end-user/server sends an HTTP request to KrakenD that is processed by the `router pipe`. One or more [HTTP server plugins](/docs/extending/http-server-plugins/) (a.k.a **http handlers**) can be injected in this stage.
-2. The `router pipe` **transforms** the HTTP request into one or several `proxy` requests -HTTP or not- through a handler function. The [request modifier plugin](/docs/extending/plugin-modifiers/) can intercept this stage and make modifications, before or after the split/aggregation.
-3. The `proxy pipe` fetches the data for all the requests through the selected transport layer. The [HTTP client plugin](/docs/extending/http-client-plugins/) modifies any interaction with the backend.
-4. The `proxy pipe` manipulates, aggregates, applies components... and returns the context to the `router pipe`. The [response modifier plugin](/docs/extending/plugin-modifiers/)) can manipulate the data per backend or when everything is aggregated.
-5. The `router pipe` finally converts the proxy response into an HTTP response.
-
-All different types of plugins let you freely implement your logic without restrictions. However, make sure to write them down, implement the correct interface, and compile them with respect to the requirements.
 
 ## Write the Go file
 {{< note title="Enterprise users" type="info" >}}

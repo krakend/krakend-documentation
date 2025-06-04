@@ -9,6 +9,9 @@ notoc: false
 menu:
   community_current:
     parent: "070 Security"
+dark_header_image: true
+images:
+- /images/documentation/hero/security.png
 ---
 KrakenD is a software built with a **security-first philosophy**. In 2022, we became a recognized **CVE Numbering Authority (CNA)** worldwide for software distribution ([Partner page](https://www.cve.org/PartnerInformation/ListofPartners/partner/KrakenD)), and we publish CVE Records for vulnerabilities within any KrakenD software or the Lura Project (© the Linux Foundation).
 

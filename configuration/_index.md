@@ -9,6 +9,9 @@ menu:
     parent: "010 Configuration files"
 weight: -1000
 aliases: ["/docs/overview/configuration/","/docs/configuration/overview/"]
+dark_header_image: true
+images:
+- /images/documentation/hero/configuration.png
 ---
 All the setup a KrakenD server needs to operate is a single configuration file. This file is referred to as `krakend.json` through all the documentation.
 
