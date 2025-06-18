@@ -223,6 +223,6 @@ Here are some indications to avoid exfiltration using **static patterns**:
 - Use [Security Policies](/docs/enterprise/security-policies/) {{< badge >}}Enterprise{{< /badge >}} to check necessary roles and conditions to deliver content
 - Use [Regex Masking or Redaction](/docs/ai-gateway/security/#data-masking--data-loss-prevention) on fields that must not be exfiltrated in full.
 - Use custom logic in [request and response modifier plugins](/docs/extending/plugin-modifiers/)
-- Instead of allowing open LLM queries, use [prompt templates](/docs/ai-gateway/governance/#prompt-templates)
+- Instead of allowing open LLM queries, use [prompt templates](/docs/enterprise/ai-gateway/governance/#prompt-templates) {{< badge >}}Enterprise{{< /badge >}}
 
 For **dynamic operation**, you can delegate the output to an LLM that will refine the response. To do that, you can add a [sequential proxy](/docs/endpoints/sequential-proxy/) step as the second backend, as explained in the chapter above.
