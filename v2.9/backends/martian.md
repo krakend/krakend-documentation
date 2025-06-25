@@ -44,7 +44,7 @@ Some **examples of typical Martian scenarios** are:
 
 Add martian modifiers in your configuration under the `extra_config` of any `backend` using the namespace `modifier/martian`.
 
-Inside the configuration, you must write one or more component keys using the notation `package.Type` using the available ones described in this page. You cannot write `@comment`-like attributes directly under the `modifier/martian` namespace, but you can add them inside each modifier.
+Inside the configuration, you must write a single component using the notation `package.Type` using the available ones described in this page. If you need **multiple modifiers** use a group type. You cannot write `@comment`-like attributes directly under the `modifier/martian` namespace, but you can add them inside each modifier.
 
 There are three main **types** of packages you can use in Martian:
 
