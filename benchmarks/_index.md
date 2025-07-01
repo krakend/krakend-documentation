@@ -6,6 +6,9 @@ title: API Gateway Performance Benchmarks with KrakenD
 description: Explore the performance benchmarks conducted with KrakenD API Gateway to ensure optimal performance and scalability for your APIs.
 aliases: ["/docs/benchmarks/overview/"]
 weight: 1
+dark_header_image: true
+images:
+  - /images/documentation/hero/benchmarks.png
 menu:
   community_current:
     parent: "300 Benchmarks"
