@@ -33,7 +33,7 @@ To enable it you need a configuration like this:
 ```json
 {
   "version": 3,
-  "$schema": "https://www.krakend.io/schema/krakend.json",
+  "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
   "tls": {
     "enable_mtls": true,
     "ca_certs": [
@@ -137,18 +137,22 @@ The KrakenD configuration needed is as follows (no endpoints used for this demo)
 
 ```json
 {
-    "version": 3,
-    "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
-    "port": 443,
-    "tls": {
-        "public_key": "./server.crt",
-        "private_key": "./server.key",
-        "enable_mtls": true,
-        "ca_certs": [
-            "./rootCA.pem"
-        ],
-        "disable_system_ca_pool": true
-    }
+  "version": 3,
+  "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
+  "port": 443,
+  "tls": {
+    "enable_mtls": true,
+    "ca_certs": [
+      "rootCA.pem"
+    ],
+    "keys": [
+     {
+      "private_key": "./server.key",
+      "public_key": "./server.crt"
+     },
+    ],
+    "disable_system_ca_pool": true
+  }
 }
 ```
 
