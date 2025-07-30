@@ -32,15 +32,20 @@ To enable it you need a configuration like this:
 
 ```json
 {
-    "version": 3,
-    "tls": {
-      "public_key": "/path/to/cert.pem",
+  "version": 3,
+  "$schema": "https://www.krakend.io/schema/krakend.json",
+  "tls": {
+    "enable_mtls": true,
+    "ca_certs": [
+      "rootCA.pem"
+    ],
+    "keys": [
+     {
       "private_key": "/path/to/key.pem",
-      "enable_mtls": true,
-       "ca_certs": [
-            "./rootCA.pem"
-        ]
-    }
+      "public_key": "/path/to/cert.pem"
+     }
+    ]
+  }
 }
 ```
 
