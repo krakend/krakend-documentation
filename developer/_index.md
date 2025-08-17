@@ -9,6 +9,9 @@ menu:
 title: Custom developer tools
 description: Discover what are the development tools you can compile additionally to work with KrakenD Open Source edition. These tools are not bundled by default with KrakenD.
 weight: 10
+dark_header_image: true
+images:
+  - /images/documentation/hero/developer.png
 ---
 
 There are some additional resources that might help you when developing with KrakenD. These tools are meant to be used only in development and **never in production**, they are **not bundled with KrakenD** and are separate components that you must compile.

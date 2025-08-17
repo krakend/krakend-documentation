@@ -9,14 +9,8 @@ menu:
   community_current:
     parent: "080 Authentication & Authorization"
 images:
-- /images/documentation/diagrams/auth-overview-all.mmd.svg
-- /images/documentation/diagrams/auth-overview-architecture.mmd.svg
-- /images/documentation/diagrams/auth-overview-backend.mmd.svg
-- /images/documentation/diagrams/auth-overview-client.mmd.svg
-- /images/documentation/diagrams/auth-overview-forward.mmd.svg
-- /images/documentation/diagrams/auth-overview.mmd.svg
-- /images/documentation/diagrams/auth-overview-no-auth.mmd.svg
-
+  - /images/documentation/hero/authorization.png
+dark_header_image: true
 ---
 Authorization and authentication are fundamental to managing access to your APIs. While authentication verifies the identity of a user or service (e.g., *is this a valid user/pass?*), the authorization checks their access rights (e.g., *Should John see this resource?*).
 
