@@ -45,7 +45,7 @@ A mobile or javascript developer needs to construct a single front page that req
 - `api.users.server/users/{id_user}`
 - `api.users.server/shopping-cart/{id_user}`
 
-The mobile application needs to retrieve data from these four different sources, authorize each of the services, wait for each round trip, and pick only a few fields from the responses (doesn't need the full response). What if, instead of doing these calls, the mobile client could call a single endpoint to KrakenD to get exactly what it needs?:
+The mobile application needs to retrieve data from these four different sources, authorize each of the services, wait for each round trip, and pick only a few fields from the responses (doesn't need the full response). What if, instead of doing these calls, the mobile client could call a single endpoint to KrakenD to get exactly what it needs?
 
 `api.krakend.server/frontpage/{id_user}`
 
