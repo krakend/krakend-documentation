@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-12-07
+lastmod: 2025-08-21
 date: 2020-11-16
 linktitle: Azure Monitor
 title: Azure Monitor Telemetry Integration
@@ -10,13 +10,13 @@ menu:
     parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: 1.1
-  source: https://github.com/krakend/krakend-opencensus
+  source: https://github.com/krakend/krakend-otel
   namespace:
-  - telemetry/opencensus
+  - telemetry/opentelemetry
   scope:
   - service
   log_prefix:
-  - "[SERVICE: Opencensus]"
+  - "[SERVICE: OpenTelemetry]"
 skip_header_image: true
 images:
 - /images/documentation/screenshots/azure-app-insights-1.png
@@ -61,7 +61,7 @@ The gateway sends all the traces to a local **OpenTelemetry Collector** ([see re
 ![Otel collector](/images/documentation/diagrams/azure-collector.mmd.svg)
 
 ## Application Insights configuration
-The [OpenCensus exporter](/docs/telemetry/opencensus/) is the (stable) component that allows you to export telemetry data, Azure included. Nevertheless, the official **OpenTelemetry Collector** is flagged as **beta** and still **does not support pushing metrics** for Azure. So without further development on the OpenTelemetry side, the integration is limited to traces.
+OpenTelemetry allows you to export telemetry data, Azure included. Nevertheless, the official **OpenTelemetry Collector** is flagged as **beta** and still **does not support pushing metrics** for Azure. So without further development on the OpenTelemetry side, the integration is limited to traces.
 
 There are three things you need to do:
 
@@ -74,9 +74,7 @@ To enable the Azure Monitor integration, you need to add a new resource **Applic
 
 ![Application Insights](/images/documentation/screenshots/azure-application-insights.png)
 
-When the resource finishes creating, **save the Instrumentation Key** for later usage, you will find it as shown in the screenshot below:
-
-![Application Insights](/images/documentation/screenshots/azure-application-insights-instrumentation-key.png)
+When the resource finishes creating, **save the Instrumentation Key** or **Connection String** for later usage.
 
 ### Starting the OpenTelemetry Collector
 You can start the OpenTelemetry Collector with Azure's compatibility using its [Docker image](https://hub.docker.com/r/otel/opentelemetry-collector-contrib). Here there is a `docker-compose.yml` example that includes a KrakenD and a collector:
@@ -98,20 +96,26 @@ services:
     volumes:
       - ./otel-collector.yaml:/etc/otel-collector.yaml
     ports:
-      - "55678"
+      - "4317"
+      - "4318"
 ```
 
 The configuration mounted for the collector is below, `otel-collector.yaml`:
 
 ```yaml
 receivers:
-  opencensus:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
 
 exporters:
   # logging:
   #   verbosity: detailed
   azuremonitor:
-    instrumentation_key: XXXXXXX
+    connection_string: XXXXXXX
 
 service:
    telemetry:
@@ -119,12 +123,12 @@ service:
        level: "warn"
   pipelines:
     traces:
-      receivers: [opencensus]
+      receivers: [otlp]
       exporters: [azuremonitor]
 ```
 Enable the logging only if you find problems and want extra information.
 
-Replace the value of the `instrumentation_key` entry with the one you got in your Azure dashboard.
+Replace the value of the `connection_string` entry with the one you got in your Azure dashboard.
 
 ### Configuration for KrakenD
 Lastly, add at the service level of KrakenD the following configuration:
@@ -133,27 +137,29 @@ Lastly, add at the service level of KrakenD the following configuration:
 {
   "version": 3,
   "extra_config": {
-    "telemetry/opencensus": {
-          "sample_rate": 100,
-          "reporting_period": 60,
-          "exporters": {
-              "ocagent": {
-                "address": "otel-collector:55678",
-                "service_name": "myKrakenD",
-                "@comment": "Connection to the internal collector is rarely under SSL (insecure flag)",
-                "insecure": true
-              }
+    "telemetry/opentelemetry": {
+      "trace_sample_rate": 1,
+      "exporters": {
+        "otlp": [
+          {
+            "name": "azure_monitor",
+            "host": "localhost",
+            "port": 4317
           }
+        ]
       }
+    }
   }
 }
 ```
+The configuration above reports a 100% of the activity (`trace_sample_rate = 1`), when in production consider lowering this value (e.g., `0.1`) as you will want a sample of the traffic only.
+
 The `otel-collector` above is the name of the docker compose service running the collector. You might need to replace it if you are not using this example.
 
 With these three steps, you can start sending data to KrakenD. You should start seeing the graphs populated on Azure Monitor in a couple of minutes.
 
 {{< note title="Insecure flag" type="warning" >}}
-Most of the times, the communication between KrakenD and the collector happens in the same machine. It is rare that this connection uses SSL, and if it doesn't the `insecure` flag must be set to `true`. Otherwise, KrakenD will fail silently.
+Most of the times, the communication between KrakenD and the collector happens in the same machine. It is rare that this connection uses SSL, and if it doesn't, the `insecure` flag must be set to `true`. Otherwise, KrakenD will fail silently.
 {{< /note >}}
 
 
