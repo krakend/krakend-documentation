@@ -10,7 +10,7 @@ menu:
   community_current:
     parent: "040 Routing and Forwarding"
 meta:
-  since: 2.11
+  since: v2.11
   namespace:
   - backend/http/client
   scope:

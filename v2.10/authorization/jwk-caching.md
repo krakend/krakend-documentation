@@ -10,7 +10,7 @@ menu:
   community_v2.10:
     parent: "080 Authentication & Authorization"
 meta:
-  since: 2.3
+  since: v2.3
   source: https://github.com/krakend/krakend-jose
   namespace:
   - auth/validator

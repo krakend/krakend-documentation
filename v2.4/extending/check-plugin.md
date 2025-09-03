@@ -8,7 +8,7 @@ description: "The command check-plugin inspects your plugin's go.sum file to fin
 weight: 50
 notoc: true
 meta:
-    since: 2.0
+    since: v2.0
 menu:
   community_v2.4:
     parent: "150 Custom Plugins and Middleware"

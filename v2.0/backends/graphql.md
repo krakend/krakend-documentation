@@ -13,7 +13,7 @@ menu:
   community_v2.0:
     parent: "050 Backends Configuration"
 meta:
-  since: 2.0
+  since: v2.0
   source: https://github.com/luraproject/lura
   namespace:
   - backend/graphql

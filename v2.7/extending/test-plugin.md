@@ -8,7 +8,7 @@ description: Learn how to test binary files that you compiled as plugins by load
 weight: 30
 notoc: true
 meta:
-    since: 2.6
+    since: v2.6
 menu:
   community_v2.7:
     parent: "180 Extending with custom code"

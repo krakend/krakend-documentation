@@ -11,7 +11,7 @@ images:
 - /images/documentation/diagrams/opentelemetry-otlp.mmd.svg
 skip_header_image: true
 meta:
-  since: 2.6
+  since: v2.6
   source: https://github.com/krakend/krakend-otel
   namespace:
   - telemetry/opentelemetry

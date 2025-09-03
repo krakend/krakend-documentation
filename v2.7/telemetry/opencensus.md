@@ -11,7 +11,7 @@ menu:
   community_v2.7:
     parent: "160 Monitoring, Logs, and Analytics"
 meta:
-  since: 0.5
+  since: v0.5
   source: https://github.com/krakend/krakend-opencensus
   namespace:
   - telemetry/opencensus

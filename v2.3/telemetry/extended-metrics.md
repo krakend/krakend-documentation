@@ -10,7 +10,7 @@ menu:
     parent: "080 Telemetry and Analytics"
 notoc: true
 meta:
-  since: 0.4
+  since: v0.4
   source: https://github.com/krakend/krakend-metrics
   namespace:
   - telemetry/metrics

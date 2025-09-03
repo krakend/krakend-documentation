@@ -8,7 +8,7 @@ description: KrakenD check-plugin Command
 weight: 50
 notoc: true
 meta:
-    since: 2.0
+    since: v2.0
 menu:
   community_v2.0:
     parent: "150 Custom Plugins and Middleware"

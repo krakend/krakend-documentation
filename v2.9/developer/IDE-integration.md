@@ -14,7 +14,7 @@ menu:
   community_v2.9:
     parent: "170 API Documentation and Dev Tools"
 meta:
-  since: 2.0
+  since: v2.0
   source: https://github.com/krakend/krakend-schema
 
 ---

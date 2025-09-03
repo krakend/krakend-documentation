@@ -12,7 +12,7 @@ skip_header_image: true
 images:
 - /images/documentation/grafana-screenshot.png
 meta:
-  since: 0.5
+  since: v0.5
   source: https://grafana.com/dashboards/5722
   namespace:
   - telemetry/influx

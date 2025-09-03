@@ -10,7 +10,7 @@ menu:
   community_current:
     parent: "180 Extending with custom code"
 meta:
-  since: 2.0
+  since: v2.0
   namespace:
   - plugin/req-resp-modifier
 images:

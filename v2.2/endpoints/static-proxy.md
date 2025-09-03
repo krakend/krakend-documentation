@@ -10,7 +10,7 @@ menu:
     parent: "040 Endpoint Configuration"
 meta:
   noop_incompatible: true
-  since: 0.5
+  since: v0.5
   source: https://github.com/luraproject/lura
   namespace:
   - proxy

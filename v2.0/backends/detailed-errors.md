@@ -9,7 +9,7 @@ menu:
   community_v2.0:
     parent: "050 Backends Configuration"
 meta:
-  since: 0.8
+  since: v0.8
   source: https://github.com/luraproject/lura
   namespace:
   - backend/http

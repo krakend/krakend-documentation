@@ -10,7 +10,7 @@ title: Environment variables in the configuration
 description: Learn how to leverage environment variables in KrakenD API Gateway configuration for flexible and dynamic configuration management
 weight: 40
 meta:
-  since: 1.2
+  since: v1.2
   source: false
   namespace: false
   scope:

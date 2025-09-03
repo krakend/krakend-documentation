@@ -11,7 +11,7 @@ menu:
     parent: "160 Monitoring, Logs, and Analytics"
 notoc: false
 meta:
-  since: 0.4
+  since: v0.4
   source: https://github.com/krakend/krakend-metrics
   namespace:
   - telemetry/metrics

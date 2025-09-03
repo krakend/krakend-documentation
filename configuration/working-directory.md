@@ -9,7 +9,7 @@ menu:
   community_current:
     parent: "010 Configuration files"
 meta:
-    since: 2.5
+    since: v2.5
 images:
 #- /images/documentation/diagrams/flexible-config.mmd.svg
 

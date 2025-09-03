@@ -11,7 +11,7 @@ menu:
   community_current:
     parent: "090 Traffic Management"
 meta:
-  since: 0.4
+  since: v0.4
   source: https://github.com/krakend/krakend-ratelimit
   namespace:
   - qos/ratelimit/router

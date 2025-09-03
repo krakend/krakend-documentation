@@ -10,7 +10,7 @@ menu:
   community_v2.8:
     parent: "180 Extending with custom code"
 meta:
-  since: 1.0
+  since: v1.0
   source: https://github.com/krakend/krakend-lua
   namespace:
   - "modifier/lua-proxy"
@@ -158,7 +158,7 @@ Use this type when you need to script the router layer, traffic between end-user
 Now you know where to put the Lua code according to what you want to do, and how to access and modify the requests and responses. In addition, the following helper functions are brought by KrakenD to extend the possibilities of your scripts without using third parties:
 
 ### Nil helper
-The `nil` in Lua is destructive in tables, because it is used to **remove elements**. For instance, if you have a table with an index `foo`, and you set it to `nil`, the element from the table is destroyed. When you want to preserve this `foo` index but emptying it's value you must use the Go `nil` value instead. 
+The `nil` in Lua is destructive in tables, because it is used to **remove elements**. For instance, if you have a table with an index `foo`, and you set it to `nil`, the element from the table is destroyed. When you want to preserve this `foo` index but emptying it's value you must use the Go `nil` value instead.
 
 *   `luaNil.new()`: Returns a native Go `nil` value. This is useful if you want to write `nil` values in a `luaTable` or a `luaList`.
 

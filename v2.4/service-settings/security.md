@@ -9,7 +9,7 @@ menu:
   community_v2.4:
     parent: "030 Service Settings"
 meta:
-  since: 0.4
+  since: v0.4
   source: https://github.com/krakend/krakend-httpsecure
   namespace:
   - security/http

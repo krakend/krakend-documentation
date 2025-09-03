@@ -10,7 +10,7 @@ menu:
   community_v1.3:
     parent: "040 Endpoint Configuration"
 meta:
-  since: 1.2
+  since: v1.2
   source: https://github.com/krakend/krakend-ce
   namespace: false
   scope:

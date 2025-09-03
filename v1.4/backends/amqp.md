@@ -10,7 +10,7 @@ menu:
   community_v1.4:
     parent: "050 Backends Configuration"
 meta:
-  since: 0.9
+  since: v0.9
   source: https://github.com/krakend/krakend-amqp
   namespace:
   - github.com/devopsfaith/krakend-amqp/consume

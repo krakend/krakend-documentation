@@ -16,7 +16,7 @@ menu:
     parent: "040 Routing and Forwarding"
 meta:
   noop_incompatible: false
-  since: 0.7
+  since: v0.7
   source: https://github.com/luraproject/lura
   namespace:
   - proxy

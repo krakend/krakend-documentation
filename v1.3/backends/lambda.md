@@ -13,7 +13,7 @@ menu:
     parent: "050 Backends Configuration"
 notoc: true
 meta:
-  since: 1.0
+  since: v1.0
   source: https://github.com/krakend/krakend-lambda
   namespace:
   - github.com/devopsfaith/krakend-lambda

@@ -10,7 +10,7 @@ menu:
   community_v2.4:
     parent: "040 Endpoint Configuration"
 meta:
-  since: 0.8
+  since: v0.8
   source: https://github.com/krakend/krakend-cel
   namespace:
   - validation/cel

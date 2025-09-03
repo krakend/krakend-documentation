@@ -11,7 +11,7 @@ menu:
   community_v2.6:
     parent: "040 Routing and Forwarding"
 meta:
-  since: 0.8
+  since: v0.8
   source: https://github.com/krakend/krakend-cel
   namespace:
   - validation/cel

@@ -11,7 +11,7 @@ menu:
   community_v2.0:
     parent: "040 Endpoint Configuration"
 meta:
-  since: 0.4
+  since: v0.4
   source: https://github.com/krakend/krakend-ratelimit
   namespace:
   - qos/ratelimit/router

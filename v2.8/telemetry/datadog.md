@@ -15,7 +15,7 @@ menu:
   community_v2.8:
     parent: "160 Monitoring, Logs, and Analytics"
 meta:
-  since: 1.2
+  since: v1.2
   source: https://github.com/krakend/krakend-otel
   namespace:
   - telemetry/opentelemetry

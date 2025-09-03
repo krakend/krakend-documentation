@@ -11,7 +11,7 @@ menu:
   community_v1.4:
     parent: "070 Traffic Management"
 meta:
-  since: 1.0
+  since: v1.0
   source: https://github.com/krakend/krakend-botdetector
   namespace:
   - github_com/devopsfaith/krakend-botdetector

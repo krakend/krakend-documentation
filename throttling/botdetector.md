@@ -12,7 +12,7 @@ menu:
   community_current:
     parent: "090 Traffic Management"
 meta:
-  since: 1.0
+  since: v1.0
   source: https://github.com/krakend/krakend-botdetector
   namespace:
   - security/bot-detector

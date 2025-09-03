@@ -11,7 +11,7 @@ menu:
   community_v1.3:
     parent: "080 Telemetry and Analytics"
 meta:
-  since: 0.5
+  since: v0.5
   source: https://github.com/letgoapp/krakend-influx
   namespace:
   - github_com/letgoapp/krakend-influx

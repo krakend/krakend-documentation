@@ -11,7 +11,7 @@ menu:
   community_current:
     parent: "050 Non-REST Connectivity"
 meta:
-  since: 1.0
+  since: v1.0
   source: https://github.com/krakend/krakend-pubsub
   namespace:
   - backend/pubsub/publisher

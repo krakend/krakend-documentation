@@ -13,7 +13,7 @@ menu:
   community_v2.6:
     parent: "050 Non-REST Connectivity"
 meta:
-  since: 2.0
+  since: v2.0
   source: https://github.com/luraproject/lura
   scope:
   - async_agent

@@ -7,7 +7,7 @@ description: Explore the router options available in KrakenD API Gateway to cust
 weight: 120
 notoc: false
 meta:
-  since: 2.0
+  since: v2.0
   source: https://github.com/krakend/krakend-cors
   namespace:
   - router
