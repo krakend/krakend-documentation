@@ -10,7 +10,7 @@ menu:
   community_v2.7:
     parent: "040 Routing and Forwarding"
 meta:
-  since: 1.2
+  since: v1.2
   source: https://github.com/krakend/krakend-ce
   namespace: false
   scope:

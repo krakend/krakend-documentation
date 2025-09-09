@@ -15,7 +15,7 @@ images:
 skip_header_image: true
 notoc: true
 meta:
-  since: 0.5 #telemetry/influxdb was released on 0.5
+  since: v0.5 #telemetry/influxdb was released on 0.5
   source: https://github.com/krakend/krakend-otel
   namespace:
   - telemetry/opentelemetry

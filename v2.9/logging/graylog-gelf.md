@@ -12,7 +12,7 @@ menu:
   community_v2.9:
     parent: "160 Monitoring, Logs, and Analytics"
 meta:
-  since: 0.7
+  since: v0.7
   source: https://github.com/krakend/krakend-gelf
   namespace:
   - telemetry/gelf

@@ -8,7 +8,7 @@ description: Configure Cross-Origin Resource Sharing (CORS) in KrakenD API Gatew
 weight: 20
 notoc: true
 meta:
-  since: 0.6
+  since: v0.6
   source: https://github.com/krakend/krakend-cors
   namespace:
   - security/cors

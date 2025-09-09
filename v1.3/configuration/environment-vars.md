@@ -11,7 +11,7 @@ menu:
 title: Overriding the configuration with environment vars
 weight: 40
 meta:
-  since: 1.2
+  since: v1.2
   source: false
   namespace: false
   scope:

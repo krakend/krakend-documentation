@@ -11,7 +11,7 @@ menu:
   community_v2.2:
     parent: "150 Custom Plugins and Middleware"
 meta:
-  since: 2.0
+  since: v2.0
   namespace:
   - plugin/http-server
 images:

@@ -9,7 +9,7 @@ menu:
   community_current:
     parent: "180 Extending with custom code"
 meta:
-  since: 1.0
+  since: v1.0
   source: https://github.com/krakend/krakend-lua
   namespace:
   - "modifier/lua-proxy"
@@ -106,7 +106,7 @@ The `request` functions are:
 *   `query(value)` (_Dynamic_): Setter that changes the query of the request. E.g.: `r:query('?foo=var&vaz=42')`. It does not have any effect when you use `modifier/lua-backend`, but you can still set the `url()` without query strings.
 *   `url()` (_Dynamic_): Getter that retrieves the full URL string of the request, including the host and path. E.g.: `r:url()` could return a string `http://domain.com/api/test`. The URL might be empty depending on the step where this information is requested, as the URL is a calculated field just before performing the request to the backend.
 *   `url(value)` (_Dynamic_): Setter that changes the URL of the request. E.g.: `r:url('http://domain.com/api/test')`. Changing the value before the `url` is calculated will result in KrakenD overwriting its value. Although available, it does not have any effect when you use it `modifier/lua-proxy`.
-*   `params()` (_Dynamic_) : Getter returning a `luaTable` type with all the parameters defined in the endpoint. For instance `c:params():get('Foo')` when you have a `{foo}` in the endpoint. Notice that the parameters capitalize the first letter. Only available on EE v2.10, CE v2.11 will have it too.
+*   `params()` (_Dynamic_) : Getter returning a `luaTable` type with all the parameters defined in the endpoint. For instance `c:params():get('Foo')` when you have a `{foo}` in the endpoint. Notice that the parameters capitalize the first letter.
 *   `params(param)` (_Dynamic_): Getter that retrieves the `{params}` of the request as defined in the endpoint. E.g.: For an endpoint `/users/{user}` the function `r:params('User')` could return a string `alice`. **The parameters must have the first letter capitalized**.
 *   `params(param,value)` (_Dynamic_): Setter that changes the params of the request. It does not have any effect when you use `modifier/lua-backend`. E.g.: `r:params('User','bob')`. **The parameters must have the first letter capitalized**.
 *   `headers()` (_Dynamic_) : Getter returning a `luaTable` type with all the headers in the request that survived the `input_headers`. For instance `r:headers():get('Content-Type'):get(1)` Only available on EE v2.10, CE v2.11 will have it too.

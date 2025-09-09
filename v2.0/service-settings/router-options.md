@@ -7,7 +7,7 @@ title: Customizing router behavior
 weight: 10
 notoc: false
 meta:
-  since: 2.0
+  since: v2.0
   source: https://github.com/krakend/krakend-cors
   namespace:
   - router

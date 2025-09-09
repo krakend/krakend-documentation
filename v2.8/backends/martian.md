@@ -10,7 +10,7 @@ menu:
   community_v2.8:
     parent: "060 Request and Response Manipulation"
 meta:
-  since: 0.7
+  since: v0.7
   source: https://github.com/krakend/krakend-martian
   namespace:
   - modifier/martian

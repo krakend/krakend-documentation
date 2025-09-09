@@ -14,7 +14,7 @@ menu:
   community_v1.3:
     parent: "040 Endpoint Configuration"
 meta:
-  since: 0.7
+  since: v0.7
   source: https://github.com/devopsfaith/krakend
   namespace:
   - github.com/devopsfaith/krakend/proxy

@@ -10,6 +10,9 @@ weight: 910
 menu:
   community_current:
     parent: "090 Traffic Management"
+images:
+  - /images/documentation/hero/throttling.png
+dark_header_image: true
 ---
 Traffic management refers to the practice of **monitoring, controlling, and optimizing the flow of requests** to and from an API. It aims to prevent abuse by limiting the volume of requests from individual clients or groups, regulate the flow of traffic, ensure fair usage, and provide predictable API performance.
 

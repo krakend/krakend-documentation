@@ -10,7 +10,7 @@ menu:
     parent: "060 Request and Response Manipulation"
 meta:
   noop_incompatible: true
-  since: 0.5
+  since: v0.5
   source: https://github.com/luraproject/lura
   namespace:
   - proxy

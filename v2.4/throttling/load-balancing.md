@@ -10,7 +10,7 @@ menu:
   community_v2.4:
     parent: "070 Traffic Management"
 meta:
-  since: 0.1
+  since: v0.1
   source: https://github.com/luraproject/lura
   #namespace:
   #-

@@ -9,7 +9,7 @@ menu:
 title: "API Configuration Designer"
 meta:
   source: https://github.com/krakend/krakendesigner
-  since: 0.2
+  since: v0.2
 notoc: false
 weight: 40
 images:

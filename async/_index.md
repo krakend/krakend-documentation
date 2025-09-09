@@ -13,7 +13,7 @@ menu:
   community_current:
     parent: "050 Non-REST Connectivity"
 meta:
-  since: 2.0
+  since: v2.0
   source: https://github.com/luraproject/lura
   scope:
   - service
@@ -37,7 +37,7 @@ You are trying to implement an event based pattern, such as:
 ## How Async agents work
 When KrakenD starts, it reads the `async_agent` list in the configuration and creates the declared agents. An agent is an application thread that can use one or multiple workers connecting to a queue or PubSub system (consumers). KrakenD contacts the defined backend(s) list passing the event data when a new message kicks in. You might decide to add manipulations, validations, filtering, or any other backend functionality supported by KrakenD.
 
-The backend(s) receive the event from the agent as part of the body. Depending on the driver and configuration, when a backend fails to process the request, you can tell KrakenD to reinject the message (`Nack`) to retry the message later by any other worker. Notice that when working with Nack, if KrakenD is the only consumer and your backend fails to process the message continuously, KrakenD will reinsert the message into the queue over and over, and could lead to an infinite loop of messages if no consumer empties these messages.
+The backend(s) receive the event from the agent as part of the body. Depending on the driver and configuration, when a backend fails to process the request, you can tell KrakenD to reinject the message (`Nack`) to retry the message later by any other worker. Notice that when working with Nack, if KrakenD is the only consumer and your backend fails to process the message continuously, KrakenD will reinsert the message into the queue over and over, and could lead to an infinite loop of messages if no consumer empties these messages. To avoid this, set `nack_discard` to `true`.
 
 Notice that as it happens with the endpoints, the messages you consume can be sent in parallel or sequentially to multiple services.
 
@@ -92,6 +92,8 @@ The `async_agent` entry is **an array** with all the different agents you want t
 The configuration accepts the following parameters:
 
 {{< schema data="async_agent.json" property="items" title="Properties of an Async Agent object" >}}
+
+Do not forget to [set the driver for the Async agent](/docs/async/amqp/) inside the `extra_config`.
 
 When agents are defined, their activity is shown in the health endpoint with the name of the agent you have chosen.  The health endpoint will show for each agent, when was the last time the agent reported itself as alive. The frequency of this checking is as defined in the `health_interval`.
 

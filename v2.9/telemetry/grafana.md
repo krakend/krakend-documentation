@@ -13,7 +13,7 @@ skip_header_image: false
 images:
 - /images/documentation/screenshots/grafana-prometheus-otel.png
 meta:
-  since: 0.5
+  since: v0.5
   namespace:
   - telemetry/opentelemetry
   - telemetry/influx

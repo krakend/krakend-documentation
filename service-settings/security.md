@@ -9,7 +9,7 @@ menu:
   community_current:
     parent: "070 Security"
 meta:
-  since: 0.4
+  since: v0.4
   source: https://github.com/krakend/krakend-httpsecure
   namespace:
   - security/http

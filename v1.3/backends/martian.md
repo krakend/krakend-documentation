@@ -9,7 +9,7 @@ menu:
   community_v1.3:
     parent: "050 Backends Configuration"
 meta:
-  since: 0.7
+  since: v0.7
   source: https://github.com/krakend/krakend-martian
   namespace:
   - github.com/devopsfaith/krakend-martian

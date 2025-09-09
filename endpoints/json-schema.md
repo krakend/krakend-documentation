@@ -10,7 +10,7 @@ menu:
     parent: "060 Request and Response Manipulation"
 notoc: true
 meta:
-  since: 1.2
+  since: v1.2
   source: https://github.com/krakend/krakend-jsonschema
   namespace:
   - validation/json-schema

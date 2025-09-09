@@ -8,7 +8,7 @@ description: Learn how to check your custom KrakenD plugins with the check-plugi
 weight: 30
 notoc: true
 meta:
-    since: 2.0
+    since: v2.0
 menu:
   community_v2.7:
     parent: "180 Extending with custom code"

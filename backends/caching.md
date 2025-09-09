@@ -10,7 +10,7 @@ menu:
     parent: "060 Request and Response Manipulation"
 notoc: false
 meta:
-  since: 0.4
+  since: v0.4
   source: https://github.com/krakend/krakend-httpcache
   namespace:
   - qos/http-cache

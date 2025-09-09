@@ -12,7 +12,7 @@ menu:
   community_v2.7:
     parent: "180 Extending with custom code"
 meta:
-  since: 2.0
+  since: v2.0
   namespace:
   - plugin/http-server
 images:

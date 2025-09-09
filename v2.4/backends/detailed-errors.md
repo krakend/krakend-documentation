@@ -10,7 +10,7 @@ menu:
     parent: "050 Backends Configuration"
 meta:
   #noop_incompatible: true
-  since: 0.8
+  since: v0.8
   source: https://github.com/luraproject/lura
   namespace:
   - backend/http

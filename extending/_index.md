@@ -6,12 +6,13 @@ title: Extending KrakenD with your code
 description: Learn how to extend KrakenD API Gateway by developing custom plugins or scripts to add new functionalities and integrate with external systems
 aliases: ["/docs/extending/introduction/"]
 weight: -1
-skip_header_image: true
 menu:
   community_current:
     parent: "180 Extending with custom code"
+dark_header_image: true
 images:
-- /images/documentation/krakend-plugins.png
+  - /images/documentation/hero/extending.png
+  - /images/documentation/krakend-plugins.png
 ---
 
 KrakenD is **highly extensible and flexible** and allows developers to extend its functionality through custom code when the built-in features are not enough. Whether you need to add custom logic, integrate specific business rules, or enhance features, KrakenD lets you add extensions coded by you.

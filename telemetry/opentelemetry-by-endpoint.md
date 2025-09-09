@@ -13,7 +13,7 @@ menu:
   community_current:
     parent: "160 Monitoring, Logs, and Analytics"
 meta:
-  since: 2.8
+  since: v2.8
   namespace:
   - telemetry/opentelemetry
   scope:

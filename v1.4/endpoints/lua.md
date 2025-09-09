@@ -9,7 +9,7 @@ menu:
   community_v1.4:
     parent: "040 Endpoint Configuration"
 meta:
-  since: 1.0
+  since: v1.0
   source: https://github.com/krakend/krakend-lua
   namespace:
   - "github.com/devopsfaith/krakend-lua/proxy"

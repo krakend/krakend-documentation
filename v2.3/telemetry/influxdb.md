@@ -10,7 +10,7 @@ menu:
   community_v2.3:
     parent: "080 Telemetry and Analytics"
 meta:
-  since: 0.5
+  since: v0.5
   source: https://github.com/krakend/krakend-influx
   namespace:
   - telemetry/opencensus
