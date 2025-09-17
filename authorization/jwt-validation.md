@@ -296,11 +296,13 @@ It is possible to forward claims in a JWT as request headers. It is a common use
 
 ```json
 {
+    "endpoint": "/foo",
+    "input_headers": ["X-User", "X-Role"],
     "extra_config": {
         "auth/validator": {
             "propagate_claims": [
-                ["sub", "x-user"],
-                ["realm_access.role", "x-role"]
+                ["sub", "X-User"],
+                ["realm_access.role", "X-Role"]
             ]
         }
     }
