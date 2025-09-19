@@ -3,7 +3,7 @@ lastmod: 2025-09-17
 date: 2025-09-17
 linktitle: AI Monitoring
 title: AI usage monitoring
-description: Monitoring the usage of AI backends
+description: Use OpenTelemetry for monitoring API gateway traffic, including AI calls, with your existing providers.
 menu:
   community_current:
     parent: "100 AI Gateway"
