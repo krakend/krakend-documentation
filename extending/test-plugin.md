@@ -43,10 +43,11 @@ Examples:
 {{< product test_plugin_command >}} -scm ./plugins/my_plugin.so ./plugins/my_other_plugin.so
 
 Flags:
-  -c, --client     The artifact should contain a Client Plugin.
-  -h, --help       help for test-plugin
-  -m, --modifier   The artifact should contain a Req/Resp Modifier Plugin.
-  -s, --server     The artifact should contain a Server Plugin.
+  -c, --client       The artifact should contain a Client Plugin.
+  -h, --help         help for test
+  -w, --middleware   The artifact should contain a Middleware Plugin.
+  -m, --modifier     The artifact should contain a Req/Resp Modifier Plugin.
+  -s, --server       The artifact should contain a Server Plugin.
 {{< /terminal >}}
 
 You can pass as many arguments as plugins you want to check at once. For instance, if you want to test that `plugin1.so` and `plugin2.so` are loadable as server plugins, you could execute `{{< product test_plugin_command >}} -s plugin1.so plugin2.so`.
