@@ -37,7 +37,7 @@ KrakenD meets multiple operational demands when AI calls are involved, enabling 
 
 The core functionality of KrakenD as an AI Gateway is classified under these four categories, each covering many use cases:
 
-1. [Unified LLM interface](/docs/ai-gateway/unified-llm-interface/)
+1. [Unified LLM interface](/docs/enterprise/ai-gateway/unified-llm-interface/) {{< badge >}}Enterprise{{< /badge >}}
 2. [Security](/docs/ai-gateway/security/)
 3. [Cost Control](/docs/enterprise/ai-gateway/budget-control/) {{< badge >}}Enterprise{{< /badge >}}
 4. [Governance](/docs/enterprise/ai-gateway/governance/) {{< badge >}}Enterprise{{< /badge >}}
