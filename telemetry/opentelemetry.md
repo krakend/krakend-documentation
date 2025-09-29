@@ -77,7 +77,7 @@ The configuration of the `telemetry/opentelemetry` namespace is very extensive, 
 - `exporters`, defining the different technologies you will use
 - `layers`, the amount of data you want to report
 
-In addition the environment variable `OTEL_PROPAGATORS` (not a configuration option) can be set to modify the propagators. It accepts a comma separated list with the values `trace_context`, `baggage`, `b3` and `b3multi`. For instance you can set `OTEL_PROPAGATORS="b3,baggage"`.
+In addition the environment variable `OTEL_PROPAGATORS` (not a configuration option) can be set to modify the propagators. It accepts a comma separated list with the values `tracecontext`, `baggage`, `b3` and `b3multi`. For instance you can set `OTEL_PROPAGATORS="b3,baggage"`.
 
 The entire configuration is as follows:
 
