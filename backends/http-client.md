@@ -23,7 +23,7 @@ The HTTP client namespace allows you to set the behavior of the HTTP connections
 ### Send the payload on 307 and 308 redirects
 KrakenD does not duplicate the body of the request when following a redirection because automatically doing it would affect the performance of all requests. In the unusual cases where your backend responds with a `307 Temporary Redirect` or a `308 Permanent Redirect`, enable the following flag to resend the original payload to the final redirected service:
 
-{{< schema data="backend/http_client.json" filter="enable_redirect_post" >}}
+{{< schema data="backend/http_client.json" filter="send_body_on_redirect" >}}
 
 Here is a configuration example:
 
@@ -40,7 +40,7 @@ Here is a configuration example:
           "url_pattern": "/url-that-will-redirect-with-307",
           "extra_config": {
             "backend/http/client": {
-              "enable_redirect_post": true
+              "send_body_on_redirect": true
             }
           }
         }
