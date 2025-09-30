@@ -20,7 +20,7 @@ meta:
   log_prefix:
   - "[SERVICE: Stats]"
 ---
-The **metrics API** offers a new `/__stats/` endpoint in a different port and contains a lot of metrics that you can scrap in a custom collector, or you can push them to [InfluxDB](/docs/v2.7/telemetry/influxdb/).
+The **metrics API** offers a new `/__stats/` endpoint in a different port and contains a lot of metrics that you can scrape in a custom collector, or you can push them to [InfluxDB](/docs/v2.7/telemetry/influxdb/).
 
 This component is unrelated to the [OpenTelemetry](/docs/v2.7/telemetry/opentelemetry/) metrics, and they can coexist. Previous to the creation of OpenTelemetry, the combination of Influx and the metrics API, offered the older versions of [Grafana dashboard](/docs/v2.7/telemetry/grafana/).
 

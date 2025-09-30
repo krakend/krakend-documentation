@@ -22,11 +22,11 @@ meta:
   scope:
   - service
 ---
-[Prometheus](https://prometheus.io/) is an open-source system monitoring and alerting toolkit that you can use to scrap a `/metrics` endpoint on KrakenD in the selected port. For instance, you could have an endpoint like `http://localhost:9091/metrics`.
+[Prometheus](https://prometheus.io/) is an open-source system monitoring and alerting toolkit that you can use to scrape a `/metrics` endpoint on KrakenD in the selected port. For instance, you could have an endpoint like `http://localhost:9091/metrics`.
 
 When using Prometheus with OpenTelemetry, you can use a [ready-to-use Grafana dashboard](/docs/v2.10/telemetry/grafana/) to visualize metrics, as shown in the image above.
 
-The mechanics are simple: you add the `telemetry/opentelemetry` integration with a `prometheus` exporter, and then you add a Prometheus job to scrap from your KrakenD instances the metrics.
+The mechanics are simple: you add the `telemetry/opentelemetry` integration with a `prometheus` exporter, and then you add a Prometheus job to scrape from your KrakenD instances the metrics.
 
 ![Prometheus scrapping from KrakenD image](/images/documentation/diagrams/opentelemetry-prometheus.mmd.svg)
 
@@ -65,7 +65,7 @@ The following configuration allows you to test a complete metrics experience, fr
 
 
 - The `krakend` service exposing port 8080
-- The `prometheus` service that will scrap the metrics from KrakenD
+- The `prometheus` service that will scrape the metrics from KrakenD
 - A `grafana` dashboard to display them (it uses our [Grafana dashboard](/docs/v2.10/telemetry/grafana/))
 
 Notice that the three services declare volumes to pick the configuration.
