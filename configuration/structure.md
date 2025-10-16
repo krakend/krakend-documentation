@@ -25,7 +25,7 @@ There are a large number of options you can put in this file. Let's focus now on
 ```
 
 
-- `$schema`: *Optional*. When added, enables [IDE integration](/docs/developer/ide-integration/) with autocompletion and documentation. Defines the JSON schema to validate your configuration. Is used by ` krakend check --lint`.
+- `$schema`: *Optional* but recommended. When added, enables [IDE integration](/docs/developer/ide-integration/) with autocompletion and documentation. Defines the JSON schema to validate your configuration. The KrakenD linting process (` krakend check --lint`) does not read this property as it knows which version must use on runtime.
 - `version` (*mandatory*): The version of the configuration file format (not the version of KrakenD).
   - Format version `3`: **Current** (since `v2.0`)
   - Format version `2`: Deprecated in 2022, for versions between `v0.4` and `v1.4.1`

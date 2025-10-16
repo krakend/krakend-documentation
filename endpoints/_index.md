@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-12-12
+lastmod: 2025-10-16
 date: 2020-02-26
 aliases: ["/docs/endpoints/creating-endpoints/"]
 linktitle:  The endpoint object
@@ -13,23 +13,31 @@ dark_header_image: true
 images:
 - /images/documentation/hero/endpoints.png
 ---
-KrakenD `endpoints` are the most critical configuration part of KrakenD, as they are what your end users consume. Adding endpoint objects creates the API contract your users will consume.
+**Endpoints** are the most important core concept in KrakenD. An oversimplification is that they define the **available routes and protocols the gateway supports**. For instance, you create a `/foo` route and this connects to a `foo.example.com` to fetch the data. If you are familiar with the *API Gateway offering*, as you continue reading, you will quickly realize that **KrakenD is quite different from other products**.
 
-{{< note title="Configuration overview" type="tip" >}}
-If you are still getting familiar with KrakenD's configuration structure, take a moment to read [Understanding the configuration file](/docs/configuration/structure/).
-{{< /note >}}
+Instead of acting as a mere proxy and coupling one sad route to one sad underlying service of the same type, in KrakenD you define **the API contract** you want to expose, and then you create the composite of services that fulfill the contract. Said otherwise, create whatever API definition you want, and plug it into your existing stack. It does not matter the protocols or encodings you have on each side, as KrakenD takes care of transforming the data for you.
 
-The `endpoints` array contains the **API definition you are publishing**. It is a collection of **endpoint objects**, and you have to place it at the root of your configuration file.
+For example, say you declare a route that offers REST API content on `/foo, but you want to aggregate the results of querying a gRPC server, a regular REST API, a Lambda service, and an LLM Model altogether. Or maybe you want to offer all the latter under a gRPC server. Or maybe you have a twenty-year-old SOAP service and want to create an MPC Server instantly so your AI client can talk "naturally" to it. All that and more is available as an endpoint.
 
+Because KrakenD treats users' interactions with the gateway and the gateway's interactions with services separate, endpoints are a piece of magic that can complete all kinds of use cases.
 
 ## The endpoint object
+{{< note title="Deep dive into the configuration" type="tip" >}}
+If you are still getting familiar with KrakenD's configuration structure, take a moment to read [Understanding the configuration file](/docs/configuration/structure/). This section explains what an `endpoint` looks like, but take a moment to understand the different pieces.
+{{< /note >}}
 
-To create an endpoint, you only need to add an **endpoint object** under the `endpoints` collection. An endpoint object should contain at least the `endpoint` name and a `backend` section (to where it connects to). The defaults are taken if no further information is declared (e.g., `method` will be a `GET`, and `output_encoding` as `json`).
+We refer to all routes as families, regardless of their transport nature (HTTP, WebSockets, SOAP, etc.), as `endpoints`. Each of these endpoints can retrieve data from one or more different upstream services, which we collectively call the `backend` array.
 
-An `endpoints` section might look like this:
+The `endpoints` array in the configuration contains the **API definition you are publishing**, and is a collection of **endpoint objects** that granularly define how each route behaves. Because everything is independent and highly configurable, the gateway can feed from a vast ecosystem and can add new functionality to your stack.
+
+To create an endpoint, you only need to add an **endpoint object** under the `endpoints` collection of the configuration. An endpoint object should contain at least the `endpoint` name and a `backend` section (to which it connects). The defaults are taken if no further information is declared (e.g., `method` will be a `GET`, and `output_encoding` as `json`).
+
+A simple`endpoints` section for a REST endpoint might look like this:
 
 ```json
 {
+  "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
+  "version": 3,
   "endpoints": [
     {
       "endpoint": "/v1/users/{user}",
@@ -48,13 +56,13 @@ An `endpoints` section might look like this:
 }
 ```
 
+The previous example exposes a REST `GET /v1/users/{user}` endpoint to the clients and takes the data from your existing backend `GET https://api.example.com/users/summary/{user}`.
 
-The previous example exposes a `GET /v1/users/{user}` endpoint to the clients and takes the data from your existing backend `GET https://api.example.com/users/summary/{user}`.
-
-Inside this object, you can add manipulation options and transform the response before it returns to the end user.
+This is the most simple example of an endpoint definition, from here you can add manipulation options, transform the request or the response, and a lot more stuff. See the options below.
 
 ### Endpoint object configuration
-The configuration attributes of **endpoints objects** are:
+When declaring `endpoints` objects in the configuration, the following fields are available for each one of them:
+
 {{< schema data="endpoint.json" >}}
 
 ### Endpoints with multiple nesting levels
