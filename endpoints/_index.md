@@ -13,7 +13,7 @@ dark_header_image: true
 images:
 - /images/documentation/hero/endpoints.png
 ---
-**Endpoints** are the most important core concept in KrakenD. An oversimplification is that they define the **available routes and protocols the gateway supports**. For instance, you create a `/foo` route and this connects to a `foo.example.com` to fetch the data. If you are familiar with the *API Gateway offering*, as you continue reading, you will quickly realize that **KrakenD is quite different from other products**.
+**Endpoints** are the most important core concept in KrakenD. An oversimplification is that they define the **available routes and protocols the gateway supports**. For instance, you create a `/foo` route and this connects to a `foo.example.com` to fetch the data. If you are familiar with the *API or AI Gateway offering*, as you continue reading, you will quickly realize that **KrakenD is quite different from other products**.
 
 Instead of acting as a mere proxy and coupling one sad route to one sad underlying service of the same type, in KrakenD you define **the API contract** you want to expose, and then you create the composite of services that fulfill the contract. Said otherwise, create whatever API definition you want, and plug it into your existing stack. It does not matter the protocols or encodings you have on each side, as KrakenD takes care of transforming the data for you.
 
@@ -71,7 +71,7 @@ You might have envisioned KrakenD as a proxy and expected its `endpoint` declara
 For instance, you declared an `"endpoint": "/user/{id}"` and you expected to resolve URLs like `/user/john/profile/preferences`, but you are getting a *404* instead. There are two solutions to this problem:
 
 1. You can declare all possible endpoints: `/user/{id}`, `/user/{id}/{level2}`, `/user/{id}/{level2}/{level3}`, etc.
-2. You use a [Wildcard {{< badge >}}Enterprise{{< /badge >}}](/docs/enterprise/endpoints/wildcard/)
+2. You use a [Wildcard](/docs/enterprise/endpoints/wildcard/)
 
 
 ### Endpoints listening to multiple methods
@@ -184,3 +184,8 @@ By default KrakenD only works with **RESTful URL patterns** in its endpoint defi
 The endpoints return HTTP content to the end-user in any of the [supported encodings](/docs/endpoints/content-types/), regardless of the type of backend you are connecting to.
 
 If, for instance, one of the backends you are connecting to uses AMQP, Kafka, gRPC, or any other supported services, KrakenD will perform automatically for you both the protocol and the encoding translation.
+
+## Additional endpoint functionality
+The `extra_config` entry of any endpoint can include additional components that provide further functionality. The following is the list of all components accepted under `extra_config`, see the linked documentation of each for more information:
+
+{{< schema data="endpoint_extra_config.json" norecurse="auth/api-keys,proxy" title="Available components of an endpoint">}}
