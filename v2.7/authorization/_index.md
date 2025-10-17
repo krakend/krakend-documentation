@@ -1,5 +1,6 @@
 ---
 lastmod: 2024-11-20
+old_version: true
 date: 2024-11-20
 linktitle: Intro to AuthZ and AuthN
 title: Authorization and Authentication (authZ + authN)
