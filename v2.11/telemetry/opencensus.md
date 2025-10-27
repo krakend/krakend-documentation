@@ -1,14 +1,14 @@
 ---
 lastmod: 2024-01-22
+old_version: true
 date: 2019-09-15
 notoc: true
-linktitle: OpenCensus (deprecated)
+linktitle: OpenCensus (frozen)
 title: OpenCensus Telemetry Integration
-description: The OpenCensus telemetry integration is now deprecated. All efforts are now put into OpenTelemetry.
+description: The OpenCensus telemetry integration is now development-frozen. All efforts are now put into OpenTelemetry.
 weight: 60
-aliases: ["/docs/logging-metrics-tracing/opencensus/"]
 menu:
-  community_current:
+  community_v2.11:
     parent: "160 Monitoring, Logs, and Analytics"
 meta:
   since: v0.5
@@ -20,10 +20,10 @@ meta:
   log_prefix:
   - "[SERVICE: Opencensus]"
 ---
-{{< note title="OpenCensus is deprecated" type="error" >}}
-KrakenD has traditionally offered its telemetry integration through this **OpenCensus** component, which has provided reliable service for over six years, but now has transitioned to the more modern and robust [OpenTelemetry](/docs/telemetry/opentelemetry/) framework.
+{{< note title="OpenCensus is no longer maintained" type="error" >}}
+KrakenD has traditionally offered its telemetry integration through this **OpenCensus** component, which has provided reliable service for over six years, but now is transitioning to the more modern and robust [OpenTelemetry](/docs/v2.11/telemetry/opentelemetry/) framework.
 
-As a result of a change in the industry, the OpenCensus integration is deprecated, and all efforts are focused on [OpenTelemetry](/docs/telemetry/opentelemetry/). Move away from this component.
+As a result of a change in the industry, the OpenCensus integration is no longer maintained, and all efforts are focused on [OpenTelemetry](/docs/v2.11/telemetry/opentelemetry/).
 {{< /note >}}
 
 The Opencensus exporter is a single component that allows you to **export data to multiple providers**, both open source and privative.
@@ -76,12 +76,12 @@ By default, all exporters use a `sample_rate=0`, meaning that **they won't repor
 }
 ```
 
-{{< schema data="telemetry/opencensus.json" norecurse="exporters">}}
+{{< schema version="v2.11" data="telemetry/opencensus.json" norecurse="exporters">}}
 
 
 
 ## Transition from OpenCensus
-If you have been using telemetry on KrakenD for the past six years (before KrakenD 2.6), you were using the [OpenCensus](/docs/telemetry/opencensus/) exporters, which have worked like a Swiss clock.
+If you have been using telemetry on KrakenD for the past six years (before KrakenD 2.6), you were using the [OpenCensus](/docs/v2.11/telemetry/opencensus/) exporters, which have worked like a Swiss clock.
 
 While OpenCensus has been working very well, it has merged with OpenTracing to form [OpenTelemetry](https://opentelemetry.io/), which serves as the next major version of OpenCensus and OpenTracing.
 

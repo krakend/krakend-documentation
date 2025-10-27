@@ -1,5 +1,6 @@
 ---
 lastmod: 2024-10-24
+old_version: true
 date: 2022-01-18
 linktitle: HTTP Server settings
 title: HTTP Server Settings
@@ -7,7 +8,7 @@ description: Configure HTTP server settings in KrakenD API Gateway for optimal p
 weight: 50
 notoc: true
 menu:
-  community_current:
+  community_v2.11:
     parent: "030 Service Settings"
 meta:
   source: https://github.com/luraproject/lura
@@ -20,10 +21,10 @@ KrakenD starts an HTTP server to offer the API Gateway server. You can personali
 
 If you want to customize any of the settings below, they must be written at the top level of the configuration.
 
-{{< schema data="_root.json" filter="max_shutdown_wait_time,port,cache_ttl,sequential_start,read_timeout,read_header_timeout,write_timeout,idle_timeout,use_h2c,listen_ip,max_header_bytes,disable_rest">}}
+{{< schema version="v2.11" data="_root.json" filter="port,cache_ttl,sequential_start,read_timeout,read_header_timeout,write_timeout,idle_timeout,use_h2c,listen_ip,max_header_bytes,disable_rest">}}
 
 ## Override settings using environment vars
-When you declare in the configuration file any of the HTTP server settings declared above, you can [override its value through environment variables](/docs/configuration/environment-vars/) when starting the server.
+When you declare in the configuration file any of the HTTP server settings declared above, you can [override its value through environment variables](/docs/v2.11/configuration/environment-vars/) when starting the server.
 
 All the environment variables have the same name are the same settings above in uppercase and with the `KRAKEND_` prefix. For instance, looking at the list of settings above, you could override:
 
