@@ -8,6 +8,7 @@ menu:
   community_current:
     parent: "100 AI Gateway"
 weight: 300
+notoc: true
 images:
 - /images/documentation/diagrams/ai-gateway-mcp-gateway.mmd.svg
 
