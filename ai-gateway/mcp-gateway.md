@@ -71,7 +71,7 @@ Line-by-Line:
 - `host`: Remote MCP server address to forward MCP messages.
 
 {{< note title="Supported MCP Server types" type="info" >}}
-The MCP server connected to KrakenD must be HTTP-based, like JSONRPC or SSE. Stdio communication is out of scope for this functionality. If you plan to use SSE, make sure to add also a `timeout` with a value large enough to not close the session.
+The MCP server connected to KrakenD must be HTTP-based, like JSONRPC or SSE. Stdio communication is out of scope for this functionality. If you plan to use SSE, make sure to add also a `timeout` with a value large enough to not close the session on the `GET` method only.
 {{< /note >}}
 
 
