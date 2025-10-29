@@ -66,6 +66,8 @@ To configure an endpoint in KrakenD acting as an MCP gateway to forward raw MCP 
         "HeaderNeededByYourMCP"
       ],
       "method": "GET",
+      "@comment": "The high timeout avoids repeating connections on SSE",
+      "timeout": "5m",
       "backend": [
         {
           "url_pattern": "/mcp",
