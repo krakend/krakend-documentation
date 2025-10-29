@@ -20,6 +20,7 @@ The Model Context Protocol (MCP) Gateway in KrakenD enables transparent communic
 - Add [CORS](/docs/service-settings/cors/)
 - Add [IP filtering](/docs/enterprise/throttling/ipfilter/) {{< badge >}}Enterprise{{< /badge >}}
 - Add [security policies](/docs/enterprise/security-policies/) or [CEL expressions](/docs/endpoints/common-expression-language-cel/) with business logic
+- Move the passing of headers to the gateway and make the client unaware with [Martian](/docs/backends/martian/)
 - Limit the [payload size](/docs/enterprise/endpoints/maximum-request-size) of the requests {{< badge >}}Enterprise{{< /badge >}}
 
 - And a long etcetera, check the documentation menu.
@@ -63,13 +64,13 @@ To configure an endpoint in KrakenD acting as an MCP gateway to forward raw MCP 
 Line-by-Line:
 
 - `output_encoding`: The `no-op` encoding allows transparent MCP communication. This is a must.
-- `input_headers`: Depending on the MCP technology, you might need forwarding headers to the MCP server.
+- `input_headers`: Depending on the MCP technology, you might need forwarding headers to the MCP server. Or you can add [Martian](/docs/backends/martian/) and inject them at the gateway level if they have constant values and you don't want the MCP agent to know.
 - `endpoint`: `/mcp` defines the KrakenD endpoint exposed to MCP agents, whatever route you want this to be.
-- `method`: `POST` - MCP traffic typically uses POST for message delivery.
+- `method`: `POST` - MCP traffic typically uses POST for message delivery. Recommended to repeat the same endpoint with `GET` and `DELETE` too.
 - `host`: Remote MCP server address to forward MCP messages.
 
 {{< note title="Supported MCP Server types" type="info" >}}
-The MCP server connected to KrakenD must be HTTP-based, like JSONRPC or SSE.
+The MCP server connected to KrakenD must be HTTP-based, like JSONRPC or SSE. Stdio communication is out of scope for this functionality. If you plan to use SSE, make sure to add also a `timeout` with a value large enough to not close the session.
 {{< /note >}}
 
 
