@@ -12,9 +12,19 @@ images:
 - /images/documentation/diagrams/ai-gateway-mcp-gateway.mmd.svg
 
 ---
-The Model Context Protocol (MCP) Gateway in KrakenD enables transparent communication between an **MCP agent** and a **third-party MCP server** through a `no-op` endpoint. This setup allows KrakenD to forward messages with minimal processing while enriching the communication path with additional layers such as authorization, observability, and rate limiting.
+The Model Context Protocol (MCP) Gateway in KrakenD enables transparent communication between an **MCP agent** and a **third-party MCP server** through a `no-op` endpoint. This setup allows KrakenD to forward messages with minimal processing while enriching the communication path with additional layers and functionality such as:
 
-Use KrakenD's MCP Gateway to connect MCP agents to external MCP servers that lack sufficient Enterprise-ready features, leveraging KrakenD as a secure, observable, and manageable gateway. This feature relays MCP agent content directly to the MCP server while enabling configurable middlewares to enhance protocol flow control and monitoring.
+- Adding [authorization](/docs/authorization/) and other security options
+- Add [observability](/docs/telemetry/)
+- [Throttle](/docs/throttling/) the usage of the MCP
+- Add [CORS](/docs/service-settings/cors/)
+- Add [IP filtering](/docs/enterprise/throttling/ipfilter/) {{< badge >}}Enterprise{{< /badge >}}
+- Add [security policies](/docs/enterprise/security-policies/) or [CEL expressions](/docs/endpoints/common-expression-language-cel/) with business logic
+- Limit the [payload size](/docs/enterprise/endpoints/maximum-request-size) of the requests {{< badge >}}Enterprise{{< /badge >}}
+
+- And a long etcetera, check the documentation menu.
+
+Use KrakenD's MCP Gateway to **connect MCP agents to external MCP servers** that lack sufficient Enterprise-ready features, leveraging KrakenD as a secure, observable, and manageable gateway. This feature relays MCP agent content directly to the MCP server while enabling configurable middlewares to enhance protocol flow control and monitoring.
 
 KrakenD can also be the [MCP Server](/docs/enterprise/ai-gateway/mcp-server/) if needed {{< badge >}}Enterprise{{< /badge >}}
 
@@ -57,6 +67,11 @@ Line-by-Line:
 - `endpoint`: `/mcp` defines the KrakenD endpoint exposed to MCP agents, whatever route you want this to be.
 - `method`: `POST` - MCP traffic typically uses POST for message delivery.
 - `host`: Remote MCP server address to forward MCP messages.
+
+{{< note title="Supported MCP Server types" type="info" >}}
+The MCP server connected to KrakenD must be HTTP-based, like JSONRPC or SSE.
+{{< /note >}}
+
 
 From here, you can add Authorization, Telemetry, Rate Limiting, or any other KrakenD component that is compatible with no-op.
 
