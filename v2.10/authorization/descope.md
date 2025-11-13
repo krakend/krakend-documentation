@@ -1,6 +1,5 @@
 ---
 lastmod:
-old_version: false
 old_version: true
 date:
 linktitle: Descope integration

@@ -8,7 +8,6 @@ linktitle: OpenCensus Agent
 title: OpenCensus Agent
 description: The ocagent exporter sends OpenCensus Stats and Traces to the OpenCensus Agent, instead of pushing data to backends’ exporters
 weight: 70
-notoc: true
 menu:
   community_v2.5:
     parent: "160 Monitoring, Logs, and Analytics"

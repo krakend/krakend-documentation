@@ -8,7 +8,6 @@ title: Graylog and the GELF format
 weight: 40
 source: https://github.com/krakend/krakend-gelf
 since: 0.7
-notoc: true
 menu:
   community_v1.4:
     parent: "090 Logging"

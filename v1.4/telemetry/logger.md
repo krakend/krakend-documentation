@@ -8,7 +8,6 @@ linktitle: Logger
 title: Exporting to the logger
 weight: 1000
 source: https://github.com/krakend/krakend-opencensus
-notoc: true
 menu:
   community_v1.4:
     parent: "080 Telemetry"

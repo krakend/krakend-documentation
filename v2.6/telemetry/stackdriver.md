@@ -3,11 +3,10 @@ lastmod: 2022-10-24
 old_version: true
 date: 2019-09-15
 notoc: true
-linktitle: Google Cloud
-title: Google Cloud and Stackdriver Integration
-description: Monitor KrakenD API Gateway using Google Cloud (formerly Stackdriver) for comprehensive insights and effective troubleshooting
-weight: 130
-notoc: true
+linktitle: Zipkin
+title: Zipkin Telemetry Integration
+description: Integrate Zipkin telemetry to monitor and trace KrakenD API Gateway requests efficiently for enhanced performance
+weight: 100
 menu:
   community_v2.6:
     parent: "160 Monitoring, Logs, and Analytics"
@@ -20,8 +19,6 @@ meta:
   - "[SERVICE: Opencensus]"
   scope:
   - service
-  log_prefix:
-  - "[SERVICE: Opencensus]"
 ---
 [Google Cloud's Operation Suite](https://cloud.google.com/products/operations) (formerly [Stackdriver](https://cloud.google.com/stackdriver/)) aggregates metrics, logs, and events from infrastructure, giving developers and operators a rich set of observable signals that speed root-cause analysis and reduce mean time to resolution (MTTR).
 

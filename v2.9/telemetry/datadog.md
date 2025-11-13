@@ -9,7 +9,6 @@ description: Integrate Datadog telemetry with KrakenD API Gateway for advanced m
 weight: 90
 since: 1.2
 source: https://github.com/krakend/krakend-opencensus
-notoc: true
 images: ["/images/documentation/datadog-screenshot.png"]
 menu:
   community_v2.9:

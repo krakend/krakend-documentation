@@ -7,7 +7,6 @@ linktitle: AWS X-Ray
 title: Exporting traces to AWS X-Ray
 weight: 110
 source: https://github.com/krakend/krakend-opencensus
-notoc: true
 menu:
   community_v1.4:
     parent: "080 Telemetry"

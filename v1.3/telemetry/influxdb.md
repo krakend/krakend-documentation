@@ -6,7 +6,6 @@ notoc: true
 linktitle: InfluxDB
 title: Exporting metrics and events to InfluxDB
 weight: 80
-notoc: true
 menu:
   community_v1.3:
     parent: "080 Telemetry"

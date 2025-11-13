@@ -7,7 +7,6 @@ notoc: true
 linktitle: Logging through OpenCensus
 title: Exporting to the logger with OpenCensus
 weight: 150
-notoc: true
 menu:
   community_v2.1:
     parent: "090 Logging"

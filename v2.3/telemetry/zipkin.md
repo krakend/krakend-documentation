@@ -6,7 +6,6 @@ notoc: true
 linktitle: Zipkin
 title: Exporting traces to Zipkin
 weight: 90
-notoc: true
 menu:
   community_v2.3:
     parent: "080 Telemetry and Analytics"

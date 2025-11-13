@@ -6,7 +6,6 @@ notoc: true
 linktitle: Jaeger
 title: Exporting traces to Jaeger
 weight: 100
-notoc: true
 menu:
   community_v1.3:
     parent: "080 Telemetry"

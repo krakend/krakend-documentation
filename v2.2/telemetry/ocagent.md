@@ -7,7 +7,6 @@ notoc: true
 linktitle: OpenCensus Agent
 title: Exporting metrics, logs, and events to the OpenCensus Agent
 weight: 140
-notoc: true
 menu:
   community_v2.2:
     parent: "080 Telemetry and Analytics"

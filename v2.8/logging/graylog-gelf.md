@@ -7,7 +7,6 @@ linktitle: Logging to Graylog - GELF
 title: Graylog GELF Logging Integration
 description: Integrate Graylog GELF logging with KrakenD API Gateway for centralized log management and analysis of API logs
 weight: 320
-notoc: true
 menu:
   community_v2.8:
     parent: "160 Monitoring, Logs, and Analytics"
