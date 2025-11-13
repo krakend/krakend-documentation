@@ -30,7 +30,7 @@ For instance, your client might be sending a `Content-Type` or `Accept` header a
 ## Configuration
 To enable the debug endpoint add the following in the configuration:
 
-{{< schema data="krakend.json" filter="debug_endpoint">}}
+{{< schema data="krakend.json" filter="debug_endpoint" title="Debug endpoint">}}
 
 Or to do it during runtime, add `-d` when starting the server. E.g., `krakend run -dc krakend.json`
 

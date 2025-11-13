@@ -16,7 +16,7 @@ The following settings affect **all connections from KrakenD to your services**.
 
 If you want to customize any of the settings below, they must be written at the top level of the configuration.
 
-{{< schema data="krakend.json" filter="dialer_timeout,dialer_keep_alive,dialer_fallback_delay,disable_compression,disable_keep_alives,max_idle_connections,max_idle_connections_per_host,idle_connection_timeout,response_header_timeout,expect_continue_timeout,client_tls">}}
+{{< schema data="krakend.json" filter="dialer_timeout,dialer_keep_alive,dialer_fallback_delay,disable_compression,disable_keep_alives,max_idle_connections,max_idle_connections_per_host,idle_connection_timeout,response_header_timeout,expect_continue_timeout,client_tls" title="Settings for KrakenD to your service communication" >}}
 
 Finally, the **TLS Handshake Timeout** is hardcoded to 10 seconds and cannot be changed.
 
