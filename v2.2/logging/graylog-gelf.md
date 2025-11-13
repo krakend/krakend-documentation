@@ -6,7 +6,6 @@ notoc: true
 linktitle: Graylog - GELF
 title: Graylog and the GELF format
 weight: 40
-notoc: true
 menu:
   community_v2.2:
     parent: "090 Logging"

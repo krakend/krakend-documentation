@@ -8,7 +8,6 @@ linktitle: OpenCensus Agent
 title: OpenCensus Agent (Azure Monitor)
 description: The ocagent exporter sends OpenCensus Stats and Traces to the OpenCensus Agent, instead of pushing data to backends’ exporters
 weight: 140
-notoc: true
 menu:
   community_v2.4:
     parent: "080 Telemetry and Analytics"

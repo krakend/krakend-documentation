@@ -6,7 +6,6 @@ linktitle: Google Cloud
 title: Google Cloud and Stackdriver Integration
 description: Monitor KrakenD API Gateway using Google Cloud (formerly Stackdriver) for comprehensive insights and effective troubleshooting
 weight: 130
-notoc: true
 aliases: ["/docs/logging-metrics-tracing/stackdriver/"]
 menu:
   community_current:
@@ -20,8 +19,6 @@ meta:
   - "[SERVICE: Opencensus]"
   scope:
   - service
-  log_prefix:
-  - "[SERVICE: Opencensus]"
 ---
 [Google Cloud's Operation Suite](https://cloud.google.com/products/operations) (formerly [Stackdriver](https://cloud.google.com/stackdriver/)) aggregates metrics, logs, and events from infrastructure, giving developers and operators a rich set of observable signals that speed root-cause analysis and reduce mean time to resolution (MTTR).
 

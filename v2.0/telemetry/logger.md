@@ -7,7 +7,6 @@ notoc: true
 linktitle: Logger
 title: Exporting to the logger
 weight: 1000
-notoc: true
 menu:
   community_v2.0:
     parent: "080 Telemetry and Analytics"

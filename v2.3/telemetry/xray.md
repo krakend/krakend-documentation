@@ -6,7 +6,6 @@ notoc: true
 linktitle: AWS X-Ray
 title: Exporting traces to AWS X-Ray
 weight: 110
-notoc: true
 menu:
   community_v2.3:
     parent: "080 Telemetry and Analytics"

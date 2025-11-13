@@ -6,7 +6,6 @@ notoc: true
 linktitle: Google Stackdriver
 title: Exporting metrics, logs and events to Google Stackdriver
 weight: 120
-notoc: true
 menu:
   community_v2.0:
     parent: "080 Telemetry and Analytics"
@@ -19,8 +18,6 @@ meta:
   - "[SERVICE: Opencensus]"
   scope:
   - service
-  log_prefix:
-  - "[SERVICE: Opencensus]"
 ---
 
 [Google Stackdriver](https://cloud.google.com/stackdriver/) aggregates metrics, logs, and events from infrastructure, giving developers and operators a rich set of observable signals that speed root-cause analysis and reduce mean time to resolution (MTTR).

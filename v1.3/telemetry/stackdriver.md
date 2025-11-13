@@ -7,7 +7,6 @@ linktitle: Google Stackdriver
 title: Exporting metrics, logs and events to Google Stackdriver
 weight: 120
 source: https://github.com/krakend/krakend-opencensus
-notoc: true
 menu:
   community_v1.3:
     parent: "080 Telemetry"

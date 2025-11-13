@@ -2,7 +2,6 @@
 lastmod: 2023-02-03
 old_version: true
 date: 2019-10-11
-notoc: true
 linktitle: Jaeger
 title: Exporting traces to Jaeger
 description: The KrakenD exporter to Jaeger allows you to submit spans to a Jaeger Collector (HTTP) or Jaeger Agent (UDP) automatically.
