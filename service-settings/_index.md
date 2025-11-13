@@ -43,7 +43,7 @@ All service settings are written directly in the root of the configuration file 
 
 The service accepts **numerous configuration options** that you'll find explained through the rest of the documentation, but here is a preview of the most important ones:
 
-{{< schema data="krakend.json" filter="version,extra_config,port,listen_ip,endpoints,output_encoding,timeout,host,cache_ttl">}}
+{{< schema data="krakend.json" filter="version,extra_config,port,listen_ip,endpoints,output_encoding,timeout,host,cache_ttl" title="Preview of important service configuration fields">}}
 
 Other service-level settings you can add:
 
