@@ -121,7 +121,7 @@ While the default policy prevents sending unrecognized query string parameters, 
 **Enabling the wildcard pollutes your backends**, as any query string sent by end-users or malicious attackers gets through the gateway and impacts the backends behind. We recommend letting the gateway know which query strings are in the API contract and specify them in the list, even when it is long, and not use the wildcard. If you decide to go with the wildcard, ensure your backends can handle client abuse attempts.
 
 ### Mandatory query string parameters
-When your backend requires mandatory **query string** parameters and you want to make them **mandatory** in KrakenD, the only way to enforce this (without scripting) is using the `{variable}` placeholders in the endpoints definition. Mandatory means that the endpoint won't exist unless the parameter is passed. For instance:
+When your backend requires mandatory **query string** parameters and you want to make them **mandatory** in KrakenD, the only way to enforce this with the open source edition (without scripting) is using the `{variable}` placeholders in the endpoints definition. Enterprise users can use [Dynamic Routing](/docs/enterprise/endpoints/dynamic-routing/#routing-based-on-query-strings) and [Security Policies](/docs/enterprise/security-policies/) together. Mandatory means that the endpoint won't exist unless the parameter is passed. For instance:
 
 ```json
 {
