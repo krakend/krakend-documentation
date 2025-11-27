@@ -3,9 +3,9 @@ lastmod: 2022-10-24
 old_version: true
 date: 2019-09-15
 notoc: true
-linktitle: Zipkin
-title: Zipkin Telemetry Integration
-description: Integrate Zipkin telemetry to monitor and trace KrakenD API Gateway requests efficiently for enhanced performance
+linktitle: Google Cloud
+title: Google Cloud and Stackdriver Integration
+description: Monitor KrakenD API Gateway using Google Cloud (formerly Stackdriver) for comprehensive insights and effective troubleshooting
 weight: 100
 menu:
   community_v2.5:
