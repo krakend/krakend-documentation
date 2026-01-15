@@ -35,3 +35,26 @@ Once you configure the OpenTelemetry component, KrakenD will start reporting met
 **The presence of the metrics and the traces described below depend on the [OpenTelemetry configuration](/docs/telemetry/opentelemetry/#opentelemetry-configuration).**
 
 {{% otel_metrics %}}
+
+
+## Measuring added latency and similar metrics
+A common metric developers like to measure is the gateway's added latency and other similar metrics. In order to get coherent results you must take into account that:
+
+* Having more than one backend in a single endpoint will produce more than one record for the `http.client.duration` metric.
+* Requests handled by KrakenD might not reach backends.
+
+So, to find the time spent in KrakenD, subtract the **sum** of `http.client.duration` from the **sum** of `http.server.duration` **only for successful responses** (200 OK) on **endpoints with a single backend**, and divide by the number of received requests. This yields an average per-request added latency attributable to KrakenD.
+
+This is a restrictive scenario, so unless you want to continuously monitor that metric, you should enable traces (with sampling) and inspect a few requests to get a better idea of added latency per endpoint. Traces provide a tree view showing how much time is spent in each “stage” of the request and give more actionable insight than aggregated metrics alone.
+
+Let's deep dive a little...
+
+Incoming requests are handled at the global layer first. There are many factors that determine whether they reach the backend or not. The gateway is meant to prematurely terminate illegitimate traffic, so **you will never have the same number of records in the global layer as in the other** layers. For example, a not-found 404 route, an invalid JWT token, a violated policy, or a server plugin raising an error, to name a few examples, are examples of records that you can see only in the global layer. As they do not succeed, the request does not produce a record for the proxy or backend layers and your upstream services were never reached in those cases.
+
+In other words, **there is never a 1:1 relationship between the global and proxy layers**, because some requests will not pass through the global layer. Those requests are handled very quickly (under a millisecond), which will skew averages if mixed with normal proxy/backend timings.
+
+Another aspect to have into account is that KrakenD is not a simple proxy, so an endpoint might have more than one backend request.
+
+The interpretation of metrics can also be misleading when an endpoint spawns multiple parallel backend requests. For example, if you have two backend requests and one takes `10 ms` and the other `100 ms`, the naive average of those two backend durations is `55 ms`, but the proxy layer will report a single duration that is higher than `100 ms` (because it waits for all backends and aggregates). That could lead you to incorrectly assume the proxy layer is adding more latency than it actually is.
+
+Traces and sampling are the best way to validate and understand these cases: a few sampled traces will show the timings for each backend call and the proxy's aggregation time.
