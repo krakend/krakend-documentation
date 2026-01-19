@@ -186,7 +186,7 @@ Or you could have a log that includes the JWT subject, the authorization header 
       "syslog": false,
       "stdout": true,
       "access_log_format": "custom",
-      "access_log_custom_format": "[AccessLog] %{prefix} %{time} | %{statusCode} | %{latencyMs} | %{clientIP} | %{method} %{scheme}://%{host}%{path}?%{query} %{query.bar} %{header.Authorization} %{jwt.sub}\n"
+      "access_log_custom_format": "[AccessLog] %{prefix} %{time} | %{statusCode} | %{latencyMs} | %{clientIP} | %{method} %{scheme}://%{host}%{path} %{query.bar} %{header.Authorization} %{jwt.sub}\n"
     }
   }
 }
