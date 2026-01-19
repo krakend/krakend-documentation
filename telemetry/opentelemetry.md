@@ -24,7 +24,7 @@ menu:
 ---
 OpenTelemetry (for short **OTEL**) offers a comprehensive, unified, and **vendor-neutral** approach to collecting and managing telemetry data, providing enhanced observability and deeper insights into application performance and behavior. It's particularly beneficial in complex, distributed, and cloud-native environments.
 
-OpenTelemetry captures detailed, contextual information about the operation of your applications. This includes not only **metrics** but also **tracing data** that shows the full lifecycle of requests as they flow through your systems, providing insights into performance bottlenecks, latency issues, and error diagnostics.
+OpenTelemetry captures detailed, contextual information about the operation of your applications. This includes not only **metrics** but also **tracing data** that shows the full lifecycle of requests as they flow through your systems, providing insights into performance bottlenecks, latency issues, and error diagnostics. This OpenTelemetry **does not** support pushing logs. See [logging](/docs/logging/), [GELF](/docs/logging/graylog-gelf/), or [Logstash](/docs/logging/logstash/) instead.
 
 It supports auto-instrumentation and can be integrated seamlessly into cloud-native deployments, making it easier to monitor these dynamic environments.
 
