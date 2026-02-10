@@ -1,7 +1,7 @@
 ---
-lastmod:
 old_version: true
-date:
+lastmod: 2025-03-10
+date: 2025-03-10
 linktitle: Descope integration
 title: Descope Authorization
 description: Learn how to integrate Descope authorization with KrakenD API Gateway for secure and controlled access to your APIs.

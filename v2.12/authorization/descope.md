@@ -1,12 +1,13 @@
 ---
-lastmod: 2025-03-10
-date: 2025-03-10
+lastmod:
+old_version: true
+date:
 linktitle: Descope integration
 title: Descope Authorization
 description: Learn how to integrate Descope authorization with KrakenD API Gateway for secure and controlled access to your APIs.
 weight: 110
 menu:
-  community_current:
+  community_v2.12:
     parent: "080 Authentication & Authorization"
 meta:
   #since:
@@ -23,7 +24,7 @@ images:
 
 Securing your APIs and underlying microservices is crucial in modern development. Descope enables you to add advanced authentication capabilities to your KrakenD endpoints efficiently.
 
-[Descope](https://www.descope.com/) is a passwordless authentication and user management service designed for developers. KrakenD integrates with Descope via the [JWT validation](/docs/authorization/jwt-validation/) component.
+[Descope](https://www.descope.com/) is a passwordless authentication and user management service designed for developers. KrakenD integrates with Descope via the [JWT validation](/docs/v2.12/authorization/jwt-validation/) component.
 
 ## Descope integration
 JSON web tokens (JWT) are an open standard ([RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519)) that define a way for securely transmitting information between parties. JWT tokens are compact, secure (digitally signed), and have become an industry-standard used at internet scale. KrakenD supports [any system using this open standard](https://www.krakend.io/docs/authorization/jwt-validation/), including Descope.
@@ -78,7 +79,7 @@ That's all you need for the basic configuration! You can expand the structure no
 
 From the folder where we create our `krakend.json` file, start the gateway with:
 {{< terminal title="Start the gateway with your configuration">}}
-docker run --rm -v "$PWD:/etc/krakend" -p "8080:8080" {{< product image >}}:{{< product minor_version >}}
+docker run --rm -v "$PWD:/etc/krakend" -p "8080:8080" {{< product image >}}:2.12
 {{< /terminal >}}
 
 Verify the gateway is running by checking the unprotected /__health endpoint:
@@ -132,7 +133,7 @@ Some possibilities are:
 - Customize JWTs with [Descope JWT templates](https://docs.descope.com/project-settings/jwt-templates) for Users or Access Keys
 - Propagate user claims to your backend services.
 
-For more details, see [KrakenD's JWT Validation documentation](/docs/authorization/jwt-validation/).
+For more details, see [KrakenD's JWT Validation documentation](/docs/v2.12/authorization/jwt-validation/).
 
 ### Conclusion
 Integrating Descope with KrakenD enhances security while maintaining flexibility. You can designate protected and public endpoints, ensuring controlled access to your APIs. Descope’s seamless integration with KrakenD streamlines authentication and improves user experience, making it an excellent choice for secure API management

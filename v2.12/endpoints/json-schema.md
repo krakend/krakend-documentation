@@ -1,12 +1,13 @@
 ---
 lastmod: 2021-11-17
+old_version: true
 date: 2020-07-10
 linktitle: JSON Schema request validation
 title: JSON Schema Validation
 description: Implement JSON Schema validation in KrakenD API Gateway to ensure data integrity and adherence to defined data structures for API requests
 weight: 450
 menu:
-  community_current:
+  community_v2.12:
     parent: "060 Request and Response Manipulation"
 notoc: true
 meta:
@@ -23,7 +24,7 @@ KrakenD endpoints receiving a JSON object in its body can apply automatic valida
 When the validation fails, KrakenD returns to the user a status code `400` (Bad Request), and only if it succeeds, the backend receives the request.
 
 ## JSON Schema Configuration
-The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `validation/json-schema`. KrakenD offers compatibility for the specs **draft-04, draft-06, draft-07, 2019-09 and 2020-12**.
+The JSON Schema configuration has to be declared at the **endpoint level** with the namespace object `validation/json-schema`. KrakenD offers compatibility for the specs **draft-04, draft-06 and draft-07**.
 
 The following example **checks if the body is a json object**:
 
@@ -42,7 +43,7 @@ You can apply constraints by adding keywords to the schema. For instance, you ca
 
 All the configuration inside the namespace is pure JSON Schema vocabulary. [Read the JSON schema documentation](https://json-schema.org/) to get familiar with the specification.
 
- A full configuration for you to try on the localhost with the [debug endpoint](/docs/endpoints/debug-endpoint/) is:
+ A full configuration for you to try on the localhost with the [debug endpoint](/docs/v2.12/endpoints/debug-endpoint/) is:
 
 ```json
 {
@@ -80,9 +81,10 @@ Do you want to extend this example? try [this other example](https://json-schema
 ### Returning the error message
 The default (and recommended) policy of KrakenD is to hide implementation details to the API consumers, and when a JSON schema fails, the gateway returns the `400` HTTP status code and no body.
 
-Still, you can show the **JSON schema error message** to the end user by [enabling the `return_error_msg`](/docs/service-settings/router-options/#return_error_msg) in the router options.
+Still, you can show the **JSON schema error message** to the end user by [enabling the `return_error_msg`](/docs/v2.12/service-settings/router-options/#return_error_msg) in the router options.
 
-The same example used above with the `return_error_msg` addition will output the problems when the schema does not validate:
+The same example used above with the `return_error_msg` addition will output the problems when the schema does not valiold_version: true
+date:
 
 ```json
 {
@@ -126,11 +128,13 @@ And when calling it incorrectly:
 {{< terminal title="Term" >}}
 curl -i -X POST -d '{"invalid": true}' http://localhost:8080/address
 HTTP/1.1 400 Bad Request
-X-Krakend: Version {{< product latest_version >}}
+X-Krakend: Version 2.12
 X-Krakend-Completed: false
 Date: Thu, 17 Nov 2022 08:57:53 GMT
 Content-Length: 96
 Content-Type: text/plain; charset=utf-8
 
-- at '': missing properties 'number', 'street_name', 'street_type'
+- (root): number is required
+- (root): street_name is required
+- (root): street_type is required
 {{< /terminal >}}
