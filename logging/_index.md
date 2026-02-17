@@ -147,8 +147,10 @@ When the `access_log_format` is set to `custom`, you can use these variables und
 - `%{prefix}`: The value you have set under the `prefix` attribute.
 - `%{time}`: The time when the the access finished. The layout prints a format like 2006/01/02 - 15:04:05.000
 - `%{statusCode}`: The response status code as given to the consumer
-- `%{latencyMs}`: The operation latency in milliseconds with 3 decimals (microsecond resolution). This computes the time of the request from beginning to end.
-- `%{latency}`: The operation latency in seconds with 3 decimals
+- `%{latency}`: The latency in seconds. The default format is `.3fs` (3 decimal float + `s` for seconds). This computes the time of the request from beginning to end.
+- `%{latencyMs}`: The latency in milliseconds. The default format is `.3fms` (3 decimal float + `ms` for milliseconds). This computes the time of the request from beginning to end.
+- `%{latencyUs}`: The latency in microseconds. The default format is `.3fus` (3 decimal float + `us` for microseconds). This computes the time of the request from beginning to end.
+- `%{latencyNs}`: The latency in nanoseconds. The default format is `dns` (integer + `ns` for nanoseconds). This computes the time of the request from beginning to end.
 - `%{clientIP}`: The real IP of the client
 - `%{method}`: The HTTP verb used
 - `%{path}`: The endpoint path
