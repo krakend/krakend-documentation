@@ -153,14 +153,14 @@ When the `access_log_format` is set to `custom`, you can use these variables und
 - `%{latencyNs}`: The latency in nanoseconds. The default format is `dns` (integer + `ns` for nanoseconds). This computes the time of the request from beginning to end.
 - `%{clientIP}`: The real IP of the client
 - `%{method}`: The HTTP verb used
-- `%{path}`: The endpoint path, does not include the query string (e.g., /path/to/endpoint)
-- `%{uri}`: The endpoint path and query string (e.g., /path/to/endpoint?foo=bar&doe=baz)
+- `%{path}`: The endpoint path, does not include the query string (e.g., `/path/to/endpoint`)
+- `%{uri}`: The endpoint path and query string (e.g., `/path/to/endpoint?foo=bar&doe=baz`)
 - `%{host}`: The host of the URL
 - `%{header.xxx}`: The value of a specific header, where `xxx` is the header name.
-- `%{scheme}`: The scheme used (e.g., http, https, ws)
+- `%{scheme}`: The scheme used (e.g., `http`, `https`, `ws`)
 - `%{jwt.xxx}`: The value of a specific claim in the token, where `xxx` is the claim name (only first level, non-nested, claims).
 - `%{query}`: The query strings passed in the request
-- `%{proto}`: The protocol used (e.g., HTTP/1.0, HTTP/2, etc)
+- `%{proto}`: The protocol used (e.g., `HTTP/1.0`, `HTTP/2`, etc.)
 
 For instance, you could **print the access log in JSON format** as follows:
 
