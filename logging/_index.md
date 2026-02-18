@@ -153,8 +153,8 @@ When the `access_log_format` is set to `custom`, you can use these variables und
 - `%{latencyNs}`: The latency in nanoseconds. The default format is `dns` (integer + `ns` for nanoseconds). This computes the time of the request from beginning to end.
 - `%{clientIP}`: The real IP of the client
 - `%{method}`: The HTTP verb used
-- `%{path}`: The endpoint path, does not include the query string
-- `%{uri}`: The endpoint URI
+- `%{path}`: The endpoint path, does not include the query string (e.g., /path/to/endpoint)
+- `%{uri}`: The endpoint path and query string (e.g., /path/to/endpoint?foo=bar&doe=baz)
 - `%{host}`: The host of the URL
 - `%{header.xxx}`: The value of a specific header, where `xxx` is the header name.
 - `%{scheme}`: The scheme used (e.g., http, https, ws)
