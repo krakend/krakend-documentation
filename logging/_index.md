@@ -135,8 +135,8 @@ For example, you can customize your pattern like this:
 Similarly, only on {{< badge >}}Enterprise{{< /badge >}} you can customize how the access log prints. The following `access_log_format` values are available:
 
 - `default`: Uses `%{prefix} %{time} [AccessLog] |%{statusCode}| %{latencyMs} | %{clientIP} | %{method} %{path}\n` as pattern.
-- `httpdCommon`: Uses `%{clientIP} - - [%{time}] \"%{method} %{path} %{proto}\" %{statusCode} -\n` as in the Apache HTTPd log format
-- `httpdCombined`: The Apache HTTPd Combined log format `%{clientIP} - - [%{time}] \"%{method} %{path} %{proto}\" %{statusCode} - \"%{header.Referer}\" \"%{header.User-Agent}\"\n`
+- `httpdCommon`: Uses `%{clientIP} - - [%{time}] \"%{method} %{uri} %{proto}\" %{statusCode} -\n` as in the Apache HTTPd log format
+- `httpdCombined`: The Apache HTTPd Combined log format `%{clientIP} - - [%{time}] \"%{method} %{uri} %{proto}\" %{statusCode} - \"%{header.Referer}\" \"%{header.User-Agent}\"\n`
 - `json`: Uses `{\"prefix\":\"%{prefix}\", \"time\":\"%{time}\", \"status_code\":%{statusCode}, \"latency\":\"%{latency}\", \"client_ip\":\"%{clientIP}\", \"method\":\"%{method}\", \"path\":\"%{path}\"}\n`
 - `custom`: Write your own pattern, as defined in the `access_log_custom_format` attribute.
 
@@ -153,7 +153,8 @@ When the `access_log_format` is set to `custom`, you can use these variables und
 - `%{latencyNs}`: The latency in nanoseconds. The default format is `dns` (integer + `ns` for nanoseconds). This computes the time of the request from beginning to end.
 - `%{clientIP}`: The real IP of the client
 - `%{method}`: The HTTP verb used
-- `%{path}`: The endpoint path
+- `%{path}`: The endpoint path, does not include the query string
+- `%{uri}`: The endpoint URI
 - `%{host}`: The host of the URL
 - `%{header.xxx}`: The value of a specific header, where `xxx` is the header name.
 - `%{scheme}`: The scheme used (e.g., http, https, ws)
