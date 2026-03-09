@@ -46,10 +46,6 @@ All the options you can set under `router` are:
 {{< schema data="router.json" >}}
 
 
-{{< note title="Caution with `disable_redirect_fixed_path`" type="error" >}}
-This flag can lead to the malfunctioning of your router. If your API configuration has paths that could collide, leave its value with the **safe choice** `disable_redirect_fixed_path=true` to avoid possible panics.
-{{< /note >}}
-
 ## Return the real client IP
 The flags `forwarded_by_client_ip`, `remote_ip_headers`, and `trusted_proxies` determine together how you get the client IP address.
 
