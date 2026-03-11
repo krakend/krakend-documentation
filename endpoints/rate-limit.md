@@ -54,7 +54,7 @@ The `max_rate` and `client_max_rate` configurations are under a common namespace
 
 For instance, let's start with a simple and mixed example that sets two limits:
 - `50` requests every `10m` (10 minutes) among all clients
-- `5` requests per client every `10m`.
+- `5` requests per client every `10m`, identified by ip.
 
 ```json
 {
@@ -63,7 +63,9 @@ For instance, let's start with a simple and mixed example that sets two limits:
       "qos/ratelimit/router": {
           "max_rate": 50,
           "every": "10m",
-          "client_max_rate": 5
+          "client_max_rate": 5,
+          "client_capacity": 5,
+          "strategy": "ip"
       }
     }
 }
@@ -137,7 +139,9 @@ Example:
       "qos/ratelimit/router": {
           "@comment":"20 requests every 5 minutes",
           "client_max_rate": 20,
-          "every": "5m"
+          "client_capacity": 20,
+          "every": "5m",
+          "strategy": "ip"
     }
   }
 }
@@ -160,6 +164,7 @@ Setting a rate limit for every issued token could be as easy as:
     },
     "qos/ratelimit/router": {
       "client_max_rate": 100,
+      "client_capacity": 100,
       "every": "1h",
       "strategy": "header",
       "key": "Authorization"
@@ -189,6 +194,7 @@ You could have a configuration like this:
     },
     "qos/ratelimit/router": {
       "client_max_rate": 100,
+      "client_capacity": 100,
       "every": "1h",
       "strategy": "header",
       "key": "x-limit-department"
@@ -212,6 +218,7 @@ In that case, you can rate limit the parameter of the endpoint as follows:
   "extra_config": {
     "qos/ratelimit/router": {
       "client_max_rate": 5,
+      "client_capacity": 5,
       "every": "1m",
       "strategy": "param",
       "key": "customer_id"
@@ -236,7 +243,9 @@ Example:
   "extra_config": {
     "qos/ratelimit/router": {
       "client_max_rate": 5,
+      "client_capacity": 5,
       "every": "1m",
+      "strategy": "ip",
       "num_shards": 2048,
       "cleanup_period": "60s",
       "cleanup_threads": 1
@@ -293,6 +302,7 @@ Configuration:
         "qos/ratelimit/router": {
           "max_rate": 50,
           "client_max_rate": 5,
+          "client_capacity": 5,
           "strategy": "ip"
         }
       }
@@ -302,6 +312,7 @@ Configuration:
       "extra_config": {
         "qos/ratelimit/router": {
           "client_max_rate": 10,
+          "client_capacity": 10,
           "strategy": "header",
           "key": "X-Auth-Token"
         }
@@ -335,7 +346,8 @@ The configuration would be:
     "@comment": "Client rate limit of 30 reqs/day",
     "client_max_rate": 30,
     "client_capacity": 30,
-    "every": "24h"
+    "every": "24h",
+    "strategy": "ip"
   }
 }
 ```

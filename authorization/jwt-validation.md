@@ -157,7 +157,7 @@ If you don't set any caching option, KrakenD will default to the **more pessimis
 {
     "version": 3,
     "extra_config": {
-        "auth/jwk-client": {
+        "auth/validator": {
             "@comment": "Enable a JWK shared cache amongst all endpoints of 15 minutes",
             "shared_cache_duration": 900
         }
