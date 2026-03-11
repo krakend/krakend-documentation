@@ -135,8 +135,8 @@ For example, you can customize your pattern like this:
 Similarly, only on {{< badge >}}Enterprise{{< /badge >}} you can customize how the access log prints. The following `access_log_format` values are available:
 
 - `default`: Uses `%{prefix} %{time} [AccessLog] |%{statusCode}| %{latencyMs} | %{clientIP} | %{method} %{path}\n` as pattern.
-- `httpdCommon`: Uses `%{clientIP} - - [%{time}] \"%{method} %{path} %{proto}\" %{statusCode} -\n` as in the Apache HTTPd log format
-- `httpdCombined`: The Apache HTTPd Combined log format `%{clientIP} - - [%{time}] \"%{method} %{path} %{proto}\" %{statusCode} - \"%{header.Referer}\" \"%{header.User-Agent}\"\n`
+- `httpdCommon`: Uses `%{clientIP} - - [%{time}] \"%{method} %{uri} %{proto}\" %{statusCode} -\n` as in the Apache HTTPd log format
+- `httpdCombined`: The Apache HTTPd Combined log format `%{clientIP} - - [%{time}] \"%{method} %{uri} %{proto}\" %{statusCode} - \"%{header.Referer}\" \"%{header.User-Agent}\"\n`
 - `json`: Uses `{\"prefix\":\"%{prefix}\", \"time\":\"%{time}\", \"status_code\":%{statusCode}, \"latency\":\"%{latency}\", \"client_ip\":\"%{clientIP}\", \"method\":\"%{method}\", \"path\":\"%{path}\"}\n`
 - `custom`: Write your own pattern, as defined in the `access_log_custom_format` attribute.
 
@@ -147,17 +147,20 @@ When the `access_log_format` is set to `custom`, you can use these variables und
 - `%{prefix}`: The value you have set under the `prefix` attribute.
 - `%{time}`: The time when the the access finished. The layout prints a format like 2006/01/02 - 15:04:05.000
 - `%{statusCode}`: The response status code as given to the consumer
-- `%{latencyMs}`: The operation latency in milliseconds with 3 decimals (microsecond resolution). This computes the time of the request from beginning to end.
-- `%{latency}`: The operation latency in seconds with 3 decimals
+- `%{latency}`: The latency in seconds. The default format is `.3fs` (3 decimal float + `s` for seconds). This computes the time of the request from beginning to end.
+- `%{latencyMs}`: The latency in milliseconds. The default format is `.3fms` (3 decimal float + `ms` for milliseconds). This computes the time of the request from beginning to end.
+- `%{latencyUs}`: The latency in microseconds. The default format is `.3fus` (3 decimal float + `us` for microseconds). This computes the time of the request from beginning to end.
+- `%{latencyNs}`: The latency in nanoseconds. The default format is `dns` (integer + `ns` for nanoseconds). This computes the time of the request from beginning to end.
 - `%{clientIP}`: The real IP of the client
 - `%{method}`: The HTTP verb used
-- `%{path}`: The endpoint path
+- `%{path}`: The endpoint path, does not include the query string (e.g., `/path/to/endpoint`)
+- `%{uri}`: The endpoint path and query string (e.g., `/path/to/endpoint?foo=bar&doe=baz`)
 - `%{host}`: The host of the URL
 - `%{header.xxx}`: The value of a specific header, where `xxx` is the header name.
-- `%{scheme}`: The scheme used (e.g., http, https, ws)
+- `%{scheme}`: The scheme used (e.g., `http`, `https`, `ws`)
 - `%{jwt.xxx}`: The value of a specific claim in the token, where `xxx` is the claim name (only first level, non-nested, claims).
 - `%{query}`: The query strings passed in the request
-- `%{proto}`: The protocol used (e.g., HTTP/1.0, HTTP/2, etc)
+- `%{proto}`: The protocol used (e.g., `HTTP/1.0`, `HTTP/2`, etc.)
 
 For instance, you could **print the access log in JSON format** as follows:
 
@@ -187,7 +190,7 @@ Or you could have a log that includes the JWT subject, the authorization header 
       "syslog": false,
       "stdout": true,
       "access_log_format": "custom",
-      "access_log_custom_format": "[AccessLog] %{prefix} %{time} | %{statusCode} | %{latencyMs} | %{clientIP} | %{method} %{scheme}://%{host}%{path} %{query.bar} %{header.Authorization} %{jwt.sub}\n"
+      "access_log_custom_format": "[AccessLog] %{prefix} %{time} | %{statusCode} | %{latencyMs} | %{clientIP} | %{method} %{scheme}://%{host}%{path}?%{query} %{query.bar} %{header.Authorization} %{jwt.sub}\n"
     }
   }
 }
