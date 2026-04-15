@@ -34,6 +34,21 @@ Once you configure the OpenTelemetry component, KrakenD will start reporting met
 
 **The presence of the metrics and the traces described below depend on the [OpenTelemetry configuration](/docs/telemetry/opentelemetry/#opentelemetry-configuration).**
 
+## How to access telemetry data
+Once the OpenTelemetry configuration is in place, KrakenD will start to push metrics and traces as specified to the providers of your choice. The telemetry data is treated differently by each of the providers, and you might find slight differences depending on what you use. For instance, most OTEL integrations will use a dot in the metric name as a separator, while Prometheus will use an underscore instead.
+
+In addition, for metrics that are an histogram, providers will add a suffix to the metric. For instance, on Prometheus you will find a metric documented as `http_server_duration` but in Prometheus **will add automatic suffixes** as follow:
+
+- `http_server_duration_bucket`: Counts how many observations fall into each range.
+- `http_server_duration_sum`: Tracks the total sum of all recorded values.
+- `http_server_duration_count`: Counts the total number of recorded observations.
+
+This is a sample of what you will find:
+
+{{% otel_metrics sample=true %}}
+
+Below you'll find all possible metrics and traces
+
 {{% otel_metrics %}}
 
 
