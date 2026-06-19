@@ -54,7 +54,7 @@ To enable the sequential proxy, you need to add in the endpoint definition the f
     "endpoint": "/hotels/{id}",
     "extra_config": {
           "proxy": {
-              "sequential": true
+              "strategy": "sequential"
           }
       }
 }
@@ -156,7 +156,7 @@ The configuration needed for this example is:
     ],
     "extra_config": {
         "proxy": {
-            "sequential": true
+            "strategy": "sequential"
         }
     }
 }
@@ -173,9 +173,9 @@ On the other hand, when your backend is `no-op` you can access the full response
 
 
 ## Passing previous values outside the `url_pattern`
-By setting the flag `"sequential": true`, the responses of the backends are available in the following `url_pattern`s. But there will be times when you don't want the value in the `url_pattern`. You can reuse the payload of previous responses elsewhere by propagating the values using the `sequential_propagated_params` attribute. These are the sequential flags you have on the `proxy` configuration:
+By setting the config `"strategy": "sequential"`, the responses of the backends are available in the following `url_pattern`s. But there will be times when you don't want the value in the `url_pattern`. You can reuse the payload of previous responses elsewhere by propagating the values using the `sequential_propagated_params` attribute. These are the sequential flags you have on the `proxy` configuration:
 
-{{< schema data="endpoint_extra_config.json" property="proxy" filter="sequential,sequential_propagated_params" title="Fields of endpoint's proxy property">}}
+{{< schema data="endpoint_extra_config.json" property="proxy" filter="strategy,sequential_propagated_params" title="Fields of endpoint's proxy property">}}
 
 
 ### Example: Setting a previous response as the payload of the next
@@ -192,7 +192,7 @@ You can copy the code of this endpoint and test locally (it requires you to have
     "endpoint": "/sequential/propagate-body",
     "extra_config": {
       "proxy": {
-          "sequential": true,
+          "strategy": "sequential",
           "sequential_propagated_params": ["resp0"]
       }
     },
