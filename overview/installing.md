@@ -97,4 +97,4 @@ You can also [download](/download/) the `tar.gz` and decompress it anywhere. Ins
 
 
 ## Compile from source
-As KrakenD is open source you can opt for [building the binary](https://github.com/krakend/krakend-ce). The binary you will produce is the same you can get in our download page, only that compiling it yourself always feels good!
+As KrakenD is [open source](/open-source/) you can opt for [building the binary](https://github.com/krakend/krakend-ce). The binary you will produce is the same you can get in our download page, only that compiling it yourself always feels good!

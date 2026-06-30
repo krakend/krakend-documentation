@@ -109,7 +109,7 @@ These steps are detailed below.
 In KrakenD Enterprise, you only need to run the command `krakend plugin init` to create all the boilerplate necessary to build a plugin. [See documentation](/docs/enterprise/extending/generating-plugins/)
 {{< /note >}}
 
-KrakenD open-source users need to create a Go file and implement the interface, as shown in every type of plugin.
+KrakenD [open-source](/open-source/) users need to create a Go file and implement the interface, as shown in every type of plugin.
 
 When the interface is correct, implement the rest of the custom logic you'd like to have.
 

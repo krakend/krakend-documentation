@@ -90,4 +90,4 @@ Both Lua and Go plugins allow you to extend KrakenD's capabilities, but their su
 
 
 ## What about forking?
-Open-source users might be tempted to fork the source code to add modifications. Our recommended way to customize KrakenD is always through plugins or scripts, and you **should avoid forking the code** if you want to keep up to date with the product's progress and security vulnerabilities. We have seen over and over forked projects that are left behind because companies don't have the resources to keep up.
+Users of the [KrakenD Community Edition](/open-source/) might be tempted to fork the source code to add modifications. Our recommended way to customize KrakenD is always through plugins or scripts, and you **should avoid forking the code** if you want to keep up to date with the product's progress and security vulnerabilities. We have seen over and over forked projects that are left behind because companies don't have the resources to keep up.

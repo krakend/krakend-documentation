@@ -41,7 +41,7 @@ When you enable through the environment variables this feature, the configuratio
 {{< note title="Different usage on Enterprise and Open Source" type="note" >}}
 The **Enterprise version** of the Flexible Configuration uses the [Extended Flexible Config](/docs/enterprise/configuration/flexible-config/) engine, which **simplifies** the operation, allows using nested directories, recursivity, or the `$ref` operator, and needs none of the following variables amongst other features.
 
-Still, all your open source-based templates are 100% compatible with the Enterprise counterpart.
+Still, all your [open source edition](/open-source/) templates are 100% compatible with the Enterprise counterpart.
 {{< /note >}}
 
 

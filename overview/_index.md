@@ -17,7 +17,7 @@ images:
 - /images/documentation/krakend-gateway.png
 ---
 
-KrakenD is an extensible, declarative, **high-performance open-source API Gateway**.
+KrakenD is an extensible, declarative, [**high-performance open-source API Gateway**](/open-source/).
 
 Its core functionality is to create an API that acts as an aggregator of many microservices into single endpoints, doing the heavy-lifting automatically for you: aggregate, transform, filter, decode, throttle, auth, and more.
 
