@@ -2,6 +2,8 @@
 lastmod: 2021-05-02
 old_version: true
 date: 2018-11-05
+# This version is the last one where this URL existed
+aliases: ["/docs/telemetry/extended-metrics/"]
 linktitle: Metrics API
 title: Extended Metrics API
 description: Explore the extended metrics available in KrakenD API Gateway telemetry for detailed insights into API performance and usage
@@ -20,6 +22,10 @@ meta:
   log_prefix:
   - "[SERVICE: Stats]"
 ---
+{{< note title="Component retired on KrakenD v3.0" type="warning" >}}
+The namespace `telemetry/influx` was discontinued in KrakenD v2.6 in March 2024 and removed in KrakenD v3.0. The InfluxDB integration now works only through OTEL.
+{{< /note >}}
+
 The **metrics API** offers a new `/__stats/` endpoint in a different port and contains a lot of metrics that you can scrape in a custom collector, or you can push them to [InfluxDB](/docs/v2.13/telemetry/influxdb/).
 
 This component is unrelated to the [OpenTelemetry](/docs/v2.13/telemetry/opentelemetry/) metrics, and they can coexist. Previous to the creation of OpenTelemetry, the combination of Influx and the metrics API, offered the older versions of [Grafana dashboard](/docs/v2.13/telemetry/grafana/).

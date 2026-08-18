@@ -97,7 +97,6 @@ The following endpoints are reserved, and you cannot use them (unless you disabl
 
 - `/__debug/` (disabled by default)
 - `/__echo/` (disabled by default)
-- `/__stats/`  (disabled by default)
 - `/__health/` (can be renamed or disabled)
 
 ## I have found a vulnerability

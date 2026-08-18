@@ -96,7 +96,6 @@ Global settings
 - security/bot-detector
 - security/cors
 - telemetry/logging
-- telemetry/metrics
 1 API endpoints:
     - GET /cel/req-resp/:id
     Timeout: 3s
@@ -154,9 +153,6 @@ Global settings
     stdout: true
     level: DEBUG
     syslog: false
-- telemetry/metrics
-    listen_address: :8090
-    collection_time: 60s
 1 API endpoints:
     - GET /example/:id
     Timeout: 3s
@@ -278,9 +274,6 @@ Global settings
     syslog: false
     stdout: true
     prefix: [KRAKEND]
-- telemetry/metrics
-    listen_address: :8090
-    collection_time: 60s
 1 API endpoints:
     - GET /example/:id
     Timeout: 3s
