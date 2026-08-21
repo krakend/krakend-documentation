@@ -35,7 +35,7 @@ When consumers of API content (especially in microservices) query backend servic
 
 KrakenD is an **API Gateway** that sits between the client and all the source servers, adding a new layer that removes all the complexity to the clients, providing them only the information that the UI needs.
 
-KrakenD **goes beyond other tools** that are mere reverse proxies, and acts as an **aggregator** of many sources, allowing you to consume in a single call many endpoints. It allows you to group, validate, wrap, transform and shrink requests and responses. Additionally, it supports a myriad of middleware and plugins that allow you to extend the functionality, such as adding OAuth2 authorization, security layers, circuit breaking, rate-limiting, connectivity, logging, metrics, traces, and much more.
+KrakenD **goes beyond other tools** that are mere reverse proxies, and acts as an **aggregator** of many sources, allowing you to consume in a single call many endpoints. It allows you to group, validate, wrap, transform and shrink requests and responses. Additionally, it supports a myriad of middleware and customizations that allow you to extend the functionality, such as adding OAuth2 authorization, security layers, circuit breaking, rate-limiting, connectivity, logging, metrics, traces, and much more.
 
 ### A practical example
 A mobile or javascript developer needs to construct a single front page that requires data from several calls to their backend services, e.g.:

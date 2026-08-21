@@ -136,7 +136,6 @@ Global settings
     Default timeout: 3s
     Default backend hosts: []
     No TLS section defined
-    No Plugin section defined
 4 global component configuration(s):
 - security/bot-detector
     deny: [a b]

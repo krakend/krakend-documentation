@@ -24,7 +24,7 @@ Each pipe loads the different factories of the components of KrakenD, what you c
 There are six differentiated parts on KrakenD pipes, as depicted in the following diagram:
 ![Execution flow](/images/documentation/diagrams/components-sequence-simple.mmd.svg)
 
-- `HTTP Adapter` or also known as `RunServer` is the entry conduit that receives the request from the user. In this phase, you can add your custom HTTP Server plugins and execute other components like Analytics or CORS.
+- `HTTP Adapter` or also known as `RunServer` is the entry conduit that receives the request from the user. In this phase, you can add your custom HTTP Server plugins ({{< badge >}}Enterprise{{< /badge >}}) and execute other components like CORS.
 - `Router` is the pipe part that identifies to which endpoint a request goes and allows to perform security checks before this happens. Both the `HTTP Adapter` and the `Router`are shared across all pipes.
 - `Endpoint` enters for a specific endpoint (e.g.: `/foo`) and is a stage that allows you to do all kinds of validations and functionalities like validating tokens or modifying the request. One endpoint can connect sequentially or in parallel to many services (HTTP or not), and the endpoint defines all the places KrakenD will connect to. In this stage KrakenD converts the HTTP request into an internal KrakenD request (its domain).
 - `Proxy` is the phase that splits the request into many connections (when necessary) and the other way around, merging the data from multiple places. Inside this pipe you can work with the data before it's sent to all your backends, or after it comes back from them.

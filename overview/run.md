@@ -29,7 +29,6 @@ Usage:
 Available Commands:
   audit         Checks the integrity of the config and returns security recommendations.
   check         Validates that the configuration file is valid.
-  check-plugin  Check the compatibility with the plugin deps.
   help          Help about any command
   run           Run the KrakenD server.
   version       Shows KrakenD version.
