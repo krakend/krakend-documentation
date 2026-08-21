@@ -14,7 +14,7 @@ images:
 - /images/documentation/krakend-plugins.png
 ---
 
-KrakenD is **highly extensible and flexible** and allows developers to extend its functionality through custom code when the built-in features are not enough. Whether you need to add custom logic, integrate specific business rules, or enhance features, KrakenD lets you add extensions coded by you. 
+KrakenD is **highly extensible and flexible** and allows developers to extend its functionality through custom code when the built-in features are not enough. Whether you need to add custom logic, integrate specific business rules, or enhance features, KrakenD lets you add extensions coded by you.
 
 ## Extending with Lua
 [Lua](/docs/v2.8/endpoints/lua/) is an embedded scripting language designed for simplicity and speed. It's perfect for **quick customizations**, such as:
@@ -39,7 +39,7 @@ KrakenD is **highly extensible and flexible** and allows developers to extend it
 ## Extending with Go plugins
 For more **advanced and performance-critical** requirements, KrakenD supports [plugins written in Go](/docs/v2.8/extending/writing-plugins/). Using Go plugins ensures optimal performance for your extensions, and if you are fluent in Go, they are the best option for extensibility.
 
-With Go plugins, you can pretty much do anything you want, including integrating with external services, using databases, and anything you can code. 
+With Go plugins, you can pretty much do anything you want, including integrating with external services, using databases, and anything you can code.
 
 
 ### Go plugins advantages
@@ -72,7 +72,7 @@ Both Lua and Go plugins allow you to extend KrakenD's capabilities, but their su
 </svg>
 
 {{< /button >}}
-{{< button url="/docs/extending/writing-plugins/" type="inversed" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+{{< button url="/docs/enterprise/extending/writing-plugins/" type="inversed" >}}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 </svg> Get started with Go Plugins{{< /button >}}
 {{< /button-group >}}

@@ -46,7 +46,7 @@ You can use the following commands:
 
 - `krakend audit`: Use [krakend audit](/docs/configuration/audit/) to get security recommendations for a given configuration.
 - `krakend check`: Use [krakend check](/docs/configuration/structure/) to make sure the configuration file you have generated is not broken and has the required attributes to start the gateway.
-- `krakend check-plugin`: Use the [check-plugin](/docs/extending/check-plugin/) when you are developing custom plugins and you want to check that they are compatible with the server.
+- `krakend check-plugin`: Use the [check-plugin](/docs/enterprise/extending/check-plugin/) when you are developing custom plugins and you want to check that they are compatible with the server.
 - `krakend run`: Use run to start the API gateway server.
 - `krakend version`: Use the version command to print the current KrakenD version and the Glibc and Go versions used during compilation.
 

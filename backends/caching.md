@@ -142,7 +142,7 @@ In addition, there are other ways to check if backend responses are served from 
 - Check your backend logs
 
 {{< note title="Configurations not eligible for caching" type="warning" >}}
-The components [Client Credentials](/docs/authorization/client-credentials/), [Lambda functions](/docs/backends/lambda/), [AMQP Consumers or Producers](/docs/backends/amqp-consumer/), [Publish/Subscribe](/docs/backends/pubsub/), and [HTTP Client plugins](/docs/extending/http-client-plugins/) **don't support direct caching** because they use a **custom HTTP client** with extended functionality that does not use the one with caching capabilities. Generally speaking, connections with upstream services that need authentication or custom HTTP clients are not eligible to cache their responses.
+The components [Client Credentials](/docs/authorization/client-credentials/), [Lambda functions](/docs/backends/lambda/), [AMQP Consumers or Producers](/docs/backends/amqp-consumer/), [Publish/Subscribe](/docs/backends/pubsub/), and [HTTP Client plugins](/docs/enterprise/extending/http-client-plugins/) **don't support direct caching** because they use a **custom HTTP client** with extended functionality that does not use the one with caching capabilities. Generally speaking, connections with upstream services that need authentication or custom HTTP clients are not eligible to cache their responses.
 {{< /note >}}
 
 
