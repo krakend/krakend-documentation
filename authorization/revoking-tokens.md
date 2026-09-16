@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-10-18
+lastmod: 2026-09-01
 date: 2018-11-05
 linktitle: Revoking tokens
 title: Token Revocation
@@ -52,6 +52,27 @@ Note that this low-level bloom filter client requires elements added to the bloo
 The Bloom filter is ideal for supporting a massive rejection of tokens with very little memory consumption. For instance, **100 million tokens** of any size consume around 0.5GB RAM (with a rate of false positives of 1 in 999,925,224 tokens), and lookups resolve in constant time (*k*-number of hashes). These numbers are impossible to get with a key value or a relational database.
 
 The tokens are in-memory and directly in the rejecter interface, so the system quickly resolves the match.
+
+## Securing the bloom filter RPC port
+The `port` declared in the `auth/revoker` configuration opens an **RPC service on every KrakenD instance**, and that is the channel used to add elements to the bloom filter. This interface is **unauthenticated and unencrypted**: there is no API key, no TLS, and no authorization check. Any host able to open a TCP connection to that port can add revocations and query them.
+
+Writing to the filter does require speaking its protocol: the RPC service uses Go's `net/rpc` with `gob` encoding, so a client has to be written in Go, either the [one included in the library](https://github.com/krakend/bloomfilter/tree/master/cmd/client) or an equivalent implementation. Keep in mind that this is a **requirement, not a protection**. It makes writing to the filter inconvenient, but it does not stop anyone who wants to do it, and it must never be counted as a security control.
+
+Securing this port is therefore **your responsibility**, and the rule is simple: it must never be reachable from the outside. Treat it as an internal control plane, the same way you treat a database port.
+
+### What an exposed RPC port allows
+- **Locking out your users**. Anyone reaching the port can revoke any value of any watched claim. Depending on your `token_keys`, a single call invalidates one session (`jti`) or every token issued for an application (`aud`).
+- **Damage that lasts until a restart**. Bloom filters do not support deletion, so an unwanted insertion cannot be undone. Recovering means restarting the affected instances, which also drops all the legitimate revocations they had.
+- **Degrading the filter**. Writing junk consumes the capacity declared in `N`. Once you exceed it, the actual rate of false positives grows above the `P` you configured, and valid tokens start being rejected at random.
+- **Probing revocations**. The interface also answers checks, so an unauthorized client can test whether a given claim value has been revoked.
+
+### Recommendations
+- **Do not publish the port**. Do not map it with `docker -p`, and do not add it to a Kubernetes `Service`, an Ingress, or a load balancer target group. The public listener of the gateway and the RPC port belong to different networks.
+- **Filter at the network level**. The RPC service listens on all the interfaces of the machine and cannot be bound to a specific address from the configuration, so the restriction has to happen outside KrakenD: security groups, host firewall rules (`iptables`/`nftables`), or a Kubernetes `NetworkPolicy` that allows ingress to that port only from the hosts or pods running your revocation client.
+- **Encrypt the traffic when it leaves the trusted network**. The protocol has no TLS. If the client and the gateways are not in the same private subnet, carry the traffic over a VPN, an IPsec/WireGuard tunnel, or a service mesh doing mTLS.
+- **Protect the client as well**. Whatever pushes revocations (your own RPC client, an internal admin panel, or the Enterprise [Revoke Server](/docs/enterprise/authentication/revoke-server/)) becomes the entry point to the revocation mechanism and should be treated as an administrative service: authenticated, audited, and not publicly reachable.
+- **Watch only the claims you need**. Every entry in `token_keys` widens the blast radius of an unauthorized write. If revoking individual sessions is enough for your use case, list `jti` only instead of broad claims such as `aud`.
+- **Monitor connections to the port**. Any connection that does not come from your revocation client is a red flag, and network-level logging is the only place where you will see it, as the component does not authenticate callers.
 
 ## Configuration
 The bloom filter lives at the `extra_config` in the root level of the configuration, using the namespace `auth/revoker`:

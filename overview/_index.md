@@ -15,6 +15,7 @@ dark_header_image: true
 images:
 - /images/KrakendFlow.png
 - /images/documentation/krakend-gateway.png
+no_seo_suffix: true
 ---
 
 KrakenD is an extensible, declarative, [**high-performance open-source API Gateway**](/open-source/).
