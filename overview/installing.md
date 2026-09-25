@@ -34,6 +34,12 @@ docker run -p 8080:8080 -v $PWD:/etc/krakend/ {{< product image >}} run --config
 
 If you choose not to mount the volume (the `-v`), a default `krakend.json` serving a `/__health` endpoint will be used. The volume expects to find a `krakend.json` in the current directory ([generate your first here](https://designer.krakend.io/)).
 
+### Easypanel
+
+[Easypanel](https://easypanel.io) is a self-hosted Docker deployment platform, and it maintains a one-click deployment template for KrakenD:
+
+[![Deploy on Easypanel](https://easypanel.io/img/deploy-on-easypanel-40.svg)](https://easypanel.io/templates/krakend)
+
 ### AWS and Azure VM
 See the [downloads page](/download/) for pre-built virtual machines in Azure and AWS.
 
