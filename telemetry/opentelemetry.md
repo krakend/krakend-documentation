@@ -30,7 +30,7 @@ OpenTelemetry captures detailed, contextual information about the operation of y
 It supports auto-instrumentation and can be integrated seamlessly into cloud-native deployments, making it easier to monitor these dynamic environments.
 
 {{< note title="Stability note on OpenTelemetry" type="note" >}}
-KrakenD has traditionally offered part of its telemetry integration through the [OpenCensus integration](/docs/telemetry/opencensus/), which has provided a reliable service for over six years. We are transitioning to the more modern and robust OpenTelemetry framework, and the OpenCensus integration does not receive further updates.
+KrakenD has traditionally offered part of its telemetry integration through the [OpenCensus integration](/docs/v2.13/telemetry/opencensus/), which has provided a reliable service for over six years. We are transitioning to the more modern and robust OpenTelemetry framework, and the OpenCensus integration does not receive further updates.
 
 While the underlying protocol specification of OpenTelemetry is stable, you'll find [mixed stability statuses](https://opentelemetry.io/docs/specs/status/) in the components lifecycle. While we cannot predict what changes there will be as the technology evolves, KrakenD will always do its best to maintain compatibility between versions. More information about the underlying exporter can be found [here](https://opentelemetry.io/docs/languages/go/exporters/).
 {{< /note >}}

@@ -99,7 +99,7 @@ services:
 Notice that we are naming the service `ddagent` in Docker compose, and this matches our `host` field in the configuration.
 
 ## Migrating from OpenCensus
-Prior to v2.6, telemetry sent to Datadog used the OpenCensus exporter. Enabling required adding the `datadog` exporter in the [opencensus module](/docs/telemetry/opencensus/), and the configurations looked like this:
+Prior to v2.6, telemetry sent to Datadog used the OpenCensus exporter. Enabling required adding the `datadog` exporter in the [opencensus module](/docs/v2.13/telemetry/opencensus/), and the configurations looked like this:
 ```json
 {
       "version": 3,

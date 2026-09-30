@@ -2,6 +2,8 @@
 lastmod: 2024-01-22
 old_version: true
 date: 2019-09-15
+# This version is the last one where this URL existed
+aliases: ["/docs/telemetry/opencensus/","/docs/logging-metrics-tracing/opencensus/"]
 notoc: true
 linktitle: OpenCensus (deprecated)
 title: OpenCensus Telemetry Integration

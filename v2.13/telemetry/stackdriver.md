@@ -2,6 +2,8 @@
 lastmod: 2022-10-24
 old_version: true
 date: 2019-09-15
+# This version is the last one where this URL existed
+aliases: ["/docs/logging-metrics-tracing/stackdriver/"]
 notoc: true
 linktitle: Google Cloud
 title: Google Cloud and Stackdriver Integration
