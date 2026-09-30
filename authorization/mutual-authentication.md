@@ -32,7 +32,7 @@ To enable it you need a configuration like this:
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
   "tls": {
     "enable_mtls": true,
@@ -60,7 +60,7 @@ If you want that **all connections to backends** use mTLS, add the following con
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "client_tls": {
         "client_certs": [
             {
@@ -137,7 +137,7 @@ The KrakenD configuration needed is as follows (no endpoints used for this demo)
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
   "port": 443,
   "tls": {

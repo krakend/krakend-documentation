@@ -88,7 +88,7 @@ Here's an example with a Grafana Tempo and a Prometheus.
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
     "extra_config": {
         "telemetry/opentelemetry": {

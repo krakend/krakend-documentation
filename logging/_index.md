@@ -80,7 +80,7 @@ To add ample logging capabilities, you need to add the component at the service 
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "telemetry/logging": {
       "level": "INFO",
@@ -118,7 +118,7 @@ For example, you can customize your pattern like this:
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "telemetry/logging": {
       "level": "INFO",
@@ -166,7 +166,7 @@ For instance, you could **print the access log in JSON format** as follows:
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "telemetry/logging": {
       "level": "INFO",
@@ -182,7 +182,7 @@ Or you could have a log that includes the JWT subject, the authorization header 
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "telemetry/logging": {
       "level": "INFO",
@@ -210,7 +210,7 @@ To setup logs on disk, you should consider the following steps:
 ### 1. Syslog configuration
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "telemetry/logging": {
       "level": "WARNING",

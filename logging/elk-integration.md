@@ -23,7 +23,7 @@ The configuration you need on your `krakend.json` to enable ELK integration is:
 ```json
 {
   "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "telemetry/logging": {
       "level": "DEBUG",

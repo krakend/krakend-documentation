@@ -48,7 +48,7 @@ The `async_agent` entry is **an array** with all the different agents you want t
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "async_agent": [
         {
             "name": "cool-agent",

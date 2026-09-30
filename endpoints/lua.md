@@ -383,7 +383,7 @@ An example setting a common header in the request to all endpoints.
 
 ```json
   {
-    "version": 3,
+    "version": 4,
     "extra_config": {
         "modifier/lua-endpoint": {
           "pre": "print('Lua service!'); local c = ctx.load(); c:headers('X-from-lua', '1234');"

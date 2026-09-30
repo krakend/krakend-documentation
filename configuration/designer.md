@@ -53,7 +53,7 @@ Suppose you don't have an initial configuration. In that case, you can generate 
 
 ```json
 {
-  "version": 3
+  "version": 4
 }
 ```
 

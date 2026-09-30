@@ -79,7 +79,7 @@ When using **self-signed certificates** in your backends, you must add the certi
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "client_tls": {
         "allow_insecure_connections": true
   },

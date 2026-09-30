@@ -161,7 +161,7 @@ This is an example of accessing claims in a `backend` expression, through propag
 ```json
 {
   "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
-  "version": 3,
+  "version": 4,
   "endpoints": [
     {
       "endpoint": "/example",
@@ -230,7 +230,7 @@ This example can be copied/pasted into a new configuration. The CEL validation h
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "endpoints": [
         {
             "endpoint": "/nick/{nick}",
@@ -330,7 +330,7 @@ The following example is a bit more complex, as it **combines the sequential pro
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "debug_endpoint": true,
     "host": [
         "http://localhost:8080"

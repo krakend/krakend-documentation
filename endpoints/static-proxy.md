@@ -87,7 +87,7 @@ The following configuration declares two endpoints that will fail that you can t
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "endpoints": [
         {
             "endpoint": "/static/errored",

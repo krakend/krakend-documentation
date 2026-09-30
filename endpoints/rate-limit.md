@@ -266,7 +266,7 @@ Configuration:
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "endpoints": [
     {
       "endpoint": "/happy-hour",

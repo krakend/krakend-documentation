@@ -61,7 +61,7 @@ Each endpoint declaration can define which encoder should be used, as shown in t
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "output_encoding": "json",
   "endpoints": [
     {

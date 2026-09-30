@@ -43,7 +43,7 @@ You might want to disable the `/__health` endpoint, rename it, or disable its ac
 ### Example: Disable the health endpoint
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "router": {
       "@comment": "The health endpoint is no longer available",
@@ -55,7 +55,7 @@ You might want to disable the `/__health` endpoint, rename it, or disable its ac
 ### Example: Rename the health endpoint
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "router": {
       "@comment": "The health endpoint is now under /health instead of /__health",
@@ -67,7 +67,7 @@ You might want to disable the `/__health` endpoint, rename it, or disable its ac
 ### Example: Disable the access log of /__health
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "router": {
       "@comment": "The health endpoint checks do not show in the logs",
@@ -90,7 +90,7 @@ A custom health configuration could look like this:
 
 ```json
     {
-        "version": 3,
+        "version": 4,
         "port": 8080,
         "endpoints": [
         {

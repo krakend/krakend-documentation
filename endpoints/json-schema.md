@@ -46,7 +46,7 @@ All the configuration inside the namespace is pure JSON Schema vocabulary. [Read
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "port": 8080,
     "host": [ "http://127.0.0.1:8080" ],
     "endpoints": [
@@ -86,7 +86,7 @@ The same example used above with the `return_error_msg` addition will output the
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "port": 8080,
     "host": [ "http://127.0.0.1:8080" ],
     "extra_config": {

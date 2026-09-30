@@ -23,7 +23,7 @@ The following configuration describes all possible options:
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "extra_config": {
       "security/http": {
         "allowed_hosts": [
