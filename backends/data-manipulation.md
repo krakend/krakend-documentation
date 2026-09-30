@@ -429,5 +429,5 @@ If you need more sophisticated manipulation options, there are different approac
 
 - Through a [Query Language](/docs/enterprise/endpoints/jmespath/) {{< badge >}}Enterprise{{< /badge >}}
 - Through a [template](/docs/enterprise/backends/response-body-generator/) {{< badge >}}Enterprise{{< /badge >}}
-- Through [Response modifier plugins](/docs/extending/plugin-modifiers/) - Very performant, requires compilation
+- Through [Response modifier plugins](/docs/enterprise/extending/plugin-modifiers/) - Very performant, requires compilation
 - Through [Lua scripting](/docs/endpoints/lua/) - Less performant, does not require compilation

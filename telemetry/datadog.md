@@ -7,7 +7,6 @@ title: Datadog Telemetry Integration
 description: Integrate Datadog telemetry with KrakenD API Gateway for advanced monitoring, visualization, and analysis of your API ecosystem
 weight: 90
 since: 1.2
-source: https://github.com/krakend/krakend-opencensus
 images: ["/images/documentation/datadog-screenshot.png"]
 aliases: ["/docs/logging-metrics-tracing/datadog/"]
 menu:
@@ -21,7 +20,7 @@ meta:
   scope:
   - service
   log_prefix:
-  - "[SERVICE: Opencensus]"
+  - "[SERVICE: OpenTelemetry]"
 ---
 [Datadog](https://www.datadoghq.com/) is a cloud monitoring and security platform for developers, IT operations teams, and businesses.
 
@@ -33,7 +32,7 @@ Datadog uses the standard OTLP exporter, here is a configuration example:
 ```json
 {
     "version": 3,
-    "$schema": "https://www.krakend.io/schema/krakend.json",
+    "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
     "host": [
         "http://localhost:8080"
     ],

@@ -16,8 +16,6 @@ meta:
   since: v0.5
   namespace:
   - telemetry/opentelemetry
-  - telemetry/influx
-  - telemetry/metrics
   scope:
   - service
 ---
@@ -72,10 +70,7 @@ volumes:
  You can see an example integrated on [KrakenD Playground](https://github.com/krakend/playground-community)'s Docker compose file.
 
 ## Getting the metrics on Grafana
-Grafana does not require any specific configuration on KrakenD, but it feeds from a data source, so you will need to push data to one of the following:
-
-1. [Prometheus exporter](/docs/telemetry/prometheus/) (**recommended**)
-2. [Legacy integration for InfluxDb](/docs/telemetry/extended-metrics/), for older versions of KrakenD
+Grafana feeds from a data source, so you will need to tell KrakenD to push data using the [Prometheus exporter](/docs/telemetry/prometheus/).
 
 ## What's in the dashboard
 This new dashboard allows you to load data from a Prometheus data source that scraps data from your KrakenD machines using OpenTelemetry.

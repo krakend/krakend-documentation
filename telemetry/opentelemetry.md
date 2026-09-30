@@ -2,6 +2,7 @@
 lastmod: 2024-01-29
 date: 2024-01-22
 notoc: false
+aliases: ["/docs/telemetry/opentelemetry/","/docs/telemetry/stackdriver/"]
 linktitle: OpenTelemetry
 title: Telemetry and Monitoring through OpenTelemetry
 description: Learn about the telemetry and monitoring capabilities of KrakenD API Gateway using OTEL, enabling real-time visibility and analysis of API performance

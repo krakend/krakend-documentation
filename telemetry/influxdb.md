@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-02-27
+lastmod: 2026-08-18
 date: 2019-09-15
 linktitle: InfluxDB
 title: InfluxDB Telemetry Integration
@@ -19,17 +19,12 @@ meta:
   source: https://github.com/krakend/krakend-otel
   namespace:
   - telemetry/opentelemetry
-  - telemetry/influx
   scope:
   - service
   log_prefix:
   - "[SERVICE: OpenTelemetry]"
 ---
 [InfluxDB](https://www.influxdata.com/) is a time series database designed to handle high write and query loads and allows you to store and visualize metrics data. Influx is offered as an open-source solution you can host but also as a cloud service.
-
-{{< note title="Native influx component" type="info" >}}
-Before KrakenD v2.6, the only option to push data to Influx was configuring the native exporter `telemetry/influx`. Although the component is development-frozen in favor of OTEL, you can still use it as described in the [Metrics API](/docs/telemetry/extended-metrics/).
-{{< /note >}}
 
 KrakenD instruments your API automatically code and generates telemetry data that is pushed using the **OpenTelemetry Protocol** (OTLP) via the [OpenTelemetry integration](/docs/telemetry/opentelemetry/). The data can travel through gRPC or HTTP and uses the standard OTLP format an [OTEL Collector](https://opentelemetry.io/docs/collector/) expects.
 
