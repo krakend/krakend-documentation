@@ -19,7 +19,7 @@ The configuration you need to enable Logstash is very simple:
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "extra_config": {
         "telemetry/logging": {
             "level": "INFO",

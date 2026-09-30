@@ -57,7 +57,7 @@ To test it, save the content of this file in a `krakend.json` and start the serv
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "port": 8080,
   "echo_endpoint": true,
   "endpoints": [

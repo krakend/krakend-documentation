@@ -49,7 +49,7 @@ Having a high number of IDLE connections to every backend affects directly to th
 
 ```json
 {
-	"version": 3,
+	"version": 4,
 	"max_idle_connections": 150
 }
 ```

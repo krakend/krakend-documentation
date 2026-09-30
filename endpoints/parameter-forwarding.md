@@ -39,7 +39,7 @@ Send the query strings `items` and `page` to the backend, as well as `User-Agent
 
 {{< highlight json "hl_lines=6-13">}}
 {
-  "version": 3,
+  "version": 4,
   "endpoints": [
     {
       "endpoint": "/v1/foo",
@@ -73,7 +73,7 @@ Add the **list** `input_query_strings` in your `endpoint` definition to enable t
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "endpoints": [
     {
       "endpoint": "/v1/foo",
@@ -213,7 +213,7 @@ An example of passing the `User-Agent` to the backend:
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "endpoints": [
     {
       "endpoint": "/v1/foo",
@@ -274,7 +274,7 @@ For instance, the following endpoint allows passing two headers to its backends,
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "host": [
     "http://some.example.com:9000"
   ],
@@ -314,7 +314,7 @@ Example:
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "endpoints": [
     {
       "endpoint": "/v1/foo",

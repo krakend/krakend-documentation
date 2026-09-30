@@ -135,7 +135,7 @@ Lastly, add at the service level of KrakenD the following configuration:
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "telemetry/opentelemetry": {
       "trace_sample_rate": 1,

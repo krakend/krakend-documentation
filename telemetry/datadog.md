@@ -31,7 +31,7 @@ Datadog uses the standard OTLP exporter, here is a configuration example:
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
     "host": [
         "http://localhost:8080"
@@ -102,7 +102,7 @@ Notice that we are naming the service `ddagent` in Docker compose, and this matc
 Prior to v2.6, telemetry sent to Datadog used the OpenCensus exporter. Enabling required adding the `datadog` exporter in the [opencensus module](/docs/v2.13/telemetry/opencensus/), and the configurations looked like this:
 ```json
 {
-      "version": 3,
+      "version": 4,
       "extra_config": {
         "telemetry/opencensus": {
           "sample_rate": 100,

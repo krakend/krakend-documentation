@@ -42,7 +42,7 @@ To start KrakenD with TLS, you need to provide a certificate for both the public
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "tls": {
     "keys": [
       {
@@ -62,7 +62,7 @@ All TLS options for the server go inside the `tls` object:
 The version v2.7 of KrakenD introduces declaring multiple TLS keys in the configuration. **Prior to KrakenD v2.7** the public and private keys were unique, and you had to declare them directly under `tls`, like this:
 ```json
 {
-  "version": 3,
+  "version": 4,
   "tls": {
       "public_key": "/path/to/cert.pem",
       "private_key": "/path/to/key.pem"
@@ -72,7 +72,7 @@ The version v2.7 of KrakenD introduces declaring multiple TLS keys in the config
 When using **KrakenD v2.7 and above**, make sure to place key pairs inside the `keys` array:
 ```json
 {
-  "version": 3,
+  "version": 4,
   "tls": {
     "keys": [
       {
@@ -93,7 +93,7 @@ For instance:
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "client_tls": {
     "@comment": "Skip SSL verification when connecting to backends",
     "allow_insecure_connections": true
@@ -115,7 +115,7 @@ To support TLS v1.2 and 1.3 simultaneously, you need the following configuration
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "tls": {
     "keys": [
       {

@@ -39,7 +39,7 @@ For instance, take the following `krakend.json` configuration as an example:
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "timeout": "3s",
     "name": "Example gateway.",
     "cache_ttl": "0s"
@@ -59,7 +59,7 @@ The resulting configuration will be:
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "timeout": "500ms",
     "name": "Build ABC0123"
 }
@@ -75,7 +75,7 @@ Here is an example with Flexible Configuration:
 
 ```go-text-template
 {
-    "version": 3,
+    "version": 4,
     "name": "Configuration for {{ env "MY_POD_NAMESPACE" }}"
 }
 ```
@@ -88,7 +88,7 @@ For instance, you have a configuration file `krakend.template.json` like the fol
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "name": "Configuration for $MY_POD_NAMESPACE"
 }
 ```

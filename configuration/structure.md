@@ -18,7 +18,7 @@ There are a large number of options you can put in this file. Let's focus now on
 ```json
 {
     "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
-    "version": 3,
+    "version": 4,
     "endpoints": [],
     "extra_config": {}
 }
@@ -26,8 +26,9 @@ There are a large number of options you can put in this file. Let's focus now on
 
 
 - `$schema`: *Optional* but recommended. When added, enables [IDE integration](/docs/developer/ide-integration/) with autocompletion and documentation. Defines the JSON schema to validate your configuration. The KrakenD linting process (` krakend check --lint`) does not read this property as it knows which version must use on runtime.
-- `version` (*mandatory*): The version of the configuration file format (not the version of KrakenD).
-  - Format version `3`: **Current** (since `v2.0`)
+- `version` (*mandatory*): The version of the configuration file format (not the version of KrakenD). KrakenD refuses to start when the value doesn't match the format it expects.
+  - Format version `4`: **Current** (since `v3.0`)
+  - Format version `3`: For versions between `v2.0` and `v2.13`. KrakenD `v3.0` and later refuse it with `unsupported version: 3 (want: 4)`.
   - Format version `2`: Deprecated in 2022, for versions between `v0.4` and `v1.4.1`
   - Format version `1`: Deprecated in 2016, for versions `v0.3.9` and older.
 - `endpoints[]`: An array of [endpoint objects](/docs/endpoints/) offered by the gateway and all the associated backends and configurations. This is your API definition.
@@ -88,7 +89,7 @@ For instance, the [extended logging component](/docs/logging/) uses the **namesp
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "extra_config": {
         "telemetry/logging": {
           "level": "WARNING",
@@ -121,7 +122,7 @@ Notice how `extra_config` is present in the endpoints and backend scopes.
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "endpoints": [
     {
       "endpoint": "/limited-to-5000-per-second",

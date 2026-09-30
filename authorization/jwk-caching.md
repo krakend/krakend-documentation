@@ -66,7 +66,7 @@ Example:
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "extra_config": {
         "auth/validator": {
             "@comment": "Enable a JWK shared cache amongst all endpoints of 15 minutes",
@@ -99,7 +99,7 @@ In all, you would have a configuration like this:
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "extra_config": {
         "auth/validator": {
             "@comment": "Enable a JWK shared cache amongst all endpoints of 15 minutes",

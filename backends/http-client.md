@@ -29,7 +29,7 @@ Here is a configuration example:
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
   "endpoints": [
     {

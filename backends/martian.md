@@ -371,7 +371,7 @@ The `header.Id` is a modifier that sets a header with a **unique identifier (UUI
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
   "host": ["http://localhost:8080"],
   "echo_endpoint": true,

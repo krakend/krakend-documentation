@@ -23,7 +23,7 @@ All service settings are written directly in the root of the configuration file 
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "port": 8080,
     "output_encoding": "json",
     "host": ["http://myapi"],

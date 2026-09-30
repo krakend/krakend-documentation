@@ -47,7 +47,7 @@ Create a `krakend.json` file and add the following configuration:
 
 {{< highlight JSON "hl_lines=8-11" >}}
 {
-  "version": 3,
+  "version": 4,
   "timeout": "3s",
   "endpoints":[
   {

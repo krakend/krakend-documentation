@@ -29,7 +29,7 @@ To add Jaeger, configure a new exporter to the [OpenTelemetry settings](/docs/te
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "extra_config": {
         "telemetry/opentelemetry": {
             "service_name": "my_krakend_service",

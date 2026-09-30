@@ -62,7 +62,7 @@ For instance, let's write a simple template `simple.tmpl` (go template emulating
 }
 ```
 
-If the template system works, the server will start with a value `"version": 3`. We can test it with (Docker example):
+If the template system works, the server will start with a value `"version": 4`. We can test it with (Docker example):
 
 {{< terminal title="Execute a simple template" >}}
 docker run --rm -v "$PWD:/etc/krakend/" -e "FC_ENABLE=1" -e "FC_OUT=result.json" {{< product image >}} check -c simple.tmpl

@@ -29,7 +29,7 @@ CORS configuration lives in the root of the file, as it's a service component. A
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "security/cors": {
       "allow_origins": [
@@ -137,7 +137,7 @@ To support `OPTIONS` in your endpoints, you only need to add the [flag `auto_opt
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "router": {
        "auto_options": true

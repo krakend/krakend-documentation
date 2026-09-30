@@ -110,7 +110,7 @@ For instance:
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
     "dns_cache_ttl": "10s"
 }

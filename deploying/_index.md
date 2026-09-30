@@ -55,7 +55,7 @@ Below there is a **recommended configuration** in production for a good performa
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "telemetry/logging": {
       "level": "ERROR",
@@ -78,7 +78,7 @@ If you send the logs out to an [ELK](/docs/logging/logstash/) or a [GELF server]
 Removing the access log increases the number of requests per second the gateway can serve on high concurrency.**[Disable the access log](/docs/service-settings/router-options/#disable_access_log)** to gain more speed. You will still have the problems logged during runtime, but the requests won't be outputted.
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "router": {
        "disable_access_log": true
@@ -151,7 +151,7 @@ Add a `name` key in the configuration file with helpful information to identify 
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "name": "Production Cluster rev-db6a182"
 }
 ```

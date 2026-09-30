@@ -33,7 +33,7 @@ To change the router behavior, you must add the namespace `router` inside the `e
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "router": {
        "hide_version_header": true
@@ -71,7 +71,7 @@ The following example shows a configuration that takes the user IP from an `X-Fo
 ```json
 {
   "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
-  "version": 3,
+  "version": 4,
   "echo_endpoint": true,
   "extra_config": {
       "router":{
@@ -104,7 +104,7 @@ You can remove the KrakenD version your installation uses by adding the `hide_ve
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "router": {
        "hide_version_header": true
@@ -119,7 +119,7 @@ You can also define generic responses for 404 and 405 errors by defining the res
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "router": {
       "error_body": {
@@ -147,7 +147,7 @@ Consider using [`return_error_details`](/docs/backends/detailed-errors/#return-b
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
       "router":{
           "return_error_msg":true
@@ -160,7 +160,7 @@ There are two options to remove content from logs: the `logger_skip_paths` (list
 
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
       "router":{
           "logger_skip_paths":[

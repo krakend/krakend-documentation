@@ -43,7 +43,7 @@ To start editing from scratch, use a [modern IDE with JSON Schema integration](/
 ```json
 {
   "$schema": "https://www.krakend.io/schema/v{{< product minor_version >}}/krakend.json",
-  "version": 3,
+  "version": 4,
   "debug_endpoint": true,
   "echo_endpoint": true,
   "endpoints": [

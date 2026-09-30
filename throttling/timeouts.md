@@ -24,7 +24,7 @@ The `timeout` key in the `krakend.json` at the root level is used to apply a **d
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "timeout": "2000ms"
 }
 ```
@@ -35,7 +35,7 @@ To do so, place it inside the desired endpoint:
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "timeout": "2000ms",
     "endpoints": [
         {

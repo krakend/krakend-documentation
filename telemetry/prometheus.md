@@ -35,7 +35,7 @@ To enable scrapeable Prometheus metrics on Krakend, add the [OpenTelemetry integ
 
 ```json
 {
-    "version": 3,
+    "version": 4,
     "extra_config": {
         "telemetry/opentelemetry": {
             "service_name": "krakend_prometheus_service",
@@ -141,7 +141,7 @@ Prior to KrakenD v2.6, you had to configure the Prometheus endpoint using the op
 If you had an OpenCensus configuration with a `prometheus` exporter like the following:
 ```json
 {
-  "version": 3,
+  "version": 4,
   "extra_config": {
     "telemetry/opencensus": {
         "sample_rate": 100,

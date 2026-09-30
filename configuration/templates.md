@@ -42,7 +42,7 @@ The template above uses a Sprig function `add` that sums two numbers, and prints
 
 ```json
 {
-    "version": 3
+    "version": 4
 }
 ```
 
@@ -156,7 +156,7 @@ And call it in the `krakend.tmpl` like this:
 
 ```go-text-template
 {
-    "version": 3,
+    "version": 4,
     "some_base_64_value": "{{template "render_as_base64.tmpl" "file.json"}}"
 }
 ```
@@ -369,7 +369,7 @@ Have a look at the highlighted lines:
 
 {{< highlight go-text-template "hl_lines=3-5 7 9 12 15" >}}
     {
-        "version": 3,
+        "version": 4,
         "port": {{ .service.port }},
         "extra_config": {{ marshal .service.extra_config }},
         "host": {{ marshal .service.default_hosts }},
