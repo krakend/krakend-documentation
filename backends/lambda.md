@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-06-20
+lastmod: 2026-10-01
 date: 2018-11-11
 linktitle: Lambda functions
 title: AWS Lambda Integration
@@ -33,8 +33,8 @@ You don't need to set an Amazon API Gateway in the middle, as KrakenD does this 
 
 ## Lambda configuration
 
-{{< note title="Dummy hosts and url_pattern" type="info" >}}
-Notice in the examples that the `host` and `url_pattern` are needed as per the [backend definition](/docs/backends/), but KrakenD will never use them when connecting to a Lambda. Feel free to add any value in there, but the entry must be present.
+{{< note title="No host or url_pattern needed" type="info" >}}
+A Lambda backend does not need the `host` and `url_pattern` fields of the [backend definition](/docs/backends/), as KrakenD never uses them when connecting to a Lambda. If you have them in your configuration, KrakenD ignores them.
 {{< /note >}}
 
 The inclusion requires you to add the code in the `extra_config` of your `backend` section using the `backend/lambda` namespace.
@@ -110,8 +110,6 @@ The configuration would be:
   "endpoint": "/call-a-lambda",
   "backend": [
     {
-      "host": ["ignore"],
-      "url_pattern": "/ignore",
       "extra_config": {
         "backend/lambda": {
           "function_param_name": "Function_name",
@@ -155,8 +153,6 @@ When you associate a KrakenD endpoint to a unique lambda function, use this conf
   "endpoint": "/call-a-lambda",
   "backend": [
     {
-      "host": ["ignore"],
-      "url_pattern": "/ignore",
       "extra_config": {
         "backend/lambda": {
           "function_name": "myLambdaFunction",
@@ -190,8 +186,6 @@ When the name of the Lambda depends on a parameter passed in the endpoint, use t
   "endpoint": "/call-a-lambda/{lambda}",
   "backend": [
     {
-      "host": ["ignore"],
-      "url_pattern": "/ignore",
       "extra_config": {
         "backend/lambda": {
           "function_param_name": "Lambda",
