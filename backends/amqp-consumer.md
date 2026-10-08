@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-03-16
+lastmod: 2026-10-08
 date: 2018-04-05
 linktitle: RabbitMQ Consumer
 title: AMQP Consumer Integration in the API Gateway (RabbitMQ)
@@ -18,7 +18,7 @@ meta:
   - backend
   - async_agent
   log_prefix:
-  - "[BACKEND: /foo][AMQP]"
+  - "[BACKEND: GET /foo -> GET /bar][AMQP]"
 ---
 
 The AMQP component allows to **send and receive messages to and from a queue** through the API Gateway.

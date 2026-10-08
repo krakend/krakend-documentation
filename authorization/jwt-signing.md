@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-10-24
+lastmod: 2026-10-08
 date: 2018-11-03
 linktitle: JWT Signing
 title: JWT Signing
@@ -17,7 +17,7 @@ meta:
   scope:
   - endpoint
   log_prefix:
-  - "[ENDPOINT: /foo][JWTSigner]"
+  - "[ENDPOINT: GET /foo][JWTSigner]"
 ---
 
 The JWT signing component creates a **wrapper for your existing login endpoint** that signs with your secret key the selected fields of the backend payload right before returning the content to the end-user.

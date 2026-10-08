@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-03-16
+lastmod: 2026-10-08
 date: 2018-04-05
 linktitle: RabbitMQ Producer
 title: AMQP Producer Integration in the API Gateway (RabbitMQ)
@@ -16,7 +16,7 @@ meta:
   scope:
   - backend
   log_prefix:
-  - "[BACKEND: /foo][AMQP]"
+  - "[BACKEND: GET /foo -> GET /bar][AMQP]"
 ---
 
 The AMQP producer component allows to **send messages to a queue** through the API Gateway.

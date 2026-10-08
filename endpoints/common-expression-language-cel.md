@@ -1,5 +1,5 @@
 ---
-lastmod: 2025-04-10
+lastmod: 2026-10-08
 date: 2019-01-24
 linktitle: "Conditional requests and responses"
 title: Conditional requests and responses with CEL
@@ -20,8 +20,8 @@ meta:
   - backend
   - async_agent
   log_prefix:
-  - "[ENDPOINT: /foo][CEL]"
-  - "[BACKEND: /foo][CEL]"
+  - "[ENDPOINT: GET /foo][CEL]"
+  - "[BACKEND: GET /foo -> GET /bar][CEL]"
 ---
 There are times when you might want to incorporate **additional logic** to check if the gateway has to **skip the backend call**. For example, maybe the request from the user is undoubtedly wrong, and there is no point in hitting your backend(s).
 

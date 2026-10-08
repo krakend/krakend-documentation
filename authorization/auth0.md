@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2026-10-08
 date: 2018-04-05
 linktitle: Auth0 integration
 title: Auth0 Integration
@@ -16,7 +16,7 @@ meta:
   scope:
   - endpoint
   log_prefix:
-  - "[ENDPOINT: /foo][JWTValidator]"
+  - "[ENDPOINT: GET /foo][JWTValidator]"
 images:
 - /images/documentation/auth0/krakend-auth0-integration-workflow.png
 dark_header_image: true
