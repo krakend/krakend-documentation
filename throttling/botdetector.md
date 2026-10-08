@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-02-08
+lastmod: 2026-10-08
 date: 2019-09-15
 linktitle: Bot detector
 title: "Bot Detection and Throttling Guide: Prevent API Abuse"
@@ -21,7 +21,7 @@ meta:
   - endpoint
   log_prefix:
   - "[SERVICE: Gin][Botdetector]"
-  - "[ENDPOINT: /foo][Botdetector]"
+  - "[ENDPOINT: GET /foo][Botdetector]"
 ---
 
 The **bot detector** module checks incoming connections to the gateway to determine if a bot made them, helping you detect and reject bots carrying out scraping, content theft, and form spam.

@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-05-02
+lastmod: 2026-10-08
 date: 2018-04-05
 linktitle: Keycloak integration
 title: Keycloak Authorization
@@ -16,7 +16,7 @@ meta:
   scope:
   - endpoint
   log_prefix:
-  - "[ENDPOINT: /foo][JWTValidator]"
+  - "[ENDPOINT: GET /foo][JWTValidator]"
 skip_header_image: true
 dark_header_image: true
 images:

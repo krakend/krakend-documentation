@@ -1,5 +1,5 @@
 ---
-lastmod: 2025-09-03
+lastmod: 2026-10-08
 date: 2025-09-03
 linktitle: HTTP Per-backend Client settings
 title: "HTTP Per-backend Client settings"
@@ -16,7 +16,7 @@ meta:
   scope:
   - backend
   log_prefix:
-  - "[BACKEND: /foo][backend/http/client]"
+  - "[BACKEND: GET /foo -> GET /bar][backend/http/client]"
 ---
 The HTTP client namespace allows you to set the behavior of the HTTP connections between KrakenD and your backend service.
 

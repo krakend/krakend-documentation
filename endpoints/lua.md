@@ -1,5 +1,5 @@
 ---
-lastmod: 2026-08-21
+lastmod: 2026-10-08
 date: 2019-09-15
 linktitle:  Lua scripts
 title: Lua Scripting
@@ -21,8 +21,8 @@ meta:
   - backend
   - async_agent
   log_prefix:
-  - "[ENDPOINT: /foo][Lua]"
-  - "[BACKEND: /foo][Lua]"
+  - "[ENDPOINT: GET /foo][Lua]"
+  - "[BACKEND: GET /foo -> GET /bar][Lua]"
 ---
 
 Scripting with Lua allows you to extend your business logic and make **transformations on requests and responses**. The Lua module is compatible with the rest of components such as [CEL](/docs/endpoints/common-expression-language-cel/), [Martian](/docs/backends/martian/), or other [Go plugins](/docs/enterprise/extending/writing-plugins/) {{< badge >}}Enterprise{{< /badge >}} and middlewares.

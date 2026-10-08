@@ -1,5 +1,5 @@
 ---
-lastmod: 2025-03-10
+lastmod: 2026-10-08
 date: 2025-03-10
 linktitle: Descope integration
 title: Descope Authorization
@@ -16,7 +16,7 @@ meta:
   scope:
   - endpoint
   log_prefix:
-  - "[ENDPOINT: /foo][JWTValidator]"
+  - "[ENDPOINT: GET /foo][JWTValidator]"
 skip_header_image: true
 images:
 ---

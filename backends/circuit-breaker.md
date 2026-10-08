@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-11-27
+lastmod: 2026-10-08
 date: 2016-07-01
 linktitle: Circuit Breaker
 title: Circuit Breaker
@@ -21,7 +21,7 @@ meta:
   scope:
   - backend
   log_prefix:
-  - "[BACKEND: /foo][CB]"
+  - "[BACKEND: GET /foo -> GET /bar][CB]"
 ---
 The **Circuit Breaker** is a straightforward **state machine** in the middle of the request and response that monitors all your backend failures. In the image above you can see a simplified version of its behavior. When backends fail to succeed for a number of consecutive times, the circuit breaker will prevent sending more traffic to a failing backend alleviating its pressure under challenging conditions.
 

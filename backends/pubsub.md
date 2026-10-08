@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-10-11
+lastmod: 2026-10-08
 date: 2019-09-15
 linktitle: Publisher/subscribe (Kafka,NATS and cloud)
 title: Publisher/Subscribe with Kafka, NATS and cloud systems
@@ -19,7 +19,7 @@ meta:
   scope:
   - backend
   log_prefix:
-  - "[BACKEND: schema://host][PubSub]"
+  - "[BACKEND: GET /foo -> GET schema://host][PubSub]"
 ---
 You can connect an endpoint to multiple publish/subscribe backends, helping you integrate with **event driven architectures**.
 

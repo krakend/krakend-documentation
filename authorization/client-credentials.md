@@ -1,5 +1,5 @@
 ---
-lastmod: 2025-04-23
+lastmod: 2026-10-08
 date: 2019-03-21
 linktitle: OAuth2 Client credentials
 title: Client Credentials Authorization
@@ -62,7 +62,7 @@ The settings of this component are:
 When you add the client credentials component in a backend, when the first request comes in, KrakenD will send a request to the identity server asking for a new token using the `client_id` and `client_secret` provided in the configuration before reaching the backend. You will see the associated error log if the token exchange URL or credentials fail. For instance:
 
 ```
-KRAKEND ERROR: [ENDPOINT: /test] Post "http://localhost:8080/test": oauth2: "invalid_client" "Bad client credentials"
+KRAKEND ERROR: [ENDPOINT: GET /test] Post "http://localhost:8080/test": oauth2: "invalid_client" "Bad client credentials"
 ```
 
 If the token exchange succeeds, KrakenD stores the token in memory, which will be reused in future requests. The `expires_in` parameter in the response from an identity provider typically denotes **for how many seconds a token is valid before it expires** (as specified in the [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)).

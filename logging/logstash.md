@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-06-15
+lastmod: 2026-10-08
 date: 2019-09-15
 notoc: true
 linktitle: Logging in JSON (Logstash)
@@ -40,8 +40,8 @@ When the `format` of the logging format is `logstash` then the output of the app
 
     {"@timestamp":"2022-06-15T15:37:02.619+00:00", "@version": 1, "level": "DEBUG", "message": "[SERVICE: Gin] Debug enabled", "module": "KRAKEND"}
     {"@timestamp":"2022-06-15T15:37:02.619+00:00", "@version": 1, "level": "INFO", "message": "Starting the KrakenD instance", "module": "KRAKEND"}
-    {"@timestamp":"2022-06-15T15:37:02.619+00:00", "@version": 1, "level": "DEBUG", "message": "[ENDPOINT: /test] Building the proxy pipe", "module": "KRAKEND"}
-    {"@timestamp":"2022-06-15T15:37:02.619+00:00", "@version": 1, "level": "DEBUG", "message": "[BACKEND: /404] Building the backend pipe", "module": "KRAKEND"}
+    {"@timestamp":"2022-06-15T15:37:02.619+00:00", "@version": 1, "level": "DEBUG", "message": "[ENDPOINT: GET /test] Building the proxy pipe", "module": "KRAKEND"}
+    {"@timestamp":"2022-06-15T15:37:02.619+00:00", "@version": 1, "level": "DEBUG", "message": "[BACKEND: GET /test -> GET /404] Building the backend pipe", "module": "KRAKEND"}
 
 The application **access log** will still show in plain text. For example, you might see the application logs in JSON and the **application logs** in JSON. For example:
 
