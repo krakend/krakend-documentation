@@ -4,7 +4,7 @@ date: 2021-11-25
 linktitle: How to extend KrakenD?
 title: Extending KrakenD with your code
 description: Learn how to extend KrakenD API Gateway by developing custom plugins or scripts to add new functionalities and integrate with external systems
-aliases: ["/docs/extending/introduction/"]
+aliases: ["/docs/extending/introduction/", "/docs/plugins/"]
 weight: -1
 menu:
   community_current:

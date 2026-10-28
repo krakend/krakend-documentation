@@ -3,6 +3,7 @@ lastmod: 2024-06-14
 date: 2016-07-01
 linktitle: Endpoint Rate Limit
 title: Rate Limiting API Gateway Endpoints
+aliases: ["/docs/throttling/rate-limit/", "/docs/endpoints/rate-limiting/"]
 description: Implement rate-limiting strategies in KrakenD API Gateway to control the number of requests and prevent API abuse or overloading
 weight: 950
 scope:
