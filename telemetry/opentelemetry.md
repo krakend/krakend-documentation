@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-01-29
+lastmod: 2026-11-02
 date: 2024-01-22
 notoc: false
 aliases: ["/docs/telemetry/opentelemetry/","/docs/telemetry/stackdriver/"]
@@ -83,6 +83,10 @@ In addition the environment variable `OTEL_PROPAGATORS` (not a configuration opt
 The entire configuration is as follows:
 
 {{< schema data="telemetry/opentelemetry.json" >}}
+
+{{< note title="A trace sample rate of 0 reports every trace" type="warning" >}}
+Setting `trace_sample_rate` to `0` does not turn sampling off. KrakenD treats `0` as an unset value and applies the default rate of `1`, so it reports every trace. To stop sending traces, set `disable_traces` to `true` in each exporter. To keep only a small share of traces, use a small positive rate such as `0.01`.
+{{< /note >}}
 
 Here's an example with a Grafana Tempo and a Prometheus.
 
