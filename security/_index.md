@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-10-09
+lastmod: 2026-11-02
 date: 2024-10-09
 linktitle:  Security Overview
 title: Security Overview
@@ -79,7 +79,6 @@ KrakenD follows **OWASP best practices** and security recommendations, incorpora
 - [Host Restriction](/docs/service-settings/security/#restrict-connections-by-host): Restrict connections by host, defining a list of backends that the API gateway can communicate with.
 - [Cross-Origin Resource Sharing (CORS)](/docs/service-settings/cors/) lets you control and limit which domains can access APIs, protecting against cross-origin attacks.
 - [HTTP Strict Transport Security (HSTS)](/docs/service-settings/security/#http-strict-transport-security-hsts) makes sure that all interactions with the gateway use HTTPS, mitigating protocol downgrade attacks.
-- **Public Key Pinning**: To [prevent certificate forgery](/docs/service-settings/security/#http-public-key-pinning-hpkp), HPKP allows you to "pin" a public key, ensuring clients connect to the intended service.
 - **Clickjacking Protection**: To activate frame-busting mechanisms by [configuring X-Frame-Options headers](/docs/service-settings/security/#clickjacking-protection).
 - **Cross-Site Scripting (XSS) Protection**: Mitigate XSS attacks by adding relevant security headers like [X-XSS-Protection](/docs/service-settings/security/#cross-site-scripting-xss-protection), protecting clients from malicious script injections.
 - **MIME Sniffing Prevention** prevents browsers from [MIME sniffing](/docs/service-settings/security/#mime-sniffing-prevention) and interpreting files as a different content type than declared by using the X-Content-Type-Options header.
