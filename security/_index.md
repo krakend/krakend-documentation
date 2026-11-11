@@ -60,7 +60,7 @@ Governments can also get a Docker container with [FIPS 140-2 validated cryptogra
 ## Data protection
 Showing the right data or allowing limited access is key on any API. In addition to blocking users without enough privileges to consume data, you can apply [data filtering and manipulation](/docs/enterprise/backends/data-manipulation/) or even [masking of data](/docs/enterprise/endpoints/content-replacer/) {{< badge >}}Enterprise{{< /badge >}}
 
-In addition, to prevent malicious or malformed requests, KrakenD allows you to [validate the payload](/docs/endpoints/JSON-schema/) of requests against a JSON schema before it reaches your service. But it also works the other way around: you can also [validate responses](/docs/enterprise/endpoints/response-schema-validator/) {{< badge >}}Enterprise{{< /badge >}} of your services against a schema and decide whether is worth or not returning it to the end user.
+In addition, to prevent malicious or malformed requests, KrakenD allows you to [validate the payload](/docs/endpoints/json-schema/) of requests against a JSON schema before it reaches your service. But it also works the other way around: you can also [validate responses](/docs/enterprise/endpoints/response-schema-validator/) {{< badge >}}Enterprise{{< /badge >}} of your services against a schema and decide whether is worth or not returning it to the end user.
 
 Finally, the [Security policy engine](/docs/enterprise/security-policies/) is designed to enforce complex business logic based on real-time evaluation of requests, responses, and tokens.
 
