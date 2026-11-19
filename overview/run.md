@@ -1,6 +1,6 @@
 ---
 aliases: ["/docs/commands/run/", "/docs/overview/usage/"]
-lastmod: 2016-10-28
+lastmod: 2023-01-20
 date: 2016-10-28
 linktitle: Running KrakenD
 title: Running KrakenD server

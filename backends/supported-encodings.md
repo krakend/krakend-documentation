@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-07-12
+lastmod: 2023-02-23
 date: 2016-04-14
 toc: true
 linktitle: Origin response formats

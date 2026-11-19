@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-11-02
+lastmod: 2023-11-07
 date: 2017-01-21
 linktitle: IDE integration
 title: IDE Integration Guide for Developers

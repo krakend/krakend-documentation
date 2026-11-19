@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-08-28
+lastmod: 2023-11-17
 date: 2018-09-21
 linktitle: Configuration with templates
 title: "Introduction to Templates"

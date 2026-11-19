@@ -1,6 +1,6 @@
 ---
 aliases: ["/overview/installing/"]
-lastmod: 2019-03-11
+lastmod: 2022-10-28
 date: 2016-07-01
 menu:
   community_current:

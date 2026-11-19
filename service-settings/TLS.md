@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-03-30
+lastmod: 2024-07-04
 date: 2019-02-22
 linktitle: TLS
 title: TLS Configuration

@@ -1,6 +1,6 @@
 ---
 aliases: ["/docs/commands/check/"]
-lastmod: 2025-01-17
+lastmod: 2026-08-18
 date: 2016-10-28
 linktitle: Configuration check
 title: Validating the configuration with `check`

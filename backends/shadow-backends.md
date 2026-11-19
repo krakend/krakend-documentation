@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-10-29
+lastmod: 2023-07-03
 date: 2018-10-29
 linktitle: Traffic shadowing/mirroring
 title: Traffic shadowing and mirroring

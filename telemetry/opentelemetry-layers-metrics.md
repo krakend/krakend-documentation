@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-03-01
+lastmod: 2026-04-15
 date: 2024-01-22
 notoc: false
 linktitle: OpenTelemetry - Layers and Metrics

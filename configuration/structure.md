@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-01-31
+lastmod: 2025-10-16
 date: 2018-09-21
 linktitle: The configuration file
 title: Configuration Structure

@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-09-28
+lastmod: 2026-08-18
 date: 2020-11-17
 linktitle: Grafana Dashboard
 title: Telemetry and Monitoring with Grafana

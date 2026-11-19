@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-02-03
+lastmod: 2024-03-11
 date: 2019-10-11
 linktitle: Jaeger
 title: Jaeger Telemetry Integration - KrakenD API Gateway

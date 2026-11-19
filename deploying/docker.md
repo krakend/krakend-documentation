@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-12-07
+lastmod: 2025-01-31
 date: 2021-12-07
 linktitle: Docker artifact
 title: Deploying KrakenD API Gateway with Docker

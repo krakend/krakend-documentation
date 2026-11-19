@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-11-03
+lastmod: 2021-11-02
 date: 2018-11-03
 linktitle: JWT overview
 title: JWT Overview - Authorization

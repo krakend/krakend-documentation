@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-09-30
+lastmod: 2025-02-21
 date: 2016-09-30
 toc: true
 linktitle: API Composition and aggregation

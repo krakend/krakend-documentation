@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-12-11
+lastmod: 2023-09-01
 date: 2021-12-11
 aliases: ["/docs/deploying/integration-tests/"]
 linktitle: Run integration tests

@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-07-24
+lastmod: 2023-08-28
 date: 2016-09-30
 toc: true
 linktitle: "Basic data manipulation: Group, Filter, Map"

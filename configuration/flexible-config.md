@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-08-22
+lastmod: 2023-11-03
 date: 2018-09-21
 linktitle: Flexible Configuration
 title: "Flexible Configuration: A template-based config for API Gateway"

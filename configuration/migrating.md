@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-03-11
+lastmod: 2025-02-06
 date: 2016-07-01
 linktitle: Upgrading the configuration
 title: Upgrading KrakenD from an older version
