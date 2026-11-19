@@ -1,5 +1,5 @@
 ---
-lastmod: 2018-10-20
+lastmod: 2021-05-11
 date: 2018-06-23
 aliases: ["krakend-vs-krakend-ce"]
 linktitle: Lura vs. KrakenD

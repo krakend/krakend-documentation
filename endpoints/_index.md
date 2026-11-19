@@ -1,5 +1,5 @@
 ---
-lastmod: 2025-10-16
+lastmod: 2025-10-17
 date: 2020-02-26
 aliases: ["/docs/endpoints/creating-endpoints/"]
 linktitle:  The endpoint object

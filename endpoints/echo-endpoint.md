@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-03-21
+lastmod: 2023-04-24
 date: 2018-11-27
 linktitle: Echo endpoint
 title: Echo Endpoint Configuration

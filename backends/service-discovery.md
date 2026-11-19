@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-12-20
+lastmod: 2024-08-14
 date: 2016-09-30
 aliases: ["/service-discovery/dns-srv/", "/docs/service-discovery/overview/"]
 linktitle: Service Discovery

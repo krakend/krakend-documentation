@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-02-07
+lastmod: 2025-01-20
 date: 2019-04-05
 toc: true
 linktitle: Response manipulation on arrays

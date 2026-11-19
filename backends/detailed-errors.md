@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-12-13
+lastmod: 2025-04-30
 date: 2019-10-02
 linktitle: Strategies to return headers and errors
 title: Returning the backend headers and errors

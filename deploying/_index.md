@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-11-11
+lastmod: 2023-01-31
 date: 2017-01-21
 linktitle: Best practices
 title: Deploying KrakenD API Gateway - Best Practices and Guidelines

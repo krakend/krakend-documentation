@@ -1,5 +1,5 @@
 ---
-lastmod: 2019-03-11
+lastmod: 2022-11-25
 date: 2016-07-01
 title: Verifying packages (PGP and SHA256)
 notoc: true

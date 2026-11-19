@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-01-21
+lastmod: 2025-07-01
 date: 2022-01-21
 linktitle: Event-Driven Async Agents
 title: "Event-Driven API Gateway: Async Agents"

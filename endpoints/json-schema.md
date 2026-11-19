@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-11-17
+lastmod: 2026-02-09
 date: 2020-07-10
 linktitle: JSON Schema request validation
 title: JSON Schema Validation

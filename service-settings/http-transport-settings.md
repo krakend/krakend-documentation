@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-01-18
+lastmod: 2023-10-25
 date: 2022-01-18
 linktitle: HTTP Global Client settings
 title: HTTP Global Client settings

@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-01-21
+lastmod: 2022-02-16
 date: 2022-01-21
 linktitle:  AMQP driver for Async Agent
 title: AMQP driver for the Asynchronous Agent

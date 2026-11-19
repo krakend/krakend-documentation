@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-06-14
+lastmod: 2026-03-11
 date: 2016-07-01
 linktitle: Endpoint Rate Limit
 title: Rate Limiting API Gateway Endpoints

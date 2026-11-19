@@ -1,5 +1,5 @@
 ---
-lastmod: 2020-03-27
+lastmod: 2021-12-21
 date: 2017-01-21
 linktitle: Server requirements
 title: Server Dimensioning for KrakenD API Gateway Deployment

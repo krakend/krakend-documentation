@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-06-03
+lastmod: 2025-06-25
 date: 2019-01-24
 linktitle: Requests and response static manipulation
 title: Static modification of requests and responses with Martian

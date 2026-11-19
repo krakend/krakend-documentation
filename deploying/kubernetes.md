@@ -1,5 +1,5 @@
 ---
-lastmod: 2021-12-11
+lastmod: 2023-05-16
 date: 2017-01-21
 linktitle: To Kubernetes
 title: Deploying KrakenD API Gateway on Kubernetes

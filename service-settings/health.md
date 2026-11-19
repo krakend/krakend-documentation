@@ -1,5 +1,5 @@
 ---
-lastmod: 2022-01-19
+lastmod: 2022-10-25
 date: 2019-10-07
 linktitle: Health check endpoint
 title: API Health Check

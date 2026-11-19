@@ -1,5 +1,5 @@
 ---
-lastmod: 2025-04-30
+lastmod: 2026-05-12
 date: 2018-11-11
 linktitle: Sequential Proxy (chain reqs.)
 title: Sequential Proxying

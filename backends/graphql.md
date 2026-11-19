@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-01-16
+lastmod: 2024-01-18
 date: 2021-11-03
 linktitle: GraphQL
 title: GraphQL Backend Integration

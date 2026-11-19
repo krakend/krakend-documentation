@@ -1,6 +1,6 @@
 ---
 aliases: ["/features/other/", "/docs/features/content-types/"]
-lastmod: 2023-10-16
+lastmod: 2024-12-04
 date: 2016-04-14
 linktitle: Returned response formats
 title: Returned encodings

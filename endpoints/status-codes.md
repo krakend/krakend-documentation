@@ -1,5 +1,5 @@
 ---
-lastmod: 2024-06-13
+lastmod: 2025-04-30
 date: 2020-10-19
 notoc: true
 linktitle: Status Codes

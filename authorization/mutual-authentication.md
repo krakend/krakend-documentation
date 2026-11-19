@@ -1,5 +1,5 @@
 ---
-lastmod: 2023-10-23
+lastmod: 2025-07-30
 date: 2020-04-10
 linktitle: Mutual TLS Authentication (mTLS)
 title: Mutual Authentication

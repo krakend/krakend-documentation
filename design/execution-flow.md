@@ -1,6 +1,6 @@
 ---
 date: 2022-09-06
-lastmod: 2022-09-06
+lastmod: 2024-08-14
 linktitle: The execution flow
 title: KrakenD Execution Flow Design
 description: Understand the execution flow design of KrakenD API Gateway. Is the configuration X executed before the configuration Y?
