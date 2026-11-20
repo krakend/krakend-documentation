@@ -1,0 +1,43 @@
+name: lastmod
+
+# The front matter lastmod is the date of the last change that matters to the reader, and
+# nothing else sets it. This warns, without failing, on each page whose content changes in a
+# PR while its lastmod doesn't: the reviewer decides whether the change counts.
+# GitHub shows at most 10 warnings per step.
+on:
+  pull_request:
+    paths: ['**/*.md']
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The PR merge commit and its first parent, the base branch
+          fetch-depth: 2
+      - name: Content changed without lastmod
+        shell: bash
+        run: |
+          base=$(git rev-parse HEAD^1)
+          body()    { awk 'n >= 2; /^---$/ { n++ }'; }
+          fm_end()  { awk '/^---$/ { if (++n == 2) { print NR; exit } }'; }
+          lastmod() { grep -m1 '^lastmod:' || true; }
+          files=$(git diff --name-only --diff-filter=M "$base" HEAD -- '*.md')
+          while read -r f; do
+            [ -n "$f" ] || continue
+            old=$(git show "$base:$f"); new=$(git show "HEAD:$f")
+            [ "$(body <<<"$old")" = "$(body <<<"$new")" ] && continue
+            [ "$(lastmod <<<"$old")" != "$(lastmod <<<"$new")" ] && continue
+            end=$(fm_end <<<"$new"); end=${end:-0}
+            # First changed line after the front matter
+            diff=$(git diff -U0 "$base" HEAD -- "$f")
+            line=$(awk -v end="$end" '
+              /^@@ / { split($3, a, ","); s = substr(a[1], 2) + 0; c = (a[2] == "" ? 1 : a[2] + 0)
+                       last = (c == 0 ? s : s + c - 1)
+                       if (last > end) { print (s > end ? (s < 1 ? 1 : s) : end + 1); exit } }' <<<"$diff")
+            echo "::warning file=$f,line=${line:-1},title=lastmod::The content changed but lastmod didn't. Update it if the change matters to the reader."
+          done <<<"$files"
