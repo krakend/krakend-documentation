@@ -27,7 +27,7 @@ When you have more than one `backend` connected to an `endpoint` that **is not**
 
 For instance, imagine you have three different API services exposing the resources `/a`,`/b`, and `/c`, and you want to disclose them all together in the KrakenD endpoint `/abc`. This is what you would get:
 
-<img title="REST to Graphql" src="/images/documentation/krakend-merge.png" class="dark-version-available">
+<img alt="KrakenD merging the responses of three backends" title="KrakenD merging the responses of three backends" src="/images/documentation/krakend-merge.png" class="dark-version-available">
 
 
 The merge operation chooses user experience and responsiveness first. It makes its *best effort* to get all the necessary parts from the involved backends and return the composed object as soon as possible.

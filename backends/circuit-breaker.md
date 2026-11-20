@@ -73,7 +73,7 @@ The attributes available for the configuration are:
 ## How the Circuit Breaker works
 It's easy to picture the state of the circuit breaker as an electrical component, where an open circuit means no flow of electricity between the ends, and a closed one normal flow:
 
-<img title="Circuit Breaker states" src="/images/documentation/circuit-breaker.png" class="dark-version-available">
+<img alt="Circuit breaker states" title="Circuit breaker states" src="/images/documentation/circuit-breaker.png" class="dark-version-available">
 
 The Circuit Breaker starts with the `CLOSED` state, meaning the electricity can flow to the backends as they are considered healthy (*innocent until proven guilty*).
 
