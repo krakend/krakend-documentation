@@ -30,7 +30,7 @@ The Token Bucket algorithm ([Wikipedia definition](https://en.wikipedia.org/wiki
 
 KrakenD uses the bucket capacity to determine the number of requests it can serve. At the same time, it **fills the bucket with new tokens at a constant rate** while there is free space in it. Then, **users spend one token for each request**, and a token is removed from the bucket.
 
-<img title="Token Bucket algorithm" src="/images/documentation/krakend-token-bucket.png" class="dark-version-available">
+<img alt="Token bucket algorithm" title="Token bucket algorithm" src="/images/documentation/krakend-token-bucket.png" class="dark-version-available">
 
 Users might spend the tokens faster than they are refilled. If the bucket gets empty, KrakenD rejects the requests until there is at least another token in the bucket.
 
