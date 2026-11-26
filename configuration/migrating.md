@@ -29,7 +29,7 @@ To upgrade when you are more than one version away from the latest, adjust the c
 ## Upgrading from 2.x to 3.0
 The following video walks you through the migration of a KrakenD 2.x configuration to 3.0:
 
-{{< youtube N_DGcmRQ3OI >}}
+{{< youtube id="N_DGcmRQ3OI" title="Migrate a KrakenD 2.x configuration to 3.0" >}}
 
 _The list below is automatically generated based on the changelog._
 

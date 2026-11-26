@@ -37,7 +37,7 @@ The dashboard is extensive and offers you metrics like:
 
 The following video makes a quick tour of the information you can find on our Grafana Dashboard using Prometheus as data source:
 
-{{< youtube a6F0s5aozJU >}}
+{{< youtube id="a6F0s5aozJU" title="Grafana Dashboard for Prometheus via OpenTelemetry" >}}
 
 ## Importing a Grafana dashboard
 The Grafana dashboard has evolved over time, and these are the different versions you can use depending on your KrakenD version and data sources:
