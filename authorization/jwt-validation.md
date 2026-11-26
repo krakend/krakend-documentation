@@ -1,5 +1,5 @@
 ---
-lastmod: 2026-10-08
+lastmod: 2026-11-26
 date: 2018-11-03
 linktitle: JWT Validation
 title: JWT Validation
@@ -310,9 +310,9 @@ It is possible to forward claims in a JWT as request headers. It is a common use
 ```
 
 
-In this case, the `sub` claim's value will be added as `x-user` header to the request. If the claim does not exist, the mapping is just skipped.
+In this case, KrakenD adds the value of the `sub` claim as an `X-User` header to the request. If the token does not contain the claim, KrakenD sends the header empty, so a value sent by the client for that header never reaches the backend. When the claim exists, its value always replaces any value sent by the client. To reject tokens that lack a claim, add a [CEL expression](/docs/endpoints/common-expression-language-cel/#variables-for-the-jwt-rejecter) such as `has(JWT.sub)` at the endpoint level.
 
-In addition, the nested property `role` (inside `realm_access`) is passed as an `x-role` header.
+In addition, the nested property `role` (inside `realm_access`) is passed as an `X-Role` header. Claims holding an array are sent as a comma-separated string, so `["buyer","organizer"]` becomes `buyer,organizer`, unless you set `propagate_claims_preserve_array` to `true` to send each element as a separate value of the header.
 
 ## A complete running example
 
