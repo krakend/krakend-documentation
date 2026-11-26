@@ -1,5 +1,5 @@
 ---
-lastmod: 2025-02-06
+lastmod: 2026-11-26
 date: 2016-07-01
 linktitle: Upgrading the configuration
 title: Upgrading KrakenD from an older version
@@ -25,6 +25,11 @@ Our policy focuses on **minimizing disruption by preserving compatibility with p
 {{< note title="Jumping several versions" type="info" >}}
 To upgrade when you are more than one version away from the latest, adjust the configuration for all the versions that the upgrade comprehends.
 {{< /note >}}
+
+## Upgrading from 2.x to 3.0
+The following video walks you through the migration of a KrakenD 2.x configuration to 3.0:
+
+{{< youtube N_DGcmRQ3OI >}}
 
 _The list below is automatically generated based on the changelog._
 
