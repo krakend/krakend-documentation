@@ -1,5 +1,5 @@
 ---
-lastmod: 2026-05-12
+lastmod: 2026-11-26
 date: 2018-11-11
 linktitle: Sequential Proxy (chain reqs.)
 title: Sequential Proxying
@@ -37,6 +37,8 @@ Using sequential calls is considered an anti-pattern because when you make a net
 {{< /note >}}
 
 In non-sequential [aggregation](/docs/endpoints/response-manipulation/#aggregation-and-merging), parallel requests execute simultaneously, whereas, in sequential aggregation, requests are executed one at a time, with each one waiting for the previous request to finish (or timeout) before moving on to the next. If a backend in a sequence fails, the process aborts and the next backend is never reached, so there are many more chances that your users will be left without data.
+
+![Parallel backend calls take as long as the slowest one, sequential calls add up](/images/blog/technical-insights/api-gateway-aggregation-bff-checklist/critical-path.webp)
 
 From an error rate perspective, the nature of sequential proxy performs more deficient: Suppose you have three backends with an error rate of 10% each, then the probability of success separately in each is 90%. However, when executing the three of them sequentially, the success rate drops to 73% (because `0.9 * 0.9 * 0.9 = 0.729`).
 
